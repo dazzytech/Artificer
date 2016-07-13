@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<contract>
+  <info>
+    <name>Defence Contract 12/06/6456: UAN</name>
+    <desc>One of our clients have requested support for one of their factory stations. Following increased aggression with a neighboring system, a small group hostile to our client is attempting to harrass and destroy the factory station closest to the outskirts of their teritory.
+
+Following probes these terrorists are little more than civilian ships outfitted with little more than simple weapon kits. They have little to no combat training and are a minor threat at best. Caution is still advised however, a well placed hit can do damage.
+
+Keep the station in working order for the specified time. This time slot has proven to have the highest amount of attacking vessels.</desc>
+    <lvl>0</lvl>
+    <ctype>defend</ctype>
+  </info>
+  <primary_missions>
+    <mission_data type="defend">
+      <time_limit>300</time_limit>
+      <reward>
+        <mat sym="Fe">4</mat>
+        <mat sym="Al">10</mat>
+        <mat sym="Cu">6</mat>
+        <mat sym="Pb">2</mat>
+        <xp>25</xp>
+      </reward>
+    </mission_data>
+  </primary_missions>
+  <optional_missions>
+    <mission_data type="destroy">
+      <time_limit>200</time_limit>
+      <goal>10</goal>
+      <reward>
+        <mat sym="Fe">6</mat>
+        <mat sym="Co">3</mat>
+        <xp>75</xp>
+      </reward>
+    </mission_data>
+    <mission_data type="collect">
+      <time_limit>300</time_limit>
+      <mmats sym="Fe">20</mmats>
+      <mmats sym="Al">20</mmats>
+      <reward>
+        <mat sym="Au">2</mat>
+        <xp>25</xp>
+      </reward>
+    </mission_data>
+  </optional_missions>
+  <waves>
+    <enemy>
+      <wave time="0" limit="4">
+        <ship>Rebel_01</ship>
+        <ship>Rebel_04</ship>
+        <ship>Rebel_01</ship>
+      </wave>
+    </enemy>
+    <friendly>
+      <wave time="0" limit="2">
+        <ship>Friendly_01</ship>
+        <ship>Friendly_02</ship>
+      </wave>
+    </friendly>
+  </waves>
+</contract>

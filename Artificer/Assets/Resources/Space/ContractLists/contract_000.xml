@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<contract>
+  <info>
+    <name>Escort Contract 11/06/6456: Civilian</name>
+    <desc>A civilian contractor has requested security services while tranporting ore between factories. Very little threat however, be on alert.</desc>
+    <lvl>0</lvl>
+    <ctype>escort</ctype>
+  </info>
+  <primary_missions>
+    <mission_data type="escort">
+      <reward>
+        <mat sym="Au">20</mat>
+        <mat sym="Fe">40</mat>
+        <mat sym="Sn">20</mat>
+        <mat sym="Ag">5</mat>
+        <xp>40</xp>
+      </reward>
+    </mission_data>
+  </primary_missions>
+  <optional_missions />
+  <waves>
+    <enemy>
+      <wave time="0" limit="2">
+        <ship>Rebel_04</ship>
+        <ship>Rebel_03</ship>
+      </wave>
+    </enemy>
+    <friendly />
+    <mission>
+      <ship>Cargo_01</ship>
+    </mission>
+  </waves>
+</contract>

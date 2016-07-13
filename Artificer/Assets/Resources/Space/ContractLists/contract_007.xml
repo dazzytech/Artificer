@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<contract>
+  <info>
+    <name>Attrition Contract 24/06/6456: UAN</name>
+    <desc>An assault force has been detected by our client and they have requested our services in regards to dispelling the threat.
+
+Intelligence reports indicate that the rebel have been more experimental with their ship builds. Although, we have not seen any indicators of advanced weaponry. However, act with caution as always.</desc>
+    <lvl>1</lvl>
+    <ctype>attrition</ctype>
+  </info>
+  <primary_missions>
+    <mission_data type="attrition">
+      <goal>10</goal>
+      <reward>
+        <mat sym="Sn">20</mat>
+        <mat sym="Ni">10</mat>
+        <mat sym="Al">20</mat>
+        <mat sym="Co">10</mat>
+        <xp>50</xp>
+      </reward>
+    </mission_data>
+  </primary_missions>
+  <optional_missions />
+  <waves>
+    <enemy>
+      <wave time="0" limit="6">
+        <ship>Rebel_03</ship>
+        <ship>Rebel_04</ship>
+      </wave>
+    </enemy>
+    <friendly>
+      <wave time="0" limit="3">
+        <ship>Friendly_01</ship>
+        <ship>Friendly_01</ship>
+        <ship>Friendly_01</ship>
+        <ship>Friendly_02</ship>
+      </wave>
+    </friendly>
+  </waves>
+</contract>

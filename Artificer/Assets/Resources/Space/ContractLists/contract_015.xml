@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<contract>
+  <info>
+    <name>Target Contract 30/08/6456: UAN</name>
+    <desc>Our client has expressed interest in our involvement of the destruction of key targets. They have expressed to us that they have reason to believe that one of the commanders for the rival faction and their officers are within attack range for their assault.
+
+Although they are unsure as to why such high targets are so close to the faction borders, they have requested our aid in destroying the targets. If successful, the chain of command will break down in our client's sector. This will give us the oppurtunity so show our reliablity for other potential clients.
+
+Time is not on your side, when we are in range the target faction will continue to reinforce until we are forced to retreat. Do not attempt without an upgraded ship.</desc>
+    <lvl>3</lvl>
+    <ctype>targets</ctype>
+  </info>
+  <primary_missions>
+    <mission_data type="targets">
+      <time_limit>150</time_limit>
+      <reward>
+        <mat sym="Au">100</mat>
+        <mat sym="Pt">100</mat>
+        <mat sym="Ag">100</mat>
+        <mat sym="Fe">300</mat>
+        <xp>300</xp>
+      </reward>
+    </mission_data>
+  </primary_missions>
+  <optional_missions />
+  <waves>
+    <enemy>
+      <wave time="50" limit="8">
+        <ship>Enemy_01</ship>
+        <ship>Enemy_01</ship>
+        <ship>Enemy_02</ship>
+      </wave>
+      <wave time="50" limit="10">
+        <ship>Enemy_01</ship>
+        <ship>Enemy_02</ship>
+        <ship>Enemy_01</ship>
+      </wave>
+      <wave time="50" limit="14">
+        <ship>Enemy_01</ship>
+        <ship>Enemy_02</ship>
+        <ship>Rebel_Big_01</ship>
+      </wave>
+    </enemy>
+    <friendly>
+      <wave time="0" limit="4">
+        <ship>Friendly_02</ship>
+        <ship>Friendly_01</ship>
+      </wave>
+    </friendly>
+    <mission>
+      <ship>Rebel_Big_01</ship>
+      <ship>Enemy_01</ship>
+      <ship>Enemy_02</ship>
+      <ship>Enemy_02</ship>
+    </mission>
+  </waves>
+</contract>

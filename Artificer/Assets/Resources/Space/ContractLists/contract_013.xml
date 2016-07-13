@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<contract>
+  <info>
+    <name>Attrition Contract 29/07/6456: UAN</name>
+    <desc>Our client reported that a collection of ships went MIA 3 hours ago. They have requested our services as they believe these ships came under fire from their rival faction. 
+
+Our clients are following an intercept course yet no further information regarding possible hostiles. Proceed with caution, only accept with an upgraded ship.</desc>
+    <lvl>3</lvl>
+    <ctype>attrition</ctype>
+  </info>
+  <primary_missions>
+    <mission_data type="attrition">
+      <goal>30</goal>
+      <reward>
+        <mat sym="Au">100</mat>
+        <mat sym="Ag">100</mat>
+        <mat sym="Pt">100</mat>
+        <xp>400</xp>
+      </reward>
+    </mission_data>
+  </primary_missions>
+  <optional_missions />
+  <waves>
+    <enemy>
+      <wave time="50" limit="8">
+        <boss>Rebel_Big_01</boss>
+        <ship>Enemy_02</ship>
+        <ship>Enemy_01</ship>
+      </wave>
+      <wave time="0" limit="8">
+        <boss>Rebel_Big_01</boss>
+        <ship>Enemy_02</ship>
+        <ship>Enemy_01</ship>
+      </wave>
+    </enemy>
+    <friendly>
+      <wave time="0" limit="4">
+        <ship>Friendly_01</ship>
+        <ship>Friendly_02</ship>
+        <ship>Friendly_03</ship>
+      </wave>
+    </friendly>
+  </waves>
+</contract>

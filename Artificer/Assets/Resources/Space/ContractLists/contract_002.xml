@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<contract>
+  <info>
+    <name>Target Contract 12/06/6456: UAN</name>
+    <desc>A client has requested that we aid in the elimination of key targets.
+
+A heavy miner vessel has been outfitted in heavy combat weaponry. The craft is believed to be a prototype however, if it is destroyed it would benefit our client.
+
+Destroy the defined targets whilst our client engages the surrounding forces. </desc>
+    <lvl>1</lvl>
+    <ctype>targets</ctype>
+  </info>
+  <primary_missions>
+    <mission_data type="targets">
+      <time_limit>200</time_limit>
+      <reward>
+        <mat sym="Au">10</mat>
+        <mat sym="Fe">30</mat>
+        <mat sym="Zn">20</mat>
+        <mat sym="Al">10</mat>
+        <xp>70</xp>
+      </reward>
+    </mission_data>
+  </primary_missions>
+  <optional_missions>
+    <mission_data type="destroy">
+      <time_limit>100</time_limit>
+      <goal>5</goal>
+      <reward>
+        <mat sym="Cu">30</mat>
+        <xp>50</xp>
+      </reward>
+    </mission_data>
+  </optional_missions>
+  <waves>
+    <enemy>
+      <wave time="0" limit="4">
+        <ship>Rebel_01</ship>
+        <ship>Rebel_02</ship>
+      </wave>
+    </enemy>
+    <friendly>
+      <wave time="0" limit="2">
+        <ship>Friendly_01</ship>
+      </wave>
+    </friendly>
+    <mission>
+      <ship>Rebel_Big_01</ship>
+    </mission>
+  </waves>
+</contract>

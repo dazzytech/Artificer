@@ -1,0 +1,73 @@
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+using Data.Space;
+using Data.Shared;
+
+namespace Space.Segment
+{
+    public class FriendlyGuardSpawner : SpawnerBehaviour
+    {
+        public static ShipGenerator ShipGen;
+        public static ShipData Ship;
+
+        // Store list of segments object currently active
+        private static List<Transform> _ships = new List<Transform>();
+        public static int Max = 2;
+        
+        void OnDestroy()
+        {
+            Disengage();
+            ShipExternalController.ShipDestroyed -= ShipDestroyed;
+        }
+
+        void Start()
+        {
+            ShipExternalController.ShipDestroyed += ShipDestroyed;
+        }
+        
+        public static void ShipDestroyed(DestroyDespatch param)
+        {
+            if (_ships.Contains(param.Self))
+            {
+                _ships.Remove(param.Self);
+            }
+        }
+
+        protected override void Trigger()
+        {
+            if (_ships.Count < Max)
+            {
+                Transform newShip = null;
+            
+                Vector3 position = new Vector3
+                (transform.position.x + Random.Range(-10, 10),
+                 transform.position.y + Random.Range(-10, 10));
+            
+                newShip = ShipGen.GenerateShip
+                (Ship, position,
+                 new Vector2(Random.Range(-1f, 1f),
+                            Random.Range(-1f, 1f)));
+
+                newShip.name = "Friendly";
+                
+                SimpleFriendlyController patrol = 
+                    newShip.gameObject.AddComponent<SimpleFriendlyGuardController>();
+                patrol.SetController
+                    (newShip.gameObject.GetComponent<ShipMessegeController>());
+                patrol.SetAlignment();
+                
+                GameObject.Find("_gui").
+                    SendMessage("AddUIPiece", newShip, 
+                                SendMessageOptions.DontRequireReceiver);
+
+                _ships.Add(newShip);
+            } else
+            {
+                //Disengage();
+            }
+        }
+    }
+
+}

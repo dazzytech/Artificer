@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<contract>
+  <info>
+    <name>Attrition Contract 18/06/6456: UAN</name>
+    <desc>Following an assault on one of our clients stations, they have requested that we engage the retreating assailants. Stopping the retreat may help reduce the number of insurgents.
+
+The terrorist groups are not well armed, it is expected to be a one sided engagement </desc>
+    <lvl>0</lvl>
+    <ctype>attrition</ctype>
+  </info>
+  <primary_missions>
+    <mission_data type="attrition">
+      <goal>20</goal>
+      <reward>
+        <mat sym="Fe">120</mat>
+        <mat sym="Au">40</mat>
+        <mat sym="Ag">20</mat>
+        <mat sym="Sn">130</mat>
+        <xp>150</xp>
+      </reward>
+    </mission_data>
+    <mission_data type="attrition">
+      <goal>10</goal>
+      <reward>
+        <mat sym="Zn">10</mat>
+        <mat sym="Sn">5</mat>
+        <xp>20</xp>
+      </reward>
+    </mission_data>
+  </primary_missions>
+  <optional_missions>
+    <mission_data type="collect">
+      <time_limit>100</time_limit>
+      <mmats sym="Fe">50</mmats>
+      <reward>
+        <xp>100</xp>
+      </reward>
+    </mission_data>
+    <mission_data type="collect">
+      <time_limit>100</time_limit>
+      <mmats sym="Fe">60</mmats>
+      <reward>
+        <xp>40</xp>
+      </reward>
+    </mission_data>
+  </optional_missions>
+  <waves>
+    <enemy>
+      <wave time="0" limit="4">
+        <ship>Rebel_01</ship>
+      </wave>
+    </enemy>
+    <friendly>
+      <wave time="0" limit="1">
+        <ship>Friendly_01</ship>
+      </wave>
+    </friendly>
+  </waves>
+</contract>

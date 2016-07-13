@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<contract>
+  <info>
+    <name>Defence Contract 12/07/6456: UAN</name>
+    <desc>A client has requested support in the defence of one of their command centers. Their military strength is very limited due to the amount of assaults by insurgent groups. 
+
+An enemy faction has taken siege of this station in hopes to further destablize the faction.
+
+Defend the station and do not let the station fall. It is recommended that you upgrade your ship from the template as to improve your chances of success.
+
+This has been regarded as an act of war, and we can be expected to be called upon for support.</desc>
+    <lvl>3</lvl>
+    <ctype>defend</ctype>
+  </info>
+  <primary_missions>
+    <mission_data type="defend">
+      <time_limit>350</time_limit>
+      <reward>
+        <mat sym="Au">40</mat>
+        <mat sym="Al">100</mat>
+        <mat sym="Co">50</mat>
+        <mat sym="Fe">100</mat>
+        <xp>250</xp>
+      </reward>
+    </mission_data>
+  </primary_missions>
+  <optional_missions>
+    <mission_data type="destroy">
+      <time_limit>100</time_limit>
+      <goal>5</goal>
+      <reward>
+        <mat sym="Co">50</mat>
+        <xp>25</xp>
+      </reward>
+    </mission_data>
+    <mission_data type="collect">
+		<time_limit>200</time_limit>
+      <mmats sym="Fe">200</mmats>
+      <reward>
+        <mat sym="Pt">30</mat>
+        <xp>200</xp>
+      </reward>
+    </mission_data>
+  </optional_missions>
+  <waves>
+    <enemy>
+      <wave time="0" limit="4">
+        <ship>Enemy_02</ship>
+        <ship>Enemy_02</ship>
+        <ship>Enemy_01</ship>
+      </wave>
+    </enemy>
+    <friendly>
+      <wave time="0" limit="2">
+        <ship>Friendly_03</ship>
+        <ship>Friendly_02</ship>
+      </wave>
+    </friendly>
+    <mission>
+      <ship>Rebel_Big_01</ship>
+      <ship>Rebel_Big_01</ship>
+    </mission>
+  </waves>
+</contract>

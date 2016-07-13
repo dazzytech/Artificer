@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<contract>
+  <info>
+    <name>Target Contract 15/07/6456: UAN</name>
+    <desc>One of our clients have requested our support in destroying key targets. Intelligence reports that the terrorists have been resupplying their own fighting units using large containers. If we are able to destroy these vessels before they can resupply that will help destablize the combat forces.
+
+These vessels are well armed and have escorts, our client has commited a few squadrons to the raids for support. Destroy the three supply ships, it is recommended that you upgrade your ship otherwise you risk the destruction of your vessel.</desc>
+    <lvl>3</lvl>
+    <ctype>targets</ctype>
+  </info>
+  <primary_missions>
+    <mission_data type="targets">
+      <time_limit>200</time_limit>
+      <reward>
+        <mat sym="Au">40</mat>
+        <mat sym="Co">130</mat>
+        <mat sym="Ag">30</mat>
+        <mat sym="Cu">120</mat>
+        <xp>200</xp>
+      </reward>
+    </mission_data>
+  </primary_missions>
+  <optional_missions>
+    <mission_data type="destroy">
+      <time_limit>100</time_limit>
+      <goal>10</goal>
+      <reward>
+        <mat sym="Ag">40</mat>
+        <mat sym="Al">20</mat>
+        <mat sym="Sn">80</mat>
+        <xp>30</xp>
+      </reward>
+    </mission_data>
+    <mission_data type="collect">
+      <time_limit>100</time_limit>
+      <mmats sym="Fe">50</mmats>
+      <reward>
+        <mat sym="Sn">100</mat>
+        <xp>10</xp>
+      </reward>
+    </mission_data>
+  </optional_missions>
+  <waves>
+    <enemy>
+      <wave time="0" limit="8">
+        <ship>Enemy_01</ship>
+        <ship>Enemy_02</ship>
+        <ship>Enemy_02</ship>
+        <ship>Rebel_04</ship>
+        <ship>Rebel_04</ship>
+      </wave>
+    </enemy>
+    <friendly>
+      <wave time="0" limit="2">
+        <boss>Friendly_02</boss>
+        <ship>Friendly_03</ship>
+      </wave>
+    </friendly>
+    <mission>
+      <ship>Rebel_Big_01</ship>
+      <ship>Rebel_Big_01</ship>
+      <ship>Rebel_Big_01</ship>
+    </mission>
+  </waves>
+</contract>

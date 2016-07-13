@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<contract>
+  <info>
+    <name>Escort Contract 29/07/6456: UAN</name>
+    <desc>Stations within our client's sector are low in supplies. We are requested for security services to protect the cargo ships while they transport good.
+
+At least one cargo ship must make it to its destination.</desc>
+    <lvl>3</lvl>
+    <ctype>escort</ctype>
+  </info>
+  <primary_missions>
+    <mission_data type="escort">
+      <reward>
+        <mat sym="Au">50</mat>
+        <mat sym="Fe">150</mat>
+        <mat sym="Al">150</mat>
+        <xp>300</xp>
+      </reward>
+    </mission_data>
+  </primary_missions>
+  <optional_missions />
+  <waves>
+    <enemy>
+      <wave time="50" limit="4">
+        <ship>Rebel_03</ship>
+        <ship>Rebel_04</ship>
+      </wave>
+      <wave time="0" limit="4">
+        <boss>Rebel_Big_01</boss>
+        <ship>Rebel_03</ship>
+        <ship>Rebel_04</ship>
+      </wave>
+    </enemy>
+    <friendly>
+      <wave time="0" limit="6">
+        <ship>Friendly_03</ship>
+        <ship>Friendly_02</ship>
+      </wave>
+    </friendly>
+    <mission>
+      <ship>Cargo_02</ship>
+      <ship>Cargo_02</ship>
+      <ship>Cargo_02</ship>
+    </mission>
+  </waves>
+</contract>
