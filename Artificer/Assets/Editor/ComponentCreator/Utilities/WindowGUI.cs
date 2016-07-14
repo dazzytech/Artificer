@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
+using Space.Ship.Components.Listener;
+using Space.Ship.Components.Attributes;
+
 namespace Editor.Components
 {
     public class WindowGUI
@@ -174,15 +177,15 @@ namespace Editor.Components
                     _att.Symbols = new string[4];
                     _att.Amounts = new float[4];
 
-                    ShipComponents.ComponentListener list = newComp.GetComponent<ShipComponents.ComponentListener>();
-                    ShipComponents.ComponentAttributes att = list.GetAttributes();
+                    ComponentListener list = newComp.GetComponent<ComponentListener>();
+                    Space.Ship.Components.Attributes.ComponentAttributes att = list.GetAttributes();
 
                     _att.Weight = list.Weight;
                     _att.HP = att.Integrity;
                     _att.ComponentName = att.Name;
                     _att.ComponentSprite = null;
 
-                    foreach(ShipComponents.ConstructInfo info in att.RequiredMats)
+                    foreach(ConstructInfo info in att.RequiredMats)
                     {
                         if(info.material != null)
                         {
@@ -195,7 +198,7 @@ namespace Editor.Components
                     // Load all the saved textures into attributes
                     if(att.componentStyles != null)
                     {
-                        foreach(ShipComponents.StyleInfo info in att.componentStyles)
+                        foreach(StyleInfo info in att.componentStyles)
                         {
                             _att.ComponentSprites.Add(info.name, info.sprite);
                         }

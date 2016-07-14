@@ -2,7 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using ShipComponents;
+
+using Space.Ship;
+using Space.Ship.Components.Listener;
 
 namespace Space.UI.Ship
 {

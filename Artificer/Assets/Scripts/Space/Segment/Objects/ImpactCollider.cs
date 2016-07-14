@@ -4,10 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 // Artificer defined
-using ShipComponents;
 using Data.Space;
 
-namespace Space
+namespace Space.Segment
 {
     #region HITDATA CONTAINER
 
@@ -26,7 +25,6 @@ namespace Space
 
     #endregion
 
-
     /// <summary>
     /// Add on function that manages server objects being hit by
     /// projectiles. 
@@ -40,6 +38,8 @@ namespace Space
 
         #endregion
 
+        #region EXTERNAL FUNCTIONS
+
         /// <summary>
         /// Receives hit info from server and calls client funcs
         /// </summary>
@@ -51,6 +51,10 @@ namespace Space
             _hitD = hit;
             RpcHit();
         }
+
+        #endregion
+
+        #region VIRTUAL FUNCTIONS
 
         /// <summary>
         /// Client function called by server 
@@ -94,5 +98,7 @@ namespace Space
                 Camera.main.gameObject.SendMessage("ShakeCam");
             }
         }*/
+
+        #endregion
     }
 }

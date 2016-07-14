@@ -6,6 +6,9 @@ using System.Text.RegularExpressions;
 // Artificer defined
 using Data.Space;
 using Data.Space.Library;
+using Space.Ship.Components;
+using Space.Ship.Components.Listener;
+using Space.Ship.Components.Attributes;
 
 namespace Editor.Components
 {
@@ -202,14 +205,14 @@ namespace Editor.Components
             CompTypeScriptUtil.AddBehavioursToObject(prefab, _att.Type.SelectedName, old);
 
             // Add material requirements to prefab object
-            ShipComponents.ComponentListener list = prefab.GetComponent<ShipComponents.ComponentListener>();
-            ShipComponents.ComponentAttributes att = list.GetAttributes();
-            att.RequiredMats = new ShipComponents.ConstructInfo[_att.Symbols.Length];
+            ComponentListener list = prefab.GetComponent<ComponentListener>();
+            Space.Ship.Components.Attributes.ComponentAttributes att = list.GetAttributes();
+            att.RequiredMats = new ConstructInfo[_att.Symbols.Length];
             for (int i = 0; i < _att.Symbols.Length; i++)
             {
                 if(_att.Symbols[i] != null)
                 {
-                    ShipComponents.ConstructInfo item = new ShipComponents.ConstructInfo();
+                    ConstructInfo item = new ConstructInfo();
                     item.material = _att.Symbols[i];
                     item.amount = _att.Amounts[i];
                     att.RequiredMats[i] = item;
@@ -221,12 +224,12 @@ namespace Editor.Components
             att.Name = _att.ComponentName;
 
             // add the skin styles to the comp attributes
-            att.componentStyles = new ShipComponents.StyleInfo
+            att.componentStyles = new StyleInfo
                 [_att.ComponentSprites.Count]; int index = 0;
 
             foreach (string name in _att.ComponentSprites.Keys)
             {
-                ShipComponents.StyleInfo info = new ShipComponents.StyleInfo();
+                StyleInfo info = new StyleInfo();
                 info.name = name;
                 info.sprite = _att.ComponentSprites [name];
                 att.componentStyles[index++] = info;

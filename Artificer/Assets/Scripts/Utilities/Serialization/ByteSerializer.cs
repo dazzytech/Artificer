@@ -7,6 +7,8 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using Data.Shared;
 
+using Space.Projectiles;
+
 namespace Serializer
 { 
     public class ByteSerializer

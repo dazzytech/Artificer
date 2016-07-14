@@ -3,8 +3,10 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 // Artificer Defined
-using ShipComponents;
-using Space.Segment;
+using Space.Generator;
+using Space.Ship;
+using Space.Ship.Components.Listener;
+using Space.Ship.Components.Attributes;
 
 [RequireComponent(typeof(ShipAttributes))]
 
@@ -114,11 +116,11 @@ public class ShipInputReceiver : NetworkBehaviour {
             }
         }
 
-        if (activeRotors.Count > 0)
+        /*if (activeRotors.Count > 0)
             CmdProcessComps(activeRotors.ToArray());
 
         if (inactiveRotors.Count > 0)
-            CmdReleaseComps(inactiveRotors.ToArray());
+            CmdReleaseComps(inactiveRotors.ToArray());*/
     }
 
     #endregion
@@ -180,13 +182,14 @@ public class ShipInputReceiver : NetworkBehaviour {
             {
         		foreach (ComponentListener listener in _ship.Components)
                 {
-        			if(listener.GetAttributes () != null)
+                    ComponentAttributes att = listener.GetAttributes();
+                    if (att != null && !att.active)
                     {
                         if(!(listener is WeaponListener) && !(listener is LauncherListener))
                         {
                             if(!_ship.Ship.CombatResponsive)
                             {
-                                if (listener.GetAttributes().TriggerKey == key)
+                                if (att.TriggerKey == key)
                                 {
                                     listener.Activate();
                                     comps.Add(listener.GetAttributes().ID);
@@ -195,30 +198,30 @@ public class ShipInputReceiver : NetworkBehaviour {
                             }
                             else
                             {
-                                if(listener.GetAttributes().CombatKey != KeyCode.None)
+                                if(att.CombatKey != KeyCode.None)
                                 {
-                                    if (listener.GetAttributes().CombatKey == key)
+                                    if (att.CombatKey == key)
                                     {
                                         listener.Activate();
-                                        comps.Add(listener.GetAttributes().ID);
+                                        comps.Add(att.ID);
                                     }
                                 }
                             }
                         }
-                            else
+                        else
+                        {
+                            // Not every component will have a combat key
+                            if(att.CombatKey != KeyCode.None)
                             {
-                                // Not every component will have a combat key
-                                if(listener.GetAttributes().CombatKey != KeyCode.None)
+                                if (att.CombatKey == key)
                                 {
-                                    if (listener.GetAttributes().CombatKey == key)
-                                    {
-                                        listener.Activate();
-                                        comps.Add(listener.GetAttributes().ID);
-                                    }   
-                                }
+                                    listener.Activate();
+                                    comps.Add(att.ID);
+                                }   
                             }
                         }
                     }
+                }
 
                 if (comps.Count > 0)
                     CmdProcessComps(comps.ToArray());
@@ -229,12 +232,16 @@ public class ShipInputReceiver : NetworkBehaviour {
             foreach (ComponentListener listener in _ship.Components) 
             {
                 if (listener != null)
-                    if (listener.GetAttributes() != null)
-                        if (listener.GetAttributes().TriggerKey == key)
+                {
+                    ComponentAttributes att = listener.GetAttributes();
+
+                    if (att != null && !att.active)
+                        if (att.TriggerKey == key)
                         {
                             listener.Activate();
-                            comps.Add(listener.GetAttributes().ID);
+                            comps.Add(att.ID);
                         }
+                }
             } 
 		}
 
@@ -261,6 +268,9 @@ public class ShipInputReceiver : NetworkBehaviour {
     [ClientRpc]
     private void RpcProcessComps(int[] comps)
     {
+        if (isLocalPlayer)
+            return;
+
         foreach (ComponentListener listener in _ship.SelectedComponents(comps))
         { 
             if (listener is RotorListener || listener is EngineListener)
@@ -287,7 +297,9 @@ public class ShipInputReceiver : NetworkBehaviour {
             {
                 foreach (ComponentListener listener in _ship.Components)
                 {
-                    if (listener.GetAttributes() != null)
+                    ComponentAttributes att = listener.GetAttributes();
+
+                    if (att != null && att.active)
                     {
                         if (!(listener is WeaponListener) && !(listener is LauncherListener))
                         {
@@ -296,18 +308,18 @@ public class ShipInputReceiver : NetworkBehaviour {
                                 if (listener.GetAttributes().TriggerKey == key)
                                 {
                                     listener.Deactivate();
-                                    comps.Add(listener.GetAttributes().ID);
+                                    comps.Add(att.ID);
                                 }
                             }
                             else
                             {
                                 // Not every component will have a combat key
-                                if (listener.GetAttributes().CombatKey != KeyCode.None)
+                                if (att.CombatKey != KeyCode.None)
                                 {
-                                    if (listener.GetAttributes().CombatKey == key)
+                                    if (att.CombatKey == key)
                                     {
                                         listener.Deactivate();
-                                        comps.Add(listener.GetAttributes().ID);
+                                        comps.Add(att.ID);
                                     }
                                 }
                             }
@@ -315,12 +327,12 @@ public class ShipInputReceiver : NetworkBehaviour {
                         else
                         {
                             // Not every component will have a combat key
-                            if (listener.GetAttributes().CombatKey != KeyCode.None)
+                            if (att.CombatKey != KeyCode.None)
                             {
-                                if (listener.GetAttributes().CombatKey == key)
+                                if (att.CombatKey == key)
                                 {
                                     listener.Deactivate();
-                                    comps.Add(listener.GetAttributes().ID);
+                                    comps.Add(att.ID);
                                 }
                             }
                         }
@@ -336,12 +348,16 @@ public class ShipInputReceiver : NetworkBehaviour {
             foreach (ComponentListener listener in _ship.Components)
             {
                 if (listener != null)
-                    if (listener.GetAttributes() != null)
-                        if (listener.GetAttributes().TriggerKey == key)
+                {
+                    ComponentAttributes att = listener.GetAttributes();
+                    if (att != null && att.active)
+                        if (att.TriggerKey == key)
                         {
                             listener.Deactivate();
                             comps.Add(listener.GetAttributes().ID);
                         }
+
+                }
             }
 
             if (comps.Count > 0)
@@ -367,6 +383,9 @@ public class ShipInputReceiver : NetworkBehaviour {
     [ClientRpc]
     private void RpcReleaseComps(int[] comps)
     {
+        if (isLocalPlayer)
+            return;
+
         foreach (ComponentListener listener in _ship.SelectedComponents(comps))
         {
             if (listener is RotorListener || listener is EngineListener)

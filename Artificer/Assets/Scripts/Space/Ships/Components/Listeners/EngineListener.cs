@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-namespace ShipComponents
+using Space.Ship.Components.Attributes;
+
+namespace Space.Ship.Components.Listener
 {
     public class EngineListener : ComponentListener
     {
@@ -33,16 +35,18 @@ namespace ShipComponents
     				_attr.engineVelocity = Vector3.zero;
 
                 rb.drag = 0.9f;
-    		}
+    		} else
+            {
+                _attr.engineMotion = transform.up;
+                _attr.engineVelocity += _attr.engineMotion * _attr.acceleration;
+                if (Mathf.Abs(_attr.engineVelocity.magnitude) > _attr.maxSpeed)
+                    _attr.engineVelocity = (_attr.engineVelocity.normalized
+                                            * _attr.maxSpeed) * _attr.engineMotion.magnitude;
+            }
     	}
 
     	public override void Activate()
     	{
-            _attr.engineMotion = transform.up;
-    		_attr.engineVelocity += _attr.engineMotion * _attr.acceleration;
-    		if (Mathf.Abs(_attr.engineVelocity.magnitude) > _attr.maxSpeed)
-    			_attr.engineVelocity = (_attr.engineVelocity.normalized 
-    			                        * _attr.maxSpeed) * _attr.engineMotion.magnitude;
     		_attr.emitter.emit = true;
     		_attr.active = true;
     	}

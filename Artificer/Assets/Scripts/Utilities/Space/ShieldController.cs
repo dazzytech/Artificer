@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
-using ShipComponents;
-using Space;
+using Space.Segment;
 
 public class ShieldController : MonoBehaviour
 {

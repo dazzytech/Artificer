@@ -40,7 +40,7 @@ namespace Menu
             {
                 foreach(Resolution res in Screen.resolutions)
                 {
-                    if(res.width < 1280 || res.height < 768)
+                    if(res.width < Video_Config.MIN_WIDTH || res.height < Video_Config.MIN_HEIGHT)
                         continue;
 
                     // create resolution prefab

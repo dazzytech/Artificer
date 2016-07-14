@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
+using Space.Ship;
+
 public class ShipStatus
 {
     /// <summary>

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Data.Shared;
 using Data.Space.Library;
-using Space.Segment;
+using Space.Segment.Generator;
 
 namespace Space.SpawnManagers
 {
@@ -22,6 +22,7 @@ namespace Space.SpawnManagers
         public ShipData mShip;
         public GameObject mGO;
     }
+
     /// <summary>
     /// template class for team spawn managers
     /// handles the creation of initial station and 

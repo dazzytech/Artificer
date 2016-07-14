@@ -2,10 +2,12 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-using Space;
 using Data.Shared;
+using Space;
+using Space.Ship.Components.Attributes;
 
-namespace ShipComponents
+
+namespace Space.Ship.Components.Listener
 {
     public class TargeterListener : ComponentListener
     {
@@ -151,7 +153,6 @@ namespace ShipComponents
                 }
                 yield return null;
             }
-            yield return null;
         }
 
         /// <summary>

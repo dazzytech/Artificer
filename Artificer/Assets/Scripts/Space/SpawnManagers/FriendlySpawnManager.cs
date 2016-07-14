@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Data.Space;
 using Data.Shared;
 using Space.UI;
-using Space.Segment;
+using Space.Generator;
 
 namespace Space.Contract
 {

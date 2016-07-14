@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using Data.Space;
 
-namespace Space.Segment
+namespace Space.Spawner
 {
     /*public class AsteroidSpawner : SpawnerBehaviour
     {

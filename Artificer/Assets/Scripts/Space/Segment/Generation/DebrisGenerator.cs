@@ -2,10 +2,9 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
-using ShipComponents;
 using Data.Space;
 
-namespace Space.Segment
+namespace Space.Segment.Generator
 {
     public class DebrisGenerator : NetworkBehaviour
     {
@@ -75,10 +74,8 @@ namespace Space.Segment
             NetworkInstanceId playerID,  Vector2 Vel)
         {
             GameObject destroyed = Instantiate(instance.WreckagePrefab);
-            //destroyed.transform.parent = instance.transform;
-            //destroyed.transform.position = position;
-            //destroyed.layer = 2;
-            
+            destroyed.transform.parent = instance.transform;
+            destroyed.transform.position = position;
 
             // Add attribute scripts
             //SegmentObjectBehaviour obj = destroyed.AddComponent<SegmentObjectBehaviour>();
@@ -106,6 +103,9 @@ namespace Space.Segment
                 rb.AddForce(Vel);
             }
         }
+
+        //[Command]
+        //private void 
     }
 }
 

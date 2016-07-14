@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Space.Segment
+namespace Space
 {
     // Script that attaches to spawner object with an object to follow
     // When object moves out of range then Follow will move spawner

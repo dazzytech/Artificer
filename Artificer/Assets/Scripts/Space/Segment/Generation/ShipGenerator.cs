@@ -4,10 +4,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 // Artificer Defined
-using ShipComponents;
 using Data.Shared;
+using Space.Ship;
+using Space.Ship.Components.Listener;
+using Space.Ship.Components.Attributes;
 
-namespace Space.Segment
+namespace Space.Segment.Generator
 {
     public class ShipGenerator : NetworkBehaviour
     {

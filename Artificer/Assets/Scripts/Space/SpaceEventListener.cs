@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 // Artificer
 using Data.Shared;
-using ShipComponents;
 using Data.Space.Library;
-using Space.Segment;
+using Space.Generator;
+using Space.Ship;
 using Space.UI;
 
 // Listen for events that happen in game. 

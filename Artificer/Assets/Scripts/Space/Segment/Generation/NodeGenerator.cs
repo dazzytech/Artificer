@@ -9,7 +9,7 @@ using System.Collections;
 /// todo: add conditionals for different nodes
 /// </summary>
 /// 
-namespace Space.Segment
+namespace Space.Segment.Generator
 {
     public class NodeGenerator : MonoBehaviour
     {

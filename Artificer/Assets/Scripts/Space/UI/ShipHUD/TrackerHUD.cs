@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+
 // Arificer
 using Data.Shared;
+using Space.Ship;
 
 namespace Space.UI.Tracker
 {

@@ -8,28 +8,22 @@ using Data.Space.Library;
 using Data.Space;
 using Space.Contract;
 using Space.UI;
-using ShipComponents;
 
-/// <summary>
-/// Is responsible for processing
-/// actions not existant within a game object
-/// General UI
-/// Missions
-/// </summary>
 namespace Space
 {
+    /// <summary>
+    /// Manager class to handle background
+    /// progresses within space
+    /// (E.G Spawning, Objectives)
+    /// </summary>
     [RequireComponent(typeof(SpaceAttributes))]
     public class SpaceManager :  NetworkBehaviour
     {
+        // External attributes class
         private SpaceAttributes _att;
-        
-        void Awake()
-        {
-            _att = GetComponent<SpaceAttributes>();
-        }
 
+        #region EVENTS 
 
-        // Event managment
         public delegate void KeyPress(KeyCode key);
         public event KeyPress OnKeyPress;
         public event KeyPress OnKeyRelease;
@@ -45,6 +39,14 @@ namespace Space
         public delegate void PlayerUpdate(Transform data);
         public static event PlayerUpdate OnPlayerUpdate;
 
+        #endregion
+
+        #region NETWORK BEHAVIOUR
+
+        /// <summary>
+        /// Runs an event to add the player ship to the 
+        /// scene when local player starts.
+        /// </summary>
         public override void OnStartLocalPlayer()
         {
             // Enter space segment
@@ -58,65 +60,30 @@ namespace Space
             base.OnStartLocalPlayer();
         }
 
-        /// <summary>
-        /// Builds game related instances and adds us to the server game environment
-        /// </summary>
-        public void InitializeSpaceParameters(GameParameters param)
+        #endregion
+
+        #region MONO BEHAVIOUR
+
+        void Awake()
         {
-            /// Dont run these yet
-            // Initialize space attributes
-            //_att.Contract.Initialize(param);
-            //_att.EnemySpawn = new EnemySpawnManager(param);
-            //_att.FriendlySpawn = new FriendlySpawnManager(param);
+            _att = GetComponent<SpaceAttributes>();
         }
 
         void Update()
         {
-            // detect system input
-            if (Input.anyKey)
-                OnKeyPress(KeyLibrary.FindKeyPressed());
+            ProcessSystemKeys();
 
-            // detect scroll
-            if (Input.mouseScrollDelta.y != 0)
-                OnMouseScroll(Input.mouseScrollDelta.y);
+            ProcessPlayerState();
 
-            // Detect key up
-            OnKeyRelease(KeyLibrary.FindKeyReleased ());
-
-            // Run checks for player entry
-            GameObject PlayerObj = GameObject.FindGameObjectWithTag 
-                ("PlayerShip");
-
-           if(PlayerObj == null)
-           {
-               if(_att.PlayerOnStage)
-               {
-                    PlayerExitScene();
-                    _att.PlayerOnStage = false;
-                }
-           } else
-           {
-                if(!_att.PlayerOnStage)
-                {
-                    PlayerEnterScene();
-                    _att.PlayerOnStage = true;
-                }
-                else
-                {
-                    OnPlayerUpdate(PlayerObj.transform);
-                }
-           }
-
-
-              /*  // Update Spawns
-                if (_att.EnemySpawn != null)
-                {
-                    _att.EnemySpawn.CycleEnemySpawn();
-                }
-                if (_att.FriendlySpawn != null)
-                {
-                    _att.FriendlySpawn.CycleFriendlySpawn();
-                }*/
+            /*  // Update Spawns
+              if (_att.EnemySpawn != null)
+              {
+                  _att.EnemySpawn.CycleEnemySpawn();
+              }
+              if (_att.FriendlySpawn != null)
+              {
+                  _att.FriendlySpawn.CycleFriendlySpawn();
+              }*/
 
             // Update Contract info
             /*if (_att.Contract != null)
@@ -133,10 +100,85 @@ namespace Space
             }*/
         }
 
-        // call disconnect to gamemanager
+        #endregion
+
+        #region INTERNAL PROCESSING
+
+        /// <summary>
+        /// Listens for player key input and 
+        /// dispatch event for processing system keys
+        /// </summary>
+        private void ProcessSystemKeys()
+        {
+            // detect system input
+            if (Input.anyKey)
+                OnKeyPress(KeyLibrary.FindKeyPressed());
+
+            // detect scroll
+            if (Input.mouseScrollDelta.y != 0)
+                OnMouseScroll(Input.mouseScrollDelta.y);
+
+            // Detect key up
+            OnKeyRelease(KeyLibrary.FindKeyReleased());
+        }
+
+        /// <summary>
+        /// Searches for player object and 
+        /// dispatches events for player death, spawn, and updates.
+        /// </summary>
+        private void ProcessPlayerState()
+        {
+            // Run checks for player entry
+            GameObject PlayerObj = GameObject.FindGameObjectWithTag
+                ("PlayerShip");
+
+            if (PlayerObj == null)
+            {
+                if (_att.PlayerOnStage)
+                {
+                    PlayerExitScene();
+                    _att.PlayerOnStage = false;
+                }
+            }
+            else
+            {
+                if (!_att.PlayerOnStage)
+                {
+                    PlayerEnterScene();
+                    _att.PlayerOnStage = true;
+                }
+                else
+                {
+                    OnPlayerUpdate(PlayerObj.transform);
+                }
+            }
+        }
+
+        #endregion
+
+        // TODO: INTERNAL OR EXTERNAL
+        /// <summary>
+        /// Builds game related instances and adds us to the server game environment
+        /// </summary>
+        public void InitializeSpaceParameters(GameParameters param)
+        {
+            /// Dont run these yet
+            // Initialize space attributes
+            //_att.Contract.Initialize(param);
+            //_att.EnemySpawn = new EnemySpawnManager(param);
+            //_att.FriendlySpawn = new FriendlySpawnManager(param);
+        }
+
+        #region EXTERNAL FUNCTIONS
+
+        /// <summary>
+        /// Handles exiting the level
+        /// </summary>
         public void ExitLevel()
         {
             GameManager.Disconnect();
         }
+
+        #endregion
     }
 }

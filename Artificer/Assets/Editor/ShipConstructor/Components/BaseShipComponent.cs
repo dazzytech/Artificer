@@ -7,7 +7,8 @@ using System.Xml.Serialization;
 using System.Linq;
 //Artificer
 using Data.Space;
-using ShipComponents;
+using Space.Ship.Components;
+using Space.Ship.Components.Attributes;
 
 namespace Editor
 {
@@ -321,7 +322,7 @@ namespace Editor
 
             if (att.componentStyles.Count() > 0)
             {
-                foreach (ShipComponents.StyleInfo info in att.componentStyles)
+                foreach (StyleInfo info in att.componentStyles)
                 {
                     componentSprites.Add(info.name, info.sprite);
                 }

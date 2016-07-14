@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Data.Space;
 
-namespace Space.Segment
+namespace Space.Segment.Generator
 {
     public class AsteroidGenerator : MonoBehaviour
     {

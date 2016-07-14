@@ -6,7 +6,7 @@ using Data.Space;
 using Data.Shared;
 using Space.Contract;
 
-namespace Space.Segment
+namespace Space.Generator
 {
     public class FriendlySpawner : SpawnerBehaviour
     {

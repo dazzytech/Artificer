@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+using Space.Ship;
+
 public class SimpleFriendlyController: FSM
 {
     ShipInputReceiver _controller;

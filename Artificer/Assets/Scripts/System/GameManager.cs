@@ -9,7 +9,6 @@ using Data.Space;
 using Space.SpawnManagers;
 using Data.Space.DataImporter;
 using Data.Space.Library;
-using ShipComponents;
 
 [RequireComponent(typeof(GameBaseAttributes))]
 

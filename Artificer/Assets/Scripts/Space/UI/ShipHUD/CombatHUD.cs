@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 using Data.Shared;
+using Space.Ship;
 
 namespace Space.UI.Ship
 {

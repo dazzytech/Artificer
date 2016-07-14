@@ -2,7 +2,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ShipComponents
+using Space.Ship.Components.Listener;
+
+namespace Space.Ship.Components.Attributes
 {
     /// <summary>
     /// Targeter behaviour.

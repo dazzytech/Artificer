@@ -4,7 +4,9 @@ using System.Collections;
 using Space;
 using Data.Shared;
 
-namespace ShipComponents
+using Space.Ship.Components.Attributes;
+
+namespace Space.Ship.Components.Listener
 {
     public class RotorListener : ComponentListener{
 
@@ -63,15 +65,17 @@ namespace ShipComponents
                 _attr.turnSpeed = 0f;          
                 rb.angularDrag = 1f;
             }
+            else
+            {
+                _attr.turnSpeed += _attr.turnAcceleration;
+
+                if (Mathf.Abs(_attr.turnSpeed) > _attr.maxTurnSpeed)
+                    _attr.turnSpeed = _attr.maxTurnSpeed;
+            }
     	}
 
     	public override void Activate()
     	{
-    		_attr.turnSpeed += _attr.turnAcceleration;
-
-            if (Mathf.Abs(_attr.turnSpeed) > _attr.maxTurnSpeed)
-                _attr.turnSpeed = _attr.maxTurnSpeed;
-
     		_attr.emitter.emit = true;
     		_attr.active = true;
     	}

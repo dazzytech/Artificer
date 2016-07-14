@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace ShipComponents
+namespace Space.Ship.Components.Attributes
 {
     public class ShieldAttributes : ComponentAttributes 
     {

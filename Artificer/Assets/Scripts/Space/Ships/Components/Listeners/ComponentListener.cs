@@ -3,9 +3,10 @@ using UnityEngine.Networking;
 using System.Collections;
 // Artificer
 using Data.Shared;
-using Space;
+using Space.Segment;
+using Space.Ship.Components.Attributes;
 
-namespace ShipComponents
+namespace Space.Ship.Components.Listener
 {
     public class ComponentListener : NetworkBehaviour
     {

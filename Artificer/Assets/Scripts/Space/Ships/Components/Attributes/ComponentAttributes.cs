@@ -5,8 +5,9 @@ using System.Collections.Generic;
 
 // Artificer
 using Data.Shared;
+using Space.Ship.Components.Listener;
 
-namespace ShipComponents
+namespace Space.Ship.Components.Attributes
 {
     [System.Serializable]
     public class ConstructInfo

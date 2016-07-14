@@ -5,6 +5,8 @@ using System.IO;
 
 using Menu;
 
+
+
 [System.Serializable]
 public class Video_Data
 {
@@ -20,7 +22,12 @@ public class Video_Data
 
 public class Video_Config : MonoBehaviour
 {
+    // CONST VARS
+    public const int MIN_WIDTH = 800;
+    public const int MIN_HEIGHT = 600;
+
     Video_Data tempData = null;
+
 	public static Video_Config Video
 	{
 		get
@@ -51,9 +58,9 @@ public class Video_Config : MonoBehaviour
         } else
         {
             m_data = new Video_Data();
-            Screen.SetResolution(1280, 768, false);
-            m_data.ScreenWidth = 1280;
-            m_data.ScreenHeight = 768;
+            Screen.SetResolution(MIN_WIDTH, MIN_HEIGHT, false);
+            m_data.ScreenWidth = MIN_WIDTH;
+            m_data.ScreenHeight = MIN_HEIGHT;
             m_data.vSync = VSync;
             m_data.QLevel = Settings;
             m_data.AA = GetAA;

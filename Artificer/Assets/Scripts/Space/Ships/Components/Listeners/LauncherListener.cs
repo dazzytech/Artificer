@@ -4,7 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ShipComponents
+using Space.Projectiles;
+using Space.Ship.Components.Attributes;
+
+namespace Space.Ship.Components.Listener
 {
     public class LauncherListener : ComponentListener
     {
@@ -118,7 +121,6 @@ namespace ShipComponents
                 }
                 yield return null;
             }
-            yield return null;
         }
 
         private IEnumerator LaunchRockets()

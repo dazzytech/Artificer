@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 // Artificer
-using ShipComponents;
 using Data.Shared;
 
 namespace Menu

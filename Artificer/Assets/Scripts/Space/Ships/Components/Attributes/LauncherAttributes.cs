@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ShipComponents
+namespace Space.Ship.Components.Attributes
 {
     public class LauncherAttributes : ComponentAttributes 
     {

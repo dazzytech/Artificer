@@ -3,7 +3,9 @@ using System;
 using System.Reflection; 
 using System.Collections;
 using System.Collections.Generic;
-using ShipComponents;
+using Space.Ship.Components;
+using Space.Ship.Components.Listener;
+using Space.Ship.Components.Attributes;
 
 namespace Editor.Components
 {
@@ -24,7 +26,7 @@ namespace Editor.Components
         
         private static Dictionary<string, System.Type> 
             _ComponentAttributesReference = new Dictionary<string, System.Type>()
-        {{"Components", typeof(ShipComponents.ComponentAttributes)},
+        {{"Components", typeof(Space.Ship.Components.Attributes.ComponentAttributes)},
             {"Engines", typeof(EngineAttributes)},
             {"Maneuvers", typeof(ManeuverAttributes)},
             {"Rotors", typeof(RotorAttributes)},
@@ -55,7 +57,7 @@ namespace Editor.Components
                 attributeName = _ComponentAttributesReference [type];
             } else
             {
-                attributeName = typeof(ShipComponents.ComponentAttributes);
+                attributeName = typeof(Space.Ship.Components.Attributes.ComponentAttributes);
             }
             
             if (old != null)

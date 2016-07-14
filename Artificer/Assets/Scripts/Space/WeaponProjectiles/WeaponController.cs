@@ -2,48 +2,51 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 
-public struct WeaponData
+namespace Space.Projectiles
 {
-    public Vector3 Direction;
-    public float Distance;
-    public float Damage;
-    public Transform Target;
-    public NetworkInstanceId Self;
-}
-
-public class WeaponController: NetworkBehaviour
-{
-    [SyncVar]
-    protected WeaponData _data;
-
-    public GameObject Explode;
-    public GameObject Muzzle;
-
-    public AudioClip MuzzleSound;
-
-    public AudioClip ImpactSound;
-
-    // ignore collectable layer
-    public LayerMask maskIgnore;
-
-    public virtual void CreateProjectile(WeaponData data)
-    {}
-
-    public virtual void CreateMissile(WeaponData data)
+    public struct WeaponData
     {
-        _data = data;
-        
-        SoundController.PlaySoundFXAt
-            (transform.position, MuzzleSound);
+        public Vector3 Direction;
+        public float Distance;
+        public float Damage;
+        public Transform Target;
+        public NetworkInstanceId Self;
     }
 
-    public virtual void Trigger()
-    {}
-
-    public void DestroyProjectile()
+    public class WeaponController : NetworkBehaviour
     {
-        NetworkServer.UnSpawn(this.gameObject);
-        Destroy(this.gameObject);
+        [SyncVar]
+        protected WeaponData _data;
+
+        public GameObject Explode;
+        public GameObject Muzzle;
+
+        public AudioClip MuzzleSound;
+
+        public AudioClip ImpactSound;
+
+        // ignore collectable layer
+        public LayerMask maskIgnore;
+
+        public virtual void CreateProjectile(WeaponData data)
+        { }
+
+        public virtual void CreateMissile(WeaponData data)
+        {
+            _data = data;
+
+            SoundController.PlaySoundFXAt
+                (transform.position, MuzzleSound);
+        }
+
+        public virtual void Trigger()
+        { }
+
+        public void DestroyProjectile()
+        {
+            NetworkServer.UnSpawn(this.gameObject);
+            Destroy(this.gameObject);
+        }
     }
 }
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 using Data.Space;
 using Data.Shared;
+using Space.Ship;
 using Space.UI;
 
 namespace Space.Segment

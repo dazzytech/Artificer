@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-using Space;
 using Data.Shared;
+using Space.Segment;
+using Space.Ship.Components.Attributes;
 
-namespace ShipComponents
+namespace Space.Ship.Components.Listener
 {
     public class ShieldListener: ComponentListener{
 

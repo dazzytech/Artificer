@@ -2,9 +2,12 @@
 using UnityEngine.Networking;
 using System.Collections;
 using System.Linq;
-using Space;
 
-namespace ShipComponents
+using Space.Projectiles;
+using Space.Ship;
+using Space.Ship.Components.Attributes;
+
+namespace Space.Ship.Components.Listener
 {
     public class WeaponListener : ComponentListener 
     {

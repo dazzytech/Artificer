@@ -4,7 +4,7 @@ using System.Collections;
 using Data.Shared;
 using Data.Space;
 
-namespace Space.Segment
+namespace Space.Segment.Generator
 {
     public class SpawnPointGenerator : MonoBehaviour
     {

@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-namespace ShipComponents
+using Space.Ship.Components.Attributes;
+
+namespace Space.Ship.Components.Listener
 {
     public class WellListener : ComponentListener
     {

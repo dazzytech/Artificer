@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 // Artificer
 using Data.Space;
-using Space.Segment;
+using Space.Generator;
 
 public class StationBehaviour : MonoBehaviour
 {/*

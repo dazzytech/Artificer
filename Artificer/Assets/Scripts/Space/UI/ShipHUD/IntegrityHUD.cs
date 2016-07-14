@@ -3,7 +3,9 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 // Artificer Defined
-using ShipComponents;
+using Space.Ship;
+using Space.Ship.Components.Listener;
+using Space.Ship.Components.Attributes;
 
 namespace Space.UI.Ship
 {
