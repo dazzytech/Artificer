@@ -233,7 +233,8 @@ namespace Space.Ship
         #region SHIP DESTRUCTION
 
         /// <summary>
-        /// When the head is destroyed the whole ship dies
+        /// Adds the entire ship components to
+        /// the debris generator. 
         /// </summary>
         public void ShipDestroyed()
         {
@@ -247,22 +248,15 @@ namespace Space.Ship
 
             SendMessage("BuildColliders");
 
-            CmdRemoveComponent(dead);
-
-            DebrisGenerator.SpawnDebris(this.transform.position, dead,
-                this.netId, GetComponent<Rigidbody2D>().velocity);
-
-            _ship.Components.Clear();
-
-            Destroy(this.gameObject);
+            CmdRemoveComponent(dead, this.transform.position);
         }
 
         /// <summary>
         /// Loops through each connection omitting the 
         /// Destroyed component. Then 
-        /// Destroys the component.
+        /// adds the unconnected components to the debris generator.
         /// </summary>
-        /// <param name="listener">Listener.</param>
+        /// <param name="hit">hit.</param>
         public void DestroyComponent(HitData hit)
         {
             // Set the aggressor
@@ -315,61 +309,37 @@ namespace Space.Ship
                 }
             }
 
-            //StartCoroutine("DestroyComponents", dead.ToArray());
-
-            SendMessage("BuildColliders");
-
-            CmdRemoveComponent(dead.ToArray());
-
-            /*// if player ship we need to destroy ship
+            // if player ship we need to destroy ship
             if ((_ship.Engines == 0 || _ship.Rotors == 0) && _ship.Weapons == 0)
-            {
                 ShipDestroyed();
-                return;
-            }*/
-
-            DebrisGenerator.SpawnDebris(listener.transform.position,
-                dead.ToArray(), this.netId, (listener.transform.position -
-                transform.position).normalized * 10);
+            else
+                CmdRemoveComponent(dead.ToArray(), listener.transform.position);
         }
 
+        /// <summary>
+        /// Runs on server to create debris using destroyed 
+        /// parts and sends rpc to rebuild all ship colliders
+        /// </summary>
+        /// <param name="dead"></param>
+        /// <param name="position"></param>
         [Command]
-        public void CmdRemoveComponent(int[] dead)
+        public void CmdRemoveComponent(int[] dead, Vector3 position)
         {
+            DebrisGenerator.SpawnShipDebris(position,
+                dead, this.netId, (position -
+                transform.position).normalized * 10);
+
             RpcRemoveComponent(dead);
         }
 
+        /// <summary>
+        /// Rebuild collider list for hit detection.
+        /// </summary>
+        /// <param name="dead"></param>
         [ClientRpc]
         public void RpcRemoveComponent(int[] dead)
         {
-            if (isLocalPlayer)
-                return;
-
             SendMessage("BuildColliders");
-            //StartCoroutine("DestroyComponents", dead);
-        }
-
-        #endregion
-
-        #region COROUTINE
-
-        private IEnumerator DestroyComponents(int[] dead)
-        {
-            /*foreach(ComponentListener listener in _ship.SelectedComponents(dead))
-            {
-                //_ship.Components.Remove(listener);
-
-               /// listener.Destroy();
-
-                //if(!isLocalPlayer)
-                    //GameObject.Destroy(listener.gameObject);
-
-                yield return null;
-            }*/
-
-
-
-            yield return null;
         }
 
         #endregion

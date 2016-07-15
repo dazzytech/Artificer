@@ -12,18 +12,21 @@ namespace Space.Projectiles
     /// </summary>
     public class BeamController : WeaponController
     {
-        // enumerator for deteriming the type of beam
         public enum BeamType
         {
             FIZZLE,
             FADE,
         }
 
-        // Particles
+        #region PARTICLES
+
         private ParticleSystem _system;
         private ParticleSystem.Particle[] _points;
 
-        // Customizable variables
+        #endregion
+
+        #region CUSTOMIZABLE ATTRIBUTES
+        
         [SerializeField]
         private int pointsPerUnit = 8;
         [SerializeField]
@@ -43,16 +46,22 @@ namespace Space.Projectiles
         [SerializeField]
         private BeamType beamType = BeamType.FADE;
 
-        // Calculation Variables
+        #endregion
+
+        #region CALCULATION VARIABLES
+        
         private int pointCount = 0;
         private float allotedTime;
+
+        #endregion
+
+        #region MONOBEHAVIOUR
 
         void Awake()
         {
             _system = GetComponent<ParticleSystem>();
         }
-
-        // Update is called once per frame
+        
         void Update()
         {
             switch (beamType)
@@ -69,6 +78,15 @@ namespace Space.Projectiles
                 _system.SetParticles(_points, _points.Length);
         }
 
+        #endregion
+
+        #region SERVER MESSAGES
+
+        /// <summary>
+        /// Used by server to pass through hit data and 
+        /// initialize the beam
+        /// </summary>
+        /// <param name="data"></param>
         [Server]
         public override void CreateProjectile(WeaponData data)
         {
@@ -78,36 +96,8 @@ namespace Space.Projectiles
             // Damage whatever is hit
             ApplyDamage(data);
 
-            // Build projectile item
-            RpcBuildFX(data);
-
             // Create destroy with delay
             Invoke("DestroyProjectile", seconds);
-        }
-
-        // create a clientrpc for showing particles on clients?
-        [ClientRpc]
-        public void RpcBuildFX(WeaponData data)
-        {
-            // Add data here too
-            _data = data;
-
-            // Local muzzle visible
-            Instantiate(Muzzle, transform.position, Quaternion.Euler(data.Direction));
-
-            SoundController.PlaySoundFXAt
-                (transform.position, MuzzleSound);
-
-            switch (beamType)
-            {
-                case BeamType.FADE:
-                    allotedTime = 0f;
-                    BuildBeam();
-                    break;
-                case BeamType.FIZZLE:
-                    BuildBeam();
-                    break;
-            }
         }
 
         /// <summary>
@@ -117,12 +107,10 @@ namespace Space.Projectiles
         [Server]
         public void ApplyDamage(WeaponData data)
         {
-            _data = data;
-
             // Find the ship that fired the projectile
-            GameObject aggressor = NetworkServer.FindLocalObject(_data.Self);
+            GameObject aggressor = NetworkServer.FindLocalObject(data.Self);
 
-            RaycastHit2D[] hitList = Physics2D.RaycastAll(transform.position, _data.Direction, _data.Distance, maskIgnore);
+            RaycastHit2D[] hitList = Physics2D.RaycastAll(transform.position, data.Direction, data.Distance, maskIgnore);
 
             if (hitList.Length != 0)
             {
@@ -134,39 +122,73 @@ namespace Space.Projectiles
                     }
 
                     // Show hit decals on clients
-                    RpcBuildHitFX(hit.point);
+                    RpcBuildHitFX(hit.point, data);
 
                     // create hitdata
                     HitData hitD = new HitData();
-                    hitD.damage = _data.Damage;
+                    hitD.damage = data.Damage;
                     hitD.hitPosition = hit.point;
-                    hitD.originID = _data.Self;
+                    hitD.originID = data.Self;
 
                     // retrieve impact controller
                     // and if one exists make ship process hit
                     ImpactCollider IC = hit.transform.GetComponent<ImpactCollider>();
                     if (IC != null)
                     {
-                        Debug.Log("Object Hit: " + hit.transform.name);
                         IC.Hit(hitD);
 
-                        _data.Distance = Vector2.Distance(transform.position, hit.point);
-
-                        // stop searching for hit points
-                        return;
+                        data.Distance = Vector2.Distance(transform.position, hit.point);
+                        break;
                     }
                 }
             }
+
+            // Build projectile item
+            RpcBuildFX(data);
         }
 
+        #endregion
+
+        #region PROJECTILE CREATION
+
+        /// <summary>
+        /// Builds the beam and muzzle on the client
+        /// </summary>
+        /// <param name="data"></param>
         [ClientRpc]
-        public void RpcBuildHitFX(Vector2 hit)
+        public void RpcBuildFX(WeaponData data)
+        {
+            // Local muzzle visible
+            Instantiate(Muzzle, transform.position, Quaternion.Euler(data.Direction));
+
+            SoundController.PlaySoundFXAt
+                (transform.position, MuzzleSound);
+
+            switch (beamType)
+            {
+                case BeamType.FADE:
+                    allotedTime = 0f;
+                    BuildBeam(data);
+                    break;
+                case BeamType.FIZZLE:
+                    BuildBeam(data);
+                    break;
+            }
+        }
+
+       
+        /// <summary>
+        /// Creates hit decals whem projectile hits a collider
+        /// </summary>
+        /// <param name="hit"></param>
+        [ClientRpc]
+        public void RpcBuildHitFX(Vector2 hit, WeaponData data)
         {
             SoundController.PlaySoundFXAt
                         (hit, ImpactSound);
 
             // display hit on the server
-            Instantiate(Explode, hit, Quaternion.Euler(_data.Direction));
+            Instantiate(Explode, hit, Quaternion.Euler(data.Direction));
         }
 
         /// <summary>
@@ -209,10 +231,10 @@ namespace Space.Projectiles
         /// </summary>
         /// <param name="mag">Mag.</param>
         /// <param name="origin">Origin.</param>
-        public void BuildBeam()
+        public void BuildBeam(WeaponData data)
         {
             // Prepare to draw beam
-            float mag = _data.Distance;
+            float mag = data.Distance;
             Vector3 origin = transform.position;
 
             pointCount = (int)mag * pointsPerUnit;
@@ -224,7 +246,7 @@ namespace Space.Projectiles
 
             for (int i = 0; i < pointCount; i++)
             {
-                Vector3 position = origin + _data.Direction * (i * bulletStep);
+                Vector3 position = origin + data.Direction * (i * bulletStep);
                 position.z = 0;
                 _points[i].position = position;
                 _points[i].color = particleColor;
@@ -232,6 +254,10 @@ namespace Space.Projectiles
             }
             _system.SetParticles(_points, _points.Length);
         }
+
+        #endregion
+
+        #region PROJECTILE UPDATES
 
         /// <summary>
         /// Arranges the particles to appear to fizzle away
@@ -262,6 +288,8 @@ namespace Space.Projectiles
                     _points[i].color = Color.Lerp(_points[i].color, fadeColor, fadeSpeed);
             }
         }
+
+        #endregion
     }
 }
 

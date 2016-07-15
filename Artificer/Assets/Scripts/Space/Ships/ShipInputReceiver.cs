@@ -106,7 +106,8 @@ public class ShipInputReceiver : NetworkBehaviour {
                 if (list.GetAttributes().active)
                 {
                     _ship.Ship.Aligned = false;
-                    activeRotors.Add(id);
+                    if(!activeRotors.Contains(id))
+                        activeRotors.Add(id);
                 }
                 else if (activeRotors.Contains(id))
                 {
@@ -116,11 +117,14 @@ public class ShipInputReceiver : NetworkBehaviour {
             }
         }
 
-        /*if (activeRotors.Count > 0)
-            CmdProcessComps(activeRotors.ToArray());
+        if (_ship.Ship.CombatActive)
+        {
+            if (activeRotors.Count > 0)
+                CmdProcessComps(activeRotors.ToArray());
 
-        if (inactiveRotors.Count > 0)
-            CmdReleaseComps(inactiveRotors.ToArray());*/
+            if (inactiveRotors.Count > 0)
+                CmdReleaseComps(inactiveRotors.ToArray());
+        }
     }
 
     #endregion

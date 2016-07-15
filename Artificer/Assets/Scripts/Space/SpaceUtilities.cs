@@ -5,12 +5,25 @@ using Space.UI;
 
 namespace Space
 {
+    /// <summary>
+    /// Misc functions used by space objects
+    /// game state control and zooming
+    /// </summary>
     public class SpaceUtilities : MonoBehaviour
     {
+        #region ATTRIBUTES
+
         // pause vars
         private bool _isPaused = false;
         private bool _pauseDelay = false;
 
+        #endregion
+
+        #region INITIALIZATION
+
+        /// <summary>
+        /// Sets default values
+        /// </summary>
         public void Init()
         {
             Time.timeScale = 1f;
@@ -18,13 +31,20 @@ namespace Space
             _pauseDelay = false;
         }
 
+        #endregion
+
+        #region MONOBEHAVIOUR
+
         // restore time when exiting
         void OnDestroy()
         {
             Time.timeScale = 1f;
         }
 
-        // UI UTILITIES
+        #endregion
+
+        #region ZOOM
+
         public void ZoomIn()
         {
             GameObject PCGO = GameObject.Find("PlayerCamera");
@@ -69,6 +89,10 @@ namespace Space
             sf.Resize();
         }
 
+        #endregion
+
+        #region GAME CONTROLS
+
         public void Pause(bool keyed)
         {
             if(!_pauseDelay)
@@ -99,6 +123,8 @@ namespace Space
         {
             _pauseDelay = false;
         }
+
+        #endregion
     }
 }
 

@@ -4,22 +4,28 @@ using System.Collections;
 
 namespace Space.Ship
 {
+    /// <summary>
+    /// interface for receiving input from the player to control the ship
+    /// </summary>
     [RequireComponent(typeof(ShipInputReceiver))]
     public class ShipPlayerInputController : NetworkBehaviour
     {
+        #region ATTRIBUTES
+
         ShipInputReceiver _controller;
         private bool dragging = false;
 
-        // Use this for initialization
+        #endregion
+
+        #region MONOBEHAVIOUR
+        
         void Awake()
         {
             _controller = GetComponent<ShipInputReceiver>();
         }
-
-        // Update is called once per frame
+        
         void Update()
         {
-            // Attempt to make this a command
             if (Input.anyKey)
                 _controller.ReceiveKey(KeyLibrary.FindKeysPressed());
 
@@ -66,6 +72,8 @@ namespace Space.Ship
                 }
             }
         }
+
+        #endregion
     }
 }
 

@@ -45,7 +45,7 @@ namespace Space.Segment
         /// </summary>
         /// <param name="hit"></param>
         [Server]
-        public void Hit(HitData hit)
+        public virtual void Hit(HitData hit)
         {
             // Set hitdata to our local storage
             _hitD = hit;
@@ -73,10 +73,10 @@ namespace Space.Segment
         /// colliders within a radius
         /// </summary>
         /// <param name="hit"></param>
-        /*[ClientRpc]
-        public void RpcHitArea(HitData hit)
+        [ClientRpc]
+        public virtual void RpcHitArea()
         {
-            // add distance damage reduction
+            /*// add distance damage reduction
             foreach (BoxCollider2D piece in colliders)
             {
                 if(piece != null)
@@ -96,8 +96,8 @@ namespace Space.Segment
             if (GetComponent<ShipPlayerInputController>() != null)
             {
                 Camera.main.gameObject.SendMessage("ShakeCam");
-            }
-        }*/
+            */
+        }
 
         #endregion
     }

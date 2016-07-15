@@ -42,6 +42,17 @@ namespace Space.Ship
 
         #region IMPACT COLLISION
 
+        [Server]
+        public override void Hit(HitData hit)
+        {
+            base.Hit(hit);
+
+            if (colliders == null)
+                BuildColliders();
+
+            StartCoroutine("CycleThroughCollidersSingle");
+        }
+
         /// <summary>
         /// Client function called by server 
         /// to handle projectile hits on our object
@@ -60,33 +71,46 @@ namespace Space.Ship
             {
                 Camera.main.gameObject.SendMessage("ShakeCam");
             }
-
-            StartCoroutine("CycleThroughColliders");
-        }
-
-        [Command]
-        public void CmdProcessDamage(int[] damaged)
-        {
-            RpcProcessDamage(damaged);
         }
 
         /// <summary>
-        /// sent to this object on other clients and 
+        /// Similar to RpcHit, however damage is sent to all
+        /// colliders within a radius
+        /// </summary>
+        /// <param name="hit"></param>
+        [ClientRpc]
+        public override void RpcHitArea()
+        {
+            if (!isLocalPlayer)
+                return;
+
+            if (GetComponent<ShipPlayerInputController>() != null)
+            {
+                Camera.main.gameObject.SendMessage("ShakeCam");
+            }
+
+            StartCoroutine("CycleThroughCollidersGroup");
+        }
+
+        /// <summary>
+        /// is called on our ship then apply damage otherwise just
+        /// update colours
         /// </summary>
         [ClientRpc]
         public void RpcProcessDamage(int[] damaged)
         {
             if (isLocalPlayer)
-                return;
-
-            StartCoroutine("CycleComponentColours", damaged);
+                StartCoroutine("CycleComponentDamage", damaged);
+            else
+                StartCoroutine("CycleComponentColours", damaged);
         }
 
         #endregion
 
         #region COROUTINE
 
-        private IEnumerator CycleThroughColliders()
+        [Server]
+        private IEnumerator CycleThroughCollidersSingle()
         {
             // Store an int reference to components that were damaged
             List<int> damagedComps = new List<int>();
@@ -102,13 +126,7 @@ namespace Space.Ship
                             piece.gameObject.
                             GetComponent<ComponentAttributes>();
 
-                        // Consider doing the damage processing here
-                        // Create a utility for retreiving the component listener item.
-                        piece.gameObject.SendMessage("DamageComponent", _hitD);
-
                         damagedComps.Add(att.ID);
-
-                        Debug.Log("Damaged Component: " + piece.name);
                     }
                 }
 
@@ -116,7 +134,59 @@ namespace Space.Ship
             }
 
             if (damagedComps.Count > 0)
-                CmdProcessDamage(damagedComps.ToArray());
+                RpcProcessDamage(damagedComps.ToArray());
+
+            yield return null;
+        }
+
+        [Server]
+        private IEnumerator CycleThroughCollidersGroup()
+        {
+            // Store an int reference to components that were damaged
+            /*List<int> damagedComps = new List<int>();
+
+            foreach (BoxCollider2D piece in colliders)
+            {
+                if (piece != null)
+                {
+                    Collider2D col = Physics2D.OverlapCircle(_hitD.hitPosition,
+                                                             _hitD.radius);
+                    if (col != null)
+                    {
+                        if (col.Equals(piece))
+                        {
+                            // Retrieve the component listener and attributes from piece obj
+                            ComponentAttributes att =
+                                    piece.gameObject.
+                                    GetComponent<ComponentAttributes>();
+
+                            // consider creating a new hit data with reduced damage based
+                            // on distance
+                            piece.gameObject.SendMessage("DamageComponent", _hitD);
+
+                            damagedComps.Add(att.ID);
+                        }
+                    }
+                }
+
+                yield return null;
+            }
+
+            if (damagedComps.Count > 0)
+                RpcProcessDamage(damagedComps.ToArray());*/
+
+            yield return null;
+        }
+
+        private IEnumerator CycleComponentDamage(int[] damaged)
+        {
+            foreach (ComponentListener listener in
+                GetComponent<ShipAttributes>().SelectedComponents(damaged))
+            {
+                listener.DamageComponent(_hitD);
+
+                yield return null;
+            }
 
             yield return null;
         }

@@ -16,7 +16,7 @@ namespace Space.Projectiles
     public class WeaponController : NetworkBehaviour
     {
         [SyncVar]
-        protected WeaponData _data;
+        public WeaponData _data;
 
         public GameObject Explode;
         public GameObject Muzzle;
@@ -33,10 +33,8 @@ namespace Space.Projectiles
 
         public virtual void CreateMissile(WeaponData data)
         {
-            _data = data;
-
-            SoundController.PlaySoundFXAt
-                (transform.position, MuzzleSound);
+           // SoundController.PlaySoundFXAt
+                //(transform.position, MuzzleSound);
         }
 
         public virtual void Trigger()

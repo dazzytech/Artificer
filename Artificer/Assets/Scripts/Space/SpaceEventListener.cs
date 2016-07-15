@@ -10,19 +10,27 @@ using Space.Generator;
 using Space.Ship;
 using Space.UI;
 
-// Listen for events that happen in game. 
-// e.g. ship destroyed etc.
 
 namespace Space
 {
+    /// <summary>
+    /// Listens for events from the space manager obj
+    /// e.g. Player death
+    /// </summary>
     [RequireComponent(typeof(SpaceAttributes))]
     [RequireComponent(typeof(SpaceManager))]
     [RequireComponent(typeof(SpaceUtilities))]
     public class SpaceEventListener : MonoBehaviour
     {
+        #region ATTRIBUTES
+
         private SpaceAttributes _att;
         private SpaceManager _con;
         private SpaceUtilities _util;
+
+        #endregion
+
+        #region MONOBEHAVIOUR
 
         void Awake()
         {
@@ -58,6 +66,10 @@ namespace Space
             SpaceManager.PlayerExitScene -= PlayerDeath;
             ShipMessageController.OnShipDestroyed -= ShipDestroyed;
         }
+
+        #endregion
+
+        #region PLAYER INTERACTION
 
         /// <summary>
         /// Handles Players input
@@ -101,6 +113,10 @@ namespace Space
             }
         }
 
+        /// <summary>
+        /// Zoom the map with middle mouse wheel
+        /// </summary>
+        /// <param name="yDelta"></param>
         private void PlayerMouseScroll(float yDelta)
         {
             if (Input.mouseScrollDelta.y < 0f)
@@ -109,7 +125,14 @@ namespace Space
                 _util.ZoomIn();
         }
 
-        // Make this suitable for networking
+        #endregion
+
+        #region PLAYER EVENTS
+
+        /// <summary>
+        /// When player ship is destroyed everything in here
+        /// is executed
+        /// </summary>
         private void PlayerDeath()
         {
             // Send this to gamemanager instead
@@ -132,22 +155,10 @@ namespace Space
             */
         }
 
-        private void EndLevel()
-        {
-            _util.Stop();
-
-            // Set Popup to display either win or lose screen
-            /*GameObject.Find("_gui").
-                SendMessage("EndGame", _att.Contract.ContractStatus
-                == Space.Contract.ContractState.Completed);
-
-            if(_att.Contract.Rewards != null)
-                GameObject.Find("_gui").
-                    SendMessage("UpdateReward", _att.Contract.Rewards);*/
-        }
-
-
-
+        /// <summary>
+        /// Load player and ship data into scene 
+        /// when player ship spawns
+        /// </summary>
         private void LoadPlayerDataIntoScene()
         {
             GameObject.Find("_gui").
@@ -158,8 +169,9 @@ namespace Space
                 SendMessage("SetState", UIState.Play);
         }
 
-        // SendMessage Events
+        #endregion
 
+        #region SPACE EVENTS
 
         /// <summary>
         /// Receives a message that a ship
@@ -193,5 +205,21 @@ namespace Space
 
             //_att.Contract.ProcessStationReached(ship);
         }
+
+        private void EndLevel()
+        {
+            _util.Stop();
+
+            // Set Popup to display either win or lose screen
+            /*GameObject.Find("_gui").
+                SendMessage("EndGame", _att.Contract.ContractStatus
+                == Space.Contract.ContractState.Completed);
+
+            if(_att.Contract.Rewards != null)
+                GameObject.Find("_gui").
+                    SendMessage("UpdateReward", _att.Contract.Rewards);*/
+        }
+
+        #endregion
     }
 }

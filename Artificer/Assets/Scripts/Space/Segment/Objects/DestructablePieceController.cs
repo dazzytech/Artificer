@@ -12,12 +12,57 @@ namespace Space
 {
     public class DestructablePieceController : ImpactCollider
     {
-        [Command]
-        public void CmdSetWreckage(int[] components, NetworkInstanceId playerID)
+        #region ATTRIBUTES
+
+        public float pieceDensity;
+        public float maxDensity;
+
+        public float secondsTillRemove = 30f;
+
+        #endregion
+
+        #region MONOBEHAVIOUR
+
+        void Start()
+        {
+            maxDensity = pieceDensity = (40f * transform.childCount);
+        }
+
+        void Update()
+        {
+           secondsTillRemove -= Time.deltaTime;
+           if (secondsTillRemove <= 0)
+               Destroy(gameObject);
+        }
+
+        #endregion
+
+        #region SERVER MESSAGES
+
+        /// <summary>
+        /// Receives parameters from server to
+        /// initialize debris and calls client rpc
+        /// </summary>
+        /// <param name="components"></param>
+        /// <param name="playerID"></param>
+        [Server]
+        public void SetWreckage(int[] components, NetworkInstanceId playerID)
         {
             RpcBuildWreckage(components, playerID);
         }
 
+        #endregion
+
+        #region DEBRIS INITIALIZATION
+
+        /// <summary>
+        /// Builds wreckage on each clients using 
+        /// parameters. Retieve components and activate them
+        /// and place them as wreckage. if ship has no components left
+        /// destroy it.
+        /// </summary>
+        /// <param name="components"></param>
+        /// <param name="playerID"></param>
         [ClientRpc]
         public void RpcBuildWreckage(int[] components, NetworkInstanceId playerID)
         {
@@ -41,27 +86,49 @@ namespace Space
                 listener.transform.parent = this.transform;
                 rb.mass += listener.Weight;
             }
+
+            if (shipAtts.Components.Count == 0)
+                Destroy(player);
         }
 
-        /*public float pieceDensity;
-        public float maxDensity;
+        #endregion
 
-        //public float secondsTillRemove = 30f;
+        #region IMPACT COLLISION
 
-        public string[] prospect;
-        // Use this for initialization
-        void Start()
+        /// <summary>
+        /// Client function called by server 
+        /// to handle projectile hits on our object
+        /// process the damage on the local object and then
+        /// update the remote clients
+        /// </summary>
+        /// <param name="hitpoint">The vector 3D point
+        /// where the projectile intesected with the colliders </param>
+        [ClientRpc]
+        public override void RpcHit()
         {
-            maxDensity = pieceDensity = (40f * transform.childCount);
+            pieceDensity -= _hitD.damage;
+
+            if (pieceDensity <= 0)
+            {
+                // for now just destroy
+                Destroy(this.gameObject);
+            }
+
         }
 
-        void Update()
+        [ClientRpc]
+        public override void RpcHitArea()
         {
-            /*secondsTillRemove -= Time.deltaTime;
-            if (secondsTillRemove <= 0)
-                Destroy(gameObject);*/
-        /*}
+            // Create ranged based damage in explosion
 
+            // call hit
+            RpcHit();
+        }
+
+        /*
+
+       public string[] prospect;
+        /*
         public void Hit(HitData hit)
         {
             pieceDensity -= hit.damage;
@@ -101,6 +168,8 @@ namespace Space
         {
             Hit(hit);
         }*/
+
+        #endregion
     }
 }
 

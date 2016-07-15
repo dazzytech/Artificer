@@ -14,8 +14,14 @@ using Space.SpawnManagers;
 // e.g Player_Data
 namespace Space
 {
+    /// <summary>
+    /// Central attributes container for space manager
+    /// stores player state.
+    /// </summary>
     public class SpaceAttributes : MonoBehaviour
     {
+        #region PLAYER TRACKING
+
         // track if the player is currently on stage
         public bool PlayerOnStage;
 
@@ -25,10 +31,12 @@ namespace Space
         // store local client controller ID
         public short playerControllerID;
 
+        #endregion
+
         //
         // Contract
         //public ContractTracker Contract;
-       
+
         // Spawn Managers
         //public EnemySpawnManager EnemySpawn;
 

@@ -9,8 +9,13 @@ using Space.Ship.Components.Listener;
 
 namespace Space.Ship
 {
+    /// <summary>
+    /// Central storage point for attributes for ship objects
+    /// </summary>
     public class ShipAttributes : NetworkBehaviour
     {
+        #region SHIP ATTRIBUTES
+
         public List<ComponentListener> Components;
 
         public ComponentListener Head;
@@ -20,9 +25,18 @@ namespace Space.Ship
         // Assigned by the local player to the ship
         public string AlignmentLabel;
 
+        // Store a reference to the ships data
+        public ShipData Ship;
+
         // Last ship to attack ship
         [SyncVar]
         public string AggressorTag;
+
+        public NetworkInstanceId instID;
+
+        #endregion
+
+        #region COMPONENT GETTERS
 
         // Getter functions
         public int Engines
@@ -129,6 +143,10 @@ namespace Space.Ship
             }
         }
 
+        #endregion
+
+        #region COMPONENT UTILITIES
+
         /// <summary>
         /// Returns a list of components from a list of IDs
         /// </summary>
@@ -157,17 +175,17 @@ namespace Space.Ship
             return retList.ToArray();
         }
 
-        // Targetting Attributes
+        #endregion
+
+        #region TARGETTING ATTRIBUTES
+
         public List<Transform> Targets;
         public List<Transform> SelfTargeted;
         public List<Transform> HighlightedTargets;
         public Rect HighlightRect;
         public float TargetDistance;
 
-        // Store a reference to the ships data
-        public ShipData Ship;
-
-        public NetworkInstanceId instID;
+        #endregion
     }
 }
 
