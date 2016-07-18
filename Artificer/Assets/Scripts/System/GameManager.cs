@@ -100,7 +100,9 @@ public class GameManager: NetworkManager
     }
 
     /// <summary>
-    /// Adds player information and connection info to the team spawner
+    /// Initailze the player and add it to the 
+    /// team spawner to allocate it a position
+    /// and then add player to the new connection
     /// </summary>
     /// <param name="conn"></param>
     /// <param name="playerControllerId"></param>
@@ -109,7 +111,7 @@ public class GameManager: NetworkManager
         Debug.Log("Adding Player");
 
         // Assign the playerspawn to the scene object if doesnt exist
-        /*if(_base.PlayerSpawn == null)
+        if(_base.PlayerSpawn == null)
             _base.PlayerSpawn = GameObject.Find("teamspawner")
                 .GetComponent<TeamSpawnManager>();
 
@@ -117,13 +119,13 @@ public class GameManager: NetworkManager
         GameObject playerGO = Instantiate(singleton.playerPrefab);
 
         // Add the initial ship data to the ship attributes
-        playerGO.GetComponent<ShipAttributes>().Ship = ShipLibrary.GetShip("Mammoth XI");
+        //playerGO.GetComponent<ShipAttributes>().Ship = ShipLibrary.GetShip("Mammoth XI");
 
         _base.PlayerSpawn.AddNewPlayer
             (playerControllerId, conn); 
 
-        NetworkServer.AddPlayerForConnection(conn, playerGO, playerControllerId);*/
-        base.OnServerAddPlayer(conn, playerControllerId);
+        NetworkServer.AddPlayerForConnection(conn, playerGO, playerControllerId);
+        //base.OnServerAddPlayer(conn, playerControllerId);
     }
 
     public override void OnServerReady(NetworkConnection conn)

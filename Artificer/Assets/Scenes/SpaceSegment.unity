@@ -10401,8 +10401,6 @@ GameObject:
   - 114: {fileID: 1368435029}
   - 114: {fileID: 1368435027}
   - 114: {fileID: 1368435026}
-  - 114: {fileID: 1368435021}
-  - 114: {fileID: 1368435020}
   m_Layer: 0
   m_Name: space
   m_TagString: Untagged
@@ -10430,33 +10428,6 @@ Transform:
   - {fileID: 434335259}
   m_Father: {fileID: 910198705}
   m_RootOrder: 2
---- !u!114 &1368435020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1368435018}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2434c23a44798a447aeec3fe75c1c807, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1368435021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1368435018}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ebb8f7df1a80244c93eb67aabc2cc1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shipGen: {fileID: 597149674}
-  _stationGen: {fileID: 1654673873}
-  _asteroidGen: {fileID: 985474240}
-  _spawnGen: {fileID: 953074365}
-  _nodeGen: {fileID: 100489211}
 --- !u!114 &1368435025
 MonoBehaviour:
   m_ObjectHideFlags: 0

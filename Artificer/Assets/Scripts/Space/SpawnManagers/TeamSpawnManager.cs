@@ -19,7 +19,6 @@ namespace Space.SpawnManagers
     {
         public short mController;
         public NetworkConnection mConnection;
-        public ShipData mShip;
         public GameObject mGO;
     }
 
@@ -35,8 +34,6 @@ namespace Space.SpawnManagers
     {
         // stores the station generator to return stations
         public StationGenerator stationGen;
-        // builds the ships
-        public ShipGenerator shipGen;
         // builds the team spawn points
         public SpawnPointGenerator spawnGen;
 
@@ -51,6 +48,7 @@ namespace Space.SpawnManagers
         /// <returns>The new player.</returns>
         /// <param name="conn">Conn.</param>
         /// <param name="client">Client.</param>
+        [Server]
         public void AddNewPlayer(short conn, NetworkConnection client)
         {
             // store info for replacing ship when destroyed
