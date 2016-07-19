@@ -53,14 +53,20 @@ namespace Space.Segment
             EnterSegment();
         }
 
-        public override void OnStartAuthority()
+        public override void OnStartServer()
+        {
+            //base.OnStartServer();
+
+            InitializeSegment();
+        }
+
+        /*(public override void OnStartAuthority()
         {
             Debug.Log("Authority Start");
 
             //base.OnStartServer();
-            //if(isServer);
-                //CmdInitializeSegment();
-        }
+          * 
+        }*/
 
         void Start()
         {
@@ -109,14 +115,14 @@ namespace Space.Segment
         /// and initializes playercam and space generation
         /// for clients
         /// </summary>
-        /*[Command]
-        private void CmdInitializeSegment()
+        [Server]
+        private void InitializeSegment()
         {
             // Initialize space segment if not created - server's job
             MessageHUD.DisplayMessege(new MsgParam("bold", "Generating space..."));
             //SegmentDataBuilder.BuildNewSegment(_att.Objects);
            //MessageHUD.DisplayMessege(new MsgParam("bold", "Finished!"));
-        }*/
+        }
 
         public void SyncListGOAdded(SyncListSO.Operation op, int index)
         {

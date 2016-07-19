@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using Data.Shared;
-using Data.Space.Library;
+using Data.Space;
 using Space.Segment.Generator;
 
 namespace Space.SpawnManagers
@@ -40,6 +37,9 @@ namespace Space.SpawnManagers
         // Store a list of all connected players
         private List<PlayerSpawnInfo> _playerSpawnInfoList;
 
+        // temp list of spawn points
+        private SpawnPointData[] _spawns;
+
         /// <summary>
         /// Adds the new player.
         /// called by game manager and returns the 
@@ -49,21 +49,24 @@ namespace Space.SpawnManagers
         /// <param name="conn">Conn.</param>
         /// <param name="client">Client.</param>
         [Server]
-        public void AddNewPlayer(short conn, NetworkConnection client)
+        public void AddNewPlayer
+            (short playerControllerId, NetworkConnection conn)
         {
             // store info for replacing ship when destroyed
             PlayerSpawnInfo info = new PlayerSpawnInfo();
-            info.mController = conn;
-            info.mConnection = client;
-            // all ships start with default
-
-            //ShipGenerator.GeneratePlayerShip(info.mShip, Vector3.zero, Vector2.up);
+            info.mController = playerControllerId;
+            info.mConnection = conn;
+            info.mGO = Instantiate(GameManager.singleton.playerPrefab); ;
+    
 
             // add player to tracking list
             if(_playerSpawnInfoList == null)
                 _playerSpawnInfoList = new List<PlayerSpawnInfo>();
 
             _playerSpawnInfoList.Add(info);
+
+            // This will become invoke
+            SpawnNewPlayer(info);
         }
 
         // called by clients when their ship is destroyed
@@ -72,5 +75,33 @@ namespace Space.SpawnManagers
         //{
             //Debug.Log("Received Spawn Request");
         //}
+
+        [Server]
+        public void ImportSpawnList(SpawnPointData[] spawns)
+        {
+            _spawns = spawns;
+        }
+
+        [Server]
+        private void SpawnPlayerShip(PlayerSpawnInfo info)
+        {
+            NetworkServer.ReplacePlayerForConnection
+                (info.mConnection, info.mGO, info.mController);
+        }
+
+        /// <summary>
+        /// Spawns player at random spawnpoint for first time
+        /// </summary>
+        /// <param name="info"></param>
+        [Server]
+        private void SpawnNewPlayer(PlayerSpawnInfo info)
+        {
+            Vector2 newPosition = _spawns[Random.Range(0, _spawns.Length)].Position;
+
+            info.mGO.transform.position = newPosition; ;
+
+            NetworkServer.AddPlayerForConnection
+                (info.mConnection, info.mGO, info.mController);
+        }
     }
 }

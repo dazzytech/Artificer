@@ -10401,6 +10401,7 @@ GameObject:
   - 114: {fileID: 1368435029}
   - 114: {fileID: 1368435027}
   - 114: {fileID: 1368435026}
+  - 114: {fileID: 1368435020}
   m_Layer: 0
   m_Name: space
   m_TagString: Untagged
@@ -10428,6 +10429,38 @@ Transform:
   - {fileID: 434335259}
   m_Father: {fileID: 910198705}
   m_RootOrder: 2
+--- !u!114 &1368435020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1368435018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &1368435025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10484,6 +10517,7 @@ MonoBehaviour:
     Aligned: 0
     Initialized: 0
   playerControllerID: 0
+  Builder: {fileID: 0}
 --- !u!1001 &1368782869
 Prefab:
   m_ObjectHideFlags: 0
@@ -14746,7 +14780,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stationGen: {fileID: 1654673873}
-  shipGen: {fileID: 597149674}
   spawnGen: {fileID: 953074365}
 --- !u!1 &1772010851
 GameObject:

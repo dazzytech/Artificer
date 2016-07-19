@@ -16,14 +16,14 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.317 seconds
+- Completed reload, in  0.290 seconds
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1280x1024 60Hz; virtual: 1280x1024 at 0,0
 <RI> Initialized touch support.
-UnloadTime: 1.262800 ms
+UnloadTime: 2.092933 ms
 DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
  
 (Filename:  Line: 374)
@@ -37,27 +37,26 @@ Start Client
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
 
-The referenced script on this Behaviour (Game Object 'space') is missing!
- 
-(Filename:  Line: 1655)
-
-The referenced script on this Behaviour (Game Object 'space') is missing!
- 
-(Filename:  Line: 1655)
-
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.566711 ms
+UnloadTime: 3.720933 ms
 Scene Changed
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
 
 
-Unloading 579 unused Assets to reduce memory usage. Loaded Objects now: 1737.
-Total: 1.747777 ms (FindLiveObjects: 0.150088 ms CreateObjectMapping: 0.098755 ms MarkObjects: 1.241777 ms  DeleteObjects: 0.251777 ms)
+Unloading 579 unused Assets to reduce memory usage. Loaded Objects now: 1738.
+Total: 1.485244 ms (FindLiveObjects: 0.140311 ms CreateObjectMapping: 0.088000 ms MarkObjects: 1.032044 ms  DeleteObjects: 0.220977 ms)
 
 Segment Start Local Player
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
 
+Log: connection {1} has been disconnected by timeout; address {::ffff:127.0.0.1:7777}
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.564222 ms
+
+Unloading 561 unused Assets to reduce memory usage. Loaded Objects now: 2338.
+Total: 2.303644 ms (FindLiveObjects: 0.173066 ms CreateObjectMapping: 0.069911 ms MarkObjects: 1.826489 ms  DeleteObjects: 0.230266 ms)
+
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 2f4 -> priority: 1 
+  Thread -> id: 2474 -> priority: 1 

@@ -44,6 +44,14 @@ namespace Space
         #region NETWORK BEHAVIOUR
 
         /// <summary>
+        /// Initialize game rules and spawns
+        /// </summary>
+        public override void OnStartServer()
+        {
+            InitializeSpaceParameters(); 
+        }
+
+        /// <summary>
         /// Runs an event to add the player ship to the 
         /// scene when local player starts.
         /// </summary>
@@ -160,8 +168,10 @@ namespace Space
         /// <summary>
         /// Builds game related instances and adds us to the server game environment
         /// </summary>
-        public void InitializeSpaceParameters(GameParameters param)
+        public void InitializeSpaceParameters()//GameParameters param)
         {
+            _att.Builder = new GameFunctions.GameBuilder();
+            _att.Builder.GenerateSpawners();
             /// Dont run these yet
             // Initialize space attributes
             //_att.Contract.Initialize(param);

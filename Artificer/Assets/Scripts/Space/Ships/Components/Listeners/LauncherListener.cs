@@ -22,7 +22,7 @@ namespace Space.Ship.Components.Listener
         void Start ()
         {
             base. SetRB();
-            _attr.Ship = transform.parent.GetComponent<ShipAttributes>();
+            //_attr.Ship = transform.parent.GetComponent<ShipAttributes>();
             _attr.readyToFire = true;
 
             if (_attr.AutoTarget)
@@ -36,12 +36,12 @@ namespace Space.Ship.Components.Listener
         
         public override void Activate()
         {
-            if (_attr.readyToFire && _attr.Ship.Targets.Count != 0)
+            /*if (_attr.readyToFire && _attr.Ship.Targets.Count != 0)
             {
                 StartCoroutine("EngageDelay");
 
                 StartCoroutine("LaunchRockets"); 
-            }
+            }*/
         }
         
         public override void Deactivate()
@@ -82,7 +82,7 @@ namespace Space.Ship.Components.Listener
                 {
                     // Only auto target heads of ships
                     // while no target grouping
-                    if (_attr.Ship.Targets.Contains(hit.collider.transform)
+                    /*if (_attr.Ship.Targets.Contains(hit.collider.transform)
                         || hit.collider.transform.tag != "Head")
                         continue;
 
@@ -103,7 +103,7 @@ namespace Space.Ship.Components.Listener
                         if (_attr.Ship.AlignmentLabel == "Friendly" && 
                             hit.transform.name != "Enemy" || hit.transform.tag == "Station")
                             continue;
-                    }
+                    }*/
 
                     ComponentListener comp = hit.collider.
                     transform.GetComponent<ComponentListener>();
@@ -111,10 +111,10 @@ namespace Space.Ship.Components.Listener
                     if (comp != null)
                     {
                         // check not self targetting
-                        if (!_attr.Ship.Components.Contains(comp))
+                        /*if (!_attr.Ship.Components.Contains(comp))
                         {
                                 _attr.Ship.Targets.Add(hit.collider.transform);
-                        }
+                        }*/
                     }
 
                     yield return null;
@@ -125,7 +125,7 @@ namespace Space.Ship.Components.Listener
 
         private IEnumerator LaunchRockets()
         {
-            Transform[] firePs = transform.Cast<Transform>().Where
+            /*Transform[] firePs = transform.Cast<Transform>().Where
                 (c=>c.gameObject.tag == "Fire").ToArray();
             
             if(firePs.Length == 0)
@@ -168,7 +168,7 @@ namespace Space.Ship.Components.Listener
                     yield return null;
                 }
 
-                data.Target = _attr.Ship.Targets[Random.Range(0, _attr.Ship.Targets.Count)];
+                //data.Target = _attr.Ship.Targets[Random.Range(0, _attr.Ship.Targets.Count)];
 
                 StartCoroutine("EngageDelay");
 
@@ -176,10 +176,10 @@ namespace Space.Ship.Components.Listener
                                                 Quaternion.Euler(0f, 0f, rotation)) as GameObject;
 
                 projectile.SendMessage("CreateMissile", data, 
-                                           SendMessageOptions.RequireReceiver);
+                                           SendMessageOptions.RequireReceiver);*/
 
                 yield return new WaitForSeconds(_attr.RocketDelay);
-            }
+            //}
         }
     }
 }

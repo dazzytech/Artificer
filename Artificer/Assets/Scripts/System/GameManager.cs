@@ -76,6 +76,11 @@ public class GameManager: NetworkManager
             singleton.StopHost();
     }
 
+    public static void SpawnPlayerShip()
+    {
+
+    }
+
     #endregion
 
     #region GAME MANAGER INTERNAL INTERACTION
@@ -102,7 +107,7 @@ public class GameManager: NetworkManager
     /// <summary>
     /// Initailze the player and add it to the 
     /// team spawner to allocate it a position
-    /// and then add player to the new connection
+    /// for the teamspawner to later add the spawn
     /// </summary>
     /// <param name="conn"></param>
     /// <param name="playerControllerId"></param>
@@ -110,22 +115,11 @@ public class GameManager: NetworkManager
     {
         Debug.Log("Adding Player");
 
-        // Assign the playerspawn to the scene object if doesnt exist
-        if(_base.PlayerSpawn == null)
-            _base.PlayerSpawn = GameObject.Find("teamspawner")
-                .GetComponent<TeamSpawnManager>();
-
-        // Use TeamManager to spawn ship for player
-        GameObject playerGO = Instantiate(singleton.playerPrefab);
-
         // Add the initial ship data to the ship attributes
         //playerGO.GetComponent<ShipAttributes>().Ship = ShipLibrary.GetShip("Mammoth XI");
 
-        _base.PlayerSpawn.AddNewPlayer
+        TeamSpawn.AddNewPlayer
             (playerControllerId, conn); 
-
-        NetworkServer.AddPlayerForConnection(conn, playerGO, playerControllerId);
-        //base.OnServerAddPlayer(conn, playerControllerId);
     }
 
     public override void OnServerReady(NetworkConnection conn)
@@ -199,6 +193,18 @@ public class GameManager: NetworkManager
     public static string Version
     {
         get {return _base.Version;}
+    }
+
+    public static TeamSpawnManager TeamSpawn
+    {
+        get
+        {
+            // Assign the playerspawn to the scene object if doesnt exist
+            if (_base.PlayerSpawn == null)
+                _base.PlayerSpawn = GameObject.Find("teamspawner")
+                    .GetComponent<TeamSpawnManager>();
+            return _base.PlayerSpawn;
+        }
     }
 
     #endregion
