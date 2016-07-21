@@ -38,14 +38,53 @@ namespace Space.GameFunctions
         {
             SpawnPointData[] spawns = new SpawnPointData[5];
 
+            // store previous points of spawns for quick access
+            Vector2[] prevPoints = new Vector2[5];
+
             //generate the five spawns near the middle
             for(int i = 0; i < 5; i++)
             {
+                // track if too close to another point
+                bool tooClose = true;
+
+                // how close is too close
+                float minDistance = 5;
+
+                // keep counter to avoid too many loops
+                int loops = 0;
+
                 // create vector around center
                 Vector2 pos = new Vector2(Random.Range(2450, 2550), Random.Range(2450, 2550));
+
+                while(tooClose)
+                {
+                    tooClose = false;
+
+                    // go through each point previously added
+                    foreach(Vector2 prev in prevPoints)
+                    {
+                        // make sure this has actually been assigned
+                        if(prev != Vector2.zero)
+                        {
+                            // check distance, but alsojust accept if we have checked 10 times
+                            if (Vector2.Distance(pos, prev) < minDistance && loops < 10)
+                            {
+                                // we are too close
+                                tooClose = true;
+                                pos = new Vector2(Random.Range(2450, 2550),
+                                    Random.Range(2450, 2550));
+                                break;
+                            }
+                        }
+                    }
+
+                    // Iterate counter
+                    loops++;
+                }
                  
                 // Assign to our spawn list
                 spawns[i] = BuildSpawn("playerSpawn", pos);
+                prevPoints[i] = pos;
             }
 
             // send these spawns to the teamspawner

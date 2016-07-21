@@ -7,6 +7,7 @@ using Space.Segment.Generator;
 
 namespace Space.SpawnManagers
 {
+    #region SPAWN INFO
     /// <summary>
     /// Information stored by the spawn mananger on each
     /// player. Each time a player joins it will create an 
@@ -19,6 +20,8 @@ namespace Space.SpawnManagers
         public GameObject mGO;
     }
 
+    #endregion
+
     /// <summary>
     /// template class for team spawn managers
     /// handles the creation of initial station and 
@@ -29,6 +32,8 @@ namespace Space.SpawnManagers
     /// </summary>
     public class TeamSpawnManager: NetworkBehaviour
     {
+        #region ATTRIBUTES
+
         // stores the station generator to return stations
         public StationGenerator stationGen;
         // builds the team spawn points
@@ -39,6 +44,10 @@ namespace Space.SpawnManagers
 
         // temp list of spawn points
         private SpawnPointData[] _spawns;
+
+        #endregion
+
+        #region PUBLIC INTERACTION
 
         /// <summary>
         /// Adds the new player.
@@ -82,6 +91,10 @@ namespace Space.SpawnManagers
             _spawns = spawns;
         }
 
+        #endregion
+
+        #region PLAYER SPAWNING
+
         [Server]
         private void SpawnPlayerShip(PlayerSpawnInfo info)
         {
@@ -96,12 +109,51 @@ namespace Space.SpawnManagers
         [Server]
         private void SpawnNewPlayer(PlayerSpawnInfo info)
         {
+            // used to track if the immediate vicinity for spawning is clear
+            bool areaClear = false;
+
+            // Space in Units in a radius we want to be clear
+            float minDistance = 2;
+
+            // take position from spawn point we want (TODO:player will select team spawn)
             Vector2 newPosition = _spawns[Random.Range(0, _spawns.Length)].Position;
 
+            // Check area is clear, if not then shift away and repeat
+            while (!areaClear)
+            {
+                // Only need one to know we will collide
+                RaycastHit2D hit = Physics2D.CircleCast(newPosition, minDistance, Vector2.zero);
+
+                if (hit.transform == null)
+                {
+                    // Vicinity is cleared for spawning
+                    areaClear = true;
+                }
+                else
+                {
+                    // move our start position out of the way
+                    newPosition += new Vector2
+                        (Random.Range(-1f, 1f), Random.Range(-1f, 1f))
+                        * minDistance;
+                }
+            }
+
+            // apply position
             info.mGO.transform.position = newPosition; ;
 
-            NetworkServer.AddPlayerForConnection
-                (info.mConnection, info.mGO, info.mController);
+            // spawn player
+            if (NetworkServer.AddPlayerForConnection
+                (info.mConnection, info.mGO, info.mController))
+            {
+                // Add new spawned ship to 
+                if (GameObject.Find("_gui") != null)
+                    GameObject.Find("_gui").
+                        SendMessage("RpcAddRemotePlayer", 
+                        info.mGO.GetComponent<NetworkIdentity>().netId,
+                        SendMessageOptions.DontRequireReceiver);
+            }
         }
+
+        #endregion
     }
 }

@@ -27,6 +27,8 @@ namespace Space.UI.Tracker
         List<Marker> _markers;
         List<Marker> _pendingDelete;
 
+        public GameObject undefinedArrow;
+        public GameObject undefinedBox;
         public GameObject stationArrow;
         public GameObject stationBox;
         public GameObject enemyArrow;
