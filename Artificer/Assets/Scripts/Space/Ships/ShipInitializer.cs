@@ -51,6 +51,10 @@ namespace Space.Ship
             if (hasSpawned)
             {
                 SetUpPlayer();
+
+                // update 
+                GameManager.GUI.AddUIPiece
+                    (this.transform);
             }
         }
 

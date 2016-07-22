@@ -7,6 +7,7 @@ using Data.Shared;
 using Data.Space;
 using Data.Space.Library;
 using Space.SpawnManagers;
+using Space.UI;
 
 /// <summary>
 /// Stores game parameters retrived from lobby or server
@@ -29,11 +30,14 @@ public class GameBaseAttributes:MonoBehaviour
     public bool LevelPaused;
     public string Version;
 
-    // Game attributes
+    // Libraries
     public ShipLibrary PrebuiltShips;
     public ElementLibrary ElementLibrary;
 
     // Server Objects
     public TeamSpawnManager PlayerSpawn;
+
+    // Static client accessors
+    public UIMessegeHandler GUIMsg;
 }
 

@@ -139,18 +139,14 @@ namespace Space.SpawnManagers
             }
 
             // apply position
-            info.mGO.transform.position = newPosition; ;
+            info.mGO.transform.position = newPosition;
 
             // spawn player
             if (NetworkServer.AddPlayerForConnection
                 (info.mConnection, info.mGO, info.mController))
             {
-                // Add new spawned ship to 
-                if (GameObject.Find("_gui") != null)
-                    GameObject.Find("_gui").
-                        SendMessage("RpcAddRemotePlayer", 
-                        info.mGO.GetComponent<NetworkIdentity>().netId,
-                        SendMessageOptions.DontRequireReceiver);
+               GameManager.GUI.RpcAddRemotePlayer
+                    (info.mGO.GetComponent<NetworkIdentity>().netId);
             }
         }
 

@@ -49,15 +49,7 @@ namespace Space.UI.Ship
         public void BuildContractData (ContractData contract)
         {
             _mission.SetContactData(contract);
-            _tracker.SetContactData(contract);
-        }
-
-        void Update()
-        {
-            if (_shipData != null)
-            {
-               
-            }
+            //_tracker.SetContactData(contract);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.IO;
 using Data.Shared;
 using Data.Space;
 using Space.SpawnManagers;
+using Space.UI;
 using Data.Space.DataImporter;
 using Data.Space.Library;
 
@@ -204,6 +205,18 @@ public class GameManager: NetworkManager
                 _base.PlayerSpawn = GameObject.Find("teamspawner")
                     .GetComponent<TeamSpawnManager>();
             return _base.PlayerSpawn;
+        }
+    }
+
+    public static UIMessegeHandler GUI
+    {
+        get
+        {
+            // Add new spawned ship to 
+            if (_base.GUIMsg == null)
+                _base.GUIMsg = GameObject.Find("_gui").GetComponent<UIMessegeHandler>();
+
+            return _base.GUIMsg;
         }
     }
 
