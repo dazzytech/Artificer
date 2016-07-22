@@ -5951,6 +5951,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df81887fea320843b9c9290b3e29a59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  undefinedArrow: {fileID: 0}
+  undefinedBox: {fileID: 0}
   stationArrow: {fileID: 175300, guid: afa19631b21a17a48a3236e83e1c23bb, type: 2}
   stationBox: {fileID: 161912, guid: 1c9207c29984a344495dd05e136a99a1, type: 2}
   enemyArrow: {fileID: 175300, guid: 3609914677565ef448dbe4a49e24f1f5, type: 2}
