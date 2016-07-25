@@ -98,7 +98,7 @@ namespace Space.Contract
                     {
                         go.GetComponent<SpawnerFollowBehaviour>().SetFollow(Follow[Random.Range(0, Follow.Count)], 20, 50);
                     }
-                    foreach (GameObject go in GameObject.FindGameObjectsWithTag("PlayerSpawn"))
+                    foreach (GameObject go in GameObject.FindGameObjectsWithTag("TeamSpawner"))
                     {
                         go.GetComponent<SpawnerFollowBehaviour>().SetFollow(Follow[Random.Range(0, Follow.Count)], 10, 20);
                     }
@@ -225,7 +225,7 @@ namespace Space.Contract
                     {
                         GameObject.Destroy(go);
                     }
-                    foreach (GameObject go in GameObject.FindGameObjectsWithTag("PlayerSpawn"))
+                    foreach (GameObject go in GameObject.FindGameObjectsWithTag("TeamSpawner"))
                     {
                         GameObject.Destroy(go);
                     }
@@ -242,7 +242,7 @@ namespace Space.Contract
                 {
                     go.GetComponent<SpawnerFollowBehaviour>().SetFollow(Follow[Random.Range(0, Follow.Count)], 100, 200);
                 }
-                foreach (GameObject go in GameObject.FindGameObjectsWithTag("PlayerSpawn"))
+                foreach (GameObject go in GameObject.FindGameObjectsWithTag("TeamSpawner"))
                 {
                     go.GetComponent<SpawnerFollowBehaviour>().SetFollow(Follow[Random.Range(0, Follow.Count)], 10, 20);
                 }

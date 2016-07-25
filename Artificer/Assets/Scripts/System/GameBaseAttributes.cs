@@ -35,7 +35,7 @@ public class GameBaseAttributes:MonoBehaviour
     public ElementLibrary ElementLibrary;
 
     // Server Objects
-    public TeamSpawnManager PlayerSpawn;
+    public TeamSpawnManager TeamSpawner;
 
     // Static client accessors
     public UIMessegeHandler GUIMsg;

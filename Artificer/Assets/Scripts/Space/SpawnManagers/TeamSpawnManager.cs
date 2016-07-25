@@ -5,7 +5,7 @@ using Data.Shared;
 using Data.Space;
 using Space.Segment.Generator;
 
-namespace Space.GameFunctions
+namespace Space.SpawnManagers
 {
     #region SPAWN INFO
     /// <summary>

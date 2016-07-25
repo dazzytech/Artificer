@@ -2,11 +2,10 @@ using UnityEngine;
 using System.Collections;
 // Artificer
 using Data.Shared;
-using Data.Space.Faction;
 
 public class UANSpawner : FactionSpawnerTemplate
 {
-    public override FSM SpawnAttackShip(AttackGroup group)
+   /* public override FSM SpawnAttackShip(AttackGroup group)
     {
         // Base will build the actual transform
         base.SpawnAttackShip(group);
@@ -77,6 +76,6 @@ public class UANSpawner : FactionSpawnerTemplate
                         SendMessageOptions.DontRequireReceiver);
 
         return patrol;
-    }
+    }*/
 }
 

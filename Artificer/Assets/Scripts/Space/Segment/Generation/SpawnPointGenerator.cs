@@ -27,7 +27,7 @@ namespace Space.Segment.Generator
                 }
                 case "playerSpawn":
                 {
-                    newSpawnPoint.tag = "PlayerSpawn";
+                    newSpawnPoint.tag = "TeamSpawner";
                     PlayerSpawner PS = newSpawnPoint.AddComponent<PlayerSpawner>();
                     PS.SpawnDelay = 5f;
                     break;
@@ -56,7 +56,7 @@ namespace Space.Segment.Generator
                 }
                 case "playerSpawnFollow":
                 {
-                    newSpawnPoint.tag = "PlayerSpawn";
+                    newSpawnPoint.tag = "TeamSpawner";
                     PlayerSpawner PS = newSpawnPoint.AddComponent<PlayerSpawner>();
                     newSpawnPoint.AddComponent<SpawnerFollowBehaviour>();
                     PS.SpawnDelay = 5f;

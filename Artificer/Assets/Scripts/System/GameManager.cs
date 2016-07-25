@@ -201,10 +201,10 @@ public class GameManager: NetworkManager
         get
         {
             // Assign the playerspawn to the scene object if doesnt exist
-            if (_base.PlayerSpawn == null)
-                _base.PlayerSpawn = GameObject.Find("teamspawner")
+            if (_base.TeamSpawner == null)
+                _base.TeamSpawner = GameObject.Find("teamspawner")
                     .GetComponent<TeamSpawnManager>();
-            return _base.PlayerSpawn;
+            return _base.TeamSpawner;
         }
     }
 

@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 //Artificer
-using Data.Space.Faction;
+using Data.Space;
 
 /// <summary>
 /// Base faction manager.
@@ -14,7 +14,7 @@ using Data.Space.Faction;
 /// </summary>
 public class BaseFactionManager: MonoBehaviour
 {
-    public List<FactionTemplate> _factionList;
+    /*public List<FactionTemplate> _factionList;
 
     // time period faction relation updates
     protected float heartBeatTimer;
@@ -46,23 +46,9 @@ public class BaseFactionManager: MonoBehaviour
         }
     }
 
-    // called when player destroys ship of another type
-    // HACK
-    public void PlayerKilled(string faction)
-    {
-        if (faction == "UAN")
-        {
-            _factionList[0].AddRelation("Player", "Enemy");
-        }
-        else
-        {
-            _factionList[1].AddRelation("Player", "Enemy");
-        }
-    }
-
     // Has a seperate tick time to update faction relations outside the current segment.
     public void HeartBeat()
     {
         // faction not implement for now
-    }
+    }*/
 }

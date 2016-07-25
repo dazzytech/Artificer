@@ -138,7 +138,7 @@ namespace Space
             // Send this to gamemanager instead
             //_att.TeamSpawn.CmdSpawnNewPlayerShip();
             // Group up all player respawns
-            /*GameObject[] spawnObjs = GameObject.FindGameObjectsWithTag("PlayerSpawn");
+            /*GameObject[] spawnObjs = GameObject.FindGameObjectsWithTag("TeamSpawner");
             PlayerSpawner PS = spawnObjs [Random.Range(0,
                       spawnObjs.Length)].GetComponent<PlayerSpawner>();
 

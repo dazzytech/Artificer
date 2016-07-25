@@ -6,16 +6,15 @@ using Data.Shared;
 using Space.UI;
 
 /// <summary>
-/// Mission tracker.
-/// Set by the space manager and updates
-/// missions with the player update listener
+/// Resposible for updating teams and statistics
+/// handles space events and dispatches event from game state
+/// has changed.
 /// </summary>
-/// 
 namespace Space.GameFunctions
 {
     public enum GameState{Running, Completed, Failed}
 
-    public class GameStateTracker: MonoBehaviour
+    public class GameStateController: MonoBehaviour
     {
         #region ATTRIBUTES
 
