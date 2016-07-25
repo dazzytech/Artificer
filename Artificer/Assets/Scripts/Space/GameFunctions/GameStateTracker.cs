@@ -11,12 +11,20 @@ using Space.UI;
 /// missions with the player update listener
 /// </summary>
 /// 
-namespace Space.Contract
+namespace Space.GameFunctions
 {
-    public enum ContractState{Pending, Completed, Failed}
+    public enum GameState{Running, Completed, Failed}
 
-    public class ContractTracker: MonoBehaviour
-    {/*
+    public class GameStateTracker: MonoBehaviour
+    {
+        #region ATTRIBUTES
+
+        // Store builder object for generating game object
+        private GameBuilder _builder;
+
+        #endregion
+
+        /*
         ContractData Contract;
         public ContractBuilder Builder;
         public ContractState ContractStatus;
@@ -25,12 +33,24 @@ namespace Space.Contract
         // Mission Tracker List
         public List<MissionData> PrimaryTracker;
         public List<MissionData> SecondaryTracker;
-        public List<MissionData> Ended;
+        public List<MissionData> Ended;*/
 
-        public void Initialize(GameParameters param)
+        #region PUBLIC INTERACTION
+
+        public void Initialize(/*GameParameters param*/)
         {
+            // Move parameters from param to member variables
+
+
+            // Firstly for now build the game spawnpoints
+            _builder.GenerateSpawners();
+
+            // Initialize Teams
+
+            // Deal with GUI
+
             // Initialize trackers
-            PrimaryTracker = new List<MissionData>();
+            /*PrimaryTracker = new List<MissionData>();
             SecondaryTracker = new List<MissionData>();
             Ended = new List<MissionData>();
 
@@ -56,9 +76,14 @@ namespace Space.Contract
             {
                 mission.Begin();
                 SecondaryTracker.Add(mission);
-            }
+            }*/
         }
 
+        #endregion
+
+        #region EVENT LISTENERS
+
+        /*
         public void ProcessShipDestroyed(DestroyDespatch destroyed)
         {
             foreach (MissionData mission in PrimaryTracker)
@@ -93,8 +118,11 @@ namespace Space.Contract
             {
                 mission.AddMaterial(newMat);
             }
-        }
+        }*/
 
+        #endregion
+
+        /*
         public void RunUpdate()
         {
             if (Contract != null)

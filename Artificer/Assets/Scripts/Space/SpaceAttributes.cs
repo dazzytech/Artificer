@@ -39,7 +39,7 @@ namespace Space
         //public ContractTracker Contract;
 
         // temp game builderr
-        public GameBuilder Builder;
+        public GameStateTracker GameTracker;
 
         // Spawn Managers
         //public EnemySpawnManager EnemySpawn;

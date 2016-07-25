@@ -7,6 +7,7 @@ using Data.Shared;
 using Data.Space.Library;
 using Data.Space;
 using Space.Contract;
+using Space.GameFunctions;
 using Space.UI;
 
 namespace Space
@@ -162,7 +163,7 @@ namespace Space
             }
         }
 
-        #endregion
+        
 
         // TODO: INTERNAL OR EXTERNAL
         /// <summary>
@@ -170,14 +171,14 @@ namespace Space
         /// </summary>
         public void InitializeSpaceParameters()//GameParameters param)
         {
-            _att.Builder = new GameFunctions.GameBuilder();
-            _att.Builder.GenerateSpawners();
+            _att.GameTracker = new GameStateTracker();
+            _att.GameTracker.Initialize();
             /// Dont run these yet
             // Initialize space attributes
             //_att.Contract.Initialize(param);
             //_att.EnemySpawn = new EnemySpawnManager(param);
             //_att.FriendlySpawn = new FriendlySpawnManager(param);
-        }
+        }#endregion
 
         #region EXTERNAL FUNCTIONS
 
