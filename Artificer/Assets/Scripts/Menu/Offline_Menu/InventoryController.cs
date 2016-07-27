@@ -71,11 +71,11 @@ namespace Menu
                 bool itemExists = false;                        // if item already exists in list
                 foreach (MaterialListItem item in _MatListItems)
                 {
-                    if(item.MatIs(mat))
+                    /*if(item.MatIs(mat))
                     {
                         item.SetAmount(_Materials[mat]);
                         itemExists = true;
-                    }
+                    }*/
                 }
                 if(!itemExists) CreateListboxItem(mat);
             }

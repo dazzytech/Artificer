@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 // Artificer
@@ -12,7 +13,7 @@ namespace Space.GameFunctions
     /// Build game specific space objects e.g.
     /// Starter bases and team spawns
     /// </summary>
-    public class GameBuilder : MonoBehaviour
+    public class GameBuilder
     {
         #region ATTRIBUTES 
 
@@ -34,6 +35,7 @@ namespace Space.GameFunctions
         /// For now, builds a group of player spawners in close 
         /// proximity and sends this to the team spawner
         /// </summary>
+        [Server]
         public void GenerateSpawners()
         {
             SpawnPointData[] spawns = new SpawnPointData[5];
@@ -88,7 +90,26 @@ namespace Space.GameFunctions
             }
 
             // send these spawns to the teamspawner
-            GameManager.TeamSpawn.ImportSpawnList(spawns);
+            //GameManager.GameMSG.ImportSpawnList(spawns);
+        }
+
+        #endregion
+
+        #region INTERNAL BUILDING
+
+        /// <summary>
+        /// Builds a spawn point and returns the created spawn
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        private SpawnPointData BuildSpawn(string type, Vector2 position)
+        {
+            SpawnPointData spawn = new SpawnPointData();
+            spawn.Position = position;
+            spawn.SpawnType = type;
+
+            return spawn;
         }
 
         #endregion
@@ -487,24 +508,6 @@ namespace Space.GameFunctions
         return statObj;
     }*/
 
-        #region INTERNAL BUILDING
-
-        /// <summary>
-        /// Builds a spawn point and returns the created spawn
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="position"></param>
-        /// <returns></returns>
-        private SpawnPointData BuildSpawn(string type, Vector2 position)
-        {
-            SpawnPointData spawn = new SpawnPointData();
-            spawn.Position = position;
-            spawn.SpawnType = type;
-
-            return spawn;
-        }
-
-        #endregion
     }
 }
 

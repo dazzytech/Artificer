@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+using Space.Ship;
+
 public class DefenseState : FSMState
 {
     private Path _nodePath;

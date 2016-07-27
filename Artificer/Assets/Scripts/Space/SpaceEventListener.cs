@@ -6,6 +6,7 @@ using System.IO;
 // Artificer
 using Data.Shared;
 using Data.Space.Library;
+using Space.GameFunctions;
 using Space.Generator;
 using Space.Ship;
 using Space.UI;
@@ -44,13 +45,12 @@ namespace Space
             _util.Init();
         }
 
-        // Use this for initialization
         void OnEnable()
         {
             _con.OnKeyPress += PlayerSystemInput;
             _con.OnKeyRelease += PlayerSystemInputRelease;
             _con.OnMouseScroll += PlayerMouseScroll;
-            _con.Stop += EndLevel;
+            _att.GameController.OnChangeState += EndLevel;
             _con.PlayerEnterScene += LoadPlayerDataIntoScene;
             SpaceManager.PlayerExitScene += PlayerDeath;
             ShipMessageController.OnShipDestroyed += ShipDestroyed;
@@ -61,7 +61,7 @@ namespace Space
             _con.OnKeyPress -= PlayerSystemInput;
             _con.OnKeyRelease -= PlayerSystemInputRelease;
             _con.OnMouseScroll -= PlayerMouseScroll;
-            _con.Stop -= EndLevel;
+            _att.GameController.OnChangeState -= EndLevel;
             _con.PlayerEnterScene -= LoadPlayerDataIntoScene;
             SpaceManager.PlayerExitScene -= PlayerDeath;
             ShipMessageController.OnShipDestroyed -= ShipDestroyed;
@@ -206,7 +206,7 @@ namespace Space
             //_att.Contract.ProcessStationReached(ship);
         }
 
-        private void EndLevel()
+        private void EndLevel(GameState newState)
         {
             _util.Stop();
 

@@ -16,14 +16,14 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.061 seconds
+- Completed reload, in  0.067 seconds
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1360x768 60Hz; virtual: 1360x768 at 0,0
 <RI> Initialized touch support.
-UnloadTime: 0.998800 ms
+UnloadTime: 1.141066 ms
 DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
  
 (Filename:  Line: 374)
@@ -42,7 +42,7 @@ Start Client
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
 
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 3.477467 ms
+UnloadTime: 3.735111 ms
 Segment Start Local Player
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
@@ -60,8 +60,8 @@ Adding Player
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
 
 
-Unloading 583 unused Assets to reduce memory usage. Loaded Objects now: 1802.
-Total: 1.696933 ms (FindLiveObjects: 0.142266 ms CreateObjectMapping: 0.079688 ms MarkObjects: 1.251555 ms  DeleteObjects: 0.219022 ms)
+Unloading 583 unused Assets to reduce memory usage. Loaded Objects now: 1807.
+Total: 1.646577 ms (FindLiveObjects: 0.152044 ms CreateObjectMapping: 0.093866 ms MarkObjects: 1.183111 ms  DeleteObjects: 0.213155 ms)
 
 Large state update of 1727 bytes for netId:6 from script:Ship(Clone) (Space.Ship.ShipInitializer)
  
@@ -71,68 +71,11 @@ Large state update of 1727 bytes for netId:6 from script:PlayerShip (Space.Ship.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
 
-Initialize engine version: 5.3.5f1 (960ebf59018a)
-GfxDevice: creating device client; threaded=1
-Direct3D:
-    Version:  Direct3D 11.0 [level 11.0]
-    Renderer: AMD Radeon (TM) R9 200 Series (ID=0x6811)
-    Vendor:   ATI
-    VRAM:     2030 MB
-Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.088 seconds
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
-<RI> Initializing input.
-<RI> Input initialized.
-desktop: 1360x768 60Hz; virtual: 1360x768 at 0,0
-<RI> Initialized touch support.
-UnloadTime: 1.208044 ms
-DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
- 
-(Filename:  Line: 374)
-
-[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
-Placeholder
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-Start Client
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.517822 ms
-Scene Changed
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-
-Unloading 579 unused Assets to reduce memory usage. Loaded Objects now: 1749.
-Total: 1.772222 ms (FindLiveObjects: 0.144222 ms CreateObjectMapping: 0.100711 ms MarkObjects: 1.226622 ms  DeleteObjects: 0.294311 ms)
-
 Client is Ready
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
 
 Adding Player
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-Segment Start Local Player
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
 
@@ -144,83 +87,6 @@ Large state update of 1727 bytes for netId:7 from script:Ship(Clone) (Space.Ship
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
 
-Initialize engine version: 5.3.5f1 (960ebf59018a)
-GfxDevice: creating device client; threaded=1
-Direct3D:
-    Version:  Direct3D 11.0 [level 11.0]
-    Renderer: AMD Radeon (TM) R9 200 Series (ID=0x6811)
-    Vendor:   ATI
-    VRAM:     2030 MB
-Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.173 seconds
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
-<RI> Initializing input.
-<RI> Input initialized.
-desktop: 1360x768 60Hz; virtual: 1360x768 at 0,0
-<RI> Initialized touch support.
-UnloadTime: 1.331733 ms
-DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
- 
-(Filename:  Line: 374)
-
-[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
-Placeholder
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-Start Client
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.657156 ms
-Scene Changed
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-
-Unloading 579 unused Assets to reduce memory usage. Loaded Objects now: 1749.
-Total: 1.700355 ms (FindLiveObjects: 0.143244 ms CreateObjectMapping: 0.110977 ms MarkObjects: 1.173333 ms  DeleteObjects: 0.268400 ms)
-
-Client is Ready
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-Adding Player
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-Segment Start Local Player
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-Large state update of 1727 bytes for netId:8 from script:Ship(Clone) (Space.Ship.ShipInitializer)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
-Large state update of 1727 bytes for netId:8 from script:Ship(Clone) (Space.Ship.ShipInitializer)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
+Log: connection {1} has been disconnected by timeout; address {::ffff:127.0.0.1:59632}
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 2680 -> priority: 1 
-Log: connection {2} has been disconnected by timeout; address {::ffff:127.0.0.1:57888}
-Setting up 1 worker threads for Enlighten.
-  Thread -> id: 239c -> priority: 1 
-Setting up 1 worker threads for Enlighten.
-  Thread -> id: 1a04 -> priority: 1 
+  Thread -> id: e30 -> priority: 1 

@@ -24,7 +24,7 @@ namespace Space.Ship
         public string AggressorTag;
 
         // physical destroyed ship
-        public Transform Self;
+        public NetworkInstanceId Self;
     }
 
     /// <summary>
@@ -33,13 +33,16 @@ namespace Space.Ship
     /// </summary>
     public class ShipMessageController : NetworkBehaviour
     {
+        #region EVENTS
+
+        public delegate void DestroyedEvent(DestroyDespatch DD);
+        public static event DestroyedEvent OnShipDestroyed;
+
+        #endregion
+
         #region ATTRIBUTES
 
         ShipAttributes _ship;
-
-        // EVENT DISPATCH
-        public delegate void ShipEvent(DestroyDespatch param);
-        public static event ShipEvent OnShipDestroyed;
 
         #endregion
 
@@ -53,11 +56,12 @@ namespace Space.Ship
 
         void OnDestroy()
         {
-            DestroyDespatch param = new DestroyDespatch();
-            param.AlignmentLabel = _ship.AlignmentLabel;
-            param.AggressorTag = _ship.AggressorTag;
-            param.Self = transform;
-            //ShipDestroyed(param);
+            DestroyDespatch DD = new DestroyDespatch();
+            DD.AggressorTag = _ship.AggressorTag;
+            DD.AlignmentLabel = _ship.AlignmentLabel;
+            DD.Self = netId;
+
+            OnShipDestroyed(DD);
         }
 
         #endregion

@@ -10519,7 +10519,7 @@ MonoBehaviour:
     Aligned: 0
     Initialized: 0
   playerControllerID: 0
-  Builder: {fileID: 0}
+  GameController: {fileID: 0}
 --- !u!1001 &1368782869
 Prefab:
   m_ObjectHideFlags: 0
@@ -14751,8 +14751,9 @@ GameObject:
   - 4: {fileID: 1766992885}
   - 114: {fileID: 1766992886}
   - 114: {fileID: 1766992887}
+  - 114: {fileID: 1766992888}
   m_Layer: 0
-  m_Name: team_controller
+  m_Name: game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14811,11 +14812,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1766992884}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac6423c04c5ccdb4f901b1da83d0e79e, type: 3}
+  m_Script: {fileID: 11500000, guid: 2434c23a44798a447aeec3fe75c1c807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stationGen: {fileID: 1654673873}
-  spawnGen: {fileID: 953074365}
+--- !u!114 &1766992888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1766992884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57be513d20cfc2843a20c43f294173ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1772010851
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ using Data.Space;
 using Data.Space.Library;
 using Space.SpawnManagers;
 using Space.UI;
+using Space.GameFunctions;
 
 /// <summary>
 /// Stores game parameters retrived from lobby or server
@@ -35,7 +36,7 @@ public class GameBaseAttributes:MonoBehaviour
     public ElementLibrary ElementLibrary;
 
     // Server Objects
-    public TeamSpawnManager TeamSpawner;
+    public GameMessageHandler GameMsg;
 
     // Static client accessors
     public UIMessegeHandler GUIMsg;

@@ -40,13 +40,13 @@ namespace Data.Space.Library
         public static MaterialData ReturnElement(string element)
         {
             if (_data.Length == 0)
-                return null;
+                return new MaterialData();
 
             foreach (MaterialData mat in _data)
                 if (mat.Element == element)
                     return mat;
 
-            return null;
+            return new MaterialData();
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Data.Space.Library
         public static MaterialData ReturnRandomElement()
         {
             if (_data.Length == 0)
-                return null;
+                return new MaterialData();
 
             // Get element
             int index = Random.Range(0, _data.Length);
@@ -70,7 +70,7 @@ namespace Data.Space.Library
                 (string[] prospect)
         {
             if (_data.Length == 0)
-                return null;
+                return new MaterialData();
 
             string element = prospect
                 [Random.Range(0, prospect.Length)];
@@ -79,7 +79,7 @@ namespace Data.Space.Library
                 if (mat.Element == element)
                     return mat;
 
-            return null;
+            return new MaterialData();
         }
     }
 }

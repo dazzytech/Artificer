@@ -33,7 +33,6 @@ namespace Space
         public event MouseScroll OnMouseScroll;
 
         public delegate void SceneEvent();
-        public event SceneEvent Stop;
         public event SceneEvent PlayerEnterScene;
         public static event SceneEvent PlayerExitScene;
 
@@ -163,22 +162,23 @@ namespace Space
             }
         }
 
-        
-
         // TODO: INTERNAL OR EXTERNAL
         /// <summary>
         /// Builds game related instances and adds us to the server game environment
         /// </summary>
+        [Server]
         public void InitializeSpaceParameters()//GameParameters param)
         {
-            _att.GameTracker = new GameStateTracker();
-            _att.GameTracker.Initialize();
+            _att.GameController = new GameStateController();
+            _att.GameController.Initialize();
             /// Dont run these yet
             // Initialize space attributes
             //_att.Contract.Initialize(param);
             //_att.EnemySpawn = new EnemySpawnManager(param);
             //_att.FriendlySpawn = new FriendlySpawnManager(param);
-        }#endregion
+        }
+
+        #endregion
 
         #region EXTERNAL FUNCTIONS
 

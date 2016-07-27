@@ -8,6 +8,7 @@ using Data.Shared;
 using Data.Space;
 using Space.SpawnManagers;
 using Space.UI;
+using Space.GameFunctions;
 using Data.Space.DataImporter;
 using Data.Space.Library;
 
@@ -119,7 +120,7 @@ public class GameManager: NetworkManager
         // Add the initial ship data to the ship attributes
         //playerGO.GetComponent<ShipAttributes>().Ship = ShipLibrary.GetShip("Mammoth XI");
 
-        TeamSpawn.AddNewPlayer
+        GameMSG.AddNewPlayer
             (playerControllerId, conn); 
     }
 
@@ -196,15 +197,15 @@ public class GameManager: NetworkManager
         get {return _base.Version;}
     }
 
-    public static TeamSpawnManager TeamSpawn
+    public static GameMessageHandler GameMSG
     {
         get
         {
             // Assign the playerspawn to the scene object if doesnt exist
-            if (_base.TeamSpawner == null)
-                _base.TeamSpawner = GameObject.Find("teamspawner")
-                    .GetComponent<TeamSpawnManager>();
-            return _base.TeamSpawner;
+            if (_base.GameMsg == null)
+                _base.GameMsg = GameObject.Find("game")
+                    .GetComponent<GameMessageHandler>();
+            return _base.GameMsg;
         }
     }
 

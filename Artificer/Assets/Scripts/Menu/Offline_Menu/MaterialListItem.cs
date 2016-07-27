@@ -45,10 +45,10 @@ namespace Menu
             Amount.text += " - " + value.ToString("F1") + "ft³";
         }
 
-        public bool MatIs(MaterialData mat)
+        /*public bool MatIs(MaterialData mat)
         {
             return (mat == Item);
-        }
+        }*/
 
         public MaterialData Mat
         {

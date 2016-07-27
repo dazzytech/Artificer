@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+using Space.Ship;
+
 // USED DOMINANTLY BY RAIDERS AND ATTACK SHIPS
 public class SearchState : FSMState
 {
