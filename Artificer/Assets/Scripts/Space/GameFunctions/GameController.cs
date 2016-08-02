@@ -1,34 +1,31 @@
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 using System.Collections.Generic;
-using Data.Shared;
+using Data.Space;
+using Data.Space.Library;
 using Space.Ship;
 using Space.UI;
+using Space.Teams;
 
-/// <summary>
-/// Resposible for updating teams and statistics
-/// handles space events and dispatches event from game state
-/// has changed.
-/// </summary>
 namespace Space.GameFunctions
 {
-    #region PLAYER INFO
+    public enum GameState{Completed, Failed}
+
+    #region NETWORK MESSAGE OBJECTS 
+
     /// <summary>
-    /// Information stored by the spawn mananger on each
-    /// player. Each time a player joins it will create an 
-    /// item and on diconnect will destroy it.
+    /// Message containig the IDs of 
+    /// both teams for the client
     /// </summary>
-    public class PlayerTrackInfo
+    public class TeamPickerMessage: MessageBase
     {
-        public short mController;
-        public NetworkConnection mConnection;
-        public GameObject mGO;
+        public int teamOne;
+        public int teamTwo;
     }
 
     #endregion
-
-    public enum GameState{Completed, Failed}
 
     /// <summary>
     /// Responsible for game elements such as 
@@ -45,26 +42,21 @@ namespace Space.GameFunctions
 
         #region ATTRIBUTES
 
-        // Store builder object for generating game object
-        private GameBuilder _builder;
-        
-        // Store a list of all connected players
-        private List<PlayerTrackInfo> _playerSpawnInfoList;
+        private GameAttributes _att;
+
+        #endregion
+
+        #region NETWORK BEHAVIOUR
 
         #endregion
 
         #region MONO BEHAVIOUR
 
-        void OnEnable()
+        void Awake()
         {
-            // Assign Events
-            ShipMessageController.OnShipDestroyed += ProcessShipDestroyed;
-        }
+            _att = GetComponent<GameAttributes>();
 
-        void OnDisable()
-        {
-            // De-assign events
-            ShipMessageController.OnShipDestroyed -= ProcessShipDestroyed;
+            _att.Builder = GetComponent<GameBuilder>();
         }
 
         /*
@@ -91,17 +83,31 @@ namespace Space.GameFunctions
         {
             // Move parameters from param to member variables
 
-
-            // Firstly for now build the game spawnpoints
-            _builder = new GameBuilder();
-            _builder.GenerateSpawners();
+            _att.Builder.GenerateSpawners();
 
             // Initialize Teams
+            bool teamsCompleted = false;
 
-            // Deal with GUI
+            // pick our two teams first
+            FactionData teamAcon = FactionLibrary.ReturnFaction(Random.Range(0, 3));
+
+            FactionData teamBcon = new FactionData();
+
+            // we dont want two of the same teams
+            while(!teamsCompleted)
+            {
+                teamBcon = FactionLibrary.ReturnFaction(Random.Range(0, 3));
+                if (!teamAcon.Equals(teamBcon))
+                    teamsCompleted = true;
+            }
+
+            // Team objects should already be assigned
+            _att.TeamA.Initialize(teamAcon);
+            _att.TeamB.Initialize(teamBcon);
 
             // Initialize trackers
-            /*PrimaryTracker = new List<MissionData>();
+            /*
+            PrimaryTracker = new List<MissionData>();
             SecondaryTracker = new List<MissionData>();
             Ended = new List<MissionData>();
 
@@ -135,63 +141,96 @@ namespace Space.GameFunctions
         public void AddNewPlayer
             (short playerControllerId, NetworkConnection conn)
         {
-            // store info for replacing ship when destroyed
-            PlayerTrackInfo info = new PlayerTrackInfo();
+            if (_att.PlayerInfoList == null)
+                _att.PlayerInfoList = new List<PlayerConnectionInfo>();
+
+            // store connection to the ship
+            PlayerConnectionInfo info = new PlayerConnectionInfo();
+            info.mID = _att.PlayerInfoList.Count;
             info.mController = playerControllerId;
             info.mConnection = conn;
-            info.mGO = Instantiate(GameManager.singleton.playerPrefab); ;
-
+            info.mTeam = -1;
+            info.mSpawned = false;
 
             // add player to tracking list
-            if (_playerSpawnInfoList == null)
-                _playerSpawnInfoList = new List<PlayerTrackInfo>();
+            _att.PlayerInfoList.Add(info);
 
-            _playerSpawnInfoList.Add(info);
+            // Assign our intial ID to the system
+            IntegerMessage iMsg = new IntegerMessage(info.mID);
+            NetworkServer.SendToClient(conn.connectionId, MsgType.Highest + 6, iMsg);
 
-            /// This will become invoke
-            //SpawnNewPlayer(info);
+            // prompt player to pick team
+            // Send this to single client via a message
+            TeamPickerMessage msg = new TeamPickerMessage();
+            msg.teamOne = _att.TeamA.ID;
+            msg.teamTwo = _att.TeamB.ID;
+            NetworkServer.SendToClient(conn.connectionId, MsgType.Highest + 5, msg);
+        }
+
+        /// <summary>
+        /// Player has picked a team
+        /// store that team with our info
+        /// </summary>
+        /// <param name="TeamID"></param>
+        /// <param name="conn"></param>
+        [Server]
+        public void AssignToTeam(int TeamID, int playerID)
+        {
+            PlayerConnectionInfo pInfo = GetPlayer(playerID);
+
+            if (pInfo == null)
+            {
+                Debug.Log("Error: Game Controller - Assign To Team: Player not found");
+                return;             // something is wrong
+            }
+
+            // Assign that player to the team
+            pInfo.mTeam = TeamID;
+        }
+
+        [Server]
+        public void SpawnPlayer(int playerID, int stationID, int shipID)
+        {
+            PlayerConnectionInfo info = GetPlayer(playerID);
+            GameObject GO = null;
+
+            if (info.mTeam == 0)
+            {
+                // spawn with team A
+                // add station id in future
+                GO = _att.TeamA.Spawner.SpawnPlayer(info);
+            }
+            else
+            {
+                GO = _att.TeamB.Spawner.SpawnPlayer(info);
+            }
+
+            // assign ship info
+            // e.g. ship name 
         }
 
         #endregion
 
-        #region EVENT LISTENERS
+        #region UTILITIES
 
-        public void ProcessShipDestroyed(DestroyDespatch destroyed)
+        /// <summary>
+        /// Utility that returns the player via ID
+        /// </summary>
+        /// <param name="playerID"></param>
+        /// <returns></returns>
+        private PlayerConnectionInfo GetPlayer(int playerID)
         {
-            /*foreach (MissionData mission in PrimaryTracker)
+            // Find the connection that assigned to team
+            foreach (PlayerConnectionInfo info in _att.PlayerInfoList)
             {
-                mission.AddShipKilled(destroyed);
+                if (info.mID.Equals(playerID))
+                {
+                    return info;
+                }
             }
-            foreach (MissionData mission in SecondaryTracker)
-            {
-                mission.AddShipKilled(destroyed);
-            }*/
+
+            return null;
         }
-
-        /*
-        public void ProcessStationReached(Transform ship)
-        {
-            foreach (MissionData mission in PrimaryTracker)
-            {
-                mission.StationEntered(ship);
-            }
-            foreach (MissionData mission in SecondaryTracker)
-            {
-                mission.StationEntered(ship);
-            }
-        }
-
-        public void ProcessMaterials(Dictionary<MaterialData, float> newMat)
-        {
-            foreach (MissionData mission in PrimaryTracker)
-            {
-                mission.AddMaterial(newMat);
-            }
-            foreach (MissionData mission in SecondaryTracker)
-            {
-                mission.AddMaterial(newMat);
-            }
-        }*/
 
         #endregion
 

@@ -7,7 +7,6 @@ using Data.Shared;
 using Data.Space;
 using Data.Space.Library;
 using Space.GameFunctions;
-using Space.SpawnManagers;
 
 // Add classes for data
 // that can be serialized and saved
@@ -30,16 +29,13 @@ namespace Space
         public ShipData PlayerShip;
 
         // store local client controller ID
-        public short playerControllerID;
+        public int playerID;
 
         #endregion
 
         //
         // Contract
         //public ContractTracker Contract;
-
-        // temp game builderr
-        public GameStateController GameController;
 
         // Spawn Managers
         //public EnemySpawnManager EnemySpawn;

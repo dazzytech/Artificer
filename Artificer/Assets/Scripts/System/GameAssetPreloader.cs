@@ -22,6 +22,7 @@ public class GameAssetPreloader : MonoBehaviour
     {
         PreloadShips();
         PreloadMaterials();
+        PreloadFactions();
     }
     
     private void PreloadShips()
@@ -42,6 +43,13 @@ public class GameAssetPreloader : MonoBehaviour
         ElementDataImporter
             .BuildElementLibrary
                 (_att.ElementLibrary);
+    }
+
+    private void PreloadFactions()
+    {
+        _att.FactionLibrary = new FactionLibrary();
+
+        FactionDataImporter.LoadFactions(_att.FactionLibrary);
     }
 }
 

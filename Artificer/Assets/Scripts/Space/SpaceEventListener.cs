@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -21,7 +22,7 @@ namespace Space
     [RequireComponent(typeof(SpaceAttributes))]
     [RequireComponent(typeof(SpaceManager))]
     [RequireComponent(typeof(SpaceUtilities))]
-    public class SpaceEventListener : MonoBehaviour
+    public class SpaceEventListener : NetworkBehaviour
     {
         #region ATTRIBUTES
 
@@ -38,11 +39,14 @@ namespace Space
             _att = GetComponent<SpaceAttributes>();
             _con = GetComponent<SpaceManager>();
             _util = GetComponent<SpaceUtilities>();
+
+            NetworkManager.singleton.client.RegisterHandler(MsgType.Highest + 5, OnTeamPickerMessage);
+            NetworkManager.singleton.client.RegisterHandler(MsgType.Highest + 6, OnNewIDMessage);
         }
 
         void Start()
         {
-            _util.Init();
+            _util.Init();    
         }
 
         void OnEnable()
@@ -50,7 +54,6 @@ namespace Space
             _con.OnKeyPress += PlayerSystemInput;
             _con.OnKeyRelease += PlayerSystemInputRelease;
             _con.OnMouseScroll += PlayerMouseScroll;
-            _att.GameController.OnChangeState += EndLevel;
             _con.PlayerEnterScene += LoadPlayerDataIntoScene;
             SpaceManager.PlayerExitScene += PlayerDeath;
             ShipMessageController.OnShipDestroyed += ShipDestroyed;
@@ -61,7 +64,6 @@ namespace Space
             _con.OnKeyPress -= PlayerSystemInput;
             _con.OnKeyRelease -= PlayerSystemInputRelease;
             _con.OnMouseScroll -= PlayerMouseScroll;
-            _att.GameController.OnChangeState -= EndLevel;
             _con.PlayerEnterScene -= LoadPlayerDataIntoScene;
             SpaceManager.PlayerExitScene -= PlayerDeath;
             ShipMessageController.OnShipDestroyed -= ShipDestroyed;
@@ -135,6 +137,14 @@ namespace Space
         /// </summary>
         private void PlayerDeath()
         {
+            Debug.Log("Start player");
+
+            // Prompt player to pick a spawn
+            GameManager.GUI.SetState(UIState.SpawnPicker);
+
+            // For now each spawn is 10 seconds
+            GameManager.GUI.SetSpawnDelay(10f);
+
             // Send this to gamemanager instead
             //_att.TeamSpawn.CmdSpawnNewPlayerShip();
             // Group up all player respawns
@@ -161,6 +171,7 @@ namespace Space
         /// </summary>
         private void LoadPlayerDataIntoScene()
         {
+            Debug.Log("Load player");
             GameObject.Find("_gui").
               SendMessage("BuildShipData");
 
@@ -218,6 +229,47 @@ namespace Space
             if(_att.Contract.Rewards != null)
                 GameObject.Find("_gui").
                     SendMessage("UpdateReward", _att.Contract.Rewards);*/
+        }
+
+        #endregion
+
+        #region SERVER EVENTS
+        // RPCS CALLED BY THE SERVER TO PERFORM ACTIONS
+
+        /// <summary>
+        /// Called from server object when the game is
+        /// over
+        /// </summary>
+        /// <param name="newState"></param>
+        [ClientRpc]
+        public void RpcEndGame(GameState newState)
+        {
+
+        }
+
+        /// <summary>
+        /// Called from the game server to 
+        /// display the team selection screen
+        /// listen for the button being pressed and send that 
+        /// result to the server
+        /// </summary>
+        public void OnTeamPickerMessage(NetworkMessage netMsg)
+        {
+            // Set to popup gui
+            GameManager.GUI.SetState(UIState.TeamPicker);
+
+            // Retreive variables and display options
+            TeamPickerMessage tpm = netMsg.ReadMessage<TeamPickerMessage>();
+            GameManager.GUI.SetTeamOptions(tpm.teamOne, tpm.teamTwo);
+        }
+
+        public void OnNewIDMessage(NetworkMessage netMsg)
+        {
+            // Retreive variables and display options
+            IntegerMessage im = netMsg.ReadMessage<IntegerMessage>();
+
+            // Store our id on the server
+            _att.playerID = im.value;
         }
 
         #endregion

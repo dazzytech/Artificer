@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Data.Shared;
 using Data.Space;
 using Space.Ship;
+using Space.Teams.SpawnManagers;
 
 /// <summary>
 /// An enitity solely responsible for managing all of
@@ -34,25 +35,29 @@ namespace Space.Teams
         #region ATTRIBUTES
 
         // Faction that the team belongs to
+        [SyncVar]
         private FactionData _faction;
 
         // Store a list of Net IDs of stations that the stations owns
-        private NetIDListSync _stations;
+        //private NetIDListSync _stations;
 
         //private List<Transform> _attackPoints;
         //private List<Transform> _homePoints;
 
         // unlocked components
-        private SyncListString _unlockedComponents;
+        //private SyncListString _unlockedComponents;
 
         // team-owned materials
-        private MaterialListSync _collectedMaterials;
+        //private MaterialListSync _collectedMaterials;
+
+        [SerializeField]
+        private TeamSpawnManager _teamSpawn;
 
         #endregion
 
         #region MONO BEHAVIOUR
 
-        void OnEnable()
+        /*void OnEnable()
         {
             // Assign Events
             ShipMessageController.OnShipDestroyed += ProcessShipDestroyed;
@@ -62,6 +67,32 @@ namespace Space.Teams
         {
             // De-assign events
             ShipMessageController.OnShipDestroyed -= ProcessShipDestroyed;
+        }*/
+
+        #endregion
+
+        #region PUBLIC INTERACTION
+
+        /// <summary>
+        /// for now just add the faction data to 
+        /// local memory
+        /// </summary>
+        public void Initialize(FactionData faction)
+        {
+            _faction = faction;
+        }
+
+        /// <summary>
+        /// Returns faction ID without access to faction
+        /// </summary>
+        public int ID
+        {
+            get { return _faction.ID; }
+        }
+
+        public TeamSpawnManager Spawner
+        {
+            get { return _teamSpawn; }
         }
 
         #endregion
@@ -395,6 +426,8 @@ namespace Space.Teams
 
         #endregion
 
+        /*
+
         #region TEAM RESOURCE INTERACTION
 
         /// <summary>
@@ -574,6 +607,6 @@ namespace Space.Teams
 
         // todo: create singular station retreival
 
-        #endregion
+        #endregion*/
     }
 }

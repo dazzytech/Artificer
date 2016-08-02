@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Data.Shared;
 using Data.Space;
 using Data.Space.Library;
-using Space.SpawnManagers;
+using Space;
 using Space.UI;
 using Space.GameFunctions;
 
@@ -34,11 +34,13 @@ public class GameBaseAttributes:MonoBehaviour
     // Libraries
     public ShipLibrary PrebuiltShips;
     public ElementLibrary ElementLibrary;
+    public FactionLibrary FactionLibrary;
 
     // Server Objects
     public GameMessageHandler GameMsg;
 
     // Static client accessors
     public UIMessegeHandler GUIMsg;
+    public SpaceManager Space;
 }
 

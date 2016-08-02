@@ -44,14 +44,6 @@ namespace Space
         #region NETWORK BEHAVIOUR
 
         /// <summary>
-        /// Initialize game rules and spawns
-        /// </summary>
-        public override void OnStartServer()
-        {
-            InitializeSpaceParameters(); 
-        }
-
-        /// <summary>
         /// Runs an event to add the player ship to the 
         /// scene when local player starts.
         /// </summary>
@@ -60,10 +52,8 @@ namespace Space
             // Enter space segment
             MessageHUD.DisplayMessege(new MsgParam("bold",
                                                    "Entering space segment"));
+
             
-            _att.PlayerOnStage = true;
-            
-            PlayerEnterScene();
 
             base.OnStartLocalPlayer();
         }
@@ -75,6 +65,9 @@ namespace Space
         void Awake()
         {
             _att = GetComponent<SpaceAttributes>();
+
+            // init onstage
+            _att.PlayerOnStage = false;
         }
 
         void Update()
@@ -169,8 +162,6 @@ namespace Space
         [Server]
         public void InitializeSpaceParameters()//GameParameters param)
         {
-            _att.GameController = new GameStateController();
-            _att.GameController.Initialize();
             /// Dont run these yet
             // Initialize space attributes
             //_att.Contract.Initialize(param);
@@ -188,6 +179,22 @@ namespace Space
         public void ExitLevel()
         {
             GameManager.Disconnect();
+        }
+
+        public int ID
+        {
+            get { return _att.playerID; }
+        }
+        
+        /// <summary>
+        /// Called by the team selector once a team is
+        /// selected to start the process of spawning a player
+        /// </summary>
+        public void InitializePlayer()
+        {
+            _att.PlayerOnStage = true;
+
+            //PlayerEnterScene();
         }
 
         #endregion

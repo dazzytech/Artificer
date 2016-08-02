@@ -53,10 +53,11 @@ namespace Space.Segment
             EnterSegment();
         }
 
+        /// <summary>
+        /// Run here because segment is independant of game parameters
+        /// </summary>
         public override void OnStartServer()
         {
-            //base.OnStartServer();
-
             InitializeSegment();
         }
 

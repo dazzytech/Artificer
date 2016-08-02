@@ -2,6 +2,8 @@
 using UnityEngine.Networking;
 using System.Collections;
 
+using Data.Space;
+
 namespace Space.GameFunctions
 {
     /// <summary>
@@ -10,12 +12,7 @@ namespace Space.GameFunctions
     /// </summary>
     public class GameMessageHandler : NetworkBehaviour
     {
-        public GameController _con;
-
-        void Awake()
-        {
-            _con = GetComponent<GameController>();
-        }
+        public GameController Con;
 
         /// <summary>
         /// Adds the new player 
@@ -28,7 +25,41 @@ namespace Space.GameFunctions
         public void AddNewPlayer
             (short playerControllerId, NetworkConnection conn)
         {
-            _con.AddNewPlayer(playerControllerId, conn);
+            Con.AddNewPlayer(playerControllerId, conn);
+        }
+
+        /// <summary>
+        /// Called when the player 
+        /// chooses a spawn point to spawn their ship
+        /// </summary>
+        /// <param name="playerID"></param>
+        /// <param name="SpawnID"></param>
+        /// <param name="shipID"></param>
+        [Command]
+        public void CmdSpawnPlayerAt
+            (int playerID, int SpawnID, int shipID)
+        {
+            Con.SpawnPlayer(playerID, SpawnID, shipID);
+        }
+
+        /// <summary>
+        /// Called when player picked a side
+        /// </summary>
+        /// <param name="teamID"></param>
+        /// <param name="playerID"></param>
+        [Command]
+        public void CmdAssignToTeam(int teamID, int playerID)
+        {
+            Con.AssignToTeam(teamID, playerID);
+        }
+
+        /// <summary>
+        /// Initialize from gamemanager 
+        /// </summary>
+        [Server]
+        public void InitializeGameParameters(/*GameParameters param*/)
+        {
+            Con.Initialize();
         }
     }
 }

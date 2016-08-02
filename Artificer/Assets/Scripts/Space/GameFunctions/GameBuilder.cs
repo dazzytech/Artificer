@@ -13,7 +13,7 @@ namespace Space.GameFunctions
     /// Build game specific space objects e.g.
     /// Starter bases and team spawns
     /// </summary>
-    public class GameBuilder
+    public class GameBuilder: NetworkBehaviour
     {
         #region ATTRIBUTES 
 

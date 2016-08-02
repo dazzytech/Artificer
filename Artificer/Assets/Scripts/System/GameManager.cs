@@ -6,11 +6,9 @@ using System.IO;
 // Artificer
 using Data.Shared;
 using Data.Space;
-using Space.SpawnManagers;
+using Space;
 using Space.UI;
 using Space.GameFunctions;
-using Data.Space.DataImporter;
-using Data.Space.Library;
 
 [RequireComponent(typeof(GameBaseAttributes))]
 
@@ -115,18 +113,17 @@ public class GameManager: NetworkManager
     /// <param name="playerControllerId"></param>
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
-        Debug.Log("Adding Player");
-
-        // Add the initial ship data to the ship attributes
-        //playerGO.GetComponent<ShipAttributes>().Ship = ShipLibrary.GetShip("Mammoth XI");
-
         GameMSG.AddNewPlayer
             (playerControllerId, conn); 
     }
 
     public override void OnServerReady(NetworkConnection conn)
     {
-        Debug.Log("Client is Ready");
+        // This is where we would pass the game parameters
+
+        Space.InitializeSpaceParameters();
+
+        GameMSG.InitializeGameParameters();
 
         base.OnServerReady(conn);
     }
@@ -218,6 +215,18 @@ public class GameManager: NetworkManager
                 _base.GUIMsg = GameObject.Find("_gui").GetComponent<UIMessegeHandler>();
 
             return _base.GUIMsg;
+        }
+    }
+
+    public static SpaceManager Space
+    {
+        get
+        {
+            // Add new spawned ship to 
+            if (_base.Space == null)
+                _base.Space = GameObject.Find("space").GetComponent<SpaceManager>();
+
+            return _base.Space;
         }
     }
 

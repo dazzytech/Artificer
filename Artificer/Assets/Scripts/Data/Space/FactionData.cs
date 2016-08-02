@@ -6,7 +6,7 @@ namespace Data.Space
     public struct FactionData
     {
         // Unique faction identifier
-        public short ID;
+        public int ID;
 
         // Faction name
         public string Name;
@@ -18,6 +18,6 @@ namespace Data.Space
         public string[] Styles;
 
         //Faction logo
-        public Texture2D Icon;
+        public string Icon;
     }
 }

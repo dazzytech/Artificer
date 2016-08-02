@@ -8,7 +8,7 @@ using Space.UI.Tracker;
 
 namespace Space.UI
 {
-    public enum UIState {Play, Pause, Popup}
+    public enum UIState {Play, Pause, Popup, TeamPicker, SpawnPicker}
 
     /// <summary>
     /// Redirects incoming messages
@@ -21,6 +21,8 @@ namespace Space.UI
         public GameObject PlayRect;
         public GameObject PauseRect;
         public GameObject PopupRect;
+        public GameObject TeamSelectRect;
+        public GameObject SpawnPickerRect;
         private bool _keyDelay = false;
 
         #endregion
@@ -39,16 +41,36 @@ namespace Space.UI
                     PauseRect.SetActive(true);
                     PlayRect.SetActive(false);
                     PopupRect.SetActive(false);
+                    TeamSelectRect.SetActive(false);
+                    SpawnPickerRect.SetActive(false);
                     break;
                 case UIState.Play:
                     PauseRect.SetActive(false);
                     PlayRect.SetActive(true);
                     PopupRect.SetActive(false);
+                    TeamSelectRect.SetActive(false);
+                    SpawnPickerRect.SetActive(false);
                     break;
                 case UIState.Popup:
                     PauseRect.SetActive(false);
                     PlayRect.SetActive(false);
                     PopupRect.SetActive(true);
+                    TeamSelectRect.SetActive(false);
+                    SpawnPickerRect.SetActive(false);
+                    break;
+                case UIState.TeamPicker:
+                    PauseRect.SetActive(false);
+                    PlayRect.SetActive(false);
+                    PopupRect.SetActive(false);
+                    TeamSelectRect.SetActive(true);
+                    SpawnPickerRect.SetActive(false);
+                    break;
+                case UIState.SpawnPicker:
+                    PauseRect.SetActive(false);
+                    PlayRect.SetActive(false);
+                    PopupRect.SetActive(false);
+                    TeamSelectRect.SetActive(false);
+                    SpawnPickerRect.SetActive(true);
                     break;
             }
         }
@@ -147,6 +169,35 @@ namespace Space.UI
         {
             PopupRect.SendMessage("UpdateReward", val);
         }*/
+
+        #endregion
+
+        #region TEAM PICKER MESSAGES
+            
+        /// <summary>
+        /// Sets the team picker rect to show 
+        /// which team objects can be chosen
+        /// </summary>
+        /// <param name="teamA"></param>
+        /// <param name="teamB"></param>
+        public void SetTeamOptions(int teamA, int teamB)
+        {
+            TeamSelectRect.SendMessage("SetTeams", 
+                new int[2] { teamA, teamB });
+        }
+
+        #endregion
+
+        #region SPAWN PICKER MESSAGES
+
+        /// <summary>
+        /// Set the HUD spawn button to enable after a certain period
+        /// </summary>
+        /// <param name="delay"></param>
+        public void SetSpawnDelay(float delay)
+        {
+            SpawnPickerRect.SendMessage("SetSpawnTimer", delay);
+        }
 
         #endregion
 
