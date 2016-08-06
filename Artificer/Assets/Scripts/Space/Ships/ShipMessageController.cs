@@ -54,16 +54,6 @@ namespace Space.Ship
             _ship = GetComponent<ShipAttributes>();
         }
 
-        void OnDestroy()
-        {
-            DestroyDespatch DD = new DestroyDespatch();
-            DD.AggressorTag = _ship.AggressorTag;
-            DD.AlignmentLabel = _ship.AlignmentLabel;
-            DD.Self = netId;
-
-            OnShipDestroyed(DD);
-        }
-
         #endregion
 
         #region INCOMING MESSAGES
@@ -82,7 +72,7 @@ namespace Space.Ship
             foreach (MaterialData mat in data.Keys)
             {
                 // Set to popup gui
-                MessageHUD.DisplayMessege(new MsgParam("small", "You have collected: " +
+                GameManager.GUI.DisplayMessege(new MsgParam("small", "You have collected: " +
                     (data[mat]).ToString("F2")
                        + " - " + mat.Element));
             }
@@ -253,6 +243,8 @@ namespace Space.Ship
             SendMessage("BuildColliders");
 
             CmdRemoveComponent(dead, this.transform.position);
+
+            Destroy();
         }
 
         /// <summary>
@@ -344,6 +336,19 @@ namespace Space.Ship
         public void RpcRemoveComponent(int[] dead)
         {
             SendMessage("BuildColliders");
+        }
+
+        /// <summary>
+        /// Triggers destroyed event 
+        /// </summary>
+        private void Destroy()
+        {
+            DestroyDespatch DD = new DestroyDespatch();
+            DD.AggressorTag = _ship.AggressorTag;
+            DD.AlignmentLabel = _ship.AlignmentLabel;
+            DD.Self = netId;
+
+            OnShipDestroyed(DD);
         }
 
         #endregion

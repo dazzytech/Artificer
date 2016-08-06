@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Data.Shared;
 using Data.Space;
 using Space.Segment.Generator;
+using Space.Teams;
 
 namespace Space.GameFunctions
 {
@@ -36,61 +37,28 @@ namespace Space.GameFunctions
         /// proximity and sends this to the team spawner
         /// </summary>
         [Server]
-        public void GenerateSpawners()
+        public void GenerateStations(TeamController teamA, TeamController teamB)
         {
-            SpawnPointData[] spawns = new SpawnPointData[5];
+            // place team A at the top half of the map
+            Vector2 teamAPos = new Vector2(2500, 1000);
 
-            // store previous points of spawns for quick access
-            Vector2[] prevPoints = new Vector2[5];
+            // Place team B at the other half
+            Vector2 teamBPos = new Vector2(2500, 3000);
 
-            //generate the five spawns near the middle
-            for(int i = 0; i < 5; i++)
-            {
-                // track if too close to another point
-                bool tooClose = true;
+            // Create a main station position within team As location
+            Vector2 stationAPosition = new Vector2
+                (Random.Range((teamAPos.x - 50), (teamAPos.x + 50)),
+                 Random.Range((teamAPos.y - 50), (teamAPos.y + 50)));
 
-                // how close is too close
-                float minDistance = 5;
+            // Create a main station position within team Bs location
+            Vector2 stationBPosition = new Vector2
+                (Random.Range((teamBPos.x - 50), (teamBPos.x + 50)),
+                 Random.Range((teamBPos.y - 50), (teamBPos.y + 50)));
 
-                // keep counter to avoid too many loops
-                int loops = 0;
+            // for now only send one vector position
+            teamA.Spawner.AddStation(stationAPosition);
 
-                // create vector around center
-                Vector2 pos = new Vector2(Random.Range(2450, 2550), Random.Range(2450, 2550));
-
-                while(tooClose)
-                {
-                    tooClose = false;
-
-                    // go through each point previously added
-                    foreach(Vector2 prev in prevPoints)
-                    {
-                        // make sure this has actually been assigned
-                        if(prev != Vector2.zero)
-                        {
-                            // check distance, but alsojust accept if we have checked 10 times
-                            if (Vector2.Distance(pos, prev) < minDistance && loops < 10)
-                            {
-                                // we are too close
-                                tooClose = true;
-                                pos = new Vector2(Random.Range(2450, 2550),
-                                    Random.Range(2450, 2550));
-                                break;
-                            }
-                        }
-                    }
-
-                    // Iterate counter
-                    loops++;
-                }
-                 
-                // Assign to our spawn list
-                spawns[i] = BuildSpawn("playerSpawn", pos);
-                prevPoints[i] = pos;
-            }
-
-            // send these spawns to the teamspawner
-            //GameManager.GameMSG.ImportSpawnList(spawns);
+            teamB.Spawner.AddStation(stationBPosition);
         }
 
         #endregion

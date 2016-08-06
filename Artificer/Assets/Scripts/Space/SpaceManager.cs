@@ -50,10 +50,8 @@ namespace Space
         public override void OnStartLocalPlayer()
         {
             // Enter space segment
-            MessageHUD.DisplayMessege(new MsgParam("bold",
+            GameManager.GUI.DisplayMessege(new MsgParam("bold",
                                                    "Entering space segment"));
-
-            
 
             base.OnStartLocalPlayer();
         }

@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
+
+using Space.GameFunctions;
 
 namespace Space.UI.Spawn
 {
@@ -33,7 +37,12 @@ namespace Space.UI.Spawn
         public void SpawnPressed()
         {
             // For now we don't use spawn or ship info
-            GameManager.GameMSG.CmdSpawnPlayerAt(GameManager.Space.ID, 0, 0);
+            SpawnSelectionMessage ssm = new SpawnSelectionMessage();
+            ssm.PlayerID = GameManager.Space.ID;
+            ssm.ShipID = 0;
+            ssm.SpawnID = 0;
+
+            GameManager.singleton.client.Send(MsgType.Highest + 8, ssm);
         }
 
         /// <summary>

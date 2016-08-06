@@ -91,10 +91,10 @@ namespace Space.Segment
         /// </summary>
         private void EnterSegment()
         {
-            MessageHUD.DisplayMessege(new MsgParam("bold",
-                "Initializing server space segment - User Count: " + (++_att.playerCount).ToString()));
+           // GameManager.GUI.DisplayMessege(new MsgParam("bold",
+               // "Initializing server space segment - User Count: " + (++_att.playerCount).ToString()));
 
-            MessageHUD.DisplayMessege(new MsgParam("bold", "Retreiving space."));
+           // GameManager.GUI.DisplayMessege(new MsgParam("bold", "Retreiving space."));
 
             _gen.GenerateBase();
 
@@ -120,7 +120,7 @@ namespace Space.Segment
         private void InitializeSegment()
         {
             // Initialize space segment if not created - server's job
-            MessageHUD.DisplayMessege(new MsgParam("bold", "Generating space..."));
+            //GameManager.GUI.DisplayMessege(new MsgParam("bold", "Generating space..."));
             //SegmentDataBuilder.BuildNewSegment(_att.Objects);
            //MessageHUD.DisplayMessege(new MsgParam("bold", "Finished!"));
         }
@@ -142,7 +142,6 @@ namespace Space.Segment
         /// <param name="player">Player.</param>
         private void OnPlayerUpdate(Transform playerShip)
         {
-
             // Check that player is within bounds of current segment
             if (!_att.MapBounds.Contains(playerShip.transform.position))
             {

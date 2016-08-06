@@ -8,9 +8,10 @@ using Space.GameFunctions;
 
 namespace Space.Teams.SpawnManagers
 {
-    public struct SpawnPointInformation
+    public class SpawnPointInformation
     {
-
+        public int ID;
+        public Vector2[] Spawns;
     }
 
     /// <summary>
@@ -25,13 +26,8 @@ namespace Space.Teams.SpawnManagers
     {
         #region ATTRIBUTES
 
-        // stores the station generator to return stations
-        //public StationGenerator stationGen;
-        // builds the team spawn points
-        public SpawnPointGenerator spawnGen;
-
         // temp list of spawn points
-        private SpawnPointData[] _spawns;
+        private List<SpawnPointInformation> _spawns;
 
         #endregion
 
@@ -45,37 +41,87 @@ namespace Space.Teams.SpawnManagers
         //}
 
         [Server]
-        public void ImportSpawnList(SpawnPointData[] spawns)
+        public void AddStation(Vector2 station)
         {
-            _spawns = spawns;
+            Vector2[] spawns = new Vector2[5];
+
+            //generate the five spawns near the middle
+            for (int i = 0; i < 5; i++)
+            {
+                // track if too close to another point
+                bool tooClose = true;
+
+                // how close is too close
+                float minDistance = 5;
+
+                // keep counter to avoid too many loops
+                int loops = 0;
+
+                // create vector around center
+                Vector2 pos = new Vector2(Random.Range(2450, 2550), Random.Range(2450, 2550));
+
+                while (tooClose)
+                {
+                    tooClose = false;
+
+                    // go through each point previously added
+                    foreach (Vector2 prev in spawns)
+                    {
+                        // make sure this has actually been assigned
+                        if (prev != Vector2.zero)
+                        {
+                            // check distance, but alsojust accept if we have checked 10 times
+                            if (Vector2.Distance(pos, prev) < minDistance && loops < 10)
+                            {
+                                // we are too close
+                                tooClose = true;
+                                pos = new Vector2(Random.Range(2450, 2550),
+                                    Random.Range(2450, 2550));
+                                break;
+                            }
+                        }
+                    }
+
+                    // Iterate counter
+                    loops++;
+                }
+
+                // Assign to our spawn list
+                spawns[i] = pos;
+            }
+
+            if (_spawns == null)
+                _spawns = new List<SpawnPointInformation>();
+
+            // Spawn point information initialisation
+            SpawnPointInformation sPInfo = new SpawnPointInformation();
+            sPInfo.ID = _spawns.Count;
+            sPInfo.Spawns = spawns;
+
+            _spawns.Add(sPInfo);
         }
 
         #endregion
 
         #region PLAYER SPAWNING
 
-        [Server]
-        private void SpawnPlayerShip(/*PlayerTrackInfo info*/)
-        {
-            //NetworkServer.ReplacePlayerForConnection
-               // (info.mConnection, info.mGO, info.mController);
-        }
-
         /// <summary>
         /// Spawns player at random spawnpoint for first time
         /// </summary>
         /// <param name="info"></param>
         [Server]
-        public GameObject SpawnPlayer(PlayerConnectionInfo info)
+        public GameObject SpawnPlayer(PlayerConnectionInfo info, int spawnID)
         {
+            SpawnPointInformation toSpawn = GetSPInfo(spawnID);
+
             // used to track if the immediate vicinity for spawning is clear
             bool areaClear = false;
 
             // Space in Units in a radius we want to be clear
             float minDistance = 2;
 
-            // take position from spawn point we want (TODO:player will select team spawn)
-            Vector2 newPosition = _spawns[Random.Range(0, _spawns.Length)].Position;
+            // take position from spawn point we want
+            Vector2 newPosition = toSpawn.Spawns[Random.Range(0, toSpawn.Spawns.Length)];
 
             // Check area is clear, if not then shift away and repeat
             while (!areaClear)
@@ -101,27 +147,32 @@ namespace Space.Teams.SpawnManagers
             // apply position
             playerObject.transform.position = newPosition;
 
-            // spawn player
-            if (!info.mSpawned)
-            {
-                if (NetworkServer.AddPlayerForConnection
-                    (info.mConnection, playerObject, info.mController))
-                {
-                    GameManager.GUI.RpcAddRemotePlayer
-                         (playerObject.GetComponent<NetworkIdentity>().netId);
-                }
-            }
-            else
-            {
-                if(NetworkServer.ReplacePlayerForConnection
-                 (info.mConnection, playerObject, info.mController))
-                {
-                    GameManager.GUI.RpcAddRemotePlayer
-                         (playerObject.GetComponent<NetworkIdentity>().netId);
-                }
-            }
+            NetworkServer.ReplacePlayerForConnection
+                 (info.mConnection, playerObject, info.mController);
 
             return playerObject;
+        }
+
+        #endregion
+
+        #region INTERNAL UTILITES
+
+        /// <summary>
+        /// returns correct spawn info or raises
+        /// error if invalid id
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private SpawnPointInformation GetSPInfo(int index)
+        {
+            foreach(SpawnPointInformation spawn in _spawns)
+            { 
+                if(spawn.ID == index)
+                    return spawn;
+            }
+
+            Debug.Log("Error: Team Spawn Manager - GetSPInfo: Spawn index not found!");
+            return null;
         }
 
         #endregion

@@ -45,16 +45,11 @@ namespace Space.Ship
         /// </summary>
         public override void OnStartClient()
         {
-            MessageHUD.DisplayMessege(new MsgParam("bold", "Start Client Spawned, ID:  " + this.netId.ToString()));
             // This player may have spawned before this client joined the game, 
             // so if that's the case, spawn it now. Otherwise, just wait for the RpcSpawnMe call.
             if (hasSpawned)
             {
                 SetUpPlayer();
-
-                // update 
-                GameManager.GUI.AddUIPiece
-                    (this.transform);
             }
         }
 

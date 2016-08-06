@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
 
 using Data.Space;
 using Data.Space.Library;
+using Space.GameFunctions;
 
 namespace Space.UI.Teams
 {
@@ -21,11 +23,13 @@ namespace Space.UI.Teams
         public RawImage TeamAIcon;
         public Text TeamAName;
         public Text TeamACount;
+        public RectTransform TeamARect;
 
         // TEAM B UI Elements
         public RawImage TeamBIcon;
         public Text TeamBName;
         public Text TeamBCount;
+        public RectTransform TeamBRect;
 
         #endregion
 
@@ -43,7 +47,17 @@ namespace Space.UI.Teams
 
             TeamBName.text = factionB.Name;
 
+            Texture2D iconA = Resources.Load("Textures/FactionTextures/" + 
+                factionA.Icon, typeof(Texture2D)) as Texture2D;
 
+            Texture2D iconB = Resources.Load("Textures/FactionTextures/" + 
+                factionB.Icon, typeof(Texture2D)) as Texture2D;
+
+            if (iconA != null)
+                TeamAIcon.texture = iconA;
+
+            if (iconB != null)
+                TeamBIcon.texture = iconB;
         }
 
         /// <summary>
@@ -52,8 +66,12 @@ namespace Space.UI.Teams
         /// <param name="selection"></param>
         public void SelectedTeam(int selection)
         {
-            GameManager.GameMSG.CmdAssignToTeam
-                (selection, GameManager.Space.ID);
+            // Create our message for the server
+            TeamSelectionMessage tsm = new TeamSelectionMessage();
+            tsm.ID = GameManager.Space.ID;
+            tsm.Selected = selection;
+            // Send message baack to server
+            GameManager.singleton.client.Send(MsgType.Highest + 7, tsm);
 
             GameManager.Space.InitializePlayer();
         }

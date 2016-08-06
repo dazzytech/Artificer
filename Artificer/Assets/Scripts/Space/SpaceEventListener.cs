@@ -137,8 +137,6 @@ namespace Space
         /// </summary>
         private void PlayerDeath()
         {
-            Debug.Log("Start player");
-
             // Prompt player to pick a spawn
             GameManager.GUI.SetState(UIState.SpawnPicker);
 
@@ -171,13 +169,10 @@ namespace Space
         /// </summary>
         private void LoadPlayerDataIntoScene()
         {
-            Debug.Log("Load player");
-            GameObject.Find("_gui").
-              SendMessage("BuildShipData");
-
             // Set to popup gui
-            GameObject.Find("_gui").
-                SendMessage("SetState", UIState.Play);
+            GameManager.GUI.SetState(UIState.Play);
+
+            GameManager.GUI.BuildShipData();
         }
 
         #endregion
@@ -197,9 +192,9 @@ namespace Space
             if(destroyed.AggressorTag == "PlayerShip")
             {
                 if(destroyed.AlignmentLabel == "Enemy")
-                    MessageHUD.DisplayMessege(new MsgParam("sm-green", "You have destroyed an enemy."));
+                    GameManager.GUI.DisplayMessege(new MsgParam("sm-green", "You have destroyed an enemy."));
                 if(destroyed.AlignmentLabel == "Friendly")
-                    MessageHUD.DisplayMessege(new MsgParam("sm-red", "You have destroyed an friendly."));
+                    GameManager.GUI.DisplayMessege(new MsgParam("sm-red", "You have destroyed an friendly."));
             }
         }
         
@@ -263,6 +258,10 @@ namespace Space
             GameManager.GUI.SetTeamOptions(tpm.teamOne, tpm.teamTwo);
         }
 
+        /// <summary>
+        /// Stores the ID assigned from the game controller
+        /// </summary>
+        /// <param name="netMsg"></param>
         public void OnNewIDMessage(NetworkMessage netMsg)
         {
             // Retreive variables and display options

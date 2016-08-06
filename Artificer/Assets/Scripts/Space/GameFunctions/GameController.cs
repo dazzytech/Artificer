@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using Data.Space;
 using Data.Space.Library;
@@ -83,20 +84,20 @@ namespace Space.GameFunctions
         {
             // Move parameters from param to member variables
 
-            _att.Builder.GenerateSpawners();
-
             // Initialize Teams
             bool teamsCompleted = false;
 
+            //UnityEngine.Random.seed = DateTime.Now.Millisecond;
+
             // pick our two teams first
-            FactionData teamAcon = FactionLibrary.ReturnFaction(Random.Range(0, 3));
+            FactionData teamAcon = FactionLibrary.ReturnFaction(UnityEngine.Random.Range(0, 3));
 
             FactionData teamBcon = new FactionData();
 
             // we dont want two of the same teams
             while(!teamsCompleted)
             {
-                teamBcon = FactionLibrary.ReturnFaction(Random.Range(0, 3));
+                teamBcon = FactionLibrary.ReturnFaction(UnityEngine.Random.Range(0, 3));
                 if (!teamAcon.Equals(teamBcon))
                     teamsCompleted = true;
             }
@@ -104,6 +105,10 @@ namespace Space.GameFunctions
             // Team objects should already be assigned
             _att.TeamA.Initialize(teamAcon);
             _att.TeamB.Initialize(teamBcon);
+
+            // Generated stations for the teams
+            _att.Builder.GenerateStations(_att.TeamA, _att.TeamB);
+
 
             // Initialize trackers
             /*
@@ -150,7 +155,6 @@ namespace Space.GameFunctions
             info.mController = playerControllerId;
             info.mConnection = conn;
             info.mTeam = -1;
-            info.mSpawned = false;
 
             // add player to tracking list
             _att.PlayerInfoList.Add(info);
@@ -198,11 +202,11 @@ namespace Space.GameFunctions
             {
                 // spawn with team A
                 // add station id in future
-                GO = _att.TeamA.Spawner.SpawnPlayer(info);
+                GO = _att.TeamA.Spawner.SpawnPlayer(info, stationID);
             }
             else
             {
-                GO = _att.TeamB.Spawner.SpawnPlayer(info);
+                GO = _att.TeamB.Spawner.SpawnPlayer(info, stationID);
             }
 
             // assign ship info

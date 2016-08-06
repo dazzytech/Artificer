@@ -25,13 +25,6 @@ namespace Space.Segment.Generator
                     AS.Engage();
                     break;
                 }
-                case "playerSpawn":
-                {
-                    newSpawnPoint.tag = "TeamSpawner";
-                    PlayerSpawner PS = newSpawnPoint.AddComponent<PlayerSpawner>();
-                    PS.SpawnDelay = 5f;
-                    break;
-                }
                 case "friendlySpawn":
                 {
                     newSpawnPoint.tag = "FriendlySpawn";

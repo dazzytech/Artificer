@@ -18,7 +18,6 @@ namespace Space.GameFunctions
         public short mController;
         public NetworkConnection mConnection;
         public int mTeam;
-        public bool mSpawned;
     }
 
     #endregion

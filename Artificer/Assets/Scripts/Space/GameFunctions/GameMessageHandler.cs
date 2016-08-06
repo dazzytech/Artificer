@@ -1,11 +1,33 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 
 using Data.Space;
 
 namespace Space.GameFunctions
 {
+    #region NETWORK MESSAGE OBJECTS 
+
+    /// <summary>
+    /// Message containig the ID of the client
+    /// and the team selected
+    /// </summary>
+    public class TeamSelectionMessage : MessageBase
+    {
+        public int Selected;
+        public int ID;
+    }
+
+    public class SpawnSelectionMessage : MessageBase
+    {
+        public int PlayerID;
+        public int SpawnID;
+        public int ShipID;
+    }
+
+    #endregion
+
     /// <summary>
     /// Handles messages sent from other parts of the program
     /// Has a refence to other parts 
@@ -13,6 +35,13 @@ namespace Space.GameFunctions
     public class GameMessageHandler : NetworkBehaviour
     {
         public GameController Con;
+
+        void Awake()
+        {
+            // For team selection
+            NetworkServer.RegisterHandler(MsgType.Highest + 7, OnAssignToTeam);
+            NetworkServer.RegisterHandler(MsgType.Highest + 8, OnSpawnPlayerAt);
+        }
 
         /// <summary>
         /// Adds the new player 
@@ -35,11 +64,12 @@ namespace Space.GameFunctions
         /// <param name="playerID"></param>
         /// <param name="SpawnID"></param>
         /// <param name="shipID"></param>
-        [Command]
-        public void CmdSpawnPlayerAt
-            (int playerID, int SpawnID, int shipID)
+        public void OnSpawnPlayerAt
+            (NetworkMessage netMsg)
         {
-            Con.SpawnPlayer(playerID, SpawnID, shipID);
+            // Retreive variables and display options
+            SpawnSelectionMessage ssm = netMsg.ReadMessage<SpawnSelectionMessage>();
+            Con.SpawnPlayer(ssm.PlayerID, ssm.SpawnID, ssm.ShipID);
         }
 
         /// <summary>
@@ -47,10 +77,11 @@ namespace Space.GameFunctions
         /// </summary>
         /// <param name="teamID"></param>
         /// <param name="playerID"></param>
-        [Command]
-        public void CmdAssignToTeam(int teamID, int playerID)
+        public void OnAssignToTeam(NetworkMessage netMsg)
         {
-            Con.AssignToTeam(teamID, playerID);
+            // Retreive variables and display options
+            TeamSelectionMessage tsm = netMsg.ReadMessage<TeamSelectionMessage>();
+            Con.AssignToTeam(tsm.Selected, tsm.ID);
         }
 
         /// <summary>

@@ -25,6 +25,9 @@ namespace Space.UI
         public GameObject SpawnPickerRect;
         private bool _keyDelay = false;
 
+        // messages
+        public MessageHUD MsgBase;
+
         #endregion
 
         #region STATE MANAGEMENT
@@ -43,6 +46,7 @@ namespace Space.UI
                     PopupRect.SetActive(false);
                     TeamSelectRect.SetActive(false);
                     SpawnPickerRect.SetActive(false);
+                    MsgBase.gameObject.SetActive(false);
                     break;
                 case UIState.Play:
                     PauseRect.SetActive(false);
@@ -50,6 +54,7 @@ namespace Space.UI
                     PopupRect.SetActive(false);
                     TeamSelectRect.SetActive(false);
                     SpawnPickerRect.SetActive(false);
+                    MsgBase.gameObject.SetActive(true);
                     break;
                 case UIState.Popup:
                     PauseRect.SetActive(false);
@@ -57,6 +62,7 @@ namespace Space.UI
                     PopupRect.SetActive(true);
                     TeamSelectRect.SetActive(false);
                     SpawnPickerRect.SetActive(false);
+                    MsgBase.gameObject.SetActive(true);
                     break;
                 case UIState.TeamPicker:
                     PauseRect.SetActive(false);
@@ -64,6 +70,7 @@ namespace Space.UI
                     PopupRect.SetActive(false);
                     TeamSelectRect.SetActive(true);
                     SpawnPickerRect.SetActive(false);
+                    MsgBase.gameObject.SetActive(false);
                     break;
                 case UIState.SpawnPicker:
                     PauseRect.SetActive(false);
@@ -71,6 +78,7 @@ namespace Space.UI
                     PopupRect.SetActive(false);
                     TeamSelectRect.SetActive(false);
                     SpawnPickerRect.SetActive(true);
+                    MsgBase.gameObject.SetActive(false);
                     break;
             }
         }
@@ -109,7 +117,11 @@ namespace Space.UI
         /// <param name="param"></param>
         public void DisplayMessege(MsgParam param)
         {
-            PlayRect.SendMessage("DisplayMessege", param);
+            //PlayRect.SendMessage("DisplayMessege", param);
+            if(MsgBase.gameObject.activeSelf)
+            {
+                MsgBase.DisplayMessege(param);
+            }
         }
 
         /// <summary>

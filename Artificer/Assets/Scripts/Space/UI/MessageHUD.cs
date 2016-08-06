@@ -35,7 +35,7 @@ namespace Space.UI
             messegeMax = 20;
         }
 
-        public static void DisplayMessege(MsgParam param)
+        public void DisplayMessege(MsgParam param)
         {
             GameObject disp = new GameObject();
             Text text = disp.AddComponent<Text>();

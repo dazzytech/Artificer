@@ -24,7 +24,7 @@ public class GameManager: NetworkManager
 
     #endregion
 
-    #region MONOGAME
+    #region MONO BEHAVIOUR
 
     void Start()
     {
@@ -41,6 +41,11 @@ public class GameManager: NetworkManager
     }
 
     #endregion
+
+    #region NETWORK BEHAVIOUR
+
+    #endregion
+
 
     #region PUBLIC INTERACTION
 
@@ -76,9 +81,13 @@ public class GameManager: NetworkManager
             singleton.StopHost();
     }
 
-    public static void SpawnPlayerShip()
+    public void InitServer()
     {
+        // This is where we would pass the game parameters
 
+        Space.InitializeSpaceParameters();
+
+        GameMSG.InitializeGameParameters();
     }
 
     #endregion
@@ -117,15 +126,9 @@ public class GameManager: NetworkManager
             (playerControllerId, conn); 
     }
 
-    public override void OnServerReady(NetworkConnection conn)
+    public override void OnServerSceneChanged(string sceneName)
     {
-        // This is where we would pass the game parameters
-
-        Space.InitializeSpaceParameters();
-
-        GameMSG.InitializeGameParameters();
-
-        base.OnServerReady(conn);
+        InitServer();
     }
 
     // CLIENT SIDE

@@ -48,7 +48,7 @@ namespace Space.UI.Ship
         // Use this for initialization
         public void BuildContractData (ContractData contract)
         {
-            _mission.SetContactData(contract);
+            //_mission.SetContactData(contract);
             //_tracker.SetContactData(contract);
         }
     }

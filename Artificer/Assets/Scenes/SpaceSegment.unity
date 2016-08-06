@@ -4628,7 +4628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -4662,8 +4662,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
+    m_HighlightedColor: {r: 0.39705884, g: 0.29487458, b: 0.29487458, a: 0.578}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -7554,7 +7554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &873041641
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9823,7 +9823,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac6423c04c5ccdb4f901b1da83d0e79e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnGen: {fileID: 0}
 --- !u!114 &1211362284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14429,6 +14428,7 @@ MonoBehaviour:
   PopupRect: {fileID: 1559320749}
   TeamSelectRect: {fileID: 1933346439}
   SpawnPickerRect: {fileID: 1378598535}
+  MsgBase: {fileID: 873041642}
 --- !u!114 &1653808580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15115,7 +15115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac6423c04c5ccdb4f901b1da83d0e79e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnGen: {fileID: 0}
 --- !u!114 &1694752608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16915,7 +16914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -16949,8 +16948,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
+    m_HighlightedColor: {r: 0.39705884, g: 0.29487458, b: 0.29487458, a: 0.578}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -17726,7 +17725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.102941155, g: 0.044658296, b: 0.044658296, a: 0.517}
+  m_Color: {r: 0.102941155, g: 0.044658296, b: 0.044658296, a: 0.403}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -17761,9 +17760,11 @@ MonoBehaviour:
   TeamAIcon: {fileID: 899788168}
   TeamAName: {fileID: 449953183}
   TeamACount: {fileID: 841833226}
+  TeamARect: {fileID: 0}
   TeamBIcon: {fileID: 1759009203}
   TeamBName: {fileID: 2119132109}
   TeamBCount: {fileID: 291267841}
+  TeamBRect: {fileID: 0}
 --- !u!1001 &1934138412
 Prefab:
   m_ObjectHideFlags: 0
@@ -18449,7 +18450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
