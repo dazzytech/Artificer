@@ -211,6 +211,8 @@ namespace Space.GameFunctions
 
             // assign ship info
             // e.g. ship name 
+            StringMessage sMsg = new StringMessage("");
+            NetworkServer.SendToClient(info.mConnection.connectionId, MsgType.Highest + 9, sMsg);
         }
 
         #endregion

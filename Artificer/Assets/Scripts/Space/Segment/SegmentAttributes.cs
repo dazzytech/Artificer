@@ -9,36 +9,19 @@ namespace Space.Segment
 {
     public struct SegmentObject
     {
-        //public int _id;
-        //public Vector2 _position;
-        //public Vector2 _size;
-        //public int _count;
+        public int _id;
+        public Vector2 _position;
+        public Vector2 _size;
+        public int _count;
 
-        //public string _name;
-        //public string _texturePath;
-        //public string _type;
+        public string _name;
+        public string _texturePath;
+        public string _type;
 
         // material yield when destroyed
         //public string[] _symbols;
     }
 
-    public class SyncListSO : SyncListStruct<SegmentObject>
-    {
-        /// <summary>
-    	/// Gets the type of the object 
-    	/// called in parameters.
-    	/// </summary>
-    	/// <returns>The objects of type.</returns>
-    	/// <param name="type">Type.</param>
-    	/*public List<SegmentObject> GetObjsOfType(string type)
-        {
-            List<SegmentObject> objs = new List<SegmentObject>();
-            foreach (SegmentObject obj in this)
-                if (obj._type == type)
-                    objs.Add(obj);
-            return objs;
-        }*/
-    }
 
     class SegmentAttributes: NetworkBehaviour
     {
@@ -52,7 +35,8 @@ namespace Space.Segment
             }
         }
 
-        //public SyncListSO SegObjs = new SyncListSO();
+        // nested within controller
+        public SegmentBehaviour.SyncListSO SegObjs = new SegmentBehaviour.SyncListSO();
 
         [SyncVar]
         public int playerCount;

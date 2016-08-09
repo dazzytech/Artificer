@@ -153,6 +153,16 @@ MonoBehaviour:
   Components: []
   Head: {fileID: 0}
   AlignmentLabel: 
+  Ship:
+    components: []
+    Name: 
+    Description: 
+    Category: 
+    PlayerMade: 0
+    CombatResponsive: 1
+    CombatActive: 0
+    Aligned: 0
+    Initialized: 0
   AggressorTag: 
   Targets: []
   SelfTargeted: []
@@ -164,16 +174,6 @@ MonoBehaviour:
     width: 0
     height: 0
   TargetDistance: 0
-  Ship:
-    components: []
-    Name: 
-    Description: 
-    Category: 
-    PlayerMade: 0
-    CombatResponsive: 1
-    CombatActive: 0
-    Aligned: 0
-    Initialized: 0
 --- !u!114 &11460230
 MonoBehaviour:
   m_ObjectHideFlags: 1

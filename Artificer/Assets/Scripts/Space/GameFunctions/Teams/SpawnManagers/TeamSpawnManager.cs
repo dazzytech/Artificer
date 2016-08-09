@@ -58,7 +58,9 @@ namespace Space.Teams.SpawnManagers
                 int loops = 0;
 
                 // create vector around center
-                Vector2 pos = new Vector2(Random.Range(2450, 2550), Random.Range(2450, 2550));
+                Vector2 pos = new Vector2
+                    (Random.Range((station.x - 5), (station.x + 5)),
+                    Random.Range((station.y - 5), (station.y + 5)));
 
                 while (tooClose)
                 {
@@ -75,8 +77,8 @@ namespace Space.Teams.SpawnManagers
                             {
                                 // we are too close
                                 tooClose = true;
-                                pos = new Vector2(Random.Range(2450, 2550),
-                                    Random.Range(2450, 2550));
+                                pos = new Vector2(Random.Range((station.x - 5), (station.x + 5)),
+                                    Random.Range((station.y - 5), (station.y + 5)));
                                 break;
                             }
                         }

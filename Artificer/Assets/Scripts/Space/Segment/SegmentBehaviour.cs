@@ -19,9 +19,51 @@ namespace Space.Segment
     public class SegmentBehaviour 
         : NetworkBehaviour
     {
+        #region NESTED SYNCLIST CLASS
+
+        public class SyncListSO : SyncListStruct<SegmentObject>
+        {
+            /// <summary>
+            /// Gets the type of the object 
+            /// called in parameters.
+            /// </summary>
+            /// <returns>The objects of type.</returns>
+            /// <param name="type">Type.</param>
+            public List<SegmentObject> GetObjsOfType(string type)
+            {
+                List<SegmentObject> objs = new List<SegmentObject>();
+                foreach (SegmentObject obj in this)
+                    if (obj._type == type)
+                        objs.Add(obj);
+                return objs;
+            }
+        }
+
+        // sync list callback
+        public void SyncListGOAdded(SyncListSO.Operation op, int index)
+        {
+            /*MessageHUD.DisplayMessege(new MsgParam("sm-green", ("\nName: " + _att.SegObjs[index]._name +
+                 ", Position: " + _att.SegObjs[index]._position.ToString() +
+                 ", Type: " + _att.SegObjs[index]._type + "\n")));*/
+        }
+
+        #endregion
+
+        #region ATTRIBUTES
+
         private SegmentGenerator _gen;
         private SegmentAttributes _att;
-        
+
+        private bool _segInit;
+
+        // Stores textures for player colours
+        private Texture2D playerCursorCombat;
+        private Texture2D playerCursorTurning;
+
+        #endregion
+
+        #region MONO BEHAVIOUR
+
         void Awake()
         {
             _gen = GetComponent<SegmentGenerator>();
@@ -41,16 +83,35 @@ namespace Space.Segment
             Cursor.SetCursor(null, new Vector2(16, 16), CursorMode.Auto);
         }
 
+        void Start()
+        {
+            // Segment is seperate from game functions 
+            // so is encapsulated
+
+            _att.SegObjs.Callback += SyncListGOAdded;
+
+            // initialize cursor
+            playerCursorCombat =
+                Resources.Load("Textures/playerCursorCombat")
+                    as Texture2D;
+            playerCursorTurning =
+                Resources.Load("Textures/playerCursorTurning")
+                    as Texture2D;
+
+            _segInit = false;
+        }
+
+        #endregion
+
+        #region NETWORK BEHAVIOUR
+
         /// <summary>
-        /// Raises the start client event.
         /// Builds the space segment before the player 
         /// object is created
         /// </summary>
         public override void OnStartClient()
         {
-            Debug.Log("Segment Start Local Player");
-
-            EnterSegment();
+            _gen.GenerateBase();
         }
 
         /// <summary>
@@ -61,54 +122,18 @@ namespace Space.Segment
             InitializeSegment();
         }
 
-        /*(public override void OnStartAuthority()
-        {
-            Debug.Log("Authority Start");
+        #endregion
 
-            //base.OnStartServer();
-          * 
-        }*/
-
-        void Start()
-        {
-            // Segment is seperate from game functions 
-            // so is encapsulated
-
-            //_att.SegObjs.Callback += SyncListGOAdded;
-
-            //if (isServer)
-              //  InitializeSegment();
-        }
-
-        // Stores space
-        Texture2D playerCursorCombat;
-        Texture2D playerCursorTurning;
+        #region SEGMENT INITIALIZATION
 
         /// <summary>
-        /// Builds the space enviroment is server
-        /// and initializes playercam and space generation
-        /// for clients
+        /// Starts the process of making 
+        /// objects within range visable
         /// </summary>
         private void EnterSegment()
         {
-           // GameManager.GUI.DisplayMessege(new MsgParam("bold",
-               // "Initializing server space segment - User Count: " + (++_att.playerCount).ToString()));
-
-           // GameManager.GUI.DisplayMessege(new MsgParam("bold", "Retreiving space."));
-
-            _gen.GenerateBase();
-
-            //MessageHUD.DisplayMessege(new MsgParam("md-green", "\nObject Count: " + _att.SegObjs.Count));
-
-            //_gen.GenerateSegment(_att.Objects);
-
-            // initialize cursor
-            playerCursorCombat = 
-                Resources.Load ("Textures/playerCursorCombat") 
-                    as Texture2D;
-            playerCursorTurning = 
-                Resources.Load ("Textures/playerCursorTurning") 
-                    as Texture2D;
+            _gen.StartSegmentCycle();
+            _segInit = true;
         }
 
         /// <summary>
@@ -121,29 +146,30 @@ namespace Space.Segment
         {
             // Initialize space segment if not created - server's job
             //GameManager.GUI.DisplayMessege(new MsgParam("bold", "Generating space..."));
-            //SegmentDataBuilder.BuildNewSegment(_att.Objects);
+            SegmentObject[] sObjs = SegmentDataBuilder.BuildNewSegment();
+
+            foreach (SegmentObject sObj in sObjs)
+                _att.SegObjs.Add(sObj);
            //MessageHUD.DisplayMessege(new MsgParam("bold", "Finished!"));
         }
 
-        public void SyncListGOAdded(SyncListSO.Operation op, int index)
-        {
-            Debug.Log("list changed " + op);
+        #endregion
 
-            /*MessageHUD.DisplayMessege(new MsgParam("sm-green", ("\nName: " + _att.SegObjs[index]._name +
-                 ", Position: " + _att.SegObjs[index]._position.ToString() +
-                 ", Type: " + _att.SegObjs[index]._type + "\n")));*/
-        }
+        #region EVENT LISTENER
 
         /// <summary>
         /// Raises the player update event.
-        /// detects to see if player is leaving the area.
         /// also updates cursor
         /// </summary>
         /// <param name="player">Player.</param>
         private void OnPlayerUpdate(Transform playerShip)
         {
+            // initialize segment 
+            if (!_segInit)
+                EnterSegment();
+
             // Check that player is within bounds of current segment
-            if (!_att.MapBounds.Contains(playerShip.transform.position))
+            /*if (!_att.MapBounds.Contains(playerShip.transform.position))
             {
                 Vector2 temp = playerShip.transform.position;
                 // Boundary detection
@@ -157,7 +183,7 @@ namespace Space.Segment
                     temp.y -= 1;
                 else if (playerShip.transform.position.y >= _att.MapSize.y)
                     temp.y += 1;
-            }
+            }*/
 
             // retrive ship attributes
             ShipData ship = playerShip.GetComponent<ShipAttributes>().Ship;
@@ -178,6 +204,8 @@ namespace Space.Segment
                 Cursor.SetCursor(null, new Vector2(16, 16), CursorMode.Auto);
             }
         }
+
+        #endregion
     }
 }
 

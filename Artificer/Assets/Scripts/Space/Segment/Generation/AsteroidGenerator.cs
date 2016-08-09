@@ -6,7 +6,7 @@ namespace Space.Segment.Generator
 {
     public class AsteroidGenerator : MonoBehaviour
     {
-        /*public GameObject GenerateField(SegmentObject aData)
+        public GameObject GenerateField(SegmentObject aData)
         {
             GameObject field = new GameObject ();
             field.name = "asteroidBelt";
@@ -31,8 +31,8 @@ namespace Space.Segment.Generator
                                 scale, 1f);
                 asteroid.GetComponent<Rigidbody2D>().mass = scale;
                 
-                AsteroidBehaviour behaviour = asteroid.AddComponent<AsteroidBehaviour>();
-                behaviour.rockDensity = 20f * scale;
+               // AsteroidBehaviour behaviour = asteroid.AddComponent<AsteroidBehaviour>();
+                //behaviour.rockDensity = 20f * scale;
                 //behaviour.prospect = aData._symbols;
                 ACount++;
             }
@@ -61,10 +61,10 @@ namespace Space.Segment.Generator
             rb.AddForce(velocity, ForceMode2D.Force);
             
             AsteroidBehaviour behaviour = asteroid.AddComponent<AsteroidBehaviour>();
-            behaviour.rockDensity = 20f * scale;
+            //behaviour.rockDensity = 20f * scale;
             //behaviour.prospect = aData._symbols;
 
             return asteroid;
-        }*/
+        }
     }
 }

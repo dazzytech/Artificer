@@ -1924,7 +1924,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelPaused: 0
   Version: Artificer_v.0.63
-  PlayerSpawn: {fileID: 0}
+  GameMsg: {fileID: 0}
+  GUIMsg: {fileID: 0}
+  Space: {fileID: 0}
 --- !u!4 &174379682
 Transform:
   m_ObjectHideFlags: 0
@@ -12026,10 +12028,13 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11467084, guid: 6f4b89ae1570ed24aa5770d7772d4bd2, type: 2}
       propertyPath: m_Text
-      value: 'Art Assets by Skorpio
+      value: 'Art Assets by:
 
 
         http://opengameart.org/users/skorpio
+
+
+        http://opengameart.org/users/unnamed
 
 '
       objectReference: {fileID: 0}
@@ -12043,11 +12048,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11467084, guid: 6f4b89ae1570ed24aa5770d7772d4bd2, type: 2}
       propertyPath: m_Color.g
-      value: .566176474
+      value: 0.5661765
       objectReference: {fileID: 0}
     - target: {fileID: 11467084, guid: 6f4b89ae1570ed24aa5770d7772d4bd2, type: 2}
       propertyPath: m_Color.b
-      value: .700151384
+      value: 0.7001514
       objectReference: {fileID: 0}
     - target: {fileID: 11467084, guid: 6f4b89ae1570ed24aa5770d7772d4bd2, type: 2}
       propertyPath: m_Color.r

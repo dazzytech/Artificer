@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Networking.NetworkSystem;
 using System;
 using System.Collections;
 using Serializer;
@@ -28,18 +29,6 @@ namespace Space.Ship
         #endregion
 
         #region ONSTART OVERRIDES
-
-        /// <summary>
-        /// When creating our own ship
-        /// pass the shipdata to the server
-        /// </summary>
-        public override void OnStartAuthority()
-        {
-            //Get your spawnData from somewhere
-            //Tell the server to spawn this player
-            CmdSpawnMe(ByteSerializer.getBytes(ShipLibrary.GetShip("Mammoth XI")));
-        }
-
         /// <summary>
         /// Builds the ship if it was build on server already
         /// </summary>
@@ -55,6 +44,15 @@ namespace Space.Ship
 
         #endregion
 
+        #region MONO BEHAVIOUR
+
+        void Awake()
+        {
+            NetworkManager.singleton.client.RegisterHandler(MsgType.Highest + 9, OnSpawnMe);
+        }
+
+        #endregion
+
         #region SHIP INITIALIZATION
 
         /// <summary>
@@ -62,13 +60,21 @@ namespace Space.Ship
         /// to the player's own ship data variable
         /// </summary>
         /// <param name="a_data">ship data to pass</param>
-        [Command]
-        private void CmdSpawnMe(byte[] a_data)
+        private void OnSpawnMe(NetworkMessage netMsg)
         {
             //MessageHUD.DisplayMessege(new MsgParam("bold", "Running Command: " + (a_data.GetComponents() == null).ToString()));
-            Ship = ByteSerializer.fromBytes(a_data);
+            CmdSpawnMe(Serializer.ByteSerializer.getBytes(ShipLibrary.GetShip("Mammoth XI")));
+        }
+
+        [Command]
+        private void CmdSpawnMe(byte[] shipInfo)
+        {
+            if (hasSpawned)
+                return; 
+
             hasSpawned = true;
-            RpcSpawnMe(a_data);
+            Ship = Serializer.ByteSerializer.fromBytes(shipInfo);
+            RpcSpawnMe(shipInfo);
         }
 
         /// <summary>
@@ -76,12 +82,12 @@ namespace Space.Ship
         /// </summary>
         /// <param name="a_data">ship data to pass</param>
         [ClientRpc]
-        private void RpcSpawnMe(byte[] a_data)
+        private void RpcSpawnMe(byte[] shipInfo)
         {
             //spawnData will be synced by the server automatically,
             //but I don't trust it to arrive before this call, so I pass it into
             //this function anyway to be sure.
-            Ship = ByteSerializer.fromBytes(a_data);
+            Ship = Serializer.ByteSerializer.fromBytes(shipInfo);
             SetUpPlayer();
             _ship.instID = this.netId;
         }
@@ -96,6 +102,10 @@ namespace Space.Ship
 
             //Build the object with spawnData
             ShipGenerator.GenerateShip(Ship, this.gameObject);
+
+            // add network proximity checker
+            NetworkProximityChecker npc = gameObject.AddComponent<NetworkProximityChecker>();
+            npc.checkMethod = NetworkProximityChecker.CheckMethod.Physics2D;
 
             // we will add player interaction if this is our ship
             if (isLocalPlayer)

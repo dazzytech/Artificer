@@ -150,17 +150,7 @@ namespace Space
             PlayerSpawner PS = spawnObjs [Random.Range(0,
                       spawnObjs.Length)].GetComponent<PlayerSpawner>();
 
-            PS.Engage();
-
-            // Set to popup gui
-            GameObject.Find("_gui").
-                SendMessage("SetState", UIState.Popup);
-
-            // Set to popup gui
-            GameObject.Find("_gui").
-                SendMessage("SetCounter", 5f);
-            // Set Popup UI to respawn view 
-            */
+            PS.Engage();*/
         }
 
         /// <summary>

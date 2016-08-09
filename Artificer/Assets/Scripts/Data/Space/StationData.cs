@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 // Artificer
 using Data.Space;
+
 /*
 namespace Data.Space
 {
@@ -38,5 +39,4 @@ namespace Data.Space
     		get { return "Textures/StationTextures/" + _texturePath;}
     	}
     }
-}
-*/
+}*/

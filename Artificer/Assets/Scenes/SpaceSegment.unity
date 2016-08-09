@@ -483,7 +483,7 @@ Transform:
   - {fileID: 1211362282}
   - {fileID: 1694752606}
   m_Father: {fileID: 1368435019}
-  m_RootOrder: 7
+  m_RootOrder: 6
 --- !u!1001 &61469122
 Prefab:
   m_ObjectHideFlags: 0
@@ -971,7 +971,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1368435019}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!114 &100489211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2795,7 +2795,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1368435019}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!114 &312580315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3226,7 +3226,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1368435019}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!114 &434335260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8185,7 +8185,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1368435019}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!114 &953074365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8499,7 +8499,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1368435019}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!114 &985474240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11536,7 +11536,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 597149673}
-  - {fileID: 1654673872}
   - {fileID: 312580314}
   - {fileID: 985474239}
   - {fileID: 953074364}
@@ -14461,46 +14460,6 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!1 &1654673871
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1654673872}
-  - 114: {fileID: 1654673873}
-  m_Layer: 0
-  m_Name: _stations
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1654673872
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1654673871}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 1368435019}
-  m_RootOrder: 1
---- !u!114 &1654673873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1654673871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40dccd8989cab404dbadd60a32b5bc8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1658477784
 Prefab:
   m_ObjectHideFlags: 0
@@ -15065,14 +15024,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shipGen: {fileID: 597149674}
-  _stationGen: {fileID: 1654673873}
   _asteroidGen: {fileID: 985474240}
-  _satelliteGen: {fileID: 312580315}
+  _segmentObjectGen: {fileID: 312580315}
   _spawnGen: {fileID: 953074365}
   _nodeGen: {fileID: 100489211}
   defaultSpawnDistance: 500
   stationSpawnDistance: 2000
   asteroidSpawnDistance: 1050
+  SatellitePrefab: {fileID: 175094, guid: c1fe0a9a4dde9214a9566f0bf63d3f3e, type: 2}
 --- !u!1 &1694752605
 GameObject:
   m_ObjectHideFlags: 0
@@ -19171,7 +19130,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shipGen: {fileID: 0}
-  _stationGen: {fileID: 0}
   _asteroidGen: {fileID: 0}
   _spawnGen: {fileID: 0}
   _nodeGen: {fileID: 0}

@@ -20,13 +20,11 @@ namespace Menu.Server
 
         public void StartHost()
         {
-            Debug.Log("Placeholder");
             GameManager.CreateHostedGame();
         }
 
         public void JoinClient()
         {
-            Debug.Log("Placeholder");
             GameManager.JoinAsClient(address.text);
         }
     }

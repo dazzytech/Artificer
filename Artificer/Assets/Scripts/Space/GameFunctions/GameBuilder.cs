@@ -20,7 +20,6 @@ namespace Space.GameFunctions
 
         // Generator Objects
         public ShipGenerator _shipGen;
-        public StationGenerator _stationGen;
         public AsteroidGenerator _asteroidGen;
         public SpawnPointGenerator _spawnGen;
         public NodeGenerator _nodeGen;

@@ -16,57 +16,37 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.276 seconds
+- Completed reload, in  0.288 seconds
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1360x768 60Hz; virtual: 1360x768 at 0,0
 <RI> Initialized touch support.
-UnloadTime: 1.319511 ms
+UnloadTime: 1.178222 ms
 DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
  
 (Filename:  Line: 374)
 
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
-Placeholder
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
-
 Start Client
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
 
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.893778 ms
+UnloadTime: 3.996667 ms
 Scene Changed
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
 
 
-Unloading 582 unused Assets to reduce memory usage. Loaded Objects now: 1888.
-Total: 1.587911 ms (FindLiveObjects: 0.141777 ms CreateObjectMapping: 0.096800 ms MarkObjects: 1.035466 ms  DeleteObjects: 0.308977 ms)
+Unloading 593 unused Assets to reduce memory usage. Loaded Objects now: 2525.
+Total: 1.949689 ms (FindLiveObjects: 0.183822 ms CreateObjectMapping: 0.111466 ms MarkObjects: 1.403600 ms  DeleteObjects: 0.246400 ms)
 
-Segment Start Local Player
+Log: connection {1} has been disconnected by timeout; address {::ffff:127.0.0.1:53759}
+Empty player list given to NetworkServer.Destroy(), nothing to do.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
 
-Log: connection {1} has been disconnected by timeout; address {::ffff:127.0.0.1:7777}
-NullReferenceException: Object reference not set to an instance of an object
-  at Space.Ship.ShipMessageController.OnDestroy () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-NullReferenceException: Object reference not set to an instance of an object
-  at Space.Ship.ShipMessageController.OnDestroy () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-UnloadTime: 1.228577 ms
-
-Unloading 575 unused Assets to reduce memory usage. Loaded Objects now: 2351.
-Total: 1.892489 ms (FindLiveObjects: 0.155955 ms CreateObjectMapping: 0.063066 ms MarkObjects: 1.490133 ms  DeleteObjects: 0.178444 ms)
-
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 1270 -> priority: 1 
+  Thread -> id: 187c -> priority: 1 

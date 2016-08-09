@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 
 using Data.Space;
 using Data.Shared;
@@ -13,6 +15,8 @@ namespace Space.Segment
     /// </summary>
     public class SegmentDataBuilder 
     {
+        #region PUBLIC INTERACTION
+
         /// <summary>
         /// Builds the new segment.
         /// randomly generated objects
@@ -25,8 +29,39 @@ namespace Space.Segment
         /// 
         /// </summary>
         /// <returns>The new segment.</returns>
-        /*public static void BuildNewSegment(SyncListSO SyncList)
+        public static SegmentObject[] BuildNewSegment()
         {
+            List<SegmentObject> SyncList = new List<SegmentObject>();
+
+            // between 7 and 14 planets
+            //int planets = Random.Range(7, 14);
+            //float planetDistance = 300; // 300 units between each planet
+            //Vector2[] prevPPos = new Vector2[planets];
+
+            /*for(int i = 0; i <= planets; i++)
+            {
+                bool tooclose = true;
+
+                Vector2 newPos = Vector2.zero;
+
+                while (tooclose)
+                {
+                    tooclose = false;
+
+                    newPos = new Vector2
+                    (Random.Range(100f, 4900f),
+                     Random.Range(100f, 4900f));
+
+                    foreach(Vector2 prev in prevPPos)
+                    {
+                        if (Vector2.Distance(newPos, prev) < planetDistance)
+                            tooclose = true;
+                    }
+                }
+
+                //SyncList.Add(BuildPlanet(newPos));
+            }*/
+             
             // Generate a selection of asteroid fields
             int fields = Random.Range(6, 20);
             for (int i = 0; i <= fields; i++)
@@ -46,7 +81,13 @@ namespace Space.Segment
                     (Random.Range(100f, 4900f),
                      Random.Range(100f, 4900f))));
             }
-        }*/
+
+            return SyncList.ToArray();
+        }
+
+        #endregion
+
+        #region DATA BUILDERS
 
         /*
         /// <summary>
@@ -67,20 +108,45 @@ namespace Space.Segment
             return station;
         }*/
 
+        /*private static SegmentObject BuildPlanet(Vector2 planetPos)
+        {
+            // Create the start object
+            SegmentObject planet = new SegmentObject();
+
+            // Pick a random texture
+
+            // Get directory list of textures
+            string path = (System.Environment.CurrentDirectory + 
+                "\\Assets\\Resources\\Textures\\PlanetTextures");
+
+            string[] fileEntries = Directory.GetFiles(path);
+
+            // assign info and pick random planet texture
+            planet._type = "planet";
+            planet._name = "planet";
+            planet._texturePath = "Textures/PlanetTextures/" + 
+                System.IO.Path.GetFileNameWithoutExtension
+                (fileEntries[Random.Range(0, fileEntries.Length)]);
+
+            planet._position = planetPos;
+
+            return planet;
+        }*/
+
         /// <summary>
         /// Builds a satellite object and returns it
         /// </summary>
         /// <param name="station"></param>
         /// <returns></returns>
-        /*private static SegmentObject BuildSatellite(Vector2 planet)
+        private static SegmentObject BuildSatellite(Vector2 planet)
         {
             // build base object
             SegmentObject satellite = new SegmentObject();
 
             // Set descriptive info
-            //satellite._type = "satellite";
-           // satellite._texturePath = "Textures/SatelliteTextures/satellite_01";
-            //satellite._name = "satellite";
+            satellite._type = "satellite";
+            satellite._texturePath = "Textures/SatelliteTextures/satellite_01";
+            satellite._name = "satellite";
 
             // Set numeric data
             satellite._position = new Vector2
@@ -96,16 +162,16 @@ namespace Space.Segment
             SegmentObject aField = new SegmentObject();
 
             // Set descriptive info
-            //aField._type = "asteroid";
-            //aField._texturePath = "Space/asteroid";
-            //aField._name = "asteroid field";
+            aField._type = "asteroid";
+            aField._texturePath = "Space/asteroid";
+            aField._name = "asteroid field";
 
             // Set numeric data
-            //aField._position = position;
-           /* aField._size =
+            aField._position = position;
+            aField._size =
                 new Vector2(Random.Range(100, 500),
                 Random.Range(100, 500));
-            aField._count = Random.Range(50, 100);*/
+            aField._count = Random.Range(50, 100);
 
             /*switch (value)
             {
@@ -189,8 +255,10 @@ namespace Space.Segment
                         break;
                     }
             }
-
+            */
             return aField;
-        }*/
+        }
+
+        #endregion
     }
 }
