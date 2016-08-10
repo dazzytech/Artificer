@@ -2775,7 +2775,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 312580314}
-  - 114: {fileID: 312580315}
   m_Layer: 0
   m_Name: _satellites
   m_TagString: Untagged
@@ -2796,17 +2795,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1368435019}
   m_RootOrder: 1
---- !u!114 &312580315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 312580313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 451903ee3facbeb469e297852e3ae703, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &329679064
 GameObject:
   m_ObjectHideFlags: 0
@@ -8479,7 +8467,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 985474239}
-  - 114: {fileID: 985474240}
   m_Layer: 0
   m_Name: _asteroids
   m_TagString: Untagged
@@ -8500,17 +8487,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1368435019}
   m_RootOrder: 2
---- !u!114 &985474240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 985474238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 158775ec2ff67de44aac1a5193d6c339, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1003857925
 Prefab:
   m_ObjectHideFlags: 0
@@ -14936,6 +14912,7 @@ GameObject:
   - 114: {fileID: 1688872190}
   - 114: {fileID: 1688872187}
   - 114: {fileID: 1688872189}
+  - 114: {fileID: 1688872191}
   m_Layer: 0
   m_Name: segment
   m_TagString: Untagged
@@ -15024,14 +15001,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shipGen: {fileID: 597149674}
-  _asteroidGen: {fileID: 985474240}
-  _segmentObjectGen: {fileID: 312580315}
+  _segmentObjectGen: {fileID: 1688872191}
   _spawnGen: {fileID: 953074365}
   _nodeGen: {fileID: 100489211}
-  defaultSpawnDistance: 500
-  stationSpawnDistance: 2000
-  asteroidSpawnDistance: 1050
+--- !u!114 &1688872191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1688872185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 451903ee3facbeb469e297852e3ae703, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   SatellitePrefab: {fileID: 175094, guid: c1fe0a9a4dde9214a9566f0bf63d3f3e, type: 2}
+  AsteroidPrefab: {fileID: 197064, guid: 989a9aa3b67a4954c80bd74b13f2a2d4, type: 2}
 --- !u!1 &1694752605
 GameObject:
   m_ObjectHideFlags: 0
@@ -19155,7 +19140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1268a975b63488147bddad2aba100ca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Builder: {fileID: 0}
+  Builder: {fileID: 2057568945}
   TeamA: {fileID: 1211362284}
   TeamB: {fileID: 1694752608}
 --- !u!114 &2057568948

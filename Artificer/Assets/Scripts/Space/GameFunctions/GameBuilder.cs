@@ -19,10 +19,10 @@ namespace Space.GameFunctions
         #region ATTRIBUTES 
 
         // Generator Objects
-        public ShipGenerator _shipGen;
-        public AsteroidGenerator _asteroidGen;
-        public SpawnPointGenerator _spawnGen;
-        public NodeGenerator _nodeGen;
+        //public ShipGenerator _shipGen;
+       // public AsteroidGenerator _asteroidGen;
+        //public SpawnPointGenerator _spawnGen;
+        //public NodeGenerator _nodeGen;
 
         #endregion
 

@@ -1858,12 +1858,12 @@ MonoBehaviour:
   m_NetworkPort: 7777
   m_ServerBindToIP: 0
   m_ServerBindAddress: 
-  m_NetworkAddress: localhost
+  m_NetworkAddress: 192.168.1.94
   m_DontDestroyOnLoad: 1
   m_RunInBackground: 1
   m_ScriptCRCCheck: 0
   m_MaxDelay: 0.01
-  m_LogLevel: 2
+  m_LogLevel: 1
   m_PlayerPrefab: {fileID: 120812, guid: 38c98b8ba5ddec540906980955e1a8dc, type: 2}
   m_AutoCreatePlayer: 1
   m_PlayerSpawnMethod: 0
@@ -1872,6 +1872,9 @@ MonoBehaviour:
   m_SpawnPrefabs:
   - {fileID: 120856, guid: ace3482e178741e4bbd5233db59f622f, type: 2}
   - {fileID: 178506, guid: 87f3cc353526fb047936b76a6bf725f2, type: 2}
+  - {fileID: 175094, guid: c1fe0a9a4dde9214a9566f0bf63d3f3e, type: 2}
+  - {fileID: 197064, guid: 989a9aa3b67a4954c80bd74b13f2a2d4, type: 2}
+  - {fileID: 122420, guid: 070991070974b204e843d6b8141a482c, type: 2}
   m_CustomConfig: 1
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -1903,8 +1906,8 @@ MonoBehaviour:
   m_Channels: 0400000004000000
   m_UseWebSockets: 0
   m_UseSimulator: 0
-  m_SimulatedLatency: 1
-  m_PacketLossPercentage: 0
+  m_SimulatedLatency: 50
+  m_PacketLossPercentage: 1
   m_MatchHost: mm.unet.unity3d.com
   m_MatchPort: 443
   isNetworkActive: 0

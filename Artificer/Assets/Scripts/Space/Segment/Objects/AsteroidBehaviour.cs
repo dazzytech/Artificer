@@ -6,17 +6,76 @@ using Data.Space.Library;
 
 public class AsteroidBehaviour : NetworkBehaviour
 {
-    /*public float rockDensity; 
-    protected float maxDensity;
-    public string[] prospect;
 
-    protected Animator anim;
+    #region ATTRIUTES
+
+    [SyncVar]
+    private float _rockDensity;
+    private float _maxDensity;
+    [SyncVar]
+    private NetworkInstanceId _parentID;
+    [SyncVar]
+    private float _scale;
+
+    #endregion
+
+    #region MONO BEHAVIOUR
 
     void Start()
     {
-        maxDensity = rockDensity;
-        anim = GetComponent<Animator>();
+        // Check if we have been intialized by server
+        if (!_parentID.IsEmpty())
+            InitializeAsteroid();
+        //anim = GetComponent<Animator>();
     }
+
+    #endregion
+
+    #region SERVER INTERACTION
+
+    /// <summary>
+    /// Given parameters from server
+    /// </summary>
+    /// <param name="scale"></param>
+    /// <param name="parentID"></param>
+    [Server]
+    public void InitializeParameters(float scale, NetworkInstanceId parentID)
+    {
+        _scale = scale;
+        _rockDensity = 20f * _scale;
+        _parentID = parentID;
+
+        InitializeAsteroid();
+    }
+
+    #endregion
+
+    #region GAME OBJECT UTILITIES
+
+    /// <summary>
+    /// Use the parameters to create a working asteroid on
+    /// client and server
+    /// </summary>
+    private void InitializeAsteroid()
+    {
+        transform.parent = ClientScene.FindLocalObject(_parentID).transform;
+
+        transform.localScale =
+                    new Vector3(_scale,
+                                _scale, 1f);
+
+        GetComponent<Rigidbody2D>().mass = _scale;
+
+        _maxDensity = _rockDensity;
+    }
+
+    #endregion
+
+    //public string[] prospect;         Sync list string
+    /*
+    protected Animator anim;
+
+    
 
 	void OnCollisionEnter2D(Collision2D other)
 	{

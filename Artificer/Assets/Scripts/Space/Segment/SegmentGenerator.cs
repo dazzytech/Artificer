@@ -24,21 +24,13 @@ namespace Space.Segment
 
         // Generator Objects
         public ShipGenerator _shipGen;
-        public AsteroidGenerator _asteroidGen;
-        public SingleObjectGenerator _segmentObjectGen;
+        public SegmentObjectGenerator _segmentObjectGen;
         public SpawnPointGenerator _spawnGen;
         public NodeGenerator _nodeGen;
-
-        // default spawn distances
-        public float defaultSpawnDistance;
-        public float stationSpawnDistance;
-        public float asteroidSpawnDistance;
 
         private SegmentAttributes _att;
 
         private List<SegmentObject> SegObjs;
-
-        public GameObject SatellitePrefab;
 
         #endregion
 
@@ -150,25 +142,15 @@ namespace Space.Segment
             {
                 switch (segObj._type)
                 {
-                    case "asteroid":
+                    case "_asteroids":
                         // Build the game object in generator
-                        GameObject field = _asteroidGen.GenerateField
+                        _segmentObjectGen.GenerateField
                                 (segObj);
-
-                        // spawn on network? consider children
-
-
-                        // disable the object by default
-                        field.SetActive(false);
                         break;
-                    case "satellite":
+                    case "_satellites":
                         // Build the game object in generator
-                        GameObject newSatellite = _segmentObjectGen.GenerateSatellite
-                                (segObj, SatellitePrefab);
-
-                        NetworkServer.Spawn(newSatellite);
-
-                        // assign network inst id
+                        _segmentObjectGen.GenerateSatellite
+                                (segObj);
                         break;
                 }
 
@@ -181,6 +163,7 @@ namespace Space.Segment
         /// <summary>
         /// Cycles the segment.
         /// enables objects within range
+        /// only checks if objects are disabled
         /// </summary>
         /// <returns>The segment.</returns>
         /// <param name="segment">Segment.</param>
@@ -224,20 +207,20 @@ namespace Space.Segment
                          in _att.SegObjs.GetObjsOfType("asteroid")) 
                 {
                     // Spawn only within distance
-                    if(Vector3.Distance(playerPos, asteroid._position)
+                    /*if(Vector3.Distance(playerPos, asteroid._position)
                        < defaultSpawnDistance)
                     {
                         // Only spawn if not currently exists within space
                         if(!SegObjs.Contains(asteroid))
                         {
-                            GameObject field = _asteroidGen.GenerateField
-                                (asteroid);
+                            //GameObject field = _asteroidGen.GenerateField
+                               // (asteroid);
 
-                            SegmentObjectBehaviour obj = field.AddComponent<SegmentObjectBehaviour>();
+                            //SegmentObjectBehaviour obj = field.AddComponent<SegmentObjectBehaviour>();
                             //obj.Create(asteroidSpawnDistance, asteroid);
-                            SegObjs.Add(asteroid);
+                            //SegObjs.Add(asteroid);
                         }
-                    }
+                    }*/
                     yield return null;
                 }
                 
@@ -245,7 +228,7 @@ namespace Space.Segment
                          in _att.SegObjs.GetObjsOfType("satellite")) 
                 {
                     // Spawn only within distance
-                    if(Vector3.Distance(playerPos, satellite._position)
+                    /*if(Vector3.Distance(playerPos, satellite._position)
                        < defaultSpawnDistance)
                     {
                         // Only spawn if not currently exists within space
@@ -257,9 +240,9 @@ namespace Space.Segment
                             // Add attribute scripts
                             //SegmentObjectBehaviour obj = newSatellite.AddComponent<SegmentObjectBehaviour>();
                             //obj.Create(defaultSpawnDistance, satellite);
-                            SegObjs.Add(satellite);
+                            //SegObjs.Add(satellite);
                         }
-                    }
+                    }*/
                     yield return null;
                 }
                 

@@ -55,9 +55,8 @@ public class GameManager: NetworkManager
     public static void CreateHostedGame()
     {
         // Artificer uses port 7777
-        NetworkManager.singleton.networkPort = 7777;
 
-        NetworkManager.singleton.networkAddress = "localhost";
+        NetworkManager.singleton.networkAddress = Network.player.ipAddress;
 
         NetworkManager.singleton.StartHost(); 
     }
@@ -65,10 +64,8 @@ public class GameManager: NetworkManager
     public static void JoinAsClient(string serverAddress)
     {
         // Artificer uses port 7777
-        NetworkManager.singleton.networkPort = 7777;
 
-        //NetworkManager.singleton.networkAddress = serverAddress;
-        NetworkManager.singleton.networkAddress = "localhost";
+        NetworkManager.singleton.networkAddress = serverAddress;
 
         NetworkManager.singleton.StartClient();
     }

@@ -76,6 +76,7 @@ namespace Space.Segment
 
             // Generate a small amount of satellites (temp)
             int satellites = Random.Range(12, 24);
+            for (int i = 0; i <= satellites; i++)
             {
                 SyncList.Add(BuildSatellite(new Vector2
                     (Random.Range(100f, 4900f),
@@ -144,9 +145,10 @@ namespace Space.Segment
             SegmentObject satellite = new SegmentObject();
 
             // Set descriptive info
-            satellite._type = "satellite";
+            satellite._type = "_satellites";
             satellite._texturePath = "Textures/SatelliteTextures/satellite_01";
             satellite._name = "satellite";
+            satellite._tag = "Satellite";
 
             // Set numeric data
             satellite._position = new Vector2
@@ -162,9 +164,10 @@ namespace Space.Segment
             SegmentObject aField = new SegmentObject();
 
             // Set descriptive info
-            aField._type = "asteroid";
-            aField._texturePath = "Space/asteroid";
+            aField._type = "_asteroids";
+            aField._prefabPath = "Space/asteroid";
             aField._name = "asteroid field";
+            aField._tag = "Asteroid";
 
             // Set numeric data
             aField._position = position;

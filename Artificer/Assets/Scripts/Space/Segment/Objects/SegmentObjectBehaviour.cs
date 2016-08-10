@@ -21,9 +21,6 @@ namespace Space.Segment
 
         #region ATTRIBUTES
 
-        [SyncVar]
-        private string _texturePath;
-
         public float PopDistance;
 
         [SyncVar]
@@ -35,7 +32,9 @@ namespace Space.Segment
 
         void Start()
         {
-            if (_texturePath != "")
+            Position();
+
+            if (_segObject._texturePath != "")
                 Render();
         }
 
@@ -56,22 +55,7 @@ namespace Space.Segment
         #region SERVER INTERACTION
 
         /// <summary>
-        /// assigns texture to object
-        /// </summary>
-        /// <param name="newTexName"></param>
-        [Server]
-        public void AssignTexture(string newTexName)
-        {
-            if (newTexName == null)
-                return;                     //error check
-
-            _texturePath = newTexName;
-
-            Render();
-        }
-
-        /// <summary>
-        /// 
+        /// Passed the object data
         /// </summary>
         /// <param name="popDistance"></param>
         /// <param name="Obj"></param>
@@ -79,6 +63,10 @@ namespace Space.Segment
         public void Create(SegmentObject Obj)
         {
             _segObject = Obj;
+
+            Position();
+
+            Render();
         }
 
         #endregion
@@ -106,8 +94,10 @@ namespace Space.Segment
                 if (Destroyed != null)
                     Destroyed(_segObject);
 
-                GetComponent<SpriteRenderer>().enabled = false;
-                GetComponent<BoxCollider2D>().enabled = false;
+                if(GetComponent<SpriteRenderer>() != null)
+                    GetComponent<SpriteRenderer>().enabled = false;
+                if(GetComponent<BoxCollider2D>() != null)
+                    GetComponent<BoxCollider2D>().enabled = false;
                 GetComponent<NetworkTransform>().enabled = false;
 
                 StopCoroutine("PopCheck");
@@ -118,7 +108,7 @@ namespace Space.Segment
 
         #endregion
 
-        #region TEXTURE UTILITIES
+        #region GAMEOBJECT UTILITIES
 
         /// <summary>
         /// retreive texture for our object and render it
@@ -128,21 +118,29 @@ namespace Space.Segment
             if (GetComponent<SpriteRenderer>() == null)
                 return;                     //error check
 
-            Sprite img = Resources.Load(_texturePath, typeof(Sprite)) as Sprite;
+            Sprite img = Resources.Load(_segObject._texturePath, typeof(Sprite)) as Sprite;
             GetComponent<SpriteRenderer>().sprite = img;
+        }
 
-            transform.parent = GameObject.Find("_satellites").transform;
+        /// <summary>
+        /// Place in position and within heirachy 
+        /// </summary>
+        private void Position()
+        {
+            transform.parent = GameObject.Find(_segObject._type).transform;
+            transform.name = _segObject._name;
+            transform.tag = _segObject._tag;
         }
 
         #endregion
 
         #region COROUTINES
 
-        /// <summary>
-        /// disable this object if far away
-        /// </summary>
-        /// <returns></returns>
-        IEnumerator PopCheck()
+            /// <summary>
+            /// disable this object if far away
+            /// </summary>
+            /// <returns></returns>
+            IEnumerator PopCheck()
         {
             // for now just create infinite loop
             for (;;)

@@ -9,19 +9,20 @@ namespace Space.Segment
 {
     public struct SegmentObject
     {
-        public int _id;
+        public NetworkInstanceId netID;
         public Vector2 _position;
         public Vector2 _size;
         public int _count;
 
         public string _name;
+        public string _tag;
         public string _texturePath;
+        public string _prefabPath;
         public string _type;
 
         // material yield when destroyed
         //public string[] _symbols;
     }
-
 
     class SegmentAttributes: NetworkBehaviour
     {
