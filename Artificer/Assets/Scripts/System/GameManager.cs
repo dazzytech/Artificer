@@ -56,7 +56,7 @@ public class GameManager: NetworkManager
     {
         // Artificer uses port 7777
 
-        NetworkManager.singleton.networkAddress = Network.player.ipAddress;
+        //NetworkManager.singleton.networkAddress = Network.player.ipAddress;
 
         NetworkManager.singleton.StartHost(); 
     }
@@ -65,7 +65,7 @@ public class GameManager: NetworkManager
     {
         // Artificer uses port 7777
 
-        NetworkManager.singleton.networkAddress = serverAddress;
+       // NetworkManager.singleton.networkAddress = serverAddress;
 
         NetworkManager.singleton.StartClient();
     }

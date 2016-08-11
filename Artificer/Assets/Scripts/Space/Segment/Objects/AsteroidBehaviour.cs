@@ -3,8 +3,9 @@ using UnityEngine.Networking;
 using System.Collections;
 //Artificer
 using Data.Space.Library;
+using Space.Segment;
 
-public class AsteroidBehaviour : NetworkBehaviour
+public class AsteroidBehaviour : ImpactCollider
 {
 
     #region ATTRIUTES
@@ -17,6 +18,10 @@ public class AsteroidBehaviour : NetworkBehaviour
     [SyncVar]
     private float _scale;
 
+    protected Animator anim;
+
+    //public string[] prospect;         Sync list string
+
     #endregion
 
     #region MONO BEHAVIOUR
@@ -27,6 +32,9 @@ public class AsteroidBehaviour : NetworkBehaviour
         if (!_parentID.IsEmpty())
             InitializeAsteroid();
         //anim = GetComponent<Animator>();
+
+        if (isServer)
+            StartCoroutine("IsParentActive");
     }
 
     #endregion
@@ -71,10 +79,45 @@ public class AsteroidBehaviour : NetworkBehaviour
 
     #endregion
 
-    //public string[] prospect;         Sync list string
-    /*
-    protected Animator anim;
+    #region COROUTINES
 
+    /// <summary>
+    /// Constant checks if field is disabled on host
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator IsParentActive()
+    {
+        for (;;)
+        {
+            if(transform.parent.transform.GetComponent<NetworkTransform>().enabled)
+            {
+                if(!GetComponent<NetworkTransform>().enabled)
+                {
+                    // Parent is enabled but we are not
+                    GetComponent<NetworkTransform>().enabled = true;
+                    GetComponent<SpriteRenderer>().enabled = true;
+                    foreach (CircleCollider2D c in GetComponents<CircleCollider2D>())
+                        c.enabled = true;
+                }
+            }
+            else
+            {
+                if (GetComponent<NetworkTransform>().enabled)
+                {
+                    // Parent isnt enabled but we are 
+                    GetComponent<NetworkTransform>().enabled = false;
+                    GetComponent<SpriteRenderer>().enabled = false;
+
+                    foreach (CircleCollider2D c in GetComponents<CircleCollider2D>())
+                        c.enabled = false;
+                }
+            }
+
+            yield return null;
+        }
+    }
+
+    #endregion
     
 
 	void OnCollisionEnter2D(Collision2D other)
@@ -86,32 +129,47 @@ public class AsteroidBehaviour : NetworkBehaviour
             float magnitude = dir.sqrMagnitude;
             GetComponent<Rigidbody2D>().AddForce(dir * magnitude, ForceMode2D.Force);
 
-            HitData hitD = new HitData();
-            hitD.damage = 50f;
-            hitD.hitPosition = other.contacts[0].point;
-            hitD.originID = this.netId;
-            other.gameObject.SendMessage("Hit", hitD, SendMessageOptions.DontRequireReceiver);
+            CmdAsteroidDmg(other);
         }
 	}
 
-    public void HitArea(HitData hit)
+    public void CmdAsteroidDmg(Collision2D other)
     {
-        Hit(hit);
+        HitData hitD = new HitData();
+        hitD.damage = 50f;
+        hitD.hitPosition = other.contacts[0].point;
+        hitD.originID = this.netId;
+
+        // retrieve impact controller
+        // and if one exists make ship process hit
+        ImpactCollider IC = other.transform.GetComponent<ImpactCollider>();
+        if (IC != null)
+            IC.Hit(hitD);
     }
 
-    public void Hit(HitData hit)
+    [ClientRpc]
+    public override void RpcHitArea()
     {
-        rockDensity -= hit.damage;
+        RpcHit();
+    }
 
-        float dmgPerc = hit.damage / maxDensity;
+    [ClientRpc]
+    public override void RpcHit()
+    {
+        if (!isServer)
+            return;
+
+        _rockDensity -= _hitD.damage;
+
+        float dmgPerc = _hitD.damage / _maxDensity;
 
         int numOfRocks = Mathf.CeilToInt(
-            (maxDensity*dmgPerc)*0.2f) 
+            (_maxDensity*dmgPerc)*0.2f) 
             + Random.Range(0, 4);
         
         for(int i = 0; i < numOfRocks; i++)
         {
-            GameObject rock = new GameObject();
+            /*GameObject rock = new GameObject();
             SpriteRenderer rockSprite = rock.AddComponent<SpriteRenderer>();
             rockSprite.sprite = GetComponent<SpriteRenderer>().sprite;
             rock.transform.localScale = new Vector3(.5f, .5f, 1f);
@@ -119,7 +177,7 @@ public class AsteroidBehaviour : NetworkBehaviour
             rock.layer = 8;
 
             CollectableRockBehaviour behaviour = 
-                rock.AddComponent<CollectableRockBehaviour>();
+            rock.AddComponent<CollectableRockBehaviour>();
             behaviour.PopulateWeighted(prospect);
 
             Rigidbody2D rb = rock.AddComponent<Rigidbody2D>();
@@ -129,17 +187,19 @@ public class AsteroidBehaviour : NetworkBehaviour
             BoxCollider2D col = rock.AddComponent<BoxCollider2D>();
             Vector3 size = new Vector3(.5f, .5f);
             col.size = size;
-            col.isTrigger = true;
+            col.isTrigger = true;*/
         }
 
         Vector3 scale = this.transform.localScale * 0.9f;
         this.transform.localScale = scale;
 
-        if (rockDensity <= 0)
+        if (_rockDensity <= 0)
         {
+            NetworkServer.UnSpawn(this.gameObject);
+
             // for now just destroy
             Destroy(this.gameObject);
         }
-    }*/
+    }
 }
 

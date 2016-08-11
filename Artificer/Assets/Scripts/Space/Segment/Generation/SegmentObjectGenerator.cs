@@ -34,19 +34,14 @@ namespace Space.Segment.Generator
             return newPlanet;
         }
 
-        public void GenerateSatellite(SegmentObject segObj)
+        public GameObject GenerateSatellite(SegmentObject segObj)
         {
             GameObject newSatellite = Instantiate(SatellitePrefab);
             newSatellite.transform.position = segObj._position;
 
             NetworkServer.Spawn(newSatellite);
 
-            // assign network inst id
-            segObj.netID = newSatellite.GetComponent<NetworkIdentity>().netId;
-
-            // Assign segmentobject to segment object
-            newSatellite.GetComponent<SegmentObjectBehaviour>().Create
-                (segObj);
+            return newSatellite;
         }
 
         /// <summary>
@@ -60,13 +55,6 @@ namespace Space.Segment.Generator
             field.transform.position = segObj._position;
 
             NetworkServer.Spawn(field);
-
-            // assign network inst id
-            segObj.netID = field.GetComponent<NetworkIdentity>().netId;
-
-            // Assign segmentobject to segment object
-            field.GetComponent<SegmentObjectBehaviour>().Create
-                (segObj);
 
             // for now only spawn one asteroid to make sure it works
             int ACount = 0;
@@ -85,7 +73,7 @@ namespace Space.Segment.Generator
                 NetworkServer.Spawn(asteroid);
                 
                 asteroid.GetComponent<AsteroidBehaviour>().
-                    InitializeParameters(scale, segObj.netID);
+                    InitializeParameters(scale, field.GetComponent<NetworkIdentity>().netId);
                 //behaviour.prospect = aData._symbols;
                 ACount++;
             }

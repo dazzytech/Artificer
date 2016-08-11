@@ -7,12 +7,14 @@ using UnityEngine.Networking;
 
 namespace Space.Segment
 {
+    [Serializable]
     public struct SegmentObject
     {
         public NetworkInstanceId netID;
         public Vector2 _position;
         public Vector2 _size;
         public int _count;
+        public float _visibleDistance;
 
         public string _name;
         public string _tag;
@@ -23,6 +25,9 @@ namespace Space.Segment
         // material yield when destroyed
         //public string[] _symbols;
     }
+
+    public class SyncListSO : SyncListStruct<SegmentObject>
+    { }
 
     class SegmentAttributes: NetworkBehaviour
     {
@@ -37,7 +42,8 @@ namespace Space.Segment
         }
 
         // nested within controller
-        public SegmentBehaviour.SyncListSO SegObjs = new SegmentBehaviour.SyncListSO();
+        public SyncListSO SegObjs = 
+            new SyncListSO();
 
         [SyncVar]
         public int playerCount;

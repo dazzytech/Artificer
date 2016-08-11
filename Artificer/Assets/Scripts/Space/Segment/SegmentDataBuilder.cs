@@ -149,6 +149,7 @@ namespace Space.Segment
             satellite._texturePath = "Textures/SatelliteTextures/satellite_01";
             satellite._name = "satellite";
             satellite._tag = "Satellite";
+            satellite._visibleDistance = 50;
 
             // Set numeric data
             satellite._position = new Vector2
@@ -168,6 +169,7 @@ namespace Space.Segment
             aField._prefabPath = "Space/asteroid";
             aField._name = "asteroid field";
             aField._tag = "Asteroid";
+            aField._visibleDistance = 500;
 
             // Set numeric data
             aField._position = position;

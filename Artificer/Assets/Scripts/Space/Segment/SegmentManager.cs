@@ -10,34 +10,16 @@ using Space.UI;
 
 namespace Space.Segment
 {
-    [RequireComponent(typeof(SegmentGenerator))]
+    [RequireComponent(typeof(SegmentObjectManager))]
     /// <summary>
     /// Segment behaviour.
     /// responsible for automated tasks and dispatching events
     /// e.g. What segment the player is currently, loading and unloading data
     /// </summary>
-    public class SegmentBehaviour 
+    public class SegmentManager 
         : NetworkBehaviour
     {
         #region NESTED SYNCLIST CLASS
-
-        public class SyncListSO : SyncListStruct<SegmentObject>
-        {
-            /// <summary>
-            /// Gets the type of the object 
-            /// called in parameters.
-            /// </summary>
-            /// <returns>The objects of type.</returns>
-            /// <param name="type">Type.</param>
-            public List<SegmentObject> GetObjsOfType(string type)
-            {
-                List<SegmentObject> objs = new List<SegmentObject>();
-                foreach (SegmentObject obj in this)
-                    if (obj._type == type)
-                        objs.Add(obj);
-                return objs;
-            }
-        }
 
         // sync list callback
         public void SyncListGOAdded(SyncListSO.Operation op, int index)
@@ -51,7 +33,7 @@ namespace Space.Segment
 
         #region ATTRIBUTES
 
-        private SegmentGenerator _gen;
+        private SegmentObjectManager _gen;
         private SegmentAttributes _att;
 
         private bool _segInit;
@@ -66,7 +48,7 @@ namespace Space.Segment
 
         void Awake()
         {
-            _gen = GetComponent<SegmentGenerator>();
+            _gen = GetComponent<SegmentObjectManager>();
             _att = GetComponent<SegmentAttributes>();           
         }
 
@@ -150,7 +132,9 @@ namespace Space.Segment
 
             foreach (SegmentObject sObj in sObjs)
                 _att.SegObjs.Add(sObj);
-           //MessageHUD.DisplayMessege(new MsgParam("bold", "Finished!"));
+            //MessageHUD.DisplayMessege(new MsgParam("bold", "Finished!"));
+
+            _gen.GenerateServerObjects();
         }
 
         #endregion

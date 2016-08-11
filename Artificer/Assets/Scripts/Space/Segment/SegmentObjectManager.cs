@@ -17,20 +17,18 @@ namespace Space.Segment
     /// TODO: STORE SEGMENT DATA AND START COROUTINE
     /// TO BUILD OBJECTS THAT COME WITHIN RANGE
     /// </summary>
-    public class SegmentGenerator: NetworkBehaviour
+    public class SegmentObjectManager: NetworkBehaviour
     {
 
         #region ATTRIBUTES
 
         // Generator Objects
-        public ShipGenerator _shipGen;
+        //public ShipGenerator _shipGen;
         public SegmentObjectGenerator _segmentObjectGen;
-        public SpawnPointGenerator _spawnGen;
-        public NodeGenerator _nodeGen;
+        //public SpawnPointGenerator _spawnGen;
+        //public NodeGenerator _nodeGen;
 
         private SegmentAttributes _att;
-
-        private List<SegmentObject> SegObjs;
 
         #endregion
 
@@ -60,12 +58,8 @@ namespace Space.Segment
         /// </summary>
         public void GenerateBase()
         {
-            SegObjs = new List<SegmentObject>();
-
             // Build camera
             BuildCamera();
-
-            StartCoroutine("BuildSegment");
         }
 
         /// <summary>
@@ -76,7 +70,13 @@ namespace Space.Segment
         public void StartSegmentCycle()
         {
             // Start new coroutine with new segment
-            //StartCoroutine("CycleSegment");
+            StartCoroutine("CycleSegment");
+        }
+
+        [Server]
+        public void GenerateServerObjects()
+        {
+            StartCoroutine("BuildSegment");
         }
 
         #endregion
@@ -137,22 +137,44 @@ namespace Space.Segment
 
         private IEnumerator BuildSegment()
         {
-            foreach (SegmentObject segObj
-                         in _att.SegObjs)
+            for(int i = 0; i < _att.SegObjs.Count; i++)
             {
+                SegmentObject segObj = _att.SegObjs[i];
                 switch (segObj._type)
                 {
                     case "_asteroids":
-                        // Build the game object in generator
-                        _segmentObjectGen.GenerateField
+                        {
+                            // Build the game object in generator
+                            GameObject segObjGO = _segmentObjectGen.GenerateField
+                                    (segObj);
+
+                            // assign network inst id
+                            segObj.netID = segObjGO.GetComponent<NetworkIdentity>().netId;
+
+                            // Assign segmentobject to segment object
+                            segObjGO.GetComponent<SegmentObjectBehaviour>().Create
                                 (segObj);
-                        break;
+
+                            break;
+                        }
                     case "_satellites":
-                        // Build the game object in generator
-                        _segmentObjectGen.GenerateSatellite
+                        {
+                            // Build the game object in generator
+                            GameObject segObjGO = _segmentObjectGen.GenerateSatellite
+                                    (segObj);
+
+                            // assign network inst id
+                            segObj.netID = segObjGO.GetComponent<NetworkIdentity>().netId;
+
+                            // Assign segmentobject to segment object
+                            segObjGO.GetComponent<SegmentObjectBehaviour>().Create
                                 (segObj);
-                        break;
+
+                            break;
+                        }
                 }
+
+                _att.SegObjs[i] = segObj;
 
                 yield return null;
             }
@@ -180,70 +202,20 @@ namespace Space.Segment
                 
                 Vector3 playerPos = player.transform.position;
 
-                /*foreach (SegmentObject planet
-                         in _att.SegObjs.GetObjsOfType("planet"))
+                foreach (SegmentObject segObj
+                         in _att.SegObjs)
                 {
-                    // Spawn only within distance
-                   // if (Vector3.Distance(playerPos, planet._position)
-                      // < defaultSpawnDistance)
-                   // {
-                        // Only spawn if not currently exists within space
-                        if (!SegObjs.Contains(planet))
-                        {
-                            GameObject newPlanet = _segmentObjectGen.GeneratePlanet
-                                (planet);
+                    GameObject segObjGO = ClientScene.FindLocalObject(segObj.netID);
 
-                            // Add attribute scripts
-                            //SegmentObjectBehaviour obj = newSatellite.AddComponent<SegmentObjectBehaviour>();
-                            //obj.Create(defaultSpawnDistance, satellite);
-                            SegObjs.Add(planet);
-                        }
-                   // }
-                    yield return null;
-                }*/
+                    if (segObjGO == null || segObj._visibleDistance <= 0)
+                        continue;
 
-                // Generate segments asteroids
-                foreach (SegmentObject asteroid
-                         in _att.SegObjs.GetObjsOfType("asteroid")) 
-                {
-                    // Spawn only within distance
-                    /*if(Vector3.Distance(playerPos, asteroid._position)
-                       < defaultSpawnDistance)
-                    {
-                        // Only spawn if not currently exists within space
-                        if(!SegObjs.Contains(asteroid))
-                        {
-                            //GameObject field = _asteroidGen.GenerateField
-                               // (asteroid);
-
-                            //SegmentObjectBehaviour obj = field.AddComponent<SegmentObjectBehaviour>();
-                            //obj.Create(asteroidSpawnDistance, asteroid);
-                            //SegObjs.Add(asteroid);
-                        }
-                    }*/
-                    yield return null;
-                }
-                
-                foreach (SegmentObject satellite
-                         in _att.SegObjs.GetObjsOfType("satellite")) 
-                {
-                    // Spawn only within distance
-                    /*if(Vector3.Distance(playerPos, satellite._position)
-                       < defaultSpawnDistance)
-                    {
-                        // Only spawn if not currently exists within space
-                        if(!SegObjs.Contains(satellite))
-                        {
-                            //GameObject newSatellite = _segmentObjectGen.GenerateSatellite
-                                //(satellite, );
-
-                            // Add attribute scripts
-                            //SegmentObjectBehaviour obj = newSatellite.AddComponent<SegmentObjectBehaviour>();
-                            //obj.Create(defaultSpawnDistance, satellite);
-                            //SegObjs.Add(satellite);
-                        }
-                    }*/
-                    yield return null;
+                    if (Vector3.Distance(playerPos, segObjGO.transform.position)
+                           < segObj._visibleDistance)
+                        if (!isServer)
+                            segObjGO.SetActive(true);
+                        else
+                            segObjGO.SendMessage("Reenable");
                 }
                 
                 yield return null;

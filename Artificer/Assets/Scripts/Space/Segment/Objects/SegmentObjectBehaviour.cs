@@ -21,8 +21,6 @@ namespace Space.Segment
 
         #region ATTRIBUTES
 
-        public float PopDistance;
-
         [SyncVar]
         SegmentObject _segObject;
 
@@ -36,18 +34,24 @@ namespace Space.Segment
 
             if (_segObject._texturePath != "")
                 Render();
+
+            if (_segObject._visibleDistance > 0)
+                StartCoroutine("PopCheck");
         }
 
         void OnDisable()
         {
             if(Destroyed != null)
                 Destroyed(_segObject);
-            StopCoroutine("PopCheck");
+
+            if (_segObject._visibleDistance > 0)
+                StopCoroutine("PopCheck");
         }
 
         void OnEnable()
         {
-            StartCoroutine("PopCheck");
+            if(_segObject._visibleDistance > 0)
+                StartCoroutine("PopCheck");
         }
 
         #endregion
@@ -67,6 +71,27 @@ namespace Space.Segment
             Position();
 
             Render();
+
+            if (_segObject._visibleDistance > 0)
+                StartCoroutine("PopCheck");
+        }
+
+        #endregion
+
+        #region PUBLIC INTERACTION
+
+        /// <summary>
+        /// Only called on server to reenable features
+        /// </summary>
+        public void Reenable()
+        {
+            if (GetComponent<SpriteRenderer>() != null)
+                GetComponent<SpriteRenderer>().enabled = true;
+            if (GetComponent<BoxCollider2D>() != null)
+                GetComponent<BoxCollider2D>().enabled = true;
+            GetComponent<NetworkTransform>().enabled = true;
+
+            StartCoroutine("PopCheck");
         }
 
         #endregion
@@ -101,8 +126,6 @@ namespace Space.Segment
                 GetComponent<NetworkTransform>().enabled = false;
 
                 StopCoroutine("PopCheck");
-
-                this.enabled = false;
             }
         }
 
@@ -140,7 +163,7 @@ namespace Space.Segment
             /// disable this object if far away
             /// </summary>
             /// <returns></returns>
-            IEnumerator PopCheck()
+        IEnumerator PopCheck()
         {
             // for now just create infinite loop
             for (;;)
@@ -158,7 +181,7 @@ namespace Space.Segment
 
                 Vector3 thisPos = transform.position;
 
-                if (Vector3.Distance(thisPos, playerPos) > PopDistance)
+                if (Vector3.Distance(thisPos, playerPos) > _segObject._visibleDistance)
                 {
                     DisableObj();
                 }
