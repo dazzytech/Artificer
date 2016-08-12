@@ -92,7 +92,7 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.01, y: -0.125, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 454610}
   m_RootOrder: 2
@@ -134,22 +134,22 @@ ParticleAnimator:
   Does Animate Color?: 1
   colorAnimation[0]:
     serializedVersion: 2
-    rgba: 184549375
+    rgba: 167903999
   colorAnimation[1]:
     serializedVersion: 2
-    rgba: 3036676095
+    rgba: 4294967295
   colorAnimation[2]:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 2475461782
   colorAnimation[3]:
     serializedVersion: 2
-    rgba: 3036676095
+    rgba: 762014575
   colorAnimation[4]:
     serializedVersion: 2
-    rgba: 184549375
+    rgba: 654311424
   worldRotationAxis: {x: 0, y: 0, z: 0}
   localRotationAxis: {x: 0, y: 0, z: 0}
-  sizeGrow: -0.5699999
+  sizeGrow: 0.82
   rndForce: {x: 0, y: 0, z: 0}
   force: {x: 0, y: 0, z: 0}
   damping: 1
@@ -164,16 +164,16 @@ EllipsoidParticleEmitter:
   serializedVersion: 2
   m_Enabled: 1
   m_Emit: 0
-  minSize: 0
+  minSize: 0.5
   maxSize: 0.5
   minEnergy: 0.2
-  maxEnergy: 0.3
+  maxEnergy: 0.4
   minEmission: 1000
   maxEmission: 1000
   worldVelocity: {x: 0, y: 0, z: 0}
-  localVelocity: {x: 0, y: 0, z: 3.823578}
+  localVelocity: {x: 0, y: 0, z: 1}
   rndVelocity: {x: 0, y: 0, z: 0}
-  emitterVelocityScale: 0.05
+  emitterVelocityScale: 0
   tangentVelocity: {x: 0, y: 0, z: 0}
   angularVelocity: 0
   rndAngularVelocity: 0
@@ -181,7 +181,7 @@ EllipsoidParticleEmitter:
   Simulate in Worldspace?: 1
   m_OneShot: 0
   m_Ellipsoid: {x: 0.1, y: 0.1, z: 0.1}
-  m_MinEmitterRange: 0
+  m_MinEmitterRange: 1
 --- !u!26 &2693882
 ParticleRenderer:
   m_ObjectHideFlags: 1

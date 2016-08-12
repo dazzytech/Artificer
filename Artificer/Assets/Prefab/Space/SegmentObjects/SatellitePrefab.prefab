@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 2
-  m_SendInterval: 0.1
+  m_SendInterval: 0.2
   m_SyncRotationAxis: 3
   m_RotationSyncCompression: 0
   m_SyncSpin: 0
@@ -96,7 +96,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3031c74398c0d964587d0e86a5b8c1f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PopDistance: 50
 --- !u!114 &11490088
 MonoBehaviour:
   m_ObjectHideFlags: 1

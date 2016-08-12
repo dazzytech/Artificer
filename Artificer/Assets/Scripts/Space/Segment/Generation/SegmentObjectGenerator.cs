@@ -12,6 +12,7 @@ namespace Space.Segment.Generator
         // Prefabs
         public GameObject SatellitePrefab;
         public GameObject AsteroidPrefab;
+        public GameObject CloudPrefab;
 
         #endregion
 
@@ -43,6 +44,8 @@ namespace Space.Segment.Generator
 
             return newSatellite;
         }
+
+        #region ASTEROID GENERATION
 
         /// <summary>
         /// Generate asteroid field and child asteroid objects
@@ -79,6 +82,66 @@ namespace Space.Segment.Generator
             }
 
             return field;
+        }
+
+        public GameObject GenerateSingle(SegmentObject aData,
+                                        Vector2 position, Vector2 velocity)
+        {
+            GameObject asteroid = (GameObject)Instantiate
+                (Resources.Load(aData._texturePath));
+
+            asteroid.transform.parent = this.transform;
+            // Give a random location and size;
+            Vector2 location = position;
+            asteroid.transform.position = location;
+
+            float scale = Random.Range(1f, 10f);
+            asteroid.transform.localScale =
+                new Vector3(scale,
+                            scale, 1f);
+
+            Rigidbody2D rb = asteroid.GetComponent<Rigidbody2D>();
+            rb.mass = scale;
+            rb.AddForce(velocity, ForceMode2D.Force);
+
+            AsteroidBehaviour behaviour = asteroid.AddComponent<AsteroidBehaviour>();
+            //behaviour.rockDensity = 20f * scale;
+            //behaviour.prospect = aData._symbols;
+
+            return asteroid;
+        }
+
+        #endregion
+
+        public GameObject GenerateCloud(SegmentObject segObj)
+        {
+            GameObject newCloud = Instantiate(CloudPrefab);
+            newCloud.transform.position = segObj._position;
+
+            NetworkServer.Spawn(newCloud);
+
+            // for now only spawn one asteroid to make sure it works
+            int CloudCount = 0;
+            while (CloudCount < segObj._count)
+            {
+                GameObject cloud = (GameObject)Instantiate(Resources.Load(segObj._prefabPath));
+                cloud.transform.parent = newCloud.transform;
+
+                // Give a random location and size;
+                Vector2 location = new Vector2
+                    (Random.Range(-500, 500),
+                     Random.Range(-500, 500));
+
+                cloud.transform.localPosition = location;
+
+                NetworkServer.Spawn(cloud);
+
+                cloud.GetComponent<InterstellarCloudBehaviour>().
+                    InitializeParameters(cloud.GetComponent<NetworkIdentity>().netId);
+                CloudCount++;
+            }
+
+            return newCloud;
         }
 
         /*public GameObject GenerateStation(StationData station)

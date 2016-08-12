@@ -172,6 +172,21 @@ namespace Space.Segment
 
                             break;
                         }
+                    case "_clouds":
+                        {
+                            // Build the game object in generator
+                            GameObject segObjGO = _segmentObjectGen.GenerateCloud
+                                    (segObj);
+
+                            // assign network inst id
+                            segObj.netID = segObjGO.GetComponent<NetworkIdentity>().netId;
+
+                            // Assign segmentobject to segment object
+                            segObjGO.GetComponent<SegmentObjectBehaviour>().Create
+                                (segObj);
+
+                            break;
+                        }
                 }
 
                 _att.SegObjs[i] = segObj;

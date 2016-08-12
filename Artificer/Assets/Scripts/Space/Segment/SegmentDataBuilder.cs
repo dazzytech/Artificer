@@ -61,9 +61,9 @@ namespace Space.Segment
 
                 //SyncList.Add(BuildPlanet(newPos));
             }*/
-             
+
             // Generate a selection of asteroid fields
-            int fields = Random.Range(6, 20);
+            int fields = Random.Range(20, 60);
             for (int i = 0; i <= fields; i++)
             {
                 int value = Random.Range(0, 3);
@@ -79,6 +79,15 @@ namespace Space.Segment
             for (int i = 0; i <= satellites; i++)
             {
                 SyncList.Add(BuildSatellite(new Vector2
+                    (Random.Range(100f, 4900f),
+                     Random.Range(100f, 4900f))));
+            }
+
+            
+            int clouds = Random.Range(12, 24);
+            for (int i = 0; i <= clouds; i++)
+            {
+                SyncList.Add(BuildInterstellarCloud(new Vector2
                     (Random.Range(100f, 4900f),
                      Random.Range(100f, 4900f))));
             }
@@ -169,13 +178,13 @@ namespace Space.Segment
             aField._prefabPath = "Space/asteroid";
             aField._name = "asteroid field";
             aField._tag = "Asteroid";
-            aField._visibleDistance = 500;
+            aField._visibleDistance = 300;
 
             // Set numeric data
             aField._position = position;
             aField._size =
-                new Vector2(Random.Range(100, 500),
-                Random.Range(100, 500));
+                new Vector2(Random.Range(100, 200),
+                Random.Range(100, 200));
             aField._count = Random.Range(50, 100);
 
             /*switch (value)
@@ -262,6 +271,22 @@ namespace Space.Segment
             }
             */
             return aField;
+        }
+
+        private static SegmentObject BuildInterstellarCloud(Vector2 position)
+        {
+            SegmentObject cloud = new SegmentObject();
+
+            cloud._type = "_clouds";
+            cloud._prefabPath = "Space/cloud";
+            cloud._name = "interstellar cloud";
+            cloud._tag = "Untagged";
+            cloud._visibleDistance = 1;
+
+            cloud._position = position;
+            cloud._count = Random.Range(6, 10);
+
+            return cloud;   
         }
 
         #endregion
