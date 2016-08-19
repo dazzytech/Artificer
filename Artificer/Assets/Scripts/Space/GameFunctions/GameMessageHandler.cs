@@ -4,6 +4,8 @@ using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 
 using Data.Space;
+using Space.Projectiles;
+using Space.Segment;
 
 namespace Space.GameFunctions
 {
@@ -26,6 +28,26 @@ namespace Space.GameFunctions
         public int ShipID;
     }
 
+    public class ProjectileBuildMessage: MessageBase
+    {
+        public Vector3 Position;
+        public int PrefabIndex, shooterID;
+        public WeaponData WData;
+    }
+
+    public class ShipColliderHitMessage:MessageBase
+    {
+        public int[] HitComponents;
+        public NetworkInstanceId ShipID;
+        public HitData HitD;
+    }
+
+    public class SOColliderHitMessage : MessageBase
+    {
+        public NetworkInstanceId SObjectID;
+        public HitData HitD;
+    }
+
     #endregion
 
     /// <summary>
@@ -41,6 +63,9 @@ namespace Space.GameFunctions
             // For team selection
             NetworkServer.RegisterHandler(MsgType.Highest + 7, OnAssignToTeam);
             NetworkServer.RegisterHandler(MsgType.Highest + 8, OnSpawnPlayerAt);
+            NetworkServer.RegisterHandler(MsgType.Highest + 10, OnShipHit);
+            NetworkServer.RegisterHandler(MsgType.Highest + 12, OnBuildProjectile);
+            NetworkServer.RegisterHandler(MsgType.Highest + 15, OnObjectHit);
         }
 
         /// <summary>
@@ -64,6 +89,7 @@ namespace Space.GameFunctions
         /// <param name="playerID"></param>
         /// <param name="SpawnID"></param>
         /// <param name="shipID"></param>
+        [Server]
         public void OnSpawnPlayerAt
             (NetworkMessage netMsg)
         {
@@ -77,6 +103,7 @@ namespace Space.GameFunctions
         /// </summary>
         /// <param name="teamID"></param>
         /// <param name="playerID"></param>
+        [Server]
         public void OnAssignToTeam(NetworkMessage netMsg)
         {
             // Retreive variables and display options
@@ -91,6 +118,26 @@ namespace Space.GameFunctions
         public void InitializeGameParameters(/*GameParameters param*/)
         {
             Con.Initialize();
+        }
+
+        [Server]
+        public void OnBuildProjectile(NetworkMessage msg)
+        {
+            ProjectileBuildMessage projMsg = msg.ReadMessage<ProjectileBuildMessage>();
+
+            Con.BuildProjectile(projMsg.PrefabIndex, projMsg.shooterID, projMsg.Position, projMsg.WData);
+        }
+
+        [Server]
+        public void OnShipHit(NetworkMessage msg)
+        {
+            Con.ShipHit(msg.ReadMessage<ShipColliderHitMessage>());
+        }
+
+        [Server]
+        public void OnObjectHit(NetworkMessage msg)
+        {
+            Con.ObjectHit(msg.ReadMessage<SOColliderHitMessage>());
         }
     }
 }

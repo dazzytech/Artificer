@@ -281,7 +281,7 @@ namespace Space.Segment
             cloud._prefabPath = "Space/cloud";
             cloud._name = "interstellar cloud";
             cloud._tag = "Untagged";
-            cloud._visibleDistance = 1;
+            cloud._visibleDistance = 600;
 
             cloud._position = position;
             cloud._count = Random.Range(6, 10);

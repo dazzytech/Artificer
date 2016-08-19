@@ -9,6 +9,8 @@ using Data.Space.Library;
 using Space.Ship;
 using Space.UI;
 using Space.Teams;
+using Space.Ship.Components.Listener;
+using Space.Projectiles;
 
 namespace Space.GameFunctions
 {
@@ -213,6 +215,45 @@ namespace Space.GameFunctions
             // e.g. ship name 
             StringMessage sMsg = new StringMessage("");
             NetworkServer.SendToClient(info.mConnection.connectionId, MsgType.Highest + 9, sMsg);
+        }
+
+        [Server]
+        public void BuildProjectile(int prefabIndex, int playerID, Vector3 position, WeaponData wData)
+        {
+            PlayerConnectionInfo info = GetPlayer(playerID);
+
+            GameObject Prefab = NetworkManager.singleton.spawnPrefabs[prefabIndex];
+
+            GameObject GO = Instantiate(Prefab, position, Quaternion.identity) as GameObject;
+
+            // Projectile can run command to display self
+            NetworkServer.SpawnWithClientAuthority(GO, info.mConnection);
+
+            GO.transform.GetComponent<WeaponController>().Init();
+
+            ProjectileSpawnedMessage spwnMsg = new ProjectileSpawnedMessage();
+            spwnMsg.WData = wData;
+            spwnMsg.Projectile = GO.GetComponent<NetworkIdentity>().netId;
+
+            NetworkServer.SendToClient(info.mConnection.connectionId, MsgType.Highest + 11, spwnMsg);
+        }
+
+        [Server]
+        public void ShipHit(ShipColliderHitMessage hitMsg)
+        {
+            foreach(PlayerConnectionInfo info in _att.PlayerInfoList)
+            {
+                NetworkServer.SendToClient(info.mConnection.connectionId, MsgType.Highest + 13, hitMsg);
+            }
+        }
+
+        [Server]
+        public void ObjectHit(SOColliderHitMessage hitMsg)
+        {
+            foreach (PlayerConnectionInfo info in _att.PlayerInfoList)
+            {
+                NetworkServer.SendToClient(info.mConnection.connectionId, MsgType.Highest + 14, hitMsg);
+            }
         }
 
         #endregion

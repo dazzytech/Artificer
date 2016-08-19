@@ -7,8 +7,8 @@ namespace Space.Segment
 {
     public class InterstellarCloudBehaviour : NetworkBehaviour
     {
-
         #region ATTRIUTES
+
         [SyncVar]
         private NetworkInstanceId _parentID;
 
@@ -33,6 +33,16 @@ namespace Space.Segment
                 transform.parent.GetComponent<SegmentObjectBehaviour>().ObjDisable
                     -= DisableObj;
             }
+        }
+
+        void OnDisable()
+        {
+            DisableObj();
+        }
+
+        void OnEnable()
+        {
+            EnableObj();
         }
 
         #endregion
@@ -62,15 +72,20 @@ namespace Space.Segment
         /// </summary>
         private void InitializeCloud()
         {
-            transform.parent = ClientScene.FindLocalObject(_parentID).transform;
+            GameObject parent = ClientScene.FindLocalObject(_parentID);
+            if (parent != null)
+            {
+                transform.parent = parent.transform;
 
-            transform.parent.GetComponent<SegmentObjectBehaviour>().ObjEnable
-            += EnableObj;
+                transform.parent.GetComponent<SegmentObjectBehaviour>().ObjEnable
+                    += EnableObj;
 
-            transform.parent.GetComponent<SegmentObjectBehaviour>().ObjDisable
-                += DisableObj;
-
-
+                transform.parent.GetComponent<SegmentObjectBehaviour>().ObjDisable
+                    += DisableObj;
+            }
+            else
+                Debug.Log(_parentID + " NOT FOUND");
+           
             GetComponent<ParticleSystem>().Play();
         }
 

@@ -14,6 +14,7 @@ namespace Space.Segment
     /// Container object - Stores information
     /// about a projectile to pass to a possible hit object
     /// </summary>
+    [System.Serializable]
     public struct HitData
     {
         public Vector3 hitPosition;
@@ -44,12 +45,11 @@ namespace Space.Segment
         /// Receives hit info from server and calls client funcs
         /// </summary>
         /// <param name="hit"></param>
-        [Server]
         public virtual void Hit(HitData hit)
         {
             // Set hitdata to our local storage
             _hitD = hit;
-            RpcHit();
+            //RpcHit();
         }
 
         #endregion

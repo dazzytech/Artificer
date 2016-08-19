@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 using System.Collections.Generic;
 
 // Artificer defined
 using Data.Space;
 using Space.Segment;
+using Space.GameFunctions;
 using Space.Ship.Components.Attributes;
 using Space.Ship.Components.Listener;
 
@@ -18,6 +20,15 @@ namespace Space.Ship
         // Store a base list of colliders
         // in some cases this could be only one
         private List<BoxCollider2D> colliders;
+
+        #endregion
+
+        #region MONO BEHAVIOUR
+
+        void Awake()
+        {
+            GameManager.singleton.client.RegisterHandler(MsgType.Highest + 13, ProcessHitMsg);
+        }
 
         #endregion
 
@@ -42,7 +53,11 @@ namespace Space.Ship
 
         #region IMPACT COLLISION
 
-        [Server]
+        /// <summary>
+        /// Called on remote ship for client side
+        /// collision detection
+        /// </summary>
+        /// <param name="hit"></param>
         public override void Hit(HitData hit)
         {
             base.Hit(hit);
@@ -53,23 +68,15 @@ namespace Space.Ship
             StartCoroutine("CycleThroughCollidersSingle");
         }
 
-        /// <summary>
-        /// Client function called by server 
-        /// to handle projectile hits on our object
-        /// process the damage on the local object and then
-        /// update the remote clients
-        /// </summary>
-        /// <param name="hitpoint">The vector 3D point
-        /// where the projectile intesected with the colliders </param>
-        [ClientRpc]
-        public override void RpcHit()
+        public void ProcessHitMsg(NetworkMessage msg)
         {
-            if (!isLocalPlayer)
-                return;
+            ShipColliderHitMessage colMsg = msg.ReadMessage<ShipColliderHitMessage>();
 
-            if (GetComponent<ShipPlayerInputController>() != null)
+            GameObject HitObj = ClientScene.FindLocalObject(colMsg.ShipID);
+            if (HitObj != null)
             {
-                Camera.main.gameObject.SendMessage("ShakeCam");
+                HitObj.transform.GetComponent<ShipImpactCollider>()
+                .ProcessDamage(colMsg.HitComponents, colMsg.HitD);
             }
         }
 
@@ -78,7 +85,7 @@ namespace Space.Ship
         /// colliders within a radius
         /// </summary>
         /// <param name="hit"></param>
-        [ClientRpc]
+        /*[ClientRpc]
         public override void RpcHitArea()
         {
             if (!isLocalPlayer)
@@ -90,17 +97,24 @@ namespace Space.Ship
             }
 
             StartCoroutine("CycleThroughCollidersGroup");
-        }
+        }*/
 
         /// <summary>
         /// is called on our ship then apply damage otherwise just
         /// update colours
         /// </summary>
-        [ClientRpc]
-        public void RpcProcessDamage(int[] damaged)
+        public void ProcessDamage(int[] damaged, HitData hData)
         {
+            _hitD = hData;
+
             if (isLocalPlayer)
+            {
                 StartCoroutine("CycleComponentDamage", damaged);
+                if (GetComponent<ShipPlayerInputController>() != null)
+                {
+                    Camera.main.gameObject.SendMessage("ShakeCam");
+                }
+            }
             else
                 StartCoroutine("CycleComponentColours", damaged);
         }
@@ -109,7 +123,6 @@ namespace Space.Ship
 
         #region COROUTINE
 
-        [Server]
         private IEnumerator CycleThroughCollidersSingle()
         {
             // Store an int reference to components that were damaged
@@ -133,13 +146,19 @@ namespace Space.Ship
                 yield return null;
             }
 
+            // Send message to server to process damage
             if (damagedComps.Count > 0)
-                RpcProcessDamage(damagedComps.ToArray());
+            {
+                ShipColliderHitMessage msg = new ShipColliderHitMessage();
+                msg.HitComponents = damagedComps.ToArray();
+                msg.ShipID = this.netId;
+                msg.HitD = _hitD;
+                GameManager.singleton.client.Send(MsgType.Highest+10, msg);
+            }
 
             yield return null;
         }
-
-        [Server]
+        
         private IEnumerator CycleThroughCollidersGroup()
         {
             // Store an int reference to components that were damaged

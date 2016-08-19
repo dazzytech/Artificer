@@ -109,6 +109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 443dd2c641575a646b5b49a4e00e6579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  withinDistance: 100
+  running: 0
 --- !u!114 &11454782
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -137,7 +137,7 @@ namespace Space.Segment.Generator
                 NetworkServer.Spawn(cloud);
 
                 cloud.GetComponent<InterstellarCloudBehaviour>().
-                    InitializeParameters(cloud.GetComponent<NetworkIdentity>().netId);
+                    InitializeParameters(newCloud.GetComponent<NetworkIdentity>().netId);
                 CloudCount++;
             }
 

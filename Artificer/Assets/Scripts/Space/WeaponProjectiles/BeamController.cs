@@ -74,24 +74,21 @@ namespace Space.Projectiles
                     break;
             }
 
-            if (_system != null)
+            if (_system != null && _points != null)
                 _system.SetParticles(_points, _points.Length);
         }
 
         #endregion
 
-        #region SERVER MESSAGES
+        #region PUBLIC INTERACTION
 
         /// <summary>
-        /// Used by server to pass through hit data and 
-        /// initialize the beam
+        /// Called from weapon controller 
         /// </summary>
         /// <param name="data"></param>
-        [Server]
         public override void CreateProjectile(WeaponData data)
         {
-            if (!isServer)
-                return;
+            base.CreateProjectile(data);
 
             // Damage whatever is hit
             ApplyDamage(data);
@@ -104,11 +101,10 @@ namespace Space.Projectiles
         /// Server functions for applying damage for
         /// colliders within the 
         /// </summary>
-        [Server]
         public void ApplyDamage(WeaponData data)
         {
             // Find the ship that fired the projectile
-            GameObject aggressor = NetworkServer.FindLocalObject(data.Self);
+            GameObject aggressor = ClientScene.FindLocalObject(data.Self);
 
             RaycastHit2D[] hitList = Physics2D.RaycastAll(transform.position, data.Direction, data.Distance, maskIgnore);
 
@@ -122,7 +118,7 @@ namespace Space.Projectiles
                     }
 
                     // Show hit decals on clients
-                    RpcBuildHitFX(hit.point, data);
+                    CmdBuildHitFX(hit.point, data);
 
                     // create hitdata
                     HitData hitD = new HitData();
@@ -143,8 +139,7 @@ namespace Space.Projectiles
                 }
             }
 
-            // Build projectile item
-            RpcBuildFX(data);
+            CmdBuildFX(data);
         }
 
         #endregion
@@ -156,7 +151,7 @@ namespace Space.Projectiles
         /// </summary>
         /// <param name="data"></param>
         [ClientRpc]
-        public void RpcBuildFX(WeaponData data)
+        public override void RpcBuildFX(WeaponData data)
         {
             // Local muzzle visible
             Instantiate(Muzzle, transform.position, Quaternion.Euler(data.Direction));
@@ -182,7 +177,7 @@ namespace Space.Projectiles
         /// </summary>
         /// <param name="hit"></param>
         [ClientRpc]
-        public void RpcBuildHitFX(Vector2 hit, WeaponData data)
+        public override void RpcBuildHitFX(Vector2 hit, WeaponData data)
         {
             SoundController.PlaySoundFXAt
                         (hit, ImpactSound);
@@ -191,40 +186,6 @@ namespace Space.Projectiles
             Instantiate(Explode, hit, Quaternion.Euler(data.Direction));
         }
 
-        /// <summary>
-        /// Builds the ray from the laser origin and then
-        /// moves the origin to within the camera if is outside
-        /// cropping the laser to within main viewport
-        /// </summary>
-        /// <param name="mag">Mag.</param>
-        /// <param name="origin">Origin.</param>
-        /*public void CropToCamera(out float mag, out Vector3 origin)
-        {
-            Vector3 hitPoint = _data.Direction * _data.Distance;
-
-            mag = _data.Distance;
-
-            //float camDistance;
-            origin = transform.position;
-
-            Ray ray = new Ray(transform.position, _data.Direction);
-
-            Bounds b = 
-                CameraExtensions.OrthographicBounds
-                    (Camera.main);
-
-            if (b.IntersectRay(ray, out camDistance))
-            {
-                if(camDistance < mag && !b.Contains(transform.position))
-                {
-                    transform.Translate(_data.Direction * (camDistance+1));
-                    // using new transform
-                    origin = transform.position - _data.Direction;
-                    mag = (origin -
-                           hitPoint).magnitude;
-                }
-            }
-        }*/
 
         /// <summary>
         /// Builds a beam

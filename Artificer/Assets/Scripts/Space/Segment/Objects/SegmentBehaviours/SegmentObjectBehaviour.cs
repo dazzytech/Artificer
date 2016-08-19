@@ -28,34 +28,37 @@ namespace Space.Segment
         [SyncVar]
         SegmentObject _segObject;
 
+        [SerializeField]
+        bool _physicalObject;
+
+        public bool Active;
+
         #endregion
 
         #region MONO BEHAVIOUR
 
         void Start()
         {
+            // move location and place within parent
             Position();
 
-            if (_segObject._texturePath != "")
-                Render();
+            // If this isn't a container, render object
+            // and begin distance checking
+            if (_physicalObject)
+            {
+                if (_segObject._texturePath != "")
+                    Render();
 
-            if (_segObject._visibleDistance > 0)
-                StartCoroutine("PopCheck");
+            }
+
+            // disable as we wont have spawned
+            DisableObj();
         }
 
-        void OnDisable()
+        void OnDestroy()
         {
             if(Destroyed != null)
                 Destroyed(_segObject);
-
-            if (_segObject._visibleDistance > 0)
-                StopCoroutine("PopCheck");
-        }
-
-        void OnEnable()
-        {
-            if(_segObject._visibleDistance > 0)
-                StartCoroutine("PopCheck");
         }
 
         #endregion
@@ -74,39 +77,44 @@ namespace Space.Segment
 
             Position();
 
-            Render();
+            if (_physicalObject)
+            {
+                if (_segObject._texturePath != "")
+                    Render();
 
-            if (_segObject._visibleDistance > 0)
-                StartCoroutine("PopCheck");
-
-            //DisableObj();
+            }
         }
 
         #endregion
 
-        #region PUBLIC INTERACTION
+        #region ENABLE & DISABLE
 
         /// <summary>
         /// Only called on server to reenable features
         /// </summary>
-        public void Reenable()
+        public void ReEnable()
         {
-            if (GetComponent<SpriteRenderer>() != null)
-                GetComponent<SpriteRenderer>().enabled = true;
-            if (GetComponent<BoxCollider2D>() != null)
-                GetComponent<BoxCollider2D>().enabled = true;
-            if (GetComponent<NetworkTransform>() != null)
-                GetComponent<NetworkTransform>().enabled = true;
+            Active = true;
 
-            if (ObjEnable != null)
-                ObjEnable();
+            if (_physicalObject)
+            {
+                // Only activate object if physical
+                if (GetComponent<SpriteRenderer>() != null)
+                    GetComponent<SpriteRenderer>().enabled = true;
+
+                if (GetComponent<NetworkTransform>() != null)
+                    GetComponent<NetworkTransform>().enabled = true;
+
+                if (GetComponent<Collider2D>() != null)
+                    GetComponent<Collider2D>().enabled = true;
+            }
 
             StartCoroutine("PopCheck");
+
+            // TODO: THIS SHOULDN'T DISABLE ASTEROIDS WHEN THEY GET THEIR OWN DISTANCE
+            if (ObjEnable != null)
+                ObjEnable();
         }
-
-        #endregion
-
-        #region INTERNAL FUNCTION
 
         /// <summary>
         /// disable if client, otherwise hide as many processes as possible
@@ -119,23 +127,24 @@ namespace Space.Segment
                     Destroyed(_segObject);
 
                 this.gameObject.SetActive(false);
-
-                if (ObjDisable != null)
-                    ObjDisable();
             }
             else
             {
                 // think of asomething for localhost
+                // no longer needed when object isnt destroyed
 
-                if (Destroyed != null)
-                    Destroyed(_segObject);
+                Active = false;
 
-                if(GetComponent<SpriteRenderer>() != null)
-                    GetComponent<SpriteRenderer>().enabled = false;
-                if(GetComponent<BoxCollider2D>() != null)
-                    GetComponent<BoxCollider2D>().enabled = false;
-                if (GetComponent<NetworkTransform>() != null)
-                    GetComponent<NetworkTransform>().enabled = false;
+                if (_physicalObject)
+                {
+                    // Only disable this object if it is physical
+                    if (GetComponent<SpriteRenderer>() != null)
+                        GetComponent<SpriteRenderer>().enabled = false;
+                    if (GetComponent<BoxCollider2D>() != null)
+                        GetComponent<BoxCollider2D>().enabled = false;
+                    if (GetComponent<NetworkTransform>() != null)
+                        GetComponent<NetworkTransform>().enabled = false;
+                }
 
                 StopCoroutine("PopCheck");
 

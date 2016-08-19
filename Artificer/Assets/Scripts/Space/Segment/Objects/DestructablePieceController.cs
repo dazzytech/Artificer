@@ -7,13 +7,14 @@ using Data.Space.Library;
 using Space.Segment;
 using Space.Ship;
 using Space.Ship.Components.Listener;
+using Space.GameFunctions;
 
 namespace Space
 {
     public class DestructablePieceController : ImpactCollider
     {
         #region ATTRIBUTES
-
+        [SyncVar]
         public float pieceDensity;
         public float maxDensity;
 
@@ -26,6 +27,11 @@ namespace Space
         void Start()
         {
             maxDensity = pieceDensity = (40f * transform.childCount);
+        }
+
+        void Awake()
+        {
+            GameManager.singleton.client.RegisterHandler(MsgType.Highest + 14, ProcessHitMsg);
         }
 
         void Update()
@@ -89,40 +95,80 @@ namespace Space
 
             if (shipAtts.Components.Count == 0)
                 Destroy(player);
+
+            maxDensity = pieceDensity = (40f * transform.childCount);
         }
 
         #endregion
 
         #region IMPACT COLLISION
 
-        /// <summary>
-        /// Client function called by server 
-        /// to handle projectile hits on our object
-        /// process the damage on the local object and then
-        /// update the remote clients
-        /// </summary>
-        /// <param name="hitpoint">The vector 3D point
-        /// where the projectile intesected with the colliders </param>
-        [ClientRpc]
-        public override void RpcHit()
+        void OnCollisionEnter2D(Collision2D other)
         {
-            pieceDensity -= _hitD.damage;
-
-            if (pieceDensity <= 0)
+            if (other.transform.gameObject.tag != "Station")
             {
-                // for now just destroy
-                Destroy(this.gameObject);
-            }
+                Vector2 dir = transform.position - other.transform.position;
+                dir = other.transform.InverseTransformDirection(dir);
+                float magnitude = dir.sqrMagnitude;
+                GetComponent<Rigidbody2D>().AddForce(dir * magnitude, ForceMode2D.Force);
 
+                HitData hitD = new HitData();
+                hitD.damage = 50f;
+                hitD.hitPosition = other.contacts[0].point;
+                hitD.originID = this.netId;
+
+                // retrieve impact controller
+                // and if one exists make ship process hit
+                ImpactCollider IC = other.transform.GetComponent<ImpactCollider>();
+
+                if (IC != null)
+                    IC.Hit(hitD);
+            }
+        }
+
+        public override void Hit(HitData hit)
+        {
+            SOColliderHitMessage msg = new SOColliderHitMessage();
+            msg.SObjectID = this.netId;
+            msg.HitD = hit;
+            GameManager.singleton.client.Send(MsgType.Highest + 15, msg);
         }
 
         [ClientRpc]
         public override void RpcHitArea()
         {
-            // Create ranged based damage in explosion
-
-            // call hit
             RpcHit();
+        }
+
+        public void ProcessHitMsg(NetworkMessage msg)
+        {
+            if (!isServer)
+                return;
+
+            SOColliderHitMessage colMsg = msg.ReadMessage<SOColliderHitMessage>();
+
+            GameObject HitObj = ClientScene.FindLocalObject(colMsg.SObjectID);
+            if (HitObj != null)
+            {
+                HitObj.transform.
+                    GetComponent<DestructablePieceController>().ApplyDamage(colMsg.HitD);
+            }
+
+        }
+
+        public void ApplyDamage(HitData hData)
+        {
+            pieceDensity -= hData.damage;
+
+            if (pieceDensity <= 0)
+            {
+                // this will work cause host
+                NetworkServer.UnSpawn(this.gameObject);
+
+                // for now just destroy
+                Destroy(this.gameObject);
+            }
+
         }
 
         /*

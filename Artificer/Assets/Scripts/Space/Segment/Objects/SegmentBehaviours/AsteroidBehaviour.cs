@@ -4,6 +4,7 @@ using System.Collections;
 //Artificer
 using Data.Space.Library;
 using Space.Segment;
+using Space.GameFunctions;
 
 public class AsteroidBehaviour : ImpactCollider
 {
@@ -21,31 +22,40 @@ public class AsteroidBehaviour : ImpactCollider
     public float withinDistance;
     public bool running;
 
-    protected Animator anim;
-
+    //protected Animator anim;
     //public string[] prospect;         Sync list string
 
     #endregion
 
     #region MONO BEHAVIOUR
 
+    void Awake()
+    {
+        GameManager.singleton.client.RegisterHandler(MsgType.Highest + 14, ProcessHitMsg);
+    }
+
     void Start()
     {
         // Check if we have been intialized by server
         if (!_parentID.IsEmpty())
             InitializeAsteroid();
+        else
+            StartCoroutine("PopCheck");
     }
 
     void OnDestroy()
     {
+        // Release the event listener
         if (transform.parent != null)
         {
             transform.parent.GetComponent<SegmentObjectBehaviour>().ObjEnable
-                -= EnableObj;
+                -= ParentEnabled;
 
             transform.parent.GetComponent<SegmentObjectBehaviour>().ObjDisable
-                -= DisableObj;
+                -= ParentDisabled;
         }
+        else
+            StopCoroutine("PopCheck");
     }
 
     #endregion
@@ -69,6 +79,26 @@ public class AsteroidBehaviour : ImpactCollider
 
     #endregion
 
+    #region EVENT LISTENER
+
+    /// <summary>
+    /// start running coroutine when parent within range
+    /// </summary>
+    private void ParentEnabled()
+    {
+        EnableObj();
+    }
+
+    /// <summary>
+    /// stop running coroutine when parent out of range
+    /// </summary>
+    private void ParentDisabled()
+    {
+        DisableObj();
+    }
+
+    #endregion
+
     #region GAME OBJECT UTILITIES
 
     /// <summary>
@@ -77,25 +107,37 @@ public class AsteroidBehaviour : ImpactCollider
     /// </summary>
     private void InitializeAsteroid()
     {
-        transform.parent = ClientScene.FindLocalObject(_parentID).transform;
+        GameObject parent = ClientScene.FindLocalObject(_parentID);
+        if (parent != null)
+        {
+            transform.parent = parent.transform;
 
-        transform.parent.GetComponent<SegmentObjectBehaviour>().ObjEnable
-            += EnableObj;
+            transform.parent.GetComponent<SegmentObjectBehaviour>().ObjEnable
+                += ParentEnabled;
 
-        transform.parent.GetComponent<SegmentObjectBehaviour>().ObjDisable
-            += DisableObj;
+            transform.parent.GetComponent<SegmentObjectBehaviour>().ObjDisable
+                += ParentDisabled;
+        }
+        else
+            Debug.Log(_parentID + " NOT FOUND");
 
         transform.localScale =
                     new Vector3(_scale,
                                 _scale, 1f);
 
-        GetComponent<Rigidbody2D>().mass = _scale;
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.mass = _scale;
+
+        // give each asteroid a gentle velocity so it moves
+        //rb.AddForce(new Vector2(Random.Range(-1f, 1f),
+            //Random.Range(-1f, 1f)), ForceMode2D.Impulse);
 
         _maxDensity = _rockDensity;
-
-        //StartCoroutine("PopCheck");
     }
 
+    /// <summary>
+    /// Server host, puts asteroid at normal functioning
+    /// </summary>
     private void EnableObj()
     {
         if (this == null)
@@ -111,9 +153,11 @@ public class AsteroidBehaviour : ImpactCollider
             c.enabled = true;
 
         running = true;
-        //StartCoroutine("PopCheck");
     }
 
+    /// <summary>
+    ///  Server host, puts asteroid at minimal functioning
+    /// </summary>
     private void DisableObj()
     {
         if (this == null)
@@ -134,16 +178,24 @@ public class AsteroidBehaviour : ImpactCollider
 
     #region COROUTINES
 
-   /* private IEnumerator PopCheck()
+    /// <summary>
+    /// Like a standard segment object, enable 
+    /// object if in range and disable if not
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator PopCheck()
     {
         // for now just create infinite loop
-        while (running)
+        while (true)
         {
             GameObject player = GameObject.FindGameObjectWithTag
                 ("PlayerShip");
 
             if (player == null)
             {
+                if (running)
+                    DisableObj();
+
                 yield return null;
                 continue;
             }
@@ -154,27 +206,19 @@ public class AsteroidBehaviour : ImpactCollider
 
             if (Vector3.Distance(thisPos, playerPos) > withinDistance)
             {
-                // Parent isnt enabled but we are 
-                GetComponent<NetworkTransform>().enabled = false;
-                GetComponent<SpriteRenderer>().enabled = false;
-
-                foreach (CircleCollider2D c in GetComponents<CircleCollider2D>())
-                    c.enabled = false;
+                // we are out of visiblity distance
+                if (running)
+                    DisableObj();
             }
             else
             {
-                if(!GetComponent<NetworkTransform>().enabled)
-                {
-                    // Parent is enabled but we are not
-                    GetComponent<NetworkTransform>().enabled = true;
-                    GetComponent<SpriteRenderer>().enabled = true;
-                    foreach (CircleCollider2D c in GetComponents<CircleCollider2D>())
-                        c.enabled = true;
-                }
+                // within visual range
+                if (!running)
+                    EnableObj();
             }
             yield return null;
         }
-    }*/
+    }
 
     #endregion
 
@@ -189,22 +233,26 @@ public class AsteroidBehaviour : ImpactCollider
             float magnitude = dir.sqrMagnitude;
             GetComponent<Rigidbody2D>().AddForce(dir * magnitude, ForceMode2D.Force);
 
-            CmdAsteroidDmg(other);
+            HitData hitD = new HitData();
+            hitD.damage = 50f;
+            hitD.hitPosition = other.contacts[0].point;
+            hitD.originID = this.netId;
+
+            // retrieve impact controller
+            // and if one exists make ship process hit
+            ImpactCollider IC = other.transform.GetComponent<ImpactCollider>();
+
+            if (IC != null)
+                IC.Hit(hitD);
         }
 	}
 
-    public void CmdAsteroidDmg(Collision2D other)
+    public override void Hit(HitData hit)
     {
-        HitData hitD = new HitData();
-        hitD.damage = 50f;
-        hitD.hitPosition = other.contacts[0].point;
-        hitD.originID = this.netId;
-
-        // retrieve impact controller
-        // and if one exists make ship process hit
-        ImpactCollider IC = other.transform.GetComponent<ImpactCollider>();
-        if (IC != null)
-            IC.Hit(hitD);
+        SOColliderHitMessage msg = new SOColliderHitMessage();
+        msg.SObjectID = this.netId;
+        msg.HitD = hit;
+        GameManager.singleton.client.Send(MsgType.Highest + 15, msg);
     }
 
     [ClientRpc]
@@ -213,21 +261,35 @@ public class AsteroidBehaviour : ImpactCollider
         RpcHit();
     }
 
-    [ClientRpc]
-    public override void RpcHit()
+    public void ProcessHitMsg(NetworkMessage msg)
     {
         if (!isServer)
             return;
+
+        SOColliderHitMessage colMsg = msg.ReadMessage<SOColliderHitMessage>();
+
+        GameObject HitObj = ClientScene.FindLocalObject(colMsg.SObjectID);
+        if (HitObj != null)
+        { 
+            HitObj.transform.
+                GetComponent<AsteroidBehaviour>().ApplyDamage(colMsg.HitD);
+        }
+        
+    }
+
+    public void ApplyDamage(HitData hData)
+    {
+        _hitD = hData;
 
         _rockDensity -= _hitD.damage;
 
         float dmgPerc = _hitD.damage / _maxDensity;
 
         int numOfRocks = Mathf.CeilToInt(
-            (_maxDensity*dmgPerc)*0.2f) 
+            (_maxDensity * dmgPerc) * 0.2f)
             + Random.Range(0, 4);
-        
-        for(int i = 0; i < numOfRocks; i++)
+
+        for (int i = 0; i < numOfRocks; i++)
         {
             /*GameObject rock = new GameObject();
             SpriteRenderer rockSprite = rock.AddComponent<SpriteRenderer>();
@@ -255,6 +317,7 @@ public class AsteroidBehaviour : ImpactCollider
 
         if (_rockDensity <= 0)
         {
+            // this will work cause host
             NetworkServer.UnSpawn(this.gameObject);
 
             // for now just destroy

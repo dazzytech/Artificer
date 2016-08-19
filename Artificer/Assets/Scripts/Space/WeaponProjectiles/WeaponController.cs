@@ -28,8 +28,34 @@ namespace Space.Projectiles
         // ignore collectable layer
         public LayerMask maskIgnore;
 
+        public void Init()
+        {
+        }
+
         public virtual void CreateProjectile(WeaponData data)
+        {
+        }
+
+        [Command]
+        public void CmdBuildFX(WeaponData data)
+        {
+            RpcBuildFX(data);
+        }
+
+        [ClientRpc]
+        public virtual void RpcBuildFX(WeaponData data)
         { }
+
+        [Command]
+        public void CmdBuildHitFX(Vector2 hit, WeaponData data)
+        {
+            RpcBuildHitFX(hit, data);
+        }
+
+        [ClientRpc]
+        public virtual void RpcBuildHitFX(Vector2 hit, WeaponData data)
+        {
+        }
 
         public virtual void CreateMissile(WeaponData data)
         {
@@ -41,6 +67,12 @@ namespace Space.Projectiles
         { }
 
         public void DestroyProjectile()
+        {
+            CmdDestroyProjectile();
+        }
+
+        [Command]
+        private void CmdDestroyProjectile()
         {
             NetworkServer.UnSpawn(this.gameObject);
             Destroy(this.gameObject);

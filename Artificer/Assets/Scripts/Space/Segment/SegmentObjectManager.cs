@@ -225,12 +225,16 @@ namespace Space.Segment
                     if (segObjGO == null || segObj._visibleDistance <= 0)
                         continue;
 
+                    // If object is within range we will reenable it
                     if (Vector3.Distance(playerPos, segObjGO.transform.position)
                            < segObj._visibleDistance)
-                        if (!isServer)
+                        // Make sure the object is actually disabled
+                        if (!isServer && !segObjGO.activeSelf)
                             segObjGO.SetActive(true);
                         else
-                            segObjGO.SendMessage("Reenable");
+                        // if server we cant disable object so make it function minimally
+                            if(!segObjGO.GetComponent<SegmentObjectBehaviour>().Active)
+                                segObjGO.SendMessage("ReEnable");
                 }
                 
                 yield return null;

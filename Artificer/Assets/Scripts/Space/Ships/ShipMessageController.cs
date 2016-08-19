@@ -145,45 +145,6 @@ namespace Space.Ship
             }
         }
 
-        /// <summary>
-        /// Called by the local object to 
-        /// send a projectile to spawn to the server
-        /// </summary>
-        /// <param name="pos"></param>
-        /// <param name="Prefab"></param>
-        /// <param name="wep"></param>
-        public void SpawnProjectile(Vector3 pos,
-                GameObject Prefab, WeaponData wep)
-        {
-            if (!isLocalPlayer) return;
-
-            int prefabIndex = NetworkManager.singleton.spawnPrefabs.IndexOf(Prefab);
-
-            CmdSpawnProjectile(pos, prefabIndex, wep);
-        }
-
-        /// <summary>
-        /// Server command that creates a projectile and then 
-        /// initializes it
-        /// </summary>
-        /// <param name="pos"></param>
-        /// <param name="prefabIndex"></param>
-        /// <param name="wep"></param>
-        [Command]
-        public void CmdSpawnProjectile(Vector3 pos,
-                int prefabIndex, WeaponData wep)
-        {
-            GameObject Prefab = NetworkManager.singleton.spawnPrefabs[prefabIndex];
-
-            GameObject GO = Instantiate(Prefab, pos, Quaternion.identity) as GameObject;
-
-            NetworkHash128 GOID = GO.GetComponent<NetworkIdentity>().assetId;
-
-            NetworkServer.Spawn(GO);
-
-            GO.GetComponent<WeaponController>().CreateProjectile(wep);
-        }
-
         #endregion
 
         #region SHIP INITIALIZATION
