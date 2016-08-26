@@ -13,6 +13,8 @@ namespace Space.Segment.Generator
         public GameObject SatellitePrefab;
         public GameObject AsteroidPrefab;
         public GameObject CloudPrefab;
+        public GameObject GravePrefab;
+        public GameObject WreckagePrefab;
 
         #endregion
 
@@ -142,6 +144,17 @@ namespace Space.Segment.Generator
             }
 
             return newCloud;
+        }
+
+        public GameObject GenerateGrave(SegmentObject segObj)
+        {
+            GameObject newGrave = Instantiate(GravePrefab);
+            newGrave.transform.position = segObj._position;
+            newGrave.GetComponent<ShipGraveyardBehaviour>().WreckagePrefab = WreckagePrefab;
+
+            NetworkServer.Spawn(newGrave);
+
+            return newGrave;
         }
 
         /*public GameObject GenerateStation(StationData station)

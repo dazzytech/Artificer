@@ -92,6 +92,14 @@ namespace Space.Segment
                      Random.Range(100f, 4900f))));
             }
 
+            int graves = Random.Range(2, 4);
+            for (int i = 0; i <= graves; i++)
+            {
+                SyncList.Add(BuildGraveyard(new Vector2
+                    (Random.Range(500f, 4500f),
+                     Random.Range(500f, 4500f))));
+            }
+
             return SyncList.ToArray();
         }
 
@@ -278,7 +286,7 @@ namespace Space.Segment
             SegmentObject cloud = new SegmentObject();
 
             cloud._type = "_clouds";
-            cloud._prefabPath = "Space/cloud";
+            cloud._prefabPath = "Space/Cloud";
             cloud._name = "interstellar cloud";
             cloud._tag = "Untagged";
             cloud._visibleDistance = 600;
@@ -287,6 +295,21 @@ namespace Space.Segment
             cloud._count = Random.Range(6, 10);
 
             return cloud;   
+        }
+
+        private static SegmentObject BuildGraveyard(Vector2 position)
+        {
+            SegmentObject grave = new SegmentObject();
+
+            grave._type = "_debris";
+            grave._prefabPath = "Space/Wreck";
+            grave._name = "ship graveyard";
+            grave._tag = "Untagged";
+            grave._visibleDistance = 600;
+
+            grave._position = position;
+
+            return grave;
         }
 
         #endregion

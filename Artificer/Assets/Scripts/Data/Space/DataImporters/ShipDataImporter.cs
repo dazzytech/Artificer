@@ -12,6 +12,39 @@ namespace Data.Space.DataImporter
     {
         #region STATIC IMPORTER
 
+        public static ShipData[] LoadShipDataWreckage()
+        {
+            // load all the ship schematics within 
+            // the ship directories.
+
+            // load to Object and then convert to text
+            System.Object[] objAssets = Resources.LoadAll
+                ("Space/Wreckage/templates");
+
+            TextAsset[] shipTexts =
+                new TextAsset[objAssets.Length];
+
+            for (var i = 0; i < objAssets.Length; i++)
+                shipTexts[i] = objAssets[i] as TextAsset;
+
+            // Create empty data objects for the ships
+            // and its index
+            ShipData[] shipsData =
+                new ShipData[shipTexts.Length];
+            int shipIndex = 0;
+
+            // Create 
+            XmlDocument baseShipXml = new XmlDocument();
+            // loop through each ship and create it
+            foreach (TextAsset shipText in shipTexts)
+            {
+                baseShipXml.LoadXml(shipText.text);
+                shipsData[shipIndex] = LoadShip(baseShipXml, shipText.name);
+                shipIndex++;
+            }
+            return shipsData;
+        }
+
         /// <summary>
         /// Loops through each stored ship information
         /// and retrives all the information stored in the xml

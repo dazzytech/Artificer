@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 // Artificer defined
 using Data.Space;
+using Space.GameFunctions;
 
 namespace Space.Segment
 {
@@ -39,6 +40,11 @@ namespace Space.Segment
 
         #endregion
 
+        void Awake()
+        {
+            GameManager.singleton.client.RegisterHandler(MsgType.Highest + 14, ProcessHitMsg);
+        }
+
         #region EXTERNAL FUNCTIONS
 
         /// <summary>
@@ -53,6 +59,20 @@ namespace Space.Segment
         }
 
         #endregion
+
+        public void ProcessHitMsg(NetworkMessage msg)
+        {
+            if (!isServer)
+                return;
+
+            SOColliderHitMessage colMsg = msg.ReadMessage<SOColliderHitMessage>();
+
+            GameObject HitObj = ClientScene.FindLocalObject(colMsg.SObjectID);
+            if (HitObj != null)
+            {
+                HitObj.transform.SendMessage("ApplyDamage", colMsg.HitD, SendMessageOptions.DontRequireReceiver);
+            }
+        }
 
         #region VIRTUAL FUNCTIONS
 
