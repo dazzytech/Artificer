@@ -7,6 +7,7 @@ using Data.Space;
 using Data.Shared;
 using Space.Ship;
 using Space.UI;
+using Utilities.Parellax;
 
 namespace Space.Segment
 {
@@ -135,6 +136,13 @@ namespace Space.Segment
             //MessageHUD.DisplayMessege(new MsgParam("bold", "Finished!"));
 
             _gen.GenerateServerObjects();
+
+            // Initialize parellax objects
+            ParellaxItem[] pItems = SegmentDataBuilder.BuildNewBackground();
+
+
+            foreach (ParellaxItem pItem in pItems)
+                _att.BGItem.Add(pItem);
         }
 
         #endregion

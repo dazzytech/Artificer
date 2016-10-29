@@ -8,6 +8,7 @@ using Data.Shared;
 using Data.Space;
 using Data.Space.Library;
 using Space.Segment.Generator;
+using Utilities.Parellax;
 
 namespace Space.Segment
 {
@@ -60,6 +61,10 @@ namespace Space.Segment
         {
             // Build camera
             BuildCamera();
+
+            // Send our collection of scrolling items to the client camera
+            foreach (ParellaxItem pItem in _att.BGItem)
+                Camera.main.SendMessage("AddScrollObject", pItem);
         }
 
         /// <summary>
@@ -110,6 +115,8 @@ namespace Space.Segment
                 
                 camObject.AddComponent<AudioListener>();
 
+                camObject.AddComponent<ParellaxScroller>();
+
                 BuildStarfield(camObject.transform);
             }
         }
@@ -121,14 +128,14 @@ namespace Space.Segment
                                                             , Vector3.zero, Quaternion.identity);
             starField.transform.parent = cam;
 
-            float screenAspect = (float)Screen.width / (float)Screen.height;
+            /*float screenAspect = (float)Screen.width / (float)Screen.height;
             float cameraHeight = Camera.main.orthographicSize * 2;
             GameObject starDrop = (GameObject)Instantiate (Resources.Load ("Space/Backdrops/stardrop_0")
                                                            , Vector3.zero, Quaternion.identity);
             Vector3 size = new Vector3(cameraHeight * screenAspect, cameraHeight, 0f);
             starDrop.transform.localScale = size;
             starDrop.transform.parent = cam;
-            starDrop.transform.Translate (new Vector3 (0f, 0f, 1f));
+            starDrop.transform.Translate (new Vector3 (0f, 0f, 1f));*/
         }
 
         #endregion
@@ -255,17 +262,6 @@ namespace Space.Segment
                 yield return null;
             }
         }
-
-        /// <summary>
-        /// Removes the object.
-        /// called by segment object when destoryed
-        /// </summary>
-        /// <param name="obj">Object.</param>
-        /*public void RemoveObject(SegmentObject obj)
-        {
-            if (SegObjs.Contains(obj))
-                SegObjs.Remove(obj);
-        }*/
 
         #endregion
     }

@@ -48,7 +48,7 @@ namespace Space.Segment
         private void BuildGraveyard()
         {
             // Pick number of ships to generate
-            int numWreckedShips = Random.Range(20, 40);
+            int numWreckedShips = Random.Range(50, 200);
 
             // width and height of our ship graveyard
             int width = Random.Range(500, 1000);

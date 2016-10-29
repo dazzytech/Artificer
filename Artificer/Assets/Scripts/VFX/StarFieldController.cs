@@ -15,7 +15,8 @@ public class StarFieldController : MonoBehaviour {
 	private float starDistanceSqr;
 	
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         starDistance = Camera.main.orthographicSize * 2;
         starsMax = Mathf.RoundToInt((starDistance / 10f) * 100f);
 		starDistanceSqr = starDistance * starDistance;
@@ -23,13 +24,14 @@ public class StarFieldController : MonoBehaviour {
 	
     public void Resize()
     {
-        starDistance = Camera.main.orthographicSize * 2;
+        /*starDistance = Camera.main.orthographicSize * 2;
         starsMax = Mathf.RoundToInt((starDistance / 10f) * 100f);
         starDistanceSqr = starDistance * starDistance;
-        CreateStars();
+        CreateStars();*/
     }
 	
-	private void CreateStars() {
+	private void CreateStars()
+    {
 		tx = gameObject.transform;
 		prevPos = tx.position;
 		points = new ParticleSystem.Particle[starsMax];
@@ -39,13 +41,14 @@ public class StarFieldController : MonoBehaviour {
 			position.z = 0;
 			points[i].position = position;
 			points[i].color = new Color(1,1,1, 1);
-			points[i].size = Random.Range(starSizeMin, starSizeMax);
+			points[i].startSize = Random.Range(starSizeMin, starSizeMax);
 		}
 	}
 	
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		if ( points == null ) CreateStars();
 		for (int i = 0; i < starsMax; i++) {
 			if ((points[i].position).sqrMagnitude > starDistanceSqr) {
@@ -59,7 +62,7 @@ public class StarFieldController : MonoBehaviour {
 			{
 				Vector3 movement = (prevPos - tx.position)* 0.5f;
 				Vector3 position = points[i].position +
-					new Vector3(movement.x * points[i].size, movement.y * points[i].size, 0.0f);
+					new Vector3(movement.x * points[i].GetCurrentSize(GetComponent<ParticleSystem>()), movement.y * points[i].GetCurrentSize(GetComponent<ParticleSystem>()), 0.0f);
 				position.z = 0;
 				points[i].position = position;
 			}

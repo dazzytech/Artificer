@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
+using Utilities.Parellax;
 
 namespace Space.Segment
 {
@@ -29,6 +30,9 @@ namespace Space.Segment
     public class SyncListSO : SyncListStruct<SegmentObject>
     { }
 
+    public class SyncListPI : SyncListStruct<ParellaxItem>
+    { }
+
     class SegmentAttributes: NetworkBehaviour
     {
         public Vector2 MapSize = new Vector2(5000, 5000);
@@ -44,6 +48,9 @@ namespace Space.Segment
         // nested within controller
         public SyncListSO SegObjs = 
             new SyncListSO();
+
+        public SyncListPI BGItem =
+            new SyncListPI();
 
         [SyncVar]
         public int playerCount;

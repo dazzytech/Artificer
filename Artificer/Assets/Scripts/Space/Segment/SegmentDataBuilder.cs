@@ -5,6 +5,7 @@ using System.IO;
 
 using Data.Space;
 using Data.Shared;
+using Utilities.Parellax;
 
 namespace Space.Segment
 {
@@ -32,35 +33,6 @@ namespace Space.Segment
         public static SegmentObject[] BuildNewSegment()
         {
             List<SegmentObject> SyncList = new List<SegmentObject>();
-
-            // between 7 and 14 planets
-            //int planets = Random.Range(7, 14);
-            //float planetDistance = 300; // 300 units between each planet
-            //Vector2[] prevPPos = new Vector2[planets];
-
-            /*for(int i = 0; i <= planets; i++)
-            {
-                bool tooclose = true;
-
-                Vector2 newPos = Vector2.zero;
-
-                while (tooclose)
-                {
-                    tooclose = false;
-
-                    newPos = new Vector2
-                    (Random.Range(100f, 4900f),
-                     Random.Range(100f, 4900f));
-
-                    foreach(Vector2 prev in prevPPos)
-                    {
-                        if (Vector2.Distance(newPos, prev) < planetDistance)
-                            tooclose = true;
-                    }
-                }
-
-                //SyncList.Add(BuildPlanet(newPos));
-            }*/
 
             // Generate a selection of asteroid fields
             int fields = Random.Range(20, 60);
@@ -103,59 +75,149 @@ namespace Space.Segment
             return SyncList.ToArray();
         }
 
+        public static ParellaxItem[] BuildNewBackground()
+        {
+            List<ParellaxItem> SyncList = new List<ParellaxItem>();
+
+            // between 7 and 14 planets
+            int planets = Random.Range(4, 7);
+            float planetDistance = 500; // 500 units between each planet
+            Vector2[] prevPPos = new Vector2[planets];
+
+            for (int i = 0; i <= planets; i++)
+            {
+                bool tooclose = true;
+
+                Vector2 newPos = Vector2.zero;
+
+                while (tooclose)
+                {
+                    tooclose = false;
+
+                    newPos = new Vector2
+                    (Random.Range(100f, 4900f),
+                     Random.Range(100f, 4900f));
+
+                    foreach (Vector2 prev in prevPPos)
+                    {
+                        if (Vector2.Distance(newPos, prev) < planetDistance)
+                            tooclose = true;
+                    }
+                }
+
+                SyncList.Add(BuildPlanet(newPos));
+            }
+
+            // between 2 and 4 galaxies
+            /*int galaxies = Random.Range(1, 3);
+            float galaxyDistance = 1500; 
+            Vector2[] prevGPos = new Vector2[galaxies];
+
+            for (int i = 0; i <= galaxies; i++)
+            {
+                bool tooclose = true;
+
+                Vector2 newPos = Vector2.zero;
+
+                while (tooclose)
+                {
+                    tooclose = false;
+
+                    newPos = new Vector2
+                    (Random.Range(100f, 4900f),
+                     Random.Range(100f, 4900f));
+
+                    foreach (Vector2 prev in prevGPos)
+                    {
+                        if (Vector2.Distance(newPos, prev) < galaxyDistance)
+                            tooclose = true;
+                    }
+                }
+
+                SyncList.Add(BuildGalaxy(newPos));
+            }*/
+
+            return SyncList.ToArray();
+        }
+
         #endregion
 
         #region DATA BUILDERS
 
-        /*
-        /// <summary>
-        /// Builds the station.
-        /// in future this will be 
-        /// done in another class with defined vars
-        /// </summary>
-        /// <returns>The station.</returns>
-        private static StationData BuildStation(Vector2 planet)
-        {
-            StationData station = new StationData();
-            station.Position = new Vector2
-                (Random.Range(planet.x - 200f, planet.x + 200f),
-                 Random.Range(planet.y - 200f, planet.y + 200f));
+            /*
+            /// <summary>
+            /// Builds the station.
+            /// in future this will be 
+            /// done in another class with defined vars
+            /// </summary>
+            /// <returns>The station.</returns>
+            private static StationData BuildStation(Vector2 planet)
+            {
+                StationData station = new StationData();
+                station.Position = new Vector2
+                    (Random.Range(planet.x - 200f, planet.x + 200f),
+                     Random.Range(planet.y - 200f, planet.y + 200f));
 
-            station.SetAttributes("New Station", "Station_External_Small_01");
+                station.SetAttributes("New Station", "Station_External_Small_01");
 
-            return station;
-        }*/
+                return station;
+            }*/
 
-        /*private static SegmentObject BuildPlanet(Vector2 planetPos)
+        private static ParellaxItem BuildPlanet(Vector2 planetPos)
         {
             // Create the start object
-            SegmentObject planet = new SegmentObject();
+            ParellaxItem planet = new ParellaxItem();
 
             // Pick a random texture
 
             // Get directory list of textures
             string path = (System.Environment.CurrentDirectory + 
-                "\\Assets\\Resources\\Textures\\PlanetTextures");
+                    "\\Assets\\Resources\\Textures\\PlanetTextures");
 
-            string[] fileEntries = Directory.GetFiles(path);
+            string[] fileEntries = Directory.GetFiles(path, "*.png");
 
             // assign info and pick random planet texture
-            planet._type = "planet";
-            planet._name = "planet";
-            planet._texturePath = "Textures/PlanetTextures/" + 
-                System.IO.Path.GetFileNameWithoutExtension
-                (fileEntries[Random.Range(0, fileEntries.Length)]);
-
-            planet._position = planetPos;
+            planet.X = planetPos.x;
+            planet.Y = planetPos.y;
+            planet.Distance = Random.Range(10, 90);
+            planet.Texture = "Textures/PlanetTextures/" + 
+                    System.IO.Path.GetFileNameWithoutExtension
+                    (fileEntries[Random.Range(0, fileEntries.Length)]);
+            planet.Type = "Planet";
 
             return planet;
-        }*/
+        }
 
-        /// <summary>
-        /// Builds a satellite object and returns it
-        /// </summary>
-        /// <param name="station"></param>
-        /// <returns></returns>
+        private static ParellaxItem BuildGalaxy(Vector2 galaxyPos)
+        {
+            // Create the start object
+            ParellaxItem galaxy = new ParellaxItem();
+
+            // Pick a random texture
+
+            // Get directory list of textures
+            string path = (System.Environment.CurrentDirectory +
+                    "\\Assets\\Resources\\Textures\\GalaxyTextures");
+
+            string[] fileEntries = Directory.GetFiles(path, "*.png");
+
+            // assign info and pick random planet texture
+            galaxy.X = galaxyPos.x;
+            galaxy.Y = galaxyPos.y;
+            galaxy.Distance = Random.Range(50, 100);
+            galaxy.Texture = "Textures/GalaxyTextures/" +
+                    System.IO.Path.GetFileNameWithoutExtension
+                    (fileEntries[Random.Range(0, fileEntries.Length)]);
+            galaxy.Type = "Galaxy";
+
+            return galaxy;
+        }
+
+            /// <summary>
+            /// Builds a satellite object and returns it
+            /// </summary>
+            /// <param name="station"></param>
+            /// <returns></returns>
         private static SegmentObject BuildSatellite(Vector2 planet)
         {
             // build base object

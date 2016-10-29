@@ -58,9 +58,10 @@ namespace Space
             // resize backgroundTransform 
             float screenAspect = (float)Screen.width / (float)Screen.height;
             float cameraHeight = Camera.main.orthographicSize * 2;
-            Transform bg = cam.transform.GetChild(1);
-            Vector3 size = new Vector3(cameraHeight * screenAspect, cameraHeight, 0f);
-            bg.localScale = size;
+            // Commented out cause no longer a bgimage
+            //Transform bg = cam.transform.GetChild(1);
+            //Vector3 size = new Vector3(cameraHeight * screenAspect, cameraHeight, 0f);
+            //bg.localScale = size;
             
             StarFieldController sf = cam.transform.GetComponentInChildren<StarFieldController>();
             sf.starDistance -= 1;
@@ -80,9 +81,9 @@ namespace Space
 
             float screenAspect = (float)Screen.width / (float)Screen.height;
             float cameraHeight = Camera.main.orthographicSize * 2;
-            Transform bg = cam.transform.GetChild(1);
-            Vector3 size = new Vector3(cameraHeight * screenAspect, cameraHeight, 0f);
-            bg.localScale = size;
+            //Transform bg = cam.transform.GetChild(1);
+            //Vector3 size = new Vector3(cameraHeight * screenAspect, cameraHeight, 0f);
+            //bg.localScale = size;
 
             StarFieldController sf = cam.transform.GetComponentInChildren<StarFieldController>();
             sf.starDistance += 1;
