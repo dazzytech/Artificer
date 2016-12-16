@@ -7,6 +7,7 @@ using Data.Shared;
 using Data.Space;
 using Data.Space.Library;
 using Space;
+using Space.CameraUtils;
 using Space.UI;
 using Space.GameFunctions;
 
@@ -42,5 +43,6 @@ public class GameBaseAttributes:MonoBehaviour
     // Static client accessors
     public UIMessegeHandler GUIMsg;
     public SpaceManager Space;
+    public CameraMessageHandler CamMsgHandler;
 }
 

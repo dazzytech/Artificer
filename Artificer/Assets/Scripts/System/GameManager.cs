@@ -7,6 +7,7 @@ using System.IO;
 using Data.Shared;
 using Data.Space;
 using Space;
+using Space.CameraUtils;
 using Space.UI;
 using Space.GameFunctions;
 
@@ -227,6 +228,17 @@ public class GameManager: NetworkManager
                 _base.Space = GameObject.Find("space").GetComponent<SpaceManager>();
 
             return _base.Space;
+        }
+    }
+
+    public static CameraMessageHandler Background
+    {
+        get
+        {
+            if (_base.CamMsgHandler == null)
+                _base.CamMsgHandler = GameObject.Find("PlayerCamera").GetComponent<CameraMessageHandler>();
+
+            return _base.CamMsgHandler; 
         }
     }
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
-using Utilities.Parellax;
+using Space.CameraUtils;
 
 namespace Space.Segment
 {

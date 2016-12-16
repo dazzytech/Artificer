@@ -8,7 +8,7 @@ using Data.Shared;
 using Data.Space;
 using Data.Space.Library;
 using Space.Segment.Generator;
-using Utilities.Parellax;
+using Space.CameraUtils;
 
 namespace Space.Segment
 {
@@ -103,39 +103,48 @@ namespace Space.Segment
                 
                 // create and format the camera
                 Camera playerCam = camObject.AddComponent<Camera> ();
-                playerCam.clearFlags = CameraClearFlags.Color;
+                playerCam.clearFlags = CameraClearFlags.Nothing;
+                playerCam.depth = 1;
+                playerCam.cullingMask &= ~(1 << LayerMask.NameToLayer("SpaceElements"));
                 playerCam.backgroundColor = Color.black;
                 playerCam.orthographic = true;
                 playerCam.orthographicSize = 20f;
-                
-                // add and initialize scripts for the camera object
-                CameraFollow camFollow = 
-                    camObject.AddComponent<CameraFollow>();
-                camObject.AddComponent<CameraShake>();
-                
-                camObject.AddComponent<AudioListener>();
 
+                // add and initialize scripts for the camera object
+                CameraMessageHandler cMsg = camObject.AddComponent<CameraMessageHandler>();
+                cMsg.CamFollow = camObject.AddComponent<CameraFollow>();
+                camObject.AddComponent<CameraShake>();
+                camObject.AddComponent<AudioListener>();
                 camObject.AddComponent<ParellaxScroller>();
 
-                BuildStarfield(camObject.transform);
+                BuildStarfield(camObject.transform, cMsg);
             }
         }
 
-        private void BuildStarfield(Transform cam)
+        private void BuildStarfield(Transform cam, CameraMessageHandler cMsg)
         {
-            // create objects that follow player
-            GameObject starField = (GameObject)Instantiate (Resources.Load ("Space/starfield")
-                                                            , Vector3.zero, Quaternion.identity);
-            starField.transform.parent = cam;
+            GameObject spaceCamObj = new GameObject();
+            spaceCamObj.name = "SpaceCamera";
+            spaceCamObj.transform.parent = cam;
+            spaceCamObj.transform.Translate(new Vector3(0, 0, -10f));
 
-            /*float screenAspect = (float)Screen.width / (float)Screen.height;
-            float cameraHeight = Camera.main.orthographicSize * 2;
-            GameObject starDrop = (GameObject)Instantiate (Resources.Load ("Space/Backdrops/stardrop_0")
-                                                           , Vector3.zero, Quaternion.identity);
-            Vector3 size = new Vector3(cameraHeight * screenAspect, cameraHeight, 0f);
-            starDrop.transform.localScale = size;
-            starDrop.transform.parent = cam;
-            starDrop.transform.Translate (new Vector3 (0f, 0f, 1f));*/
+            // create and format the camera
+            Camera spaceCam = spaceCamObj.AddComponent<Camera>();
+            spaceCam.clearFlags = CameraClearFlags.SolidColor;
+            spaceCam.depth = 0;
+            spaceCam.cullingMask = (1 << LayerMask.NameToLayer("SpaceElements"));
+            spaceCam.backgroundColor = Color.black;
+            spaceCam.orthographic = true;
+            spaceCam.orthographicSize = 20f;
+
+            // create objects that follow player
+            GameObject starField = (GameObject)Instantiate(Resources.Load("Space/starfield")
+                                                            , Vector3.zero, Quaternion.identity);
+            cMsg.StarField = starField.GetComponent<StarFieldController>();
+            starField.transform.parent = spaceCamObj.transform;
+
+            GalaxyScroller gScroll = spaceCamObj.AddComponent<GalaxyScroller>();
+            gScroll.AssignBG(1, spaceCam);
         }
 
         #endregion

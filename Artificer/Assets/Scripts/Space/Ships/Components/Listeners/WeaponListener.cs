@@ -91,7 +91,6 @@ namespace Space.Ship.Components.Listener
 
         public void ProjectileCreated(NetworkMessage msg)
         {
-            Debug.Log("bullet made");
             // retreive message
             ProjectileSpawnedMessage projMsg = msg.ReadMessage<ProjectileSpawnedMessage>();
 

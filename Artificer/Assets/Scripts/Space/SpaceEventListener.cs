@@ -143,6 +143,8 @@ namespace Space
             // For now each spawn is 10 seconds
             GameManager.GUI.SetSpawnDelay(10f);
 
+            GameManager.Background.StopBackground();
+
             // Send this to gamemanager instead
             //_att.TeamSpawn.CmdSpawnNewPlayerShip();
             // Group up all player respawns
@@ -163,6 +165,8 @@ namespace Space
             GameManager.GUI.SetState(UIState.Play);
 
             GameManager.GUI.BuildShipData();
+
+            GameManager.Background.StartBackground();
         }
 
         #endregion

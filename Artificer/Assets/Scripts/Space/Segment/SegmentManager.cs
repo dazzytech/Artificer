@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 using Data.Space;
 using Data.Shared;
+using Space.CameraUtils;
 using Space.Ship;
 using Space.UI;
-using Utilities.Parellax;
 
 namespace Space.Segment
 {

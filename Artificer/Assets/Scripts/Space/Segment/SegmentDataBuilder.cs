@@ -5,7 +5,7 @@ using System.IO;
 
 using Data.Space;
 using Data.Shared;
-using Utilities.Parellax;
+using Space.CameraUtils;
 
 namespace Space.Segment
 {
@@ -80,8 +80,8 @@ namespace Space.Segment
             List<ParellaxItem> SyncList = new List<ParellaxItem>();
 
             // between 7 and 14 planets
-            int planets = Random.Range(4, 7);
-            float planetDistance = 500; // 500 units between each planet
+            int planets = Random.Range(1, 4);
+            float planetDistance = 900; // 500 units between each planet
             Vector2[] prevPPos = new Vector2[planets];
 
             for (int i = 0; i <= planets; i++)
@@ -179,7 +179,7 @@ namespace Space.Segment
             // assign info and pick random planet texture
             planet.X = planetPos.x;
             planet.Y = planetPos.y;
-            planet.Distance = Random.Range(10, 90);
+            planet.Distance = Random.Range(90, 200);
             planet.Texture = "Textures/PlanetTextures/" + 
                     System.IO.Path.GetFileNameWithoutExtension
                     (fileEntries[Random.Range(0, fileEntries.Length)]);

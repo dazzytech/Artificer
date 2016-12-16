@@ -54,18 +54,6 @@ namespace Space
             if (cam.orthographicSize < 10)
                 return; 
             cam.orthographicSize--;
-            
-            // resize backgroundTransform 
-            float screenAspect = (float)Screen.width / (float)Screen.height;
-            float cameraHeight = Camera.main.orthographicSize * 2;
-            // Commented out cause no longer a bgimage
-            //Transform bg = cam.transform.GetChild(1);
-            //Vector3 size = new Vector3(cameraHeight * screenAspect, cameraHeight, 0f);
-            //bg.localScale = size;
-            
-            StarFieldController sf = cam.transform.GetComponentInChildren<StarFieldController>();
-            sf.starDistance -= 1;
-            sf.Resize();
         }
         
         public void ZoomOut()
@@ -78,16 +66,6 @@ namespace Space
             if (cam.orthographicSize > 30)
                 return; 
             cam.orthographicSize++;
-
-            float screenAspect = (float)Screen.width / (float)Screen.height;
-            float cameraHeight = Camera.main.orthographicSize * 2;
-            //Transform bg = cam.transform.GetChild(1);
-            //Vector3 size = new Vector3(cameraHeight * screenAspect, cameraHeight, 0f);
-            //bg.localScale = size;
-
-            StarFieldController sf = cam.transform.GetComponentInChildren<StarFieldController>();
-            sf.starDistance += 1;
-            sf.Resize();
         }
 
         #endregion
