@@ -126,7 +126,7 @@ namespace Space
             }
         }
 
-        public override void Hit(HitData hit)
+        /*public override void Hit(HitData hit)
         {
             SOColliderHitMessage msg = new SOColliderHitMessage();
             msg.SObjectID = this.netId;
@@ -138,9 +138,9 @@ namespace Space
         public override void RpcHitArea()
         {
             RpcHit();
-        }
+        }*/
 
-        public void ProcessHitMsg(NetworkMessage msg)
+        /*public void ProcessHitMsg(NetworkMessage msg)
         {
             if (!isServer)
                 return;
@@ -154,7 +154,7 @@ namespace Space
                     GetComponent<DestructablePieceController>().ApplyDamage(colMsg.HitD);
             }
 
-        }
+        }*/
 
         public void ApplyDamage(HitData hData)
         {
@@ -168,7 +168,6 @@ namespace Space
                 // for now just destroy
                 Destroy(this.gameObject);
             }
-
         }
 
         /*

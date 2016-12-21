@@ -55,12 +55,19 @@ namespace Space.Segment
         {
             // Set hitdata to our local storage
             _hitD = hit;
-            //RpcHit();
+
+            SOColliderHitMessage msg = new SOColliderHitMessage();
+            msg.SObjectID = this.netId;
+            msg.HitD = hit;
+            GameManager.singleton.client.Send(MsgType.Highest + 15, msg);
         }
 
         #endregion
 
-        public void ProcessHitMsg(NetworkMessage msg)
+
+        #region VIRTUAL FUNCTIONS
+
+        public virtual void ProcessHitMsg(NetworkMessage msg)
         {
             if (!isServer)
                 return;
@@ -73,8 +80,6 @@ namespace Space.Segment
                 HitObj.transform.SendMessage("ApplyDamage", colMsg.HitD, SendMessageOptions.DontRequireReceiver);
             }
         }
-
-        #region VIRTUAL FUNCTIONS
 
         /// <summary>
         /// Client function called by server 

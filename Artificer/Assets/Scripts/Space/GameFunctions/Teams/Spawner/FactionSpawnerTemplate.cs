@@ -4,6 +4,8 @@ using System.Collections.Generic;
 // Artificer
 using Data.Shared;
 
+// NPC SPAWNING
+
 /// <summary>
 /// Faction spawner template.
 /// Contains functions used by 

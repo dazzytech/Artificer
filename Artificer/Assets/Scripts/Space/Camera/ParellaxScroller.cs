@@ -70,7 +70,6 @@ namespace Space.CameraUtils
                 Vector3 scale = new Vector3();
                 float newScale = UnityEngine.Random.Range(.1f, .5f);
                 scale = Vector3.one * newScale;
-                Debug.Log(scale);
                 newObject.transform.localScale = scale;
             }
 
@@ -128,9 +127,9 @@ namespace Space.CameraUtils
             while(true)
             {
                 GameObject player = GameObject.FindGameObjectWithTag("PlayerShip");
-                if(player != null)
+                foreach(ParellaxItem pItem in _scrollItems)
                 {
-                    foreach (ParellaxItem pItem in _scrollItems)
+                    if (player != null)
                     {
                         if (pItem.Bound.Contains(player.transform.position))
                         {

@@ -60,15 +60,15 @@ namespace Space.Ship
         /// <param name="hit"></param>
         public override void Hit(HitData hit)
         {
-            base.Hit(hit);
-
             if (colliders == null)
                 BuildColliders();
+
+            _hitD = hit;
 
             StartCoroutine("CycleThroughCollidersSingle");
         }
 
-        public void ProcessHitMsg(NetworkMessage msg)
+        public override void ProcessHitMsg(NetworkMessage msg)
         {
             ShipColliderHitMessage colMsg = msg.ReadMessage<ShipColliderHitMessage>();
 
@@ -132,7 +132,7 @@ namespace Space.Ship
             {
                 if (piece != null)
                 {
-                    if (piece.bounds.Contains(_hitD.hitPosition))
+                    if (piece.OverlapPoint(_hitD.hitPosition))
                     {
                         // Retrieve the component listener and attributes from piece obj
                         ComponentAttributes att =

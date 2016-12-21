@@ -41,8 +41,13 @@ namespace Space.Teams.SpawnManagers
         //}
 
         [Server]
-        public void AddStation(Vector2 station)
+        public void AddStation(Vector2 station, string StationPrefab = "Placeholder_Station")
         {
+            GameObject newStation = Instantiate((Resources.Load("Space/Stations/" + StationPrefab) as GameObject),
+                station, Quaternion.identity) as GameObject;
+
+            NetworkServer.Spawn(newStation);
+
             Vector2[] spawns = new Vector2[5];
 
             //generate the five spawns near the middle

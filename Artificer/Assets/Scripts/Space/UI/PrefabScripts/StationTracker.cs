@@ -2,18 +2,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
+using Space.Segment;
+
 
 namespace Space.UI.Ship
 {
     public class StationTracker : MonoBehaviour
     {
-        private StationBehaviour _station;
+        private StationController _station;
 
         public Slider Slider;
 
         public Text Label;
 
-        public void DefineStation(StationBehaviour Station)
+        public void DefineStation(StationController Station)
         {
             Label.text = Station.name;
 

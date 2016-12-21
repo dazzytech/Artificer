@@ -243,7 +243,7 @@ namespace Space.Segment
             }
         }
 
-        public override void Hit(HitData hit)
+        /*public override void Hit(HitData hit)
         {
             SOColliderHitMessage msg = new SOColliderHitMessage();
             msg.SObjectID = this.netId;
@@ -255,7 +255,7 @@ namespace Space.Segment
         public override void RpcHitArea()
         {
             RpcHit();
-        }
+        }*/
 
         public void ApplyDamage(HitData hData)
         {

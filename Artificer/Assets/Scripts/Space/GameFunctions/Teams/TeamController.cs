@@ -413,8 +413,6 @@ namespace Space.Teams
 
         #region EVENT LISTENER
 
-        // listen for station destroyed and ship destroyed.
-
         /// <summary>
         /// When ship is destroyed decide something to do (lol)
         /// </summary>
@@ -423,6 +421,8 @@ namespace Space.Teams
         {
 
         }
+
+        // Here will be an event listening for station destroyed
 
         #endregion
 

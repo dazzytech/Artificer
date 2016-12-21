@@ -54,6 +54,9 @@ namespace Space.GameFunctions
                 (Random.Range((teamBPos.x - 50), (teamBPos.x + 50)),
                  Random.Range((teamBPos.y - 50), (teamBPos.y + 50)));
 
+            // Todo: Develop more parameters for station construction
+            // e.g. prefab name
+
             // for now only send one vector position
             teamA.Spawner.AddStation(stationAPosition);
 
