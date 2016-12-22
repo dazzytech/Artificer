@@ -22,7 +22,7 @@ namespace Space.Segment
         {
             m_att = GetComponent<StationAttributes>();
 
-            m_att.currentDensity = m_att.Density;
+            m_att.CurrentIntegrity = m_att.Integrity;
         }
 
         #endregion
