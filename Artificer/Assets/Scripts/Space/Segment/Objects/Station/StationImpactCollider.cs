@@ -16,7 +16,7 @@ namespace Space.Segment
     {
         #region ATTRIBUTES
 
-        private StationAttributes m_att;
+        private StationController m_con;
 
         #endregion
 
@@ -24,7 +24,7 @@ namespace Space.Segment
 
         void Awake()
         {
-            m_att = GetComponent<StationAttributes>();
+            m_con = GetComponent<StationController>();
         }
 
         #endregion
@@ -43,6 +43,8 @@ namespace Space.Segment
                 // for now just destroy
                 Destroy(this.gameObject);
             }*/
+
+            m_con.ProcessDamage(hData);
 
         }
 

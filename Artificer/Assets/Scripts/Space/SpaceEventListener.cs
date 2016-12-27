@@ -10,6 +10,7 @@ using Data.Space.Library;
 using Space.GameFunctions;
 using Space.Generator;
 using Space.Ship;
+using Space.Segment;
 using Space.UI;
 
 
@@ -57,6 +58,7 @@ namespace Space
             _con.PlayerEnterScene += LoadPlayerDataIntoScene;
             SpaceManager.PlayerExitScene += PlayerDeath;
             ShipMessageController.OnShipDestroyed += ShipDestroyed;
+            StationController.OnStationDestroyed += StationDestroyed;
         }
     	
         void OnDisable()
@@ -67,6 +69,7 @@ namespace Space
             _con.PlayerEnterScene -= LoadPlayerDataIntoScene;
             SpaceManager.PlayerExitScene -= PlayerDeath;
             ShipMessageController.OnShipDestroyed -= ShipDestroyed;
+            StationController.OnStationDestroyed -= StationDestroyed;
         }
 
         #endregion
@@ -190,6 +193,11 @@ namespace Space
                 if(destroyed.AlignmentLabel == "Friendly")
                     GameManager.GUI.DisplayMessege(new MsgParam("sm-red", "You have destroyed an friendly."));
             }
+        }
+
+        public void StationDestroyed(DestroyDespatch destroyed)
+        {
+
         }
         
         public void MaterialCollected(Dictionary<MaterialData, float> newMat)

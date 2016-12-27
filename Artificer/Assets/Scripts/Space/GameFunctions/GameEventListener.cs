@@ -50,6 +50,11 @@ namespace Space.GameFunctions
             }*/
         }
 
+        public void ProcessStationDestroyed(DestroyDespatch destroyed)
+        {
+
+        }
+
         /*
         public void ProcessStationReached(Transform ship)
         {

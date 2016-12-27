@@ -13,20 +13,6 @@ using Space.UI;
 
 namespace Space.Ship
 {
-    // defines the parameters for a 
-    // ship destroyed event
-    public class DestroyDespatch
-    {
-        // self alignment
-        public string AlignmentLabel;
-
-        // Last ship to attack ship
-        public string AggressorTag;
-
-        // physical destroyed ship
-        public NetworkInstanceId Self;
-    }
-
     /// <summary>
     /// Ship external controller.
     /// Dispatches and listens for events from external sources
