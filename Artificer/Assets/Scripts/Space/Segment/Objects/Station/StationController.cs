@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
+
 // Artificer
 using Data.Space;
+using Networking;
 
 namespace Space.Segment
 {
@@ -19,13 +21,6 @@ namespace Space.Segment
 
         #endregion
 
-        #region EVENTS
-
-        public delegate void DestroyedEvent(DestroyDespatch DD);
-        public static event DestroyedEvent OnStationDestroyed;
-
-        #endregion
-
         #region MONO BEHAVIOUR 
 
         void Awake()
@@ -39,9 +34,19 @@ namespace Space.Segment
 
         #region PUBLIC INTERACTION
 
-        public void Initialize()
+        /// <summary>
+        /// called from team spawner to 
+        /// pass important information to the station object
+        /// </summary>
+        /// <param name="newID"></param>
+        /// <param name="newType"></param>
+        public void Initialize(int newID, STATIONTYPE newType = STATIONTYPE.DEFAULT)
         {
-            // no current reason to initialize yet
+            // Store our ID for when the station is destroyed
+            m_att.ID = newID;
+
+            // What type of station is being constructed
+            m_att.Type = newType;
         }
 
         /// <summary>
@@ -52,15 +57,21 @@ namespace Space.Segment
         /// <param name="hitD"></param>
         public void ProcessDamage(HitData hitD)
         {
+            // For now ignore friendly fire
+            //if (m_att.Team.PlayerOnTeam(hitD.originID))
+                //return;
+
             // First apply damage to station integrity
             m_att.CurrentIntegrity -= hitD.damage;
             
             // if station destroyed then being destroy process
             if(m_att.CurrentIntegrity <= 0)
             {
-                DestroyDespatch DD = new DestroyDespatch();
-                DD.Self = netId;
-                OnStationDestroyed(DD);
+                StationDestroyMessage msg = new StationDestroyMessage();
+                msg.SelfID = netId;
+                msg.ID = m_att.ID;
+
+                GameManager.singleton.client.Send((short)MSGCHANNEL.STATIONDESTROYED, msg);
 
                 NetworkServer.UnSpawn(this.gameObject);
                 Destroy(this.gameObject);
@@ -92,6 +103,11 @@ namespace Space.Segment
         #endregion
 
         #region ACCESSORS
+
+        public int ID
+        {
+            get { return m_att.ID; }
+        }
 
         public bool Functional
         {

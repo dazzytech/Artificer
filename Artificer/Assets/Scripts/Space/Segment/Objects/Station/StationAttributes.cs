@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
+using Space.Teams;
 
 namespace Space.Segment
 {
@@ -28,15 +29,21 @@ namespace Space.Segment
 
         #region IDENTFIER 
 
-        int ID;
+        public int ID;
 
-        STATIONTYPE Type;
+        public STATIONTYPE Type;
 
         #endregion
 
         #region CONSTRUCTION
 
-        float BuildCounter;
+        public float BuildCounter;
+
+        #endregion
+
+        #region REFERENCES
+
+        public TeamController Team;
 
         #endregion
     }

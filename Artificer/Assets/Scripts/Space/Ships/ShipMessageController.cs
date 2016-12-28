@@ -11,6 +11,8 @@ using Space.Segment.Generator;
 using Space.Ship.Components.Listener;
 using Space.UI;
 
+using Networking;
+
 namespace Space.Ship
 {
     /// <summary>
@@ -19,13 +21,6 @@ namespace Space.Ship
     /// </summary>
     public class ShipMessageController : NetworkBehaviour
     {
-        #region EVENTS
-
-        public delegate void DestroyedEvent(DestroyDespatch DD);
-        public static event DestroyedEvent OnShipDestroyed;
-
-        #endregion
-
         #region ATTRIBUTES
 
         ShipAttributes _ship;
@@ -290,12 +285,13 @@ namespace Space.Ship
         /// </summary>
         private void Destroy()
         {
-            DestroyDespatch DD = new DestroyDespatch();
-            DD.AggressorTag = _ship.AggressorTag;
-            DD.AlignmentLabel = _ship.AlignmentLabel;
-            DD.Self = netId;
+            // Send message to server for updating
+            ShipDestroyMessage msg = new ShipDestroyMessage();
+            msg.AggressorTag = _ship.AggressorTag;
+            msg.AlignmentLabel = _ship.AlignmentLabel;
+            msg.SelfID = netId;
 
-            OnShipDestroyed(DD);
+            GameManager.singleton.client.Send((short)MSGCHANNEL.SHIPDESTROYED, msg);
         }
 
         #endregion

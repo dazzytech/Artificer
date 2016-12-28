@@ -10,6 +10,7 @@ using Space.Segment;
 using Space.GameFunctions;
 using Space.Ship.Components.Attributes;
 using Space.Ship.Components.Listener;
+using Networking;
 
 namespace Space.Ship
 {
@@ -27,7 +28,7 @@ namespace Space.Ship
 
         void Awake()
         {
-            GameManager.singleton.client.RegisterHandler(MsgType.Highest + 13, ProcessHitMsg);
+            GameManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSSHIPHIT, ProcessHitMsg);
         }
 
         #endregion
@@ -153,7 +154,7 @@ namespace Space.Ship
                 msg.HitComponents = damagedComps.ToArray();
                 msg.ShipID = this.netId;
                 msg.HitD = _hitD;
-                GameManager.singleton.client.Send(MsgType.Highest+10, msg);
+                GameManager.singleton.client.Send((short)MSGCHANNEL.SHIPHIT, msg);
             }
 
             yield return null;

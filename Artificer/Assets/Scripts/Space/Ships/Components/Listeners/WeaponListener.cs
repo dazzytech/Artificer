@@ -8,22 +8,10 @@ using Space.GameFunctions;
 using Space.Projectiles;
 using Space.Ship;
 using Space.Ship.Components.Attributes;
+using Networking;
 
 namespace Space.Ship.Components.Listener
 {
-    #region NETWORK MESSAGE OBJECTS 
-
-    /// <summary>
-    /// Message sent when projectile is spawned by server
-    /// with reference for accessing new projectile
-    /// </summary>
-    public class ProjectileSpawnedMessage : MessageBase
-    {
-        public NetworkInstanceId Projectile;
-        public WeaponData WData;
-    }
-
-    #endregion
 
     public class WeaponListener : ComponentListener 
     {
@@ -34,7 +22,7 @@ namespace Space.Ship.Components.Listener
             ComponentType = "Weapons";
     		_attr = GetComponent<WeaponAttributes>();
 
-            GameManager.singleton.client.RegisterHandler(MsgType.Highest + 11, ProjectileCreated);
+            GameManager.singleton.client.RegisterHandler((short)MSGCHANNEL.CREATEPROJECTILE, ProjectileCreated);
         }
     	
     	void Start ()
@@ -85,7 +73,7 @@ namespace Space.Ship.Components.Listener
                 msg.shooterID = GameManager.Space.ID;
 
                 // Sendmsg to game to spawn projectile
-                GameManager.singleton.client.Send(MsgType.Highest + 12, msg);
+                GameManager.singleton.client.Send((short)MSGCHANNEL.BUILDPROJECTILE, msg);
             }
     	}
 

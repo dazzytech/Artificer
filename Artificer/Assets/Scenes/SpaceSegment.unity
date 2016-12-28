@@ -16293,6 +16293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Con: {fileID: 2057568948}
+  Event: {fileID: 2057568950}
 --- !u!1 &1772010851
 GameObject:
   m_ObjectHideFlags: 0
@@ -19117,6 +19118,7 @@ GameObject:
   - 114: {fileID: 2057568947}
   - 114: {fileID: 2057568946}
   - 114: {fileID: 2057568945}
+  - 114: {fileID: 2057568950}
   m_Layer: 0
   m_Name: _server
   m_TagString: Untagged
@@ -19216,6 +19218,17 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 1
   m_LocalPlayerAuthority: 0
+--- !u!114 &2057568950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2057568943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 745050bbfaaecee4b8ed1172adc4055c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2057886465
 Prefab:
   m_ObjectHideFlags: 0

@@ -29,11 +29,6 @@ namespace Space
             maxDensity = pieceDensity = (40f * transform.childCount);
         }
 
-        void Awake()
-        {
-            GameManager.singleton.client.RegisterHandler(MsgType.Highest + 14, ProcessHitMsg);
-        }
-
         void Update()
         {
            secondsTillRemove -= Time.deltaTime;
@@ -126,34 +121,10 @@ namespace Space
             }
         }
 
-        /*public override void Hit(HitData hit)
-        {
-            SOColliderHitMessage msg = new SOColliderHitMessage();
-            msg.SObjectID = this.netId;
-            msg.HitD = hit;
-            GameManager.singleton.client.Send(MsgType.Highest + 15, msg);
-        }
-
-        [ClientRpc]
+        /*[ClientRpc]
         public override void RpcHitArea()
         {
             RpcHit();
-        }*/
-
-        /*public void ProcessHitMsg(NetworkMessage msg)
-        {
-            if (!isServer)
-                return;
-
-            SOColliderHitMessage colMsg = msg.ReadMessage<SOColliderHitMessage>();
-
-            GameObject HitObj = ClientScene.FindLocalObject(colMsg.SObjectID);
-            if (HitObj != null)
-            {
-                HitObj.transform.
-                    GetComponent<DestructablePieceController>().ApplyDamage(colMsg.HitD);
-            }
-
         }*/
 
         public void ApplyDamage(HitData hData)

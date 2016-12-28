@@ -12,6 +12,7 @@ using Space.Generator;
 using Space.Ship;
 using Space.Segment;
 using Space.UI;
+using Networking;
 
 
 namespace Space
@@ -41,8 +42,8 @@ namespace Space
             _con = GetComponent<SpaceManager>();
             _util = GetComponent<SpaceUtilities>();
 
-            NetworkManager.singleton.client.RegisterHandler(MsgType.Highest + 5, OnTeamPickerMessage);
-            NetworkManager.singleton.client.RegisterHandler(MsgType.Highest + 6, OnNewIDMessage);
+            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.TEAMPICKER, OnTeamPickerMessage);
+            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
         }
 
         void Start()
@@ -57,8 +58,8 @@ namespace Space
             _con.OnMouseScroll += PlayerMouseScroll;
             _con.PlayerEnterScene += LoadPlayerDataIntoScene;
             SpaceManager.PlayerExitScene += PlayerDeath;
-            ShipMessageController.OnShipDestroyed += ShipDestroyed;
-            StationController.OnStationDestroyed += StationDestroyed;
+            //ShipMessageController.OnShipDestroyed += ShipDestroyed;
+            //StationController.OnStationDestroyed += StationDestroyed;
         }
     	
         void OnDisable()
@@ -68,8 +69,8 @@ namespace Space
             _con.OnMouseScroll -= PlayerMouseScroll;
             _con.PlayerEnterScene -= LoadPlayerDataIntoScene;
             SpaceManager.PlayerExitScene -= PlayerDeath;
-            ShipMessageController.OnShipDestroyed -= ShipDestroyed;
-            StationController.OnStationDestroyed -= StationDestroyed;
+            //ShipMessageController.OnShipDestroyed -= ShipDestroyed;
+            //StationController.OnStationDestroyed -= StationDestroyed;
         }
 
         #endregion
@@ -176,6 +177,9 @@ namespace Space
 
         #region SPACE EVENTS
 
+        // Consider using sync events
+
+        /*
         /// <summary>
         /// Receives a message that a ship
         /// has been destroyed and processes the event
@@ -198,7 +202,7 @@ namespace Space
         public void StationDestroyed(DestroyDespatch destroyed)
         {
 
-        }
+        }*/
         
         public void MaterialCollected(Dictionary<MaterialData, float> newMat)
         {

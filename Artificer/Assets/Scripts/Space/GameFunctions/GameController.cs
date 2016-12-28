@@ -11,24 +11,11 @@ using Space.UI;
 using Space.Teams;
 using Space.Ship.Components.Listener;
 using Space.Projectiles;
+using Networking;
 
 namespace Space.GameFunctions
 {
     public enum GameState{Completed, Failed}
-
-    #region NETWORK MESSAGE OBJECTS 
-
-    /// <summary>
-    /// Message containig the IDs of 
-    /// both teams for the client
-    /// </summary>
-    public class TeamPickerMessage: MessageBase
-    {
-        public int teamOne;
-        public int teamTwo;
-    }
-
-    #endregion
 
     /// <summary>
     /// Responsible for game elements such as 
@@ -163,14 +150,16 @@ namespace Space.GameFunctions
 
             // Assign our intial ID to the system
             IntegerMessage iMsg = new IntegerMessage(info.mID);
-            NetworkServer.SendToClient(conn.connectionId, MsgType.Highest + 6, iMsg);
+            NetworkServer.SendToClient(conn.connectionId,
+                (short)MSGCHANNEL.NEWID, iMsg);
 
             // prompt player to pick team
             // Send this to single client via a message
             TeamPickerMessage msg = new TeamPickerMessage();
             msg.teamOne = _att.TeamA.ID;
             msg.teamTwo = _att.TeamB.ID;
-            NetworkServer.SendToClient(conn.connectionId, MsgType.Highest + 5, msg);
+            NetworkServer.SendToClient(conn.connectionId,
+                (short)MSGCHANNEL.TEAMPICKER, msg);
         }
 
         /// <summary>
@@ -200,21 +189,23 @@ namespace Space.GameFunctions
             PlayerConnectionInfo info = GetPlayer(playerID);
             GameObject GO = null;
 
+            // Spawn player using correct team
             if (info.mTeam == 0)
             {
-                // spawn with team A
-                // add station id in future
                 GO = _att.TeamA.Spawner.SpawnPlayer(info, stationID);
+                _att.TeamA.AddPlayerObject(GO.GetComponent<NetworkIdentity>().netId);
             }
             else
             {
                 GO = _att.TeamB.Spawner.SpawnPlayer(info, stationID);
+                _att.TeamB.AddPlayerObject(GO.GetComponent<NetworkIdentity>().netId);
             }
 
             // assign ship info
             // e.g. ship name 
             StringMessage sMsg = new StringMessage("");
-            NetworkServer.SendToClient(info.mConnection.connectionId, MsgType.Highest + 9, sMsg);
+            NetworkServer.SendToClient(info.mConnection.connectionId, 
+                (short)MSGCHANNEL.SPAWNME, sMsg);
         }
 
         [Server]
@@ -235,7 +226,8 @@ namespace Space.GameFunctions
             spwnMsg.WData = wData;
             spwnMsg.Projectile = GO.GetComponent<NetworkIdentity>().netId;
 
-            NetworkServer.SendToClient(info.mConnection.connectionId, MsgType.Highest + 11, spwnMsg);
+            NetworkServer.SendToClient(info.mConnection.connectionId, 
+                (short)MSGCHANNEL.CREATEPROJECTILE, spwnMsg);
         }
 
         [Server]
@@ -243,7 +235,8 @@ namespace Space.GameFunctions
         {
             foreach(PlayerConnectionInfo info in _att.PlayerInfoList)
             {
-                NetworkServer.SendToClient(info.mConnection.connectionId, MsgType.Highest + 13, hitMsg);
+                NetworkServer.SendToClient(info.mConnection.connectionId,
+                    (short)MSGCHANNEL.PROCESSSHIPHIT, hitMsg);
             }
         }
 
@@ -252,7 +245,8 @@ namespace Space.GameFunctions
         {
             foreach (PlayerConnectionInfo info in _att.PlayerInfoList)
             {
-                NetworkServer.SendToClient(info.mConnection.connectionId, MsgType.Highest + 14, hitMsg);
+                NetworkServer.SendToClient(info.mConnection.connectionId,
+                    (short)MSGCHANNEL.PROCESSOBJECTHIT, hitMsg);
             }
         }
 

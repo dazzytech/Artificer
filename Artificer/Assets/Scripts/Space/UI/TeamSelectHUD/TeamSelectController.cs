@@ -7,6 +7,7 @@ using System.Collections;
 using Data.Space;
 using Data.Space.Library;
 using Space.GameFunctions;
+using Networking;
 
 namespace Space.UI.Teams
 {
@@ -71,7 +72,7 @@ namespace Space.UI.Teams
             tsm.ID = GameManager.Space.ID;
             tsm.Selected = selection;
             // Send message baack to server
-            GameManager.singleton.client.Send(MsgType.Highest + 7, tsm);
+            GameManager.singleton.client.Send((short)MSGCHANNEL.ASSIGNTOTEAM, tsm);
 
             GameManager.Space.InitializePlayer();
         }

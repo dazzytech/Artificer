@@ -38,6 +38,9 @@ namespace Space.Teams
         [SyncVar]
         private FactionData _faction;
 
+        // Store a list of player connections for that team
+        //private NetIDListSync _players;
+
         // Store a list of Net IDs of stations that the stations owns
         //private NetIDListSync _stations;
 
@@ -61,12 +64,14 @@ namespace Space.Teams
         {
             // Assign Events
             ShipMessageController.OnShipDestroyed += ProcessShipDestroyed;
+            StationController.OnShipDestroyed += ProcessStationDestroyed;
         }
 
         void OnDisable()
         {
             // De-assign events
             ShipMessageController.OnShipDestroyed -= ProcessShipDestroyed;
+            StationController.OnShipDestroyed -= ProcessStationDestroyed;
         }*/
 
         #endregion
@@ -80,7 +85,42 @@ namespace Space.Teams
         public void Initialize(FactionData faction)
         {
             _faction = faction;
+
+            //_players = new NetIDListSync();
         }
+
+        /// <summary>
+        /// Adds player physical object to list when player spawns
+        /// </summary>
+        /// <param name="netID"></param>
+        public void AddPlayerObject(NetworkInstanceId netID)
+        {
+            //_players.Add(netID);
+        }
+
+        /// <summary>
+        /// Called when player leaves team or leaves game or dies
+        /// </summary>
+        /// <param name="netID"></param>
+        public void RemovePlayerObject(NetworkInstanceId netID)
+        {
+            //_players.Remove(netID);
+        }
+
+        /// <summary>
+        /// returns if the network ID is associated
+        /// with player on this team (friendly fire)
+        /// </summary>
+        /// <param name="netID"></param>
+        /// <returns></returns>
+        /*public bool PlayerOnTeam(NetworkInstanceId netID)
+        {
+            return _players.Contains(netID);
+        }*/
+
+        #endregion
+
+        #region ACCESSORS
 
         /// <summary>
         /// Returns faction ID without access to faction
@@ -90,6 +130,9 @@ namespace Space.Teams
             get { return _faction.ID; }
         }
 
+        /// <summary>
+        /// Returns spawner for use by game object
+        /// </summary>
         public TeamSpawnManager Spawner
         {
             get { return _teamSpawn; }
@@ -418,6 +461,11 @@ namespace Space.Teams
         /// </summary>
         /// <param name="destroyed"></param>
         public void ProcessShipDestroyed(DestroyDespatch destroyed)
+        {
+
+        }
+
+        public void ProcessStationDestroyed(DestroyDespatch destroyed)
         {
 
         }

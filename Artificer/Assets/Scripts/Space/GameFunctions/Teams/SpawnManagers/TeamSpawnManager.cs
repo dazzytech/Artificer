@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Data.Shared;
 using Data.Space;
-using Space.Segment.Generator;
+using Space.Segment;
 using Space.GameFunctions;
 
 namespace Space.Teams.SpawnManagers
@@ -26,19 +26,12 @@ namespace Space.Teams.SpawnManagers
     {
         #region ATTRIBUTES
 
-        // temp list of spawn points
+        // temp list of spawn points (stations)
         private List<SpawnPointInformation> _spawns;
 
         #endregion
 
         #region PUBLIC INTERACTION
-
-        // called by clients when their ship is destroyed
-        //[Command]
-        //public void CmdSpawnNewPlayerShip(short conn)
-        //{
-            //Debug.Log("Received Spawn Request");
-        //}
 
         [Server]
         public void AddStation(Vector2 station, string StationPrefab = "Placeholder_Station")
@@ -105,11 +98,15 @@ namespace Space.Teams.SpawnManagers
             sPInfo.ID = _spawns.Count;
             sPInfo.Spawns = spawns;
 
+            // Pass ID to station for later access
+            newStation.GetComponent<StationController>().Initialize(sPInfo.ID);
+
             _spawns.Add(sPInfo);
         }
 
         #endregion
 
+        // Maybe combine regions?
         #region PLAYER SPAWNING
 
         /// <summary>

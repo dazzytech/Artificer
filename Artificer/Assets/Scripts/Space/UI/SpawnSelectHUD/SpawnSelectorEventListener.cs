@@ -4,6 +4,7 @@ using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 
 using Space.GameFunctions;
+using Networking;
 
 namespace Space.UI.Spawn
 {
@@ -42,7 +43,7 @@ namespace Space.UI.Spawn
             ssm.ShipID = 0;
             ssm.SpawnID = 0;
 
-            GameManager.singleton.client.Send(MsgType.Highest + 8, ssm);
+            GameManager.singleton.client.Send((short)MSGCHANNEL.SPAWNPLAYER, ssm);
         }
 
         /// <summary>

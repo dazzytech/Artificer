@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Space.GameFunctions;
 
 using Data.Space;
+using Networking;
 
 /// <summary>
 /// Prefab objects for wreckage objects

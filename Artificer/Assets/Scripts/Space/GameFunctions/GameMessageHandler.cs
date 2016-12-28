@@ -6,50 +6,10 @@ using System.Collections;
 using Data.Space;
 using Space.Projectiles;
 using Space.Segment;
+using Networking;
 
 namespace Space.GameFunctions
 {
-    #region NETWORK MESSAGE OBJECTS 
-
-    /// <summary>
-    /// Message containig the ID of the client
-    /// and the team selected
-    /// </summary>
-    public class TeamSelectionMessage : MessageBase
-    {
-        public int Selected;
-        public int ID;
-    }
-
-    public class SpawnSelectionMessage : MessageBase
-    {
-        public int PlayerID;
-        public int SpawnID;
-        public int ShipID;
-    }
-
-    public class ProjectileBuildMessage: MessageBase
-    {
-        public Vector3 Position;
-        public int PrefabIndex, shooterID;
-        public WeaponData WData;
-    }
-
-    public class ShipColliderHitMessage:MessageBase
-    {
-        public int[] HitComponents;
-        public NetworkInstanceId ShipID;
-        public HitData HitD;
-    }
-
-    public class SOColliderHitMessage : MessageBase
-    {
-        public NetworkInstanceId SObjectID;
-        public HitData HitD;
-    }
-
-    #endregion
-
     /// <summary>
     /// Handles messages sent from other parts of the program
     /// Has a refence to other parts 
@@ -57,15 +17,19 @@ namespace Space.GameFunctions
     public class GameMessageHandler : NetworkBehaviour
     {
         public GameController Con;
+        public GameServerEvents Event;
 
         void Awake()
         {
-            // For team selection
-            NetworkServer.RegisterHandler(MsgType.Highest + 7, OnAssignToTeam);
-            NetworkServer.RegisterHandler(MsgType.Highest + 8, OnSpawnPlayerAt);
-            NetworkServer.RegisterHandler(MsgType.Highest + 10, OnShipHit);
-            NetworkServer.RegisterHandler(MsgType.Highest + 12, OnBuildProjectile);
-            NetworkServer.RegisterHandler(MsgType.Highest + 15, OnObjectHit);
+            NetworkServer.RegisterHandler((short)MSGCHANNEL.ASSIGNTOTEAM, OnAssignToTeam);
+            NetworkServer.RegisterHandler((short)MSGCHANNEL.SPAWNPLAYER, OnSpawnPlayerAt);
+            NetworkServer.RegisterHandler((short)MSGCHANNEL.SHIPHIT, OnShipHit);
+            NetworkServer.RegisterHandler((short)MSGCHANNEL.BUILDPROJECTILE, OnBuildProjectile);
+            NetworkServer.RegisterHandler((short)MSGCHANNEL.OBJECTHIT, OnObjectHit);
+
+            // call Server events
+            NetworkServer.RegisterHandler((short)MSGCHANNEL.SHIPDESTROYED, OnShipDestroyed);
+            NetworkServer.RegisterHandler((short)MSGCHANNEL.STATIONDESTROYED, OnStationDestroyed);
         }
 
         /// <summary>
@@ -138,6 +102,20 @@ namespace Space.GameFunctions
         public void OnObjectHit(NetworkMessage msg)
         {
             Con.ObjectHit(msg.ReadMessage<SOColliderHitMessage>());
+        }
+
+        // Server Event Calling
+
+        [Server]
+        public void OnShipDestroyed(NetworkMessage msg)
+        {
+            Event.ShipDestroyed(msg.ReadMessage<ShipDestroyMessage>());
+        }
+
+        [Server]
+        public void OnStationDestroyed(NetworkMessage msg)
+        {
+            Event.StationDestroyed(msg.ReadMessage<StationDestroyMessage>());
         }
     }
 }

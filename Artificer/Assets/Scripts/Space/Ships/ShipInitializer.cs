@@ -8,6 +8,7 @@ using Data.Shared;
 using Data.Space.Library;
 using Space.Segment.Generator;
 using Space.UI;
+using Networking;
 
 namespace Space.Ship
 {
@@ -48,7 +49,7 @@ namespace Space.Ship
 
         void Awake()
         {
-            NetworkManager.singleton.client.RegisterHandler(MsgType.Highest + 9, OnSpawnMe);
+            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.SPAWNME, OnSpawnMe);
         }
 
         #endregion

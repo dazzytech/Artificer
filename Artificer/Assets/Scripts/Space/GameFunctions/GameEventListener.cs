@@ -19,13 +19,15 @@ namespace Space.GameFunctions
         void OnEnable()
         {
             // Assign Events
-            ShipMessageController.OnShipDestroyed += ProcessShipDestroyed;
+            GameServerEvents.OnShipDestroyed += ProcessShipDestroyed;
+            GameServerEvents.OnStationDestroyed += ProcessStationDestroyed;
         }
 
         void OnDisable()
         {
             // De-assign events
-            ShipMessageController.OnShipDestroyed -= ProcessShipDestroyed;
+            GameServerEvents.OnShipDestroyed -= ProcessShipDestroyed;
+            GameServerEvents.OnStationDestroyed -= ProcessStationDestroyed;
         }
 
         // Use this for initialization

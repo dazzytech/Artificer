@@ -10,6 +10,9 @@ public class DestroyDespatch
     // Last ship to attack ship
     public string AggressorTag;
 
-    // physical destroyed ship
+    // physically destroyed object
     public NetworkInstanceId Self;
+
+    // ID object if one is assigned
+    public int MiscID;
 }
