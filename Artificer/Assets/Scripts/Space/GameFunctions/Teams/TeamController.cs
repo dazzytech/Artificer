@@ -39,7 +39,7 @@ namespace Space.Teams
         private FactionData _faction;
 
         // Store a list of player connections for that team
-        //private NetIDListSync _players;
+        private NetIDListSync _players = new NetIDListSync();
 
         // Store a list of Net IDs of stations that the stations owns
         //private NetIDListSync _stations;
@@ -85,8 +85,6 @@ namespace Space.Teams
         public void Initialize(FactionData faction)
         {
             _faction = faction;
-
-            //_players = new NetIDListSync();
         }
 
         /// <summary>
@@ -95,7 +93,7 @@ namespace Space.Teams
         /// <param name="netID"></param>
         public void AddPlayerObject(NetworkInstanceId netID)
         {
-            //_players.Add(netID);
+            _players.Add(netID);
         }
 
         /// <summary>
@@ -104,7 +102,7 @@ namespace Space.Teams
         /// <param name="netID"></param>
         public void RemovePlayerObject(NetworkInstanceId netID)
         {
-            //_players.Remove(netID);
+            _players.Remove(netID);
         }
 
         /// <summary>
@@ -113,10 +111,10 @@ namespace Space.Teams
         /// </summary>
         /// <param name="netID"></param>
         /// <returns></returns>
-        /*public bool PlayerOnTeam(NetworkInstanceId netID)
+        public bool PlayerOnTeam(NetworkInstanceId netID)
         {
             return _players.Contains(netID);
-        }*/
+        }
 
         #endregion
 

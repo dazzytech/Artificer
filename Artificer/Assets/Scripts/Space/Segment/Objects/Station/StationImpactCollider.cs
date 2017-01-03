@@ -45,7 +45,6 @@ namespace Space.Segment
             }*/
 
             m_con.ProcessDamage(hData);
-
         }
 
         #endregion

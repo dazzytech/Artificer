@@ -99,7 +99,8 @@ namespace Space.Teams.SpawnManagers
             sPInfo.Spawns = spawns;
 
             // Pass ID to station for later access
-            newStation.GetComponent<StationController>().Initialize(sPInfo.ID);
+            newStation.GetComponent<StationController>().Initialize
+                (sPInfo.ID, GetComponent<TeamController>());
 
             _spawns.Add(sPInfo);
         }

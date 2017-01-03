@@ -112,6 +112,7 @@ namespace Networking
         public NetworkInstanceId SelfID;
         public string AggressorTag;
         public string AlignmentLabel;
+        public int ID;
     }
 
     /// <summary>

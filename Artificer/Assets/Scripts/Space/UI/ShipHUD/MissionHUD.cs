@@ -113,6 +113,5 @@ namespace Space.UI.Ship
                 Invoke("PauseRelease", 0.3f);
             }
         }
-
     }
 }

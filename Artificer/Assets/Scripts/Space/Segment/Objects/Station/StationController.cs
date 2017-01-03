@@ -4,6 +4,7 @@ using System.Collections;
 
 // Artificer
 using Data.Space;
+using Space.Teams;
 using Networking;
 
 namespace Space.Segment
@@ -40,13 +41,16 @@ namespace Space.Segment
         /// </summary>
         /// <param name="newID"></param>
         /// <param name="newType"></param>
-        public void Initialize(int newID, STATIONTYPE newType = STATIONTYPE.DEFAULT)
+        public void Initialize(int newID, TeamController newTeam, STATIONTYPE newType = STATIONTYPE.DEFAULT)
         {
             // Store our ID for when the station is destroyed
             m_att.ID = newID;
 
             // What type of station is being constructed
             m_att.Type = newType;
+
+            // reference to our team
+            m_att.Team = newTeam;
         }
 
         /// <summary>
@@ -57,12 +61,22 @@ namespace Space.Segment
         /// <param name="hitD"></param>
         public void ProcessDamage(HitData hitD)
         {
+            Debug.Log(hitD.originID);
+
             // For now ignore friendly fire
-            //if (m_att.Team.PlayerOnTeam(hitD.originID))
-                //return;
+            if (m_att.Team.PlayerOnTeam(hitD.originID))
+                return;
 
             // First apply damage to station integrity
             m_att.CurrentIntegrity -= hitD.damage;
+
+
+            // After successfully taking damage, set to under attack mode
+            StopCoroutine("AttackTimer");
+
+            m_att.UnderAttack = true;
+
+            StartCoroutine("AttackTimer");
             
             // if station destroyed then being destroy process
             if(m_att.CurrentIntegrity <= 0)
@@ -79,9 +93,30 @@ namespace Space.Segment
         }
 
         #endregion
-       
+
+        #region COROUTINE
+
+        /// <summary>
+        /// When Station is hit by an enemy
+        /// Station is in under attack mode
+        /// for 20 sec after last shot
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator AttackTimer()
+        {
+            if (m_att.UnderAttack)
+            {
+                yield return new WaitForSeconds(20f);
+
+                m_att.UnderAttack = false;
+            }
+            yield return null;
+        }
+
+        #endregion
+
         #region COLLISION TRIGGERS
-        
+
         /// <summary>
         /// This function will detect if a ship
         /// has come into distance with the station
@@ -109,14 +144,62 @@ namespace Space.Segment
             get { return m_att.ID; }
         }
 
-        public bool Functional
+        /// <summary>
+        /// returns int labeling the state the station is currently in
+        /// 0 - Safe
+        /// 1 - Under Attack
+        /// 2 - Destroyed
+        /// </summary>
+        public int Status
         {
-            get { return m_att.CurrentIntegrity > 0; }
+            get
+            {
+                if (m_att.CurrentIntegrity <= 0)
+                    return 2;
+                if (m_att.UnderAttack)
+                    return 1;
+                else
+                    return 0;
+            }
         }
 
+        /// <summary>
+        /// Return texture within sprite renderer of this object as sprite
+        /// </summary>
+        public Sprite Icon
+        {
+            get
+            {
+                return GetComponent<SpriteRenderer>().sprite;
+            }
+        }
+
+        /// <summary>
+        /// Return health in a value between 1.0 - 0.0
+        /// </summary>
         public float NormalizedHealth
         {
             get { return m_att.CurrentIntegrity / m_att.Integrity; }
+        }
+
+        public float Distance
+        {
+            get
+            {
+                // Retrieve player object and check if 
+                // Player object currently exists
+                GameObject playerTransform =
+                    GameObject.FindGameObjectWithTag("PlayerShip");
+
+                if (playerTransform == null)
+                {
+                    return -1;
+                }
+
+                // return distance
+                return Vector3.Distance(this.transform.position, 
+                    playerTransform.transform.position);
+            }
         }
 
         #endregion 

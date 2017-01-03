@@ -28,6 +28,7 @@ namespace Space.GameFunctions
             DD.AggressorTag = msg.AggressorTag;
             DD.AlignmentLabel = msg.AlignmentLabel;
             DD.Self = msg.SelfID;
+            DD.MiscID = msg.ID;
 
             OnShipDestroyed(DD);
         }

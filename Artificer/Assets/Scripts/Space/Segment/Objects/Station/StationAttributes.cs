@@ -25,6 +25,8 @@ namespace Space.Segment
         public float CurrentIntegrity;
         public float Integrity;
 
+        public bool UnderAttack;
+
         #endregion
 
         #region IDENTFIER 

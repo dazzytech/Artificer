@@ -98,7 +98,6 @@ namespace Space.GameFunctions
             // Generated stations for the teams
             _att.Builder.GenerateStations(_att.TeamA, _att.TeamB);
 
-
             // Initialize trackers
             /*
             PrimaryTracker = new List<MissionData>();
@@ -252,29 +251,6 @@ namespace Space.GameFunctions
 
         #endregion
 
-        #region UTILITIES
-
-        /// <summary>
-        /// Utility that returns the player via ID
-        /// </summary>
-        /// <param name="playerID"></param>
-        /// <returns></returns>
-        private PlayerConnectionInfo GetPlayer(int playerID)
-        {
-            // Find the connection that assigned to team
-            foreach (PlayerConnectionInfo info in _att.PlayerInfoList)
-            {
-                if (info.mID.Equals(playerID))
-                {
-                    return info;
-                }
-            }
-
-            return null;
-        }
-
-        #endregion
-
         /*
         public void RunUpdate()
         {
@@ -405,6 +381,28 @@ namespace Space.GameFunctions
             }
         }*/
 
+        #region UTILITIES
+
+        /// <summary>
+        /// Utility that returns the player via ID
+        /// </summary>
+        /// <param name="playerID"></param>
+        /// <returns></returns>
+        private PlayerConnectionInfo GetPlayer(int playerID)
+        {
+            // Find the connection that assigned to team
+            foreach (PlayerConnectionInfo info in _att.PlayerInfoList)
+            {
+                if (info.mID.Equals(playerID))
+                {
+                    return info;
+                }
+            }
+
+            return null;
+        }
+
+        #endregion
     }
 }
 

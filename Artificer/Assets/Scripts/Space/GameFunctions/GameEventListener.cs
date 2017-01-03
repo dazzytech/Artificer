@@ -10,7 +10,7 @@ namespace Space.GameFunctions
     {
         #region ATTRIBUTES
 
-        private GameAttributes _att;
+        private GameAttributes m_att;
 
         #endregion
 
@@ -33,7 +33,7 @@ namespace Space.GameFunctions
         // Use this for initialization
         void Awake()
         {
-            _att = GetComponent<GameAttributes>();
+            m_att = GetComponent<GameAttributes>();
         }
 
         #endregion
@@ -42,14 +42,25 @@ namespace Space.GameFunctions
 
         public void ProcessShipDestroyed(DestroyDespatch destroyed)
         {
-            /*foreach (MissionData mission in PrimaryTracker)
+            PlayerConnectionInfo info = GetPlayer(destroyed.MiscID);
+
+            if (info.mTeam == 0)
             {
-                mission.AddShipKilled(destroyed);
+                m_att.TeamA.RemovePlayerObject(destroyed.Self);
             }
-            foreach (MissionData mission in SecondaryTracker)
+            else
             {
-                mission.AddShipKilled(destroyed);
-            }*/
+                m_att.TeamB.RemovePlayerObject(destroyed.Self);
+            }
+
+            /*foreach (MissionData mission in PrimaryTracker)
+                {
+                    mission.AddShipKilled(destroyed);
+                }
+                foreach (MissionData mission in SecondaryTracker)
+                {
+                    mission.AddShipKilled(destroyed);
+                }*/
         }
 
         public void ProcessStationDestroyed(DestroyDespatch destroyed)
@@ -81,6 +92,29 @@ namespace Space.GameFunctions
                 mission.AddMaterial(newMat);
             }
         }*/
+
+        #endregion
+
+        #region UTILITIES
+
+        /// <summary>
+        /// Utility that returns the player via ID
+        /// </summary>
+        /// <param name="playerID"></param>
+        /// <returns></returns>
+        private PlayerConnectionInfo GetPlayer(int playerID)
+        {
+            // Find the connection that assigned to team
+            foreach (PlayerConnectionInfo info in m_att.PlayerInfoList)
+            {
+                if (info.mID.Equals(playerID))
+                {
+                    return info;
+                }
+            }
+
+            return null;
+        }
 
         #endregion
     }

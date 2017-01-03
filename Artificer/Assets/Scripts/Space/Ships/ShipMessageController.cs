@@ -290,6 +290,7 @@ namespace Space.Ship
             msg.AggressorTag = _ship.AggressorTag;
             msg.AlignmentLabel = _ship.AlignmentLabel;
             msg.SelfID = netId;
+            msg.ID = GameManager.Space.ID;
 
             GameManager.singleton.client.Send((short)MSGCHANNEL.SHIPDESTROYED, msg);
         }

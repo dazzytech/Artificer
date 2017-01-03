@@ -232,7 +232,7 @@ namespace Space.UI
         /// The player can set the mission HUD visible and invisible alone
         /// due to its size
         /// </summary>
-        public void ToggleMissionHUD()
+        public void ToggleStationHUD()
         {
             if(!PopupRect.activeSelf && PlayRect.activeSelf)
                 PlayRect.SendMessage("ToggleHUD");
