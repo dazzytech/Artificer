@@ -58,9 +58,11 @@ namespace Space.GameFunctions
             // e.g. prefab name
 
             // for now only send one vector position
-            teamA.Spawner.AddStation(stationAPosition);
+            GameObject stationA = teamA.Spawner.AddStation(stationAPosition);
+            teamA.AddStationObject(stationA.GetComponent<NetworkIdentity>().netId);
 
-            teamB.Spawner.AddStation(stationBPosition);
+            GameObject stationB = teamB.Spawner.AddStation(stationBPosition);
+            teamB.AddStationObject(stationB.GetComponent<NetworkIdentity>().netId);
         }
 
         #endregion

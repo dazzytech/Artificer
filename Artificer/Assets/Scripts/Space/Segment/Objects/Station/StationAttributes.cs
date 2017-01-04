@@ -25,20 +25,24 @@ namespace Space.Segment
         public float CurrentIntegrity;
         public float Integrity;
 
+        [SyncVar]
         public bool UnderAttack;
 
         #endregion
 
         #region IDENTFIER 
 
+        [SyncVar]
         public int ID;
 
+        [SyncVar]
         public STATIONTYPE Type;
 
         #endregion
 
         #region CONSTRUCTION
 
+        [SyncVar]
         public float BuildCounter;
 
         #endregion

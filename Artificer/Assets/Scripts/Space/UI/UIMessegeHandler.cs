@@ -5,6 +5,7 @@ using System.Collections;
 using Data.Shared;
 using Space.UI.Ship;
 using Space.UI.Tracker;
+using Space.Segment;
 
 namespace Space.UI
 {
@@ -133,6 +134,12 @@ namespace Space.UI
         {
             PlayRect.GetComponent<TrackerHUD>().
                 AddUIPiece(piece);
+        }
+
+        public void AddStation(StationController station)
+        {
+            PlayRect.GetComponent<StationHUD>().
+                AddUIPiece(station); 
         }
 
         #endregion

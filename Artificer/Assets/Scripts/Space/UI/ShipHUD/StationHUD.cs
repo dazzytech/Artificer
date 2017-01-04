@@ -41,7 +41,7 @@ namespace Space.UI.Ship
         public void AddUIPiece(StationController controller)
         {
             GameObject newStation = Instantiate(StationPrefab);
-            newStation.transform.SetParent(StationList);
+            newStation.transform.SetParent(StationList, false);
 
             StationTracker tracker = newStation.GetComponent<StationTracker>();
             tracker.DefineStation(controller);

@@ -19,6 +19,8 @@ namespace Space.UI.Ship
 
         public IntegrityTracker Integrity;
 
+        private bool Activated;
+
         #region HUD ELEMENTS
 
         public Text Label;
@@ -49,6 +51,21 @@ namespace Space.UI.Ship
 
         #endregion
 
+        #region MONOBEHAVIOUR
+
+        void OnEnable()
+        {
+            if (Activated)
+                StartCoroutine("Step");
+        }
+
+        void OnDisable()
+        {
+            StopAllCoroutines();
+        }
+
+        #endregion
+
         public void DefineStation(StationController Station)
         {
             _station = Station;
@@ -59,7 +76,7 @@ namespace Space.UI.Ship
 
             standardColor = SelfPanel.color;
 
-            StartCoroutine("Step");
+            Activated = true;
         }
 
         #region COROUTINE

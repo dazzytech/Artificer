@@ -23,6 +23,8 @@ namespace Networking
         PROCESSOBJECTHIT,
         SHIPDESTROYED,
         STATIONDESTROYED,
+        BUILDSTATONHUD,
+
     };
 
     #endregion
@@ -122,6 +124,14 @@ namespace Networking
     {
         public NetworkInstanceId SelfID;
         public int ID;
+    }
+
+    /// <summary>
+    /// Sent to each client to add stations to HUD
+    /// </summary>
+    public class StationBuildMessage : MessageBase
+    {
+        public NetworkInstanceId SelfID;
     }
 
     #endregion

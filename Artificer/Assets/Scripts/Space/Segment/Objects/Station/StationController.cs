@@ -41,6 +41,7 @@ namespace Space.Segment
         /// </summary>
         /// <param name="newID"></param>
         /// <param name="newType"></param>
+        [Server]
         public void Initialize(int newID, TeamController newTeam, STATIONTYPE newType = STATIONTYPE.DEFAULT)
         {
             // Store our ID for when the station is destroyed
@@ -59,6 +60,7 @@ namespace Space.Segment
         /// performs the actual destruction
         /// </summary>
         /// <param name="hitD"></param>
+        [Server]
         public void ProcessDamage(HitData hitD)
         {
             Debug.Log(hitD.originID);
@@ -179,7 +181,13 @@ namespace Space.Segment
         /// </summary>
         public float NormalizedHealth
         {
-            get { return m_att.CurrentIntegrity / m_att.Integrity; }
+            get
+            {
+                if (m_att.Integrity == 0)
+                    return 1;
+                else
+                return m_att.CurrentIntegrity / m_att.Integrity;
+            }
         }
 
         public float Distance

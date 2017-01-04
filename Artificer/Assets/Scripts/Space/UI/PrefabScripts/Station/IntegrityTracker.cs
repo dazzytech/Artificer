@@ -14,7 +14,7 @@ namespace Space.UI.Ship
 
         // store a list of the integrity bar segments
         [SerializeField]
-        public Image[] ImageList = new Image[10];
+        public Image[] ImageList;
 
         #endregion
 
@@ -28,10 +28,10 @@ namespace Space.UI.Ship
         public void Step(float normalValue)
         {
             // Simply go down in increments showing and hiding each segment
-            for(int i = 0; i < 10;)
+            for(int i = 0; i < 10; i++)
             {
                 // 1.0 - (1 * 0.1f) = 0.9
-                CompareValue(normalValue, (1.0f - ++i * 0.1f), ImageList[i]);
+                CompareValue(normalValue, (1.0f - (i+1) * 0.1f), ImageList[i]);
             }
         }
 

@@ -7,6 +7,7 @@ using Data.Shared;
 using Data.Space;
 using Space.Ship;
 using Space.Teams.SpawnManagers;
+using Networking;
 
 /// <summary>
 /// An enitity solely responsible for managing all of
@@ -42,7 +43,7 @@ namespace Space.Teams
         private NetIDListSync _players = new NetIDListSync();
 
         // Store a list of Net IDs of stations that the stations owns
-        //private NetIDListSync _stations;
+        private NetIDListSync _stations = new NetIDListSync();
 
         //private List<Transform> _attackPoints;
         //private List<Transform> _homePoints;
@@ -114,6 +115,28 @@ namespace Space.Teams
         public bool PlayerOnTeam(NetworkInstanceId netID)
         {
             return _players.Contains(netID);
+        }
+
+        public void AddStationObject(NetworkInstanceId netID)
+        {
+            _stations.Add(netID);
+        }
+
+        public void RemoveStationObject(NetworkInstanceId netID)
+        {
+            _stations.Remove(netID);
+        }
+
+        public void UpdateStationHUD(NetworkConnection conn)
+        {
+            foreach(NetworkInstanceId netID in _stations)
+            {
+                StationBuildMessage msg = new StationBuildMessage();
+                msg.SelfID = netID;
+
+                NetworkServer.SendToClient(conn.connectionId,
+                    (short)MSGCHANNEL.BUILDSTATONHUD, msg);
+            }
         }
 
         #endregion

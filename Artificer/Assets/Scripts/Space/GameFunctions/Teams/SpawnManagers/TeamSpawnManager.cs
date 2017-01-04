@@ -34,7 +34,7 @@ namespace Space.Teams.SpawnManagers
         #region PUBLIC INTERACTION
 
         [Server]
-        public void AddStation(Vector2 station, string StationPrefab = "Placeholder_Station")
+        public GameObject AddStation(Vector2 station, string StationPrefab = "Placeholder_Station")
         {
             GameObject newStation = Instantiate((Resources.Load("Space/Stations/" + StationPrefab) as GameObject),
                 station, Quaternion.identity) as GameObject;
@@ -103,6 +103,8 @@ namespace Space.Teams.SpawnManagers
                 (sPInfo.ID, GetComponent<TeamController>());
 
             _spawns.Add(sPInfo);
+
+            return newStation;
         }
 
         #endregion

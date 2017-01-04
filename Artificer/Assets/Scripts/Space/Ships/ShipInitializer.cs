@@ -122,6 +122,8 @@ namespace Space.Ship
                 GetComponent<ShipAttributes>().AlignmentLabel = "Player";
 
                 SendMessage("BuildColliders");
+
+                //GameManager.GUI.RpcAddRemotePlayer(netId);
             }
         }
 

@@ -44,6 +44,7 @@ namespace Space
 
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.TEAMPICKER, OnTeamPickerMessage);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
+            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.BUILDSTATONHUD, AddStationToHUD);
         }
 
         void Start()
@@ -275,6 +276,21 @@ namespace Space
 
             // Store our id on the server
             _att.playerID = im.value;
+        }
+
+        public void AddStationToHUD(NetworkMessage netMsg)
+        {
+            // Retrieve net id from sent message
+            NetworkInstanceId stationNetID = netMsg.ReadMessage
+                <StationBuildMessage>().SelfID;
+
+            // Get our local station with the same netID
+            GameObject station = ClientScene.
+                FindLocalObject(stationNetID);
+
+            // Pass the station controller from our object to the HUD
+            GameManager.GUI.AddStation(station.
+                GetComponent<StationController>());
         }
 
         #endregion
