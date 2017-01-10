@@ -100,7 +100,7 @@ namespace Space.Teams.SpawnManagers
 
             // Pass ID to station for later access
             newStation.GetComponent<StationController>().Initialize
-                (sPInfo.ID, GetComponent<TeamController>());
+                (sPInfo.ID, netId);
 
             _spawns.Add(sPInfo);
 

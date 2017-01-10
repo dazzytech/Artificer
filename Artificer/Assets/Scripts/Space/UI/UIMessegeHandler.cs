@@ -125,6 +125,22 @@ namespace Space.UI
             }
         }
 
+        public void DisplayPrompt(string message)
+        {
+            if (MsgBase.gameObject.activeSelf)
+            {
+                MsgBase.DisplayPrompt(message);
+            }
+        }
+
+        public void ClearPrompt()
+        {
+            if (MsgBase.gameObject.activeSelf)
+            {
+                MsgBase.HidePrompt();
+            }
+        }
+
         /// <summary>
         /// Adds a peice for the TrackerHUD to track
         /// a transform dependant on its tag

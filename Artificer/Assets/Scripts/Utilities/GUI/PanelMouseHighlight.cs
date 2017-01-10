@@ -3,23 +3,26 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
-public class PanelMouseHighlight : MonoBehaviour//, IPointerEnterHandler, IPointerExitHandler
+namespace UI.Effects
 {
-    #region ATTRIBUTES
-
-    public Color NormalColour;
-    public Color HighlightColour;
-
-    private Image _rect;
-
-    #endregion
-
-    #region MONO BEHAVIOUR
-
-    void Awake()
+    public class PanelMouseHighlight : MonoBehaviour//, IPointerEnterHandler, IPointerExitHandler
     {
-      //  _rect = GetComponent<Image>();
-    }
+        #region ATTRIBUTES
 
-    #endregion
+        public Color NormalColour;
+        public Color HighlightColour;
+
+        private Image _rect;
+
+        #endregion
+
+        #region MONO BEHAVIOUR
+
+        void Awake()
+        {
+            //  _rect = GetComponent<Image>();
+        }
+
+        #endregion
+    }
 }

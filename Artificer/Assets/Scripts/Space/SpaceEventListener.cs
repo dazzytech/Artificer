@@ -59,8 +59,10 @@ namespace Space
             _con.OnMouseScroll += PlayerMouseScroll;
             _con.PlayerEnterScene += LoadPlayerDataIntoScene;
             SpaceManager.PlayerExitScene += PlayerDeath;
-            //ShipMessageController.OnShipDestroyed += ShipDestroyed;
-            //StationController.OnStationDestroyed += StationDestroyed;
+
+            // Station events
+            StationController.EnterStation += OnEnterStation;
+            StationController.ExitStation += OnExitStation;
         }
     	
         void OnDisable()
@@ -70,8 +72,10 @@ namespace Space
             _con.OnMouseScroll -= PlayerMouseScroll;
             _con.PlayerEnterScene -= LoadPlayerDataIntoScene;
             SpaceManager.PlayerExitScene -= PlayerDeath;
-            //ShipMessageController.OnShipDestroyed -= ShipDestroyed;
-            //StationController.OnStationDestroyed -= StationDestroyed;
+
+            // Station events
+            StationController.EnterStation -= OnEnterStation;
+            StationController.ExitStation -= OnExitStation;
         }
 
         #endregion
@@ -174,6 +178,16 @@ namespace Space
             GameManager.Background.StartBackground();
         }
 
+        private void OnEnterStation(StationController controller)
+        {
+            GameManager.GUI.DisplayPrompt("Press Enter to dock at station");
+        }
+
+        private void OnExitStation(StationController controller)
+        {
+            GameManager.GUI.ClearPrompt();
+        }
+
         #endregion
 
         #region SPACE EVENTS
@@ -236,6 +250,7 @@ namespace Space
         #endregion
 
         #region SERVER EVENTS
+
         // RPCS CALLED BY THE SERVER TO PERFORM ACTIONS
 
         /// <summary>

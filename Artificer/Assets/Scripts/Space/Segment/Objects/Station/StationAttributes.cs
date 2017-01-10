@@ -49,8 +49,22 @@ namespace Space.Segment
 
         #region REFERENCES
 
-        public TeamController Team;
+        [SyncVar]
+        public NetworkInstanceId TeamID;
 
         #endregion
+
+        public int MinDistance;
+
+        /// <summary>
+        /// Quick access to station team object
+        /// </summary>
+        public TeamController Team
+        {
+            get
+            {
+                return ClientScene.FindLocalObject(TeamID).GetComponent<TeamController>();
+            }
+        }
     }
 }

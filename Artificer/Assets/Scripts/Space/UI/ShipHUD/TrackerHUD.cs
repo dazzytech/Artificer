@@ -84,6 +84,10 @@ namespace Space.UI.Tracker
 
         void LateUpdate()
         {
+            if (GameObject.FindGameObjectWithTag
+                    ("MainCamera") == null)
+                return;
+
             // retreive the position of the main camera in our scene
             Transform cameraTransform =
                 GameObject.FindGameObjectWithTag

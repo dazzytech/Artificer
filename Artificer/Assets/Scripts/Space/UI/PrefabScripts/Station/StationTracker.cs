@@ -128,7 +128,7 @@ namespace Space.UI.Ship
                 }
 
                 // display distance
-                Distance.text = ((int)distance / 10).ToString() + "km";
+                Distance.text = ((int)distance  *0.01).ToString("F2") + "km";
 
                 //finished this step
                 yield return null;

@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
+using UI.Effects;
+
 namespace Space.UI
 {
     public class MsgParam
@@ -22,9 +24,12 @@ namespace Space.UI
         private static int messegeCount = 0;
         private static int messegeMax = 20;
 
-        //public GameObject txtItemPrefab;
-        //public Transform txtPanel;
+        
+        public Text PromptText;
+
         public Font font;
+
+        #region MONO BEHAVIOUR
 
         void Awake()
         {
@@ -35,6 +40,15 @@ namespace Space.UI
             messegeMax = 20;
         }
 
+        #endregion
+
+        #region PUBLIC MESSAGES
+
+        /// <summary>
+        /// Display a message to the chat window
+        /// with formatting
+        /// </summary>
+        /// <param name="param"></param>
         public void DisplayMessege(MsgParam param)
         {
             GameObject disp = new GameObject();
@@ -98,6 +112,37 @@ namespace Space.UI
             }
 
         }
+
+        #endregion
+
+        #region PROMPT MESSAGES
+
+        /// <summary>
+        /// Displays the message to the specified prompt
+        /// text with fading in and out
+        /// </summary>
+        /// <param name="message"></param>
+        public void DisplayPrompt(string message)
+        {
+            //Ensure play hud prompt is enabled
+            if (PromptText.gameObject.activeSelf)
+            {
+                // Assign message and use fade effects
+                PromptText.text = message;
+                PanelFadeEffects.FadeInText(PromptText);
+            }
+        }
+
+        public void HidePrompt()
+        {
+            //Ensure play hud prompt is enabled
+            if (PromptText.gameObject.activeSelf)
+            {
+                PromptText.text = "";
+            }
+        }
+
+        #endregion
 
         /*private IEnumerator Count() make create wipe/clear functionality
         {

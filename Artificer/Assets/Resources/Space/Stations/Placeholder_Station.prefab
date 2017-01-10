@@ -134,8 +134,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4524fef8c8a11184f8588cacbc7618e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentDensity: 0
-  Density: 1000
+  CurrentIntegrity: 0
+  Integrity: 0
+  UnderAttack: 0
+  ID: 0
+  Type: 0
+  BuildCounter: 0
+  Team: {fileID: 0}
+  MinDistance: 10
 --- !u!114 &114000013604808810
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -16,9 +16,20 @@ namespace Space.Segment
     [RequireComponent(typeof(StationAttributes))]
     public class StationController : NetworkBehaviour
     {
+        #region EVENTS
+
+        public delegate void StationEvent(StationController controller);
+        public static event StationEvent EnterStation;
+        public static event StationEvent ExitStation;
+
+        #endregion
+
         #region ATTRIBUTES
 
         private StationAttributes m_att;
+
+        // stop flickering effect caused by ships mulitple components
+        private bool m_dockReady;
 
         #endregion
 
@@ -29,6 +40,18 @@ namespace Space.Segment
             m_att = GetComponent<StationAttributes>();
 
             m_att.CurrentIntegrity = m_att.Integrity;
+
+            m_dockReady = false;
+        }
+
+        void Start()
+        {
+            StartCoroutine("DistanceBasedDocking");
+        }
+
+        void OnDestroy()
+        {
+            StopCoroutine("DistanceBasedDocking");
         }
 
         #endregion
@@ -42,7 +65,7 @@ namespace Space.Segment
         /// <param name="newID"></param>
         /// <param name="newType"></param>
         [Server]
-        public void Initialize(int newID, TeamController newTeam, STATIONTYPE newType = STATIONTYPE.DEFAULT)
+        public void Initialize(int newID, NetworkInstanceId newTeam, STATIONTYPE newType = STATIONTYPE.DEFAULT)
         {
             // Store our ID for when the station is destroyed
             m_att.ID = newID;
@@ -51,7 +74,10 @@ namespace Space.Segment
             m_att.Type = newType;
 
             // reference to our team
-            m_att.Team = newTeam;
+            m_att.TeamID = newTeam;
+
+            // place station under correct parent
+            transform.SetParent(m_att.Team.transform);
         }
 
         /// <summary>
@@ -115,26 +141,65 @@ namespace Space.Segment
             yield return null;
         }
 
-        #endregion
-
-        #region COLLISION TRIGGERS
-
         /// <summary>
         /// This function will detect if a ship
         /// has come into distance with the station
         /// we will need to check the ship is local player and friendly.
         /// Continue when working on next step
         /// </summary>
-        /// <param name="collider"></param>
-        public void OnTriggerEnter2D(Collider2D collider)
+        private IEnumerator DistanceBasedDocking()
         {
-            /*if (Enter)
-                GameObject.Find("space").SendMessage("StationReached",
-                    collider.transform.parent, SendMessageOptions.DontRequireReceiver);*/
-        }
+            while (true)
+            {
+                GameObject playerObj =
+                    GameObject.FindGameObjectWithTag("PlayerShip");
 
-        public void OnTriggerExit2D(Collider2D collider)
-        {
+                // Ensure player is alive
+                if (playerObj == null)
+                {
+                    yield return null;
+                    continue;
+                }
+
+                // Retrieve NetworkInstance of player
+                NetworkInstanceId localInstID = playerObj.GetComponent
+                    <NetworkIdentity>().netId;
+
+                // only proceed if local player 
+                // is on the correct team
+                //if (!m_att.Team.PlayerOnTeam(localInstID))
+                //{
+                    //StopCoroutine("DistanceBasedDocking");
+                //}
+
+                // Find distance between station and player object
+                float distance = Vector2.Distance
+                    (transform.position, playerObj.transform.position);
+
+                // determine range
+                if(distance <= m_att.MinDistance)
+                {
+                    if (!m_dockReady)
+                    {
+                        // Call the event
+                        EnterStation(this);
+
+                        m_dockReady = true;
+                    }
+                }
+                else
+                {
+                    if(m_dockReady)
+                    {
+                        // Call the event
+                        ExitStation(this);
+
+                        m_dockReady = false;
+                    }
+                }
+
+                yield return null;
+            }
         }
 
         #endregion
