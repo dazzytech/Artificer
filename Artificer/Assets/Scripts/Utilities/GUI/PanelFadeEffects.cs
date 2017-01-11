@@ -17,40 +17,36 @@ namespace UI.Effects
         /// <param name="Panel"></param>
         public static void FadeInText(Text FadeText)
         {
-            // Create timer to update at 30fps
-            // and pass text as parameter
-            //Timer internalClock = new Timer(32);
-            //internalClock.Elapsed +=
-             //   delegate { fadeIn_Elapsed(internalClock, FadeText); };
-
-            // auto reset and repeat elapsed event
-            //internalClock.AutoReset = true;
-
-            // Set colour in text to 0
-            //FadeText.color = new Color(FadeText.color.r, FadeText.color.g,
-                //FadeText.color.b, 0f);
-
             FadeText.canvasRenderer.SetAlpha(0f);
 
             FadeText.CrossFadeAlpha(1.0f, .1f, false);
+        }
 
-            // start timer
-            //internalClock.Enabled = true;
+        public static void FadeOutText(Text FadeText)
+        {
+            FadeText.CrossFadeAlpha(0f, .1f, false);
+        }
+
+        /// <summary>
+        /// Create the appearance of the panel 
+        /// Spreading across the screen with an initial white
+        /// </summary>
+        /// <param name="panel"></param>
+        public static void AnimInPanel(Space.UI.BasePanel panel)
+        {
+            panel.DeactivateHUD();
+
+            float origHeight, origWidth;
+
+            RectTransform rect = panel.GetComponent<RectTransform>();
+
+
         }
 
         #endregion
 
         #region PRIVATE UTILITIES
 
-        /* private static void fadeIn_Elapsed(Timer internalClock, Text FadeText)
-         {
-             // Create new color for the next text fade step
-             Color newColor = new Color(FadeText.color.r, FadeText.color.g,
-                 FadeText.color.b, FadeText.color.a + (float)internalClock.Interval*0.01f);
-
-             FadeText.col
-         }
-         */
         #endregion
     }
 }

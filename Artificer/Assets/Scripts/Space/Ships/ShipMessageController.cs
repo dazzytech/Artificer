@@ -126,6 +126,84 @@ namespace Space.Ship
             }
         }
 
+        /// <summary>
+        /// Ship has docked at a station therefore should 
+        /// be interactive as well change appearance to indicate
+        /// </summary>
+        public void DisableShip()
+        {
+            // First disable any form of input through
+            // player interaction
+            ShipPlayerInputController input = GetComponent<ShipPlayerInputController>();
+
+            if (input == null)
+                return;
+
+            input.enabled = false;
+
+            // Begin the process of hiding components on all components
+            CmdDisableComponents();
+
+            GetComponent<Rigidbody2D>().constraints = 
+                RigidbodyConstraints2D.FreezeAll;
+
+
+            // disable any automatic functioning components
+            foreach(TargeterListener listener in _ship.Targeter)
+            {
+                listener.enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// When ship has undocked we add player functionality once
+        /// again
+        /// </summary>
+        public void EnableShip()
+        {
+            // First enable
+            // player interaction
+            ShipPlayerInputController input = GetComponent<ShipPlayerInputController>();
+
+            if (input == null)
+                return;
+
+            input.enabled = true;
+
+            
+
+            GetComponent<Rigidbody2D>().constraints =
+                RigidbodyConstraints2D.None;
+
+
+            // disable any automatic functioning components
+            foreach (TargeterListener listener in _ship.Targeter)
+            {
+                listener.enabled = true;
+            }
+        }
+
+        #region CMD & RPC
+
+        [Command]
+        private void CmdDisableComponents()
+        {
+            _ship.ShipDocked = true;
+            RpcDisableComponents();
+        }
+
+        [ClientRpc]
+        private void RpcDisableComponents()
+        {
+            // loop through each component and change visual back
+            foreach (ComponentListener listener in _ship.Components)
+            {
+                listener.HideComponent();
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region SHIP INITIALIZATION
@@ -255,32 +333,6 @@ namespace Space.Ship
         }
 
         /// <summary>
-        /// Runs on server to create debris using destroyed 
-        /// parts and sends rpc to rebuild all ship colliders
-        /// </summary>
-        /// <param name="dead"></param>
-        /// <param name="position"></param>
-        [Command]
-        public void CmdRemoveComponent(int[] dead, Vector3 position)
-        {
-            DebrisGenerator.SpawnShipDebris(position,
-                dead, this.netId, (position -
-                transform.position).normalized * 10);
-
-            RpcRemoveComponent(dead);
-        }
-
-        /// <summary>
-        /// Rebuild collider list for hit detection.
-        /// </summary>
-        /// <param name="dead"></param>
-        [ClientRpc]
-        public void RpcRemoveComponent(int[] dead)
-        {
-            SendMessage("BuildColliders");
-        }
-
-        /// <summary>
         /// Triggers destroyed event 
         /// </summary>
         private void Destroy()
@@ -294,6 +346,36 @@ namespace Space.Ship
 
             GameManager.singleton.client.Send((short)MSGCHANNEL.SHIPDESTROYED, msg);
         }
+
+        #region CMD & RPC
+
+        /// <summary>
+        /// Runs on server to create debris using destroyed 
+        /// parts and sends rpc to rebuild all ship colliders
+        /// </summary>
+        /// <param name="dead"></param>
+        /// <param name="position"></param>
+        [Command]
+        private void CmdRemoveComponent(int[] dead, Vector3 position)
+        {
+            DebrisGenerator.SpawnShipDebris(position,
+                dead, this.netId, (position -
+                transform.position).normalized * 10);
+
+            RpcRemoveComponent(dead);
+        }
+
+        /// <summary>
+        /// Rebuild collider list for hit detection.
+        /// </summary>
+        /// <param name="dead"></param>
+        [ClientRpc]
+        private void RpcRemoveComponent(int[] dead)
+        {
+            SendMessage("BuildColliders");
+        }
+
+        #endregion
 
         #endregion
     }

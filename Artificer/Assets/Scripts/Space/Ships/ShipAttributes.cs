@@ -32,6 +32,9 @@ namespace Space.Ship
         [SyncVar]
         public string AggressorTag;
 
+        //[SyncVar]             why does this work?
+        public bool ShipDocked;
+
         public NetworkInstanceId instID;
 
         #endregion
@@ -128,7 +131,6 @@ namespace Space.Ship
                 return targets;
             }
         }
-
 
         public WarpListener Warp
         {

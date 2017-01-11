@@ -65,7 +65,7 @@ public class Control_Config: MonoBehaviour
         m_data.ShipControls.Add ("eject", KeyCode.LeftControl);
         m_data.ShipControls.Add ("switchtocombat", KeyCode.F);
         m_data.ShipControls.Add ("Activate Shield", KeyCode.C);
-		Save();
+        Save();
 	}
 
 	private static void SetCombatDefaults()
@@ -88,7 +88,7 @@ public class Control_Config: MonoBehaviour
         m_data.SystemControls.Add("pause", KeyCode.Escape);
         m_data.SystemControls.Add("zoomIn", KeyCode.Plus);
         m_data.SystemControls.Add("zoomOut", KeyCode.Minus);
-        m_data.SystemControls.Add("enter", KeyCode.Return);
+        m_data.SystemControls.Add("dock", KeyCode.Return);
         m_data.SystemControls.Add("toggle objectives", KeyCode.O);
         m_data.SystemControls.Add("toggle hud", KeyCode.H);
         Save();

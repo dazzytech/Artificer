@@ -9,7 +9,7 @@ using Space.Segment;
 
 namespace Space.UI
 {
-    public enum UIState {Play, Pause, Popup, TeamPicker, SpawnPicker}
+    public enum UIState {Play, Pause, Popup, TeamPicker, SpawnPicker, Station}
 
     /// <summary>
     /// Redirects incoming messages
@@ -24,6 +24,7 @@ namespace Space.UI
         public GameObject PopupRect;
         public GameObject TeamSelectRect;
         public GameObject SpawnPickerRect;
+        public GameObject StationRect;
         private bool _keyDelay = false;
 
         // messages
@@ -48,6 +49,7 @@ namespace Space.UI
                     TeamSelectRect.SetActive(false);
                     SpawnPickerRect.SetActive(false);
                     MsgBase.gameObject.SetActive(false);
+                    StationRect.SetActive(false);
                     break;
                 case UIState.Play:
                     PauseRect.SetActive(false);
@@ -56,6 +58,7 @@ namespace Space.UI
                     TeamSelectRect.SetActive(false);
                     SpawnPickerRect.SetActive(false);
                     MsgBase.gameObject.SetActive(true);
+                    StationRect.SetActive(false);
                     break;
                 case UIState.Popup:
                     PauseRect.SetActive(false);
@@ -64,6 +67,7 @@ namespace Space.UI
                     TeamSelectRect.SetActive(false);
                     SpawnPickerRect.SetActive(false);
                     MsgBase.gameObject.SetActive(true);
+                    StationRect.SetActive(false);
                     break;
                 case UIState.TeamPicker:
                     PauseRect.SetActive(false);
@@ -72,6 +76,7 @@ namespace Space.UI
                     TeamSelectRect.SetActive(true);
                     SpawnPickerRect.SetActive(false);
                     MsgBase.gameObject.SetActive(false);
+                    StationRect.SetActive(false);
                     break;
                 case UIState.SpawnPicker:
                     PauseRect.SetActive(false);
@@ -80,6 +85,16 @@ namespace Space.UI
                     TeamSelectRect.SetActive(false);
                     SpawnPickerRect.SetActive(true);
                     MsgBase.gameObject.SetActive(false);
+                    StationRect.SetActive(false);
+                    break;
+                case UIState.Station:
+                    PauseRect.SetActive(false);
+                    PlayRect.SetActive(false);
+                    PopupRect.SetActive(false);
+                    TeamSelectRect.SetActive(false);
+                    SpawnPickerRect.SetActive(false);
+                    MsgBase.gameObject.SetActive(true);
+                    StationRect.SetActive(true);
                     break;
             }
         }
@@ -94,7 +109,7 @@ namespace Space.UI
         /// </summary>
         public void BuildShipData()
         {
-            PlayRect.GetComponent<ShipHUD>().
+            PlayRect.GetComponent<PlayHUD>().
                 BuildShipData();
         }
 
@@ -125,6 +140,11 @@ namespace Space.UI
             }
         }
 
+        /// <summary>
+        /// Sends message to the UI text towards the 
+        /// bottom of the screen
+        /// </summary>
+        /// <param name="message"></param>
         public void DisplayPrompt(string message)
         {
             if (MsgBase.gameObject.activeSelf)
@@ -133,6 +153,9 @@ namespace Space.UI
             }
         }
 
+        /// <summary>
+        /// Clears the text at the bottom of the screen
+        /// </summary>
         public void ClearPrompt()
         {
             if (MsgBase.gameObject.activeSelf)
@@ -258,7 +281,7 @@ namespace Space.UI
         public void ToggleStationHUD()
         {
             if(!PopupRect.activeSelf && PlayRect.activeSelf)
-                PlayRect.SendMessage("ToggleHUD");
+                PlayRect.SendMessage("HidePanel", "station");
         }
 
         public void PauseRelease()

@@ -10,20 +10,54 @@ namespace Space.Ship.Components.Listener
 {
     public class ComponentListener : NetworkBehaviour
     {
-    	protected Rigidbody2D rb;
+        #region ATTRIBUTES
+
+        protected Rigidbody2D rb;
     	public float Weight;
         public float TotalHP;
-
+        
         // Used by editor tools to determine type
         public string ComponentType;
 
-    	void Start()
+        #region ACCESSORS
+
+        public ComponentAttributes GetAttributes()
+        {
+            if (transform.GetComponent<ComponentAttributes>() != null)
+                return transform.GetComponent<ComponentAttributes>();
+            else
+                return null;
+        }
+
+        public int ID
+        {
+            set
+            {
+                GetAttributes().ID = value;
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region MONO BEHAVIOUR
+
+        void Start()
     	{
             ComponentType = "Components";
             SetRB();
     	}
 
-        public void SetRB()
+        #endregion
+
+        #region INITIALZATION
+
+        /// <summary>
+        /// Initialise the physics component
+        /// of the listener
+        /// </summary>
+        protected void SetRB()
         {
             rb = transform.parent.GetComponent<Rigidbody2D> ();
             rb.mass += Weight;
@@ -39,6 +73,16 @@ namespace Space.Ship.Components.Listener
         public void SetShip(ShipAttributes Ship)
         {
             GetAttributes().ShipAtt = Ship;
+
+            // If ship is already docked then we must hide it
+            if (Ship.ShipDocked)
+            {
+                if (GetComponent<Collider2D>() != null)
+                    GetComponent<Collider2D>().enabled = false;
+
+                GetComponentInChildren<SpriteRenderer>().color =
+                    new Color(1.0f, 1.0f, 1.0f, 0f);
+            }
         }
 
         /// <summary>
@@ -52,21 +96,34 @@ namespace Space.Ship.Components.Listener
                 System.Collections.Generic.List<ComponentListener>();
         }
 
-        public void SetID(int ID)
-        {
-            GetAttributes().ID = ID;
-        }
+        #endregion
 
+        #region CONSTRUCTION
+
+        /// <summary>
+        /// Pass reference to other component 
+        /// this component will attach to
+        /// </summary>
+        /// <param name="trans"></param>
         public void LockTo(Transform trans)
         {
             GetAttributes().LockedGO = trans;
         }
 
+        /// <summary>
+        /// Pass reference to connected sockets we
+        /// will use to attach components
+        /// </summary>
+        /// <param name="sock"></param>
         public void SetSock(Socket sock)
         {
             GetAttributes().sockInfo = sock;
         }
 
+        /// <summary>
+        /// Snap this component to the component
+        /// passed via reference with socket information
+        /// </summary>
         public void FixToConnected()
         {
             if (GetAttributes().LockedGO != null &&
@@ -105,18 +162,15 @@ namespace Space.Ship.Components.Listener
             att.connectedComponents.Add(connected);
         }
 
-        public virtual void Activate(){}
+        #endregion
 
-    	public virtual void Deactivate(){}
+        #region PUBLIC INTERACTION
 
-        public ComponentAttributes GetAttributes()
-        {
-            if (transform.GetComponent<ComponentAttributes>() != null)
-                return transform.GetComponent<ComponentAttributes>();
-            else
-                return null;
-        }
-
+        /// <summary>
+        /// Applys damage from impact collider to the
+        /// component
+        /// </summary>
+        /// <param name="hit"></param>
         public void DamageComponent(HitData hit)
         {
             ComponentAttributes att = GetAttributes();
@@ -136,11 +190,16 @@ namespace Space.Ship.Components.Listener
             {
                 hit.hitComponent = att.ID;
                 transform.parent.gameObject.
-                    SendMessage("DestroyComponent", hit, 
+                    SendMessage("DestroyComponent", hit,
                                 SendMessageOptions.DontRequireReceiver);
             }
         }
 
+        /// <summary>
+        /// Darkens the colour of the component based
+        /// on integrity
+        /// </summary>
+        /// <param name="integrity"></param>
         public void SetColour(float integrity)
         {
             // Change color to show damage for now
@@ -150,12 +209,61 @@ namespace Space.Ship.Components.Listener
                 new Color(0.5f + brightness, 0.5f + brightness, 0.5f + brightness);
         }
 
+        /// <summary>
+        /// disables all external interaction
+        /// with component and gradually fades out
+        /// visual
+        /// </summary>
+        public void HideComponent()
+        {
+            // stop component from running
+            Deactivate();
+
+            // Deactivate collider object so other components 
+            // do not interact
+            if(GetComponent<Collider2D>() != null)
+                GetComponent<Collider2D>().enabled = false;
+            
+            // begin fading process
+            StartCoroutine("FadeOut");
+        }
+
+        /// <summary>
+        /// called to disable this component
+        /// </summary>
         public virtual void Destroy()
         {
             // will be important when able to loot, and stop locking
             SetRB();
             this.enabled = false;
         }
+
+        #endregion
+
+        #region COROUTINES
+
+        private IEnumerator FadeOut()
+        {
+            float alpha = 1.0f;
+
+            while(GetComponentInChildren<SpriteRenderer>().color.a > 0)
+            {
+                GetComponentInChildren<SpriteRenderer>().color =
+                    new Color(1.0f, 1.0f, 1.0f, alpha -= 0.03f);
+                yield return null;
+            }
+        }
+
+        #endregion
+
+        #region VIRTUAL FUNCTIONS
+
+        public virtual void Activate(){}
+
+    	public virtual void Deactivate(){}
+
+        #endregion
+
     }
 }
 

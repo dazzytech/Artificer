@@ -7,6 +7,7 @@ using Data.Shared;
 using Data.Space;
 using Data.Space.Library;
 using Space.GameFunctions;
+using Space.Segment;
 
 // Add classes for data
 // that can be serialized and saved
@@ -30,6 +31,14 @@ namespace Space
 
         // store local client controller ID
         public int playerID;
+
+        // if the player is within vicinity of station
+        public bool overStation;
+
+        // refence to the station we are currently at
+        public StationController station;
+
+        public bool docked;
 
         #endregion
 

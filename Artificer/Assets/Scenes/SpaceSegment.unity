@@ -6808,7 +6808,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c507b1cac90af774dbed30ce23d20aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HUD: {fileID: 1088678458}
+  ToggleActive:
+  - {fileID: 1960184406}
+  - {fileID: 937606404}
   StationList: {fileID: 2006588502}
   StationPrefab: {fileID: 1000011340027288, guid: 6b12d0a0e234d414ebd77694db7bf51b,
     type: 2}
@@ -6883,10 +6885,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _int: {fileID: 766316686}
   _warp: {fileID: 766316685}
-  _mission: {fileID: 0}
   _target: {fileID: 766316683}
   _tracker: {fileID: 766316688}
   _shields: {fileID: 766316690}
+  _station: {fileID: 0}
 --- !u!114 &766316690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11724,6 +11726,9 @@ MonoBehaviour:
     Aligned: 0
     Initialized: 0
   playerID: 0
+  overStation: 0
+  station: {fileID: 0}
+  docked: 0
 --- !u!1001 &1368782869
 Prefab:
   m_ObjectHideFlags: 0
@@ -14440,6 +14445,7 @@ RectTransform:
   - {fileID: 1559320750}
   - {fileID: 1378598536}
   - {fileID: 873041641}
+  - {fileID: 1874999455}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
@@ -14519,6 +14525,7 @@ MonoBehaviour:
   PopupRect: {fileID: 1559320749}
   TeamSelectRect: {fileID: 1933346439}
   SpawnPickerRect: {fileID: 1378598535}
+  StationRect: {fileID: 1874999454}
   MsgBase: {fileID: 873041642}
 --- !u!114 &1653808580
 MonoBehaviour:
@@ -17530,6 +17537,39 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1867184026}
+--- !u!1 &1874999454
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 1874999455}
+  m_Layer: 5
+  m_Name: Station
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1874999455
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1874999454}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 1653808575}
+  m_RootOrder: 7
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -0.000000834465}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1902120804
 GameObject:
   m_ObjectHideFlags: 0
@@ -18294,6 +18334,10 @@ Prefab:
     - target: {fileID: 105768, guid: 15d13621195bd06469aadf32f8962ddf, type: 2}
       propertyPath: m_Name
       value: HeaderItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 105768, guid: 15d13621195bd06469aadf32f8962ddf, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11433704, guid: 15d13621195bd06469aadf32f8962ddf, type: 2}

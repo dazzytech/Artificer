@@ -138,8 +138,14 @@ namespace Space.UI
             //Ensure play hud prompt is enabled
             if (PromptText.gameObject.activeSelf)
             {
-                PromptText.text = "";
+                PanelFadeEffects.FadeOutText(PromptText);
+                Invoke("ClearPrompt", 1f);
             }
+        }
+
+        public void ClearPrompt()
+        {
+            PromptText.text = "";
         }
 
         #endregion

@@ -66,6 +66,10 @@ namespace Space
 
             // init onstage
             _att.PlayerOnStage = false;
+
+            _att.docked = false;
+
+            _att.overStation = false;
         }
 
         void Update()
@@ -193,6 +197,27 @@ namespace Space
             _att.PlayerOnStage = true;
 
             //PlayerEnterScene();
+        }
+
+        public void DockAtStation()
+        {
+            if (!_att.overStation)
+                return;
+
+            // for now first task is to retrieve 
+            // player ship and notify it to disable
+            GameObject PlayerObj = GameObject.FindGameObjectWithTag
+                ("PlayerShip");
+
+            if (PlayerObj == null)
+                return;                 // need to be alive
+
+            PlayerObj.SendMessage("DisableShip",
+                SendMessageOptions.RequireReceiver);
+
+            // Next is to update the HUD to display the
+            // micro stationHUD
+
         }
 
         #endregion

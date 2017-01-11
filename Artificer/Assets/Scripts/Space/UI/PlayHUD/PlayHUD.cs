@@ -17,7 +17,7 @@ using Space.Ship;
 /// </summary>
 namespace Space.UI.Ship
 {
-    public class ShipHUD : MonoBehaviour
+    public class PlayHUD : MonoBehaviour
     {
         // Ship attributes for player ship
         private ShipAttributes _shipData;
@@ -25,10 +25,10 @@ namespace Space.UI.Ship
         // Other GUIs
         public IntegrityHUD _int;
         public WarpHUD _warp;
-        public MissionHUD _mission;
         public TargetHUD _target;
         public TrackerHUD _tracker;
         public ShieldHUD _shields;
+        public StationHUD _station;
 
     	// Use this for initialization
         public void BuildShipData()
@@ -45,11 +45,14 @@ namespace Space.UI.Ship
             _shields.SetShipData(_shipData);
     	}
 
-        // Use this for initialization
-        public void BuildContractData (ContractData contract)
+        public void HidePanel(string panel)
         {
-            //_mission.SetContactData(contract);
-            //_tracker.SetContactData(contract);
+            switch(panel)
+            {
+                case "station":
+                    _station.ToggleHUD();
+                    break;
+            }
         }
     }
 }

@@ -16,14 +16,14 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.257 seconds
+- Completed reload, in  0.169 seconds
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1360x768 60Hz; virtual: 1360x768 at 0,0
 <RI> Initialized touch support.
-UnloadTime: 2.359923 ms
+UnloadTime: 3.302874 ms
 DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
  
 (Filename:  Line: 386)
@@ -34,46 +34,30 @@ Start Client
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.733973 ms
+UnloadTime: 3.752581 ms
 Scene Changed
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
 
-Unloading 581 unused Assets to reduce memory usage. Loaded Objects now: 2997.
-Total: 3.011791 ms (FindLiveObjects: 0.222075 ms CreateObjectMapping: 0.133383 ms MarkObjects: 2.143406 ms  DeleteObjects: 0.489537 ms)
+Unloading 581 unused Assets to reduce memory usage. Loaded Objects now: 2887.
+Total: 2.575514 ms (FindLiveObjects: 0.240600 ms CreateObjectMapping: 0.111153 ms MarkObjects: 1.805778 ms  DeleteObjects: 0.395057 ms)
 
-Large state update of 1727 bytes for netId:5558 from script:Ship(Clone) (Space.Ship.ShipInitializer)
+Large state update of 1727 bytes for netId:2659 from script:Ship(Clone) (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Large state update of 1727 bytes for netId:5558 from script:PlayerShip (Space.Ship.ShipInitializer)
+Large state update of 1727 bytes for netId:2659 from script:PlayerShip (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Large state update of 1727 bytes for netId:5559 from script:Ship(Clone) (Space.Ship.ShipInitializer)
+Large state update of 1727 bytes for netId:2660 from script:Ship(Clone) (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Large state update of 1727 bytes for netId:5559 from script:Ship(Clone) (Space.Ship.ShipInitializer)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-5558
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-5558
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-5558
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-5558
+Large state update of 1727 bytes for netId:2660 from script:Ship(Clone) (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: ef4 -> priority: 1 
+  Thread -> id: 35ec -> priority: 1 

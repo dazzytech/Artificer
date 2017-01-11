@@ -28,9 +28,9 @@ namespace Space
     {
         #region ATTRIBUTES
 
-        private SpaceAttributes _att;
-        private SpaceManager _con;
-        private SpaceUtilities _util;
+        private SpaceAttributes m_att;
+        private SpaceManager m_con;
+        private SpaceUtilities m_util;
 
         #endregion
 
@@ -38,9 +38,9 @@ namespace Space
 
         void Awake()
         {
-            _att = GetComponent<SpaceAttributes>();
-            _con = GetComponent<SpaceManager>();
-            _util = GetComponent<SpaceUtilities>();
+            m_att = GetComponent<SpaceAttributes>();
+            m_con = GetComponent<SpaceManager>();
+            m_util = GetComponent<SpaceUtilities>();
 
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.TEAMPICKER, OnTeamPickerMessage);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
@@ -49,15 +49,15 @@ namespace Space
 
         void Start()
         {
-            _util.Init();    
+            m_util.Init();    
         }
 
         void OnEnable()
         {
-            _con.OnKeyPress += PlayerSystemInput;
-            _con.OnKeyRelease += PlayerSystemInputRelease;
-            _con.OnMouseScroll += PlayerMouseScroll;
-            _con.PlayerEnterScene += LoadPlayerDataIntoScene;
+            m_con.OnKeyPress += PlayerSystemInput;
+            m_con.OnKeyRelease += PlayerSystemInputRelease;
+            m_con.OnMouseScroll += PlayerMouseScroll;
+            m_con.PlayerEnterScene += LoadPlayerDataIntoScene;
             SpaceManager.PlayerExitScene += PlayerDeath;
 
             // Station events
@@ -67,10 +67,10 @@ namespace Space
     	
         void OnDisable()
         {
-            _con.OnKeyPress -= PlayerSystemInput;
-            _con.OnKeyRelease -= PlayerSystemInputRelease;
-            _con.OnMouseScroll -= PlayerMouseScroll;
-            _con.PlayerEnterScene -= LoadPlayerDataIntoScene;
+            m_con.OnKeyPress -= PlayerSystemInput;
+            m_con.OnKeyRelease -= PlayerSystemInputRelease;
+            m_con.OnMouseScroll -= PlayerMouseScroll;
+            m_con.PlayerEnterScene -= LoadPlayerDataIntoScene;
             SpaceManager.PlayerExitScene -= PlayerDeath;
 
             // Station events
@@ -91,19 +91,19 @@ namespace Space
         {
             if (key == Control_Config.GetKey("pause", "sys"))
             {
-                _util.Pause(true);
+                m_util.Pause(true);
             }
 
             if (Time.timeScale == 1f)
             {
                 if (key == Control_Config.GetKey("zoomOut", "sys"))
                 {
-                    _util.ZoomOut();
+                    m_util.ZoomOut();
                 }
 
                 if (key == Control_Config.GetKey("zoomOut", "sys"))
                 {
-                    _util.ZoomIn();
+                    m_util.ZoomIn();
                 }
                 if(key == Control_Config.GetKey("toggle hud", "sys"))
                 {
@@ -113,6 +113,10 @@ namespace Space
                 {
                     GameObject.Find("_gui").SendMessage("ToggleMissionHUD");
                 }
+                if(key == Control_Config.GetKey("dock", "sys"))
+                {
+                    m_con.DockAtStation();
+                }
             }
         }
 
@@ -120,7 +124,7 @@ namespace Space
         {
             if (key == Control_Config.GetKey("pause", "sys"))
             {
-                _util.PauseRelease();
+                m_util.PauseRelease();
             }
         }
 
@@ -131,9 +135,9 @@ namespace Space
         private void PlayerMouseScroll(float yDelta)
         {
             if (Input.mouseScrollDelta.y < 0f)
-                _util.ZoomOut();
+                m_util.ZoomOut();
             if (Input.mouseScrollDelta.y > 0f)
-                _util.ZoomIn();
+                m_util.ZoomIn();
         }
 
         #endregion
@@ -178,13 +182,30 @@ namespace Space
             GameManager.Background.StartBackground();
         }
 
+        /// <summary>
+        /// When player is in proximity of a station it can enter
+        /// then keep reference tho the station
+        /// </summary>
+        /// <param name="controller"></param>
         private void OnEnterStation(StationController controller)
         {
+            m_att.overStation = true;
+
+            m_att.station = controller;
+
             GameManager.GUI.DisplayPrompt("Press Enter to dock at station");
         }
 
+        /// <summary>
+        /// When player leaves station vicinity then clear reference
+        /// </summary>
+        /// <param name="controller"></param>
         private void OnExitStation(StationController controller)
         {
+            m_att.overStation = false;
+
+            m_att.station = null;
+
             GameManager.GUI.ClearPrompt();
         }
 
@@ -235,7 +256,7 @@ namespace Space
 
         private void EndLevel(GameState newState)
         {
-            _util.Stop();
+            m_util.Stop();
 
             // Set Popup to display either win or lose screen
             /*GameObject.Find("_gui").
@@ -290,7 +311,7 @@ namespace Space
             IntegerMessage im = netMsg.ReadMessage<IntegerMessage>();
 
             // Store our id on the server
-            _att.playerID = im.value;
+            m_att.playerID = im.value;
         }
 
         public void AddStationToHUD(NetworkMessage netMsg)
