@@ -4,7 +4,8 @@ using System.Collections.Generic;
 // Artificer Defined 
 using Data.Shared;
 using Data.Space.Library;
-using ShipComponents;
+using Space.Ship.Components.Listener;
+using Space.Ship.Components.Attributes;
 
 namespace Construction.ShipEditor
 {
@@ -68,7 +69,7 @@ namespace Construction.ShipEditor
             {
                 foreach(ConstructInfo info in att.RequiredMats)
                 {
-                    MaterialData mat = ElementLibrary.ReturnElement(info.material);
+                    /*MaterialData mat = ElementLibrary.ReturnElement(info.material);
                     if(mat == null)
                         continue;
                     if(Requirements.ContainsKey(mat))
@@ -78,7 +79,7 @@ namespace Construction.ShipEditor
                     else
                     {
                         Requirements.Add(mat, info.amount);
-                    }
+                    }*/
                 }
             }
         }
@@ -118,7 +119,7 @@ namespace Construction.ShipEditor
                     Dictionary<MaterialData, float> ReturnAmt = new Dictionary<MaterialData, float>();
                     foreach (ConstructInfo info in att.RequiredMats)
                     {
-                        MaterialData mat = ElementLibrary.ReturnElement(info.material);
+                        /*MaterialData mat = ElementLibrary.ReturnElement(info.material);
 
                         if(mat == null)
                             continue;
@@ -137,7 +138,7 @@ namespace Construction.ShipEditor
                         } else
                         {
                             Reimbursed.Add(mat, info.amount);
-                        }
+                        }*/
                     }
                     // Reimburse player
                     //GameManager.GetPlayer.AddMaterial(ReturnAmt);
@@ -150,7 +151,7 @@ namespace Construction.ShipEditor
                 if (att.RequiredMats != null)
                 {
                     // Remove amount from store
-                    foreach(ConstructInfo info in att.RequiredMats)
+                    /*foreach(ConstructInfo info in att.RequiredMats)
                     {
                         MaterialData mat = ElementLibrary.ReturnElement(info.material);
 
@@ -164,7 +165,7 @@ namespace Construction.ShipEditor
                             if(Requirements[mat] <= 0)
                                 Requirements.Remove(mat);
                         }
-                    }
+                    }*/
                 }
             }
         }

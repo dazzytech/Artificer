@@ -39,6 +39,7 @@ namespace Space.Ship.Components.Attributes
         public int ID;
         public bool TrackIntegrity;
     	public float Integrity;
+        public float MaxIntegrity;
 
         public Transform LockedGO;
         public Socket sockInfo;
@@ -65,6 +66,21 @@ namespace Space.Ship.Components.Attributes
         public ShipData Ship
         {
             get { return ShipAtt.Ship; }
+        }
+
+        #endregion
+
+        #region ACCESSORS
+
+        public float NormalizedHealth
+        {
+            get
+            {
+                if (MaxIntegrity == 0)
+                    return 1;
+                else
+                    return Integrity / MaxIntegrity;
+            }
         }
 
         #endregion

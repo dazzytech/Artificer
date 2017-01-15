@@ -5,7 +5,8 @@ using System.Collections.Generic;
 // Artificer
 using Data.Shared;
 using Data.Space;
-using ShipComponents;
+using Space.Ship.Components.Listener;
+using Space.Ship.Components.Attributes;
 
 namespace Construction.ShipEditor
 {
@@ -45,7 +46,7 @@ namespace Construction.ShipEditor
             temp.Folder = param.Folder;
             temp.Direction = param.Direction;
             temp.Name = param.Name;
-            temp.Sockets = param.Sockets;
+            //temp.Sockets = param.Sockets;
             temp.InstanceID = param.InstanceID;
             temp.AutoLock = param.AutoLock;
             temp.AutoFire = param.AutoFire;
@@ -438,10 +439,10 @@ namespace Construction.ShipEditor
         
         public virtual void ConfirmConnect()
         {
-            if (ShipComponent != null)
+            /*if (ShipComponent != null)
             {
                 Connect.Confirm();
-            }
+            }*/
         }
 
         public void LerpMove(Vector3 newPos)

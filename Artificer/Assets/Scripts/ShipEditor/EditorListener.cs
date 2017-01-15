@@ -4,14 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 // Artificer
 using Data.Shared;
-using ShipComponents;
-using UnityEngine.Cloud.Analytics;
+using Space.Ship.Components.Listener;
 
 namespace Construction.ShipEditor
 {
     public class EditorListener : MonoBehaviour
     {
-        private EditorAttributes _att;
+        /*private EditorAttributes _att;
         
         void Awake()
         {
@@ -73,12 +72,12 @@ namespace Construction.ShipEditor
         {
             // Save? Prompt?
 
-            UnityAnalytics.CustomEvent("ExitShipEditor", new Dictionary<string, object>
+            /*UnityAnalytics.CustomEvent("ExitShipEditor", new Dictionary<string, object>
                                                {{"elapsed time", Time.timeSinceLevelLoad},
                 {"pieces placed", _att.PiecesPlaced},
                 {"ships created", _att.ShipsCreated},
-                {"ships deleted", _att.ShipsDeleted}});
-        }
+                {"ships deleted", _att.ShipsDeleted}});*/
+        //}
     }
 }
 

@@ -14,7 +14,6 @@ namespace Space.Ship.Components.Listener
 
         protected Rigidbody2D rb;
     	public float Weight;
-        public float TotalHP;
         
         // Used by editor tools to determine type
         public string ComponentType;
@@ -62,7 +61,7 @@ namespace Space.Ship.Components.Listener
             rb = transform.parent.GetComponent<Rigidbody2D> ();
             rb.mass += Weight;
 
-            TotalHP = GetAttributes().Integrity;
+            GetAttributes().MaxIntegrity = GetAttributes().Integrity;
         }
 
         /// <summary>
@@ -195,6 +194,18 @@ namespace Space.Ship.Components.Listener
             }
         }
 
+        public void HealComponent(float amount)
+        {
+            ComponentAttributes att = GetAttributes();
+
+            att.Integrity += amount;
+
+            if (att.Integrity > att.MaxIntegrity)
+            {
+                att.Integrity = att.MaxIntegrity;
+            }
+        }
+
         /// <summary>
         /// Darkens the colour of the component based
         /// on integrity
@@ -203,7 +214,7 @@ namespace Space.Ship.Components.Listener
         public void SetColour(float integrity)
         {
             // Change color to show damage for now
-            float brightness = (integrity / TotalHP) * 0.5f;
+            float brightness = (integrity / GetAttributes().MaxIntegrity) * 0.5f;
 
             GetComponentInChildren<SpriteRenderer>().color =
                 new Color(0.5f + brightness, 0.5f + brightness, 0.5f + brightness);
@@ -229,6 +240,19 @@ namespace Space.Ship.Components.Listener
         }
 
         /// <summary>
+        /// Enables component again and fades in
+        /// </summary>
+        public void ShowComponent()
+        {
+            // Activate collider object 
+            if (GetComponent<Collider2D>() != null)
+                GetComponent<Collider2D>().enabled = true;
+
+            // begin fading process
+            StartCoroutine("FadeIn");
+        }
+
+        /// <summary>
         /// called to disable this component
         /// </summary>
         public virtual void Destroy()
@@ -250,6 +274,18 @@ namespace Space.Ship.Components.Listener
             {
                 GetComponentInChildren<SpriteRenderer>().color =
                     new Color(1.0f, 1.0f, 1.0f, alpha -= 0.03f);
+                yield return null;
+            }
+        }
+
+        private IEnumerator FadeIn()
+        {
+            float alpha = 0.0f;
+
+            while (GetComponentInChildren<SpriteRenderer>().color.a < 1)
+            {
+                GetComponentInChildren<SpriteRenderer>().color =
+                    new Color(1.0f, 1.0f, 1.0f, alpha += 0.03f);
                 yield return null;
             }
         }

@@ -9,6 +9,7 @@ using Data.Space;
 using Space.Contract;
 using Space.GameFunctions;
 using Space.UI;
+using Space.Ship;
 
 namespace Space
 {
@@ -212,12 +213,51 @@ namespace Space
             if (PlayerObj == null)
                 return;                 // need to be alive
 
+            _att.overStation = false;
+
+            _att.docked = true;
+
             PlayerObj.SendMessage("DisableShip",
                 SendMessageOptions.RequireReceiver);
 
             // Next is to update the HUD to display the
             // micro stationHUD
+            GameManager.GUI.SetState(UIState.Station);
 
+            // retrieve ship atts from player object
+            ShipAttributes shipAtt = PlayerObj.GetComponent<ShipAttributes>();
+
+            // Add message for sending ship attributes
+            GameManager.GUI.InitializeStationHUD(shipAtt);
+        }
+
+        /// <summary>
+        /// Returns ship (newparameters)
+        /// And changes space and hud settings to play
+        /// </summary>
+        public void LeaveStation()
+        {
+            if (!_att.docked)
+                return;
+
+            // for now first task is to retrieve 
+            // player ship and notify it to disable
+            GameObject PlayerObj = GameObject.FindGameObjectWithTag
+                ("PlayerShip");
+
+            if (PlayerObj == null)
+                return;                 // need to be alive
+
+            _att.overStation = true;
+
+            _att.docked = false;
+
+            PlayerObj.SendMessage("EnableShip",
+                SendMessageOptions.RequireReceiver);
+
+            // Next is to update the HUD to display the
+            // micro stationHUD
+            GameManager.GUI.SetState(UIState.Play);
         }
 
         #endregion

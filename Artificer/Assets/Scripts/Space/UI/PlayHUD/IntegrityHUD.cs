@@ -101,7 +101,7 @@ namespace Space.UI.Ship
                 }
 
                 ComponentAttributes att = item.Component.GetAttributes();
-                float healthPerc = (att.Integrity / item.Component.TotalHP * 100);
+                float healthPerc = (att.Integrity / item.Component.GetAttributes().MaxIntegrity * 100);
                 
                 if(att.Integrity > 0)
                     item.Status.text = att.Name + ": " + 
@@ -157,7 +157,7 @@ namespace Space.UI.Ship
             // List item
             IntegrityListItem intItem = newItem.GetComponent<IntegrityListItem>();
             intItem.Status.text = att.Name + ": " + 
-                (att.Integrity / comp.TotalHP * 100).ToString("F0") + "%\n";
+                (att.Integrity / comp.GetAttributes().MaxIntegrity * 100).ToString("F0") + "%\n";
             intItem.Component = comp;
                 
             // Button functionality

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 // Artificer
 using Data.Shared;
-using ShipComponents;
+using Space.Ship.Components.Listener;
 
 namespace Construction.ShipEditor
 {

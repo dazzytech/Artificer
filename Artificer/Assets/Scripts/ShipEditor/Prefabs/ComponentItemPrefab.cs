@@ -4,7 +4,8 @@ using UnityEngine.EventSystems;
 using System.Collections;
 
 using Data.Shared;
-using ShipComponents;
+using Space.Ship.Components.Listener;
+using Space.Ship.Components.Attributes;
 
 namespace Construction.ShipEditor
 {
@@ -56,14 +57,14 @@ namespace Construction.ShipEditor
 
         public void OnPointerDown(PointerEventData data)
         {
-            if(data.button == PointerEventData.InputButton.Left)
+            /*if(data.button == PointerEventData.InputButton.Left)
                 List.CreateItem(Tracked);
             if (Hovering)
             {
                 GameObject.Destroy(HoverWindow);
                 Hovering = false;
                 HintBoxController.Clear();
-            }
+            }*/
         }
 
         public void OnPointerEnter(PointerEventData data)

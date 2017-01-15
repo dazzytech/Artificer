@@ -17,7 +17,7 @@ namespace Construction.ShipEditor
     public class ShipEditorController : MonoBehaviour
     {
         // Ship is stored in a designated container
-        private ShipContainer _ship;
+        /*private ShipContainer _ship;
 
         private ShipUIUtility _util;
 
@@ -341,7 +341,7 @@ namespace Construction.ShipEditor
 
                 GameManager.GetPlayer.Cargo[mat] -=  _req.Requirements[mat];
             }*/
-
+            /*
             // Clear requirements as the ship will be saved
             _req.Clear(true);
 
@@ -380,7 +380,7 @@ namespace Construction.ShipEditor
             _tex.SaveIcon(_ship.Components, temp);
 
             // Change requirement bool
-            _req.StoreExisting = false;*/
+            _req.StoreExisting = false;*//*
         }
 
         private void SaveCompSockets(BaseShipComponent bSC, ShipData ship, List<int> AddedIDs)
@@ -428,10 +428,10 @@ namespace Construction.ShipEditor
             if (GameManager.GetPlayer.Ship.Equals(_ship.Ship))
             {
                 GameManager.GetPlayer.SetShip(0);
-            }*/
+            }*//*
             ResetShipData();
 
             _util.ClearWeight();
-        }
+        }*/
     }
 }

@@ -170,7 +170,8 @@ namespace Space.Ship
 
             input.enabled = true;
 
-            
+            // Begin the process of showing all components
+            CmdEnableComponents();
 
             GetComponent<Rigidbody2D>().constraints =
                 RigidbodyConstraints2D.None;
@@ -199,6 +200,23 @@ namespace Space.Ship
             foreach (ComponentListener listener in _ship.Components)
             {
                 listener.HideComponent();
+            }
+        }
+
+        [Command]
+        private void CmdEnableComponents()
+        {
+            _ship.ShipDocked = false;
+            RpcEnableComponents();
+        }
+
+        [ClientRpc]
+        private void RpcEnableComponents()
+        {
+            // loop through each component and change visual back
+            foreach (ComponentListener listener in _ship.Components)
+            {
+                listener.ShowComponent();
             }
         }
 

@@ -13,7 +13,7 @@ namespace Construction.ShipEditor
         public void SetShipItem(ShipData ship, EditorListener listener)
         {
             // Set the image to the ship icon
-            Texture2D tex = ship.IconTex;
+            /*Texture2D tex = ship.IconTex;
 
             if (tex != null)
             {
@@ -21,7 +21,7 @@ namespace Construction.ShipEditor
                 ShipImage.transform.localScale = new Vector3(tex.width * 0.002f, tex.height * 0.002f);
             }
 
-            SelectionButton.onClick.AddListener(delegate{listener.SelectShip(ship);});
+            SelectionButton.onClick.AddListener(delegate{listener.SelectShip(ship);});*/
         }
     }
 }

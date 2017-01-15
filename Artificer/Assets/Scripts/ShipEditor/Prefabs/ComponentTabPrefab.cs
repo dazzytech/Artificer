@@ -11,9 +11,9 @@ namespace Construction.ShipEditor
 
         public void SetTab(string item, EditorListener listener)
         {
-            Label.text =  item;
+           /* Label.text =  item;
             Btn.onClick.AddListener(
-                delegate{listener.SelectTab(item);});
+                delegate{listener.SelectTab(item);});*/
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Construction.ShipEditor
         {
             // Assign button function
             // Look out for same problem with ship selector
-            Button.onClick.AddListener(delegate{listener.CreateNewShip();});
+           // Button.onClick.AddListener(delegate{listener.CreateNewShip();});
         }
     }
 }

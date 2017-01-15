@@ -89,6 +89,10 @@ namespace Space
         /// <param name="key">Key.</param>
         private void PlayerSystemInput(KeyCode key)
         {
+            // only interact if not docked
+            if (m_att.docked)
+                return;
+
             if (key == Control_Config.GetKey("pause", "sys"))
             {
                 m_util.Pause(true);
@@ -134,6 +138,9 @@ namespace Space
         /// <param name="yDelta"></param>
         private void PlayerMouseScroll(float yDelta)
         {
+            if (m_att.docked)
+                return;
+
             if (Input.mouseScrollDelta.y < 0f)
                 m_util.ZoomOut();
             if (Input.mouseScrollDelta.y > 0f)

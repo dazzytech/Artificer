@@ -27,7 +27,7 @@ namespace Space
         public bool PlayerOnStage;
 
         // store shipdata for playership
-        public ShipData PlayerShip;
+        //public ShipData PlayerShip;
 
         // store local client controller ID
         public int playerID;

@@ -157,6 +157,8 @@ namespace Space.Ship
                 GameManager.singleton.client.Send((short)MSGCHANNEL.SHIPHIT, msg);
             }
 
+            StopAllCoroutines();
+
             yield return null;
         }
         
@@ -207,6 +209,8 @@ namespace Space.Ship
 
                 yield return null;
             }
+
+            StopAllCoroutines();
 
             yield return null;
         }

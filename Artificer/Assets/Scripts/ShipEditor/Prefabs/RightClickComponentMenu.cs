@@ -3,7 +3,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 
-using ShipComponents;
+using Space.Ship.Components.Listener;
+using Space.Ship.Components.Attributes;
 
 namespace Construction.ShipEditor
 {

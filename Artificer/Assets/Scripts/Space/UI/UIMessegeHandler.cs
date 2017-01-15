@@ -6,6 +6,7 @@ using Data.Shared;
 using Space.UI.Ship;
 using Space.UI.Tracker;
 using Space.Segment;
+using Space.Ship;
 
 namespace Space.UI
 {
@@ -287,6 +288,15 @@ namespace Space.UI
         public void PauseRelease()
         {
             _keyDelay = false;
+        }
+
+        #endregion
+
+        #region STATION RECT MESSAGES
+
+        public void InitializeStationHUD(ShipAttributes ship)
+        {
+            StationRect.SendMessage("InitializeHUD", ship);
         }
 
         #endregion

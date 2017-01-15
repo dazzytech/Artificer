@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 // Artificer
 using Data.Shared;
-using ShipComponents;
+using Space.Ship.Components.Listener;
+using Space.Ship.Components.Attributes;
 
 namespace Construction.ShipEditor
 {
@@ -164,7 +165,7 @@ namespace Construction.ShipEditor
             string path = (System.Environment.CurrentDirectory) + "/Space/icons";
             Directory.CreateDirectory(path);
             File.WriteAllBytes (path + "/" + Ship.Name + ".png", atlas.EncodeToPNG ());
-            Ship.IconTex = atlas;
+            //Ship.IconTex = atlas;
         }
 
         // need to add a delete function
