@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 //Artificer
 using Space.Ship;
+using Space.UI.Station.Viewer;
 
 namespace Space.UI.Station
 {
@@ -20,7 +21,7 @@ namespace Space.UI.Station
 
         #endregion
 
-        #region SHIP REFENCE
+        #region SHIP REFERENCE
 
         [HideInInspector]
         // reference to player ship data
@@ -29,6 +30,8 @@ namespace Space.UI.Station
         [HideInInspector]
         // list of components selected to repair
         public List<int> SelectedIDs;
+
+        public ShipViewer Viewer;
 
         public bool Busy;
 

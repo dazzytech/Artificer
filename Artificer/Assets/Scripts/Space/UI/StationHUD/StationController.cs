@@ -43,6 +43,8 @@ namespace Space.UI.Station
             m_att.Ship = ship;
 
             BuildComponentPanel();
+
+            m_att.Viewer.BuildShip(ship);
         }
 
         #endregion
