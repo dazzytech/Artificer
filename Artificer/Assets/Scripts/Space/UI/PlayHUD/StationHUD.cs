@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 //Artificer
 
@@ -14,6 +15,9 @@ namespace Space.UI.Ship
     public class StationHUD : BasePanel
     {
         #region ATTRIBUTES
+
+        // Stop duplicate HUD elements
+        public List<int> AddedIDs = new List<int>();
 
         #region HUD ELEMENTS
 
@@ -37,11 +41,16 @@ namespace Space.UI.Ship
         /// <param name="piece"></param>
         public void AddUIPiece(StationController controller)
         {
+            if (AddedIDs.Contains(controller.ID))
+                return;
+
             GameObject newStation = Instantiate(StationPrefab);
             newStation.transform.SetParent(StationList, false);
 
             StationTracker tracker = newStation.GetComponent<StationTracker>();
             tracker.DefineStation(controller);
+
+            AddedIDs.Add(controller.ID);
         }
 
         #endregion

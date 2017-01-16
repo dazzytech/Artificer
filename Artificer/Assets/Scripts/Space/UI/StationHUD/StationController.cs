@@ -84,6 +84,19 @@ namespace Space.UI.Station
             }
         }
 
+        /// <summary>
+        /// Removes selected components and resets color of 
+        /// each component item
+        /// </summary>
+        private void ClearSelection()
+        {
+            m_att.SelectedIDs.Clear();
+
+            // Get each list item and revert its colour
+            foreach (Transform child in m_att.SelectionListPanel.transform)
+                child.GetComponent<ComponentListItem>().ResetColor();
+        }
+
         #endregion
 
         #region COROUTINES
@@ -115,7 +128,7 @@ namespace Space.UI.Station
 
             m_att.Busy = false;
 
-            m_att.SelectedIDs.Clear();
+            ClearSelection();
 
             StopCoroutine("HealComponents");
 

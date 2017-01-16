@@ -66,5 +66,7 @@ namespace Space.Segment
                 return ClientScene.FindLocalObject(TeamID).GetComponent<TeamController>();
             }
         }
+
+        public Sprite Icon;
     }
 }

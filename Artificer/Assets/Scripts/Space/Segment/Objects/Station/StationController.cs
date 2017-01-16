@@ -236,7 +236,10 @@ namespace Space.Segment
         {
             get
             {
-                return GetComponent<SpriteRenderer>().sprite;
+                if(m_att.Icon != null)
+                    return m_att.Icon;
+                else
+                    return GetComponent<SpriteRenderer>().sprite;
             }
         }
 

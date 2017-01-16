@@ -67,6 +67,8 @@ namespace Space.UI.Station
 
         #endregion
 
+        #region PUBLIC INTERACTION
+
         public void DefineComponent(ComponentAttributes attributes)
         {
             Attributes = attributes;
@@ -79,6 +81,13 @@ namespace Space.UI.Station
 
             StartCoroutine("Step");
         }
+
+        public void ResetColor()
+        {
+            SelfPanel.color = standardColor;
+        }
+
+        #endregion
 
         #region COROUTINE
 
