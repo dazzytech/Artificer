@@ -42,7 +42,7 @@ namespace Space.UI.Station.Viewer
         /// <param name="Ship"></param>
         public void BuildShip(ShipAttributes Ship)
         {
-            //Container.Ship = Ship;
+            Items = new List<ViewerItem>();
 
             foreach(ComponentListener comp in Ship.Components)
             {
@@ -51,10 +51,54 @@ namespace Space.UI.Station.Viewer
             }
         }
 
+        /// <summary>
+        /// When components are highlighted
+        /// this function will clear 
+        /// </summary>
+        public void ClearHighlights()
+        {
+            foreach (ViewerItem item in Items)
+                item.Reset(true);
+        }
+
+        public void ClearItem(int ID)
+        {
+            foreach (ViewerItem item in Items)
+                if (item.ID == ID)
+                {
+                    item.Reset(true);
+                    break;
+                }
+        }
+
+        public void SelectItem(int ID)
+        {
+            foreach (ViewerItem item in Items)
+                if (item.ID == ID)
+                {
+                    item.Select();
+                    break;
+                }
+        }
+
+        public void HoverItem(int ID)
+        {
+            foreach (ViewerItem item in Items)
+                if (item.ID == ID)
+                {
+                    item.Highlight();
+                    break;
+                }
+        }
+
         #endregion
 
-        #region PRIVATE UTILITIES
+            #region PRIVATE UTILITIES
 
+            /// <summary>
+            /// Create a piece for component
+            /// </summary>
+            /// <param name="comp"></param>
         private void BuildComponent(ComponentListener comp)
         {
             // Rather than lock sockets, just copy local position
@@ -65,7 +109,11 @@ namespace Space.UI.Station.Viewer
             newObj.transform.SetParent(ViewerPanel.transform, false);
             newObj.transform.localPosition = location;
 
-            newObj.SendMessage("Define", comp.gameObject);
+            ViewerItem item = newObj.GetComponent<ViewerItem>();
+
+            item.Define(comp.gameObject, comp.ID);
+
+            Items.Add(item);
         }
 
         #endregion

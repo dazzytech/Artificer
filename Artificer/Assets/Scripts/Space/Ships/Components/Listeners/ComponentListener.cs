@@ -30,6 +30,10 @@ namespace Space.Ship.Components.Listener
 
         public int ID
         {
+            get
+            {
+                return GetAttributes().ID;
+            }
             set
             {
                 GetAttributes().ID = value;
@@ -204,6 +208,11 @@ namespace Space.Ship.Components.Listener
             {
                 att.Integrity = att.MaxIntegrity;
             }
+        }
+
+        public void SetID(int val)
+        {
+            ID = val;
         }
 
         /// <summary>

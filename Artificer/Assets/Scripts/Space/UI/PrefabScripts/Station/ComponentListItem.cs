@@ -14,11 +14,10 @@ namespace Space.UI.Station
     {
         #region EVENTS
 
-        public delegate void SelectEvent(int ID);
-
         public static event SelectEvent ItemSelected;
-
         public static event SelectEvent ItemDeselected;
+        public static event SelectEvent ItemHover;
+        public static event SelectEvent ItemLeave;
 
         #endregion
 
@@ -32,6 +31,8 @@ namespace Space.UI.Station
 
         private ComponentAttributes Attributes;
 
+        public int ID { get { return Attributes.ID;} } 
+
         #region HUD ELEMENTS
 
         public Text Label;
@@ -42,11 +43,11 @@ namespace Space.UI.Station
 
         #region COLORS
 
-        public Color highlightColor;
+        public Color HighlightColor;
 
-        public Color selectedColor;
+        public Color SelectedColor;
 
-        private Color standardColor;
+        private Color StandardColor;
 
         #endregion
 
@@ -75,16 +76,31 @@ namespace Space.UI.Station
 
             Label.text = attributes.name;
 
-            standardColor = SelfPanel.color;
+            StandardColor = SelfPanel.color;
 
             Activated = true;
 
             StartCoroutine("Step");
         }
 
-        public void ResetColor()
+        public void Reset(bool Deselect)
         {
-            SelfPanel.color = standardColor;
+            SelfPanel.color = StandardColor;
+
+            if (Deselect)
+                Selected = false;
+        }
+
+        public void Highlight()
+        {
+            SelfPanel.color = HighlightColor;
+        }
+
+        public void Select()
+        {
+            SelfPanel.color = SelectedColor;
+
+            Selected = true;
         }
 
         #endregion
@@ -118,30 +134,24 @@ namespace Space.UI.Station
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (!Selected)
-                SelfPanel.color = highlightColor;
+            //if (!Selected)
+            // SelfPanel.color = HighlightColor;
+            ItemHover(ID);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (!Selected)
-                SelfPanel.color = standardColor;
+            //if (!Selected)
+            //  SelfPanel.color = StandardColor;
+            //ItemLeave(ID);
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
             if (Selected)
-            {
-                SelfPanel.color = standardColor;
                 ItemDeselected(Attributes.ID);
-            }
             else
-            {
-                SelfPanel.color = selectedColor;
                 ItemSelected(Attributes.ID);
-            }
-
-            Selected = !Selected;
         }
 
         #endregion

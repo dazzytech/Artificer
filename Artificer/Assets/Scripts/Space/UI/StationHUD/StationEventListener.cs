@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using Space.Ship.Components.Listener;
+using Space.UI.Station.Viewer;
 
 namespace Space.UI.Station
 {
@@ -21,7 +22,7 @@ namespace Space.UI.Station
 
         #region MONO BEHAVIOUR
 
-        void Start()
+        void Awake()
         {
             m_att = GetComponent<StationAttributes>();
             m_con = GetComponent<StationController>();
@@ -32,6 +33,12 @@ namespace Space.UI.Station
             // listen to component item events
             ComponentListItem.ItemSelected += ComponentSelected;
             ComponentListItem.ItemDeselected += ComponentDeselected;
+            ViewerItem.ItemSelected += ComponentSelected;
+            ViewerItem.ItemDeselected += ComponentDeselected;
+
+            ComponentListItem.ItemHover += ComponentHover;
+
+            ViewerItem.ItemHover += ComponentHover;
         }
 
         void OnDisable()
@@ -39,6 +46,12 @@ namespace Space.UI.Station
             // listen to component item events
             ComponentListItem.ItemSelected -= ComponentSelected;
             ComponentListItem.ItemDeselected -= ComponentDeselected;
+            ViewerItem.ItemSelected -= ComponentSelected;
+            ViewerItem.ItemDeselected -= ComponentDeselected;
+
+            ComponentListItem.ItemHover -= ComponentHover;
+
+            ViewerItem.ItemHover -= ComponentHover;
         }
 
         #endregion
@@ -83,12 +96,22 @@ namespace Space.UI.Station
         {
             if (!m_att.SelectedIDs.Contains(ID))
                 m_att.SelectedIDs.Add(ID);
+
+            m_con.SelectItem(ID);
         }
 
         public void ComponentDeselected(int ID)
         {
             if (m_att.SelectedIDs.Contains(ID))
                 m_att.SelectedIDs.Remove(ID);
+
+            m_con.ClearItem(ID);
+        }
+
+        public void ComponentHover(int ID)
+        {
+            if (!m_att.SelectedIDs.Contains(ID))
+                m_con.HoverItem(ID);
         }
 
         #endregion

@@ -1,12 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using Space.Ship;
 using Space.Ship.Components.Attributes;
 using Space.Ship.Components.Listener;
+using Space.UI.Station.Viewer;
 
 namespace Space.UI.Station
 {
+    // Used by both component types when mouse interacts with component 
+    // so both items highlight etc
+    public delegate void SelectEvent(int ID);
+
+
     /// <summary>
     /// Performs tasks for the station HUD
     /// such as initializing views
@@ -42,9 +49,46 @@ namespace Space.UI.Station
         {
             m_att.Ship = ship;
 
+            m_att.Items = new List<ComponentListItem>();
+
             BuildComponentPanel();
 
             m_att.Viewer.BuildShip(ship);
+        }
+
+        public void ClearItem(int ID)
+        {
+            foreach (ComponentListItem item in m_att.Items)
+                if (item.ID == ID)
+                {
+                    item.Reset(true);
+                    break;
+                }
+
+            m_att.Viewer.ClearItem(ID);
+        }
+
+        public void SelectItem(int ID)
+        {
+            foreach (ComponentListItem item in m_att.Items)
+                if (item.ID == ID)
+                {
+                    item.Select();
+                    break;
+                }
+
+            m_att.Viewer.SelectItem(ID);
+        }
+
+        public void HoverItem(int ID)
+        {
+            foreach (ComponentListItem item in m_att.Items)
+                if (item.ID == ID)
+                {
+                    item.Highlight();
+                    break;
+                }
+                    m_att.Viewer.HoverItem(ID);
         }
 
         #endregion
@@ -83,6 +127,8 @@ namespace Space.UI.Station
 
                 // Now initialise
                 lItem.DefineComponent(comp.GetAttributes());
+
+                m_att.Items.Add(lItem);
             }
         }
 
@@ -95,8 +141,10 @@ namespace Space.UI.Station
             m_att.SelectedIDs.Clear();
 
             // Get each list item and revert its colour
-            foreach (Transform child in m_att.SelectionListPanel.transform)
-                child.GetComponent<ComponentListItem>().ResetColor();
+            foreach (ComponentListItem child in m_att.Items)
+                child.Reset(true);
+
+            m_att.Viewer.ClearHighlights();
         }
 
         #endregion

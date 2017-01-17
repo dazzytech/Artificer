@@ -11,8 +11,6 @@ namespace Space.UI.Station
 {
     public class StationAttributes : MonoBehaviour
     {
-        #region ATTRIBUTES
-
         #region HUD ELEMENTS
 
         public GameObject SelectionListPrefab;
@@ -20,6 +18,8 @@ namespace Space.UI.Station
         public Scrollbar SelectionListScroll;
 
         #endregion
+
+        public bool Busy;
 
         #region SHIP REFERENCE
 
@@ -33,11 +33,8 @@ namespace Space.UI.Station
 
         public ShipViewer Viewer;
 
-        public bool Busy;
-
-        #endregion
-
-        // contain reference to inner ship panel controller here
+        [HideInInspector]
+        public List<ComponentListItem> Items;
 
         #endregion
     }
