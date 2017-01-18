@@ -37,8 +37,9 @@ namespace Space.UI.Station
             ViewerItem.ItemDeselected += ComponentDeselected;
 
             ComponentListItem.ItemHover += ComponentHover;
-
+            ComponentListItem.ItemLeave += ComponentLeave;
             ViewerItem.ItemHover += ComponentHover;
+            ViewerItem.ItemLeave += ComponentLeave;
         }
 
         void OnDisable()
@@ -50,8 +51,9 @@ namespace Space.UI.Station
             ViewerItem.ItemDeselected -= ComponentDeselected;
 
             ComponentListItem.ItemHover -= ComponentHover;
-
+            ComponentListItem.ItemLeave -= ComponentLeave;
             ViewerItem.ItemHover -= ComponentHover;
+            ViewerItem.ItemLeave -= ComponentLeave;
         }
 
         #endregion
@@ -112,6 +114,12 @@ namespace Space.UI.Station
         {
             if (!m_att.SelectedIDs.Contains(ID))
                 m_con.HoverItem(ID);
+        }
+
+        public void ComponentLeave(int ID)
+        {
+            if (!m_att.SelectedIDs.Contains(ID))
+                m_con.LeaveItem(ID);
         }
 
         #endregion

@@ -91,14 +91,24 @@ namespace Space.UI.Station.Viewer
                 }
         }
 
+        public void LeaveItem(int ID)
+        {
+            foreach (ViewerItem item in Items)
+                if (item.ID == ID)
+                {
+                    item.Reset(false);
+                    break;
+                }
+        }
+
         #endregion
 
-            #region PRIVATE UTILITIES
+        #region PRIVATE UTILITIES
 
-            /// <summary>
-            /// Create a piece for component
-            /// </summary>
-            /// <param name="comp"></param>
+        /// <summary>
+        /// Create a piece for component
+        /// </summary>
+        /// <param name="comp"></param>
         private void BuildComponent(ComponentListener comp)
         {
             // Rather than lock sockets, just copy local position

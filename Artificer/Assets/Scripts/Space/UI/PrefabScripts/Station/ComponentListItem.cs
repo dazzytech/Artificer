@@ -143,7 +143,7 @@ namespace Space.UI.Station
         {
             //if (!Selected)
             //  SelfPanel.color = StandardColor;
-            //ItemLeave(ID);
+            ItemLeave(ID);
         }
 
         public void OnPointerClick(PointerEventData eventData)

@@ -91,6 +91,17 @@ namespace Space.UI.Station
                     m_att.Viewer.HoverItem(ID);
         }
 
+        public void LeaveItem(int ID)
+        {
+            foreach (ComponentListItem item in m_att.Items)
+                if (item.ID == ID)
+                {
+                    item.Reset(false);
+                    break;
+                }
+            m_att.Viewer.LeaveItem(ID);
+        }
+
         #endregion
 
         #region INTERNAL INTERACTION
@@ -107,7 +118,7 @@ namespace Space.UI.Station
             Vector2 newPos = new Vector2
                 (m_att.SelectionListPanel.transform.localPosition.x, 0f);
 
-            //m_att.SelectionListScroll.value = 0;
+            m_att.SelectionListScroll.value = 0;
 
             m_att.SelectionListPanel.transform.localPosition = newPos;
 
