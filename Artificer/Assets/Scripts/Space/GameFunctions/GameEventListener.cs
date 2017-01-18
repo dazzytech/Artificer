@@ -42,7 +42,7 @@ namespace Space.GameFunctions
 
         public void ProcessShipDestroyed(DestroyDespatch destroyed)
         {
-            PlayerConnectionInfo info = GetPlayer(destroyed.MiscID);
+            PlayerConnectionInfo info = m_att.PlayerInfoList.Item(destroyed.MiscID);
 
             if (info.mTeam == 0)
             {
@@ -92,29 +92,6 @@ namespace Space.GameFunctions
                 mission.AddMaterial(newMat);
             }
         }*/
-
-        #endregion
-
-        #region UTILITIES
-
-        /// <summary>
-        /// Utility that returns the player via ID
-        /// </summary>
-        /// <param name="playerID"></param>
-        /// <returns></returns>
-        private PlayerConnectionInfo GetPlayer(int playerID)
-        {
-            // Find the connection that assigned to team
-            foreach (PlayerConnectionInfo info in m_att.PlayerInfoList)
-            {
-                if (info.mID.Equals(playerID))
-                {
-                    return info;
-                }
-            }
-
-            return null;
-        }
 
         #endregion
     }

@@ -135,11 +135,10 @@ namespace Space.GameFunctions
             (short playerControllerId, NetworkConnection conn)
         {
             if (_att.PlayerInfoList == null)
-                _att.PlayerInfoList = new List<PlayerConnectionInfo>();
+                _att.PlayerInfoList = new IndexedList<PlayerConnectionInfo>();
 
             // store connection to the ship
             PlayerConnectionInfo info = new PlayerConnectionInfo();
-            info.mID = _att.PlayerInfoList.Count;
             info.mController = playerControllerId;
             info.mConnection = conn;
             info.mTeam = -1;
@@ -148,7 +147,7 @@ namespace Space.GameFunctions
             _att.PlayerInfoList.Add(info);
 
             // Assign our intial ID to the system
-            IntegerMessage iMsg = new IntegerMessage(info.mID);
+            IntegerMessage iMsg = new IntegerMessage(info.ID);
             NetworkServer.SendToClient(conn.connectionId,
                 (short)MSGCHANNEL.NEWID, iMsg);
 
@@ -170,7 +169,8 @@ namespace Space.GameFunctions
         [Server]
         public void AssignToTeam(int TeamID, int playerID)
         {
-            PlayerConnectionInfo pInfo = GetPlayer(playerID);
+            PlayerConnectionInfo pInfo = 
+                _att.PlayerInfoList.Item(playerID);
 
             if (pInfo == null)
             {
@@ -185,7 +185,9 @@ namespace Space.GameFunctions
         [Server]
         public void SpawnPlayer(int playerID, int stationID, int shipID)
         {
-            PlayerConnectionInfo info = GetPlayer(playerID);
+            PlayerConnectionInfo info = 
+                _att.PlayerInfoList.Item(playerID);
+
             GameObject GO = null;
 
             // Spawn player using correct team
@@ -212,7 +214,8 @@ namespace Space.GameFunctions
         [Server]
         public void BuildProjectile(int prefabIndex, int playerID, Vector3 position, WeaponData wData)
         {
-            PlayerConnectionInfo info = GetPlayer(playerID);
+            PlayerConnectionInfo info =
+                _att.PlayerInfoList.Item(playerID);
 
             GameObject Prefab = NetworkManager.singleton.spawnPrefabs[prefabIndex];
 
@@ -382,29 +385,6 @@ namespace Space.GameFunctions
                 }
             }
         }*/
-
-        #region UTILITIES
-
-        /// <summary>
-        /// Utility that returns the player via ID
-        /// </summary>
-        /// <param name="playerID"></param>
-        /// <returns></returns>
-        private PlayerConnectionInfo GetPlayer(int playerID)
-        {
-            // Find the connection that assigned to team
-            foreach (PlayerConnectionInfo info in _att.PlayerInfoList)
-            {
-                if (info.mID.Equals(playerID))
-                {
-                    return info;
-                }
-            }
-
-            return null;
-        }
-
-        #endregion
     }
 }
 

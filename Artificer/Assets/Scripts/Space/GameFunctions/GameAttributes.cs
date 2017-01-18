@@ -12,9 +12,8 @@ namespace Space.GameFunctions
     /// Server only object, central tracker that 
     /// controls game rules and assigns teams
     /// </summary>
-    public class PlayerConnectionInfo
+    public class PlayerConnectionInfo: IndexedObject
     {
-        public int mID;
         public short mController;
         public NetworkConnection mConnection;
         public int mTeam;
@@ -30,7 +29,7 @@ namespace Space.GameFunctions
         public GameBuilder Builder;
 
         // Store a list of all connected players
-        public List<PlayerConnectionInfo> PlayerInfoList;
+        public IndexedList<PlayerConnectionInfo> PlayerInfoList;
 
         // Teams, currently on supports two teams
         public TeamController TeamA;
