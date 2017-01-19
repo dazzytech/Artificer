@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 //Artificer
-
 using Space.Segment;
 
 namespace Space.UI.Ship
@@ -17,17 +16,21 @@ namespace Space.UI.Ship
         #region ATTRIBUTES
 
         // Stop duplicate HUD elements
-        public List<int> AddedIDs = new List<int>();
+        private List<int> m_addedIDs = new List<int>();
 
         #region HUD ELEMENTS
 
-        public Transform StationList;
+        [Header("Station List Panel")]
+        [SerializeField]
+        private Transform m_stationList;
 
         #endregion
 
         #region PREFABS
 
-        public GameObject StationPrefab;
+        [Header("Station HUD Prefab")]
+        [SerializeField]
+        private GameObject m_stationPrefab;
 
         #endregion
 
@@ -41,16 +44,16 @@ namespace Space.UI.Ship
         /// <param name="piece"></param>
         public void AddUIPiece(StationController controller)
         {
-            if (AddedIDs.Contains(controller.ID))
+            if (m_addedIDs.Contains(controller.ID))
                 return;
 
-            GameObject newStation = Instantiate(StationPrefab);
-            newStation.transform.SetParent(StationList, false);
+            GameObject newStation = Instantiate(m_stationPrefab);
+            newStation.transform.SetParent(m_stationList, false);
 
             StationTracker tracker = newStation.GetComponent<StationTracker>();
             tracker.DefineStation(controller);
 
-            AddedIDs.Add(controller.ID);
+            m_addedIDs.Add(controller.ID);
         }
 
         #endregion
