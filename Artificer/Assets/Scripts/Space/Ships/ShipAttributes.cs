@@ -32,9 +32,9 @@ namespace Space.Ship
         [SyncVar]
         public string AggressorTag;
 
-        //[SyncVar]             why does this work?
+        [SyncVar]             //why doesnt this work?
         public bool ShipDocked;
-
+        [SyncVar]
         public bool UnderAttack;
 
         public NetworkInstanceId instID;

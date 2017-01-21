@@ -116,6 +116,8 @@ namespace Space.UI.Ship
             foreach (Transform child in m_friendlyList.transform)
                 Destroy(child.gameObject);
 
+            m_addedIDs.Clear();
+
             // Loop through each player and assign a friendly prefab
             foreach(uint ID in m_team.Players)
             {

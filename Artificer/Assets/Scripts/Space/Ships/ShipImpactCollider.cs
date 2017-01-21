@@ -108,15 +108,19 @@ namespace Space.Ship
                 }
 
                 // After successfully taking damage, set to under attack mode
-                StopCoroutine("AttackTimer");
+                CmdSetUA(true);
 
-                m_ship.UnderAttack = true;
-
-                StartCoroutine("AttackTimer");
+                Invoke("AttackTimer", 20f);
 
             }
             else
                 StartCoroutine("CycleComponentColours", damaged);
+        }
+
+        [Command]
+        private void CmdSetUA(bool ua)
+        {
+            m_ship.UnderAttack = ua;
         }
 
         #endregion
@@ -234,15 +238,12 @@ namespace Space.Ship
         /// for 20 sec after last shot
         /// </summary>
         /// <returns></returns>
-        private IEnumerator AttackTimer()
+        private void AttackTimer()
         {
             if (m_ship.UnderAttack)
             {
-                yield return new WaitForSeconds(20f);
-
-                m_ship.UnderAttack = false;
+                CmdSetUA(false);
             }
-            yield return null;
         }
 
         #endregion
