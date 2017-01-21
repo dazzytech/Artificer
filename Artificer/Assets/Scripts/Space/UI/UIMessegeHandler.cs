@@ -7,6 +7,7 @@ using Space.UI.Ship;
 using Space.UI.Tracker;
 using Space.Segment;
 using Space.Ship;
+using Space.Teams;
 
 namespace Space.UI
 {
@@ -180,6 +181,12 @@ namespace Space.UI
         {
             PlayRect.GetComponent<StationHUD>().
                 AddUIPiece(station); 
+        }
+
+        public void SetTeam(TeamController Team)
+        {
+            PlayRect.GetComponent<FriendlyHUD>().
+                AssignTeam(Team);
         }
 
         #endregion

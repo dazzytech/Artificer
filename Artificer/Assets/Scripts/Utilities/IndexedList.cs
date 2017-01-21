@@ -18,7 +18,7 @@ public class IndexedObject
 /// that are stored and accessed using
 /// ID instead of an index
 /// </summary>
-public class IndexedList<T>: Collection<T> where T: IndexedObject
+public class IndexedList<T>: List<T> where T: IndexedObject
 {
     #region ID MANAGER
 
@@ -88,13 +88,13 @@ public class IndexedList<T>: Collection<T> where T: IndexedObject
     private IDManagerClass m_IDManager;
 
     //inner ArrayList object
-    protected ArrayList m_list;
+    //protected ArrayList m_list;
 
     public IndexedList()
     {
         m_IDManager = new IDManagerClass();
 
-        m_list = new ArrayList();
+       // m_list = new ArrayList();
     }
 
     /// <summary>
@@ -106,14 +106,14 @@ public class IndexedList<T>: Collection<T> where T: IndexedObject
         // Return next available ID with IDManager
         newItem.ID = m_IDManager.Next();
 
-        m_list.Add(newItem);
+        base.Add(newItem);
+        //m_list.Add(newItem);
     }
 
     new public void Remove(T obj)
     {
-        if(m_list.Contains(obj))
+        if(base.Remove(obj))
         {
-            m_list.Remove(obj);
             m_IDManager.Delete(obj.ID);
         }
     }
@@ -126,12 +126,12 @@ public class IndexedList<T>: Collection<T> where T: IndexedObject
     public void Remove(int ID)
     {
         // Find our ID within list and remove it
-        for (int i = 0; i < m_list.Count; i++)
+        for (int i = 0; i < base.Count; i++)
         {
-            if (ID == ((IndexedObject)m_list[i]).ID)
+            if (ID == ((IndexedObject)base[i]).ID)
             {
-                m_IDManager.Delete(((IndexedObject)m_list[i]).ID);
-                m_list.RemoveAt(i);
+                m_IDManager.Delete(((IndexedObject)base[i]).ID);
+                base.RemoveAt(i);
                 break;
             }
         }
@@ -145,11 +145,11 @@ public class IndexedList<T>: Collection<T> where T: IndexedObject
     public T Item(int ID)
     {
         // Find our ID within list and remove it
-        for (int i = 0; i < m_list.Count; i++)
+        for (int i = 0; i < base.Count; i++)
         {
-            if (ID == ((T)m_list[i]).ID)
+            if (ID == ((T)base[i]).ID)
             {
-                return (T)m_list[i];
+                return (T)base[i];
             }
         }
 

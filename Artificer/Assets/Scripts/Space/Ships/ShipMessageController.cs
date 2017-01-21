@@ -23,7 +23,7 @@ namespace Space.Ship
     {
         #region ATTRIBUTES
 
-        ShipAttributes _ship;
+        ShipAttributes m_ship;
 
         #endregion
 
@@ -32,7 +32,7 @@ namespace Space.Ship
         // Use this for initialization
         void Awake()
         {
-            _ship = GetComponent<ShipAttributes>();
+            m_ship = GetComponent<ShipAttributes>();
         }
 
         #endregion
@@ -73,7 +73,7 @@ namespace Space.Ship
 
             List<ComponentListener> piecesToAdd
                 = new List<ComponentListener>
-                    (_ship.Head.GetAttributes().connectedComponents);
+                    (m_ship.Head.GetAttributes().connectedComponents);
 
             while (piecesToAdd.Count != 0)
             {
@@ -108,21 +108,21 @@ namespace Space.Ship
             if (comp != null)
             {
                 // test if self targetting
-                if (_ship.Components.Contains(comp))
+                if (m_ship.Components.Contains(comp))
                 {
-                    if (!_ship.SelfTargeted.Contains(target))
-                        _ship.SelfTargeted.Add(target);
+                    if (!m_ship.SelfTargeted.Contains(target))
+                        m_ship.SelfTargeted.Add(target);
                 }
                 else
                 {
-                    if (!_ship.Targets.Contains(target))
-                        _ship.Targets.Add(target);
+                    if (!m_ship.Targets.Contains(target))
+                        m_ship.Targets.Add(target);
                 }
             }
             else
             {
-                if (!_ship.Targets.Contains(target))
-                    _ship.Targets.Add(target);
+                if (!m_ship.Targets.Contains(target))
+                    m_ship.Targets.Add(target);
             }
         }
 
@@ -149,7 +149,7 @@ namespace Space.Ship
 
 
             // disable any automatic functioning components
-            foreach(TargeterListener listener in _ship.Targeter)
+            foreach(TargeterListener listener in m_ship.Targeter)
             {
                 listener.enabled = false;
             }
@@ -178,7 +178,7 @@ namespace Space.Ship
 
 
             // disable any automatic functioning components
-            foreach (TargeterListener listener in _ship.Targeter)
+            foreach (TargeterListener listener in m_ship.Targeter)
             {
                 listener.enabled = true;
             }
@@ -189,7 +189,7 @@ namespace Space.Ship
         [Command]
         private void CmdDisableComponents()
         {
-            _ship.ShipDocked = true;
+            m_ship.ShipDocked = true;
             RpcDisableComponents();
         }
 
@@ -197,7 +197,7 @@ namespace Space.Ship
         private void RpcDisableComponents()
         {
             // loop through each component and change visual back
-            foreach (ComponentListener listener in _ship.Components)
+            foreach (ComponentListener listener in m_ship.Components)
             {
                 listener.HideComponent();
             }
@@ -206,7 +206,7 @@ namespace Space.Ship
         [Command]
         private void CmdEnableComponents()
         {
-            _ship.ShipDocked = false;
+            m_ship.ShipDocked = false;
             RpcEnableComponents();
         }
 
@@ -214,7 +214,7 @@ namespace Space.Ship
         private void RpcEnableComponents()
         {
             // loop through each component and change visual back
-            foreach (ComponentListener listener in _ship.Components)
+            foreach (ComponentListener listener in m_ship.Components)
             {
                 listener.ShowComponent();
             }
@@ -242,12 +242,12 @@ namespace Space.Ship
                 {
                     // Store component in attributes 
                     // and sent attributes to component
-                    _ship.Components.Add(comp);
-                    comp.SetShip(_ship);
+                    m_ship.Components.Add(comp);
+                    comp.SetShip(m_ship);
                 }
 
                 if (child.tag == "Head")
-                    _ship.Head = comp;
+                    m_ship.Head = comp;
             }
         }
 
@@ -257,7 +257,7 @@ namespace Space.Ship
         /// <param name="alignment"></param>
         public void SetShipAlignment(string alignment)
         {
-            _ship.AlignmentLabel = alignment;
+            m_ship.AlignmentLabel = alignment;
         }
 
         #endregion
@@ -270,9 +270,9 @@ namespace Space.Ship
         /// </summary>
         public void ShipDestroyed()
         {
-            int[] dead = new int[_ship.Components.Count];
+            int[] dead = new int[m_ship.Components.Count];
             int i = 0;
-            foreach (ComponentListener listener in _ship.Components)
+            foreach (ComponentListener listener in m_ship.Components)
             {
                 listener.Destroy();
                 dead[i++] = listener.GetAttributes().ID;
@@ -297,14 +297,14 @@ namespace Space.Ship
             GameObject aggressor = NetworkServer.FindLocalObject(hit.originID);
             if (aggressor != null)
             {
-                _ship.AggressorTag = aggressor.tag;
+                m_ship.AggressorTag = aggressor.tag;
             }
 
             // Find the corresponding transform
 
             ComponentListener listener = null;
 
-            foreach (ComponentListener temp in _ship.Components)
+            foreach (ComponentListener temp in m_ship.Components)
             {
                 if (temp.GetAttributes().ID == hit.hitComponent)
                 {
@@ -318,7 +318,7 @@ namespace Space.Ship
                 return;
 
             // first test if head was killed
-            if (listener.Equals(_ship.Head))
+            if (listener.Equals(m_ship.Head))
             {
                 ShipDestroyed();
                 return;
@@ -334,9 +334,9 @@ namespace Space.Ship
 
             List<int> dead = new List<int>();
 
-            foreach (ComponentListener p in _ship.Components)
+            foreach (ComponentListener p in m_ship.Components)
             {
-                if (!connected.Contains(p) && !p.Equals(_ship.Head))
+                if (!connected.Contains(p) && !p.Equals(m_ship.Head))
                 {
                     // remove piece
                     dead.Add(p.GetAttributes().ID);
@@ -344,7 +344,7 @@ namespace Space.Ship
             }
 
             // if player ship we need to destroy ship
-            if ((_ship.Engines == 0 || _ship.Rotors == 0) && _ship.Weapons == 0)
+            if ((m_ship.Engines == 0 || m_ship.Rotors == 0) && m_ship.Weapons == 0)
                 ShipDestroyed();
             else
                 CmdRemoveComponent(dead.ToArray(), listener.transform.position);
@@ -357,8 +357,8 @@ namespace Space.Ship
         {
             // Send message to server for updating
             ShipDestroyMessage msg = new ShipDestroyMessage();
-            msg.AggressorTag = _ship.AggressorTag;
-            msg.AlignmentLabel = _ship.AlignmentLabel;
+            msg.AggressorTag = m_ship.AggressorTag;
+            msg.AlignmentLabel = m_ship.AlignmentLabel;
             msg.SelfID = netId;
             msg.ID = GameManager.Space.ID;
 

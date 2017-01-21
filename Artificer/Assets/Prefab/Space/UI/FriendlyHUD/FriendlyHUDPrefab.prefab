@@ -136,6 +136,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3391df5e410330640a9abdc996cc9dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_label: {fileID: 114000012674099750}
+  m_status: {fileID: 114000012110987638}
+  m_distance: {fileID: 114000013507953716}
+  m_selfPanel: {fileID: 114000010761389886}
+  m_safeColor: {r: 0.4674524, g: 0.9632353, b: 0.7991141, a: 0.722}
+  m_attackColor: {r: 0.74264705, g: 0.2849324, b: 0.18020111, a: 0.672}
+  m_destroyedColor: {r: 0.41911763, g: 0.41911763, b: 0.41911763, a: 0.784}
+  m_dockedColor: {r: 1, g: 1, b: 1, a: 0.766}
+  m_highlightColor: {r: 0.77205884, g: 0.6467754, b: 0.4882137, a: 0.541}
 --- !u!114 &114000010761389886
 MonoBehaviour:
   m_ObjectHideFlags: 1

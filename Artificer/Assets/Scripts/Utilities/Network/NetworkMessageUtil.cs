@@ -12,7 +12,7 @@ namespace Networking
     {
         TEAMPICKER = MsgType.Highest + 1,
         NEWID,
-        ASSIGNTOTEAM,
+        TEAMSELECTED,
         SPAWNPLAYER,
         SPAWNME,
         SHIPHIT,
@@ -24,7 +24,7 @@ namespace Networking
         SHIPDESTROYED,
         STATIONDESTROYED,
         BUILDSTATONHUD,
-
+        ASSIGNTEAM
     };
 
     #endregion
@@ -129,7 +129,7 @@ namespace Networking
     /// <summary>
     /// Sent to each client to add stations to HUD
     /// </summary>
-    public class StationBuildMessage : MessageBase
+    public class NetMsgMessage : MessageBase
     {
         public NetworkInstanceId SelfID;
     }

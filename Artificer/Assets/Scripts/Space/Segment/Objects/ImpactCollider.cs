@@ -41,12 +41,7 @@ namespace Space.Segment
 
         #endregion
 
-        void Awake()
-        {
-            GameManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSOBJECTHIT, ProcessHitMsg);
-        }
-
-        #region EXTERNAL FUNCTIONS
+        #region VIRTUAL FUNCTIONS
 
         /// <summary>
         /// Receives hit info from server and calls client funcs
@@ -61,25 +56,6 @@ namespace Space.Segment
             msg.SObjectID = this.netId;
             msg.HitD = hit;
             GameManager.singleton.client.Send((short)MSGCHANNEL.OBJECTHIT, msg);
-        }
-
-        #endregion
-
-
-        #region VIRTUAL FUNCTIONS
-
-        public virtual void ProcessHitMsg(NetworkMessage msg)
-        {
-            if (!isServer)
-                return;
-
-            SOColliderHitMessage colMsg = msg.ReadMessage<SOColliderHitMessage>();
-
-            GameObject HitObj = ClientScene.FindLocalObject(colMsg.SObjectID);
-            if (HitObj != null)
-            {
-                HitObj.transform.SendMessage("ApplyDamage", colMsg.HitD, SendMessageOptions.DontRequireReceiver);
-            }
         }
 
         /// <summary>

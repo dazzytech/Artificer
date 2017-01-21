@@ -82,6 +82,8 @@ namespace Space.UI.Station
                 {
                     m_att.SelectedIDs.Add
                         (comp.GetAttributes().ID);
+
+                    m_con.SelectItem(comp.GetAttributes().ID);
                 }
             }
 

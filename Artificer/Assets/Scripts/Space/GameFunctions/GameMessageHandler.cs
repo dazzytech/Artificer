@@ -21,7 +21,7 @@ namespace Space.GameFunctions
 
         void Awake()
         {
-            NetworkServer.RegisterHandler((short)MSGCHANNEL.ASSIGNTOTEAM, OnAssignToTeam);
+            NetworkServer.RegisterHandler((short)MSGCHANNEL.TEAMSELECTED, OnAssignToTeam);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SPAWNPLAYER, OnSpawnPlayerAt);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SHIPHIT, OnShipHit);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.BUILDPROJECTILE, OnBuildProjectile);

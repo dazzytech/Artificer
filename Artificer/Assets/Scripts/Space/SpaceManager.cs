@@ -188,7 +188,12 @@ namespace Space
         {
             get { return _att.playerID; }
         }
-        
+
+        public uint NetID
+        {
+            get { return _att.netID; }
+        }
+
         /// <summary>
         /// Called by the team selector once a team is
         /// selected to start the process of spawning a player

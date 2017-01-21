@@ -89,7 +89,6 @@ namespace Space.Segment
         [Server]
         public void ProcessDamage(HitData hitD)
         {
-
             // For now ignore friendly fire
             if (m_att.Team.PlayerOnTeam(hitD.originID))
                 return;

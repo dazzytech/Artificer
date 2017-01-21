@@ -13,7 +13,7 @@ using Space.Ship;
 using Space.Segment;
 using Space.UI;
 using Networking;
-
+using Space.Teams;
 
 namespace Space
 {
@@ -45,11 +45,14 @@ namespace Space
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.TEAMPICKER, OnTeamPickerMessage);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.BUILDSTATONHUD, AddStationToHUD);
+            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.ASSIGNTEAM, OnDefineTeam);
+            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSOBJECTHIT, OnProcessHitMsg);
+            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSSHIPHIT, OnProcessHitMsgShip);
         }
 
         void Start()
         {
-            m_util.Init();    
+            m_util.Init();
         }
 
         void OnEnable()
@@ -64,7 +67,7 @@ namespace Space
             StationController.EnterStation += OnEnterStation;
             StationController.ExitStation += OnExitStation;
         }
-    	
+
         void OnDisable()
         {
             m_con.OnKeyPress -= PlayerSystemInput;
@@ -109,15 +112,15 @@ namespace Space
                 {
                     m_util.ZoomIn();
                 }
-                if(key == Control_Config.GetKey("toggle hud", "sys"))
+                if (key == Control_Config.GetKey("toggle hud", "sys"))
                 {
                     GameObject.Find("_gui").SendMessage("ToggleHUD");
                 }
-                if(key == Control_Config.GetKey("toggle objectives", "sys"))
+                if (key == Control_Config.GetKey("toggle objectives", "sys"))
                 {
                     GameObject.Find("_gui").SendMessage("ToggleMissionHUD");
                 }
-                if(key == Control_Config.GetKey("dock", "sys"))
+                if (key == Control_Config.GetKey("dock", "sys"))
                 {
                     m_con.DockAtStation();
                 }
@@ -157,6 +160,8 @@ namespace Space
         /// </summary>
         private void PlayerDeath()
         {
+            m_att.netID = 0;
+
             // Prompt player to pick a spawn
             GameManager.GUI.SetState(UIState.SpawnPicker);
 
@@ -181,6 +186,16 @@ namespace Space
         /// </summary>
         private void LoadPlayerDataIntoScene()
         {
+            // Run checks for player entry
+            GameObject PlayerObj = GameObject.FindGameObjectWithTag
+                ("PlayerShip");
+
+            if (PlayerObj != null)
+            {
+                m_att.netID = PlayerObj.GetComponent<NetworkIdentity>().
+                    netId.Value;
+            }
+
             // Set to popup gui
             GameManager.GUI.SetState(UIState.Play);
 
@@ -246,17 +261,17 @@ namespace Space
         {
 
         }*/
-        
+
         public void MaterialCollected(Dictionary<MaterialData, float> newMat)
         {
             //_att.Contract.ProcessMaterials
-              //  (newMat);
+            //  (newMat);
         }
-        
+
         public void StationReached(Transform ship)
         {
             //if (_att.Contract == null)
-                //return;
+            //return;
 
             //_att.Contract.ProcessStationReached(ship);
         }
@@ -321,11 +336,58 @@ namespace Space
             m_att.playerID = im.value;
         }
 
+        public void OnDefineTeam(NetworkMessage netMsg)
+        {
+            // Retrieve net id from sent message
+            NetworkInstanceId teamID = netMsg.ReadMessage
+                <NetMsgMessage>().SelfID;
+
+            // Get our local team object with the same netID
+            GameObject teamObj = ClientScene.
+                FindLocalObject(teamID);
+
+            // extract the team manager and store int space object
+            m_att.Team = teamObj.
+                GetComponent<TeamController>();
+
+            // for now define team for play HUD here
+            GameManager.GUI.SetTeam(m_att.Team);
+        }
+
+        public void OnProcessHitMsg(NetworkMessage msg)
+        {
+            SOColliderHitMessage colMsg = msg.ReadMessage<SOColliderHitMessage>();
+
+            GameObject HitObj = ClientScene.FindLocalObject(colMsg.SObjectID);
+
+            if (HitObj != null)
+            {
+                HitObj.transform.SendMessage("ApplyDamage", colMsg.HitD, SendMessageOptions.DontRequireReceiver);
+            }
+            else
+            {
+                Debug.Log("ERROR: Space Event Listener - Process Hit Msg: " +
+                    "Passed hit object is null.");
+            }
+        }
+
+        public void OnProcessHitMsgShip(NetworkMessage msg)
+        {
+            ShipColliderHitMessage colMsg = msg.ReadMessage<ShipColliderHitMessage>();
+
+            GameObject HitObj = ClientScene.FindLocalObject(colMsg.ShipID);
+            if (HitObj != null)
+            {
+                HitObj.transform.GetComponent<ShipImpactCollider>()
+                .ProcessDamage(colMsg.HitComponents, colMsg.HitD);
+            }
+        }
+
         public void AddStationToHUD(NetworkMessage netMsg)
         {
             // Retrieve net id from sent message
             NetworkInstanceId stationNetID = netMsg.ReadMessage
-                <StationBuildMessage>().SelfID;
+                <NetMsgMessage>().SelfID;
 
             // Get our local station with the same netID
             GameObject station = ClientScene.

@@ -8,6 +8,7 @@ using Data.Space;
 using Data.Space.Library;
 using Space.GameFunctions;
 using Space.Segment;
+using Space.Teams;
 
 // Add classes for data
 // that can be serialized and saved
@@ -29,8 +30,11 @@ namespace Space
         // store shipdata for playership
         //public ShipData PlayerShip;
 
-        // store local client controller ID
+        // store local client ID on server
         public int playerID;
+
+        // Network instance ID for player's ship
+        public uint netID;
 
         // if the player is within vicinity of station
         public bool overStation;
@@ -39,6 +43,9 @@ namespace Space
         public StationController station;
 
         public bool docked;
+
+        // Reference to player team
+        public TeamController Team;
 
         #endregion
 

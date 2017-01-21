@@ -35,6 +35,8 @@ namespace Space.Ship
         //[SyncVar]             why does this work?
         public bool ShipDocked;
 
+        public bool UnderAttack;
+
         public NetworkInstanceId instID;
 
         #endregion
@@ -186,6 +188,49 @@ namespace Space.Ship
         public List<Transform> HighlightedTargets;
         public Rect HighlightRect;
         public float TargetDistance;
+
+        #endregion
+
+        #region ACCESSORS
+
+        /// <summary>
+        /// returns int labeling the state the station is currently in
+        /// 0 - Safe
+        /// 1 - Under Attack
+        /// 2 - Docked
+        /// </summary>
+        public int Status
+        {
+            get
+            {
+                if (ShipDocked)
+                    return 2;
+                if (UnderAttack)
+                    return 1;
+                else
+                    return 0;
+            }
+        }
+
+        public float Distance
+        {
+            get
+            {
+                // Retrieve player object and check if 
+                // Player object currently exists
+                GameObject playerTransform =
+                    GameObject.FindGameObjectWithTag("PlayerShip");
+
+                if (playerTransform == null)
+                {
+                    return -1;
+                }
+
+                // return distance
+                return Vector3.Distance(this.transform.position,
+                    playerTransform.transform.position);
+            }
+        }
 
         #endregion
     }

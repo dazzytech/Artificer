@@ -172,6 +172,9 @@ namespace Space.GameFunctions
             PlayerConnectionInfo pInfo = 
                 _att.PlayerInfoList.Item(playerID);
 
+            // network instance ID of our team object
+            NetworkInstanceId teamNetID;
+
             if (pInfo == null)
             {
                 Debug.Log("Error: Game Controller - Assign To Team: Player not found");
@@ -180,6 +183,22 @@ namespace Space.GameFunctions
 
             // Assign that player to the team
             pInfo.mTeam = TeamID;
+
+            // Pass that player team to an instance ID
+            if (TeamID == 0)
+                teamNetID = _att.TeamA.netId;
+            else
+                teamNetID = _att.TeamB.netId;
+
+            // Create netID message
+            NetMsgMessage netMsg = new NetMsgMessage();
+
+            // assign team netID to message
+            netMsg.SelfID = teamNetID;
+
+            // Send message for clients space obj
+            NetworkServer.SendToClient(pInfo.mConnection.connectionId,
+                (short)MSGCHANNEL.ASSIGNTEAM, netMsg);
         }
 
         [Server]
@@ -224,6 +243,7 @@ namespace Space.GameFunctions
             // Projectile can run command to display self
             NetworkServer.SpawnWithClientAuthority(GO, info.mConnection);
 
+            // currently down nothing..
             GO.transform.GetComponent<WeaponController>().Init();
 
             ProjectileSpawnedMessage spwnMsg = new ProjectileSpawnedMessage();

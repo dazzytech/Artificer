@@ -281,7 +281,8 @@ namespace Space.Ship
             {
                 if (listener is RotorListener || listener is EngineListener)
                 {
-                    listener.GetAttributes().emitter.emit = true;
+                    if(listener.GetAttributes() != null)
+                        listener.GetAttributes().emitter.emit = true;
                 }
             }
         }

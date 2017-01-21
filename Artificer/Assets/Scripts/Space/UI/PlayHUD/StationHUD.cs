@@ -50,7 +50,7 @@ namespace Space.UI.Ship
             GameObject newStation = Instantiate(m_stationPrefab);
             newStation.transform.SetParent(m_stationList, false);
 
-            StationTracker tracker = newStation.GetComponent<StationTracker>();
+            StationPrefab tracker = newStation.GetComponent<StationPrefab>();
             tracker.DefineStation(controller);
 
             m_addedIDs.Add(controller.ID);

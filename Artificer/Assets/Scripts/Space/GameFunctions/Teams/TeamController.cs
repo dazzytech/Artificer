@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 using System.Collections.Generic;
 // Artificer
@@ -17,19 +18,24 @@ using Networking;
 /// </summary>
 namespace Space.Teams
 {
+    #region SYNCLISTS 
+
+    /// <summary>
+    /// Create synced material lists for networking objects
+    /// </summary>
+    public class MaterialListSync : SyncListStruct<MaterialData> { }
+
+    #endregion
+
     public class TeamController : NetworkBehaviour
     {
-        #region SYNCLISTS 
+        #region EVENTS
 
-        /// <summary>
-        /// Create synced material lists for networking objects
-        /// </summary>
-        public class MaterialListSync : SyncListStruct<MaterialData> { }
+        public delegate void SyncListDelegate();
 
-        /// <summary>
-        /// create synced list for network IDs
-        /// </summary>
-        public class NetIDListSync : SyncListStruct<NetworkInstanceId> { }
+        // client HUDs listen to this event to update friendly list
+        [SyncEvent]
+        public event SyncListDelegate EventPlayerListChanged;
 
         #endregion
 
@@ -37,13 +43,13 @@ namespace Space.Teams
 
         // Faction that the team belongs to
         [SyncVar]
-        private FactionData _faction;
+        private FactionData m_faction;
 
         // Store a list of player connections for that team
-        private NetIDListSync _players = new NetIDListSync();
+        private SyncListUInt m_players = new SyncListUInt();
 
         // Store a list of Net IDs of stations that the stations owns
-        private NetIDListSync _stations = new NetIDListSync();
+        private SyncListUInt m_stations = new SyncListUInt();
 
         //private List<Transform> _attackPoints;
         //private List<Transform> _homePoints;
@@ -83,27 +89,32 @@ namespace Space.Teams
         /// for now just add the faction data to 
         /// local memory
         /// </summary>
+        [Server]
         public void Initialize(FactionData faction)
         {
-            _faction = faction;
+            m_faction = faction;
+
+            m_players.Callback = PlayerListChanged;
         }
 
         /// <summary>
         /// Adds player physical object to list when player spawns
         /// </summary>
         /// <param name="netID"></param>
+        [Server]
         public void AddPlayerObject(NetworkInstanceId netID)
         {
-            _players.Add(netID);
+            m_players.Add(netID.Value);
         }
 
         /// <summary>
         /// Called when player leaves team or leaves game or dies
         /// </summary>
         /// <param name="netID"></param>
+        [Server]
         public void RemovePlayerObject(NetworkInstanceId netID)
         {
-            _players.Remove(netID);
+            m_players.Remove(netID.Value);
         }
 
         /// <summary>
@@ -114,24 +125,28 @@ namespace Space.Teams
         /// <returns></returns>
         public bool PlayerOnTeam(NetworkInstanceId netID)
         {
-            return _players.Contains(netID);
+            return m_players.Contains(netID.Value);
         }
 
+        [Server]
         public void AddStationObject(NetworkInstanceId netID)
         {
-            _stations.Add(netID);
+            m_stations.Add(netID.Value);
         }
 
+        [Server]
         public void RemoveStationObject(NetworkInstanceId netID)
         {
-            _stations.Remove(netID);
+            m_stations.Remove(netID.Value);
         }
 
+        [Server]
         public void UpdateStationHUD(NetworkConnection conn)
         {
-            foreach(NetworkInstanceId netID in _stations)
+            foreach(uint ID in m_stations)
             {
-                StationBuildMessage msg = new StationBuildMessage();
+                NetworkInstanceId netID = new NetworkInstanceId(ID);
+                NetMsgMessage msg = new NetMsgMessage();
                 msg.SelfID = netID;
 
                 NetworkServer.SendToClient(conn.connectionId,
@@ -148,7 +163,7 @@ namespace Space.Teams
         /// </summary>
         public int ID
         {
-            get { return _faction.ID; }
+            get { return m_faction.ID; }
         }
 
         /// <summary>
@@ -157,6 +172,11 @@ namespace Space.Teams
         public TeamSpawnManager Spawner
         {
             get { return _teamSpawn; }
+        }
+
+        public SyncListUInt Players
+        {
+            get { return m_players; }
         }
 
         #endregion
@@ -492,6 +512,17 @@ namespace Space.Teams
         }
 
         // Here will be an event listening for station destroyed
+
+        #endregion
+
+        #region CALLBACKS
+
+        void PlayerListChanged(SyncListUInt.
+            Operation op, int itemIndex)
+        {
+            if(EventPlayerListChanged != null)
+                EventPlayerListChanged();
+        }
 
         #endregion
 

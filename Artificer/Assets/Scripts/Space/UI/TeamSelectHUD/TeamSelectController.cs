@@ -72,7 +72,7 @@ namespace Space.UI.Teams
             tsm.ID = GameManager.Space.ID;
             tsm.Selected = selection;
             // Send message baack to server
-            GameManager.singleton.client.Send((short)MSGCHANNEL.ASSIGNTOTEAM, tsm);
+            GameManager.singleton.client.Send((short)MSGCHANNEL.TEAMSELECTED, tsm);
 
             GameManager.Space.InitializePlayer();
         }

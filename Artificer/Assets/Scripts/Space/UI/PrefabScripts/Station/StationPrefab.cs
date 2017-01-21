@@ -1,43 +1,48 @@
-﻿using UnityEngine;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 
 //Artificer
-using Space.Ship;
-using UnityEngine.EventSystems;
+using Space.Segment;
 
 namespace Space.UI.Ship
 {
     /// <summary>
-    /// Keeps a referenceto an assigned friendly ship
-    /// including ship state and component integrity
+    /// Local HUD element that tracks state of station
     /// </summary>
-    public class FriendlyPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class StationPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         #region ATTRIBUTES
 
-        // reference to ship
-        private ShipAttributes m_ship;
+        // Reference to tracked station
+        private StationController m_station;
+
+
+        [SerializeField]
+        [Header("Integrity Tracker")]
+        private IntegrityTracker m_integrity;
 
         // If item was active before enable
         private bool m_activated;
 
         #region HUD ELEMENTS
 
-        // For now displays the ship name
         [SerializeField]
         [Header("Label")]
-        private Text m_label;
+        public Text m_label;
 
-        // displays if ship is safe, attacked or docked
-        [SerializeField]
-        [Header("Status")]
-        private Text m_status;
-
-        // displays distance from player
         [SerializeField]
         [Header("Distance")]
-        private Text m_distance;
+        public Text m_distance;
+
+        [SerializeField]
+        [Header("Status")]
+        public Text m_status;
+
+        [SerializeField]
+        [Header("Icon")]
+        public Image m_icon;
 
         [SerializeField]
         [Header("Self Panel")]
@@ -58,10 +63,6 @@ namespace Space.UI.Ship
         [SerializeField]
         [Header("Colour Destroyed")]
         private Color m_destroyedColor;
-
-        [SerializeField]
-        [Header("Colour Docked")]
-        private Color m_dockedColor;
 
         [SerializeField]
         [Header("Colour Highlighted")]
@@ -91,21 +92,24 @@ namespace Space.UI.Ship
         #region PUBLIC INTERACTION
 
         /// <summary>
-        /// Pass the friendly attributes to the Prefab to begintracking
+        /// Pass the station to HUD element for
+        /// tracking
         /// </summary>
-        /// <param name="newShip"></param>
-        public void DefineFriendly(ShipAttributes newShip)
+        /// <param name="Station"></param>
+        public void DefineStation(StationController Station)
         {
-            // keep reference
-            m_ship = newShip;
+            m_station = Station;
 
-            // non highlighted colour
+            m_label.text = Station.name;
+
+            m_icon.overrideSprite = m_station.Icon;
+
             m_standardColor = m_selfPanel.color;
 
             m_activated = true;
 
             // Begin tracking process if active
-            if(isActiveAndEnabled)
+            if (isActiveAndEnabled)
                 StartCoroutine("Step");
         }
 
@@ -115,24 +119,20 @@ namespace Space.UI.Ship
 
         private IEnumerator Step()
         {
-            while (true)
+            while(true)
             {
-                if (m_ship == null)
+                if (m_station == null)
                 {
-                    m_status.text = "Destroyed";
-                    m_status.color = m_destroyedColor;
-
-                    m_distance.text = "-";
-
-                    StartCoroutine(DelayDestroy(10f));
+                    Destroy(this.gameObject);
+                    StopAllCoroutines();
                     break;
                 }
 
-                // update name
-                m_label.text = m_ship.Ship.Name;
+                // Pass info to integrity tracker 
+                m_integrity.Step(m_station.NormalizedHealth);
 
                 // Update station status
-                switch (m_ship.Status)
+                switch(m_station.Status)
                 {
                     // change and recolor text based on station state
                     case 0:
@@ -146,7 +146,7 @@ namespace Space.UI.Ship
                         break;
 
                     case 2:
-                        m_status.text = "Docked";
+                        m_status.text = "Destroyed";
                         m_status.color = m_destroyedColor;
                         break;
                 }
@@ -155,19 +155,18 @@ namespace Space.UI.Ship
 
                 // Retrieve player object and check if 
                 // Player object currently exists
-                float distance = m_ship.Distance;
+                float distance = m_station.Distance;
 
-                if (distance == -1)
+                if(distance == -1)
                 {
                     m_distance.text = "-";
                     yield return null;
                 }
 
                 // display distance
-                m_distance.text = ((int)distance * 0.01).ToString("F2") + "km";
+                m_distance.text = ((int)distance  *0.01).ToString("F2") + "km";
 
                 //finished this step
-
                 yield return null;
             }
 
@@ -189,25 +188,6 @@ namespace Space.UI.Ship
         }
 
         #endregion
-
-        #region COROUTINES
-
-        /// <summary>
-        /// Allow the player to see that the 
-        /// ship has been destroyed before removing
-        /// </summary>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        private IEnumerator DelayDestroy(float t)
-        {
-            yield return new WaitForSeconds(t);
-
-            Destroy(this.gameObject);
-            StopAllCoroutines();
-
-            yield return null;
-        }
-
-        #endregion
     }
 }
+

@@ -358,6 +358,9 @@ MonoBehaviour:
   - {fileID: 114000012111005594}
   - {fileID: 114000012105275730}
   - {fileID: 114000012229819194}
+  Recolor: 0
+  MedColor: {r: 0, g: 0, b: 0, a: 0}
+  LowColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114000010916911300
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -462,8 +465,8 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: be6d60d238aa80d489cb47394563eb1e, type: 3}
     m_FontSize: 8
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 8
+    m_BestFit: 1
+    m_MinSize: 5
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -699,16 +702,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1f9335f1e6ca204b9858f84204f8fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Integrity: {fileID: 114000010794190986}
-  Label: {fileID: 114000014233540776}
-  Distance: {fileID: 114000010607842196}
-  Status: {fileID: 114000011664748956}
-  Icon: {fileID: 114000010983903572}
-  SelfPanel: {fileID: 114000012895206734}
-  safeColor: {r: 0.6156863, g: 1, b: 0.7607843, a: 1}
-  attackColor: {r: 0.75, g: 0.5128676, b: 0.5128676, a: 1}
-  destroyedColor: {r: 0.71323526, g: 0.71323526, b: 0.71323526, a: 1}
-  highlightColor: {r: 0.9411765, g: 0.7723183, b: 0.5190311, a: 0.203}
+  m_integrity: {fileID: 114000010794190986}
+  m_label: {fileID: 114000014233540776}
+  m_distance: {fileID: 114000010607842196}
+  m_status: {fileID: 114000011664748956}
+  m_icon: {fileID: 114000010983903572}
+  m_selfPanel: {fileID: 114000012895206734}
+  m_safeColor: {r: 0.35326558, g: 0.8897059, b: 0.8009157, a: 0.659}
+  m_attackColor: {r: 0.875, g: 0.28859025, b: 0.15441176, a: 0.716}
+  m_destroyedColor: {r: 0.4705882, g: 0.4705882, b: 0.4705882, a: 0.878}
+  m_highlightColor: {r: 1, g: 0.80294114, b: 0.50735295, a: 0.328}
 --- !u!114 &114000013963398550
 MonoBehaviour:
   m_ObjectHideFlags: 1

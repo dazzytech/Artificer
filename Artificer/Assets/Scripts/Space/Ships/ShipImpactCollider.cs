@@ -22,13 +22,16 @@ namespace Space.Ship
         // in some cases this could be only one
         private List<BoxCollider2D> colliders;
 
+        ShipAttributes m_ship;
+
         #endregion
 
         #region MONO BEHAVIOUR
 
+        // Use this for initialization
         void Awake()
         {
-            GameManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSSHIPHIT, ProcessHitMsg);
+            m_ship = GetComponent<ShipAttributes>();
         }
 
         #endregion
@@ -69,18 +72,6 @@ namespace Space.Ship
             StartCoroutine("CycleThroughCollidersSingle");
         }
 
-        public override void ProcessHitMsg(NetworkMessage msg)
-        {
-            ShipColliderHitMessage colMsg = msg.ReadMessage<ShipColliderHitMessage>();
-
-            GameObject HitObj = ClientScene.FindLocalObject(colMsg.ShipID);
-            if (HitObj != null)
-            {
-                HitObj.transform.GetComponent<ShipImpactCollider>()
-                .ProcessDamage(colMsg.HitComponents, colMsg.HitD);
-            }
-        }
-
         /// <summary>
         /// Similar to RpcHit, however damage is sent to all
         /// colliders within a radius
@@ -115,6 +106,14 @@ namespace Space.Ship
                 {
                     Camera.main.gameObject.SendMessage("ShakeCam");
                 }
+
+                // After successfully taking damage, set to under attack mode
+                StopCoroutine("AttackTimer");
+
+                m_ship.UnderAttack = true;
+
+                StartCoroutine("AttackTimer");
+
             }
             else
                 StartCoroutine("CycleComponentColours", damaged);
@@ -226,6 +225,23 @@ namespace Space.Ship
                 yield return null;
             }
 
+            yield return null;
+        }
+
+        /// <summary>
+        /// When ship is hit by an enemy
+        /// ship is in under attack mode
+        /// for 20 sec after last shot
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator AttackTimer()
+        {
+            if (m_ship.UnderAttack)
+            {
+                yield return new WaitForSeconds(20f);
+
+                m_ship.UnderAttack = false;
+            }
             yield return null;
         }
 

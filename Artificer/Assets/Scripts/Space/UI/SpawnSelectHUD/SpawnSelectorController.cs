@@ -28,7 +28,7 @@ namespace Space.UI.Spawn
 
         #region MONO BEHAVIOUR
 
-        void Awake()
+        void OnEnable()
         {
             // disable Spawn UI Elements
             SpawnButton.interactable = false;
