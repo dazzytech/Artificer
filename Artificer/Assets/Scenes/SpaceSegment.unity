@@ -1554,7 +1554,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -0.000006198883, y: -17.979965}
-  m_SizeDelta: {x: 275, y: 0}
+  m_SizeDelta: {x: 275, y: 30}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &151098288
 MonoBehaviour:
@@ -7889,7 +7889,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &766316682
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11073,8 +11073,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 444441898}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 1.6, y: 0}
   m_SizeDelta: {x: 15.4, y: -6.9}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -13401,9 +13401,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerOnStage: 0
   playerID: 0
+  netID: 0
   overStation: 0
   station: {fileID: 0}
   docked: 0
+  Team: {fileID: 0}
 --- !u!1001 &1368782869
 Prefab:
   m_ObjectHideFlags: 0
@@ -19191,7 +19193,7 @@ RectTransform:
   m_Father: {fileID: 1331379910}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

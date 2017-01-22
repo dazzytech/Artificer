@@ -123,8 +123,12 @@ namespace Space.UI.Ship
             {
                 if (m_station == null)
                 {
-                    Destroy(this.gameObject);
-                    StopAllCoroutines();
+                    m_status.text = "Destroyed";
+                    m_status.color = m_destroyedColor;
+
+                    m_distance.text = "-";
+
+                    Invoke("DelayDestroy", 20f);
                     break;
                 }
 
@@ -143,11 +147,6 @@ namespace Space.UI.Ship
                     case 1:
                         m_status.text = "Attacked";
                         m_status.color = m_attackColor;
-                        break;
-
-                    case 2:
-                        m_status.text = "Destroyed";
-                        m_status.color = m_destroyedColor;
                         break;
                 }
 
@@ -171,6 +170,18 @@ namespace Space.UI.Ship
             }
 
             yield return null;
+        }
+
+        /// <summary>
+        /// Delays the removal of the 
+        /// HUD element for players to know station was destroyed
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        private void DelayDestroy()
+        {
+            Destroy(this.gameObject);
+            StopAllCoroutines();
         }
 
         #endregion

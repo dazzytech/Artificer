@@ -90,11 +90,27 @@ namespace Space.UI.Ship
                 return;
             }
 
+            // Assign self to receive message
+            FriendlyPrefab.Base = this;
+
             // if comp is already active then we need to set up events
             if(isActiveAndEnabled)
             {
                 m_team.EventPlayerListChanged += GenerateTeamList;
                 GenerateTeamList();
+            }
+        }
+
+        /// <summary>
+        /// Remove ID from list so new ship can be added
+        /// while previous ship HUD is being removed
+        /// </summary>
+        /// <param name="ID"></param>
+        public void RemoveID(uint ID)
+        {
+            if(m_addedIDs.Contains(ID))
+            {
+                m_addedIDs.Remove(ID);
             }
         }
 
@@ -113,10 +129,10 @@ namespace Space.UI.Ship
 
             // loop through each item in list and destroy it
             // refresh
-            foreach (Transform child in m_friendlyList.transform)
-                Destroy(child.gameObject);
+            //foreach (Transform child in m_friendlyList.transform)
+              //  Destroy(child.gameObject);
 
-            m_addedIDs.Clear();
+            //m_addedIDs.Clear();
 
             // Loop through each player and assign a friendly prefab
             foreach(uint ID in m_team.Players)
@@ -142,12 +158,14 @@ namespace Space.UI.Ship
                     ShipAttributes friendlyShip = friendlyObj.GetComponent<ShipAttributes>();
 
                     // Create Friendly HUD Prefab
-                    GameObject FriendlyHUD = Instantiate(m_friendlyPrefab);
+                    GameObject FriendlyObj = Instantiate(m_friendlyPrefab);
 
-                    FriendlyHUD.transform.SetParent(m_friendlyList.transform, false);
+                    FriendlyObj.transform.SetParent(m_friendlyList.transform, false);
+
+                    FriendlyPrefab FriendlyHUD = FriendlyObj.GetComponent<FriendlyPrefab>();
 
                     // Set Friendly Prefab and initialise
-                    FriendlyHUD.SendMessage("DefineFriendly", friendlyShip);
+                    FriendlyHUD.DefineFriendly(friendlyShip, ID);
 
                     // add to addedlist
                     m_addedIDs.Add(ID);

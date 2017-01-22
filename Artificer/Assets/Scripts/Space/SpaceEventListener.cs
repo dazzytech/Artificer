@@ -350,6 +350,8 @@ namespace Space
             m_att.Team = teamObj.
                 GetComponent<TeamController>();
 
+            m_con.InitializePlayer();
+
             // for now define team for play HUD here
             GameManager.GUI.SetTeam(m_att.Team);
         }

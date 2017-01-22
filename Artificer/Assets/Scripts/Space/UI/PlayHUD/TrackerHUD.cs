@@ -365,7 +365,7 @@ namespace Space.UI.Tracker
             m.box.GetComponent<RectTransform>().anchoredPosition =
                 UIConvert.WorldToCamera(m.trackedObj);
             m.text.transform.localPosition = dir + dir.normalized * Overlap(i, m, camPos);
-            m.text.GetComponent<Text>().text = ((int)objDistance / 10).ToString() + "km";
+            m.text.GetComponent<Text>().text = ((int)objDistance * 0.01).ToString("F2") + "km";
         }
 
         #endregion

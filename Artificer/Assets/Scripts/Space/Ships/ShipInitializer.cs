@@ -76,6 +76,8 @@ namespace Space.Ship
             hasSpawned = true;
             Ship = Serializer.ByteSerializer.fromBytes(shipInfo);
             RpcSpawnMe(shipInfo);
+
+            GameManager.GUI.RpcAddRemotePlayer(netId);
         }
 
         /// <summary>
@@ -122,8 +124,22 @@ namespace Space.Ship
                 GetComponent<ShipAttributes>().AlignmentLabel = "Player";
 
                 SendMessage("BuildColliders");
-
-                //GameManager.GUI.RpcAddRemotePlayer(netId);
+            }
+            // Any ships spawned before we pick team will need
+            // assigning when team is assigned
+            else if (GameManager.Space.Team)
+            {
+                // Determine tag based on our reference to team
+                if (GameManager.Space.Team.PlayerOnTeam(netId))
+                {
+                    name = "AllyShip";
+                    tag = "Friendly";
+                }
+                else
+                {
+                    name = "EnemyShip";
+                    tag = "Enemy";
+                }
             }
         }
 

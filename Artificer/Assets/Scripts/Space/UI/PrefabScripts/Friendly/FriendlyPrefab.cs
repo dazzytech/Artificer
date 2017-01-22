@@ -13,7 +13,7 @@ namespace Space.UI.Ship
     /// including ship state and component integrity
     /// </summary>
     public class FriendlyPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
-    {
+    { 
         #region ATTRIBUTES
 
         // reference to ship
@@ -21,6 +21,11 @@ namespace Space.UI.Ship
 
         // If item was active before enable
         private bool m_activated;
+
+        private uint m_ID;
+
+        [Header("FriendlyHUD")]
+        public static FriendlyHUD Base;
 
         #region HUD ELEMENTS
 
@@ -94,7 +99,7 @@ namespace Space.UI.Ship
         /// Pass the friendly attributes to the Prefab to begintracking
         /// </summary>
         /// <param name="newShip"></param>
-        public void DefineFriendly(ShipAttributes newShip)
+        public void DefineFriendly(ShipAttributes newShip, uint newID)
         {
             // keep reference
             m_ship = newShip;
@@ -103,6 +108,9 @@ namespace Space.UI.Ship
             m_standardColor = m_selfPanel.color;
 
             m_activated = true;
+
+            // assign ID
+            m_ID = newID;
 
             // Begin tracking process if active
             if(isActiveAndEnabled)
@@ -124,7 +132,7 @@ namespace Space.UI.Ship
 
                     m_distance.text = "-";
 
-                    StartCoroutine(DelayDestroy(10f));
+                    Invoke("DelayDestroy", 10f);
                     break;
                 }
 
@@ -172,6 +180,9 @@ namespace Space.UI.Ship
             }
 
             yield return null;
+
+            // This HUD is due for removal
+            Base.RemoveID(m_ID);
         }
 
         #endregion
@@ -198,14 +209,10 @@ namespace Space.UI.Ship
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        private IEnumerator DelayDestroy(float t)
+        private void DelayDestroy()
         {
-            yield return new WaitForSeconds(t);
-
             Destroy(this.gameObject);
             StopAllCoroutines();
-
-            yield return null;
         }
 
         #endregion

@@ -219,8 +219,6 @@ namespace Space.Segment
         {
             get
             {
-                if (m_att.CurrentIntegrity <= 0)
-                    return 2;
                 if (m_att.UnderAttack)
                     return 1;
                 else

@@ -10,6 +10,7 @@ using Space.Contract;
 using Space.GameFunctions;
 using Space.UI;
 using Space.Ship;
+using Space.Teams;
 
 namespace Space
 {
@@ -194,6 +195,11 @@ namespace Space
             get { return _att.netID; }
         }
 
+        public TeamController Team
+        {
+            get { return _att.Team; }
+        }
+
         /// <summary>
         /// Called by the team selector once a team is
         /// selected to start the process of spawning a player
@@ -202,6 +208,25 @@ namespace Space
         {
             _att.PlayerOnStage = true;
 
+            foreach(Transform ship in GameObject.Find("_ships").transform)
+            {
+                if(ship.tag == "Untagged")
+                {
+                    NetworkInstanceId netId = ship.GetComponent<NetworkIdentity>().netId;
+
+                    // Determine tag based on our reference to team
+                    if (GameManager.Space.Team.PlayerOnTeam(netId))
+                    {
+                        ship.name = "AllyShip";
+                        ship.tag = "Friendly";
+                    }
+                    else
+                    {
+                        ship.name = "EnemyShip";
+                        ship.tag = "Enemy";
+                    }
+                }
+            }
             //PlayerEnterScene();
         }
 
@@ -235,6 +260,8 @@ namespace Space
             // Add message for sending ship attributes
             GameManager.GUI.InitializeStationHUD(shipAtt);
         }
+
+
 
         /// <summary>
         /// Returns ship (newparameters)
