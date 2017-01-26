@@ -73,8 +73,8 @@ public class Control_Config: MonoBehaviour
 		//Assign walking controls
         m_data.CombatControls.Add ("moveUp", KeyCode.W);
         m_data.CombatControls.Add ("moveDown", KeyCode.S);
-        m_data.CombatControls.Add ("strafeLeft", KeyCode.D);
-        m_data.CombatControls.Add ("strafeRight", KeyCode.A);
+        m_data.CombatControls.Add ("strafeLeft", KeyCode.A);
+        m_data.CombatControls.Add ("strafeRight", KeyCode.D);
         m_data.CombatControls.Add ("use", KeyCode.E);
         m_data.CombatControls.Add ("fire", KeyCode.Mouse0);
         m_data.CombatControls.Add ("secondary", KeyCode.Mouse1);

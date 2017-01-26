@@ -69,7 +69,7 @@ namespace Space.Ship
 
             _hitD = hit;
 
-            StartCoroutine("CycleThroughCollidersSingle");
+            StartCoroutine("CycleThroughCollidersSingle", (Vector2)hit.hitPosition);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Space.Ship
 
         #region COROUTINE
 
-        private IEnumerator CycleThroughCollidersSingle()
+        private IEnumerator CycleThroughCollidersSingle(Vector2 hitPosition)
         {
             // Store an int reference to components that were damaged
             List<int> damagedComps = new List<int>();
@@ -136,7 +136,12 @@ namespace Space.Ship
             {
                 if (piece != null)
                 {
-                    if (piece.OverlapPoint(_hitD.hitPosition))
+                    // Hit detection is manual due to overlap
+                    // miss edge collisions
+                    if((hitPosition.x <= piece.bounds.max.x
+                    && hitPosition.x >= piece.bounds.min.x)
+                    && (hitPosition.y <= piece.bounds.max.y
+                    && hitPosition.y >= piece.bounds.min.y))
                     {
                         // Retrieve the component listener and attributes from piece obj
                         ComponentAttributes att =
@@ -160,9 +165,7 @@ namespace Space.Ship
                 GameManager.singleton.client.Send((short)MSGCHANNEL.SHIPHIT, msg);
             }
 
-            StopAllCoroutines();
-
-            yield return null;
+            yield break;
         }
         
         private IEnumerator CycleThroughCollidersGroup()
@@ -200,7 +203,7 @@ namespace Space.Ship
             if (damagedComps.Count > 0)
                 RpcProcessDamage(damagedComps.ToArray());*/
 
-            yield return null;
+            yield break;
         }
 
         private IEnumerator CycleComponentDamage(int[] damaged)
@@ -213,9 +216,7 @@ namespace Space.Ship
                 yield return null;
             }
 
-            StopAllCoroutines();
-
-            yield return null;
+            yield break;
         }
 
         private IEnumerator CycleComponentColours(int[] damaged)
@@ -229,7 +230,7 @@ namespace Space.Ship
                 yield return null;
             }
 
-            yield return null;
+            yield break;
         }
 
         /// <summary>

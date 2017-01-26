@@ -40,6 +40,9 @@ namespace Space.Ship
             if (hasSpawned)
             {
                 SetUpPlayer();
+                // Add this item to local UI list
+                // p.s should be performed on each client without cmd
+                GameManager.GUI.AddUIPiece(transform);
             }
         }
 
@@ -141,6 +144,12 @@ namespace Space.Ship
                     tag = "Enemy";
                 }
             }
+        }
+
+        [Command]
+        private void CmdUpdateHUD()
+        {
+            GameManager.GUI.RpcAddRemotePlayer(netId);
         }
 
         #endregion

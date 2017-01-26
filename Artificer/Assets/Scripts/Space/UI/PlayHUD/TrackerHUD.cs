@@ -72,8 +72,8 @@ namespace Space.UI.Tracker
 
         void Awake()
         {
-            _markers = new List<Marker>();
-            _pendingDelete = new List<Marker>();
+            //_markers = new List<Marker>();
+            //_pendingDelete = new List<Marker>();
             //_targets = new List<Transform>();
         }
 
@@ -84,19 +84,16 @@ namespace Space.UI.Tracker
 
         void LateUpdate()
         {
-            if (GameObject.FindGameObjectWithTag
-                    ("MainCamera") == null)
-                return;
-
-            // retreive the position of the main camera in our scene
-            Transform cameraTransform =
-                GameObject.FindGameObjectWithTag
-                    ("MainCamera").transform;
+            GameObject cameraObject = GameObject.FindGameObjectWithTag
+                    ("MainCamera");
 
             // If we don't have a camera or anything to track
             // this stops here
-            if (cameraTransform == null || _markers == null)
+            if (cameraObject == null || _markers == null)
                 return;
+            
+            // retreive the position of the main camera in our scene
+            Transform cameraTransform = cameraObject.transform;
 
             int i = 0;
 
@@ -117,6 +114,9 @@ namespace Space.UI.Tracker
                 i++;
             }
 
+            if (_pendingDelete == null)
+                return;
+
             foreach (Marker m in _pendingDelete)
             {
                 _markers.Remove(m);
@@ -135,13 +135,17 @@ namespace Space.UI.Tracker
         public void AddUIPiece(Transform piece)
         {
             // no point tracking if no camera
-            if (GameObject.FindGameObjectWithTag
+            // not sure if this still needs to be here
+            /*if (GameObject.FindGameObjectWithTag
                 ("MainCamera") == null)
-                return;
+                return;*/
 
             // stations aren't added this way so piece is a ship
             Marker m = new Marker();
             m.trackedObj = piece;
+
+            if (_markers == null)
+                _markers = new List<Marker>();
 
             _markers.Add(m);
         }
@@ -217,6 +221,9 @@ namespace Space.UI.Tracker
         /// <param name="m"></param>
         private void DeleteMarker(Marker m)
         {
+            if (_pendingDelete == null)
+                _pendingDelete = new List<Marker>();
+
             // pending markers will be deleted at the end of 
             // the update
             _pendingDelete.Add(m);

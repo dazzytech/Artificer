@@ -383,6 +383,11 @@ namespace Space
                 HitObj.transform.GetComponent<ShipImpactCollider>()
                 .ProcessDamage(colMsg.HitComponents, colMsg.HitD);
             }
+            else
+            {
+                Debug.Log("ERROR: Space Event Listener - Process Ship Hit Msg: " +
+                    "Passed ship object is null.");
+            }
         }
 
         public void AddStationToHUD(NetworkMessage netMsg)
