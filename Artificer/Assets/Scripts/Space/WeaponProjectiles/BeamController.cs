@@ -97,6 +97,8 @@ namespace Space.Projectiles
             Invoke("DestroyProjectile", seconds);
         }
 
+
+        // THIS AINT PUBLIC
         /// <summary>
         /// Server functions for applying damage for
         /// colliders within the 
@@ -170,7 +172,6 @@ namespace Space.Projectiles
                     break;
             }
         }
-
        
         /// <summary>
         /// Creates hit decals whem projectile hits a collider
@@ -185,7 +186,6 @@ namespace Space.Projectiles
             // display hit on the server
             Instantiate(Explode, hit, Quaternion.Euler(data.Direction));
         }
-
 
         /// <summary>
         /// Builds a beam

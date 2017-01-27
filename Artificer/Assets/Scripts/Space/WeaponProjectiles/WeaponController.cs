@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
+using System;
 
 namespace Space.Projectiles
 {
+    [Serializable]
     public struct WeaponData
     {
         public Vector3 Direction;
@@ -28,12 +30,15 @@ namespace Space.Projectiles
         // ignore collectable layer
         public LayerMask maskIgnore;
 
-        public void Init()
-        {
-        }
-
         public virtual void CreateProjectile(WeaponData data)
         {
+            CmdAssignData(data);
+        }
+
+        [Command]
+        public virtual void CmdAssignData(WeaponData data)
+        {
+            _data = data;
         }
 
         [Command]
@@ -66,7 +71,7 @@ namespace Space.Projectiles
         public virtual void Trigger()
         { }
 
-        public void DestroyProjectile()
+        public virtual void DestroyProjectile()
         {
             CmdDestroyProjectile();
         }

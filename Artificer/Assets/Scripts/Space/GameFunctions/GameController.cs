@@ -244,7 +244,7 @@ namespace Space.GameFunctions
             NetworkServer.SpawnWithClientAuthority(GO, info.mConnection);
 
             // currently down nothing..
-            GO.transform.GetComponent<WeaponController>().Init();
+            //GO.transform.GetComponent<WeaponController>().Init();
 
             ProjectileSpawnedMessage spwnMsg = new ProjectileSpawnedMessage();
             spwnMsg.WData = wData;

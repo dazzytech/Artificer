@@ -16,29 +16,17 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.063 seconds
+- Completed reload, in  0.189 seconds
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1360x768 60Hz; virtual: 1360x768 at 0,0
 <RI> Initialized touch support.
-UnloadTime: 1.987786 ms
-IndexOutOfRangeException: Array index is out of range.
-  at SoundController.ResumeMusic () [0x00000] in <filename unknown>:0 
-  at Audio_Config.set_AudioType (Int32 value) [0x00000] in <filename unknown>:0 
-  at Audio_Config.SetDefaults () [0x00000] in <filename unknown>:0 
-  at Audio_Config.Awake () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
+UnloadTime: 1.976439 ms
 DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
  
 (Filename:  Line: 386)
-
-[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
 Start Client
@@ -50,32 +38,83 @@ The referenced script on this Behaviour (Game Object 'ShipViewer') is missing!
 (Filename:  Line: 1656)
 
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.110113 ms
-Exception in OnStartServer:Directory 'C:\Users\renderman\Documents\Artificer\Artificer\EXE\Assets\Resources\Textures\PlanetTextures' not found.   at System.IO.Directory.GetFileSystemEntries (System.String path, System.String searchPattern, FileAttributes mask, FileAttributes attrs) [0x00000] in <filename unknown>:0 
-  at System.IO.Directory.GetFiles (System.String path, System.String searchPattern) [0x00000] in <filename unknown>:0 
-  at Space.Segment.SegmentDataBuilder.BuildPlanet (Vector2 planetPos) [0x00000] in <filename unknown>:0 
-  at Space.Segment.SegmentDataBuilder.BuildNewBackground () [0x00000] in <filename unknown>:0 
-  at Space.Segment.SegmentManager.InitializeSegment () [0x00000] in <filename unknown>:0 
-  at Space.Segment.SegmentManager.OnStartServer () [0x00000] in <filename unknown>:0 
-  at UnityEngine.Networking.NetworkIdentity.OnStartServer (Boolean allowNonZeroNetId) [0x00000] in <filename unknown>:0 
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
+UnloadTime: 4.301852 ms
 Scene Changed
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
 
-Unloading 581 unused Assets to reduce memory usage. Loaded Objects now: 3027.
-Total: 2.522709 ms (FindLiveObjects: 0.201927 ms CreateObjectMapping: 0.089153 ms MarkObjects: 1.864823 ms  DeleteObjects: 0.361941 ms)
+Unloading 581 unused Assets to reduce memory usage. Loaded Objects now: 3192.
+Total: 2.723248 ms (FindLiveObjects: 0.223232 ms CreateObjectMapping: 0.113005 ms MarkObjects: 1.952587 ms  DeleteObjects: 0.410571 ms)
 
-Large state update of 1727 bytes for netId:2263 from script:Ship(Clone) (Space.Ship.ShipInitializer)
+Large state update of 1727 bytes for netId:2746 from script:Ship(Clone) (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Large state update of 1727 bytes for netId:2263 from script:PlayerShip (Space.Ship.ShipInitializer)
+Large state update of 1727 bytes for netId:2746 from script:PlayerShip (Space.Ship.ShipInitializer)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Large state update of 1727 bytes for netId:2757 from script:Ship(Clone) (Space.Ship.ShipInitializer)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Large state update of 1727 bytes for netId:2757 from script:AllyShip (Space.Ship.ShipInitializer)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Instance not found when handling Command message [netId=2784]
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Instance not found when handling Command message [netId=2786]
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Instance not found when handling Command message [netId=2787]
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+HandleTransform no gameObject
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+ERROR: Space Event Listener - Process Hit Msg: Passed hit object is null.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Large state update of 1727 bytes for netId:2801 from script:Ship(Clone) (Space.Ship.ShipInitializer)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Large state update of 1727 bytes for netId:2801 from script:AllyShip (Space.Ship.ShipInitializer)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Log: connection {1} has been disconnected by timeout; address {::ffff:127.0.0.1:54967}
+ERROR: Friendly HUD - GenerateTeamList: Friendly ship not found in client scene.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Large state update of 1727 bytes for netId:2938 from script:Ship(Clone) (Space.Ship.ShipInitializer)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Large state update of 1727 bytes for netId:2938 from script:AllyShip (Space.Ship.ShipInitializer)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Instance not found when handling Command message [netId=2943]
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Instance not found when handling Command message [netId=2944]
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+ERROR: Friendly HUD - GenerateTeamList: Friendly ship not found in client scene.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 3f30 -> priority: 1 
+  Thread -> id: 2b30 -> priority: 1 

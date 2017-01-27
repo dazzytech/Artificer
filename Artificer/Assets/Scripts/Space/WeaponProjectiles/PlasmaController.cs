@@ -11,64 +11,195 @@ namespace Space.Projectiles
     {
         // The three different plasma types behave slightly different
         public enum PlasmaType { DEFAULT, COMPRESSED, FUSION };
-        public PlasmaType PType;
 
+        #region PARTICLES
 
-        //VFX vars
+        private ParticleSystem _system;
         private ParticleSystem.Particle[] points;
-        public int pointCount = 50;
+
+        #endregion
+
+        #region CUSTOMIZABLE ATTRIBUTES
+
+        [SerializeField]
+        private float radius = 0f;
+        [SerializeField]
+        private float followRadius = 0f;
+        [SerializeField]
+        private float followTurnSpeed = 0f;
+        [SerializeField]
+        private float speed = 75f;
+        [SerializeField]
+        private float trailLength = 1f;
+        [SerializeField]
+        private int pointCount = 50;
+        [SerializeField]
+        private PlasmaType PType;
+
+        #endregion
+
+        #region CALCULATION VARIABLES
+
         private Vector3 projPosition;
-
-        // bullet vars
         private Vector3 origTransPosition;
-        public float speed = 3f;
-        public float trailLength = 5f;
-        float bulletStep;
+        private float bulletStep;
+        private float currDistance;
+        private bool destroyed;
 
-        //time
-        float seconds;
-        float currSeconds;
+        #endregion
 
-        // Specific vars
-        public float radius = 0f;
-        public float followRadius = 0f;
-        public float followTurnSpeed = 0f;
+        #region MONOBEHAVIOUR
+
+        void Awake()
+        {
+            _system = GetComponent<ParticleSystem>();
+        }
 
         // Update is called once per frame
         void Update()
         {
-            if (points == null)
+            if (points == null || destroyed)
                 return;
 
             // if plasmatype is fusion then detect any transforms within a certain radius
             if (PType == PlasmaType.FUSION)
             {
-                if (!FusionCurve())
-                {
-                    // move the transform in the bullet direction
-                    transform.Translate((_data.Direction * speed) * Time.deltaTime);
-                }
+                UpdateFusion();
+            }
+            else if(PType == PlasmaType.COMPRESSED)
+            {
+                UpdateCompressed();
             }
             else
             {
-                // move the transform in the bullet direction
-                transform.Translate((_data.Direction * speed) * Time.deltaTime);
+                UpdateProjectile();
             }
-            float travel = ((transform.position - origTransPosition).sqrMagnitude);
-            travel *= bulletStep;
+        }
 
-            if (travel > bulletStep)
-                travel = bulletStep;
+        #endregion
+
+        #region PUBLIC INTERACTION
+
+        /// <summary>
+        /// Creates the bullet appearance then.
+        /// </summary>
+        /// <param name="direction">Direction.</param>
+        /// <param name="range">Range.</param>
+        public override void CreateProjectile(WeaponData data)
+        {
+            base.CreateProjectile(data);
+
+            CmdBuildFX(data);
+        }
+
+        #endregion
+
+        #region PROJECTILE CREATION
+
+        [ClientRpc]
+        public override void RpcBuildFX(WeaponData data)
+        {
+            Instantiate(Muzzle, transform.position + (data.Direction * 1f) * Time.deltaTime,
+                        Quaternion.LookRotation(data.Direction));
+
+            SoundController.PlaySoundFXAt
+                (transform.position, MuzzleSound);
+
+            BuildProjectile(data);
+        }
+
+        [ClientRpc]
+        public override void RpcBuildHitFX(Vector2 hit, WeaponData data)
+        {
+            SoundController.PlaySoundFXAt
+                        (transform.position, ImpactSound);
+
+            // Compressed plasma will explode on impact
+            Instantiate(Explode, transform.position, Quaternion.Euler(-_data.Direction));
+        }
+
+        public void BuildProjectile(WeaponData data)
+        {
+            transform.Translate(_data.Direction * Time.deltaTime);
+
+            GetComponent<ParticleSystem>().simulationSpace
+                = ParticleSystemSimulationSpace.Local;
+            points = new ParticleSystem.Particle[pointCount];
+
+            // First create the main projectile particle
+            projPosition = Vector3.zero;
+
+            currDistance = 0;
+
+            destroyed = false;
+
+            points[pointCount - 1].position = projPosition;
+            points[pointCount - 1].color = new Color(1f, 1f, 1f, 1f);
+            points[pointCount - 1].size = .2f;
+
+            // Figure out a bullet step
+            bulletStep = trailLength / (pointCount - 1);
 
             for (int i = 0; i < pointCount - 1; i++)
             {
-                points[i].position = projPosition - _data.Direction * (travel * i);
-            }
-            GetComponent<ParticleSystem>().SetParticles(points, points.Length);
+                points[i].position = projPosition;
 
-            currSeconds += Time.deltaTime;
-            if (currSeconds >= seconds)
-                DestroyProjectile();
+                points[i].color = Color.Lerp(points[pointCount - 1].color, 
+                    new Color(0.66f, 0.164f, 0.015f, 1f), bulletStep * i);
+
+                points[i].size = points[pointCount - 1].size - 
+                    (points[pointCount - 1].size / pointCount) * i;
+            }
+
+            GetComponent<ParticleSystem>().SetParticles(points, points.Length);
+            origTransPosition = transform.position;
+        }
+
+        #endregion
+
+        #region PROJECTILE UPDATES
+
+        private void UpdateFusion()
+        {
+            FusionCurve();
+
+            TravelBullet();
+
+            RaycastHit2D[] hitList = Physics2D.RaycastAll(transform.position, 
+                -_data.Direction, speed * Time.deltaTime, maskIgnore);
+
+            if (hitList.Length != 0)
+            {
+                foreach (RaycastHit2D hit in hitList)
+                {
+                    // if successful hit then break out of the loop
+                    if(ApplyDamage(hit))
+                        break;
+                }
+            }
+        }
+
+        private void UpdateProjectile()
+        {
+            TravelBullet();
+
+            RaycastHit2D[] hitList = Physics2D.RaycastAll(transform.position,
+                -_data.Direction, speed * Time.deltaTime, maskIgnore);
+
+            if (hitList.Length != 0)
+            {
+                foreach (RaycastHit2D hit in hitList)
+                {
+                    // if successful hit then break out of the loop
+                    if (ApplyDamage(hit))
+                        break;
+                }
+            }
+        }
+
+        private void UpdateCompressed()
+        {
+            TravelBullet();
 
             RaycastHit2D[] hitList = Physics2D.RaycastAll(transform.position, -_data.Direction, speed * Time.deltaTime, maskIgnore);
 
@@ -81,44 +212,96 @@ namespace Space.Projectiles
                         continue;
                     }
 
-                    SoundController.PlaySoundFXAt
-                        (transform.position, ImpactSound);
-
-                    if (PType == PlasmaType.COMPRESSED)
+                    CmdBuildHitFX(hit.point, _data);
+                    
+                    RaycastHit2D[] colliderList = Physics2D.CircleCastAll(transform.position, radius, Vector2.up, 0, maskIgnore);
+                    foreach (RaycastHit2D hitB in colliderList)
                     {
-                        // Compressed plasma will explode on impact
-                        Instantiate(Explode, transform.position, Quaternion.identity);
-                        RaycastHit2D[] colliderList = Physics2D.CircleCastAll(transform.position, radius, Vector2.up, 0, maskIgnore);
-                        foreach (RaycastHit2D hitB in colliderList)
+                        if (hit.transform != null)
                         {
-                            if (hit.transform != null)
-                            {
-                                HitData hitD = new HitData();
-                                hitD.damage = _data.Damage;
-                                hitD.hitPosition = hitB.point;
-                                hitD.radius = radius;
-                                hitD.originID = _data.Self;
-                                hitB.transform.gameObject.SendMessage("HitArea", hitD, SendMessageOptions.DontRequireReceiver);
-                            }
-                            DestroyProjectile();
-                            break;
+                            HitData hitD = new HitData();
+                            hitD.damage = _data.Damage;
+                            hitD.hitPosition = hitB.point;
+                            hitD.radius = radius;
+                            hitD.originID = _data.Self;
+                            hitB.transform.gameObject.SendMessage("HitArea", hitD, SendMessageOptions.DontRequireReceiver);
                         }
-                    }
-                    else
-                    {
-                        HitData hitD = new HitData();
-                        hitD.damage = _data.Damage;
-                        hitD.hitPosition = hit.point;
-                        hitD.originID = _data.Self;
-                        hit.transform.gameObject.SendMessage("Hit", hitD, SendMessageOptions.DontRequireReceiver);
                         DestroyProjectile();
-                        Instantiate(Explode, hit.point,
-                                Quaternion.Euler(-_data.Direction));
                         break;
                     }
                 }
             }
         }
+
+        #region SHARED
+
+        /// <summary>
+        /// Each bullet has shared behaviour FX
+        /// So create trailing bullet projectile script
+        /// </summary>
+        private void TravelBullet()
+        {
+            // move the transform in the bullet direction
+            transform.Translate((_data.Direction * speed) * Time.deltaTime);
+
+            float travel = ((transform.position - origTransPosition).sqrMagnitude);
+            travel *= bulletStep;
+            currDistance += travel;
+
+            if (travel > bulletStep)
+                travel = bulletStep;
+
+            for (int i = 0; i < pointCount - 1; i++)
+            {
+                points[i].position = projPosition - _data.Direction * (travel * i);
+            }
+
+            GetComponent<ParticleSystem>().SetParticles(points, points.Length);
+
+            if(currDistance > _data.Distance)
+                DestroyProjectileDelay();
+        }
+
+        /// <summary>
+        /// If contacts a collider then 
+        /// invokes the object's impact collider
+        /// </summary>
+        /// <param name="hit"></param>
+        /// <returns></returns>
+        private bool ApplyDamage(RaycastHit2D hit)
+        {
+            // Find the ship that fired the projectile
+            GameObject aggressor = ClientScene.FindLocalObject(_data.Self);
+
+            if (hit.transform.Equals(aggressor.transform))
+            {
+                return false;
+            }
+
+            CmdBuildHitFX(hit.point, _data);
+
+            HitData hitD = new HitData();
+            hitD.damage = _data.Damage;
+            hitD.hitPosition = hit.point;
+            hitD.originID = _data.Self;
+
+
+            // retrieve impact controller
+            // and if one exists make ship process hit
+            ImpactCollider IC = hit.transform.GetComponent<ImpactCollider>();
+            if (IC != null)
+            {
+                IC.Hit(hitD);
+            }
+
+            DestroyProjectileDelay();
+
+            return true;
+        }
+
+        #endregion
+
+        #region PRIVATE
 
         /// <summary>
         /// curves the plasma bolt to an object.
@@ -157,44 +340,20 @@ namespace Space.Projectiles
             return false;
         }
 
-        /// <summary>
-        /// Creates the bullet appearance then.
-        /// 
-        /// </summary>
-        /// <param name="direction">Direction.</param>
-        /// <param name="range">Range.</param>
-        public override void CreateProjectile(WeaponData data)
+        #endregion
+
+        public void DestroyProjectileDelay()
         {
-            base.CreateProjectile(data);
-            Instantiate(Muzzle, transform.position + (_data.Direction * 1f) * Time.deltaTime,
-                        Quaternion.LookRotation(_data.Direction));
+            destroyed = true;
 
-            transform.Translate(_data.Direction * Time.deltaTime);
+            points = null;
 
-            seconds = data.Distance / speed;
-            currSeconds = 0;
+            _system.Clear();
 
-            GetComponent<ParticleSystem>().simulationSpace
-                = ParticleSystemSimulationSpace.Local;
-            points = new ParticleSystem.Particle[pointCount];
-
-            // First create the main projectile particle
-            projPosition = Vector3.zero;
-            points[pointCount - 1].position = projPosition;
-            points[pointCount - 1].color = new Color(1f, 1f, 1f, 1f);
-            points[pointCount - 1].size = .2f;
-
-            // Figure out a bullet step
-            bulletStep = trailLength / (pointCount - 1);
-
-            for (int i = 0; i < pointCount - 1; i++)
-            {
-                points[i].position = projPosition;
-                points[i].color = Color.Lerp(points[pointCount - 1].color, new Color(0.66f, 0.164f, 0.015f, 1f), bulletStep * i);
-                points[i].size = points[pointCount - 1].size - (points[pointCount - 1].size / pointCount) * i;
-            }
-            GetComponent<ParticleSystem>().SetParticles(points, points.Length);
-            origTransPosition = transform.position;
+            // Create destroy with delay of one sec
+            Invoke("DestroyProjectile", 1f);
         }
+
+        #endregion
     }
 }
