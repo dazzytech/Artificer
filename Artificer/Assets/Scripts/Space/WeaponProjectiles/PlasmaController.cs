@@ -206,12 +206,14 @@ namespace Space.Projectiles
                 {
                     if (collider.transform.tag == "Enemy")
                     {
-                        Vector3 newDir = collider.transform.position - transform.position;
+                        Vector3 newDir = (collider.transform.position - transform.position).normalized;
                         newDir.z = 0;
-                        Vector3 dir = Vector3.Slerp(_data.Direction, newDir, Time.deltaTime * (followTurnSpeed * (10f - newDir.magnitude)));
-                        //transform.Translate((dir.normalized * speed) * Time.deltaTime);
 
-                        _data.Direction = dir;
+                        if (Vector3.Angle(collider.transform.position, transform.position) < 1)
+                            _data.Direction = newDir;
+                        else
+                            _data.Direction = Vector3.Lerp(_data.Direction, newDir, Time.deltaTime * followTurnSpeed).normalized;
+
                         return true;
                     }
                 }

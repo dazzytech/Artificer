@@ -1876,11 +1876,19 @@ MonoBehaviour:
   m_OnlineScene: SpaceSegment
   m_SpawnPrefabs:
   - {fileID: 120856, guid: ace3482e178741e4bbd5233db59f622f, type: 2}
+  - {fileID: 113244, guid: 32aa955214923df4bb3e4d80765251cd, type: 2}
+  - {fileID: 166728, guid: cd40bb1d677020247a2a03ad060de7fa, type: 2}
+  - {fileID: 195394, guid: f30d2661916b5db469ce1d08cc2a3efc, type: 2}
   - {fileID: 124172, guid: 6d37b3440dff94f4c8c614836f78d216, type: 2}
   - {fileID: 138752, guid: 38b7e0dbd327f9742a0a49b7066d30d4, type: 2}
   - {fileID: 135586, guid: df735912ad43c584782776715257325d, type: 2}
   - {fileID: 154318, guid: b15093253fcab90439e0f97826893cae, type: 2}
   - {fileID: 127046, guid: f39acb4e38cf3bd418f2300601d8c5e7, type: 2}
+  - {fileID: 175588, guid: 6fbaa736aaade13499b459e76e938e24, type: 2}
+  - {fileID: 164394, guid: 9ceb4ef9a181edd43a3a5092a03e6b4a, type: 2}
+  - {fileID: 173508, guid: 087a3ec77e0650741b2a39fdc4d92bb0, type: 2}
+  - {fileID: 195712, guid: c7bc59000d8e94544a0905e965654cb5, type: 2}
+  - {fileID: 112430, guid: dfe41666fdf05414ea45a49e37dd47d1, type: 2}
   - {fileID: 178506, guid: 87f3cc353526fb047936b76a6bf725f2, type: 2}
   - {fileID: 175094, guid: c1fe0a9a4dde9214a9566f0bf63d3f3e, type: 2}
   - {fileID: 197064, guid: 989a9aa3b67a4954c80bd74b13f2a2d4, type: 2}
@@ -1890,11 +1898,6 @@ MonoBehaviour:
   - {fileID: 135224, guid: b04ee84ac096c4c43a8715bf3187b43d, type: 2}
   - {fileID: 194402, guid: c700d74112a9dc544b31585ef708d3a4, type: 2}
   - {fileID: 1000013982247906, guid: 7a2be7575710e7b4c93780e3b5226764, type: 2}
-  - {fileID: 175588, guid: 6fbaa736aaade13499b459e76e938e24, type: 2}
-  - {fileID: 164394, guid: 9ceb4ef9a181edd43a3a5092a03e6b4a, type: 2}
-  - {fileID: 173508, guid: 087a3ec77e0650741b2a39fdc4d92bb0, type: 2}
-  - {fileID: 195712, guid: c7bc59000d8e94544a0905e965654cb5, type: 2}
-  - {fileID: 112430, guid: dfe41666fdf05414ea45a49e37dd47d1, type: 2}
   m_CustomConfig: 1
   m_MaxConnections: 4
   m_ConnectionConfig:
