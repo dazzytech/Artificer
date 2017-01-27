@@ -39,10 +39,10 @@ namespace Space.GameFunctions
         public void GenerateStations(TeamController teamA, TeamController teamB)
         {
             // place team A at the top half of the map
-            Vector2 teamAPos = new Vector2(2500, 1000);
+            Vector2 teamAPos = new Vector2(2500, 2400);
 
             // Place team B at the other half
-            Vector2 teamBPos = new Vector2(2500, 3000);
+            Vector2 teamBPos = new Vector2(2500, 2500);
 
             // Create a main station position within team As location
             Vector2 stationAPosition = new Vector2

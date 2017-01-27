@@ -16,14 +16,14 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.189 seconds
+- Completed reload, in  0.128 seconds
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1360x768 60Hz; virtual: 1360x768 at 0,0
 <RI> Initialized touch support.
-UnloadTime: 1.976439 ms
+UnloadTime: 1.799983 ms
 DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
  
 (Filename:  Line: 386)
@@ -38,44 +38,20 @@ The referenced script on this Behaviour (Game Object 'ShipViewer') is missing!
 (Filename:  Line: 1656)
 
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.301852 ms
+UnloadTime: 4.687414 ms
 Scene Changed
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
 
-Unloading 581 unused Assets to reduce memory usage. Loaded Objects now: 3192.
-Total: 2.723248 ms (FindLiveObjects: 0.223232 ms CreateObjectMapping: 0.113005 ms MarkObjects: 1.952587 ms  DeleteObjects: 0.410571 ms)
+Unloading 581 unused Assets to reduce memory usage. Loaded Objects now: 3388.
+Total: 3.268129 ms (FindLiveObjects: 0.240831 ms CreateObjectMapping: 0.214895 ms MarkObjects: 2.364780 ms  DeleteObjects: 0.427244 ms)
 
-Large state update of 1727 bytes for netId:2746 from script:Ship(Clone) (Space.Ship.ShipInitializer)
+Large state update of 1727 bytes for netId:3129 from script:Ship(Clone) (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Large state update of 1727 bytes for netId:2746 from script:PlayerShip (Space.Ship.ShipInitializer)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Large state update of 1727 bytes for netId:2757 from script:Ship(Clone) (Space.Ship.ShipInitializer)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Large state update of 1727 bytes for netId:2757 from script:AllyShip (Space.Ship.ShipInitializer)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Instance not found when handling Command message [netId=2784]
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Instance not found when handling Command message [netId=2786]
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Instance not found when handling Command message [netId=2787]
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-HandleTransform no gameObject
+Large state update of 1727 bytes for netId:3129 from script:PlayerShip (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
@@ -83,38 +59,18 @@ ERROR: Space Event Listener - Process Hit Msg: Passed hit object is null.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Large state update of 1727 bytes for netId:2801 from script:Ship(Clone) (Space.Ship.ShipInitializer)
+Large state update of 1727 bytes for netId:3134 from script:Ship(Clone) (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Large state update of 1727 bytes for netId:2801 from script:AllyShip (Space.Ship.ShipInitializer)
+Large state update of 1727 bytes for netId:3134 from script:EnemyShip (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Log: connection {1} has been disconnected by timeout; address {::ffff:127.0.0.1:54967}
-ERROR: Friendly HUD - GenerateTeamList: Friendly ship not found in client scene.
+ERROR: Space Event Listener - Process Hit Msg: Passed hit object is null.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Large state update of 1727 bytes for netId:2938 from script:Ship(Clone) (Space.Ship.ShipInitializer)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Large state update of 1727 bytes for netId:2938 from script:AllyShip (Space.Ship.ShipInitializer)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Instance not found when handling Command message [netId=2943]
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Instance not found when handling Command message [netId=2944]
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-ERROR: Friendly HUD - GenerateTeamList: Friendly ship not found in client scene.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
+Log: connection {1} has been disconnected by timeout; address {::ffff:127.0.0.1:55015}
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 2b30 -> priority: 1 
+  Thread -> id: 39cc -> priority: 1 
