@@ -121,12 +121,6 @@ namespace Space
             }
         }
 
-        /*[ClientRpc]
-        public override void RpcHitArea()
-        {
-            RpcHit();
-        }*/
-
         public void ApplyDamage(HitData hData)
         {
             pieceDensity -= hData.damage;
@@ -141,9 +135,8 @@ namespace Space
             }
         }
 
-        /*
 
-       public string[] prospect;
+        public string[] prospect;
         /*
         public void Hit(HitData hit)
         {
@@ -178,11 +171,6 @@ namespace Space
                     col.isTrigger = true;
                 }        
             }
-        }
-
-        public void HitArea(HitData hit)
-        {
-            Hit(hit);
         }*/
 
         #endregion

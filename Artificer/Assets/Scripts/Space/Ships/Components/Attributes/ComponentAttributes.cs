@@ -61,11 +61,11 @@ namespace Space.Ship.Components.Attributes
 
         #region SHIP DATA REFERENCE
 
-        public ShipAttributes ShipAtt;
+        public ShipAttributes Ship;
 
-        public ShipData Ship
+        public ShipData ShipData
         {
-            get { return ShipAtt.Ship; }
+            get { return Ship.Ship; }
         }
 
         #endregion

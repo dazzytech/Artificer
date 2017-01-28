@@ -75,7 +75,7 @@ namespace Space.Ship.Components.Listener
         /// <param name="Ship"></param>
         public void SetShip(ShipAttributes Ship)
         {
-            GetAttributes().ShipAtt = Ship;
+            GetAttributes().Ship = Ship;
 
             // If ship is already docked then we must hide it
             if (Ship.ShipDocked)

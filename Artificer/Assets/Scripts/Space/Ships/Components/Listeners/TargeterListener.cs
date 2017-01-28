@@ -64,7 +64,7 @@ namespace Space.Ship.Components.Listener
             } else
             {
                 // Control the mousefollow behaviour here
-                if (_attr.Ship.CombatActive)
+                if (_attr.ShipData.CombatActive)
                 {
                     LerpTowardsMouse();
                 } else

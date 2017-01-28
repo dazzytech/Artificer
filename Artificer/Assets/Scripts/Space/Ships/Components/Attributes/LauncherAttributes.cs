@@ -16,9 +16,6 @@ namespace Space.Ship.Components.Attributes
         
         public bool readyToFire;
         public GameObject ProjectilePrefab;
-
-        // Auto target items
-        //\public ShipAttributes Ship;
         
         public bool AutoTarget = true;
     }

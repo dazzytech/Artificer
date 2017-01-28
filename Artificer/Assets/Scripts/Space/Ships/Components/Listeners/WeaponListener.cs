@@ -21,8 +21,6 @@ namespace Space.Ship.Components.Listener
     	{
             ComponentType = "Weapons";
     		_attr = GetComponent<WeaponAttributes>();
-
-            GameManager.singleton.client.RegisterHandler((short)MSGCHANNEL.CREATEPROJECTILE, ProjectileCreated);
         }
     	
     	void Start ()
@@ -60,7 +58,7 @@ namespace Space.Ship.Components.Listener
                 data.Damage = _attr.WeaponDamage;
                 data.Direction = forward;
                 data.Distance = _attr.WeaponRange;
-                data.Self = _attr.ShipAtt.instID;
+                data.Self = _attr.Ship.instID;
 
                 int prefabIndex = NetworkManager.singleton.spawnPrefabs.IndexOf(_attr.ProjectilePrefab);
 
@@ -76,20 +74,6 @@ namespace Space.Ship.Components.Listener
                 GameManager.singleton.client.Send((short)MSGCHANNEL.BUILDPROJECTILE, msg);
             }
     	}
-
-        public void ProjectileCreated(NetworkMessage msg)
-        {
-            // retreive message
-            ProjectileSpawnedMessage projMsg = msg.ReadMessage<ProjectileSpawnedMessage>();
-
-            // find our projectile
-            GameObject GO = ClientScene.FindLocalObject
-                (projMsg.Projectile);
-
-            // client side projectile building
-            GO.GetComponent<WeaponController>().CreateProjectile(projMsg.WData);
-        }
-
 
         public override void Deactivate()
     	{

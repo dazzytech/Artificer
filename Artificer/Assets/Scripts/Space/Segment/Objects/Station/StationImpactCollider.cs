@@ -31,16 +31,6 @@ namespace Space.Segment
 
         #region IMPACT COLLISION
 
-        /// <summary>
-        /// Damage done to a station is processed
-        /// on the server 
-        /// </summary>
-        /// <param name="hit"></param>
-        /*public override void Hit(HitData hit)
-        {
-            m_con.ProcessDamage(hit);
-        }*/
-
         public void ApplyDamage(HitData hData)
         {
             /*pieceDensity -= hData.damage;

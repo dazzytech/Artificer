@@ -6,6 +6,7 @@ using System.Linq;
 
 using Space.Projectiles;
 using Space.Ship.Components.Attributes;
+using Networking;
 
 namespace Space.Ship.Components.Listener
 {
@@ -36,12 +37,12 @@ namespace Space.Ship.Components.Listener
         
         public override void Activate()
         {
-            /*if (_attr.readyToFire && _attr.Ship.Targets.Count != 0)
+            if (_attr.readyToFire && _attr.Ship.Targets.Count != 0)
             {
                 StartCoroutine("EngageDelay");
 
                 StartCoroutine("LaunchRockets"); 
-            }*/
+            }
         }
         
         public override void Deactivate()
@@ -82,28 +83,13 @@ namespace Space.Ship.Components.Listener
                 {
                     // Only auto target heads of ships
                     // while no target grouping
-                    /*if (_attr.Ship.Targets.Contains(hit.collider.transform)
+                    if (_attr.Ship.Targets.Contains(hit.collider.transform)
                         || hit.collider.transform.tag != "Head")
                         continue;
 
-                    // detect if enemy
-                    if (_attr.Ship.AlignmentLabel == "Player")
-                    {
-                        // use player relations
-                        if (hit.transform.name
-                            != "Enemy")
-                            continue;
-                    } else
-                    {
-                        // ai relation
-                        if (_attr.Ship.AlignmentLabel == "Enemy" && 
-                            hit.transform.name == "Enemy")
-                            continue;
-
-                        if (_attr.Ship.AlignmentLabel == "Friendly" && 
-                            hit.transform.name != "Enemy" || hit.transform.tag == "Station")
-                            continue;
-                    }*/
+                    if (hit.transform.tag
+                             != "Enemy")
+                        continue;
 
                     ComponentListener comp = hit.collider.
                     transform.GetComponent<ComponentListener>();
@@ -111,10 +97,10 @@ namespace Space.Ship.Components.Listener
                     if (comp != null)
                     {
                         // check not self targetting
-                        /*if (!_attr.Ship.Components.Contains(comp))
+                        if (!_attr.Ship.Components.Contains(comp))
                         {
-                                _attr.Ship.Targets.Add(hit.collider.transform);
-                        }*/
+                            _attr.Ship.Targets.Add(hit.collider.transform);
+                        }
                     }
 
                     yield return null;
@@ -125,7 +111,7 @@ namespace Space.Ship.Components.Listener
 
         private IEnumerator LaunchRockets()
         {
-            /*Transform[] firePs = transform.Cast<Transform>().Where
+            Transform[] firePs = transform.Cast<Transform>().Where
                 (c=>c.gameObject.tag == "Fire").ToArray();
             
             if(firePs.Length == 0)
@@ -159,7 +145,9 @@ namespace Space.Ship.Components.Listener
                 data.Damage = _attr.WeaponDamage;
                 data.Direction = forward;
                 data.Distance = _attr.WeaponRange;
-                data.Self = this.GetComponentInParent<NetworkBehaviour>().netId;
+                data.Self = _attr.Ship.instID;
+
+                int prefabIndex = NetworkManager.singleton.spawnPrefabs.IndexOf(_attr.ProjectilePrefab);
 
                 // if targets are removed mid fire
                 if (_attr.Ship.Targets.Count == 0)
@@ -168,18 +156,30 @@ namespace Space.Ship.Components.Listener
                     yield return null;
                 }
 
-                //data.Target = _attr.Ship.Targets[Random.Range(0, _attr.Ship.Targets.Count)];
+                Transform Target = _attr.Ship.Targets[Random.Range(0,
+                    _attr.Ship.Targets.Count)];
+
+                NetworkInstanceId netTarget = Target
+                    .GetComponent<NetworkIdentity>().netId;
+
+                if(netTarget.Value == 0)
+                    netTarget = Target.parent.GetComponent<NetworkIdentity>().netId;
+
+                data.Target = netTarget;
 
                 StartCoroutine("EngageDelay");
 
-                projectile = Instantiate(_attr.ProjectilePrefab, shotOrigin,
-                                                Quaternion.Euler(0f, 0f, rotation)) as GameObject;
+                ProjectileBuildMessage msg = new ProjectileBuildMessage();
+                msg.PrefabIndex = prefabIndex;
+                msg.Position = shotOrigin;
+                msg.WData = data;
+                msg.shooterID = GameManager.Space.ID;
 
-                projectile.SendMessage("CreateMissile", data, 
-                                           SendMessageOptions.RequireReceiver);*/
+                // Sendmsg to game to spawn projectile
+                GameManager.singleton.client.Send((short)MSGCHANNEL.BUILDPROJECTILE, msg);
 
                 yield return new WaitForSeconds(_attr.RocketDelay);
-            //}
+            }
         }
     }
 }

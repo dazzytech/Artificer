@@ -117,14 +117,12 @@ namespace Space.Projectiles
 
         #endregion
 
-        #region PRIVATE UTILITY
+        #endregion
 
-        #region PROJECTILE UPDATES
+        #region PRIVATE UTILITY
 
         private void BuildProjectile()
         {
-            //transform.Translate(_data.Direction * Time.deltaTime);
-
             GetComponent<ParticleSystem>().simulationSpace
                 = ParticleSystemSimulationSpace.Local;
 
@@ -156,7 +154,7 @@ namespace Space.Projectiles
             origTransPosition = transform.position;
         }
 
-        #endregion
+        #region PROJECTILE UPDATES
 
         #region FUSION
 
@@ -252,68 +250,20 @@ namespace Space.Projectiles
             {
                 foreach (RaycastHit2D hit in hitList)
                 {
-                    if (hit.transform.Equals(_data.Self))
+                    // if successful hit then break out of the loop
+                    if (ApplyDamageArea(hit))
                     {
-                        continue;
+                        TravelBullet(hit.point);
+                        return;
                     }
-
-                    CmdBuildHitFX(hit.point, _data);
-                    
-                    RaycastHit2D[] colliderList = Physics2D.CircleCastAll(transform.position, radius, Vector2.up, 0, maskIgnore);
-                    foreach (RaycastHit2D hitB in colliderList)
-                    {
-                        if (hit.transform != null)
-                        {
-                            HitData hitD = new HitData();
-                            hitD.damage = _data.Damage;
-                            hitD.hitPosition = hitB.point;
-                            hitD.radius = radius;
-                            hitD.originID = _data.Self;
-                            hitB.transform.gameObject.SendMessage("HitArea", hitD, SendMessageOptions.DontRequireReceiver);
-                        }
-                        DestroyProjectile();
-                    }
-
-                    TravelBullet(hit.point);
-                    return;
                 }
             }
-
             TravelBullet(Vector3.zero);
         }
 
         #endregion
 
         #region BULLET UPDATE
-
-        /*
-        /// <summary>
-        /// Each bullet has shared behaviour FX
-        /// So create trailing bullet projectile script
-        /// </summary>
-        private void TravelBullet()
-        {
-            // move the transform in the bullet direction
-            transform.Translate((_data.Direction * speed) * Time.deltaTime);
-
-            float travel = ((transform.position - origTransPosition).sqrMagnitude);
-            travel *= bulletStep;
-            currDistance += travel;
-
-            if (travel > bulletStep)
-                travel = bulletStep;
-
-            for (int i = 0; i < pointCount - 1; i++)
-            {
-                points[i].position = -_data.Direction * (travel * i);
-            }
-
-            GetComponent<ParticleSystem>().SetParticles(points, points.Length);
-
-            if(currDistance > _data.Distance)
-                DestroyProjectileDelay();
-        }
-        */
 
         /// <summary>
         /// Each bullet has shared behaviour FX
@@ -391,6 +341,8 @@ namespace Space.Projectiles
             origTransPosition = transform.position;
         }
 
+        #endregion
+
         /// <summary>
         /// If contacts a collider then 
         /// invokes the object's impact collider
@@ -433,6 +385,52 @@ namespace Space.Projectiles
             return true;
         }
 
+        private bool ApplyDamageArea(RaycastHit2D hit)
+        {
+            // Find the ship that fired the projectile
+            GameObject aggressor = ClientScene.FindLocalObject(_data.Self);
+
+            if (aggressor == null)
+            {
+                return false;
+            }
+            if (hit.transform.Equals(aggressor.transform))
+            {
+                return false;
+            }
+
+            CmdBuildHitFX(hit.point, _data);
+
+            HitData hitD = new HitData();
+            hitD.damage = _data.Damage;
+            // maybe this should be center of impact
+            hitD.hitPosition = hit.point;
+            hitD.radius = radius;
+            hitD.originID = _data.Self;
+
+            RaycastHit2D[] colliderList = Physics2D.CircleCastAll(transform.position, radius, Vector2.up, 0, maskIgnore);
+            foreach (RaycastHit2D hitB in colliderList)
+            {
+                if (hitB.transform != null)
+                {
+                    // retrieve impact controller
+                    ImpactCollider IC = hitB.transform.GetComponent<ImpactCollider>();
+                    if (IC != null)
+                    {
+                        IC.HitArea(hitD);
+                    }
+                }
+            }
+
+            DestroyProjectileDelay();
+
+            return true;
+        }
+
+        /// <summary>
+        /// Stops the bullet functionality and destroys
+        /// bullet after trail dies
+        /// </summary>
         public void DestroyProjectileDelay()
         {
             destroyed = true;
@@ -445,7 +443,6 @@ namespace Space.Projectiles
             Invoke("DestroyProjectile", 1f);
         }
 
-        #endregion
 
         #endregion
     }

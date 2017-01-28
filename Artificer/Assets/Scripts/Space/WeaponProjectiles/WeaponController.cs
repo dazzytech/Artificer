@@ -11,7 +11,7 @@ namespace Space.Projectiles
         public Vector3 Direction;
         public float Distance;
         public float Damage;
-        public Transform Target;
+        public NetworkInstanceId Target;
         public NetworkInstanceId Self;
     }
 
@@ -61,15 +61,6 @@ namespace Space.Projectiles
         public virtual void RpcBuildHitFX(Vector2 hit, WeaponData data)
         {
         }
-
-        public virtual void CreateMissile(WeaponData data)
-        {
-           // SoundController.PlaySoundFXAt
-                //(transform.position, MuzzleSound);
-        }
-
-        public virtual void Trigger()
-        { }
 
         public virtual void DestroyProjectile()
         {

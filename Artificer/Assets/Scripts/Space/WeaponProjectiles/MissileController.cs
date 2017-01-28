@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
 using Space.Segment;
@@ -7,14 +8,26 @@ namespace Space.Projectiles
 {
     public class MissileController : WeaponController
     {
+        #region CUSTOMIZABLE ATTRIBUTES
+
         public float MissileSpeed = 5f;
         public float MissileFuse;
+
+        #endregion
+
+        #region CALCULATION VARIABLES
 
         float turn = 2.5f;
         float lastTurn = 0f;
         public float Radius = 3f;
 
+        #endregion
+
+        Transform Target;
+
         protected Rigidbody2D rocketRigidbody;
+
+        #region MONOBEHAVIOUR
 
         // Use this for initialization
         void Awake()
@@ -24,15 +37,18 @@ namespace Space.Projectiles
 
         void Start()
         {
-            Invoke("Trigger", MissileFuse);
+            if(!hasAuthority)
+                return;
+
+            Invoke("ApplyDamageArea", MissileFuse);
         }
 
         void FixedUpdate()
         {
-            if (_data.Target == null)
+            if (Target == null || !hasAuthority)
                 return;
 
-            Quaternion newRotation = Quaternion.LookRotation(transform.position - _data.Target.position, Vector3.forward);
+            Quaternion newRotation = Quaternion.LookRotation(transform.position - Target.position, Vector3.forward);
             newRotation.x = 0.0f;
             newRotation.y = 0.0f;
             transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * turn);
@@ -46,46 +62,175 @@ namespace Space.Projectiles
 
         void Update()
         {
+            if (!hasAuthority)
+                return;
+
             RaycastHit2D hit = Physics2D.Raycast(transform.position, -_data.Direction, MissileSpeed * Time.deltaTime, maskIgnore);
 
             if (hit.transform != null)
             {
                 if (!hit.transform.Equals(_data.Self))
                 {
-                    Trigger();
+                    ApplyDamageArea(hit);
                 }
             }
         }
 
-        public override void Trigger()
+        #endregion
+
+        #region PUBLIC INTERACTION
+
+        /// <summary>
+        /// Creates the bullet appearance then.
+        /// </summary>
+        /// <param name="direction">Direction.</param>
+        /// <param name="range">Range.</param>
+        public override void CreateProjectile(WeaponData data)
         {
-            CancelInvoke("Trigger");
+            base.CreateProjectile(data);
 
-            SoundController.PlaySoundFXAt
-                (transform.position, ImpactSound);
+            GameObject targetObj = ClientScene.FindLocalObject(data.Target);
 
-            Instantiate(Explode, transform.position, Quaternion.identity);
-
-            RaycastHit2D[] colliderList = Physics2D.CircleCastAll(transform.position, Radius, Vector2.up, 0, maskIgnore);
-            foreach (RaycastHit2D hit in colliderList)
+            if (targetObj == null)
             {
-                if (hit.transform.Equals(_data.Self))
+                DestroyProjectile();
+                return;
+            }
+            Target = targetObj.transform;
+
+            CmdBuildFX(data);
+        }
+
+        #endregion
+
+        #region PRIVATE UTILITY
+
+/*
+        #region BULLET UPDATE
+
+        /// <summary>
+        /// Each bullet has shared behaviour FX
+        /// So create trailing bullet projectile script
+        /// </summary>
+        private void TravelBullet(Vector3 affix)
+        {
+            if (affix == Vector3.zero)
+                // move the transform in the bullet direction
+                transform.Translate((_data.Direction * speed) * Time.deltaTime);
+            else
+                transform.position = affix;
+
+            float travel = ((transform.position - origTransPosition).sqrMagnitude);
+            travel *= bulletStep;
+            currDistance += travel;
+
+            if (travel > bulletStep)
+                travel = bulletStep;
+
+            for (int i = 0; i < pointCount - 1; i++)
+            {
+                points[i].position = -_data.Direction * (travel * i);
+            }
+
+            GetComponent<ParticleSystem>().SetParticles(points, points.Length);
+
+            Vector3 translation = transform.position;
+
+            CmdTravelBullet(translation);
+        }
+
+        [Command]
+        private void CmdTravelBullet(Vector3 translation)
+        {
+            RpcTravelBullet(translation);
+        }
+
+        [ClientRpc]
+        private void RpcTravelBullet(Vector3 translation)
+        {
+            if (!hasAuthority)
+            {
+                // move the transform in the bullet direction
+                transform.position = translation;
+
+                float travel = ((transform.position - origTransPosition).sqrMagnitude);
+                travel *= bulletStep;
+                currDistance += travel;
+
+                if (travel > bulletStep)
+                    travel = bulletStep;
+
+                if (points != null)
                 {
-                    continue;
+                    for (int i = 0; i < pointCount - 1; i++)
+                    {
+                        points[i].position = -_data.Direction * (travel * i);
+                    }
+
+                    GetComponent<ParticleSystem>().SetParticles(points, points.Length);
                 }
 
-                if (hit.transform != null)
+                origTransPosition = transform.position;
+
+                return;
+            }
+
+            float distance = ((transform.position - origTransPosition).magnitude);
+            currDistance += distance;
+
+            if (currDistance > _data.Distance)
+                DestroyProjectileDelay();
+
+            origTransPosition = transform.position;
+        }
+        */
+
+        private bool ApplyDamageArea(RaycastHit2D hit)
+        {
+            CancelInvoke("ApplyDamageArea");
+
+            // Find the ship that fired the projectile
+            GameObject aggressor = ClientScene.FindLocalObject(_data.Self);
+
+            if (aggressor == null)
+            {
+                return false;
+            }
+
+            if (hit.transform == aggressor.transform)
+                return false;
+
+            CmdBuildHitFX(hit.point, _data);
+
+            HitData hitD = new HitData();
+            hitD.damage = _data.Damage;
+            // maybe this should be center of impact
+            hitD.hitPosition = hit.point;
+            hitD.radius = Radius;
+            hitD.originID = _data.Self;
+
+            RaycastHit2D[] colliderList = 
+                Physics2D.CircleCastAll(transform.position, Radius, Vector2.up, 0, maskIgnore);
+
+            foreach (RaycastHit2D hitB in colliderList)
+            {
+                if (hitB.transform != null)
                 {
-                    HitData hitD = new HitData();
-                    hitD.damage = _data.Damage;
-                    hitD.radius = Radius;
-                    hitD.hitPosition = hit.point;
-                    hitD.originID = _data.Self;
-                    hit.transform.gameObject.SendMessage("HitArea", hitD, SendMessageOptions.DontRequireReceiver);
+                    // retrieve impact controller
+                    ImpactCollider IC = hitB.transform.GetComponent<ImpactCollider>();
+                    if (IC != null)
+                    {
+                        IC.HitArea(hitD);
+                    }
                 }
             }
+
             DestroyProjectile();
+
+            return true;
         }
+
+        #endregion
     }
 }
 

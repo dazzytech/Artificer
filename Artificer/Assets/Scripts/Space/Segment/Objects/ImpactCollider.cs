@@ -59,6 +59,22 @@ namespace Space.Segment
         }
 
         /// <summary>
+        /// The base hit area will only
+        /// hit a single collider so forward to 
+        /// Hit
+        /// </summary>
+        /// <param name="hit"></param>
+        public virtual void HitArea(HitData hit)
+        {
+            // avoid multiple hits
+            if (_hitD.Equals(hit))
+                return;
+
+            // Forward to single hit
+            Hit(hit);
+        }
+
+        /// <summary>
         /// Client function called by server 
         /// to handle projectile hits on our object
         /// process the damage on the local object and then

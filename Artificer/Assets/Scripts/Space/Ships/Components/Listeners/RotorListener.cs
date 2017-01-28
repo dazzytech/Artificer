@@ -30,7 +30,7 @@ namespace Space.Ship.Components.Listener
     	void Update()
     	{
             // Perform automated turning if in combat mode
-            if (_attr.Ship.CombatActive && _attr.Ship.CombatResponsive)
+            if (_attr.ShipData.CombatActive && _attr.ShipData.CombatResponsive)
             {
                 float difference = CalcAngle();
                 if (Mathf.Sign(transform.localEulerAngles.z - 180) < 0)

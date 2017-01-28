@@ -14,6 +14,7 @@ using Space.Segment;
 using Space.UI;
 using Networking;
 using Space.Teams;
+using Space.Projectiles;
 
 namespace Space
 {
@@ -48,6 +49,7 @@ namespace Space
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.ASSIGNTEAM, OnDefineTeam);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSOBJECTHIT, OnProcessHitMsg);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSSHIPHIT, OnProcessHitMsgShip);
+            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.CREATEPROJECTILE, OnProjectileCreated);
         }
 
         void Start()
@@ -403,6 +405,19 @@ namespace Space
             // Pass the station controller from our object to the HUD
             GameManager.GUI.AddStation(station.
                 GetComponent<StationController>());
+        }
+
+        public void OnProjectileCreated(NetworkMessage msg)
+        {
+            // retreive message
+            ProjectileSpawnedMessage projMsg = msg.ReadMessage<ProjectileSpawnedMessage>();
+
+            // find our projectile
+            GameObject GO = ClientScene.FindLocalObject
+                (projMsg.Projectile);
+
+            // client side projectile building
+            GO.GetComponent<WeaponController>().CreateProjectile(projMsg.WData);
         }
 
         #endregion

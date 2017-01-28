@@ -73,23 +73,23 @@ namespace Space.Ship
         }
 
         /// <summary>
-        /// Similar to RpcHit, however damage is sent to all
+        /// Similar to Hit, however damage is sent to all
         /// colliders within a radius
         /// </summary>
         /// <param name="hit"></param>
-        /*[ClientRpc]
-        public override void RpcHitArea()
+        public override void HitArea(HitData hit)
         {
-            if (!isLocalPlayer)
+            if (colliders == null)
+                BuildColliders();
+
+            // check if he have just been hit
+            if (_hitD.Equals(hit))
                 return;
 
-            if (GetComponent<ShipPlayerInputController>() != null)
-            {
-                Camera.main.gameObject.SendMessage("ShakeCam");
-            }
+            _hitD = hit;
 
             StartCoroutine("CycleThroughCollidersGroup");
-        }*/
+        }
 
         /// <summary>
         /// is called on our ship then apply damage otherwise just
@@ -171,37 +171,43 @@ namespace Space.Ship
         private IEnumerator CycleThroughCollidersGroup()
         {
             // Store an int reference to components that were damaged
-            /*List<int> damagedComps = new List<int>();
+            List<int> damagedComps = new List<int>();
+
+            Collider2D[] col = Physics2D.OverlapCircleAll(_hitD.hitPosition,
+                                                             _hitD.radius);
+            // We did not receive damage
+            if (col.Length == 0)
+                yield break;
+
+            List<Collider2D> colList = new List<Collider2D>(col);
 
             foreach (BoxCollider2D piece in colliders)
             {
                 if (piece != null)
                 {
-                    Collider2D col = Physics2D.OverlapCircle(_hitD.hitPosition,
-                                                             _hitD.radius);
-                    if (col != null)
-                    {
-                        if (col.Equals(piece))
+                    if (colList.Contains(piece))
                         {
                             // Retrieve the component listener and attributes from piece obj
                             ComponentAttributes att =
                                     piece.gameObject.
                                     GetComponent<ComponentAttributes>();
 
-                            // consider creating a new hit data with reduced damage based
-                            // on distance
-                            piece.gameObject.SendMessage("DamageComponent", _hitD);
-
                             damagedComps.Add(att.ID);
                         }
                     }
-                }
 
                 yield return null;
             }
 
+            // Send message to server to process damage
             if (damagedComps.Count > 0)
-                RpcProcessDamage(damagedComps.ToArray());*/
+            {
+                ShipColliderHitMessage msg = new ShipColliderHitMessage();
+                msg.HitComponents = damagedComps.ToArray();
+                msg.ShipID = this.netId;
+                msg.HitD = _hitD;
+                GameManager.singleton.client.Send((short)MSGCHANNEL.SHIPHIT, msg);
+            }
 
             yield break;
         }
