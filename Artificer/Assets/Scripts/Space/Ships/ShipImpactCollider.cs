@@ -99,9 +99,10 @@ namespace Space.Ship
         {
             _hitD = hData;
 
+            StartCoroutine("CycleComponentDamage", damaged);
+
             if (isLocalPlayer)
             {
-                StartCoroutine("CycleComponentDamage", damaged);
                 if (GetComponent<ShipPlayerInputController>() != null)
                 {
                     Camera.main.gameObject.SendMessage("ShakeCam");
@@ -113,8 +114,6 @@ namespace Space.Ship
                 Invoke("AttackTimer", 20f);
 
             }
-            else
-                StartCoroutine("CycleComponentColours", damaged);
         }
 
         [Command]
@@ -230,8 +229,7 @@ namespace Space.Ship
             foreach (ComponentListener listener in
                 GetComponent<ShipAttributes>().SelectedComponents(damaged))
             {
-                listener.GetAttributes().Integrity -= _hitD.damage;
-                listener.SetColour(listener.GetAttributes().Integrity);
+                listener.DamageComponent(_hitD);
 
                 yield return null;
             }

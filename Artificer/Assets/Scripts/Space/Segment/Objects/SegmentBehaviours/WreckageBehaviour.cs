@@ -327,12 +327,6 @@ namespace Space.Segment
             }
         }
 
-        [ClientRpc]
-        public override void RpcHitArea()
-        {
-            RpcHit();
-        }
-
         public void ApplyDamage(HitData hData)
         {
             pieceDensity -= hData.damage;

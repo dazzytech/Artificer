@@ -52,6 +52,11 @@ namespace Space.Segment
             // Set hitdata to our local storage
             _hitD = hit;
 
+            _hitD.damage *= Random.Range(0.5f, 1.0f);
+
+            // Reduce damage based on distance
+            _hitD.damage -= Vector3.Distance(transform.position, _hitD.hitPosition) * 0.1f;
+
             SOColliderHitMessage msg = new SOColliderHitMessage();
             msg.SObjectID = this.netId;
             msg.HitD = hit;
@@ -72,49 +77,6 @@ namespace Space.Segment
 
             // Forward to single hit
             Hit(hit);
-        }
-
-        /// <summary>
-        /// Client function called by server 
-        /// to handle projectile hits on our object
-        /// process the damage on the local object and then
-        /// update the remote clients
-        /// </summary>
-        /// <param name="hitpoint">The vector 3D point
-        /// where the projectile intesected with the colliders </param>
-        [ClientRpc]
-        public virtual void RpcHit()
-        { }
-
-        /// <summary>
-        /// Similar to RpcHit, however damage is sent to all
-        /// colliders within a radius
-        /// </summary>
-        /// <param name="hit"></param>
-        [ClientRpc]
-        public virtual void RpcHitArea()
-        {
-            /*// add distance damage reduction
-            foreach (BoxCollider2D piece in colliders)
-            {
-                if(piece != null)
-                {
-                    Collider2D col = Physics2D.OverlapCircle(hit.hitPosition,
-                                                             hit.radius);
-                    if(col != null)
-                    {
-                        if(col.Equals(piece))
-                        {
-                            piece.gameObject.SendMessage("DamageComponent", hit);
-                        }
-                    }
-                }
-            }
-
-            if (GetComponent<ShipPlayerInputController>() != null)
-            {
-                Camera.main.gameObject.SendMessage("ShakeCam");
-            */
         }
 
         #endregion

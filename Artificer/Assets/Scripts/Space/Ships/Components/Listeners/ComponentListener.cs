@@ -185,7 +185,11 @@ namespace Space.Ship.Components.Listener
                 return;
             }
 
-            att.Integrity -= hit.damage;
+            float damage = hit.damage;
+            damage *= Random.Range(0.5f, 1.0f);
+            damage -= Vector3.Distance(transform.position, hit.hitPosition) * 0.1f;
+
+            att.Integrity -= damage;
 
             SetColour(att.Integrity);
 
