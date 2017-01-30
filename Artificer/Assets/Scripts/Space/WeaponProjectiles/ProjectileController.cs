@@ -29,8 +29,11 @@ namespace Space.Projectiles
         // Update is called once per frame
         void Update()
         {
-            if (destroyed || !hasAuthority)
+            if (destroyed)
                 return;
+
+            if (Aggressor == null)
+                Aggressor = ClientScene.FindLocalObject(_data.Self);
 
             // Retrieve list of colliders That we are about to intersect with
             RaycastHit2D[] hitList = Physics2D.RaycastAll(transform.position,
@@ -41,12 +44,24 @@ namespace Space.Projectiles
             {
                 foreach (RaycastHit2D hit in hitList)
                 {
-                    // if successful hit then break out of the loop
-                    if (ApplyDamage(hit))
+                    // Both client and host reach here
+                    // however only the player that applies damage
+                    if (hasAuthority)
                     {
-                        //speed = Vector3.Distance(transform.position, hit.point);
-                        TravelBullet(hit.point);
-                        return;
+                        // if successful hit then break out of the loop
+                        if (ApplyDamage(hit))
+                        {
+                            TravelBullet(hit.point);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (!hit.transform.Equals(Aggressor.transform))
+                        {
+                            TravelBullet(hit.point);
+                            return;
+                        }
                     }
                 }
             }
@@ -115,35 +130,6 @@ namespace Space.Projectiles
                 transform.Translate((_data.Direction * speed) * Time.deltaTime);
             else
                 transform.position = affix;
-
-            Vector3 translation = transform.position;
-
-            CmdTravelBullet(translation);
-        }
-
-        [Command]
-        private void CmdTravelBullet(Vector3 translation)
-        {
-            RpcTravelBullet(translation);
-        }
-
-        [ClientRpc]
-        private void RpcTravelBullet(Vector3 translation)
-        {
-            if (!hasAuthority)
-            {
-                transform.position = translation;
-                return;
-            }
-
-            float travel = ((transform.position - origTransPosition).magnitude);
-            currDistance += travel;
-
-
-            if (currDistance > _data.Distance)
-                DestroyProjectileDelay();
-
-            origTransPosition = transform.position;
         }
 
         /// <summary>

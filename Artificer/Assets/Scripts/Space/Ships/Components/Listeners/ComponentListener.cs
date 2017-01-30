@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 // Artificer
+using Networking;
 using Data.Shared;
 using Space.Segment;
 using Space.Ship.Components.Attributes;
@@ -174,7 +175,7 @@ namespace Space.Ship.Components.Listener
         /// component
         /// </summary>
         /// <param name="hit"></param>
-        public void DamageComponent(HitData hit)
+        public void DamageComponent(HitData hit, float damage)
         {
             ComponentAttributes att = GetAttributes();
 
@@ -185,21 +186,30 @@ namespace Space.Ship.Components.Listener
                 return;
             }
 
-            float damage = hit.damage;
-            damage *= Random.Range(0.5f, 1.0f);
-            damage -= Vector3.Distance(transform.position, hit.hitPosition) * 0.1f;
-
             att.Integrity -= damage;
 
             SetColour(att.Integrity);
 
+            // May need to add local player here
             if (att.Integrity <= 0)
             {
                 hit.hitComponent = att.ID;
                 transform.parent.gameObject.
-                    SendMessage("DestroyComponent", hit,
-                                SendMessageOptions.DontRequireReceiver);
+                SendMessage("DestroyComponent", hit,
+                SendMessageOptions.DontRequireReceiver);
             }
+
+            if (isLocalPlayer)
+            {
+                
+
+                IntegrityChangedMsg msg = new IntegrityChangedMsg();
+                msg.Amount = damage;
+                msg.Location = transform.position;
+                msg.PlayerID = GameManager.Space.ID;
+
+                GameManager.singleton.client.Send((short)MSGCHANNEL.INTEGRITYCHANGE, msg);
+            }          
         }
 
         public void HealComponent(float amount)

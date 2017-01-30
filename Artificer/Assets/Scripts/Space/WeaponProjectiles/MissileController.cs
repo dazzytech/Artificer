@@ -45,7 +45,7 @@ namespace Space.Projectiles
 
         void FixedUpdate()
         {
-            if (Target == null || !hasAuthority)
+            if (Target == null)
                 return;
 
             Quaternion newRotation = Quaternion.LookRotation(transform.position - Target.position, Vector3.forward);
@@ -62,15 +62,15 @@ namespace Space.Projectiles
 
         void Update()
         {
-            if (!hasAuthority)
-                return;
-
             RaycastHit2D hit = Physics2D.Raycast(transform.position, -_data.Direction, MissileSpeed * Time.deltaTime, maskIgnore);
 
             if (hit.transform != null)
             {
-                if (!hit.transform.Equals(_data.Self))
+                // Both client and host reach here
+                // however only the player that applies damage
+                if (hasAuthority)
                 {
+                    // if successful hit then break out of the loop
                     ApplyDamageArea(hit);
                 }
             }
@@ -104,86 +104,6 @@ namespace Space.Projectiles
         #endregion
 
         #region PRIVATE UTILITY
-
-/*
-        #region BULLET UPDATE
-
-        /// <summary>
-        /// Each bullet has shared behaviour FX
-        /// So create trailing bullet projectile script
-        /// </summary>
-        private void TravelBullet(Vector3 affix)
-        {
-            if (affix == Vector3.zero)
-                // move the transform in the bullet direction
-                transform.Translate((_data.Direction * speed) * Time.deltaTime);
-            else
-                transform.position = affix;
-
-            float travel = ((transform.position - origTransPosition).sqrMagnitude);
-            travel *= bulletStep;
-            currDistance += travel;
-
-            if (travel > bulletStep)
-                travel = bulletStep;
-
-            for (int i = 0; i < pointCount - 1; i++)
-            {
-                points[i].position = -_data.Direction * (travel * i);
-            }
-
-            GetComponent<ParticleSystem>().SetParticles(points, points.Length);
-
-            Vector3 translation = transform.position;
-
-            CmdTravelBullet(translation);
-        }
-
-        [Command]
-        private void CmdTravelBullet(Vector3 translation)
-        {
-            RpcTravelBullet(translation);
-        }
-
-        [ClientRpc]
-        private void RpcTravelBullet(Vector3 translation)
-        {
-            if (!hasAuthority)
-            {
-                // move the transform in the bullet direction
-                transform.position = translation;
-
-                float travel = ((transform.position - origTransPosition).sqrMagnitude);
-                travel *= bulletStep;
-                currDistance += travel;
-
-                if (travel > bulletStep)
-                    travel = bulletStep;
-
-                if (points != null)
-                {
-                    for (int i = 0; i < pointCount - 1; i++)
-                    {
-                        points[i].position = -_data.Direction * (travel * i);
-                    }
-
-                    GetComponent<ParticleSystem>().SetParticles(points, points.Length);
-                }
-
-                origTransPosition = transform.position;
-
-                return;
-            }
-
-            float distance = ((transform.position - origTransPosition).magnitude);
-            currDistance += distance;
-
-            if (currDistance > _data.Distance)
-                DestroyProjectileDelay();
-
-            origTransPosition = transform.position;
-        }
-        */
 
         private bool ApplyDamageArea(RaycastHit2D hit)
         {

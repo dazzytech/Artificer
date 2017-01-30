@@ -261,8 +261,6 @@ namespace Space
             GameManager.GUI.InitializeStationHUD(shipAtt);
         }
 
-
-
         /// <summary>
         /// Returns ship (newparameters)
         /// And changes space and hud settings to play

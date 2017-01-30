@@ -274,6 +274,19 @@ namespace Space.GameFunctions
             }
         }
 
+        [Server]
+        public void OnIntegrityChanged(IntegrityChangedMsg intMsg)
+        {
+            Debug.Log(intMsg.Amount);
+            foreach (PlayerConnectionInfo info in _att.PlayerInfoList)
+            {
+                if(info.ID != intMsg.PlayerID)
+                {
+                    // Message would be sent to client here
+                }
+            }
+        }
+
         #endregion
 
         /*

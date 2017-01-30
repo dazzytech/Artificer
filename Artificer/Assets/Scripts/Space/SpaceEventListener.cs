@@ -383,7 +383,7 @@ namespace Space
             if (HitObj != null)
             {
                 HitObj.transform.GetComponent<ShipImpactCollider>()
-                .ProcessDamage(colMsg.HitComponents, colMsg.HitD);
+                .ProcessDamage(colMsg.HitComponents, colMsg.HitD, colMsg.HitValues);
             }
             else
             {

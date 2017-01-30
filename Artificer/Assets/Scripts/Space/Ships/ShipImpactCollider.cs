@@ -95,11 +95,10 @@ namespace Space.Ship
         /// is called on our ship then apply damage otherwise just
         /// update colours
         /// </summary>
-        public void ProcessDamage(int[] damaged, HitData hData)
+        public void ProcessDamage(int[] damaged, HitData hData, float[] vals)
         {
             _hitD = hData;
-
-            StartCoroutine("CycleComponentDamage", damaged);
+            StartCoroutine(CycleComponentDamage(damaged, vals));
 
             if (isLocalPlayer)
             {
@@ -112,7 +111,6 @@ namespace Space.Ship
                 CmdSetUA(true);
 
                 Invoke("AttackTimer", 20f);
-
             }
         }
 
@@ -130,6 +128,7 @@ namespace Space.Ship
         {
             // Store an int reference to components that were damaged
             List<int> damagedComps = new List<int>();
+            List<float> damagedVals = new List<float>();
 
             foreach (BoxCollider2D piece in colliders)
             {
@@ -148,6 +147,7 @@ namespace Space.Ship
                             GetComponent<ComponentAttributes>();
 
                         damagedComps.Add(att.ID);
+                        damagedVals.Add(_hitD.damage *= Random.Range(0.5f, 1.0f));
                     }
                 }
 
@@ -161,6 +161,7 @@ namespace Space.Ship
                 msg.HitComponents = damagedComps.ToArray();
                 msg.ShipID = this.netId;
                 msg.HitD = _hitD;
+                msg.HitValues = damagedVals.ToArray();
                 GameManager.singleton.client.Send((short)MSGCHANNEL.SHIPHIT, msg);
             }
 
@@ -171,6 +172,7 @@ namespace Space.Ship
         {
             // Store an int reference to components that were damaged
             List<int> damagedComps = new List<int>();
+            List<float> damagedVals = new List<float>();
 
             Collider2D[] col = Physics2D.OverlapCircleAll(_hitD.hitPosition,
                                                              _hitD.radius);
@@ -185,15 +187,16 @@ namespace Space.Ship
                 if (piece != null)
                 {
                     if (colList.Contains(piece))
-                        {
-                            // Retrieve the component listener and attributes from piece obj
-                            ComponentAttributes att =
-                                    piece.gameObject.
-                                    GetComponent<ComponentAttributes>();
+                    {
+                        // Retrieve the component listener and attributes from piece obj
+                        ComponentAttributes att =
+                                piece.gameObject.
+                                GetComponent<ComponentAttributes>();
 
-                            damagedComps.Add(att.ID);
-                        }
+                        damagedComps.Add(att.ID);
+                        damagedVals.Add(_hitD.damage *= Random.Range(0.5f, 1.0f));
                     }
+                }
 
                 yield return null;
             }
@@ -205,31 +208,20 @@ namespace Space.Ship
                 msg.HitComponents = damagedComps.ToArray();
                 msg.ShipID = this.netId;
                 msg.HitD = _hitD;
+                msg.HitValues = damagedVals.ToArray();
                 GameManager.singleton.client.Send((short)MSGCHANNEL.SHIPHIT, msg);
             }
 
             yield break;
         }
 
-        private IEnumerator CycleComponentDamage(int[] damaged)
+        private IEnumerator CycleComponentDamage(int[] damaged, float[] dmg)
         {
+            int i = 0;
             foreach (ComponentListener listener in
                 GetComponent<ShipAttributes>().SelectedComponents(damaged))
             {
-                listener.DamageComponent(_hitD);
-
-                yield return null;
-            }
-
-            yield break;
-        }
-
-        private IEnumerator CycleComponentColours(int[] damaged)
-        {
-            foreach (ComponentListener listener in
-                GetComponent<ShipAttributes>().SelectedComponents(damaged))
-            {
-                listener.DamageComponent(_hitD);
+                listener.DamageComponent(_hitD, dmg[i++]);
 
                 yield return null;
             }

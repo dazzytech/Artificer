@@ -24,7 +24,8 @@ namespace Networking
         SHIPDESTROYED,
         STATIONDESTROYED,
         BUILDSTATONHUD,
-        ASSIGNTEAM
+        ASSIGNTEAM,
+        INTEGRITYCHANGE
     };
 
     #endregion
@@ -92,6 +93,7 @@ namespace Networking
     public class ShipColliderHitMessage : MessageBase
     {
         public int[] HitComponents;
+        public float[] HitValues;
         public NetworkInstanceId ShipID;
         public HitData HitD;
     }
@@ -132,6 +134,17 @@ namespace Networking
     public class NetMsgMessage : MessageBase
     {
         public NetworkInstanceId SelfID;
+    }
+
+    /// <summary>
+    /// Used to notify Server and other clients of
+    /// a change of integrity either addition or minus
+    /// </summary>
+    public class IntegrityChangedMsg: MessageBase
+    {
+        public float Amount;
+        public Vector3 Location;
+        public int PlayerID;
     }
 
     #endregion

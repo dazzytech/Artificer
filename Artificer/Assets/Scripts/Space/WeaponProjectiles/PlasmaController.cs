@@ -43,6 +43,8 @@ namespace Space.Projectiles
         private Vector3 origTransPosition;
         private float bulletStep;
         private float currDistance;
+
+        [SyncVar]
         private bool destroyed;
 
         #endregion
@@ -51,14 +53,17 @@ namespace Space.Projectiles
 
         void Awake()
         {
-            _system = GetComponent<ParticleSystem>();
+            BuildProjectile();
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (points == null || destroyed || !hasAuthority)
+            if (destroyed)
                 return;
+
+            if(Aggressor == null)
+                Aggressor = ClientScene.FindLocalObject(_data.Self);
 
             // if plasmatype is fusion then detect any transforms within a certain radius
             if (PType == PlasmaType.FUSION)
@@ -89,8 +94,6 @@ namespace Space.Projectiles
             base.CreateProjectile(data);
 
             CmdBuildFX(data);
-
-            BuildProjectile();
         }
 
         #region FX
@@ -121,20 +124,25 @@ namespace Space.Projectiles
 
         #region PRIVATE UTILITY
 
+        /// <summary>
+        /// Initialized the particle system 
+        /// and init calculation variables on all clients
+        /// </summary>
         private void BuildProjectile()
         {
-            GetComponent<ParticleSystem>().simulationSpace
+            _system = GetComponent<ParticleSystem>();
+            _system.simulationSpace
                 = ParticleSystemSimulationSpace.Local;
 
             points = new ParticleSystem.Particle[pointCount];
 
-            currDistance = 0;
-
-            destroyed = false;
-
             points[pointCount - 1].position = Vector3.zero;
             points[pointCount - 1].color = new Color(1f, 1f, 1f, 1f);
             points[pointCount - 1].size = .2f;
+
+            currDistance = 0;
+
+            destroyed = false;
 
             // Figure out a bullet step
             bulletStep = trailLength / (pointCount - 1);
@@ -169,11 +177,24 @@ namespace Space.Projectiles
             {
                 foreach (RaycastHit2D hit in hitList)
                 {
-                    // if successful hit then break out of the loop
-                    if (ApplyDamage(hit))
+                    // Both client and host reach here
+                    // however only the player that applies damage
+                    if (hasAuthority)
                     {
-                        TravelBullet(hit.point);
-                        return;
+                        // if successful hit then break out of the loop
+                        if (ApplyDamage(hit))
+                        {
+                            TravelBullet(hit.point);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (!hit.transform.Equals(Aggressor.transform))
+                        {
+                            TravelBullet(hit.point);
+                            return;
+                        }
                     }
                 }
             }
@@ -187,10 +208,7 @@ namespace Space.Projectiles
         /// <returns><c>true</c>, if curve was successful, <c>false</c> otherwise.</returns>
         private bool FusionCurve()
         {
-            GameObject aggressor = ClientScene.FindLocalObject(_data.Self);
-
-            // Get home alignment
-            if (aggressor == null)
+            if (Aggressor == null)
             {
                 //DestroyProjectileDelay();
                 return false;
@@ -200,7 +218,7 @@ namespace Space.Projectiles
             RaycastHit2D collider = Physics2D.CircleCast(transform.position, followRadius, Vector2.up, 0, maskIgnore);
 
             if (collider.transform != null)
-                if (!collider.transform.Equals(aggressor))
+                if (!collider.transform.Equals(Aggressor))
                 {
                     if (collider.transform.tag == "Enemy")
                     {
@@ -229,11 +247,24 @@ namespace Space.Projectiles
             {
                 foreach (RaycastHit2D hit in hitList)
                 {
-                    // if successful hit then break out of the loop
-                    if (ApplyDamage(hit))
+                    // Both client and host reach here
+                    // however only the player that applies damage
+                    if (hasAuthority)
                     {
-                        TravelBullet(hit.point);
-                        return;
+                        // if successful hit then break out of the loop
+                        if (ApplyDamage(hit))
+                        {
+                            TravelBullet(hit.point);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (!hit.transform.Equals(Aggressor.transform))
+                        {
+                            TravelBullet(hit.point);
+                            return;
+                        }
                     }
                 }
             }
@@ -250,11 +281,24 @@ namespace Space.Projectiles
             {
                 foreach (RaycastHit2D hit in hitList)
                 {
-                    // if successful hit then break out of the loop
-                    if (ApplyDamageArea(hit))
+                    // Both client and host reach here
+                    // however only the player that applies damage
+                    if (hasAuthority)
                     {
-                        TravelBullet(hit.point);
-                        return;
+                        // if successful hit then break out of the loop
+                        if (ApplyDamageArea(hit))
+                        {
+                            TravelBullet(hit.point);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (!hit.transform.Equals(Aggressor.transform))
+                        {
+                            TravelBullet(hit.point);
+                            return;
+                        }
                     }
                 }
             }
@@ -291,54 +335,8 @@ namespace Space.Projectiles
 
             GetComponent<ParticleSystem>().SetParticles(points, points.Length);
 
-            Vector3 translation = transform.position;
-
-            CmdTravelBullet(translation);
-        }
-
-        [Command]
-        private void CmdTravelBullet(Vector3 translation)
-        {
-            RpcTravelBullet(translation);
-        }
-
-        [ClientRpc]
-        private void RpcTravelBullet(Vector3 translation)
-        {
-            if (!hasAuthority)
-            {
-                // move the transform in the bullet direction
-                transform.position = translation;
-
-                float travel = ((transform.position - origTransPosition).sqrMagnitude);
-                travel *= bulletStep;
-                currDistance += travel;
-
-                if (travel > bulletStep)
-                    travel = bulletStep;
-
-                if (points != null)
-                {
-                    for (int i = 0; i < pointCount - 1; i++)
-                    {
-                        points[i].position = -_data.Direction * (travel * i);
-                    }
-
-                    GetComponent<ParticleSystem>().SetParticles(points, points.Length);
-                }
-
-                origTransPosition = transform.position;
-
-                return;
-            }
-
-            float distance = ((transform.position - origTransPosition).magnitude);
-            currDistance += distance;
-
-            if (currDistance > _data.Distance)
+            if (currDistance > _data.Distance * _data.Distance)
                 DestroyProjectileDelay();
-
-            origTransPosition = transform.position;
         }
 
         #endregion
@@ -351,15 +349,8 @@ namespace Space.Projectiles
         /// <returns></returns>
         private bool ApplyDamage(RaycastHit2D hit)
         {
-            // Find the ship that fired the projectile
-            GameObject aggressor = ClientScene.FindLocalObject(_data.Self);
 
-            if (aggressor == null)
-            {
-                return false;
-            }
-
-            if (hit.transform.Equals(aggressor.transform))
+            if (hit.transform.Equals(Aggressor.transform))
             {
                 return false;
             }
@@ -387,14 +378,7 @@ namespace Space.Projectiles
 
         private bool ApplyDamageArea(RaycastHit2D hit)
         {
-            // Find the ship that fired the projectile
-            GameObject aggressor = ClientScene.FindLocalObject(_data.Self);
-
-            if (aggressor == null)
-            {
-                return false;
-            }
-            if (hit.transform.Equals(aggressor.transform))
+            if (hit.transform.Equals(Aggressor.transform))
             {
                 return false;
             }
@@ -433,9 +417,7 @@ namespace Space.Projectiles
         /// </summary>
         public void DestroyProjectileDelay()
         {
-            destroyed = true;
-
-            //points = null;
+            CmdSetDestroy();
 
             _system.Clear();
 
@@ -443,6 +425,11 @@ namespace Space.Projectiles
             Invoke("DestroyProjectile", 1f);
         }
 
+        [Command]
+        public void CmdSetDestroy()
+        {
+            destroyed = true;
+        }
 
         #endregion
     }

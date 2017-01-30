@@ -26,6 +26,7 @@ namespace Space.GameFunctions
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SHIPHIT, OnShipHit);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.BUILDPROJECTILE, OnBuildProjectile);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.OBJECTHIT, OnObjectHit);
+            NetworkServer.RegisterHandler((short)MSGCHANNEL.INTEGRITYCHANGE, OnIntegrityChanged);
 
             // call Server events
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SHIPDESTROYED, OnShipDestroyed);
@@ -102,6 +103,12 @@ namespace Space.GameFunctions
         public void OnObjectHit(NetworkMessage msg)
         {
             Con.ObjectHit(msg.ReadMessage<SOColliderHitMessage>());
+        }
+
+        [Server]
+        public void OnIntegrityChanged(NetworkMessage msg)
+        {
+            Con.OnIntegrityChanged(msg.ReadMessage<IntegrityChangedMsg>());
         }
 
         // Server Event Calling

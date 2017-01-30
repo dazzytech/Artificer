@@ -23,6 +23,8 @@ namespace Space.Projectiles
         public GameObject Explode;
         public GameObject Muzzle;
 
+        public GameObject Aggressor;
+
         public AudioClip MuzzleSound;
 
         public AudioClip ImpactSound;
