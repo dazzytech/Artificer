@@ -285,6 +285,55 @@ namespace Space.Ship.Components.Listener
             this.enabled = false;
         }
 
+
+        #endregion
+
+        #region ACCESSORS
+
+        /// <summary>
+        /// Returns the UI icon of this components
+        /// </summary>
+        /// <returns></returns>
+        public Sprite Icon
+        {
+            get
+            {
+                ComponentAttributes att = GetAttributes();
+                if (att.iconImage == null)
+                    return GetComponentInChildren<SpriteRenderer>().sprite;
+                else
+                    return att.iconImage;
+            }
+        }
+
+        /// <summary>
+        /// Lower left point of component
+        /// item in world space units
+        /// </summary>
+        public Vector2 Min
+        {
+            get
+            {
+                return (Vector2)(transform.localPosition - 
+                    GetComponentInChildren<SpriteRenderer>().
+                    sprite.bounds.extents);
+            }
+        }
+
+        /// <summary>
+        /// Upper Right point of component item 
+        /// in world space units
+        /// </summary>
+        public Vector2 Max
+        {
+            get
+            {
+                return (Vector2)(transform.localPosition + 
+                    GetComponentInChildren<SpriteRenderer>().
+                    sprite.bounds.extents);
+            }
+        }
+
         #endregion
 
         #region COROUTINES

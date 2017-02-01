@@ -56,6 +56,7 @@ namespace Space.Ship.Components.Attributes
         public string Description;
         public ConstructInfo[] RequiredMats;
         public StyleInfo[] componentStyles;
+        public Sprite iconImage;
 
         #endregion
 

@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 using Space.UI.Station;
+using Space.Ship.Components.Listener;
 
 namespace Space.UI.Station.Viewer
 {
@@ -36,7 +37,7 @@ namespace Space.UI.Station.Viewer
 
         #region COLOR
 
-        private Color StandardColor = Color.white;
+        private Color StandardColor;
 
         [SerializeField]
         private Color HighlightColor;
@@ -52,13 +53,13 @@ namespace Space.UI.Station.Viewer
         {
             // extract the sprite from the components 
             // game object
-            Sprite Img = Obj.gameObject.
-                GetComponentInChildren<SpriteRenderer>().sprite;
+            Sprite Img = Obj.GetComponent<ComponentListener>().Icon();
 
             // next set ID
             Icon.sprite = Img;
             Icon.rectTransform.sizeDelta = Img.rect.size;
             Icon.rectTransform.localRotation = Obj.transform.localRotation;
+            StandardColor = Icon.color;
 
             ID = id;
         }

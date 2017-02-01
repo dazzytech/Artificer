@@ -191,17 +191,20 @@ ParticleRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: 9475698742e944615b0ab2c4b4ecc1b7, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_SelectedWireframeHidden: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -294,6 +297,7 @@ MonoBehaviour:
   ID: 0
   TrackIntegrity: 0
   Integrity: 0
+  MaxIntegrity: 0
   LockedGO: {fileID: 0}
   sockInfo:
     SocketID: 0
@@ -323,7 +327,8 @@ MonoBehaviour:
     name: red
   - sprite: {fileID: 21300000, guid: bee49878a20f63b45a7d523ed593b5ed, type: 3}
     name: green
-  ShipAtt: {fileID: 0}
+  iconImage: {fileID: 21300000, guid: 85425b0c509e196408c7ca8a1109ffab, type: 3}
+  Ship: {fileID: 0}
   engineMotion: {x: 0, y: 0, z: 0}
   engineVelocity: {x: 0, y: 0, z: 0}
   acceleration: 50
@@ -340,7 +345,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Weight: 0.01
-  TotalHP: 0
   ComponentType: Engines
 --- !u!114 &11493190
 MonoBehaviour:
@@ -362,17 +366,20 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_SelectedWireframeHidden: 1
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
