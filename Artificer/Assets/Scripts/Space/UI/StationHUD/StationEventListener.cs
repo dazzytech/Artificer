@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using Space.Ship.Components.Listener;
 using Space.UI.Station.Viewer;
+using UI;
 
 namespace Space.UI.Station
 {

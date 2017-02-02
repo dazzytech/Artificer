@@ -23,7 +23,6 @@ namespace Networking
         PROCESSOBJECTHIT,
         SHIPDESTROYED,
         STATIONDESTROYED,
-        BUILDSTATONHUD,
         ASSIGNTEAM,
         INTEGRITYCHANGE
     };

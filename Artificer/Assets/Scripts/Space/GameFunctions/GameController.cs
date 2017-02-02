@@ -214,13 +214,11 @@ namespace Space.GameFunctions
             {
                 GO = _att.TeamA.Spawner.SpawnPlayer(info, stationID);
                 _att.TeamA.AddPlayerObject(GO.GetComponent<NetworkIdentity>().netId);
-                _att.TeamA.UpdateStationHUD(info.mConnection);
             }
             else
             {
                 GO = _att.TeamB.Spawner.SpawnPlayer(info, stationID);
                 _att.TeamB.AddPlayerObject(GO.GetComponent<NetworkIdentity>().netId);
-                _att.TeamB.UpdateStationHUD(info.mConnection);
             }
 
             // assign ship info

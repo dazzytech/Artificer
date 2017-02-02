@@ -26,6 +26,11 @@ namespace Space.UI.Ship
         // If item was active before enable
         private bool m_activated;
 
+        private uint m_ID;
+
+        [Header("StationHUD")]
+        public static StationHUD Base;
+
         #region HUD ELEMENTS
 
         [SerializeField]
@@ -96,7 +101,7 @@ namespace Space.UI.Ship
         /// tracking
         /// </summary>
         /// <param name="Station"></param>
-        public void DefineStation(StationController Station)
+        public void DefineStation(StationController Station, uint newID)
         {
             m_station = Station;
 
@@ -105,6 +110,9 @@ namespace Space.UI.Ship
             m_icon.overrideSprite = m_station.Icon;
 
             m_standardColor = m_selfPanel.color;
+
+            // assign ID
+            m_ID = newID;
 
             m_activated = true;
 
@@ -168,6 +176,8 @@ namespace Space.UI.Ship
                 //finished this step
                 yield return null;
             }
+
+            Base.RemoveID(m_ID);
 
             yield return null;
         }

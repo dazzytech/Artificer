@@ -37,6 +37,9 @@ namespace Space.Teams
         [SyncEvent]
         public event SyncListDelegate EventPlayerListChanged;
 
+        [SyncEvent]
+        public event SyncListDelegate EventStationListChanged;
+
         #endregion
 
         #region ATTRIBUTES
@@ -51,14 +54,14 @@ namespace Space.Teams
         // Store a list of Net IDs of stations that the stations owns
         private SyncListUInt m_stations = new SyncListUInt();
 
-        //private List<Transform> _attackPoints;
+        /*private List<Transform> _attackPoints;
         //private List<Transform> _homePoints;
 
         // unlocked components
         //private SyncListString _unlockedComponents;
 
         // team-owned materials
-        //private MaterialListSync _collectedMaterials;
+        //private MaterialListSync _collectedMaterials;*/
 
         [SerializeField]
         private TeamSpawnManager _teamSpawn;
@@ -94,7 +97,9 @@ namespace Space.Teams
         {
             m_faction = faction;
 
+            // Assign callbacks
             m_players.Callback = PlayerListChanged;
+            m_stations.Callback = StationListChanged;
         }
 
         /// <summary>
@@ -140,20 +145,6 @@ namespace Space.Teams
             m_stations.Remove(netID.Value);
         }
 
-        [Server]
-        public void UpdateStationHUD(NetworkConnection conn)
-        {
-            foreach(uint ID in m_stations)
-            {
-                NetworkInstanceId netID = new NetworkInstanceId(ID);
-                NetMsgMessage msg = new NetMsgMessage();
-                msg.SelfID = netID;
-
-                NetworkServer.SendToClient(conn.connectionId,
-                    (short)MSGCHANNEL.BUILDSTATONHUD, msg);
-            }
-        }
-
         #endregion
 
         #region ACCESSORS
@@ -177,6 +168,11 @@ namespace Space.Teams
         public SyncListUInt Players
         {
             get { return m_players; }
+        }
+
+        public SyncListUInt Stations
+        {
+            get { return m_stations; }
         }
 
         #endregion
@@ -522,6 +518,13 @@ namespace Space.Teams
         {
             if(EventPlayerListChanged != null)
                 EventPlayerListChanged();
+        }
+
+        void StationListChanged(SyncListUInt.
+            Operation op, int itemIndex)
+        {
+            if (EventStationListChanged != null)
+                EventStationListChanged();
         }
 
         #endregion

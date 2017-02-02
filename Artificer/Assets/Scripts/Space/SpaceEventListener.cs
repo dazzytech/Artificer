@@ -45,7 +45,6 @@ namespace Space
 
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.TEAMPICKER, OnTeamPickerMessage);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
-            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.BUILDSTATONHUD, AddStationToHUD);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.ASSIGNTEAM, OnDefineTeam);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSOBJECTHIT, OnProcessHitMsg);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSSHIPHIT, OnProcessHitMsgShip);
@@ -353,9 +352,6 @@ namespace Space
                 GetComponent<TeamController>();
 
             m_con.InitializePlayer();
-
-            // for now define team for play HUD here
-            GameManager.GUI.SetTeam(m_att.Team);
         }
 
         public void OnProcessHitMsg(NetworkMessage msg)
@@ -390,21 +386,6 @@ namespace Space
                 Debug.Log("ERROR: Space Event Listener - Process Ship Hit Msg: " +
                     "Passed ship object is null.");
             }
-        }
-
-        public void AddStationToHUD(NetworkMessage netMsg)
-        {
-            // Retrieve net id from sent message
-            NetworkInstanceId stationNetID = netMsg.ReadMessage
-                <NetMsgMessage>().SelfID;
-
-            // Get our local station with the same netID
-            GameObject station = ClientScene.
-                FindLocalObject(stationNetID);
-
-            // Pass the station controller from our object to the HUD
-            GameManager.GUI.AddStation(station.
-                GetComponent<StationController>());
         }
 
         public void OnProjectileCreated(NetworkMessage msg)

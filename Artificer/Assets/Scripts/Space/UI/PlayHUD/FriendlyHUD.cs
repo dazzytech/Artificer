@@ -23,7 +23,20 @@ namespace Space.UI.Ship
 
         // Reference to the team we will be retrieving 
         // team list from
-        private TeamController m_team;
+        #region ACCESSORS
+
+        private TeamController Team
+        {
+            get
+            {
+                if (GameManager.Space != null)
+                    return GameManager.Space.Team;
+                else
+                    return null;
+            }
+        }
+
+        #endregion
 
         // Stop duplicate HUD elements
         private List<uint> m_addedIDs = new List<uint>();
@@ -52,10 +65,10 @@ namespace Space.UI.Ship
         // Use this for initialization
         void OnEnable()
         {
-            if(m_team != null)
+            if(Team != null)
             {
                 // event listener here
-                m_team.EventPlayerListChanged += GenerateTeamList;
+                Team.EventPlayerListChanged += GenerateTeamList;
                 // regenerate team list incase of changes
                 GenerateTeamList();
             }
@@ -64,42 +77,22 @@ namespace Space.UI.Ship
         // Update is called once per frame
         void OnDisable()
         {
-            if (m_team != null)
+            if (Team != null)
             {
                 // event listener here
-                m_team.EventPlayerListChanged -= GenerateTeamList;
+                Team.EventPlayerListChanged -= GenerateTeamList;
             }
+        }
+
+        void Awake()
+        {
+            // Assign self to receive message
+            FriendlyPrefab.Base = this;
         }
 
         #endregion
 
         #region PUBLIC INTERACTION
-
-        /// <summary>
-        /// On initialization HUD stores reference to 
-        /// team and builds HUD
-        /// </summary>
-        /// <param name="newTeam"></param>
-        public void AssignTeam(TeamController newTeam)
-        {
-            if(newTeam != null)
-                m_team = newTeam;
-            else
-            {
-                Debug.Log("ERROR: Friendly HUD - Passed team variable is null.");
-                return;
-            }
-
-            // Assign self to receive message
-            FriendlyPrefab.Base = this;
-
-            // if comp is already active then we need to set up events
-            if(isActiveAndEnabled)
-            {
-                m_team.EventPlayerListChanged += GenerateTeamList;
-                GenerateTeamList();
-            }
-        }
 
         /// <summary>
         /// Remove ID from list so new ship can be added
@@ -127,15 +120,8 @@ namespace Space.UI.Ship
                 return;
             }
 
-            // loop through each item in list and destroy it
-            // refresh
-            //foreach (Transform child in m_friendlyList.transform)
-              //  Destroy(child.gameObject);
-
-            //m_addedIDs.Clear();
-
             // Loop through each player and assign a friendly prefab
-            foreach(uint ID in m_team.Players)
+            foreach(uint ID in Team.Players)
             {
                 // Skip if local player
                 if (ID == GameManager.Space.NetID || m_addedIDs.Contains(ID))
@@ -154,23 +140,26 @@ namespace Space.UI.Ship
                 }
                 else
                 {
-                    // retrive ship attributes
-                    ShipAttributes friendlyShip = friendlyObj.GetComponent<ShipAttributes>();
-
-                    // Create Friendly HUD Prefab
-                    GameObject FriendlyObj = Instantiate(m_friendlyPrefab);
-
-                    FriendlyObj.transform.SetParent(m_friendlyList.transform, false);
-
-                    FriendlyPrefab FriendlyHUD = FriendlyObj.GetComponent<FriendlyPrefab>();
-
-                    // Set Friendly Prefab and initialise
-                    FriendlyHUD.DefineFriendly(friendlyShip, ID);
-
-                    // add to addedlist
-                    m_addedIDs.Add(ID);
+                    AddUIPiece(friendlyObj.GetComponent<ShipAttributes>(), ID);
                 }
             }
+        }
+
+        private void AddUIPiece(ShipAttributes Ship, uint ID)
+        {
+
+            // Create Friendly HUD Prefab
+            GameObject FriendlyObj = Instantiate(m_friendlyPrefab);
+
+            FriendlyObj.transform.SetParent(m_friendlyList.transform, false);
+
+            FriendlyPrefab FriendlyHUD = FriendlyObj.GetComponent<FriendlyPrefab>();
+
+            // Set Friendly Prefab and initialise
+            FriendlyHUD.DefineFriendly(Ship, ID);
+
+            // add to addedlist
+            m_addedIDs.Add(ID);
         }
 
         #endregion

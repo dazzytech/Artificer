@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Space.Ship;
 using Space.Ship.Components.Listener;
+using UI;
 
 namespace Space.UI.Station.Viewer
 {
@@ -14,20 +15,18 @@ namespace Space.UI.Station.Viewer
     {
         #region ATTRIBUTES
 
-        private List<ViewerItem> Items;
-
         #region HUD ELEMENTS
 
         // viewer window
         [SerializeField]
-        private GameObject ViewerPanel;
+        private ComponentBuilderUtility ViewerPanel;
 
         // Prefab for component viewer
         [SerializeField]
         private GameObject PiecePrefab;
 
-        [SerializeField]
-        private Vector2 StartingPos;
+       // [SerializeField]
+       // private Vector2 StartingPos;
 
         #endregion
 
@@ -42,13 +41,7 @@ namespace Space.UI.Station.Viewer
         /// <param name="Ship"></param>
         public void BuildShip(ShipAttributes Ship)
         {
-            Items = new List<ViewerItem>();
-
-            foreach(ComponentListener comp in Ship.Components)
-            {
-                // Create prefab and apply components
-                BuildComponent(comp);
-            }
+            ViewerPanel.BuildShip(Ship, PiecePrefab);
         }
 
         /// <summary>
@@ -57,13 +50,13 @@ namespace Space.UI.Station.Viewer
         /// </summary>
         public void ClearHighlights()
         {
-            foreach (ViewerItem item in Items)
+            foreach (ViewerItem item in ViewerPanel.ViewerItems)
                 item.Reset(true);
         }
 
         public void ClearItem(int ID)
         {
-            foreach (ViewerItem item in Items)
+            foreach (ViewerItem item in ViewerPanel.ViewerItems)
                 if (item.ID == ID)
                 {
                     item.Reset(true);
@@ -73,7 +66,7 @@ namespace Space.UI.Station.Viewer
 
         public void SelectItem(int ID)
         {
-            foreach (ViewerItem item in Items)
+            foreach (ViewerItem item in ViewerPanel.ViewerItems)
                 if (item.ID == ID)
                 {
                     item.Select();
@@ -83,7 +76,7 @@ namespace Space.UI.Station.Viewer
 
         public void HoverItem(int ID)
         {
-            foreach (ViewerItem item in Items)
+            foreach (ViewerItem item in ViewerPanel.ViewerItems)
                 if (item.ID == ID)
                 {
                     item.Highlight();
@@ -93,37 +86,12 @@ namespace Space.UI.Station.Viewer
 
         public void LeaveItem(int ID)
         {
-            foreach (ViewerItem item in Items)
+            foreach (ViewerItem item in ViewerPanel.ViewerItems)
                 if (item.ID == ID)
                 {
                     item.Reset(false);
                     break;
                 }
-        }
-
-        #endregion
-
-        #region PRIVATE UTILITIES
-
-        /// <summary>
-        /// Create a piece for component
-        /// </summary>
-        /// <param name="comp"></param>
-        private void BuildComponent(ComponentListener comp)
-        {
-            // Rather than lock sockets, just copy local position
-            Vector2 location = (comp.transform.localPosition * 100f);
-            location += StartingPos;
-            GameObject newObj = Instantiate(PiecePrefab);
-
-            newObj.transform.SetParent(ViewerPanel.transform, false);
-            newObj.transform.localPosition = location;
-
-            ViewerItem item = newObj.GetComponent<ViewerItem>();
-
-            item.Define(comp.gameObject, comp.ID);
-
-            Items.Add(item);
         }
 
         #endregion

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using Space.Ship;
 using Space.Ship.Components.Listener;
+using System.Collections.Generic;
 
 namespace UI
 {
@@ -18,21 +19,31 @@ namespace UI
         // on
         [Header("Component Build Transform")]
         [SerializeField]
-        private Transform m_selfPanel;
+        private RectTransform m_selfPanel;
 
         // created transform the components will be placed on
-        private Transform m_constructPanel;
+        private RectTransform m_constructPanel;
 
         // Prefab object - component Icon
-        [Header("Build Item Prefab")]
-        [SerializeField]
         private GameObject m_componentPrefab;
 
         //dimensions of transform
-        private float m_width, m_height;
+        private float m_width, m_height, m_margin;
 
         // refence to ship attributes
         private ShipAttributes m_ship;
+
+        // Keep track of component list
+        private List<ViewerItem> m_viewerItems;
+
+        #endregion
+
+        #region ACCESSORS
+
+        public List<ViewerItem> ViewerItems
+        {
+            get { return m_viewerItems; }
+        }
 
         #endregion
 
@@ -44,7 +55,13 @@ namespace UI
             // If not assigned beforehand,
             // Set to this panel
             if (m_selfPanel == null)
-                m_selfPanel = this.transform;
+                m_selfPanel = GetComponent<RectTransform>();
+        }
+
+        void OnEnable()
+        {
+            if(m_constructPanel)
+                Destroy(m_constructPanel.gameObject);
         }
 
         #endregion
@@ -55,9 +72,13 @@ namespace UI
         /// Builds ship gameobject to define UI panel
         /// </summary>
         /// <param name="Ship"></param>
-        public void BuildShip(ShipAttributes Ship)
+        public void BuildShip(ShipAttributes Ship, GameObject PiecePrefab)
         {
             m_ship = Ship;
+
+            m_componentPrefab = PiecePrefab;
+
+            m_viewerItems = new List<ViewerItem>();
 
             // Begin routines
             StartCoroutine("DiscoverSize");
@@ -86,8 +107,8 @@ namespace UI
                 // component min and max then replace
                 if (minX > item.Min.x) minX = item.Min.x;
                 if (minY > item.Min.y) minY = item.Min.y;
-                if (maxX > item.Max.x) maxX = item.Max.x;
-                if (maxY > item.Max.y) maxY = item.Max.y;
+                if (maxX < item.Max.x) maxX = item.Max.x;
+                if (maxY < item.Max.y) maxY = item.Max.y;
 
                 yield return null;
             }
@@ -96,6 +117,8 @@ namespace UI
             // create new transform
             m_width = maxX - minX;
             m_height = maxY - minY;
+
+            m_margin = maxY;
 
             StartCoroutine("BuildComponents");
 
@@ -109,8 +132,51 @@ namespace UI
         private IEnumerator BuildComponents()
         {
             GameObject constructGO = new GameObject("ConstructPanel");
-            m_constructPanel = constructGO.transform;
-            m_constructPanel.localScale = new Vector3(m_width, m_height, 0);
+            m_constructPanel = constructGO.AddComponent<RectTransform>();
+            // Set parent
+            m_constructPanel.SetParent(m_selfPanel, false);
+            // Set size
+            m_constructPanel.sizeDelta = new Vector2(m_width * 100, m_height * 100);
+
+            // Set each component to display on our ship panel
+            foreach (ComponentListener component in m_ship.Components)
+            {
+                // Create GameObject
+                GameObject newObj = (GameObject)Instantiate(m_componentPrefab);
+                // Set anchor for accurate positioning
+                newObj.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 1.0f);
+                newObj.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 1.0f);
+                newObj.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+                // Position component offsettinng height
+                newObj.transform.position = (component.Postion * 100) - new Vector3(0, m_margin * 100, 0);
+                // Set parent
+                newObj.transform.SetParent(m_constructPanel, false);
+
+                // Create Viewer Item
+                ViewerItem item = newObj.GetComponent<ViewerItem>();
+                item.Define(component.gameObject, component.ID);
+                m_viewerItems.Add(item);
+
+                yield return null;
+            }
+
+            // if self panel is wider than taller the ship is required to be lengthways
+            if (m_selfPanel.sizeDelta.x > m_selfPanel.sizeDelta.y)
+            {
+                m_constructPanel.localEulerAngles = new Vector3(0, 0, 90);
+
+                // Return percentage scale of panels based on width
+                float heightScale = m_selfPanel.rect.size.y / m_constructPanel.rect.size.y;
+
+                m_constructPanel.transform.localScale = new Vector3(heightScale, heightScale, 1);
+            }
+            else
+            {
+                // Return percentage scale of panels based on width
+                float widthScale = m_selfPanel.rect.size.x / m_constructPanel.rect.size.x;
+
+                m_constructPanel.transform.localScale = new Vector3(widthScale, widthScale, 1);
+            }
 
             yield break;
         }

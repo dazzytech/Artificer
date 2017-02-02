@@ -334,6 +334,14 @@ namespace Space.Ship.Components.Listener
             }
         }
 
+        /// <summary>
+        /// Quick access local position world units
+        /// </summary>
+        public Vector3 Postion
+        {
+            get { return transform.localPosition; }
+        }
+
         #endregion
 
         #region COROUTINES

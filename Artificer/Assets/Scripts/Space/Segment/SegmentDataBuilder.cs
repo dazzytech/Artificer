@@ -144,25 +144,6 @@ namespace Space.Segment
 
         #region DATA BUILDERS
 
-            /*
-            /// <summary>
-            /// Builds the station.
-            /// in future this will be 
-            /// done in another class with defined vars
-            /// </summary>
-            /// <returns>The station.</returns>
-            private static StationData BuildStation(Vector2 planet)
-            {
-                StationData station = new StationData();
-                station.Position = new Vector2
-                    (Random.Range(planet.x - 200f, planet.x + 200f),
-                     Random.Range(planet.y - 200f, planet.y + 200f));
-
-                station.SetAttributes("New Station", "Station_External_Small_01");
-
-                return station;
-            }*/
-
         private static ParellaxItem BuildPlanet(Vector2 planetPos)
         {
             // Create the start object

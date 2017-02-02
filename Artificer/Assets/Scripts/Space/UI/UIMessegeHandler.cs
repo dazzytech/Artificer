@@ -177,18 +177,6 @@ namespace Space.UI
                 AddUIPiece(piece);
         }
 
-        public void AddStation(StationController station)
-        {
-            PlayRect.GetComponent<StationHUD>().
-                AddUIPiece(station); 
-        }
-
-        public void SetTeam(TeamController Team)
-        {
-            PlayRect.GetComponent<FriendlyHUD>().
-                AssignTeam(Team);
-        }
-
         #endregion
 
         #region PLAYRECT RPC
