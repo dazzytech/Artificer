@@ -40,6 +40,7 @@ GameObject:
   - 224: {fileID: 224000014173862388}
   - 222: {fileID: 222000011111478470}
   - 114: {fileID: 114000010006780984}
+  - 114: {fileID: 114000011048838602}
   m_Layer: 5
   m_Name: Ship
   m_TagString: Untagged
@@ -136,6 +137,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3391df5e410330640a9abdc996cc9dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ViewerPanel: {fileID: 114000011048838602}
+  PiecePrefab: {fileID: 1000013815724100, guid: 98c0888ad76ba414587887299164745f,
+    type: 2}
   m_label: {fileID: 114000012674099750}
   m_status: {fileID: 114000012110987638}
   m_distance: {fileID: 114000013507953716}
@@ -172,6 +176,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114000011048838602
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011081379194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46e7cd3552b63e84e8981fe4730cc049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_selfPanel: {fileID: 224000014173862388}
 --- !u!114 &114000012110987638
 MonoBehaviour:
   m_ObjectHideFlags: 1

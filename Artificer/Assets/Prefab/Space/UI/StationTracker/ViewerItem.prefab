@@ -41,7 +41,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5147059, g: 0.28006056, b: 0.28006056, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -69,6 +69,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 114000012588750864}
   ID: 0
+  HighHealth: {r: 0.66176474, g: 0.986004, b: 1, a: 1}
+  MedHealth: {r: 1, g: 0.8810345, b: 0.625, a: 1}
+  LowHealth: {r: 0.5514706, g: 0.012164804, b: 0.012164804, a: 1}
   HighlightColor: {r: 0.67869884, g: 0.75735295, b: 0.40095156, a: 0.684}
   SelectedColor: {r: 0.77205884, g: 0.7233652, b: 0.065999985, a: 0.909}
 --- !u!222 &222000012076201850

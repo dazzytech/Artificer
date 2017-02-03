@@ -5,6 +5,7 @@ using System.Collections;
 //Artificer
 using Space.Ship;
 using UnityEngine.EventSystems;
+using UI;
 
 namespace Space.UI.Ship
 {
@@ -26,6 +27,14 @@ namespace Space.UI.Ship
 
         [Header("FriendlyHUD")]
         public static FriendlyHUD Base;
+
+        // viewer window
+        [SerializeField]
+        private ComponentBuilderUtility ViewerPanel;
+
+        // Prefab for component viewer
+        [SerializeField]
+        private GameObject PiecePrefab;
 
         #region HUD ELEMENTS
 
@@ -91,6 +100,12 @@ namespace Space.UI.Ship
             StopAllCoroutines();
         }
 
+        void OnDestroy()
+        {
+            if(m_ship != null)
+                m_ship.Init.OnShipCreated -= OnShipCreated;
+        }
+
         #endregion
 
         #region PUBLIC INTERACTION
@@ -112,8 +127,33 @@ namespace Space.UI.Ship
             // assign ID
             m_ID = newID;
 
+            // If ship has been built then create ship viewer
+            if (newShip.Components.Count > 0)
+            {
+                ViewerPanel.BuildShip(newShip, PiecePrefab);
+
+                // Begin tracking process if active
+                if (isActiveAndEnabled)
+                    StartCoroutine("Step");
+            }
+            else
+            {
+                // If ship is still pending creation then 
+                // assign listener for when item is created
+                newShip.Init.OnShipCreated += OnShipCreated;
+            }
+        }
+
+        #endregion
+
+        #region EVENT LISTENER
+
+        private void OnShipCreated()
+        {
+            ViewerPanel.BuildShip(m_ship, PiecePrefab);
+
             // Begin tracking process if active
-            if(isActiveAndEnabled)
+            if (isActiveAndEnabled)
                 StartCoroutine("Step");
         }
 

@@ -33,11 +33,20 @@ namespace UI
 
         private bool Selected;
 
-        public static StationController Controller;
+        //public static StationController Controller;
+
+        private ComponentListener Listener; 
 
         #region COLOR
 
         private Color StandardColor;
+
+        [SerializeField]
+        private Color HighHealth;
+        [SerializeField]
+        private Color MedHealth;
+        [SerializeField]
+        private Color LowHealth;
 
         [SerializeField]
         private Color HighlightColor;
@@ -49,21 +58,36 @@ namespace UI
 
         #endregion
 
+        #region MONOBEHAVIOUR
+
+        void OnDestroy()
+        {
+            StopAllCoroutines();
+        }
+
+        #endregion
+
         public void Define(GameObject Obj, int id)
         {
             // extract the sprite from the components 
             // game object
-            Sprite Img = Obj.GetComponent<ComponentListener>().Icon;
+            Listener = Obj.GetComponent<ComponentListener>();
+
+            Sprite Img = Listener.Icon;
 
             // next set ID
             Icon.sprite = Img;
             Icon.rectTransform.sizeDelta = Img.rect.size;
             Icon.rectTransform.localRotation = Obj.transform.localRotation;
-            StandardColor = Icon.color;
+            StandardColor = HighHealth;
+
 
             //transform.localPosition = Obj.GetComponent<ComponentListener>().Postion * 100;
 
             ID = id;
+
+            // Start coroutine that updates health
+            StartCoroutine("Step");
         }
 
         public void Reset(bool Deselect)
@@ -85,6 +109,29 @@ namespace UI
 
             Selected = true;
         }
+
+        #region COROUTINE
+
+        private IEnumerator Step()
+        {
+            while(true)
+            {
+                if (Listener.NormalizedHealth < 0.3)
+                    StandardColor = LowHealth;
+                else if
+                    (Listener.NormalizedHealth < 0.6)
+                    StandardColor = MedHealth;
+                else
+                    StandardColor = HighHealth;
+
+                if(Icon.color != StandardColor)
+                    Icon.color = StandardColor;
+
+                yield return null;
+            }
+        }
+
+        #endregion
 
         #region IPOINTEREVENTS
 

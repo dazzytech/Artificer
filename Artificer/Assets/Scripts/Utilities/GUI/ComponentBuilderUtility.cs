@@ -58,12 +58,6 @@ namespace UI
                 m_selfPanel = GetComponent<RectTransform>();
         }
 
-        void OnEnable()
-        {
-            if(m_constructPanel)
-                Destroy(m_constructPanel.gameObject);
-        }
-
         #endregion
 
         #region PUBLIC INTERACTION
@@ -79,6 +73,10 @@ namespace UI
             m_componentPrefab = PiecePrefab;
 
             m_viewerItems = new List<ViewerItem>();
+
+            // clear prev ship if exists
+            if (m_constructPanel != null)
+                Destroy(m_constructPanel.gameObject);
 
             // Begin routines
             StartCoroutine("DiscoverSize");
@@ -163,7 +161,7 @@ namespace UI
             // if self panel is wider than taller the ship is required to be lengthways
             if (m_selfPanel.sizeDelta.x > m_selfPanel.sizeDelta.y)
             {
-                m_constructPanel.localEulerAngles = new Vector3(0, 0, 90);
+                m_constructPanel.localEulerAngles = new Vector3(0, 0, 270);
 
                 // Return percentage scale of panels based on width
                 float heightScale = m_selfPanel.rect.size.y / m_constructPanel.rect.size.y;

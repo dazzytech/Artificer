@@ -342,6 +342,18 @@ namespace Space.Ship.Components.Listener
             get { return transform.localPosition; }
         }
 
+        public float NormalizedHealth
+        {
+            get
+            {
+                ComponentAttributes att = GetAttributes();
+                if (att.MaxIntegrity == 0)
+                    return 1;
+                else
+                    return att.Integrity / att.MaxIntegrity;
+            }
+        }
+
         #endregion
 
         #region COROUTINES

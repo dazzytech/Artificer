@@ -17,6 +17,14 @@ namespace Space.Ship
     /// </summary>
     public class ShipInitializer : NetworkBehaviour
     {
+        #region EVENTS
+
+        public delegate void ShipEvent();
+
+        public event ShipEvent OnShipCreated;
+
+        #endregion
+
         #region ATTRIBUTES
 
         public ShipAttributes _ship;
@@ -96,6 +104,9 @@ namespace Space.Ship
             Ship = Serializer.ByteSerializer.fromBytes(shipInfo);
             SetUpPlayer();
             _ship.instID = this.netId;
+
+            if(OnShipCreated != null)
+                OnShipCreated();
         }
 
         /// <summary>
@@ -150,6 +161,14 @@ namespace Space.Ship
         private void CmdUpdateHUD()
         {
             GameManager.GUI.RpcAddRemotePlayer(netId);
+            RpcFinishCreate();
+        }
+
+        [ClientRpc]
+        private void RpcFinishCreate()
+        {
+            if (OnShipCreated != null)
+                OnShipCreated();
         }
 
         #endregion

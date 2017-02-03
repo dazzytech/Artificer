@@ -147,6 +147,11 @@ namespace Space.Ship
             }
         }
 
+        public ShipInitializer Init
+        {
+            get { return GetComponent<ShipInitializer>(); }
+        }
+
         #endregion
 
         #region COMPONENT UTILITIES
