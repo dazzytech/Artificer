@@ -8012,16 +8012,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df81887fea320843b9c9290b3e29a59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  undefinedArrow: {fileID: 129566, guid: 51feace49ff581f44ba06281306a0ea7, type: 2}
-  undefinedBox: {fileID: 157094, guid: 7fca01e2201ed0141a1dd48d6b87cb70, type: 2}
-  stationArrow: {fileID: 175300, guid: afa19631b21a17a48a3236e83e1c23bb, type: 2}
-  stationBox: {fileID: 161912, guid: 1c9207c29984a344495dd05e136a99a1, type: 2}
-  enemyArrow: {fileID: 175300, guid: 3609914677565ef448dbe4a49e24f1f5, type: 2}
-  enemyBox: {fileID: 106080, guid: a38db33dbf2535f44af2131bc5c0dfca, type: 2}
-  friendlyArrow: {fileID: 189484, guid: fe6b26cd3717b5e48aecf7caf3851a7d, type: 2}
-  friendlyBox: {fileID: 124348, guid: c42bb906f19bbd64b8943e86b3bc8c06, type: 2}
-  missionArrow: {fileID: 184394, guid: 4db4766ffd452bf4a9af797ab8ce7fd1, type: 2}
-  missionBox: {fileID: 106474, guid: 05b39782c5426d84aab2121ca11ea9e3, type: 2}
+  m_arrowPrefab: {fileID: 129566, guid: 51feace49ff581f44ba06281306a0ea7, type: 2}
+  m_boxPrefab: {fileID: 157094, guid: 7fca01e2201ed0141a1dd48d6b87cb70, type: 2}
+  m_friendlyColor: {r: 0.2516761, g: 0.97794116, b: 0.4971037, a: 1}
+  m_enemyColor: {r: 0.5588235, g: 0.06163494, b: 0.06163494, a: 1}
   font: {fileID: 12800000, guid: be6d60d238aa80d489cb47394563eb1e, type: 3}
 --- !u!114 &766316689
 MonoBehaviour:

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 // Arificer
 using Data.Shared;
 using Space.Ship;
+using UI.Effects;
 
 namespace Space.UI.Tracker
 {
@@ -38,23 +39,41 @@ namespace Space.UI.Tracker
 
         #region MARKER LISTS
 
-        List<Marker> _markers;
-        List<Marker> _pendingDelete;
+        private List<Marker> _markers;
+        private List<Marker> _pendingDelete;
 
         #endregion
 
         #region UI HUD PREFABS
 
-        public GameObject undefinedArrow;
-        public GameObject undefinedBox;
-        public GameObject stationArrow;
+        [Header("Arrow")]
+        [SerializeField]
+        private GameObject m_arrowPrefab;
+
+        [Header("Box")]
+        [SerializeField]
+        private GameObject m_boxPrefab;
+
+        /*public GameObject stationArrow;
         public GameObject stationBox;
         public GameObject enemyArrow;
         public GameObject enemyBox;
         public GameObject friendlyArrow;
         public GameObject friendlyBox;
         public GameObject missionArrow;
-        public GameObject missionBox;
+        public GameObject missionBox;*/
+
+        #endregion
+
+        #region COLOUR
+
+        [Header("Friendly")]
+        [SerializeField]
+        private Color m_friendlyColor;
+
+        [Header("Enemy")]
+        [SerializeField]
+        private Color m_enemyColor;
 
         #endregion
 
@@ -69,18 +88,6 @@ namespace Space.UI.Tracker
         #endregion
 
         #region MONO BEHAVIOUR
-
-        void Awake()
-        {
-            //_markers = new List<Marker>();
-            //_pendingDelete = new List<Marker>();
-            //_targets = new List<Transform>();
-        }
-
-        /*public void SetContactData(ContractData contract)
-        {
-            //_contract = contract;
-        }*/
 
         void LateUpdate()
         {
@@ -134,12 +141,6 @@ namespace Space.UI.Tracker
         /// <param name="piece"></param>
         public void AddUIPiece(Transform piece)
         {
-            // no point tracking if no camera
-            // not sure if this still needs to be here
-            /*if (GameObject.FindGameObjectWithTag
-                ("MainCamera") == null)
-                return;*/
-
             // stations aren't added this way so piece is a ship
             Marker m = new Marker();
             m.trackedObj = piece;
@@ -165,7 +166,7 @@ namespace Space.UI.Tracker
         /// <returns></returns>
         private int Overlap(int index, Marker m, Vector3 cameraPosition)
         {
-            int overlap = 30;
+            int overlap = 40;
 
             Vector2 dirA =
                 (m.trackedObj.position - cameraPosition);
@@ -184,31 +185,12 @@ namespace Space.UI.Tracker
                 float angle = Vector2.Angle(dirA, dirB);
                 if (angle < 10f)
                 {
-                    overlap += 30;
+                    overlap += 40;
                 }
             }
 
             return overlap;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /*public void ClearGUI()
-        {
-            foreach (Marker m in _markers)
-            {
-                if (m.trackedObj.tag != "Station")
-                {
-                    Destroy(m.arrow);
-                    m.arrow = null;
-                    Destroy(m.box);
-                    m.box = null;
-                    Destroy(m.text);
-                    m.text = null;
-                }
-            }
-        }*/
 
         #endregion
 
@@ -261,48 +243,39 @@ namespace Space.UI.Tracker
             mtext.alignment = TextAnchor.MiddleCenter;
             mtext.fontSize = 8;
 
+            // Initialize the HUD items
+            m.arrow = (GameObject)Instantiate(m_arrowPrefab, dir, Quaternion.identity);
+            m.arrow.transform.SetParent(this.transform, false);
+            m.box = (GameObject)Instantiate(m_boxPrefab, dir, Quaternion.identity);
+            m.box.transform.SetParent(this.transform, false);
+            m.box.SetActive(false);
+            m.arrow.SetActive(false);
+
             // assign UI elements based on tag (for now)
-            switch(m.trackedObj.tag)
+            switch (m.trackedObj.tag)
             {
                 case "Station":
+                    // NOT USED ATM
                     // for now assign yellow objects to all stations
-                    m.arrow = (GameObject)Instantiate(stationArrow, dir, Quaternion.identity);
-                    m.arrow.transform.SetParent(this.transform, false);
-                    m.box = (GameObject)Instantiate(stationBox, dir, Quaternion.identity);
-                    m.box.transform.SetParent(this.transform, false);
-                    mtext.color = Color.yellow;
-                    m.trackDist = -1f;
+                    //mtext.color = Color.yellow;
+                    //m.trackDist = -1f;
                     break;
                 case "Friendly":
-                    // All friendly show up as green
-                    m.arrow = (GameObject)Instantiate(friendlyArrow, dir, Quaternion.identity);
-                    m.arrow.transform.SetParent(this.transform, false);
-                    m.box = (GameObject)Instantiate(friendlyBox, dir, Quaternion.identity);
-                    m.box.transform.SetParent(this.transform, false);
-                    m.box.SetActive(false);
-                    m.arrow.SetActive(false);
-                    mtext.color = Color.green;
+                    // Colourize HUD elements
+                    mtext.color = m_friendlyColor;
+                    m.arrow.GetComponent<Image>().color = m_friendlyColor;
+                    m.box.GetComponent<Image>().color = m_friendlyColor;
                     m.trackDist = 500f;
                     break;
                 case "Enemy":
-                    // enemys are red
-                    m.arrow = (GameObject)Instantiate(enemyArrow, dir, Quaternion.identity);
-                    m.arrow.transform.SetParent(this.transform, false);
-                    m.box = (GameObject)Instantiate(enemyBox, dir, Quaternion.identity);
-                    m.box.transform.SetParent(this.transform, false);
-                    m.box.SetActive(false);
-                    m.arrow.SetActive(false);
-                    mtext.color = Color.red;
+                    // Colourize HUD elements
+                    mtext.color = m_enemyColor;
+                    m.arrow.GetComponent<Image>().color = m_enemyColor;
+                    m.box.GetComponent<Image>().color = m_enemyColor;
                     m.trackDist = 500f;
                     break;
                 default:
-                    // Grey if a different tag
-                    m.arrow = (GameObject)Instantiate(undefinedArrow, dir, Quaternion.identity);
-                    m.arrow.transform.SetParent(this.transform, false);
-                    m.box = (GameObject)Instantiate(undefinedBox, dir, Quaternion.identity);
-                    m.box.transform.SetParent(this.transform, false);
-                    m.box.SetActive(false);
-                    m.arrow.SetActive(false);
+                    // Grey if a different tag              
                     mtext.color = Color.grey;
                     m.trackDist = 500f;
                     break;
@@ -325,11 +298,16 @@ namespace Space.UI.Tracker
 
             if (camB.Contains(m.trackedObj.position))
             {
-                // object is visible to use
-                // only show box directly over obj
-                m.arrow.SetActive(false);
-                m.box.SetActive(true);
-                m.text.SetActive(false);
+                if (!m.box.activeSelf)
+                {
+                    // object is visible to use
+                    // only show box directly over obj
+                    m.arrow.SetActive(false);
+                    m.box.SetActive(true);
+                    m.text.SetActive(false);
+
+                    //PanelFadeEffects.FlashInItem(m.box.GetComponent<Image>());
+                }
             }
             else
             {
@@ -337,8 +315,13 @@ namespace Space.UI.Tracker
                 // Display arrow if within tracking range
                 if (m.trackDist == -1 || objDistance <= m.trackDist)
                 {
-                    m.arrow.SetActive(true);
-                    m.text.SetActive(true);
+                    if (!m.arrow.activeSelf)
+                    {
+                        m.arrow.SetActive(true);
+                        m.text.SetActive(true);
+
+                        //PanelFadeEffects.FlashInItem(m.arrow.GetComponent<Image>());
+                    }
                 }
                 else
                 {

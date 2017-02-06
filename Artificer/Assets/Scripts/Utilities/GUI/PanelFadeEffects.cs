@@ -43,9 +43,71 @@ namespace UI.Effects
 
         }
 
+        /// <summary>
+        /// gives the appearance of an image
+        /// flashing into existance (HUD item or panel)
+        /// </summary>
+        /// <param name="item"></param>
+        public static void FlashInItem(Image item)
+        {
+            Color originalColor = item.color; 
+            item.StartCoroutine(FadeImg(item,
+                Color.white, 
+                FadeImg(item, originalColor)));
+        }
+
+        #endregion
+
+        #region COROUTINE
+
+        /// <summary>
+        /// Blends a colour with a pending Fade
+        /// </summary>
+        /// <param name="img"></param>
+        /// <param name="goalColor"></param>
+        /// <param name="NextFade"></param>
+        /// <returns></returns>
+        public static IEnumerator FadeImg(Image img, 
+            Color goalColor, IEnumerator NextFade = null)
+        {
+            // Store the original color for tweening back
+            Color currentColor = img.color;
+
+            while (img.color != goalColor)
+            {
+                currentColor.r += BlendColourVal(currentColor.r, goalColor.r);
+                currentColor.g += BlendColourVal(currentColor.g, goalColor.g);
+                currentColor.b += BlendColourVal(currentColor.b, goalColor.b);
+                currentColor.a += BlendColourVal(currentColor.a, goalColor.a);
+
+                img.color = currentColor;
+
+                yield return new WaitForSeconds(0.033f); // 30fps
+            }
+
+            if (NextFade != null)
+                img.StartCoroutine(NextFade);
+
+            yield break;
+        }
+
         #endregion
 
         #region PRIVATE UTILITIES
+
+        /// <summary>
+        /// Returns the next step in the fade between two colours
+        /// </summary>
+        /// <param name="colFrom"></param>
+        /// <param name="colTo"></param>
+        /// <param name="step"></param>
+        /// <returns></returns>
+        private static float BlendColourVal(float colFrom, float colTo, float step = 0.2f)
+        {
+            float result = colTo - colFrom;
+            return colFrom != colTo ? Mathf.Abs(result) < step ? result :
+                Mathf.Sign(result) * step : 0f;
+        }
 
         #endregion
     }
