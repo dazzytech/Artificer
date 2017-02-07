@@ -44,8 +44,12 @@ namespace Space.Segment
                 Destroy(this.gameObject);
             }*/
 
-            if(isServer)
+            if (isServer)
+            {
+                hData.damage *= Random.Range(0.5f, 1.0f);
+
                 m_con.ProcessDamage(hData);
+            }
         }
 
         #endregion

@@ -221,7 +221,7 @@ namespace Space.Ship
             foreach (ComponentListener listener in
                 GetComponent<ShipAttributes>().SelectedComponents(damaged))
             {
-                listener.DamageComponent(_hitD, dmg[i++]);
+                listener.DamageComponent(_hitD, dmg[i++], hasAuthority);
 
                 yield return null;
             }

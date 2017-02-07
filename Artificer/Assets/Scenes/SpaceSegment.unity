@@ -7896,6 +7896,7 @@ GameObject:
   - 114: {fileID: 766316690}
   - 114: {fileID: 766316684}
   - 114: {fileID: 766316692}
+  - 114: {fileID: 766316693}
   m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
@@ -8076,6 +8077,22 @@ MonoBehaviour:
   m_friendlyList: {fileID: 1874369535}
   m_friendlyPrefab: {fileID: 1000010073972948, guid: 606769e8b63a5b543a0d2bfa5305e628,
     type: 2}
+--- !u!114 &766316693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 766316681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f06a917dc0248d40ba03e31537278c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ToggleActive: []
+  m_dmgcmp: {fileID: 12800000, guid: be6d60d238aa80d489cb47394563eb1e, type: 3}
+  m_healcmp: {fileID: 12800000, guid: be6d60d238aa80d489cb47394563eb1e, type: 3}
+  m_dmgcmpcol: {r: 0.9411765, g: 0.006920422, b: 0.006920422, a: 0.866}
+  m_healcmpcol: {r: 0.1102941, g: 1, b: 0.8159229, a: 0.866}
 --- !u!1001 &778430917
 Prefab:
   m_ObjectHideFlags: 0

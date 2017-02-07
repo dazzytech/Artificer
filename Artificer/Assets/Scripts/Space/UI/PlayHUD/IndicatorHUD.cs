@@ -1,0 +1,136 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+
+using UI.Effects;
+
+namespace Space.UI.Ship
+{
+    /// <summary>
+    /// Displays nuremic data on HUD alerting
+    /// player to changes e.g. Component Damage
+    /// </summary>
+    public class IndicatorHUD : BasePanel
+    {
+        #region ATTRIBUTES
+
+        private List<RectTransform> m_rects;
+
+        #region FONTS
+
+        [Header("Damage Component Font")]
+        [SerializeField]
+        private Font m_dmgcmp;
+
+        [Header("Heal Component Font")]
+        [SerializeField]
+        private Font m_healcmp;
+
+        #endregion
+
+        #region COLOR
+
+        [Header("Damage Component Colour")]
+        [SerializeField]
+        private Color m_dmgcmpcol;
+
+        [Header("Heal Component Colour")]
+        [SerializeField]
+        private Color m_healcmpcol;
+
+        #endregion
+
+        #endregion
+
+
+        #region PUBLIC INTERACTION
+
+        public void IndicateIntegrity
+            (Vector2 location, float amount)
+        { 
+            // Build the game object 
+            GameObject IndicationText = new GameObject();
+
+            RectTransform rect = IndicationText.
+                AddComponent<RectTransform>();
+
+            rect.sizeDelta = new Vector2(45, 20);
+
+            // set parent while preseving postion
+            IndicationText.transform.SetParent(this.transform, false);
+
+            // convert from world to camera pos
+            IndicationText.transform.localPosition = UIConvert.
+                WorldToCameraPoint(location);
+                
+            Overlap(rect);
+
+            // build Text object
+            Text textItem = IndicationText.AddComponent<Text>();
+
+            // set font on sign of amount
+            textItem.font = amount > 0 ? m_healcmp : m_dmgcmp;
+            textItem.color = amount > 0 ? m_healcmpcol : m_dmgcmpcol;
+            textItem.fontSize = 10;
+            textItem.alignment = TextAnchor.MiddleCenter;
+
+            // set text (always positive number)
+            textItem.text = Mathf.Abs(amount).ToString("F0");
+
+            // Fade in the text
+            PanelFadeEffects.FadeInText(textItem);
+
+            // Destroy after delay
+            Destroy(IndicationText, 1f);
+
+            m_rects.Add(rect);
+        }
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        /// <summary>
+        /// Shifts rect upwards if it is currently overlaying
+        /// an item
+        /// </summary>
+        /// <param name="rect"></param>
+        public void Overlap(RectTransform rect)
+        {
+            if (m_rects == null)
+                m_rects = new List<RectTransform>();
+
+            for(int i = 0; i < m_rects.Count; i++)
+            {
+                RectTransform r = m_rects[i];
+
+                if (r == null)
+                {
+                    m_rects.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+
+                if (r == rect)
+                    continue;
+
+                Vector2 Distance = r.anchoredPosition - rect.anchoredPosition;
+
+                if ( Mathf.Abs(Distance.x) < ((r.rect.width + rect.rect.width)/2)
+                    && Mathf.Abs(Distance.y) < ((r.rect.height + rect.rect.height) / 2))
+                {
+                    r.anchoredPosition =
+                        r.anchoredPosition +
+                        (new Vector2(0, 21f));
+
+                    Overlap(r);
+
+                    return;
+                }
+            }
+        }
+
+        #endregion
+    }
+}

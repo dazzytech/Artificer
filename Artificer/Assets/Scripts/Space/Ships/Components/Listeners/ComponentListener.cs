@@ -175,7 +175,8 @@ namespace Space.Ship.Components.Listener
         /// component
         /// </summary>
         /// <param name="hit"></param>
-        public void DamageComponent(HitData hit, float damage)
+        public void DamageComponent
+            (HitData hit, float damage, bool authority)
         {
             ComponentAttributes att = GetAttributes();
 
@@ -190,21 +191,19 @@ namespace Space.Ship.Components.Listener
 
             SetColour(att.Integrity);
 
-            // May need to add local player here
-            if (att.Integrity <= 0)
+            if (authority)
             {
-                hit.hitComponent = att.ID;
-                transform.parent.gameObject.
-                SendMessage("DestroyComponent", hit,
-                SendMessageOptions.DontRequireReceiver);
-            }
-
-            if (isLocalPlayer)
-            {
-                
+                // May need to add local player here
+                if (att.Integrity <= 0)
+                {
+                    hit.hitComponent = att.ID;
+                    transform.parent.gameObject.
+                    SendMessage("DestroyComponent", hit,
+                    SendMessageOptions.DontRequireReceiver);
+                }
 
                 IntegrityChangedMsg msg = new IntegrityChangedMsg();
-                msg.Amount = damage;
+                msg.Amount = -damage;
                 msg.Location = transform.position;
                 msg.PlayerID = GameManager.Space.ID;
 

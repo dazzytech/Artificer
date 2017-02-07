@@ -44,7 +44,7 @@ namespace Space.Projectiles
             {
                 foreach (RaycastHit2D hit in hitList)
                 {
-                    if (hit.transform == null)
+                    if (hit.transform == null || Aggressor == null)
                         return;
                     // Both client and host reach here
                     // however only the player that applies damage

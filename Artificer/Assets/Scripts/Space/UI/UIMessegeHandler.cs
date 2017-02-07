@@ -115,11 +115,6 @@ namespace Space.UI
                 BuildShipData();
         }
 
-        /*public void BuildContractData(ContractData att)
-        {
-            PlayRect.GetComponent<ShipHUD>().BuildContractData(att);
-        }*/
-
         /// <summary>
         /// Redraw the HUD
         /// </summary>
@@ -175,6 +170,13 @@ namespace Space.UI
         {
             PlayRect.GetComponent<TrackerHUD>().
                 AddUIPiece(piece);
+        }
+
+        public void DisplayIntegrityChange
+            (Vector2 postion, float amount)
+        {
+            PlayRect.GetComponent<IndicatorHUD>()
+                .IndicateIntegrity(postion, amount);
         }
 
         #endregion

@@ -103,9 +103,16 @@ namespace Space.Segment
             m_att.UnderAttack = true;
 
             StartCoroutine("AttackTimer");
-            
+
+            IntegrityChangedMsg intmsg = new IntegrityChangedMsg();
+            intmsg.Amount = -hitD.damage;
+            intmsg.Location = transform.position;
+            intmsg.PlayerID = -1;
+
+            GameManager.singleton.client.Send((short)MSGCHANNEL.INTEGRITYCHANGE, intmsg);
+
             // if station destroyed then being destroy process
-            if(m_att.CurrentIntegrity <= 0)
+            if (m_att.CurrentIntegrity <= 0)
             {
                 StationDestroyMessage msg = new StationDestroyMessage();
                 msg.SelfID = netId;

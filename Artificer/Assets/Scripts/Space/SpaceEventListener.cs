@@ -49,6 +49,7 @@ namespace Space
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSOBJECTHIT, OnProcessHitMsg);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSSHIPHIT, OnProcessHitMsgShip);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.CREATEPROJECTILE, OnProjectileCreated);
+            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.DISPLAYINTEGRITYCHANGE, OnIntegrityChanged);
         }
 
         void Start()
@@ -399,6 +400,17 @@ namespace Space
 
             // client side projectile building
             GO.GetComponent<WeaponController>().CreateProjectile(projMsg.WData);
+        }
+
+        public void OnIntegrityChanged(NetworkMessage msg)
+        {
+            // Convert Message
+            IntegrityChangedMsg chgMsg =
+                msg.ReadMessage<IntegrityChangedMsg>();
+
+            // Display message
+            GameManager.GUI.DisplayIntegrityChange
+                    (chgMsg.Location, chgMsg.Amount);
         }
 
         #endregion

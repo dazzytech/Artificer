@@ -41,6 +41,7 @@ namespace Space.GameFunctions
 
             OnStationDestroyed(DD);
         }
+
         #endregion
     }
 }

@@ -24,7 +24,8 @@ namespace Networking
         SHIPDESTROYED,
         STATIONDESTROYED,
         ASSIGNTEAM,
-        INTEGRITYCHANGE
+        INTEGRITYCHANGE,
+        DISPLAYINTEGRITYCHANGE,
     };
 
     #endregion
