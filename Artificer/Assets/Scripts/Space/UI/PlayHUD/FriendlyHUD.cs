@@ -44,7 +44,8 @@ namespace Space.UI.Ship
         #region HUD ELEMENTS
 
         // List panel to place prefabs
-        [Header("Friendly List Panel")]
+        [Header("HUD Elements")]
+
         [SerializeField]
         private Transform m_friendlyList;
 
@@ -52,7 +53,7 @@ namespace Space.UI.Ship
 
         #region PREFABS
 
-        [Header("Friendly HUD Prefab")]
+        [Header("HUD Prefabs")]
         [SerializeField]
         private GameObject m_friendlyPrefab;
 

@@ -33,44 +33,41 @@ namespace Space.UI.Ship
 
         #region HUD ELEMENTS
 
+        [Header("HUD Elements")]
+
         [SerializeField]
-        [Header("Label")]
         public Text m_label;
 
         [SerializeField]
-        [Header("Distance")]
         public Text m_distance;
 
         [SerializeField]
-        [Header("Status")]
         public Text m_status;
 
         [SerializeField]
-        [Header("Icon")]
         public Image m_icon;
 
         [SerializeField]
-        [Header("Self Panel")]
+        [Header("Image")]
+
         public Image m_selfPanel;
 
         #endregion
 
         #region COLORS
 
+        [Header("Colours")]
+
         [SerializeField]
-        [Header("Colour Safe")]
         private Color m_safeColor;
 
         [SerializeField]
-        [Header("Colour Attacked")]
         private Color m_attackColor;
 
         [SerializeField]
-        [Header("Colour Destroyed")]
         private Color m_destroyedColor;
 
         [SerializeField]
-        [Header("Colour Highlighted")]
         private Color m_highlightColor;
 
         private Color m_standardColor;

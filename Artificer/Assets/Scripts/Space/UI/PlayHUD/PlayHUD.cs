@@ -5,8 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 // Artificer
 using Data.Shared;
-using Space.UI.Target;
-using Space.UI.Tracker;
 using Space.Ship;
 
 
@@ -19,40 +17,65 @@ namespace Space.UI.Ship
 {
     public class PlayHUD : MonoBehaviour
     {
+        #region ATTRIBUTES
+
         // Ship attributes for player ship
-        private ShipAttributes _shipData;
+        //private ShipAttributes _shipData;
+
+        #region HUD ELEMENTS
 
         // Other GUIs
-        public IntegrityHUD _int;
-        public WarpHUD _warp;
-        public TargetHUD _target;
-        public TrackerHUD _tracker;
-        public ShieldHUD _shields;
-        public StationHUD _station;
+        //public IntegrityHUD _int;
+        //public WarpHUD _warp;
+        [Header("HUD Elements")]
 
-    	// Use this for initialization
+        [SerializeField]
+        public TargetHUD m_targetHUD;
+        //public TrackerHUD _tracker;
+        //public ShieldHUD _shields;
+
+        [SerializeField]
+        public StationHUD m_station;
+
+        #endregion
+
+        #endregion
+
+        #region PUBLIC INTERACTION
+
+        /// <summary>
+        /// Initializes and passes player ship
+        /// attributes to each panel
+        /// </summary>
         public void BuildShipData()
     	{
             // Retreive data of player ship
-            _shipData = 
+            ShipAttributes shipData = 
                 GameObject.FindGameObjectWithTag
                     ("PlayerShip").GetComponent
                     <ShipAttributes>();
 
-            _int.SetShipData(_shipData);
-            _warp.SetShipData(_shipData);
-            _target.SetShipData(_shipData);
-            _shields.SetShipData(_shipData);
+            m_targetHUD.SetShipData(shipData);
+
+            //_int.SetShipData(shipData);
+            //_warp.SetShipData(shipData);
+            //_shields.SetShipData(shipData);
     	}
 
+        /// <summary>
+        /// Hides the specified panel
+        /// </summary>
+        /// <param name="panel"></param>
         public void HidePanel(string panel)
         {
             switch(panel)
             {
                 case "station":
-                    _station.ToggleHUD();
+                    m_station.ToggleHUD();
                     break;
             }
         }
+
+        #endregion
     }
 }

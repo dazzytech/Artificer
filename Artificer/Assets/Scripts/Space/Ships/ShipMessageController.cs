@@ -117,6 +117,16 @@ namespace Space.Ship
                 {
                     if (!m_ship.Targets.Contains(target))
                         m_ship.Targets.Add(target);
+
+                    // Determine if our target ship list already contains 
+                    // the ship parent
+                    // retreive ship attributes from removed cmp
+                    ShipAttributes shipAtt = target.GetComponentInParent<ShipAttributes>();
+                    if (shipAtt != null)
+                    {
+                        if (!m_ship.TargetedShips.Contains(shipAtt))
+                            m_ship.TargetedShips.Add(shipAtt);
+                    }
                 }
             }
             else
@@ -124,6 +134,33 @@ namespace Space.Ship
                 if (!m_ship.Targets.Contains(target))
                     m_ship.Targets.Add(target);
             }
+        }
+
+        public void SetCombatant(Transform Combatant)
+        {
+            m_ship.Target = Combatant;
+
+            CmdSetCombat(true);
+
+            CancelInvoke("AttackTimer");
+
+            Invoke("AttackTimer", 20f);
+        }
+
+        /// <summary>
+        /// When ship is hit by an enemy
+        /// ship is in under attack mode
+        /// for 20 sec after last shot
+        /// </summary>
+        /// <returns></returns>
+        private void AttackTimer()
+        {
+            if (m_ship.InCombat)
+            {
+                CmdSetCombat(false);
+            }
+
+            m_ship.Target = null;
         }
 
         /// <summary>
@@ -218,6 +255,12 @@ namespace Space.Ship
             {
                 listener.ShowComponent();
             }
+        }
+
+        [Command]
+        private void CmdSetCombat(bool ic)
+        {
+            m_ship.InCombat = ic;
         }
 
         #endregion

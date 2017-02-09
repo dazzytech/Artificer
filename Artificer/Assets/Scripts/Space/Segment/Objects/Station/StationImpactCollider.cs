@@ -33,23 +33,16 @@ namespace Space.Segment
 
         public void ApplyDamage(HitData hData)
         {
-            /*pieceDensity -= hData.damage;
-
-            if (pieceDensity <= 0)
-            {
-                // this will work cause host
-                NetworkServer.UnSpawn(this.gameObject);
-
-                // for now just destroy
-                Destroy(this.gameObject);
-            }*/
-
             if (isServer)
             {
                 hData.damage *= Random.Range(0.5f, 1.0f);
 
                 m_con.ProcessDamage(hData);
             }
+
+            GameObject attacker =
+            ClientScene.FindLocalObject(hData.originID);
+            attacker.SendMessage("SetCombatant", this.transform);
         }
 
         #endregion

@@ -25,12 +25,15 @@ namespace Space.UI.Ship
 
         private uint m_ID;
 
-        [Header("FriendlyHUD")]
+        [Header("HUD Elements")]
+
         public static FriendlyHUD Base;
 
         // viewer window
         [SerializeField]
         private ComponentBuilderUtility ViewerPanel;
+
+        [Header("HUD Prefabs")]
 
         // Prefab for component viewer
         [SerializeField]
@@ -189,7 +192,7 @@ namespace Space.UI.Ship
                         break;
 
                     case 1:
-                        m_status.text = "Attacked";
+                        m_status.text = "In Combat";
                         m_status.color = m_attackColor;
                         break;
 

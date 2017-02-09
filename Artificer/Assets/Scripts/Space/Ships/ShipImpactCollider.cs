@@ -98,6 +98,7 @@ namespace Space.Ship
         public void ProcessDamage(int[] damaged, HitData hData, float[] vals)
         {
             _hitD = hData;
+
             StartCoroutine(CycleComponentDamage(damaged, vals));
 
             if (isLocalPlayer)
@@ -107,19 +108,11 @@ namespace Space.Ship
                     Camera.main.gameObject.SendMessage("ShakeCam");
                 }
 
-                // After successfully taking damage, set to under attack mode
-                CmdSetUA(true);
-
-                Invoke("AttackTimer", 20f);
+                SendMessage("SetCombatant", 
+                    ClientScene.FindLocalObject(_hitD.originID).transform);
             }
         }
-
-        [Command]
-        private void CmdSetUA(bool ua)
-        {
-            m_ship.UnderAttack = ua;
-        }
-
+        
         #endregion
 
         #region COROUTINE
@@ -157,6 +150,9 @@ namespace Space.Ship
             // Send message to server to process damage
             if (damagedComps.Count > 0)
             {
+                ClientScene.FindLocalObject(_hitD.originID).
+                    SendMessage("SetCombatant", this.transform);
+
                 ShipColliderHitMessage msg = new ShipColliderHitMessage();
                 msg.HitComponents = damagedComps.ToArray();
                 msg.ShipID = this.netId;
@@ -204,6 +200,9 @@ namespace Space.Ship
             // Send message to server to process damage
             if (damagedComps.Count > 0)
             {
+                ClientScene.FindLocalObject(_hitD.originID).
+                    SendMessage("SetCombatant", this.transform);
+
                 ShipColliderHitMessage msg = new ShipColliderHitMessage();
                 msg.HitComponents = damagedComps.ToArray();
                 msg.ShipID = this.netId;
@@ -227,20 +226,6 @@ namespace Space.Ship
             }
 
             yield break;
-        }
-
-        /// <summary>
-        /// When ship is hit by an enemy
-        /// ship is in under attack mode
-        /// for 20 sec after last shot
-        /// </summary>
-        /// <returns></returns>
-        private void AttackTimer()
-        {
-            if (m_ship.UnderAttack)
-            {
-                CmdSetUA(false);
-            }
         }
 
         #endregion

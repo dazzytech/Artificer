@@ -23,7 +23,9 @@ namespace Space.Ship.Components.Listener
 
         public ComponentAttributes GetAttributes()
         {
-            if (transform.GetComponent<ComponentAttributes>() != null)
+            if (transform == null)
+                return null;
+            else if (transform.GetComponent<ComponentAttributes>() != null)
                 return transform.GetComponent<ComponentAttributes>();
             else
                 return null;

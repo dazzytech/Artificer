@@ -34,8 +34,9 @@ namespace Space.Ship
 
         [SyncVar]             //why doesnt this work?
         public bool ShipDocked;
+
         [SyncVar]
-        public bool UnderAttack;
+        public bool InCombat;
 
         public NetworkInstanceId instID;
 
@@ -191,8 +192,13 @@ namespace Space.Ship
         public List<Transform> Targets;
         public List<Transform> SelfTargeted;
         public List<Transform> HighlightedTargets;
+
+        public List<ShipAttributes> TargetedShips;
+
         public Rect HighlightRect;
         public float TargetDistance;
+
+        public Transform Target;
 
         #endregion
 
@@ -210,7 +216,7 @@ namespace Space.Ship
             {
                 if (ShipDocked)
                     return 2;
-                if (UnderAttack)
+                if (InCombat)
                     return 1;
                 else
                     return 0;

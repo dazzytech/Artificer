@@ -82,6 +82,16 @@ namespace UI
             StartCoroutine("DiscoverSize");
         }
 
+        public void ClearShip()
+        {
+            m_ship = null;
+
+            m_componentPrefab = null;
+
+            if (m_constructPanel != null)
+                Destroy(m_constructPanel.gameObject);
+        }
+
         #endregion
 
         #region COROUTINE

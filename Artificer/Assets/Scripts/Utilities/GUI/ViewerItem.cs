@@ -23,6 +23,8 @@ namespace UI
 
         #region HUD ELEMENTS
 
+        [Header("HUD Elements")]
+
         // component image
         [SerializeField]
         private Image Icon;
@@ -33,11 +35,11 @@ namespace UI
 
         private bool Selected;
 
-        //public static StationController Controller;
-
         private ComponentListener Listener; 
 
         #region COLOR
+
+        [Header("Colour")]
 
         private Color StandardColor;
 
@@ -116,6 +118,15 @@ namespace UI
         {
             while(true)
             {
+                // Detect if component is destroyed
+                // Destroy for now but implement
+                // destroyed colour
+                if(Listener == null)
+                {
+                    Destroy(gameObject);
+                    yield break;
+                }
+
                 if (Listener.NormalizedHealth < 0.3)
                     StandardColor = LowHealth;
                 else if
@@ -133,20 +144,18 @@ namespace UI
 
         #endregion
 
+        // Create another prefab that extends this prefab 
+        // but has pointerEventHandlers?
         #region IPOINTEREVENTS
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            //if (!Selected)
-                //Icon.color = HighlightColor;
-                ItemHover(ID);
+            ItemHover(ID);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-           // if (!Selected)
-                //Icon.color = StandardColor;
-                ItemLeave(ID);
+            ItemLeave(ID);
         }
 
         public void OnPointerClick(PointerEventData eventData)

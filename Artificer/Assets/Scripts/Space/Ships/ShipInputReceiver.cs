@@ -43,6 +43,7 @@ namespace Space.Ship
             _ship.Targets = new List<Transform>();
             _ship.SelfTargeted = new List<Transform>();
             _ship.HighlightedTargets = new List<Transform>();
+            _ship.TargetedShips = new List<ShipAttributes>();
             _ship.TargetDistance = 300f;
 
             // rotor vars
@@ -76,6 +77,28 @@ namespace Space.Ship
             foreach (Transform t in remove)
             {
                 _ship.Targets.Remove(t);
+
+                // retreive ship attributes from removed cmp
+                ShipAttributes shipAtt = t.GetComponentInParent<ShipAttributes>();
+                if(shipAtt != null)
+                {
+                    // loop through each component 
+                    // and determine if ship is still targeted
+                    bool stillTargeted = false;
+                    foreach(ComponentListener cmp in shipAtt.Components)
+                    {
+                        if(_ship.Targets.Contains(cmp.transform))
+                        {
+                            stillTargeted = true;
+
+                            break;
+                        }
+                    }
+
+                    // Ship no longer targeted
+                    if (!stillTargeted)
+                        _ship.TargetedShips.Remove(shipAtt);
+                }
             }
             remove.Clear();
 
@@ -496,6 +519,7 @@ namespace Space.Ship
             {
                 _ship.SelfTargeted.Clear();
                 _ship.Targets.Clear();
+                _ship.TargetedShips.Clear();
                 inputDelay = true;
                 StartCoroutine("EngageDelay");
             }

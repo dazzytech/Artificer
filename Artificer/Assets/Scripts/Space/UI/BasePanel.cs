@@ -15,15 +15,17 @@ namespace Space.UI
     /// </summary>
     public class BasePanel : MonoBehaviour
     {
-
         #region ATTRIBUTES
 
-        private bool _keyDelay = false;
+        private bool m_keyDelay = false;
 
-        protected Transform HUD;
+        [Header("Base Panel")]
 
         [SerializeField]
-        private List<GameObject> ToggleActive;
+        protected Transform m_HUD;
+
+        [SerializeField]
+        private List<GameObject> m_toggleActive;
 
         #endregion
 
@@ -31,18 +33,18 @@ namespace Space.UI
 
         public void ToggleHUD()
         {
-            if (!_keyDelay)
+            if (!m_keyDelay)
             {
-                HUD.gameObject.SetActive
-                    (!HUD.gameObject.activeSelf);
-                _keyDelay = true;
+                m_HUD.gameObject.SetActive
+                    (!m_HUD.gameObject.activeSelf);
+                m_keyDelay = true;
                 Invoke("PauseRelease", 0.3f);
             }
         }
 
         public void ActivateHUD()
         {
-            foreach(GameObject GO in ToggleActive)
+            foreach(GameObject GO in m_toggleActive)
             {
                 GO.SetActive(true);
             }
@@ -50,7 +52,7 @@ namespace Space.UI
 
         public void DeactivateHUD()
         {
-            foreach (GameObject GO in ToggleActive)
+            foreach (GameObject GO in m_toggleActive)
             {
                 GO.SetActive(false);
             }
@@ -62,7 +64,7 @@ namespace Space.UI
 
         private void PauseRelease()
         {
-            _keyDelay = false;
+            m_keyDelay = false;
         }
 
         #endregion

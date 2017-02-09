@@ -21,16 +21,32 @@ namespace Space.UI
     {
         #region ATTRIBUTES
 
-        public GameObject PlayRect;
-        public GameObject PauseRect;
-        public GameObject PopupRect;
-        public GameObject TeamSelectRect;
-        public GameObject SpawnPickerRect;
-        public GameObject StationRect;
-        private bool _keyDelay = false;
+        [Header("HUD Rects")]
 
-        // messages
-        public MessageHUD MsgBase;
+        [SerializeField]
+        private GameObject m_playRect;
+
+        [SerializeField]
+        private GameObject m_pauseRect;
+
+        [SerializeField]
+        private GameObject m_popupRect;
+
+        [SerializeField]
+        private GameObject m_teamSelectRect;
+
+        [SerializeField]
+        private GameObject m_spawnPickerRect;
+
+        [SerializeField]
+        private GameObject m_stationRect;
+
+        private bool m_keyDelay = false;
+
+        [Header("HUD Additions")]
+
+        [SerializeField]
+        private MessageHUD m_messageHUD;
 
         #endregion
 
@@ -45,58 +61,58 @@ namespace Space.UI
             switch (state)
             {
                 case UIState.Pause:
-                    PauseRect.SetActive(true);
-                    PlayRect.SetActive(false);
-                    PopupRect.SetActive(false);
-                    TeamSelectRect.SetActive(false);
-                    SpawnPickerRect.SetActive(false);
-                    MsgBase.gameObject.SetActive(false);
-                    StationRect.SetActive(false);
+                    m_pauseRect.SetActive(true);
+                    m_playRect.SetActive(false);
+                    m_popupRect.SetActive(false);
+                    m_teamSelectRect.SetActive(false);
+                    m_spawnPickerRect.SetActive(false);
+                    m_messageHUD.gameObject.SetActive(false);
+                    m_stationRect.SetActive(false);
                     break;
                 case UIState.Play:
-                    PauseRect.SetActive(false);
-                    PlayRect.SetActive(true);
-                    PopupRect.SetActive(false);
-                    TeamSelectRect.SetActive(false);
-                    SpawnPickerRect.SetActive(false);
-                    MsgBase.gameObject.SetActive(true);
-                    StationRect.SetActive(false);
+                    m_pauseRect.SetActive(false);
+                    m_playRect.SetActive(true);
+                    m_popupRect.SetActive(false);
+                    m_teamSelectRect.SetActive(false);
+                    m_spawnPickerRect.SetActive(false);
+                    m_messageHUD.gameObject.SetActive(true);
+                    m_stationRect.SetActive(false);
                     break;
                 case UIState.Popup:
-                    PauseRect.SetActive(false);
-                    PlayRect.SetActive(false);
-                    PopupRect.SetActive(true);
-                    TeamSelectRect.SetActive(false);
-                    SpawnPickerRect.SetActive(false);
-                    MsgBase.gameObject.SetActive(true);
-                    StationRect.SetActive(false);
+                    m_pauseRect.SetActive(false);
+                    m_playRect.SetActive(false);
+                    m_popupRect.SetActive(true);
+                    m_teamSelectRect.SetActive(false);
+                    m_spawnPickerRect.SetActive(false);
+                    m_messageHUD.gameObject.SetActive(true);
+                    m_stationRect.SetActive(false);
                     break;
                 case UIState.TeamPicker:
-                    PauseRect.SetActive(false);
-                    PlayRect.SetActive(false);
-                    PopupRect.SetActive(false);
-                    TeamSelectRect.SetActive(true);
-                    SpawnPickerRect.SetActive(false);
-                    MsgBase.gameObject.SetActive(false);
-                    StationRect.SetActive(false);
+                    m_pauseRect.SetActive(false);
+                    m_playRect.SetActive(false);
+                    m_popupRect.SetActive(false);
+                    m_teamSelectRect.SetActive(true);
+                    m_spawnPickerRect.SetActive(false);
+                    m_messageHUD.gameObject.SetActive(false);
+                    m_stationRect.SetActive(false);
                     break;
                 case UIState.SpawnPicker:
-                    PauseRect.SetActive(false);
-                    PlayRect.SetActive(false);
-                    PopupRect.SetActive(false);
-                    TeamSelectRect.SetActive(false);
-                    SpawnPickerRect.SetActive(true);
-                    MsgBase.gameObject.SetActive(false);
-                    StationRect.SetActive(false);
+                    m_pauseRect.SetActive(false);
+                    m_playRect.SetActive(false);
+                    m_popupRect.SetActive(false);
+                    m_teamSelectRect.SetActive(false);
+                    m_spawnPickerRect.SetActive(true);
+                    m_messageHUD.gameObject.SetActive(false);
+                    m_stationRect.SetActive(false);
                     break;
                 case UIState.Station:
-                    PauseRect.SetActive(false);
-                    PlayRect.SetActive(false);
-                    PopupRect.SetActive(false);
-                    TeamSelectRect.SetActive(false);
-                    SpawnPickerRect.SetActive(false);
-                    MsgBase.gameObject.SetActive(true);
-                    StationRect.SetActive(true);
+                    m_pauseRect.SetActive(false);
+                    m_playRect.SetActive(false);
+                    m_popupRect.SetActive(false);
+                    m_teamSelectRect.SetActive(false);
+                    m_spawnPickerRect.SetActive(false);
+                    m_messageHUD.gameObject.SetActive(true);
+                    m_stationRect.SetActive(true);
                     break;
             }
         }
@@ -111,7 +127,7 @@ namespace Space.UI
         /// </summary>
         public void BuildShipData()
         {
-            PlayRect.GetComponent<PlayHUD>().
+            m_playRect.GetComponent<PlayHUD>().
                 BuildShipData();
         }
 
@@ -120,7 +136,7 @@ namespace Space.UI
         /// </summary>
         public void RebuildGUI()
         {
-            PlayRect.SendMessage("RebuildGUI");
+            m_playRect.SendMessage("RebuildGUI");
         }
 
         /// <summary>
@@ -131,9 +147,9 @@ namespace Space.UI
         public void DisplayMessege(MsgParam param)
         {
             //PlayRect.SendMessage("DisplayMessege", param);
-            if(MsgBase.gameObject.activeSelf)
+            if(m_messageHUD.gameObject.activeSelf)
             {
-                MsgBase.DisplayMessege(param);
+                m_messageHUD.DisplayMessege(param);
             }
         }
 
@@ -144,9 +160,9 @@ namespace Space.UI
         /// <param name="message"></param>
         public void DisplayPrompt(string message)
         {
-            if (MsgBase.gameObject.activeSelf)
+            if (m_messageHUD.gameObject.activeSelf)
             {
-                MsgBase.DisplayPrompt(message);
+                m_messageHUD.DisplayPrompt(message);
             }
         }
 
@@ -155,9 +171,9 @@ namespace Space.UI
         /// </summary>
         public void ClearPrompt()
         {
-            if (MsgBase.gameObject.activeSelf)
+            if (m_messageHUD.gameObject.activeSelf)
             {
-                MsgBase.HidePrompt();
+                m_messageHUD.HidePrompt();
             }
         }
 
@@ -168,14 +184,14 @@ namespace Space.UI
         /// <param name="piece"></param>
         public void AddUIPiece(Transform piece)
         {
-            PlayRect.GetComponent<TrackerHUD>().
+            m_playRect.GetComponent<TrackerHUD>().
                 AddUIPiece(piece);
         }
 
         public void DisplayIntegrityChange
             (Vector2 postion, float amount)
         {
-            PlayRect.GetComponent<IndicatorHUD>()
+            m_playRect.GetComponent<IndicatorHUD>()
                 .IndicateIntegrity(postion, amount);
         }
 
@@ -208,7 +224,7 @@ namespace Space.UI
         /// <param name="val"></param>
         public void SetCounter(float val)
         {
-            PopupRect.SendMessage("SetShipRespawnCounter", val);
+            m_popupRect.SendMessage("SetShipRespawnCounter", val);
         }
 
         /// <summary>
@@ -218,7 +234,7 @@ namespace Space.UI
         /// <param name="val"></param>
         public void EndGame(bool val)
         {
-            PopupRect.SendMessage("EndGame", val);
+            m_popupRect.SendMessage("EndGame", val);
         }
 
         /*public void UpdateReward(object val)
@@ -238,7 +254,7 @@ namespace Space.UI
         /// <param name="teamB"></param>
         public void SetTeamOptions(int teamA, int teamB)
         {
-            TeamSelectRect.SendMessage("SetTeams", 
+            m_teamSelectRect.SendMessage("SetTeams", 
                 new int[2] { teamA, teamB });
         }
 
@@ -252,7 +268,7 @@ namespace Space.UI
         /// <param name="delay"></param>
         public void SetSpawnDelay(float delay)
         {
-            SpawnPickerRect.SendMessage("SetSpawnTimer", delay);
+            m_spawnPickerRect.SendMessage("SetSpawnTimer", delay);
         }
 
         #endregion
@@ -264,10 +280,10 @@ namespace Space.UI
         /// </summary>
         public void ToggleHUD()
         {
-            if (!_keyDelay && !PopupRect.activeSelf)
+            if (!m_keyDelay && !m_popupRect.activeSelf)
             {
-                PlayRect.SetActive(!PlayRect.activeSelf);
-                _keyDelay = true;
+                m_playRect.SetActive(!m_playRect.activeSelf);
+                m_keyDelay = true;
                 Invoke("PauseRelease", 0.3f);
             }
         }
@@ -278,13 +294,13 @@ namespace Space.UI
         /// </summary>
         public void ToggleStationHUD()
         {
-            if(!PopupRect.activeSelf && PlayRect.activeSelf)
-                PlayRect.SendMessage("HidePanel", "station");
+            if(!m_popupRect.activeSelf && m_playRect.activeSelf)
+                m_playRect.SendMessage("HidePanel", "station");
         }
 
         public void PauseRelease()
         {
-            _keyDelay = false;
+            m_keyDelay = false;
         }
 
         #endregion
@@ -293,7 +309,7 @@ namespace Space.UI
 
         public void InitializeStationHUD(ShipAttributes ship)
         {
-            StationRect.SendMessage("InitializeHUD", ship);
+            m_stationRect.SendMessage("InitializeHUD", ship);
         }
 
         #endregion

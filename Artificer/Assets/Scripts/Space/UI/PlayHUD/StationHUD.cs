@@ -22,7 +22,8 @@ namespace Space.UI.Ship
 
         #region HUD ELEMENTS
 
-        [Header("Station List Panel")]
+        [Header("HUD Elements")]
+
         [SerializeField]
         private Transform m_stationList;
 
@@ -30,7 +31,8 @@ namespace Space.UI.Ship
 
         #region PREFABS
 
-        [Header("Station HUD Prefab")]
+        [Header("HUD Prefabs")]
+
         [SerializeField]
         private GameObject m_stationPrefab;
 

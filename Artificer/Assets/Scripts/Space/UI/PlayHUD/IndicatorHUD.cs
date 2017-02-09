@@ -19,33 +19,38 @@ namespace Space.UI.Ship
 
         #region FONTS
 
-        [Header("Damage Component Font")]
-        [SerializeField]
-        private Font m_dmgcmp;
+        [Header("Fonts")]
 
-        [Header("Heal Component Font")]
         [SerializeField]
-        private Font m_healcmp;
+        private Font m_damageComponentFont;
+        
+        [SerializeField]
+        private Font m_healComponentFont;
 
         #endregion
 
         #region COLOR
 
-        [Header("Damage Component Colour")]
-        [SerializeField]
-        private Color m_dmgcmpcol;
+        [Header("Colours")]
 
-        [Header("Heal Component Colour")]
         [SerializeField]
-        private Color m_healcmpcol;
+        private Color m_damageComponentColour;
+        
+        [SerializeField]
+        private Color m_healComponentColour;
 
         #endregion
 
         #endregion
-
 
         #region PUBLIC INTERACTION
 
+        /// <summary>
+        /// Create a text item at the specified
+        /// location displaying the amount of integrity change
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="amount"></param>
         public void IndicateIntegrity
             (Vector2 location, float amount)
         { 
@@ -58,7 +63,7 @@ namespace Space.UI.Ship
             rect.sizeDelta = new Vector2(45, 20);
 
             // set parent while preseving postion
-            IndicationText.transform.SetParent(this.transform, false);
+            IndicationText.transform.SetParent(m_HUD.transform, false);
 
             // convert from world to camera pos
             IndicationText.transform.localPosition = UIConvert.
@@ -70,8 +75,8 @@ namespace Space.UI.Ship
             Text textItem = IndicationText.AddComponent<Text>();
 
             // set font on sign of amount
-            textItem.font = amount > 0 ? m_healcmp : m_dmgcmp;
-            textItem.color = amount > 0 ? m_healcmpcol : m_dmgcmpcol;
+            textItem.font = amount > 0 ? m_healComponentFont : m_damageComponentFont;
+            textItem.color = amount > 0 ? m_healComponentColour : m_damageComponentColour;
             textItem.fontSize = 10;
             textItem.alignment = TextAnchor.MiddleCenter;
 

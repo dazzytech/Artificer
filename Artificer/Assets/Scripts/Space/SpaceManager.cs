@@ -187,17 +187,35 @@ namespace Space
 
         public int ID
         {
-            get { return _att.playerID; }
+            get
+            {
+                if (_att == null)
+                    return -1;
+
+                return _att.playerID;
+            }
         }
 
         public uint NetID
         {
-            get { return _att.netID; }
+            get
+            {
+                if (_att == null)
+                    return 0u;
+
+                return _att.netID;
+            }
         }
 
         public TeamController Team
         {
-            get { return _att.Team; }
+            get
+            {
+                if (_att == null)
+                    return null;
+
+                return _att.Team;
+            }
         }
 
         /// <summary>
