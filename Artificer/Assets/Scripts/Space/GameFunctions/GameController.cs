@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Data.Space;
 using Data.Space.Library;
@@ -137,14 +138,26 @@ namespace Space.GameFunctions
             if (_att.PlayerInfoList == null)
                 _att.PlayerInfoList = new IndexedList<PlayerConnectionInfo>();
 
-            // store connection to the ship
-            PlayerConnectionInfo info = new PlayerConnectionInfo();
-            info.mController = playerControllerId;
-            info.mConnection = conn;
-            info.mTeam = -1;
+            // Test If this player is already joined to the match
+            PlayerConnectionInfo info = _att.PlayerInfoList
+                .FirstOrDefault(o => o.mConnection == conn);
 
-            // add player to tracking list
-            _att.PlayerInfoList.Add(info);
+            // if not match then create new info
+            if (info == null)
+            {
+                info = new PlayerConnectionInfo();
+                info.mController = playerControllerId;
+                info.mConnection = conn;
+                info.mTeam = -1;
+
+                // add player to tracking list
+                _att.PlayerInfoList.Add(info);
+            }
+            else
+            {
+                info.mController = playerControllerId;
+                info.mTeam = -1;
+            }
 
             // Assign our intial ID to the system
             IntegerMessage iMsg = new IntegerMessage(info.ID);
@@ -158,6 +171,25 @@ namespace Space.GameFunctions
             msg.teamTwo = _att.TeamB.ID;
             NetworkServer.SendToClient(conn.connectionId,
                 (short)MSGCHANNEL.TEAMPICKER, msg);
+        }
+
+        /// <summary>
+        /// Deletes player if been dropped
+        /// </summary>
+        /// <param name="conn"></param>
+        [Server]
+        public void RemovePlayer
+            (NetworkConnection conn)
+        {
+            // Test If this player is already joined to the match
+            PlayerConnectionInfo info = _att.PlayerInfoList
+                .FirstOrDefault(o => o.mConnection == conn);
+
+            // if not match then create new info
+            if (info != null)
+            {
+                _att.PlayerInfoList.Remove(info);
+            }
         }
 
         /// <summary>

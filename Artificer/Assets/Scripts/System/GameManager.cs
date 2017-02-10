@@ -47,7 +47,6 @@ public class GameManager: NetworkManager
 
     #endregion
 
-
     #region PUBLIC INTERACTION
 
     /// <summary>
@@ -127,6 +126,15 @@ public class GameManager: NetworkManager
     public override void OnServerSceneChanged(string sceneName)
     {
         InitServer();
+    }
+
+    /// <summary>
+    /// Called when player quits out of a game
+    /// </summary>
+    /// <param name="conn"></param>
+    public override void OnServerDisconnect(NetworkConnection conn)
+    {
+        GameMSG.RemovePlayer(conn);
     }
 
     // CLIENT SIDE

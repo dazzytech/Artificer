@@ -128,7 +128,6 @@ namespace Space.UI.Ship
                 if (ID == GameManager.Space.NetID || m_addedIDs.Contains(ID))
                     continue;
 
-
                 NetworkInstanceId netID = new NetworkInstanceId(ID);
 
                 // Get ship object from network id

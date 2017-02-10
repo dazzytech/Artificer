@@ -193,7 +193,7 @@ namespace Space.Ship.Components.Listener
 
             SetColour(att.Integrity);
 
-            if (authority)
+            /*if (authority)
             {
                 // May need to add local player here
                 if (att.Integrity <= 0)
@@ -210,7 +210,7 @@ namespace Space.Ship.Components.Listener
                 msg.PlayerID = GameManager.Space.ID;
 
                 GameManager.singleton.client.Send((short)MSGCHANNEL.INTEGRITYCHANGE, msg);
-            }          
+            }  */       
         }
 
         public void HealComponent(float amount)

@@ -151,7 +151,8 @@ namespace Space.Ship
             if (damagedComps.Count > 0)
             {
                 ClientScene.FindLocalObject(_hitD.originID).
-                    SendMessage("SetCombatant", this.transform);
+                    SendMessage("SetCombatant", this.transform,
+                    SendMessageOptions.DontRequireReceiver);
 
                 ShipColliderHitMessage msg = new ShipColliderHitMessage();
                 msg.HitComponents = damagedComps.ToArray();

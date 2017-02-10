@@ -16,64 +16,17 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.478 seconds
+- Completed reload, in  0.132 seconds
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 <RI> Initialized touch support.
-UnloadTime: 1.791650 ms
+UnloadTime: 2.310602 ms
 DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
  
 (Filename:  Line: 386)
-
-[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
-Initialize engine version: 5.4.1f1 (649f48bbbf0f)
-GfxDevice: creating device client; threaded=1
-Direct3D:
-    Version:  Direct3D 11.0 [level 11.0]
-    Renderer: AMD Radeon (TM) R9 200 Series (ID=0x6811)
-    Vendor:   ATI
-    VRAM:     2029 MB
-Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.144 seconds
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
-<RI> Initializing input.
-<RI> Input initialized.
-desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
-<RI> Initialized touch support.
-UnloadTime: 1.719864 ms
-IndexOutOfRangeException: Array index is out of range.
-  at SoundController.ResumeMusic () [0x00000] in <filename unknown>:0 
-  at Audio_Config.set_AudioType (Int32 value) [0x00000] in <filename unknown>:0 
-  at Audio_Config.SetDefaults () [0x00000] in <filename unknown>:0 
-  at Audio_Config.Awake () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
- 
-(Filename:  Line: 386)
-
-[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
 Start Client
@@ -85,1476 +38,231 @@ The referenced script on this Behaviour (Game Object 'ShipViewer') is missing!
 (Filename:  Line: 1656)
 
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.899077 ms
+UnloadTime: 4.799744 ms
 Scene Changed
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
 
-Unloading 603 unused Assets to reduce memory usage. Loaded Objects now: 2541.
-Total: 2.603300 ms (FindLiveObjects: 0.188960 ms CreateObjectMapping: 0.123426 ms MarkObjects: 1.787019 ms  DeleteObjects: 0.478421 ms)
+Unloading 607 unused Assets to reduce memory usage. Loaded Objects now: 3349.
+Total: 5.216569 ms (FindLiveObjects: 0.260284 ms CreateObjectMapping: 0.210265 ms MarkObjects: 3.534910 ms  DeleteObjects: 1.188647 ms)
 
-SyncList not initialized
+Large state update of 1739 bytes for netId:3262 from script:Ship(Clone) (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-SyncList not initialized
+Large state update of 1739 bytes for netId:3262 from script:PlayerShip (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-1340 NOT FOUND
+Large state update of 1739 bytes for netId:3263 from script:Ship(Clone) (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-1340 NOT FOUND
+Large state update of 1739 bytes for netId:3263 from script:AllyShip (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-1340 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-1340 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-1340 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-1340 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-1340 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-1340 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-1340 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-1340 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-1340 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-1340 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-1340 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-1340 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-1340 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-Start Client
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-2481 NOT FOUND
+Server has message
  
-(Filename: C:/buildslave/unityhe refere/builsdriatrti thits/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBis Behaviour (G Line: 42ct 
-'
-ShipViewer') is missing!
- 
-(Filename:  Line: 1656)
-
-Unloading 6 Unused Seriali2481 NOT FOUNDali
-zFilename: now loaded: 0)nitlya/build/artifacts/s
-generated/common/runtime/UniScene Changedind
-ings.gen.cpp Line: 4lav2)ni
-ty2481 NOT FOUNDs/g
-enerateme: mC:/bruildslave/unity/build/artifacts/generated/co: 42mm
-
-on/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-481 NOT nFO6U3 NnDe d
- Assets to reduce memory usage. Loadea Obrtifacts/gener1at
-edta/c o.mmon2/runtime/UnityEnjegtsi ne1DebugBindings.gen.cpp Line: 42).34
-52481s NOrTObjects:
- 1
-.823ename: C:/lbuiOldects: 0.42t16y/buil
-d
-/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-SyncLi2t4not iniT FOiUND
- 
-(Filename: C:/builddlslave/unity/build/aifacrtifacts/gedneratend/ucommon/runtime/UnityEngineDebugBindings.gen.cpp L
-
-Sine: s42)t 
-initia2481 N
-OT
- FileDme:
- Filename: C:/buildslave/unity/build/artifacts/genera/ruted/common/runtimDeUugBindiineDebugBindings.gen.c
-p
-p Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2481 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NOT FOUND
- 
-(Filename:0 NOT FOUNDve/
-unity/abuild/artifacts/generated/common/runtime/UnityEngineDeon/rundtime/UnityEngineDebugBi
-n
-dings.gen2631 NOT FOUND
-
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-2631 NIndexOutO
-fR
-angeException:b Arrslave/unity/build/artifac
-ts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: <fil
-e
-name un2631 NOT F
-OUNDSpa
-ce.Segment.WreckageBehaviourty/build/artifacts/generated/common/runtime/U
-ni
-tFilngineDebugBne: -1)ge
-n.cpp Line: 
-42
-)il
-ename: C2631 NOT FOUNDity
-(Filename: C:/buildslaat/ed/common/runtime/UnityEngineDebugBindinus.gen.cpp Line: 42)ug
-BiIdings.gen.cpp Line: i42)Ar
-ray ind2631 NOT  of ra
-ng
-e.ie  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 ngs.gen.cpp Line: 42)ec
-kageBehavioOT FOUND() 
-[0xl000m00] in <filename unknown>:0 art
-ifacts/gen  Line: -1)n/
-runtime/Uni
-ty
-EngineDebugBi/ndings.gen.cpp Line: 42)ti
-facts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
+Server has message
  
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUN24
-81
- NOlename: 
-C:
-/buildslave/uniuildslave/unitfacts/generatfed/common/runticommontyEngineDebiugBindings.gen.cpp Line: 42) L
-iIndexOut
-O
-fR2481 NOT FOUND
- ay ilename: C:/buildslav.unity/build/artifnt.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
- 
- at Spac2481 NOT FOUNDage
-BFilename: C:/buildslave/unity/buiild/artifacts/genera
- t
-edilename:  Line: -1)yE
-ngineDebugBi
-nd
-ingls.gen.cpp Line: 42)/u
-n2481build/artif
-ac
-ts/generated/common/lave/unity/buEilid/artifacts/generated/c ommon/runt
-i
-meIUndexOutOfRangeException.geAn.cypp Line: 42) o
-f range.81 NOT FOUNDegm
-ent.Wreck: C:/buaildslave/unity/build/artifa0cts/generated/common/runti:0 nityEngineDebugBindings.gene.cpp Line: 42) (
-)2481 NOT FOUNDfil
-ename unknown>:0 dsl
-ave/unity/build/artifa
-c
-ts/generated
-/c
-ommon/runt ime/UnityEngineDity/bundings.gen.cpp Line: 42)om
-mon/r2481 NOT FOUNDin
-eDebugBin: Cgs.gen.cpp Line: 42)ui
-lIndexOutOtfRangeException:o Array me/UnityEngineDebugBindi
-ngs.gen.cpp Line: 42)ck
-a2481 NOT FOUNDldW
-rFilename: C:/buildslave/unity/build/artif:0 /generated/commonn/rWreckagUnityEngineDebugBindings.gen.cpp Line: 42) nk
-no2n>:0 T F
-OUNDnam
-e:  Line: -1)bu
-0 NOT FOUNDty/
-build/ame: C:/buildslate/unity/build/artifacts/generatedgBindings.gen.cpp Line: 42)eb
-ug2481 NOT FOUNDp L
-ine: 42): 
-C:/buildslave/unity/build/artraycts/ex isa out of range.ime/UnityEngineDebugBindkags.gen.cpp LiBuildWre
-c
-kage (2481 NOT FOUND<fi
-lename un: C:/build
-slave/unity/buield/artifacts/generated/common/runtime/UnityEngineDebugBindings.ge
-n.
-cpp Line: 42)ne
-: -1) N
-O TOFT FOU
- (Fi
-lename: C:/buildslave/unity/build/artifacts/generated/commommon/runtime/UnityEngineDebugBindings.gen.cpp Line:)4
-2
-)
-2
-In1 NOT FOUNDeEx
-ception: A C:/builex is /out of range.tifacts/generated/common/runtime/iUni.BuildWreckage () [0x00000] in <filena)e 
-un2481 NOT F
-OUNDSpa
-(Filename: C:/buildslave/uur.S/abuild/artifacts/generated/common/runti>e:0 i
-ty
-EngineDebugBindings.ge
-n
-.cpp LinU: ND 
-2
-(Filename: C:/
-bu
-ildslave/unity/uildslave/unity/build/artifacts/generamteUd/common/runtime/UnityEngineDebugBindings.
-g
-eIndexOutOfRangeE
-x
-cept2481 NOT FOUNd
-ex
- is onut :of range.s
-  at Space.Segment.WreckageBehaviour.BuildWrreckage () [0x00000] bin <filenamee unknown>::0 ) a
-t2481 NOT FOUNDWre
-ckageBeha: C:/buildslave/0nity/build/artifacts/gene unkdnown>:0 unt
-ime/UnityEngineDebugBi
-n
-0 NOT FOUNDp L
-ine: 42): 
-C2481 NOT FOUNDity
-/build/artifacts/generated/common/lruntime/UnityEngineDebugBindings.gen.cpp LineineDeb
-u
-gBIndexOutOfRangeExcep:t42)
-Aray in2481 NOT FOUNDang
-e.lename: C:/bueildslave/unity/bhaviour.BuildWregenerated/common/runtnime/lnniteEnginewn>:0 indings.gen.cpp Line: 42)ge
-B2481 NOT FOUND() 
-[0x00000] in <filenalae unknown>:0 /ar
-tifacts/generated/c1om
-m
-on/runtime/U
-ni
-tyEnename: C:/buildslage/unity/build/art
-i
-fact2481 NOT FOUNDmon
-/runtime/UnityEngineDebugBinty/build/artifacts/genera
-t
-ed/common/runtime/UneptEngineDebugBinex is out of range. 42) S
-pace.2481 NOT reckage
-Be
-haviour.BuildWreckage () [0x00000] in <filename unknown>:0 mon/runtime/UnityEngineDebugBindings.gen.rcpp Line: 42) i
-n <fi2481 NOT FOUwND0 
- 
-((Flenaame: C:/buildsl
-a
-ve/unityUND
- artilacenage: C:/buildslave/unity/build/artifacts/gBindings.gen.cpp Line: 42)ty
-EngineDe2481 NdingsOUgNDcpp
- Line:ame: 
-C
-:IndexOutOfRangeException:r Array inenerateout of range.me/UnityEngineDebug.WreckageBehaviour.BuildWre
-c
-kag24(81 NOT FOU]NDn
- l(ename unknown>:0 slave/unite.Seglm/ernt.Wreckaenerated/common/runtime/UnityEngi neDebugBindings.gen.cp
-p 
-Line: 42)  
-Line: -1) N
-OT FOUNDND
- ileileename: C:/buildslave/unity/buirtifacts/generated/commoommontime/Un/runtime/UnityEngineDebugBindinLine: 42)p
-p
- Line: 42) F
-OInde
-xO
-utOfRangeExc:eption:lave/unity/buildo/taof range.enerated/common/runtime/UngeBehaviour.BuildWreckage .cpp Line: ] i
-n
- <file2481 NOT FOUND
- 
- at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 gin
-eDebugBindings.gen.cpp
- 
-Line: 42)D
- 2
-481 NOT FOUNDbui
-ldslave/e: C:/buildslave/unity/bnerated/common/runtime/UnityEnginenDebugBindinngsneeDebugBindings.ge
-n
-.IndexOutOfRang
-e
-E2481 Non: Array
- ndFex is out of range.ve/unity/build/artifareckagenerated/common/runckage () [0x00000] in <filename eunknown>:0 42)t 
-Spac2481 NOT FOUNDage
-Behaviour.Start () [0x000unity/build/artifacnknown>:0 d/c
-ommlenaume:  Line: -1)ne
-D NOgBindings
-.g
-en.cpp Line: 42)ld
-s2481 NOT FObUND/ar
-tifacts/generated/comave/unity/b/ild/artifacts/generated/common/runtime/U2)yE
-IndexOutOfRangengs.gen.cpp Line: 42) i
-s o2481 NOT FOUN
-Dat 
-Space.Segment.WrecksglBave/unity/build/artifacts /gene000] /common/runtime/UnityEngi
-neDebSugBindings.gen.cpp Line: 42)r.
-Start2481 NOT FOUNDn <
-filename unknown>:0 ave
-/unity/buil d/artifact
-s
-/generaOted/
-co
-mmon/runtime/UniityEnave/unity/build/artifacts/generated/
-c
-ommon/r2481 NOT FtOUngi
-ne
-DebugBindings.guen.cpp Line: 42)idIndexOutOfRangeException: Array index is Eout of range.ings.gen.cpp Line: 42)ck
-ageBeh2481 NOTu FOUNDkag
-e () [0x00000] in <filename unknowln>:0 facts/generated/common/runtime/aUnityEngineDebugBindings.gen.cplenane: 42)wn
->:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
+Server has message
  
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
+Server has message
  
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-0 NOT FOUND
- 
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Server has message
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
 
-0 NOT FOUND
+Log: connection {1} has been disconnected by timeout; address {::ffff:127.0.0.1:50901}
+Player not destroyed when connection disconnected.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
-
-IndexOutOfRangeException: Array index is out of range.
-  at Space.Segment.WreckageBehaviour.BuildWreckage () [0x00000] in <filename unknown>:0 
-  at Space.Segment.WreckageBehaviour.Start () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at UI.ViewerItem.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) [0x00000] in <filename unknown>:0 
-  at UnityEngine.EventSystems.ExecuteEvents.Execute (IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) [0x00000] in <filename unknown>:0 
-  at UnityEngine.EventSystems.ExecuteEvents.Execute[IPointerEnterHandler] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.EventFunction`1 functor) [0x00000] in <filename unknown>:0 
-UnityEngine.DebugLogHandler:Internal_LogException(Exception, Object)
-UnityEngine.DebugLogHandler:LogException(Exception, Object)
-UnityEngine.Logger:LogException(Exception, Object)
-UnityEngine.Debug:LogException(Exception)
-UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1)
-UnityEngine.EventSystems.BaseInputModule:HandlePointerExitAndEnter(PointerEventData, GameObject)
-UnityEngine.EventSystems.PointerInputModule:ProcessMove(PointerEventData)
-UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32)
-UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent()
-UnityEngine.EventSystems.StandaloneInputModule:Process()
-UnityEngine.EventSystems.EventSystem:Update()
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at UI.ViewerItem.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) [0x00000] in <filename unknown>:0 
-  at UnityEngine.EventSystems.ExecuteEvents.Execute (IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) [0x00000] in <filename unknown>:0 
-  at UnityEngine.EventSystems.ExecuteEvents.Execute[IPointerExitHandler] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.EventFunction`1 functor) [0x00000] in <filename unknown>:0 
-UnityEngine.DebugLogHandler:Internal_LogException(Exception, Object)
-UnityEngine.DebugLogHandler:LogException(Exception, Object)
-UnityEngine.Logger:LogException(Exception, Object)
-UnityEngine.Debug:LogException(Exception)
-UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1)
-UnityEngine.EventSystems.BaseInputModule:HandlePointerExitAndEnter(PointerEventData, GameObject)
-UnityEngine.EventSystems.PointerInputModule:ProcessMove(PointerEventData)
-UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32)
-UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent()
-UnityEngine.EventSystems.StandaloneInputModule:Process()
-UnityEngine.EventSystems.EventSystem:Update()
- 
-(Filename:  Line: -1)
 
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 1c60 -> priority: 1 
-NullReferenceException: Object reference not set to an instance of an object
-  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
-  at Space.UI.Ship.StationHUD.get_Team () [0x00000] in <filename unknown>:0 
-  at Space.UI.Ship.StationHUD.OnDisable () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
-  at Space.UI.Ship.FriendlyHUD.get_Team () [0x00000] in <filename unknown>:0 
-  at Space.UI.Ship.FriendlyHUD.OnDisable () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-Setting up 1 worker threads for Enlighten.
-  Thread -> id: 242c -> priority: 1 
-NullReferenceException: Object reference not set to an instance of an object
-  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
-  at Space.UI.Ship.StationHUD.get_Team () [0x00000] in <filename unknown>:0 
-  at Space.UI.Ship.StationHUD.OnDisable () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
-  at Space.UI.Ship.FriendlyHUD.get_Team () [0x00000] in <filename unknown>:0 
-  at Space.UI.Ship.FriendlyHUD.OnDisable () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
+  Thread -> id: 2514 -> priority: 1 

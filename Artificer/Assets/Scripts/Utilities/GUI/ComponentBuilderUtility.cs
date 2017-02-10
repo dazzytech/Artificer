@@ -94,6 +94,52 @@ namespace UI
 
         #endregion
 
+        #region PRIVATE UTILITES
+
+        /// <summary>
+        /// Build the construction rect transform
+        /// that the ship is built on and scales 
+        /// it to our dimensions
+        /// </summary>
+        private void BuildConstructGO()
+        {
+            GameObject constructGO = new GameObject("ConstructPanel");
+
+            m_constructPanel = constructGO.AddComponent<RectTransform>();
+            // Set parent
+            m_constructPanel.SetParent(m_selfPanel, false);
+            // Set size
+            m_constructPanel.sizeDelta = new Vector2(m_width * 100, m_height * 100);
+
+            // if self panel size is 0 then game size
+            if (m_selfPanel.rect.width == 0 
+                && m_selfPanel.rect.height == 0)
+            {
+                // resize item to fit in world space
+                m_constructPanel.transform.localScale = new Vector3(.01f, .01f, 1);
+                m_margin *= 2f;
+                return;
+            }
+
+            // if self panel is wider than taller the ship is required to be lengthways
+            if (m_selfPanel.sizeDelta.x > m_selfPanel.sizeDelta.y)
+            {
+                m_constructPanel.localEulerAngles = new Vector3(0, 0, 270);
+
+                // Return percentage scale of panels based on width
+                float heightScale = m_selfPanel.rect.size.y / m_constructPanel.rect.size.y;
+                m_constructPanel.transform.localScale = new Vector3(heightScale, heightScale, 1);
+            }
+            else
+            {
+                // Return percentage scale of panels based on width
+                float widthScale = m_selfPanel.rect.size.x / m_constructPanel.rect.size.x;
+                m_constructPanel.transform.localScale = new Vector3(widthScale, widthScale, 1);
+            }
+        }
+
+        #endregion
+
         #region COROUTINE
 
         /// <summary>
@@ -111,6 +157,9 @@ namespace UI
             // using each component
             foreach (ComponentListener item in m_ship.Components)
             {
+                if (item == null)
+                    continue;
+
                 // if any of the points are out of bounds from
                 // component min and max then replace
                 if (minX > item.Min.x) minX = item.Min.x;
@@ -128,6 +177,8 @@ namespace UI
 
             m_margin = maxY;
 
+            BuildConstructGO();
+
             StartCoroutine("BuildComponents");
 
             yield break;
@@ -139,18 +190,15 @@ namespace UI
         /// <returns></returns>
         private IEnumerator BuildComponents()
         {
-            GameObject constructGO = new GameObject("ConstructPanel");
-            m_constructPanel = constructGO.AddComponent<RectTransform>();
-            // Set parent
-            m_constructPanel.SetParent(m_selfPanel, false);
-            // Set size
-            m_constructPanel.sizeDelta = new Vector2(m_width * 100, m_height * 100);
-
             // Set each component to display on our ship panel
             foreach (ComponentListener component in m_ship.Components)
             {
+                if (component == null)
+                    continue;
+
                 // Create GameObject
                 GameObject newObj = (GameObject)Instantiate(m_componentPrefab);
+                newObj.layer = this.gameObject.layer;
                 // Set anchor for accurate positioning
                 newObj.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 1.0f);
                 newObj.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 1.0f);
@@ -167,25 +215,6 @@ namespace UI
 
                 yield return null;
             }
-
-            // if self panel is wider than taller the ship is required to be lengthways
-            if (m_selfPanel.sizeDelta.x > m_selfPanel.sizeDelta.y)
-            {
-                m_constructPanel.localEulerAngles = new Vector3(0, 0, 270);
-
-                // Return percentage scale of panels based on width
-                float heightScale = m_selfPanel.rect.size.y / m_constructPanel.rect.size.y;
-
-                m_constructPanel.transform.localScale = new Vector3(heightScale, heightScale, 1);
-            }
-            else
-            {
-                // Return percentage scale of panels based on width
-                float widthScale = m_selfPanel.rect.size.x / m_constructPanel.rect.size.x;
-
-                m_constructPanel.transform.localScale = new Vector3(widthScale, widthScale, 1);
-            }
-
             yield break;
         }
 

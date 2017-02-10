@@ -11,7 +11,7 @@ namespace Space.UI.Station.Viewer
     /// Draw texture of each component to the 
     /// viewer Panel
     /// </summary>
-    public class ShipViewer : MonoBehaviour
+    public class ShipViewer : MonoBehaviour 
     {
         #region ATTRIBUTES
 
@@ -24,9 +24,6 @@ namespace Space.UI.Station.Viewer
         // Prefab for component viewer
         [SerializeField]
         private GameObject PiecePrefab;
-
-       // [SerializeField]
-       // private Vector2 StartingPos;
 
         #endregion
 

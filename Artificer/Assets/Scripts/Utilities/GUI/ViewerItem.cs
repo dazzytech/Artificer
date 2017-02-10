@@ -7,9 +7,11 @@ using Space.Ship.Components.Listener;
 
 namespace UI
 {
-    public class ViewerItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
-        IPointerClickHandler
+    public class ViewerItem : MonoBehaviour, 
+        IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
     {
+        private enum Type { STATIC, RESPONSIVE }
+
         #region EVENTS
 
         public static event SelectEvent ItemSelected;
@@ -21,27 +23,32 @@ namespace UI
 
         #region ATTRIBUTES
 
+        [HideInInspector]
+        public int ID;
+
+        protected ComponentListener Listener;
+
+        private bool Selected;
+
+        private bool Highlighted;
+
+        // does item recolour?
+        [SerializeField]
+        private Type m_type;
+
         #region HUD ELEMENTS
 
         [Header("HUD Elements")]
 
         // component image
         [SerializeField]
-        private Image Icon;
+        protected Image Icon;
 
         #endregion
-
-        public int ID;
-
-        private bool Selected;
-
-        private ComponentListener Listener; 
 
         #region COLOR
 
         [Header("Colour")]
-
-        private Color StandardColor;
 
         [SerializeField]
         private Color HighHealth;
@@ -50,17 +57,18 @@ namespace UI
         [SerializeField]
         private Color LowHealth;
 
-        [SerializeField]
-        private Color HighlightColor;
-
-        [SerializeField]
-        private Color SelectedColor;
+        private Color m_standardColor;
 
         #endregion
 
         #endregion
 
         #region MONOBEHAVIOUR
+
+        void Awake()
+        {
+            m_standardColor = Icon.color;
+        }
 
         void OnDestroy()
         {
@@ -69,7 +77,15 @@ namespace UI
 
         #endregion
 
-        public void Define(GameObject Obj, int id)
+        #region PUBLIC INTERACTION
+
+        /// <summary>
+        /// Assigns the component to the object
+        /// and initializes
+        /// </summary>
+        /// <param name="Obj"></param>
+        /// <param name="id"></param>
+        public virtual void Define(GameObject Obj, int id)
         {
             // extract the sprite from the components 
             // game object
@@ -81,62 +97,76 @@ namespace UI
             Icon.sprite = Img;
             Icon.rectTransform.sizeDelta = Img.rect.size;
             Icon.rectTransform.localRotation = Obj.transform.localRotation;
-            StandardColor = HighHealth;
 
-
-            //transform.localPosition = Obj.GetComponent<ComponentListener>().Postion * 100;
+            if (m_type == Type.RESPONSIVE)
+            {
+                m_standardColor = HighHealth;
+                // Start coroutine that updates health
+                StartCoroutine("Step");
+            }
 
             ID = id;
+        }
 
-            // Start coroutine that updates health
-            StartCoroutine("Step");
+        public void SetColour(Color newColour)
+        {
+            m_standardColor = newColour;
         }
 
         public void Reset(bool Deselect)
         {
-            Icon.color = StandardColor;
+            Icon.color = m_standardColor;
 
             if (Deselect)
                 Selected = false;
+
+            Highlighted = false;
         }
 
         public void Highlight()
         {
-            Icon.color = HighlightColor;
+            Highlighted = true;
         }
 
         public void Select()
         {
-            Icon.color = SelectedColor;
-
             Selected = true;
+            Highlighted = false;
         }
+
+        #endregion
 
         #region COROUTINE
 
         private IEnumerator Step()
         {
-            while(true)
+            while (true)
             {
                 // Detect if component is destroyed
                 // Destroy for now but implement
                 // destroyed colour
-                if(Listener == null)
+                if (Listener == null)
                 {
                     Destroy(gameObject);
                     yield break;
                 }
 
                 if (Listener.NormalizedHealth < 0.3)
-                    StandardColor = LowHealth;
+                    m_standardColor = LowHealth;
                 else if
                     (Listener.NormalizedHealth < 0.6)
-                    StandardColor = MedHealth;
+                    m_standardColor = MedHealth;
                 else
-                    StandardColor = HighHealth;
+                    m_standardColor = HighHealth;
 
-                if(Icon.color != StandardColor)
-                    Icon.color = StandardColor;
+                if (Highlighted)
+                    m_standardColor += new Color(.2f, -0.12f, 1f, 0.5f);
+                else if (Selected)
+                    m_standardColor += new Color(.4f, -.1f, .1f);
+
+                if (Icon.color != m_standardColor)
+                    Icon.color = m_standardColor;
+                
 
                 yield return null;
             }
@@ -144,25 +174,29 @@ namespace UI
 
         #endregion
 
-        // Create another prefab that extends this prefab 
-        // but has pointerEventHandlers?
         #region IPOINTEREVENTS
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            ItemHover(ID);
+            if (ItemHover != null)
+                ItemHover(ID);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            ItemLeave(ID);
+            if (ItemLeave != null)
+                ItemLeave(ID);
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
             if (Selected)
-                ItemDeselected(ID);
+            {
+                if (ItemDeselected != null)
+                    ItemDeselected(ID);
+            }
             else
+                if (ItemSelected != null)
                 ItemSelected(ID);
         }
 

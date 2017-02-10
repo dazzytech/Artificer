@@ -48,6 +48,17 @@ namespace Space.GameFunctions
         }
 
         /// <summary>
+        /// Deletes player that left
+        /// </summary>
+        /// <param name="conn"></param>
+        [Server]
+        public void RemovePlayer
+            (NetworkConnection conn)
+        {
+            Con.RemovePlayer(conn);
+        }
+
+        /// <summary>
         /// Called when the player 
         /// chooses a spawn point to spawn their ship
         /// </summary>
@@ -96,6 +107,7 @@ namespace Space.GameFunctions
         [Server]
         public void OnShipHit(NetworkMessage msg)
         {
+            Debug.Log("Server has message");
             Con.ShipHit(msg.ReadMessage<ShipColliderHitMessage>());
         }
 
