@@ -134,6 +134,7 @@ public class GameManager: NetworkManager
     /// <param name="conn"></param>
     public override void OnServerDisconnect(NetworkConnection conn)
     {
+        base.OnServerDisconnect(conn);
         GameMSG.RemovePlayer(conn);
     }
 

@@ -107,7 +107,6 @@ namespace Space.GameFunctions
         [Server]
         public void OnShipHit(NetworkMessage msg)
         {
-            Debug.Log("Server has message");
             Con.ShipHit(msg.ReadMessage<ShipColliderHitMessage>());
         }
 

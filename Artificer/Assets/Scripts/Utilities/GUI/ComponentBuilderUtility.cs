@@ -79,7 +79,8 @@ namespace UI
                 Destroy(m_constructPanel.gameObject);
 
             // Begin routines
-            StartCoroutine("DiscoverSize");
+            if(m_ship != null)
+                StartCoroutine("DiscoverSize");
         }
 
         public void ClearShip()
@@ -153,12 +154,25 @@ namespace UI
             float minX, minY, maxX, maxY;
             minX = minY = maxX = maxY = 0;
 
+            if (m_ship == null)
+                yield break;
+
+
             // Find min and max points of total ship 
             // using each component
-            foreach (ComponentListener item in m_ship.Components)
+            for (int i = 0; i < m_ship.Components.Count; i++)
             {
+                yield return null;
+
+                if (m_ship == null)
+                    yield break;
+
+                ComponentListener item = m_ship.Components[i];
+
                 if (item == null)
+                {
                     continue;
+                }
 
                 // if any of the points are out of bounds from
                 // component min and max then replace
@@ -166,8 +180,6 @@ namespace UI
                 if (minY > item.Min.y) minY = item.Min.y;
                 if (maxX < item.Max.x) maxX = item.Max.x;
                 if (maxY < item.Max.y) maxY = item.Max.y;
-
-                yield return null;
             }
 
             // Now we have our dimentions
@@ -190,11 +202,25 @@ namespace UI
         /// <returns></returns>
         private IEnumerator BuildComponents()
         {
-            // Set each component to display on our ship panel
-            foreach (ComponentListener component in m_ship.Components)
+            if(m_ship == null)
+                yield break;
+
+            // Find min and max points of total ship 
+            // using each component
+            for (int i = 0; i < m_ship.Components.Count; i++)
             {
+                yield return null;
+
+                if (m_ship == null)
+                    yield break;
+
+                ComponentListener component = m_ship.Components[i];
+
                 if (component == null)
+                {
+                    
                     continue;
+                }
 
                 // Create GameObject
                 GameObject newObj = (GameObject)Instantiate(m_componentPrefab);
@@ -212,8 +238,6 @@ namespace UI
                 ViewerItem item = newObj.GetComponent<ViewerItem>();
                 item.Define(component.gameObject, component.ID);
                 m_viewerItems.Add(item);
-
-                yield return null;
             }
             yield break;
         }

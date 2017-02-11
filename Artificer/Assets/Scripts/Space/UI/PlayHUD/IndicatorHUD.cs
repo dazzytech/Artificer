@@ -101,10 +101,16 @@ namespace Space.UI.Ship
         /// an item
         /// </summary>
         /// <param name="rect"></param>
-        public void Overlap(RectTransform rect)
+        public void Overlap(RectTransform rect, int occurance = 0)
         {
             if (m_rects == null)
                 m_rects = new List<RectTransform>();
+
+            if(occurance >= 5)
+            {
+                Destroy(rect.gameObject);
+                return;
+            }
 
             for(int i = 0; i < m_rects.Count; i++)
             {
@@ -129,7 +135,7 @@ namespace Space.UI.Ship
                         r.anchoredPosition +
                         (new Vector2(0, 21f));
 
-                    Overlap(r);
+                    Overlap(r, ++occurance);
 
                     return;
                 }
