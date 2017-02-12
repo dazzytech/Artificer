@@ -111,6 +111,7 @@ namespace UI
         public void SetColour(Color newColour)
         {
             m_standardColor = newColour;
+            Icon.color = m_standardColor;
         }
 
         public void Reset(bool Deselect)

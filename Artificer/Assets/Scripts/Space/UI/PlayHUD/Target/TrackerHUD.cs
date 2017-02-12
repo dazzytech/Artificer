@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using Data.Shared;
 using Space.Ship;
 using UI.Effects;
+using Space.Ship.Components.Listener;
 
 namespace Space.UI.Tracker
 {
@@ -23,6 +24,7 @@ namespace Space.UI.Tracker
         public GameObject arrow;
         public GameObject box;
         public GameObject text;
+        public Vector3 scale;
         public float trackDist;
     }
 
@@ -34,6 +36,8 @@ namespace Space.UI.Tracker
     /// </summary>
     public class TrackerHUD : BasePanel
     {
+        #region ATTRIBUTES
+
         #region MARKER LISTS
 
         private List<Marker> m_markers;
@@ -79,6 +83,14 @@ namespace Space.UI.Tracker
         [SerializeField]
         // radius of the UI circle
         private float m_radius = 100f;
+
+        #endregion
+
+        [Header("Camera Reference")]
+
+        // Reference to camera for scaling
+        [SerializeField]
+        private Camera m_UICam;
 
         #endregion
 
@@ -258,6 +270,8 @@ namespace Space.UI.Tracker
                     mtext.color = m_friendlyColor;
                     m.arrow.GetComponent<Image>().color = m_friendlyColor;
                     m.box.GetComponent<Image>().color = m_friendlyColor;
+                    // Use coroutine to determine component scale
+                    StartCoroutine(DetermineShipSize(m));
                     m.trackDist = 500f;
                     break;
                 case "Enemy":
@@ -265,6 +279,8 @@ namespace Space.UI.Tracker
                     mtext.color = m_enemyColor;
                     m.arrow.GetComponent<Image>().color = m_enemyColor;
                     m.box.GetComponent<Image>().color = m_enemyColor;
+                    // Use coroutine to determine component scale
+                    StartCoroutine(DetermineShipSize(m));
                     m.trackDist = 500f;
                     break;
                 default:
@@ -343,15 +359,75 @@ namespace Space.UI.Tracker
             m.arrow.transform.up = dir.normalized;
             m.arrow.transform.localPosition = dir;
 
-
+            RectTransform boxRect = m.box.GetComponent<RectTransform>();
             //now you can set the position of the ui element
-            m.box.GetComponent<RectTransform>().anchoredPosition =
+            boxRect.anchoredPosition =
                 UIConvert.WorldToCamera(m.trackedObj);
+
+            float scale = m_UICam.orthographicSize / Camera.main.orthographicSize;
+
+            boxRect.localScale = m.scale * scale;
+
             m.text.transform.localPosition = dir + dir.normalized * Overlap(i, m, camPos);
             m.text.GetComponent<Text>().text = ((int)objDistance * 0.01).ToString("F2") + "km";
         }
 
         #endregion
+
+        #endregion
+
+        #region COROUTINE
+
+        private IEnumerator DetermineShipSize
+            (Marker marker)
+        {
+            // Create for floats for min and max sizes for ship transform
+            float minX, minY, maxX, maxY;
+            minX = minY = maxX = maxY = 0;
+
+            ShipAttributes ship = marker.trackedObj.GetComponent<ShipAttributes>();
+
+            if (ship == null)
+                yield break;
+
+
+            // Find min and max points of total ship 
+            // using each component
+            for (int i = 0; i < ship.Components.Count; i++)
+            {
+                yield return null;
+
+                if (ship == null)
+                    yield break;
+
+                ComponentListener item = ship.Components[i];
+
+                if (item == null)
+                {
+                    continue;
+                }
+
+                // if any of the points are out of bounds from
+                // component min and max then replace
+                if (minX > item.Min.x) minX = item.Min.x;
+                if (minY > item.Min.y) minY = item.Min.y;
+                if (maxX < item.Max.x) maxX = item.Max.x;
+                if (maxY < item.Max.y) maxY = item.Max.y;
+            }
+
+            // Now we have our dimentions
+            // Create scale factor
+            Vector3 scaleFactor = new Vector3();
+            scaleFactor.x = maxX - minX;
+            scaleFactor.y = maxY - minY;
+            scaleFactor.z = 1f;
+            marker.scale = scaleFactor;
+
+            // apply scale to object
+            marker.box.transform.localScale = marker.scale;
+
+            yield break;
+        }
 
         #endregion
     }

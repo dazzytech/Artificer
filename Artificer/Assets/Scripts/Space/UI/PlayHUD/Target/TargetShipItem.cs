@@ -61,9 +61,11 @@ namespace Space.UI.Ship
         /// - Triggers tracking function
         /// </summary>
         /// <param name="ship"></param>
-        public void BuildShip(ShipAttributes ship)
+        public void BuildShip(ShipAttributes ship, Color prefabColour)
         {
             Ship = ship;
+
+            m_prefabColour = prefabColour;
 
             Builder.BuildShip(Ship, m_UIComponentPrefab);
 

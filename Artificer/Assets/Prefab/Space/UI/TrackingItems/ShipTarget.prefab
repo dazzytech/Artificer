@@ -42,8 +42,9 @@ MonoBehaviour:
   m_self: {fileID: 224000013418151424}
   Builder: {fileID: 114000013552703390}
   Ship: {fileID: 0}
-  UIComponentPrefab: {fileID: 1000013815724100, guid: 98c0888ad76ba414587887299164745f,
+  m_UIComponentPrefab: {fileID: 1000013815724100, guid: 98c0888ad76ba414587887299164745f,
     type: 2}
+  m_prefabColour: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &114000013552703390
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -66,7 +66,8 @@ namespace UI
         /// Builds ship gameobject to define UI panel
         /// </summary>
         /// <param name="Ship"></param>
-        public void BuildShip(ShipAttributes Ship, GameObject PiecePrefab)
+        public void BuildShip
+            (ShipAttributes Ship, GameObject PiecePrefab)
         {
             m_ship = Ship;
 
@@ -80,7 +81,7 @@ namespace UI
 
             // Begin routines
             if(m_ship != null)
-                StartCoroutine("DiscoverSize");
+                DiscoverSize();
         }
 
         public void ClearShip()
@@ -118,7 +119,7 @@ namespace UI
             {
                 // resize item to fit in world space
                 m_constructPanel.transform.localScale = new Vector3(.01f, .01f, 1);
-                m_margin *= 2f;
+                m_margin *= 2.5f;
                 return;
             }
 
@@ -139,33 +140,26 @@ namespace UI
             }
         }
 
-        #endregion
-
-        #region COROUTINE
-
         /// <summary>
         /// Loop through each component
         /// and resize total size for component
         /// </summary>
         /// <returns></returns>
-        private IEnumerator DiscoverSize()
+        private void DiscoverSize()
         {
             // Create for floats for min and max sizes for ship transform
             float minX, minY, maxX, maxY;
             minX = minY = maxX = maxY = 0;
 
             if (m_ship == null)
-                yield break;
-
+                return;
 
             // Find min and max points of total ship 
             // using each component
             for (int i = 0; i < m_ship.Components.Count; i++)
             {
-                yield return null;
-
                 if (m_ship == null)
-                    yield break;
+                    return;
 
                 ComponentListener item = m_ship.Components[i];
 
@@ -191,34 +185,31 @@ namespace UI
 
             BuildConstructGO();
 
-            StartCoroutine("BuildComponents");
+            BuildComponents();
 
-            yield break;
+            return;
         }
 
         /// <summary>
         /// Place components on construct panel
         /// </summary>
         /// <returns></returns>
-        private IEnumerator BuildComponents()
+        private void BuildComponents()
         {
             if(m_ship == null)
-                yield break;
+                return;
 
             // Find min and max points of total ship 
             // using each component
             for (int i = 0; i < m_ship.Components.Count; i++)
             {
-                yield return null;
-
                 if (m_ship == null)
-                    yield break;
+                    return;
 
                 ComponentListener component = m_ship.Components[i];
 
                 if (component == null)
                 {
-                    
                     continue;
                 }
 
@@ -239,7 +230,7 @@ namespace UI
                 item.Define(component.gameObject, component.ID);
                 m_viewerItems.Add(item);
             }
-            yield break;
+            return;
         }
 
         #endregion

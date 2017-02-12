@@ -324,7 +324,7 @@ namespace Space.UI.Ship
 
             // Initialize target item and store
             // in list
-            target.BuildShip(ship);
+            target.BuildShip(ship, m_enemyColour);
 
             if (m_shipTargets == null)
                 m_shipTargets = new List<TargetShipItem>();
