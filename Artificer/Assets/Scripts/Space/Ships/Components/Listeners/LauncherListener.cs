@@ -37,12 +37,12 @@ namespace Space.Ship.Components.Listener
         
         public override void Activate()
         {
-            if (_attr.readyToFire && _attr.Ship.Targets.Count != 0)
+            /*if (_attr.readyToFire && _attr.Ship.Targets.Count != 0)
             {
                 StartCoroutine("EngageDelay");
 
                 StartCoroutine("LaunchRockets"); 
-            }
+            }*/
         }
         
         public override void Deactivate()
@@ -79,7 +79,7 @@ namespace Space.Ship.Components.Listener
                 RaycastHit2D[] hits =
                 Physics2D.CircleCastAll(transform.position, _attr.AttackRange, Vector2.zero, 0, 1);
             
-                foreach (RaycastHit2D hit in hits)
+                /*foreach (RaycastHit2D hit in hits)
                 {
                     // Only auto target heads of ships
                     // while no target grouping
@@ -104,14 +104,16 @@ namespace Space.Ship.Components.Listener
                     }
 
                     yield return null;
-                }
+                }*/
                 yield return null;
             }
         }
 
         private IEnumerator LaunchRockets()
         {
-            Transform[] firePs = transform.Cast<Transform>().Where
+            // temp
+            yield break;
+            /*Transform[] firePs = transform.Cast<Transform>().Where
                 (c=>c.gameObject.tag == "Fire").ToArray();
             
             if(firePs.Length == 0)
@@ -156,8 +158,8 @@ namespace Space.Ship.Components.Listener
                     yield return null;
                 }
 
-                Transform Target = _attr.Ship.Targets[Random.Range(0,
-                    _attr.Ship.Targets.Count)];
+                //Transform Target = _attr.Ship.Targets[Random.Range(0,
+                 //   _attr.Ship.Targets.Count)];
 
                 NetworkInstanceId netTarget = Target
                     .GetComponent<NetworkIdentity>().netId;
@@ -179,7 +181,7 @@ namespace Space.Ship.Components.Listener
                 GameManager.singleton.client.Send((short)MSGCHANNEL.BUILDPROJECTILE, msg);
 
                 yield return new WaitForSeconds(_attr.RocketDelay);
-            }
+            }*/
         }
     }
 }

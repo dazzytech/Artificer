@@ -102,7 +102,10 @@ namespace Space.Ship.Components.Listener
         /// </summary>
         private IEnumerator FindArcTargets()
         {
-            while (true)
+            // temp
+            yield break;
+
+            /*while (true)
             {
                 RaycastHit2D[] hits =
                 Physics2D.CircleCastAll(transform.position, _attr.AttackRange, Vector2.zero, 0, 1);
@@ -152,7 +155,7 @@ namespace Space.Ship.Components.Listener
                     yield return null;
                 }
                 yield return null;
-            }
+            }*/
         }
 
         /// <summary>
@@ -163,7 +166,7 @@ namespace Space.Ship.Components.Listener
         /// <c>false</c> otherwise.</returns>
         private bool FindClosestTarget()
         {
-            _attr.currentTarget = null;
+            /*_attr.currentTarget = null;
             if (_attr.ShipAtts.Targets.Count < 1)
                 return false;
 
@@ -191,7 +194,7 @@ namespace Space.Ship.Components.Listener
 
             if (_attr.currentTarget != null)
                 return true;
-            else
+            else*/
                 return false;
         }
 

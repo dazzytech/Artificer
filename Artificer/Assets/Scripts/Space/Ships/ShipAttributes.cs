@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Data.Space;
 using Data.Shared;
 using Space.Ship.Components.Listener;
+using Space.UI.Ship;
 
 namespace Space.Ship
 {
@@ -189,11 +190,11 @@ namespace Space.Ship
 
         #region TARGETTING ATTRIBUTES
 
-        public List<Transform> Targets;
+        /*public List<Transform> Targets;
         public List<Transform> SelfTargeted;
         public List<Transform> HighlightedTargets;
-
-        public List<ShipAttributes> TargetedShips;
+        */
+        public List<ShipSelect> TargetedShips;
 
         public Rect HighlightRect;
         public float TargetDistance;

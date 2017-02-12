@@ -11,6 +11,16 @@ using System.Linq;
 namespace Space.UI.Ship
 {
     /// <summary>
+    /// Container class for selecting
+    /// other ships
+    /// </summary>
+    public class ShipSelect
+    {
+        public ShipAttributes Ship;
+        public List<Transform> TargetedComponents;
+    }
+
+    /// <summary>
     /// Marker hovers over selected item
     /// </summary>
     public class Marker
@@ -67,11 +77,6 @@ namespace Space.UI.Ship
         [SerializeField]
         private Color m_enemyColour;
 
-        // If selection isn't finalized then
-        // display pending colour
-        [SerializeField]
-        private Color m_pendingColour;
-
         #endregion
 
         #region HUD ELEMENTS
@@ -90,11 +95,6 @@ namespace Space.UI.Ship
         #endregion
 
         #endregion
-
-        /*private List<Marker> _markers;
-        //private List<Transform> _pending;
-        
-        //public GameObject _selectionRect;*/
 
         public Toggle _AutoFire;
 
@@ -134,42 +134,6 @@ namespace Space.UI.Ship
 
                 SeekShipTargets();
             }
-        }
-
-        void LateUpdate()
-        {
-            /*if (m_shipRef != null)
-            {
-                Vector2 startpoint = UIConvert.WorldToCameraRect(m_shipRef.HighlightRect);
-                Vector2 endpoint = UIConvert.WorldToCameraRectEnd(m_shipRef.HighlightRect);
-
-                if (endpoint.y > 0)
-                {
-                    _selectionRect.GetComponent<RectTransform>().offsetMin = startpoint;
-                    _selectionRect.GetComponent<RectTransform>().offsetMax = endpoint;
-                } else
-                {
-                    _selectionRect.GetComponent<RectTransform>().offsetMin = new Vector2(startpoint.x, endpoint.y);
-                    _selectionRect.GetComponent<RectTransform>().offsetMax = new Vector2(endpoint.x, startpoint.y);
-                }
-
-                List<Marker> removeList = new List<Marker>();
-                foreach (Marker m in _markers)
-                {      
-                    if (m.trackedObj != null)
-                    {
-                        //now you can set the position of the ui element
-                        m.Icon.GetComponent<RectTransform>().anchoredPosition =
-                        UIConvert.WorldToCamera(m.trackedObj);
-                    } else
-                        removeList.Add(m);
-                }
-                foreach (Marker m in removeList)
-                {
-                    Destroy(m.Icon);
-                    _markers.Remove(m);
-                }
-            }*/
         }
 
         #endregion
@@ -252,8 +216,8 @@ namespace Space.UI.Ship
 
                 // Next test to see if ship is
                 // deselected
-                if(!m_shipRef.TargetedShips.Contains
-                    (currentTarget.Ship))
+                if(!(m_shipRef.TargetedShips.FirstOrDefault
+                    (o => o.Ship.Equals(currentTarget.Ship)) != null))
                 {
                     // remove and skip
                     RemoveShipTarget(i);
@@ -270,21 +234,21 @@ namespace Space.UI.Ship
         private void SeekShipTargets()
         {
             // Loop through each ship target
-            foreach (ShipAttributes ship in m_shipRef.TargetedShips)
+            foreach (ShipSelect ship in m_shipRef.TargetedShips)
             {
                 // if first ship just build
                 if (m_shipTargets == null)
-                    BuildShipTarget(ship);
+                    BuildShipTarget(ship.Ship);
                 else
                 {
                     // Use LINQ to discover if our list 
                     // already contains this ship
                     TargetShipItem item = m_shipTargets.
-                        FirstOrDefault(o => o.Ship == ship);
+                        FirstOrDefault(o => o.Ship == ship.Ship);
 
                     // if null then this ship need to be added
                     if (item == null)
-                        BuildShipTarget(ship);
+                        BuildShipTarget(ship.Ship);
                 }
             }
         }

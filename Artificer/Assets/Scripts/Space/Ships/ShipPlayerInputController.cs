@@ -38,38 +38,14 @@ namespace Space.Ship
             if (Input.GetMouseButton(0))
             {
                 _controller.ReceiveKey(KeyCode.Mouse0);
-                if (!dragging)
-                {
-                    _controller.StartRect
-                        (Camera.main.ScreenToWorldPoint(Input.mousePosition));
-                    _controller.SingleClick
-                        (Camera.main.ScreenToWorldPoint(Input.mousePosition));
-                    dragging = true;
-                } else {
-                    _controller.DragRect
-                        (Camera.main.ScreenToWorldPoint(Input.mousePosition));
-                }
+                _controller.SingleClick
+                    (Camera.main.ScreenToWorldPoint(mousePos));
             }
             // clear all selections on right
             if (Input.GetMouseButton(1))
             {
                 _controller.ReceiveKey(KeyCode.Mouse1);
-                if (!dragging)
-                    _controller.ClearTargets();
-                else
-                {
-                    dragging = false;
-                    _controller.CancelRect();
-                }
-            }
-            // confirm on mouse up
-            if (Input.GetMouseButtonUp(0))
-            {
-                if (dragging)
-                {
-                    dragging = false;
-                    _controller.ConfirmRect();
-                }
+                _controller.ClearTargets();
             }
         }
 

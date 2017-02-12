@@ -7,6 +7,7 @@ using Space.Generator;
 using Space.Ship;
 using Space.Ship.Components.Listener;
 using Space.Ship.Components.Attributes;
+using Space.UI.Ship;
 
 namespace Space.Ship
 {
@@ -40,10 +41,10 @@ namespace Space.Ship
             GetComponent<Rigidbody2D>().angularDrag = 0.9f;
 
             // init lists
-            _ship.Targets = new List<Transform>();
+            /*_ship.Targets = new List<Transform>();
             _ship.SelfTargeted = new List<Transform>();
-            _ship.HighlightedTargets = new List<Transform>();
-            _ship.TargetedShips = new List<ShipAttributes>();
+            _ship.HighlightedTargets = new List<Transform>();*/
+            _ship.TargetedShips = new List<ShipSelect>();
             _ship.TargetDistance = 300f;
 
             // rotor vars
@@ -59,51 +60,70 @@ namespace Space.Ship
 
             // Remove targets if they are null
             // Or are further away than our targeting distance
-            foreach (Transform t in _ship.Targets)
+            for(int iBase = 0; iBase < _ship.TargetedShips.Count; iBase++)
             {
-                if (t == null)
+                ShipSelect selected = _ship.TargetedShips[iBase];
+
+                if (selected.Ship == null)
                 {
-                    remove.Add(t);
+                    // ship has been destroyed
+                    // remove this selection and revert index for
+                    // component
+                    _ship.TargetedShips.RemoveAt(iBase);
+                    selected = null;
+                    iBase--;
                     continue;
                 }
-                if (Vector3.Distance(transform.position, t.position)
+
+                // Ship is still alive, however detect if
+                // ship is still in tracking range
+                if (Vector3.Distance(transform.position, 
+                    selected.Ship.transform.position)
                    > _ship.TargetDistance)
                 {
-                    remove.Add(t);
+                    // We are out of tracking range
+                    // remove this selection and revert index for
+                    // component
+                    _ship.TargetedShips.RemoveAt(iBase);
+                    selected = null;
+                    iBase--;
+                    continue;
                 }
-            }
 
-            // Remove Targets
-            foreach (Transform t in remove)
-            {
-                _ship.Targets.Remove(t);
-
-                // retreive ship attributes from removed cmp
-                ShipAttributes shipAtt = t.GetComponentInParent<ShipAttributes>();
-                if(shipAtt != null)
+                // If the ship is still being tracked then 
+                // check if we are still tracking components
+                for (int iComp = 0; iComp < selected.TargetedComponents.Count; iComp++)
                 {
-                    // loop through each component 
-                    // and determine if ship is still targeted
-                    bool stillTargeted = false;
-                    foreach(ComponentListener cmp in shipAtt.Components)
+                    Transform component = selected.TargetedComponents[iComp];
+
+                    // check the component is destroyed
+                    if (component == null)
                     {
-                        if(_ship.Targets.Contains(cmp.transform))
-                        {
-                            stillTargeted = true;
-
-                            break;
-                        }
+                        // if so then delete this item
+                        // revert index
+                        selected.TargetedComponents.RemoveAt(iComp);
+                        component = null;
+                        iComp--;
+                        continue;
                     }
+                }
 
-                    // Ship no longer targeted
-                    if (!stillTargeted)
-                        _ship.TargetedShips.Remove(shipAtt);
+                // Are there components left?
+                if (selected.TargetedComponents.Count <= 0)
+                {
+                    // if not then we don't care about this ship
+                    // remove this selection and revert index for
+                    // component
+                    _ship.TargetedShips.RemoveAt(iBase);
+                    selected = null;
+                    iBase--;
+                    continue;
                 }
             }
-            remove.Clear();
+            
 
             // Remove self targeted components if null
-            foreach (Transform t in _ship.SelfTargeted)
+            /*foreach (Transform t in _ship.SelfTargeted)
             {
                 if (t == null)
                 {
@@ -116,7 +136,7 @@ namespace Space.Ship
             foreach (Transform t in remove)
             {
                 _ship.SelfTargeted.Remove(t);
-            }
+            }*/
 
             // if player ship find out if turning
             // by checking if rotor is active
@@ -272,6 +292,8 @@ namespace Space.Ship
                             }
                     }
                 }
+
+                
             }
 
             if (comps.Count > 0)
@@ -451,74 +473,14 @@ namespace Space.Ship
         }
 
         /// <summary>
-        /// Starts the highlight rect. used by player
-        /// </summary>
-        /// <param name="position">Position.</param>
-        public void StartRect(Vector2 position)
-        {
-            if (_ship.Ship.CombatActive)
-                return;
-
-            if (_ship.HighlightRect == null)
-                _ship.HighlightRect = new Rect();
-
-            _ship.HighlightRect.position = position;
-            _ship.HighlightRect.size = new Vector2(1f, 1f);
-        }
-
-        /// <summary>
-        /// Drags the rect size with the mouse position.
-        /// adds and components to the highlight components
-        /// </summary>
-        /// <param name="position">Position.</param>
-        public void DragRect(Vector2 position)
-        {
-            if (_ship.Ship.CombatActive)
-                return;
-
-            _ship.HighlightRect.size = position - _ship.HighlightRect.position;
-            _ship.HighlightedTargets.Clear();
-
-            foreach (Collider2D col in Physics2D.OverlapAreaAll(
-                _ship.HighlightRect.position,
-                (_ship.HighlightRect.position + _ship.HighlightRect.size)))
-            {
-                if (!_ship.HighlightedTargets.Contains(col.transform))
-                    _ship.HighlightedTargets.Add(col.transform);
-            }
-        }
-
-        /// <summary>
-        /// add all components under rect to the targets
-        /// clear the selection rect
-        /// </summary>
-        public void ConfirmRect()
-        {
-            foreach (Transform trans in _ship.HighlightedTargets)
-                _msg.AddTarget(trans);
-
-            _ship.HighlightedTargets.Clear();
-            _ship.HighlightRect = new Rect();
-        }
-
-        /// <summary>
-        /// Remove the rect
-        /// </summary>
-        public void CancelRect()
-        {
-            _ship.HighlightRect = new Rect();
-            _ship.HighlightedTargets.Clear();
-        }
-
-        /// <summary>
         /// Delete all the targets within the ships attributes
         /// </summary>
         public void ClearTargets()
         {
             if (!inputDelay)
             {
-                _ship.SelfTargeted.Clear();
-                _ship.Targets.Clear();
+                //_ship.SelfTargeted.Clear();
+                //_ship.Targets.Clear();
                 _ship.TargetedShips.Clear();
                 inputDelay = true;
                 StartCoroutine("EngageDelay");

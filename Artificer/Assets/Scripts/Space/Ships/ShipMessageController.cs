@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 
 // Artificer Defined
@@ -12,6 +13,7 @@ using Space.Ship.Components.Listener;
 using Space.UI;
 
 using Networking;
+using Space.UI.Ship;
 
 namespace Space.Ship
 {
@@ -110,29 +112,56 @@ namespace Space.Ship
                 // test if self targetting
                 if (m_ship.Components.Contains(comp))
                 {
-                    if (!m_ship.SelfTargeted.Contains(target))
-                        m_ship.SelfTargeted.Add(target);
+                    // For now remove targeting self
+
+                    //if (!m_ship.SelfTargeted.Contains(target))
+                       // m_ship.SelfTargeted.Add(target);
                 }
                 else
                 {
-                    if (!m_ship.Targets.Contains(target))
-                        m_ship.Targets.Add(target);
-
                     // Determine if our target ship list already contains 
                     // the ship parent
                     // retreive ship attributes from removed cmp
                     ShipAttributes shipAtt = target.GetComponentInParent<ShipAttributes>();
+                    // Is there a ship attached to this?
                     if (shipAtt != null)
                     {
-                        if (!m_ship.TargetedShips.Contains(shipAtt))
-                            m_ship.TargetedShips.Add(shipAtt);
+                        // This will return our ship selection
+                        // if this is already selected.
+                        ShipSelect selected = m_ship.TargetedShips
+                            .FirstOrDefault(o => o.Ship.Equals(shipAtt));
+
+                        if (selected != null)
+                        {
+                            // This ship has already been selected
+                            // Add our selected component (if not already selected)
+                            if (!selected.TargetedComponents.Contains(target))
+                                selected.TargetedComponents.Add(target);
+
+                            // Else nothing else to do
+                        }
+                        else
+                        {
+                            // This is a newly selected component
+                            // Create a new shipselect object
+                            selected = new ShipSelect();
+                            selected.Ship = shipAtt;
+                            selected.TargetedComponents = new List<Transform>();
+                            // Add the head as a target bu default
+                            selected.TargetedComponents.Add
+                                (shipAtt.Head.transform);
+
+                            // Now add this to selection
+                            m_ship.TargetedShips.Add(selected);
+                        }
                     }
                 }
             }
             else
             {
-                if (!m_ship.Targets.Contains(target))
-                    m_ship.Targets.Add(target);
+                // If not a ship, ignore for now
+                //if (!m_ship.Targets.Contains(target))
+                  //  m_ship.Targets.Add(target);
             }
         }
 
