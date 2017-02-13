@@ -458,16 +458,21 @@ namespace Space.Ship
         /// <param name="position">Position.</param>
         public void SingleClick(Vector2 position)
         {
-            if (_ship.Ship.CombatActive)
-                return;
-
-            Collider2D hit =
-                Physics2D.OverlapPoint
-                    (position);
-
-            if (hit != null)
+            if (!inputDelay)
             {
-                _msg.AddTarget(hit.transform);
+                if (_ship.Ship.CombatActive)
+                    return;
+
+                Collider2D hit =
+                    Physics2D.OverlapPoint
+                        (position);
+
+                if (hit != null)
+                {
+                    _msg.AddTarget(hit.transform);
+                }
+                inputDelay = true;
+                StartCoroutine("EngageDelay");
             }
 
         }

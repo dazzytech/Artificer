@@ -56,9 +56,6 @@ namespace Space.UI.Ship
         [Header("HUD Prefab")]
 
         [SerializeField]
-        private GameObject m_targetPrefab;
-
-        [SerializeField]
         private GameObject m_shipPrefab;
 
         #endregion
@@ -206,7 +203,7 @@ namespace Space.UI.Ship
                     m_shipTargets[i];
 
                 // test if ship is destroyed
-                if(currentTarget.Ship == null)
+                if(currentTarget.Selected == null)
                 {
                     // remove and skip
                     RemoveShipTarget(i);
@@ -216,8 +213,8 @@ namespace Space.UI.Ship
 
                 // Next test to see if ship is
                 // deselected
-                if(!(m_shipRef.TargetedShips.FirstOrDefault
-                    (o => o.Ship.Equals(currentTarget.Ship)) != null))
+                if(m_shipRef.TargetedShips.FirstOrDefault
+                    (o => o.Ship.Equals(currentTarget.Selected.Ship)) == null)
                 {
                     // remove and skip
                     RemoveShipTarget(i);
@@ -238,17 +235,17 @@ namespace Space.UI.Ship
             {
                 // if first ship just build
                 if (m_shipTargets == null)
-                    BuildShipTarget(ship.Ship);
+                    BuildShipTarget(ship);
                 else
                 {
                     // Use LINQ to discover if our list 
                     // already contains this ship
                     TargetShipItem item = m_shipTargets.
-                        FirstOrDefault(o => o.Ship == ship.Ship);
+                        FirstOrDefault(o => o.Selected == ship);
 
                     // if null then this ship need to be added
                     if (item == null)
-                        BuildShipTarget(ship.Ship);
+                        BuildShipTarget(ship);
                 }
             }
         }
@@ -273,7 +270,7 @@ namespace Space.UI.Ship
         /// targeted ship within the HUD
         /// </summary>
         /// <param name="ship"></param>
-        private void BuildShipTarget(ShipAttributes ship)
+        private void BuildShipTarget(ShipSelect ship)
         {
             // Create HUD element
             GameObject shipObj = Instantiate(m_shipPrefab);
@@ -299,72 +296,6 @@ namespace Space.UI.Ship
         #endregion
 
         #endregion
-
-        /*void UpdateTargeter()
-        {
-            List<Marker> removeList = new List<Marker>();
-            List<Transform> current = new List<Transform>();
-            // find if currently tracked
-            foreach(Marker m in _markers)
-            {
-                if(m.trackedObj != null)
-                {
-                    if(!m_shipRef.Targets.Contains(m.trackedObj)
-                       && !m_shipRef.SelfTargeted.Contains(m.trackedObj)
-                       && !m_shipRef.HighlightedTargets.Contains(m.trackedObj))
-                        removeList.Add(m);
-
-                    if(_pending.Contains(m.trackedObj))
-                    {
-                        if(!m_shipRef.HighlightedTargets.Contains(m.trackedObj))
-                        {
-                            removeList.Add(m);
-                            _pending.Remove(m.trackedObj);
-                        }
-                    }
-
-                    // blend markers that are together?
-                    current.Add(m.trackedObj);
-
-                }
-                else
-                {
-                    removeList.Add(m);
-                }
-            }
-
-            foreach (Marker m in removeList)
-            {
-                Destroy(m.Icon);
-                _markers.Remove(m);
-            }
-
-            foreach (Transform t in m_shipRef.Targets)
-            {
-                if(!current.Contains(t))
-                {
-                    BuildPiece(t, m_enemyColour);
-                }
-            }
-
-            foreach (Transform t in m_shipRef.SelfTargeted)
-            {
-                if(!current.Contains(t))
-                {
-                    BuildPiece(t, m_friendlyColour);
-                }
-            }
-
-            foreach (Transform t in m_shipRef.HighlightedTargets)
-            {
-                if(!current.Contains(t))
-                {
-                    BuildPiece(t, m_pendingColour);
-                    _pending.Add(t);
-                }
-            }
-
-        }*/
 
         /*private void BuildPiece(Transform t, Color color)
         {
