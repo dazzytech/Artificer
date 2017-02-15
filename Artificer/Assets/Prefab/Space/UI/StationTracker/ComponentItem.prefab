@@ -403,7 +403,7 @@ MonoBehaviour:
   Label: {fileID: 114000010396345330}
   SelfPanel: {fileID: 114000012737783420}
   HighlightColor: {r: 0.6279736, g: 0.8455882, b: 0.818574, a: 0.341}
-  SelectedColor: {r: 0.50735295, g: 0.1032458, b: 0.08580233, a: 0.528}
+  SelectedColor: {r: 0.5, g: 0.3029412, b: 0.007352948, a: 0.934}
 --- !u!114 &114000012209166580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -466,7 +466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.04411763, g: 0.04411763, b: 0.04411763, a: 0.134}
+  m_Color: {r: 0.36764705, g: 0.24545848, b: 0.062175598, a: 0.741}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
