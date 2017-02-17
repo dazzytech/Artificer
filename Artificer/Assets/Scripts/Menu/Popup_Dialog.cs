@@ -28,6 +28,9 @@ namespace Menu
 
         // for now only have a yesnoframe
         public GameObject YesNoFrame;
+        public Text Timer;
+        public Text Header;
+        public Text Body;
 
         public static float _timer;
         public static float _dTimer;
@@ -50,14 +53,14 @@ namespace Menu
                     _dTimer = 0;
                     _timer = 10.0f;
                     instance.YesNoFrame.SetActive(true);
-                    instance.YesNoFrame.transform.Find("Header").GetComponent<Text>().text = head;
-                    instance.YesNoFrame.transform.Find("Body").GetComponent<Text>().text = body;
+                    instance.Header.text = head;
+                    instance.Body.text = body;
                     _timerRunning = true;
                     break;
                 case DialogType.YESNO:
                     instance.YesNoFrame.SetActive(true);
-                    instance.YesNoFrame.transform.Find("Header").GetComponent<Text>().text = head;
-                    instance.YesNoFrame.transform.Find("Body").GetComponent<Text>().text = body;
+                    instance.Header.text = head;
+                    instance.Body.text = body;
                     _timerRunning = false;
                     break;
             }
@@ -68,7 +71,7 @@ namespace Menu
             if (_timerRunning)
             {
                 _dTimer += Time.deltaTime;
-                instance.YesNoFrame.transform.Find("Timer").GetComponent<Text>().text =
+                instance.Timer.GetComponent<Text>().text =
                     (_timer - _dTimer).ToString("F0");
 
                 if(_dTimer > _timer)

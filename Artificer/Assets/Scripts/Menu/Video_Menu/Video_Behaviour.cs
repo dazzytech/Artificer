@@ -33,11 +33,15 @@ namespace Menu
         }
 
         // Use this for initialization
-        void Start()
+        void OnEnable()
         {
     	    // Build the resolution list using all possible resolutions
             if (ResolutionList != null)
             {
+                // delete previous
+                foreach (Transform child in ResolutionList.transform)
+                    Destroy(child.gameObject);
+
                 foreach(Resolution res in Screen.resolutions)
                 {
                     if(res.width < Video_Config.MIN_WIDTH || res.height < Video_Config.MIN_HEIGHT)
@@ -76,10 +80,10 @@ namespace Menu
         public ResolutionListItem CreateButton(Resolution res)
         {
             GameObject ResBtn = Instantiate(ResolutionItemPrefab) as GameObject;
-            ResBtn.transform.SetParent(ResolutionList);
+            ResBtn.transform.SetParent(ResolutionList, false);
 
             ResolutionListItem Res = ResBtn.GetComponent<ResolutionListItem>();
-            Res.SetResolution(res);
+            Res.SetResolution(res, _listener);
             Res.button.image.color = new Color(0f,0f,0f,0f);
             Res.button.
             onClick.AddListener(

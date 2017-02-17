@@ -41,6 +41,15 @@ namespace Menu
         /// </summary>
         void OnStateChanged(MenuState newState)
         {
+            // Enable if disabled e.g. popup closed
+            if (newState != MenuState.Popup)
+            {
+                if(!_attributes.TabPanel.activeSelf)
+                    _attributes.TabPanel.SetActive(true);
+                if(!_attributes.BasePanel.activeSelf)
+                    _attributes.BasePanel.SetActive(true);
+            }
+
             CloseAllTabs();
 
             switch (newState)
@@ -68,15 +77,13 @@ namespace Menu
                     _attributes.ServerTab.SetActive(true);
                     break;
                 case MenuState.Popup:
-                        _attributes.PopupWindow.SetActive(true);
+                        
                         // Disable tab window if popup else
                         _attributes.TabPanel.SetActive(false);
+                    _attributes.BasePanel.SetActive(false);
+                        _attributes.PopupWindow.SetActive(true);
                     break;
             }
-
-            // Enable if disabled e.g. popup closed
-            if(!_attributes.TabPanel.activeSelf && newState != MenuState.Popup)
-                _attributes.TabPanel.SetActive(true);
 
             _attributes.MenuState = newState;
         }

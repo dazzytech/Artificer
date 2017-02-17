@@ -23,6 +23,7 @@ namespace Menu
         public GameObject MatchmakerTab;
         public GameObject PopupWindow;
         public GameObject TabPanel;
+        public GameObject BasePanel;
 
     	/*
          * Popup attributes

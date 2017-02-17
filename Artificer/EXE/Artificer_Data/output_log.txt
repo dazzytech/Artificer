@@ -16,18 +16,1502 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.199 seconds
+- Completed reload, in  0.120 seconds
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 <RI> Initialized touch support.
-UnloadTime: 1.988257 ms
+UnloadTime: 1.799291 ms
 DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
  
 (Filename:  Line: 386)
 
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
+Start Client
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+The referenced script on this Behaviour (Game Object 'ShipViewer') is missing!
+ 
+(Filename:  Line: 1656)
+
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.957577 ms
+Scene Changed
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+
+Unloading 604 unused Assets to reduce memory usage. Loaded Objects now: 3388.
+Total: 3.200284 ms (FindLiveObjects: 0.242221 ms CreateObjectMapping: 0.088459 ms MarkObjects: 2.352741 ms  DeleteObjects: 0.495326 ms)
+
+Large state update of 1739 bytes for netId:3615 from script:Ship(Clone) (Space.Ship.ShipInitializer)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Large state update of 1739 bytes for netId:3615 from script:PlayerShip (Space.Ship.ShipInitializer)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Menu.Video_EventListener.SetFullscreen (Boolean isOn) [0x00000] in <filename unknown>:0 
+  at Menu.Video_Behaviour.OnEnable () [0x00000] in <filename unknown>:0 
+UnityEngine.GameObject:SetActive(Boolean)
+Space.UI.Pause.PauseEventListener:SwitchToTab(String)
+UnityEngine.Events.InvokableCall`1:Invoke(Object[])
+UnityEngine.Events.CachedInvokableCall`1:Invoke(Object[])
+UnityEngine.Events.InvokableCallList:Invoke(Object[])
+UnityEngine.Events.UnityEventBase:Invoke(Object[])
+UnityEngine.Events.UnityEvent:Invoke()
+UnityEngine.UI.Button:Press()
+UnityEngine.UI.Button:OnPointerClick(PointerEventData)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent()
+UnityEngine.EventSystems.StandaloneInputModule:Process()
+UnityEngine.EventSystems.EventSystem:Update()
+ 
+(Filename:  Line: -1)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.230241 ms
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+
+Unloading 575 unused Assets to reduce memory usage. Loaded Objects now: 2985.
+Total: 3.108583 ms (FindLiveObjects: 0.199380 ms CreateObjectMapping: 0.072017 ms MarkObjects: 2.633171 ms  DeleteObjects: 0.202854 ms)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at GameManager.get_Space () [0x00000] in <filename unknown>:0 
+  at GameManager.InitServer () [0x00000] in <filename unknown>:0 
+  at GameManager.OnServerSceneChanged (System.String sceneName) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.FinishLoadScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.UpdateScene () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 3b14 -> priority: 1 
+  Thread -> id: 2514 -> priority: 1 

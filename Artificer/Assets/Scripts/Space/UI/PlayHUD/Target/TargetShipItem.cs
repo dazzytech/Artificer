@@ -198,8 +198,6 @@ namespace Space.UI.Ship
             item.Target = target;
             item.Tracker = Instantiate(m_targetPrefab);
             item.Tracker.transform.parent = this.transform;
-            item.Tracker.GetComponent<Image>().color =
-                m_prefabColour + new Color(.5f, .5f, .5f, 1f);
 
             m_targetedComponents.Add(item);
         }
