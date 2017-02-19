@@ -85,6 +85,15 @@ namespace Space
 
         #endregion
 
+        #region NETWORK BEHAVIOUR
+
+        public override void OnStartClient()
+        {
+            GameManager.GUI.DisplayMessege(new MsgParam("bold", "Connected to Server Match."));
+        }
+
+        #endregion
+
         #region PLAYER INTERACTION
 
         /// <summary>

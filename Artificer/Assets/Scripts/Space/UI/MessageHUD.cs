@@ -21,6 +21,9 @@ namespace Space.UI
     {
         private static MessageHUD instance = null;
 
+        [SerializeField]
+        private Transform HUD;
+
         private static int messegeCount = 0;
         private static int messegeMax = 20;
 
@@ -33,9 +36,6 @@ namespace Space.UI
 
         void Awake()
         {
-            if (instance == null)
-                instance = this;
-
             messegeCount = 0;
             messegeMax = 20;
         }
@@ -55,7 +55,7 @@ namespace Space.UI
             Text text = disp.AddComponent<Text>();
             //disp.transform.localScale = new Vector3(1f, 1f, 1f);
             //disp.transform.localPosition = new Vector3(0f, 0f, 0f);
-            disp.transform.SetParent(GameObject.Find("MessageList").transform, false);
+            disp.transform.SetParent(HUD, false);
 
                 switch (param.style)
                 {
@@ -97,7 +97,7 @@ namespace Space.UI
                         break;
                 }
 
-            text.font = instance.font;
+            text.font = This.font;
             text.text = param.messege;
             messegeCount++;
 
@@ -106,7 +106,7 @@ namespace Space.UI
             {
                 for(int i = 0; i < 5; i++)
                 {
-                    GameObject.Destroy(GameObject.Find("MessageList").transform.GetChild(i).gameObject);
+                    GameObject.Destroy(HUD.GetChild(i).gameObject);
                     messegeCount--;
                 }
             }
@@ -146,6 +146,21 @@ namespace Space.UI
         public void ClearPrompt()
         {
             PromptText.text = "";
+        }
+
+        #endregion
+
+        #region ACCESSORS
+
+        private MessageHUD This
+        {
+            get
+            {
+                if (instance == null)
+                    instance = this;
+
+                return instance;
+            }
         }
 
         #endregion

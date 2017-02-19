@@ -8,6 +8,7 @@ using Space.UI.Tracker;
 using Space.Segment;
 using Space.Ship;
 using Space.Teams;
+using System.Collections.Generic;
 
 namespace Space.UI
 {
@@ -48,6 +49,20 @@ namespace Space.UI
         [SerializeField]
         private MessageHUD m_messageHUD;
 
+        [Header("Message Docks")]
+
+        [SerializeField]
+        private Transform m_playDock;
+
+        [SerializeField]
+        private Transform m_pauseDock;
+
+        [SerializeField]
+        private Transform m_spawnDock;
+
+        [SerializeField]
+        private Transform m_stationDock;
+
         #endregion
 
         #region STATE MANAGEMENT
@@ -66,7 +81,8 @@ namespace Space.UI
                     m_popupRect.SetActive(false);
                     m_teamSelectRect.SetActive(false);
                     m_spawnPickerRect.SetActive(false);
-                    m_messageHUD.gameObject.SetActive(false);
+                    m_messageHUD.gameObject.SetActive(true);
+                    m_messageHUD.transform.SetParent(m_pauseDock, false);
                     m_stationRect.SetActive(false);
                     break;
                 case UIState.Play:
@@ -76,6 +92,7 @@ namespace Space.UI
                     m_teamSelectRect.SetActive(false);
                     m_spawnPickerRect.SetActive(false);
                     m_messageHUD.gameObject.SetActive(true);
+                    m_messageHUD.transform.SetParent(m_playDock, false);
                     m_stationRect.SetActive(false);
                     break;
                 case UIState.Popup:
@@ -84,7 +101,7 @@ namespace Space.UI
                     m_popupRect.SetActive(true);
                     m_teamSelectRect.SetActive(false);
                     m_spawnPickerRect.SetActive(false);
-                    m_messageHUD.gameObject.SetActive(true);
+                    m_messageHUD.gameObject.SetActive(false);
                     m_stationRect.SetActive(false);
                     break;
                 case UIState.TeamPicker:
@@ -102,7 +119,8 @@ namespace Space.UI
                     m_popupRect.SetActive(false);
                     m_teamSelectRect.SetActive(false);
                     m_spawnPickerRect.SetActive(true);
-                    m_messageHUD.gameObject.SetActive(false);
+                    m_messageHUD.gameObject.SetActive(true);
+                    m_messageHUD.transform.SetParent(m_spawnDock, false);
                     m_stationRect.SetActive(false);
                     break;
                 case UIState.Station:
@@ -112,6 +130,7 @@ namespace Space.UI
                     m_teamSelectRect.SetActive(false);
                     m_spawnPickerRect.SetActive(false);
                     m_messageHUD.gameObject.SetActive(true);
+                    m_messageHUD.transform.SetParent(m_stationDock, false);
                     m_stationRect.SetActive(true);
                     break;
             }
@@ -137,20 +156,6 @@ namespace Space.UI
         public void RebuildGUI()
         {
             m_playRect.SendMessage("RebuildGUI");
-        }
-
-        /// <summary>
-        /// Updates the chat window with a message
-        /// sent within a MsgParam
-        /// </summary>
-        /// <param name="param"></param>
-        public void DisplayMessege(MsgParam param)
-        {
-            //PlayRect.SendMessage("DisplayMessege", param);
-            if(m_messageHUD.gameObject.activeSelf)
-            {
-                m_messageHUD.DisplayMessege(param);
-            }
         }
 
         /// <summary>
@@ -313,5 +318,15 @@ namespace Space.UI
         }
 
         #endregion
+
+        /// <summary>
+        /// Updates the chat window with a message
+        /// sent within a MsgParam
+        /// </summary>
+        /// <param name="param"></param>
+        public void DisplayMessege(MsgParam param)
+        {
+            m_messageHUD.DisplayMessege(param);
+        }
     }
 }
