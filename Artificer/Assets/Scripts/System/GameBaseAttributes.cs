@@ -43,6 +43,7 @@ public class GameBaseAttributes:MonoBehaviour
     // Static client accessors
     public UIMessegeHandler GUIMsg;
     public SpaceManager Space;
+    public GameNetworkDiscovery Discovery;
     public CameraMessageHandler CamMsgHandler;
 }
 

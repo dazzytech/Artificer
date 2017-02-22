@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Collections;
 using Steamworks;
@@ -6,7 +7,7 @@ using Steamworks;
 namespace Menu.Matchmaker.Lobby
 {
     //Displays player info to the panel
-    public class LobbyPlayer_Prefab : MonoBehaviour 
+    public class LobbyPlayer_Prefab : NetworkLobbyPlayer 
     {
         [SerializeField]
         private Text PlayerName;

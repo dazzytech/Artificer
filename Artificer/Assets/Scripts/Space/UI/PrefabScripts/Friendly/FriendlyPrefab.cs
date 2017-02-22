@@ -64,27 +64,25 @@ namespace Space.UI.Ship
 
         #region COLORS
 
-        [SerializeField]
-        [Header("Colour Safe")]
-        private Color m_safeColor;
+        [Header("Colours")]
 
         [SerializeField]
-        [Header("Colour Attacked")]
-        private Color m_attackColor;
+        
+        private Color m_safeColour;
 
         [SerializeField]
-        [Header("Colour Destroyed")]
-        private Color m_destroyedColor;
+        private Color m_attackColour;
 
         [SerializeField]
-        [Header("Colour Docked")]
-        private Color m_dockedColor;
+        private Color m_destroyedColour;
 
         [SerializeField]
-        [Header("Colour Highlighted")]
-        private Color m_highlightColor;
+        private Color m_dockedColour;
 
-        private Color m_standardColor;
+        [SerializeField]
+        private Color m_highlightColour;
+
+        private Color m_standardColour;
 
         #endregion
 
@@ -123,7 +121,7 @@ namespace Space.UI.Ship
             m_ship = newShip;
 
             // non highlighted colour
-            m_standardColor = m_selfPanel.color;
+            m_standardColour = m_selfPanel.color;
 
             m_activated = true;
 
@@ -171,7 +169,7 @@ namespace Space.UI.Ship
                 if (m_ship == null)
                 {
                     m_status.text = "Destroyed";
-                    m_status.color = m_destroyedColor;
+                    m_status.color = m_destroyedColour;
 
                     m_distance.text = "-";
 
@@ -188,17 +186,17 @@ namespace Space.UI.Ship
                     // change and recolor text based on station state
                     case 0:
                         m_status.text = "Safe";
-                        m_status.color = m_safeColor;
+                        m_status.color = m_safeColour;
                         break;
 
                     case 1:
                         m_status.text = "In Combat";
-                        m_status.color = m_attackColor;
+                        m_status.color = m_attackColour;
                         break;
 
                     case 2:
                         m_status.text = "Docked";
-                        m_status.color = m_destroyedColor;
+                        m_status.color = m_destroyedColour;
                         break;
                 }
 
@@ -234,12 +232,12 @@ namespace Space.UI.Ship
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            m_selfPanel.color = m_highlightColor;
+            m_selfPanel.color = m_highlightColour;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            m_selfPanel.color = m_standardColor;
+            m_selfPanel.color = m_standardColour;
         }
 
         #endregion

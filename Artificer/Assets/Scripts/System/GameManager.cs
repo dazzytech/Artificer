@@ -13,15 +13,83 @@ using Space.GameFunctions;
 
 [RequireComponent(typeof(GameBaseAttributes))]
 
-public class GameManager: NetworkManager 
+public class GameManager: NetworkLobbyManager 
 {
 
     #region ATTRIBUTES
 
-	private static
-		GameBaseAttributes _base;
-    private static
-        GameAssetPreloader _preload;
+    [Header("References")]
+
+    [SerializeField]
+	private GameBaseAttributes m_base;
+    [SerializeField]
+    private GameAssetPreloader m_preload;
+
+    private static GameManager m_singleton;
+
+    #endregion
+
+    #region ACCESSORS
+
+    public static string Version
+    {
+        get { return m_singleton.m_base.Version; }
+    }
+
+    public static GameMessageHandler GameMSG
+    {
+        get
+        {
+            // Assign the playerspawn to the scene object if doesnt exist
+            if (m_singleton.m_base.GameMsg == null)
+                m_singleton.m_base.GameMsg = GameObject.Find("game")
+                    .GetComponent<GameMessageHandler>();
+            return m_singleton.m_base.GameMsg;
+        }
+    }
+
+    public static UIMessegeHandler GUI
+    {
+        get
+        {
+            // Add new spawned ship to 
+            if (m_singleton.m_base.GUIMsg == null)
+                m_singleton.m_base.GUIMsg = GameObject.Find("_gui").GetComponent<UIMessegeHandler>();
+
+            return m_singleton.m_base.GUIMsg;
+        }
+    }
+
+    public static GameNetworkDiscovery Discovery
+    {
+        get
+        {
+            return m_singleton.m_base.Discovery;
+        }
+    }
+
+    public static SpaceManager Space
+    {
+        get
+        {
+            // Add new spawned ship to 
+            if (m_singleton.m_base.Space == null)
+                m_singleton.m_base.Space = GameObject.Find("space").GetComponent<SpaceManager>();
+
+            return m_singleton.m_base.Space;
+        }
+    }
+
+    public static CameraMessageHandler Background
+    {
+        get
+        {
+            if (m_singleton.m_base.CamMsgHandler == null)
+                m_singleton.m_base.CamMsgHandler = GameObject.Find("PlayerCamera").GetComponent<CameraMessageHandler>();
+
+            return m_singleton.m_base.CamMsgHandler;
+        }
+    }
 
     #endregion
 
@@ -29,73 +97,32 @@ public class GameManager: NetworkManager
 
     void Start()
     {
-        _base = GetComponent<GameBaseAttributes>();
-        _preload = GetComponent<GameAssetPreloader>();
+        if (m_singleton == null)
+            m_singleton = this;
+        else
+            Destroy(gameObject);
 
-        _preload.PreloadAssets();
-    }
-
-    void OnApplicationQuit() 
-    {
-        // We have nothing to save
-        //Save();
+        m_preload.PreloadAssets();
     }
 
     #endregion
 
-    #region NETWORK BEHAVIOUR
+    #region NETWORKMANAGER OVERRIDE
 
-    #endregion
-
-    #region PUBLIC INTERACTION
+    #region SERVER SIDE
 
     /// <summary>
-    /// For now just creates a host on local host
+    /// Integrates our custom Network Discovery component for hosting and finding games
+    /// Called in relation to StartHost(), initialized the discovery tool and Starts our broadcast
     /// </summary>
-    public static void CreateHostedGame()
+    public override void OnStartHost()
     {
-        // Artificer uses port 7777
-
-        //NetworkManager.singleton.networkAddress = Network.player.ipAddress;
-
-        NetworkManager.singleton.StartHost(); 
+        base.OnStartHost();
+        // Use this override to initialize and
+        // broadcast your game through NetworkDiscovery
+        m_base.Discovery.Initialize();
+        m_base.Discovery.StartAsServer();
     }
-
-    public static void JoinAsClient(string serverAddress)
-    {
-        // Artificer uses port 7777
-
-       // NetworkManager.singleton.networkAddress = serverAddress;
-
-        NetworkManager.singleton.StartClient();
-    }
-
-    public static void Disconnect()
-    {
-        if (singleton.client != null)
-            singleton.StopClient();
-        else
-            singleton.StopHost();
-    }
-
-    public void InitServer()
-    {
-        // This is where we would pass the game parameters
-
-        Space.InitializeSpaceParameters();
-
-        GameMSG.InitializeGameParameters();
-    }
-
-    #endregion
-
-    #region GAME MANAGER INTERNAL INTERACTION
-
-    #endregion
-
-    #region NETMANAGER OVERRIDE
-
-    // SERVER SIDE
 
     /// <summary>
     /// Called when the server is unsuccessful in creation
@@ -119,13 +146,21 @@ public class GameManager: NetworkManager
     /// <param name="playerControllerId"></param>
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
-        GameMSG.AddNewPlayer
-            (playerControllerId, conn); 
+        Debug.Log("Server Add Player");
+        // error cause goes to lobby
+        //GameMSG.AddNewPlayer
+        //   (playerControllerId, conn);
     }
 
+    /// <summary>
+    /// Initialize the game parameters if server 
+    /// scene changes to space
+    /// </summary>
+    /// <param name="sceneName"></param>
     public override void OnServerSceneChanged(string sceneName)
     {
-        InitServer();
+        Space.InitializeSpaceParameters();
+        GameMSG.InitializeGameParameters();
     }
 
     /// <summary>
@@ -138,7 +173,9 @@ public class GameManager: NetworkManager
         GameMSG.RemovePlayer(conn);
     }
 
-    // CLIENT SIDE
+    #endregion
+
+    #region CLIENT SIDE
 
     public override void OnStartClient(NetworkClient client)
     {
@@ -170,106 +207,139 @@ public class GameManager: NetworkManager
 
     #endregion
 
-    #region STATIC ACCESSORS
+    #endregion
 
-    /* THESE DONT APPLY ANYMORE
-    public static void SetContract(int contractID)
-    {
-        ContractData temp = ContractLibrary.ReturnContract(contractID);
-        if (temp != null)
-            _base.Contract = temp;
-        else
-            Debug.Log("GameManager - SetContract: contract does not exist!");
-    }
+    #region PUBLIC INTERACTION
 
-    public static void NextContract()
+    #region NETWORK DISCOVERY
+
+    /// <summary>
+    /// Manually starting the discovery tool to listen for a broadcast
+    /// called when server list starts
+    /// </summary>
+    public static void StartListening()
     {
-        ContractData temp = ContractLibrary.ReturnContract(_base.Contract.ID+1);
-        if (temp != null)
+        if (!m_singleton.m_base.Discovery.running)
         {
-            if(!temp.Locked)
-                _base.Contract = temp;
-            else
-                _base.Contract = ContractLibrary.ReturnContract(0);
-        }
-        else
-        {
-            Debug.Log("GameManager - SetContract: contract does not exist!");
-            _base.Contract = ContractLibrary.ReturnContract(0);
-        }
-    }*/
-
-    public static string Version
-    {
-        get {return _base.Version;}
-    }
-
-    public static GameMessageHandler GameMSG
-    {
-        get
-        {
-            // Assign the playerspawn to the scene object if doesnt exist
-            if (_base.GameMsg == null)
-                _base.GameMsg = GameObject.Find("game")
-                    .GetComponent<GameMessageHandler>();
-            return _base.GameMsg;
+            // Use this method to start listening for a local game
+            m_singleton.m_base.Discovery.Initialize();
+            m_singleton.m_base.Discovery.StartAsClient();
         }
     }
 
-    public static UIMessegeHandler GUI
+    /// <summary>
+    /// Stops the discovery component from listening for a broadcast
+    /// called when server list closes
+    /// </summary>
+    public static void StopListening()
     {
-        get
+        if (m_singleton.m_base.Discovery.running)
         {
-            // Add new spawned ship to 
-            if (_base.GUIMsg == null)
-                _base.GUIMsg = GameObject.Find("_gui").GetComponent<UIMessegeHandler>();
 
-            return _base.GUIMsg;
-        }
-    }
-
-    public static SpaceManager Space
-    {
-        get
-        {
-            // Add new spawned ship to 
-            if (_base.Space == null)
-                _base.Space = GameObject.Find("space").GetComponent<SpaceManager>();
-
-            return _base.Space;
-        }
-    }
-
-    public static CameraMessageHandler Background
-    {
-        get
-        {
-            if (_base.CamMsgHandler == null)
-                _base.CamMsgHandler = GameObject.Find("PlayerCamera").GetComponent<CameraMessageHandler>();
-
-            return _base.CamMsgHandler; 
+            // Use this method to stop listening for a local game
+            m_singleton.m_base.Discovery.StopBroadcast();
         }
     }
 
     #endregion
 
     /// <summary>
-    /// Copy player and segment 
-    /// data into the stored attributes 
-    /// and serializes the objects
+    /// For now just creates a host on local host
     /// </summary>
-    /* NOT NEEDED?
-    public static void Save()
+    public static void CreateServer()
     {
-        /* DONT DO ANYTHING
-        first manage the player data
-        if (GameObject.FindGameObjectWithTag("PlayerShip") 
-            != null)
-        {
-            _base.Player.LocalUp = GameObject.FindGameObjectWithTag
-                ("PlayerShip").transform.up;
-        }
-        // serialize player object
-        Serializer.Save<PlayerData>("Space/Player_Data", _base.Player);
-    }*/
+        // check if the network is already active
+        if (m_singleton.isNetworkActive)
+            return;
+
+        // Set the IP the Net Manager is going to use to host a game to OUR IP address and Port 7777
+        m_singleton.networkAddress = Network.player.ipAddress;
+        m_singleton.networkPort = 7777;
+
+        // in future set text popup to enter name
+        // If game name was set...
+        //if (ServerName.text != "")
+            //... get the provided name
+            //_name = ServerName.text;
+        //else
+        //{
+            // ELSE set a game name for our user
+        string name = "Game:" + Random.Range(0, 10000);
+        //ServerName.text = _name;
+        //}
+        // This sets the data part of the OnReceivedBroadcast() event 
+        m_singleton.m_base.Discovery.broadcastData = name;
+
+        // Startup the host
+        m_singleton.TryHost();
+    }
+
+    public static void JoinAsClient(string serverAddress)
+    {
+        // Artificer uses port 7777
+
+       // NetworkManager.singleton.networkAddress = serverAddress;
+
+        NetworkManager.singleton.StartClient();
+    }
+
+    public static void Disconnect()
+    {
+        if (singleton.client != null)
+            singleton.StopClient();
+        else
+            singleton.StopHost();
+    }
+
+    #endregion
+
+    #region PRIVATE UTILITIES
+
+    #region HOST/CLIENT CONTROLS
+
+    // Tries to host a game
+    // This method is called by the user clicking Host Game on the main menu
+    private void TryHost()
+    {
+        networkSceneName = "";
+        NetworkServer.SetAllClientsNotReady();
+        ClientScene.DestroyAllClientObjects();
+        GameManager.m_singleton.StartHost();
+    }
+
+    // Tries to connect as a client
+    // This method is called by the user clicking Join Game on a server info panel
+    private void TryClient()
+    {
+        //serverListHolder.SetActive(false);
+        networkSceneName = "";
+        NetworkServer.SetAllClientsNotReady();
+        ClientScene.DestroyAllClientObjects();
+        GameManager.m_singleton.StartClient();
+    }
+
+    // Leaves the lobby we are connected to (host and client)
+    // This method is called by the user clicking Leave Lobby from within the lobby slot panel
+    private void LeaveLobby()
+    {
+        networkSceneName = "";
+        m_base.Discovery.StopBroadcast();
+        GameManager.m_singleton.StopClient();
+        GameManager.m_singleton.StopHost();
+    }
+
+    // Leaves the game we are in (host and client)
+    // This method is called by the user clicking Exit Game from within the in-game UI
+    private void LeaveGame()
+    {
+        networkSceneName = "";
+        GameManager.m_singleton.StopClient();
+        GameManager.m_singleton.StopHost();
+    }
+
+    //http://molx.us/2016/03/28/1/   above from here
+
+    #endregion
+
+    #endregion
 }

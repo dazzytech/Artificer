@@ -22,15 +22,19 @@ namespace Menu.Server
 
         public PlayerData PlayerSelf;
 
-        public List<ServerData> ServerList;
+        public List<ServerItemPrefab> ServerList;
 
-        public ServerData SelectedServer;
+        public ServerItemPrefab SelectedServer;
+
+        public GameObject ServerPrefab;
 
         #endregion
 
         #region HUD ELEMENTS
 
-        //[Header("HUD Elements")]
+        [Header("HUD Elements")]
+
+        public Transform ServerListTransform;
 
         #endregion
 

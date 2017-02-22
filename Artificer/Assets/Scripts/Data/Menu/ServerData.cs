@@ -27,11 +27,16 @@ namespace Data.Menu
         // Connection port
         public string ServerPort;
 
+        public bool Visible;
+
         // Currently how many players in server
         public int ServerPopulation;
 
         // Maximum players allowed - Considered server setting not game
         public int ServerMaxPopulation;
+
+        // Game version host is running
+        public string ServerVersion;
 
         #endregion
 
