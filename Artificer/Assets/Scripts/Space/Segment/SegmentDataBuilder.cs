@@ -75,9 +75,9 @@ namespace Space.Segment
             return SyncList.ToArray();
         }
 
-        public static ParellaxItem[] BuildNewBackground()
+        public static SyncPI[] BuildNewBackground()
         {
-            List<ParellaxItem> SyncList = new List<ParellaxItem>();
+            List<SyncPI> SyncList = new List<SyncPI>();
 
             // between 7 and 14 planets
             int planets = Random.Range(1, 4);
@@ -144,10 +144,10 @@ namespace Space.Segment
 
         #region DATA BUILDERS
 
-        private static ParellaxItem BuildPlanet(Vector2 planetPos)
+        private static SyncPI BuildPlanet(Vector2 planetPos)
         {
             // Create the start object
-            ParellaxItem planet = new ParellaxItem();
+            SyncPI planet = new SyncPI();
 
             // Pick a random texture
 
@@ -169,10 +169,10 @@ namespace Space.Segment
             return planet;
         }
 
-        private static ParellaxItem BuildGalaxy(Vector2 galaxyPos)
+        private static SyncPI BuildGalaxy(Vector2 galaxyPos)
         {
             // Create the start object
-            ParellaxItem galaxy = new ParellaxItem();
+            SyncPI galaxy = new SyncPI();
 
             // Pick a random texture
 

@@ -6,10 +6,19 @@ using System.Collections.Generic;
 
 namespace Space.CameraUtils
 {
+    [Serializable]
+    public struct SyncPI
+    {
+        public float X;
+        public float Y;
+        public float Distance;
+        public string Texture;
+        public string Type;
+    }
+
     /// <summary>
     /// Item that will be scrolled in the background
     /// </summary>
-    [Serializable]
     public struct ParellaxItem
     {
         public float X;
@@ -17,9 +26,7 @@ namespace Space.CameraUtils
         public float Distance;
         public string Texture;
         public string Type;
-        [NonSerialized]
         public GameObject GO;
-        [NonSerialized]
         public Bounds Bound;
     }
 
@@ -47,8 +54,15 @@ namespace Space.CameraUtils
         /// Creates a scroller object
         /// and stores it in synced list across playercameras
         /// </summary>
-        public void AddScrollObject(ParellaxItem newItem)
+        public void AddScrollObject(SyncPI passedItem)
         {
+            ParellaxItem newItem = new ParellaxItem();
+            newItem.X = passedItem.X;
+            newItem.Y = passedItem.Y;
+            newItem.Type = passedItem.Type;
+            newItem.Texture = passedItem.Texture;
+            newItem.Distance = passedItem.Distance;
+
             if (_scrollItems == null)
             {
                 _scrollItems = new List<ParellaxItem>();
@@ -102,7 +116,7 @@ namespace Space.CameraUtils
             _scrollItems.Add(newItem);
         }
 
-        public void AddScrollObjects(List<ParellaxItem> newItems)
+        public void AddScrollObjects(List<SyncPI> newItems)
         {
             if (_scrollItems == null)
             {
@@ -110,7 +124,7 @@ namespace Space.CameraUtils
                 StartCoroutine("CycleScroller");
             }
 
-            foreach (ParellaxItem newItem in newItems)
+            foreach (SyncPI newItem in newItems)
                 AddScrollObject(newItem);
         }
 

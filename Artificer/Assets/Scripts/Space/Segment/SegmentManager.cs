@@ -138,10 +138,10 @@ namespace Space.Segment
             _gen.GenerateServerObjects();
 
             // Initialize parellax objects
-            ParellaxItem[] pItems = SegmentDataBuilder.BuildNewBackground();
+            SyncPI[] pItems = SegmentDataBuilder.BuildNewBackground();
 
 
-            foreach (ParellaxItem pItem in pItems)
+            foreach (SyncPI pItem in pItems)
                 _att.BGItem.Add(pItem);
         }
 

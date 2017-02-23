@@ -16,7 +16,7 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.105 seconds
+- Completed reload, in  0.067 seconds
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
 <RI> Initializing input.
@@ -27,10 +27,14 @@ The referenced script on this Behaviour (Game Object 'ServerList') is missing!
  
 (Filename:  Line: 1656)
 
-UnloadTime: 1.797439 ms
+UnloadTime: 1.623299 ms
 DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
  
 (Filename:  Line: 386)
+
+[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
 NetworkDiscovery StartAsClient already started
@@ -57,5 +61,75 @@ Server Add Player
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
+Initialize engine version: 5.4.1f1 (649f48bbbf0f)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: AMD Radeon (TM) R9 200 Series (ID=0x6811)
+    Vendor:   ATI
+    VRAM:     2029 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.318 seconds
+Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
+<RI> Initialized touch support.
+The referenced script on this Behaviour (Game Object 'ServerList') is missing!
+ 
+(Filename:  Line: 1656)
+
+UnloadTime: 1.645066 ms
+DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
+ 
+(Filename:  Line: 386)
+
+[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
+Socket: bind failed, error: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+Cannot open socket on ip {*} and port {47777}; check please your network, most probably port has been already occupied
+ 
+(Filename:  Line: 492)
+
+NetworkDiscovery StartAsClient - addHost failed
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 22ec -> priority: 1 
+  Thread -> id: 259c -> priority: 1 
+DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
+ 
+(Filename:  Line: 386)
+
+NetworkLobbyManager can't accept new connection [hostId: -1 connectionId: 0 isReady: False channel count: 0], not in lobby and game already in progress.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+NetworkLobbyManager can't accept new connection [hostId: -1 connectionId: 0 isReady: False channel count: 0], not in lobby and game already in progress.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Start Client
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Server Add Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 3e28 -> priority: 1 

@@ -63,7 +63,7 @@ namespace Space.Segment
             BuildCamera();
 
             // Send our collection of scrolling items to the client camera
-            foreach (ParellaxItem pItem in _att.BGItem)
+            foreach (SyncPI pItem in _att.BGItem)
                 Camera.main.SendMessage("AddScrollObject", pItem);
         }
 

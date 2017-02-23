@@ -30,7 +30,7 @@ namespace Space.Segment
     public class SyncListSO : SyncListStruct<SegmentObject>
     { }
 
-    public class SyncListPI : SyncListStruct<ParellaxItem>
+    public class SyncListPI : SyncListStruct<SyncPI>
     { }
 
     class SegmentAttributes: NetworkBehaviour

@@ -20,7 +20,7 @@ namespace Space.CameraUtils
         // Use this for initialization
         void Start()
         {
-            Profiler.maxNumberOfSamplesPerFrame = -1;
+            //Profiler.maxNumberOfSamplesPerFrame = -1;
             isRunning = false;
         }
 

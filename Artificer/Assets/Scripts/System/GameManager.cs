@@ -159,8 +159,12 @@ public class GameManager: NetworkLobbyManager
     /// <param name="sceneName"></param>
     public override void OnServerSceneChanged(string sceneName)
     {
-        Space.InitializeSpaceParameters();
-        GameMSG.InitializeGameParameters();
+        // Initialize space scene
+        if (sceneName == "SpaceScene")
+        {
+            Space.InitializeSpaceParameters();
+            GameMSG.InitializeGameParameters();
+        }
     }
 
     /// <summary>
@@ -180,29 +184,55 @@ public class GameManager: NetworkLobbyManager
     public override void OnStartClient(NetworkClient client)
     {
         Debug.Log("Start Client");
-
         base.OnStartClient(client);
     }
 
     public override void OnClientNotReady(NetworkConnection conn)
     {
         Debug.Log("Client Not Ready");
-
         base.OnClientNotReady(conn);
     }
 
     public override void OnClientError(NetworkConnection conn, int errorCode)
     {
         Debug.Log("Client Error");
-
         base.OnClientError(conn, errorCode);
     }
 
     public override void OnClientSceneChanged(NetworkConnection conn)
     {
-        Debug.Log("Scene Changed");
+        // stops calling base that causes error
+    }
 
-        base.OnClientSceneChanged(conn);
+    #endregion
+
+    #endregion
+
+    #region LOBBYMANAGEOVERRIDE
+
+    public override void OnLobbyStartHost()
+    {
+        Debug.Log("Lobby Started");
+        ServerChangeScene("LobbyScene");
+    }
+
+    #region CLIENT
+
+    public override void OnLobbyClientEnter()
+    {
+        Debug.Log("Client Entered");
+        base.OnLobbyClientEnter();
+    }
+
+    public override void OnLobbyStartClient(NetworkClient lobbyClient)
+    {
+        Debug.Log("Start Lobby Client");
+        base.OnLobbyStartClient(lobbyClient);
+    }
+
+    public override void OnLobbyClientSceneChanged(NetworkConnection conn)
+    {
+        Debug.Log("Lobby Changed Scene");
     }
 
     #endregion
