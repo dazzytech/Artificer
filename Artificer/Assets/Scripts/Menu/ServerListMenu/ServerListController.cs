@@ -95,6 +95,22 @@ namespace Menu.Server
             }
         }
 
+        /// <summary>
+        /// If we have a server selected 
+        /// then command gamemanager to join 
+        /// that IP as client
+        /// </summary>
+        public void JoinServer()
+        {
+            if (m_att.SelectedServer == null)
+                return;
+
+            // We have a selected server
+            string ipAddress = m_att.SelectedServer.Server.ServerIP;
+
+            GameManager.JoinAsClient(ipAddress);
+        }
+
         #endregion
 
         #region PRIVATE UTILITIES

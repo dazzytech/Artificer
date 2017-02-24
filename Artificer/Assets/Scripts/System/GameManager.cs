@@ -64,6 +64,9 @@ public class GameManager: NetworkLobbyManager
     {
         get
         {
+            if (m_singleton == null)
+                return null;
+
             return m_singleton.m_base.Discovery;
         }
     }
@@ -118,10 +121,6 @@ public class GameManager: NetworkLobbyManager
     public override void OnStartHost()
     {
         base.OnStartHost();
-        // Use this override to initialize and
-        // broadcast your game through NetworkDiscovery
-        m_base.Discovery.Initialize();
-        m_base.Discovery.StartAsServer();
     }
 
     /// <summary>
@@ -164,6 +163,13 @@ public class GameManager: NetworkLobbyManager
         {
             Space.InitializeSpaceParameters();
             GameMSG.InitializeGameParameters();
+        }
+        else if(sceneName == "LobbyScene")
+        {
+            // Use this override to initialize and
+            // broadcast your game through NetworkDiscovery
+            m_base.Discovery.Initialize();
+            m_base.Discovery.StartAsServer();
         }
     }
 
@@ -249,6 +255,10 @@ public class GameManager: NetworkLobbyManager
     /// </summary>
     public static void StartListening()
     {
+        // Check we are initialized
+        if (m_singleton == null)
+            return;
+
         if (!m_singleton.m_base.Discovery.running)
         {
             // Use this method to start listening for a local game
@@ -263,6 +273,10 @@ public class GameManager: NetworkLobbyManager
     /// </summary>
     public static void StopListening()
     {
+        // Check we are initialized
+        if (m_singleton == null)
+            return;
+
         if (m_singleton.m_base.Discovery.running)
         {
 
@@ -308,9 +322,9 @@ public class GameManager: NetworkLobbyManager
     {
         // Artificer uses port 7777
 
-       // NetworkManager.singleton.networkAddress = serverAddress;
+        NetworkManager.singleton.networkAddress = serverAddress;
 
-        NetworkManager.singleton.StartClient();
+        m_singleton.TryClient();
     }
 
     public static void Disconnect()
@@ -341,7 +355,6 @@ public class GameManager: NetworkLobbyManager
     // This method is called by the user clicking Join Game on a server info panel
     private void TryClient()
     {
-        //serverListHolder.SetActive(false);
         networkSceneName = "";
         NetworkServer.SetAllClientsNotReady();
         ClientScene.DestroyAllClientObjects();

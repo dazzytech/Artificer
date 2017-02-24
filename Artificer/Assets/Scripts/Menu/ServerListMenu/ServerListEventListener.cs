@@ -20,14 +20,16 @@ namespace Menu.Server
         {
             ServerItemPrefab.OnClickedEvent += ComponentSelected;
 
-            GameManager.Discovery.OnServerDiscovery += ServerDiscovered;
+            if(GameManager.Discovery != null)
+                GameManager.Discovery.OnServerDiscovery += ServerDiscovered;
         }
 
         void OnDisable()
         {
             ServerItemPrefab.OnClickedEvent -= ComponentSelected;
 
-            GameManager.Discovery.OnServerDiscovery -= ServerDiscovered;
+            if (GameManager.Discovery != null)
+                GameManager.Discovery.OnServerDiscovery -= ServerDiscovered;
         }
 
         #endregion
@@ -42,6 +44,14 @@ namespace Menu.Server
         public void CreateServer()
         {
             GameManager.CreateServer();
+        }
+
+        /// <summary>
+        /// Prompts controller to join server
+        /// </summary>
+        public void JoinServer()
+        {
+            m_con.JoinServer();
         }
 
         /// <summary>
