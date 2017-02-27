@@ -168,7 +168,7 @@ namespace Menu.Matchmaker
                 
                 // set default values
                 SteamMatchmaking.SetLobbyData
-                    (m_att.Lobby, "ver", GameManager.Version); 
+                    (m_att.Lobby, "ver", SystemManager.Version); 
                 SteamMatchmaking.SetLobbyData
                     (m_att.Lobby, "name", "untitled lobby"); 
                 SteamMatchmaking.SetLobbyData

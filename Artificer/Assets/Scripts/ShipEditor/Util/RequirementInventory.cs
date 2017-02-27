@@ -39,7 +39,7 @@ namespace Construction.ShipEditor
         {
             /*
             // Add player cargo into current
-            Dictionary<MaterialData, float> current = GameManager.GetPlayer.Cargo;
+            Dictionary<MaterialData, float> current = SystemManager.GetPlayer.Cargo;
 
             if (current == null)
                 return;
@@ -70,7 +70,7 @@ namespace Construction.ShipEditor
         {
             /*
             // Add player cargo into current
-            Dictionary<MaterialData, float> current = GameManager.GetPlayer.Cargo;
+            Dictionary<MaterialData, float> current = SystemManager.GetPlayer.Cargo;
 
             // Clear each requirement for rebuilding
             foreach(Transform child in _Scroller.transform)

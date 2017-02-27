@@ -8,16 +8,12 @@ using Data.Space;
 using Data.Space.DataImporter;
 using Data.Space.Library;
 
-[RequireComponent(typeof(GameBaseAttributes))]
-public class GameAssetPreloader : MonoBehaviour
+[RequireComponent(typeof(SystemAttributes))]
+public class AssetPreloader : MonoBehaviour
 {
-    private GameBaseAttributes _att;
-    // Use this for initialization
-    void Awake()
-    {
-        _att = GetComponent<GameBaseAttributes>();
-    }
-    
+    [SerializeField]
+    private SystemAttributes _att;
+
     public void PreloadAssets()
     {
         PreloadShips();

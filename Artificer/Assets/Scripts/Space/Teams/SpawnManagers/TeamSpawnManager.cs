@@ -157,7 +157,7 @@ namespace Space.Teams.SpawnManagers
                 }
             }
 
-            GameObject playerObject = Instantiate(GameManager.singleton.playerPrefab);
+            GameObject playerObject = Instantiate(SystemManager.singleton.playerPrefab);
             // apply position
             playerObject.transform.position = newPosition;
 

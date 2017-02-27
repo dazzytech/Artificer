@@ -92,7 +92,7 @@ namespace Construction.ShipEditor
 
                 // Change so that this uses a team list
                 /*
-                if(GameManager.GetPlayer.Components.Contains
+                if(SystemManager.GetPlayer.Components.Contains
                    (string.Format("{0}/{1}", Con.ComponentType, GO.name))
                    || _att.StarterList.Contains(GO))
                 {
@@ -113,10 +113,10 @@ namespace Construction.ShipEditor
                 Destroy(child.gameObject);
 
             // populate header with existing ship items.
-            /*if (GameManager.GetPlayer.ShipList != null)
+            /*if (SystemManager.GetPlayer.ShipList != null)
             {
                 // Build Ship item prefabs using shiplist
-                foreach (ShipData ship in GameManager.GetPlayer.ShipList)
+                foreach (ShipData ship in SystemManager.GetPlayer.ShipList)
                 {
                     GameObject item = Instantiate(_att.ShipItemPrefab);
                     item.transform.SetParent(_att.ShipItemPanel.transform);

@@ -321,25 +321,25 @@ namespace Construction.ShipEditor
             /*
             foreach (MaterialData mat in _req.Requirements.Keys)
             {
-                if(GameManager.GetPlayer.Cargo == null)
-                    GameManager.GetPlayer.Cargo = 
+                if(SystemManager.GetPlayer.Cargo == null)
+                    SystemManager.GetPlayer.Cargo = 
                         new System.Collections.Generic.Dictionary<MaterialData, float>();
                 
-                if(!GameManager.GetPlayer.Cargo.ContainsKey(mat))
+                if(!SystemManager.GetPlayer.Cargo.ContainsKey(mat))
                     return;
                 
-                if(!(GameManager.GetPlayer.Cargo[mat] >= _req.Requirements[mat]))
+                if(!(SystemManager.GetPlayer.Cargo[mat] >= _req.Requirements[mat]))
                     return;
             }
             
             // EXPEND MATERIAL IN CARGO
             foreach (MaterialData mat in _req.Requirements.Keys)
             {
-                if(GameManager.GetPlayer.Cargo == null)
-                    GameManager.GetPlayer.Cargo = 
+                if(SystemManager.GetPlayer.Cargo == null)
+                    SystemManager.GetPlayer.Cargo = 
                         new System.Collections.Generic.Dictionary<MaterialData, float>();
 
-                GameManager.GetPlayer.Cargo[mat] -=  _req.Requirements[mat];
+                SystemManager.GetPlayer.Cargo[mat] -=  _req.Requirements[mat];
             }*/
             /*
             // Clear requirements as the ship will be saved
@@ -363,19 +363,19 @@ namespace Construction.ShipEditor
 
             temp.CombatResponsive = _ship.Ship.CombatResponsive;
 
-            /*int shipIndex = GameManager.GetPlayer.ShipList.FindIndex(x => x==_ship.Ship);
+            /*int shipIndex = SystemManager.GetPlayer.ShipList.FindIndex(x => x==_ship.Ship);
             // Replace ship if currently stored in player base
             if (shipIndex != -1)
             {
-                GameManager.GetPlayer.ShipList [shipIndex] = _ship.Ship = temp;
+                SystemManager.GetPlayer.ShipList [shipIndex] = _ship.Ship = temp;
             } else
             {
                 // we have a new creation
-                GameManager.GetPlayer.AddShip(temp);
+                SystemManager.GetPlayer.AddShip(temp);
                 _ship.Ship = temp;
             }
 
-            GameManager.GetPlayer.SetShip(temp.Name);
+            SystemManager.GetPlayer.SetShip(temp.Name);
 
             _tex.SaveIcon(_ship.Components, temp);
 
@@ -421,13 +421,13 @@ namespace Construction.ShipEditor
 
             _tex.Delete(_ship.Ship.Name);
 
-            /*if (GameManager.GetPlayer.ShipList.Contains(_ship.Ship))
+            /*if (SystemManager.GetPlayer.ShipList.Contains(_ship.Ship))
             {
-                GameManager.GetPlayer.ShipList.Remove(_ship.Ship);
+                SystemManager.GetPlayer.ShipList.Remove(_ship.Ship);
             }
-            if (GameManager.GetPlayer.Ship.Equals(_ship.Ship))
+            if (SystemManager.GetPlayer.Ship.Equals(_ship.Ship))
             {
-                GameManager.GetPlayer.SetShip(0);
+                SystemManager.GetPlayer.SetShip(0);
             }*//*
             ResetShipData();
 

@@ -60,7 +60,7 @@ namespace Space.Segment
             SOColliderHitMessage msg = new SOColliderHitMessage();
             msg.SObjectID = this.netId;
             msg.HitD = hit;
-            GameManager.singleton.client.Send((short)MSGCHANNEL.OBJECTHIT, msg);
+            SystemManager.singleton.client.Send((short)MSGCHANNEL.OBJECTHIT, msg);
         }
 
         /// <summary>

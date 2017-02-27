@@ -9,6 +9,6 @@ public class PopupEventListener : MonoBehaviour
 {
     public void ExitToMenu()
     {
-        GameManager.Disconnect();
+        SystemManager.Disconnect();
     }
 }

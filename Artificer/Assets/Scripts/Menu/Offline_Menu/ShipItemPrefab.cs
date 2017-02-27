@@ -60,7 +60,7 @@ namespace Menu
             }*/
 
             
-            /*if (ship.Equals(GameManager.GetPlayer.Ship))
+            /*if (ship.Equals(SystemManager.GetPlayer.Ship))
             {
                 // change to gold
                 Select.interactable = false;
@@ -68,7 +68,7 @@ namespace Menu
 
                 Panel.color = new Color (0.712f, 0.305f, 0f, 0.309f);
             }
-            else if (GameManager.GetPlayer.ShipList.Contains(ship))
+            else if (SystemManager.GetPlayer.ShipList.Contains(ship))
             {
                 Build.interactable = false;
                 Panel.color = new Color (0.796f, 1f, 0.89f, 0.309f);

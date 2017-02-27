@@ -68,10 +68,10 @@ namespace Space.Ship.Components.Listener
                 msg.PrefabIndex = prefabIndex;
                 msg.Position = shotOrigin;
                 msg.WData = data;
-                msg.shooterID = GameManager.Space.ID;
+                msg.shooterID = SystemManager.Space.ID;
 
                 // Sendmsg to game to spawn projectile
-                GameManager.singleton.client.Send((short)MSGCHANNEL.BUILDPROJECTILE, msg);
+                SystemManager.singleton.client.Send((short)MSGCHANNEL.BUILDPROJECTILE, msg);
             }
     	}
 

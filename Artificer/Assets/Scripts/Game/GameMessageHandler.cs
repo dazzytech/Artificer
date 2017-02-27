@@ -88,7 +88,7 @@ namespace Space.GameFunctions
         }
 
         /// <summary>
-        /// Initialize from gamemanager 
+        /// Initialize from SystemManager 
         /// </summary>
         [Server]
         public void InitializeGameParameters(/*GameParameters param*/)

@@ -205,7 +205,7 @@ namespace Menu
         {
             if (_controller.SelectedContract != null)
             {
-                //GameManager.SetContract(_controller.SelectedContract.Contract.ID);
+                //SystemManager.SetContract(_controller.SelectedContract.Contract.ID);
             }
         }
 
@@ -238,7 +238,7 @@ namespace Menu
             {
                 string path = ("Space/Player_Data");
                 File.Delete(path);
-                //GameManager.ResetPlayer();
+                //SystemManager.ResetPlayer();
             }
 
             Menu.Popup_Dialog.OnDialogEvent -= ConfirmDeletion;
@@ -252,34 +252,34 @@ namespace Menu
             // TEST THAT WE HAVE ENOUGH MATERIAL
             foreach (string matName in item.GetRequirements().Keys)
             {
-                /*if(GameManager.GetPlayer.Cargo == null)
-                    GameManager.GetPlayer.Cargo = 
+                /*if(SystemManager.GetPlayer.Cargo == null)
+                    SystemManager.GetPlayer.Cargo = 
                         new System.Collections.Generic.Dictionary<MaterialData, float>();
 
                 MaterialData mat = ElementLibrary.ReturnElement(matName);
 
-                if(!GameManager.GetPlayer.Cargo.ContainsKey(mat))
+                if(!SystemManager.GetPlayer.Cargo.ContainsKey(mat))
                     return;
 
-                if(!(GameManager.GetPlayer.Cargo[mat] >= item.GetRequirements()[matName]))
+                if(!(SystemManager.GetPlayer.Cargo[mat] >= item.GetRequirements()[matName]))
                     return;*/
             }
 
             // EXPEND MATERIAL IN CARGO
             foreach (string matName in item.GetRequirements().Keys)
             {
-                /*if(GameManager.GetPlayer.Cargo == null)
-                    GameManager.GetPlayer.Cargo = 
+                /*if(SystemManager.GetPlayer.Cargo == null)
+                    SystemManager.GetPlayer.Cargo = 
                         new System.Collections.Generic.Dictionary<MaterialData, float>();
 
                 MaterialData mat = ElementLibrary.ReturnElement(matName);
-                GameManager.GetPlayer.Cargo[mat] -= item.GetRequirements()[matName];
+                SystemManager.GetPlayer.Cargo[mat] -= item.GetRequirements()[matName];
             */}
 
             // Add ship to inventory
-            //GameManager.GetPlayer.AddShip(item);
+            //SystemManager.GetPlayer.AddShip(item);
             // Set Ship to selected
-            //GameManager.GetPlayer.SetShip(item.Name);
+            //SystemManager.GetPlayer.SetShip(item.Name);
 
             // Refresh button items in panel
             foreach (Transform child in _controller.ShipGrid.transform)
@@ -291,7 +291,7 @@ namespace Menu
         public void SelectShip(string ship)
         {
             // Set Ship to selected
-            //GameManager.GetPlayer.SetShip(ship);
+            //SystemManager.GetPlayer.SetShip(ship);
 
             // Refresh button items in panel
             foreach (Transform child in _controller.ShipGrid.transform)

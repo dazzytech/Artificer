@@ -141,7 +141,7 @@ namespace Construction.ShipEditor
                         }*/
                     }
                     // Reimburse player
-                    //GameManager.GetPlayer.AddMaterial(ReturnAmt);
+                    //SystemManager.GetPlayer.AddMaterial(ReturnAmt);
                 }
                 // Remove component from list
                 Existing.Remove(newComp);
@@ -182,12 +182,12 @@ namespace Construction.ShipEditor
                 // Remove amount from store
                 /*foreach(MaterialData mat in Reimbursed.Keys)
                 {
-                    if(GameManager.GetPlayer.Cargo.ContainsKey(mat))
+                    if(SystemManager.GetPlayer.Cargo.ContainsKey(mat))
                     {
-                        GameManager.GetPlayer.Cargo[mat] -= Reimbursed[mat];
+                        SystemManager.GetPlayer.Cargo[mat] -= Reimbursed[mat];
                         // Remove entry if empty
-                        if(GameManager.GetPlayer.Cargo[mat] <= 0)
-                            GameManager.GetPlayer.Cargo.Remove(mat);
+                        if(SystemManager.GetPlayer.Cargo[mat] <= 0)
+                            SystemManager.GetPlayer.Cargo.Remove(mat);
                     }
                 }*/
             }

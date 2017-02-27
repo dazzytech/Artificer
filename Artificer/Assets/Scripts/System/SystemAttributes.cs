@@ -26,7 +26,7 @@ public struct GameParameters
 // STORES ALL INFORMATION OF THE GAME
 // THAT DOES NOT EXIST WITHIN SCENES
 // NOT INCL CINFIGURATION
-public class GameBaseAttributes:MonoBehaviour
+public class SystemAttributes:MonoBehaviour
 {
     // Game state management
     public bool LevelPaused;
@@ -43,7 +43,7 @@ public class GameBaseAttributes:MonoBehaviour
     // Static client accessors
     public UIMessegeHandler GUIMsg;
     public SpaceManager Space;
-    public GameNetworkDiscovery Discovery;
+    public SystemNetworkDiscovery Discovery;
     public CameraMessageHandler CamMsgHandler;
 }
 

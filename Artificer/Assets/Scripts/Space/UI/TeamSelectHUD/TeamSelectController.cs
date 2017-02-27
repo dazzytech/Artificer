@@ -69,10 +69,10 @@ namespace Space.UI.Teams
         {
             // Create our message for the server
             TeamSelectionMessage tsm = new TeamSelectionMessage();
-            tsm.ID = GameManager.Space.ID;
+            tsm.ID = SystemManager.Space.ID;
             tsm.Selected = selection;
             // Send message baack to server
-            GameManager.singleton.client.Send((short)MSGCHANNEL.TEAMSELECTED, tsm);
+            SystemManager.singleton.client.Send((short)MSGCHANNEL.TEAMSELECTED, tsm);
         }
     }
 }

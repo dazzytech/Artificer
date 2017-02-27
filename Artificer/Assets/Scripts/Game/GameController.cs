@@ -381,13 +381,13 @@ namespace Space.GameFunctions
                 else if (CycleCompletion)
                 {
                     // Test that contract list exists
-                    /*if(GameManager.GetPlayer.Completedlevels == null)
-                        GameManager.GetPlayer.Completedlevels = new List<int>();
+                    /*if(SystemManager.GetPlayer.Completedlevels == null)
+                        SystemManager.GetPlayer.Completedlevels = new List<int>();
 
                     // test contract is not already completed
-                    if(!GameManager.GetPlayer.Completedlevels.Contains(Contract.ID))
+                    if(!SystemManager.GetPlayer.Completedlevels.Contains(Contract.ID))
                     {
-                        GameManager.GetPlayer.Completedlevels.Add(Contract.ID);
+                        SystemManager.GetPlayer.Completedlevels.Add(Contract.ID);
                     }
 
                     StoreRewards();
@@ -401,13 +401,13 @@ namespace Space.GameFunctions
                             {
                                 // Transfer materials
                                 if(mission.Reward.Materials != null)
-                                    GameManager.GetPlayer.AddMaterial(mission.Reward.Materials);
+                                    SystemManager.GetPlayer.AddMaterial(mission.Reward.Materials);
 
                                 // Transfer components
                                 if(mission.Reward.Components != null)
-                                    GameManager.GetPlayer.AddComponent(mission.Reward.Components);
+                                    SystemManager.GetPlayer.AddComponent(mission.Reward.Components);
 
-                                GameManager.GetPlayer.AddXP(mission.Reward.Xp);
+                                SystemManager.GetPlayer.AddXP(mission.Reward.Xp);
                             }
                         }
                     }

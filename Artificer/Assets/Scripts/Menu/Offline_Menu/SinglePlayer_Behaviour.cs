@@ -70,15 +70,15 @@ namespace Menu
 
             /*
             // Generate Ship Image
-            if (GameManager.GetPlayer.Ship != null)
+            if (SystemManager.GetPlayer.Ship != null)
             {
-                if(current != GameManager.GetPlayer.Ship.Name)
+                if(current != SystemManager.GetPlayer.Ship.Name)
                 {
-                    current = GameManager.GetPlayer.Ship.Name;
-                    if(GameManager.GetPlayer.Ship.IconTex == null)
+                    current = SystemManager.GetPlayer.Ship.Name;
+                    if(SystemManager.GetPlayer.Ship.IconTex == null)
                         return;
 
-                    Texture2D tex = GameManager.GetPlayer.Ship.IconTex;
+                    Texture2D tex = SystemManager.GetPlayer.Ship.IconTex;
 
                     if(tex == null)
                         return;
@@ -109,7 +109,7 @@ namespace Menu
         private void PopulateShipList()
         {
             // Will break if player doesnt exist yet
-            //if (GameManager.GetPlayer == null)
+            //if (SystemManager.GetPlayer == null)
                 //return;
 
             // Clear out ship panel 
@@ -120,7 +120,7 @@ namespace Menu
 
             /*
             // Generate list of firstly using ships currently owned by the player
-            foreach (ShipData ship in GameManager.GetPlayer.ShipList)
+            foreach (ShipData ship in SystemManager.GetPlayer.ShipList)
             {
                 if(ship.IconTex == null)
                 {
@@ -165,7 +165,7 @@ namespace Menu
             /*foreach (ShipData ship in ShipLibrary.GetAll())
             {
                 // Check this is one the player can have and does not currently have
-                if (!ship.PlayerMade || GameManager.GetPlayer.ShipList.Contains(ship))
+                if (!ship.PlayerMade || SystemManager.GetPlayer.ShipList.Contains(ship))
                     continue;
 
                 if(ship.IconTex == null)
@@ -203,7 +203,7 @@ namespace Menu
             // move this as it is null
             foreach (ContractData contract in ContractLibrary.ReturnContractList())
             {
-                if(GameManager.GetPlayer.Level >= contract.Requirement)
+                if(SystemManager.GetPlayer.Level >= contract.Requirement)
                     contract.Locked = false;
                 else
                     contract.Locked = true;
@@ -215,12 +215,12 @@ namespace Menu
 
         private void UpdateXP()
         {
-            if (GameManager.GetPlayer != null)
+            if (SystemManager.GetPlayer != null)
             {
-                CurrentExp.text = string.Format("{0}:XP", GameManager.GetPlayer.XP);
-                CurrentLvl.text = GameManager.GetPlayer.Level.ToString();
+                CurrentExp.text = string.Format("{0}:XP", SystemManager.GetPlayer.XP);
+                CurrentLvl.text = SystemManager.GetPlayer.Level.ToString();
 
-                NextLvl.text = string.Format("{0}:XP", GameManager.GetPlayer.NextLvl);
+                NextLvl.text = string.Format("{0}:XP", SystemManager.GetPlayer.NextLvl);
             }
         }*/
     }

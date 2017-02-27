@@ -207,9 +207,9 @@ namespace Space.Ship.Components.Listener
                 IntegrityChangedMsg msg = new IntegrityChangedMsg();
                 msg.Amount = -damage;
                 msg.Location = transform.position;
-                msg.PlayerID = GameManager.Space.ID;
+                msg.PlayerID = SystemManager.Space.ID;
 
-                GameManager.singleton.client.Send((short)MSGCHANNEL.INTEGRITYCHANGE, msg);
+                SystemManager.singleton.client.Send((short)MSGCHANNEL.INTEGRITYCHANGE, msg);
             }         
         }
 

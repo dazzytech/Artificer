@@ -50,7 +50,7 @@ namespace Space.Ship
                 SetUpPlayer();
                 // Add this item to local UI list
                 // p.s should be performed on each client without cmd
-                GameManager.GUI.AddUIPiece(transform);
+                SystemManager.GUI.AddUIPiece(transform);
             }
         }
 
@@ -88,7 +88,7 @@ namespace Space.Ship
             Ship = Serializer.ByteSerializer.fromBytes(shipInfo);
             RpcSpawnMe(shipInfo);
 
-            GameManager.GUI.RpcAddRemotePlayer(netId);
+            SystemManager.GUI.RpcAddRemotePlayer(netId);
         }
 
         /// <summary>
@@ -141,10 +141,10 @@ namespace Space.Ship
             }
             // Any ships spawned before we pick team will need
             // assigning when team is assigned
-            else if (GameManager.Space.Team)
+            else if (SystemManager.Space.Team)
             {
                 // Determine tag based on our reference to team
-                if (GameManager.Space.Team.PlayerOnTeam(netId))
+                if (SystemManager.Space.Team.PlayerOnTeam(netId))
                 {
                     name = "AllyShip";
                     tag = "Friendly";
@@ -160,7 +160,7 @@ namespace Space.Ship
         [Command]
         private void CmdUpdateHUD()
         {
-            GameManager.GUI.RpcAddRemotePlayer(netId);
+            SystemManager.GUI.RpcAddRemotePlayer(netId);
             RpcFinishCreate();
         }
 

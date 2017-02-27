@@ -263,7 +263,7 @@ namespace Construction.ShipEditor
 
             List<int> UnAvailable = new List<int>(); 
             // Create a list of numbers of each untitled ship
-            /*foreach (ShipData ship in GameManager.GetPlayer.ShipList)
+            /*foreach (ShipData ship in SystemManager.GetPlayer.ShipList)
             {
                 if(ship.Name.Contains("Untitled_"))
                 {

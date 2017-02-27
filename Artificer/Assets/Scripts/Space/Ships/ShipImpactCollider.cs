@@ -159,7 +159,7 @@ namespace Space.Ship
                 msg.ShipID = this.netId;
                 msg.HitD = _hitD;
                 msg.HitValues = damagedVals.ToArray();
-                GameManager.singleton.client.Send((short)MSGCHANNEL.SHIPHIT, msg);
+                SystemManager.singleton.client.Send((short)MSGCHANNEL.SHIPHIT, msg);
             }
 
             yield break;
@@ -209,7 +209,7 @@ namespace Space.Ship
                 msg.ShipID = this.netId;
                 msg.HitD = _hitD;
                 msg.HitValues = damagedVals.ToArray();
-                GameManager.singleton.client.Send((short)MSGCHANNEL.SHIPHIT, msg);
+                SystemManager.singleton.client.Send((short)MSGCHANNEL.SHIPHIT, msg);
             }
 
             yield break;

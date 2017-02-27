@@ -28,9 +28,9 @@ namespace Menu
         // Update is called once per frame
         void Update () 
         {           
-            /*if (GameManager.GetPlayer.Cargo != null)
+            /*if (SystemManager.GetPlayer.Cargo != null)
             {
-                if (GameManager.GetPlayer.Cargo.Count == 0)
+                if (SystemManager.GetPlayer.Cargo.Count == 0)
                 {
                     foreach(Transform child in _Scroller.transform)
                         Destroy(child.gameObject);
@@ -49,7 +49,7 @@ namespace Menu
             // to recount
             _Materials.Clear();
 
-            //AddMatsToList(GameManager.GetPlayer.Cargo);
+            //AddMatsToList(SystemManager.GetPlayer.Cargo);
         }
         
         /// <summary>

@@ -64,7 +64,7 @@ namespace Space.UI.Station
         public void ExitStation()
         {
             if(!m_att.Busy)
-                GameManager.Space.LeaveStation();
+                SystemManager.Space.LeaveStation();
         }
 
         public void RepairSelected()

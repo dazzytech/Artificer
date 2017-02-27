@@ -11,21 +11,20 @@ using Space.CameraUtils;
 using Space.UI;
 using Space.GameFunctions;
 
-[RequireComponent(typeof(GameBaseAttributes))]
+[RequireComponent(typeof(SystemAttributes))]
 
-public class GameManager: NetworkLobbyManager 
+public class SystemManager: NetworkManager 
 {
-
     #region ATTRIBUTES
 
     [Header("References")]
 
     [SerializeField]
-	private GameBaseAttributes m_base;
+	private SystemAttributes m_base;
     [SerializeField]
-    private GameAssetPreloader m_preload;
+    private AssetPreloader m_preload;
 
-    private static GameManager m_singleton;
+    private static SystemManager m_singleton;
 
     #endregion
 
@@ -60,7 +59,11 @@ public class GameManager: NetworkLobbyManager
         }
     }
 
-    public static GameNetworkDiscovery Discovery
+    /// <summary>
+    /// Custom network discovery attached
+    /// to this object
+    /// </summary>
+    public static SystemNetworkDiscovery Discovery
     {
         get
         {
@@ -71,15 +74,20 @@ public class GameManager: NetworkLobbyManager
         }
     }
 
+    /// <summary>
+    /// Returns the space manager when in
+    /// the space scene
+    /// </summary>
     public static SpaceManager Space
     {
         get
         {
-            // Add new spawned ship to 
-            if (m_singleton.m_base.Space == null)
-                m_singleton.m_base.Space = GameObject.Find("space").GetComponent<SpaceManager>();
-
-            return m_singleton.m_base.Space;
+            if (m_singleton == null)
+                return null;
+            else if (m_singleton.m_base.Space == null)
+                return null;   
+            else
+                return m_singleton.m_base.Space;
         }
     }
 
@@ -96,45 +104,9 @@ public class GameManager: NetworkLobbyManager
 
     #endregion
 
-    #region MONO BEHAVIOUR
-
-    void Start()
-    {
-        if (m_singleton == null)
-            m_singleton = this;
-        else
-            Destroy(gameObject);
-
-        m_preload.PreloadAssets();
-    }
-
-    #endregion
-
     #region NETWORKMANAGER OVERRIDE
 
     #region SERVER SIDE
-
-    /// <summary>
-    /// Integrates our custom Network Discovery component for hosting and finding games
-    /// Called in relation to StartHost(), initialized the discovery tool and Starts our broadcast
-    /// </summary>
-    public override void OnStartHost()
-    {
-        base.OnStartHost();
-    }
-
-    /// <summary>
-    /// Called when the server is unsuccessful in creation
-    /// displays a popup alerting the user
-    /// </summary>
-    /// <param name="conn"></param>
-    /// <param name="errorCode"></param>
-    public override void OnServerError(NetworkConnection conn, int errorCode)
-    {
-        Debug.Log(errorCode.ToString());
-
-        base.OnServerError(conn, errorCode);
-    }
 
     /// <summary>
     /// Initailze the player and add it to the 
@@ -154,6 +126,8 @@ public class GameManager: NetworkLobbyManager
     /// <summary>
     /// Initialize the game parameters if server 
     /// scene changes to space
+    /// If Lobby, initialized the discovery tool 
+    /// and start our broadcast
     /// </summary>
     /// <param name="sceneName"></param>
     public override void OnServerSceneChanged(string sceneName)
@@ -164,7 +138,7 @@ public class GameManager: NetworkLobbyManager
             Space.InitializeSpaceParameters();
             GameMSG.InitializeGameParameters();
         }
-        else if(sceneName == "LobbyScene")
+        else if (sceneName == "LobbyScene")
         {
             // Use this override to initialize and
             // broadcast your game through NetworkDiscovery
@@ -177,17 +151,54 @@ public class GameManager: NetworkLobbyManager
     /// Called when player quits out of a game
     /// </summary>
     /// <param name="conn"></param>
-    public override void OnServerDisconnect(NetworkConnection conn)
+    /*public override void OnServerDisconnect(NetworkConnection conn)
     {
         base.OnServerDisconnect(conn);
         GameMSG.RemovePlayer(conn);
-    }
+    }*/
+
+    /*
+    /// <summary>
+    /// Called when the server is unsuccessful in creation
+    /// displays a popup alerting the user
+    /// </summary>
+    /// <param name="conn"></param>
+    /// <param name="errorCode"></param>
+    public override void OnServerError(NetworkConnection conn, int errorCode)
+    {
+        Debug.Log(errorCode.ToString());
+
+        base.OnServerError(conn, errorCode);
+    }*/
 
     #endregion
 
     #region CLIENT SIDE
 
-    public override void OnStartClient(NetworkClient client)
+    /// <summary>
+    /// Called on each client when the server changes
+    /// the server and assigns the space manager when 
+    /// entering the server scene
+    /// </summary>
+    /// <param name="conn"></param>
+    public override void OnClientSceneChanged(NetworkConnection conn)
+    {
+        base.OnClientSceneChanged(conn);
+
+        // If we switched to space then assign our
+        // space manager
+        if (networkSceneName == "SpaceScene")
+        {
+            m_singleton.m_base.Space
+                = GameObject.Find("space").GetComponent<SpaceManager>();
+
+            if (m_singleton.m_base.Space == null)
+                Debug.Log("Error: System Manager - Client Scene Changed: " +
+                    "SpaceManager not found in space scene.");
+        }
+    }
+
+    /*public override void OnStartClient(NetworkClient client)
     {
         Debug.Log("Start Client");
         base.OnStartClient(client);
@@ -203,45 +214,23 @@ public class GameManager: NetworkLobbyManager
     {
         Debug.Log("Client Error");
         base.OnClientError(conn, errorCode);
-    }
-
-    public override void OnClientSceneChanged(NetworkConnection conn)
-    {
-        // stops calling base that causes error
-    }
+    }*/
 
     #endregion
 
     #endregion
 
-    #region LOBBYMANAGEOVERRIDE
+    #region MONO BEHAVIOUR
 
-    public override void OnLobbyStartHost()
+    void Start()
     {
-        Debug.Log("Lobby Started");
-        ServerChangeScene("LobbyScene");
+        if (m_singleton == null)
+            m_singleton = this;
+        else
+            Destroy(gameObject);
+
+        m_preload.PreloadAssets();
     }
-
-    #region CLIENT
-
-    public override void OnLobbyClientEnter()
-    {
-        Debug.Log("Client Entered");
-        base.OnLobbyClientEnter();
-    }
-
-    public override void OnLobbyStartClient(NetworkClient lobbyClient)
-    {
-        Debug.Log("Start Lobby Client");
-        base.OnLobbyStartClient(lobbyClient);
-    }
-
-    public override void OnLobbyClientSceneChanged(NetworkConnection conn)
-    {
-        Debug.Log("Lobby Changed Scene");
-    }
-
-    #endregion
 
     #endregion
 
@@ -348,7 +337,7 @@ public class GameManager: NetworkLobbyManager
         networkSceneName = "";
         NetworkServer.SetAllClientsNotReady();
         ClientScene.DestroyAllClientObjects();
-        GameManager.m_singleton.StartHost();
+        SystemManager.m_singleton.StartHost();
     }
 
     // Tries to connect as a client
@@ -358,7 +347,7 @@ public class GameManager: NetworkLobbyManager
         networkSceneName = "";
         NetworkServer.SetAllClientsNotReady();
         ClientScene.DestroyAllClientObjects();
-        GameManager.m_singleton.StartClient();
+        SystemManager.m_singleton.StartClient();
     }
 
     // Leaves the lobby we are connected to (host and client)
@@ -367,8 +356,8 @@ public class GameManager: NetworkLobbyManager
     {
         networkSceneName = "";
         m_base.Discovery.StopBroadcast();
-        GameManager.m_singleton.StopClient();
-        GameManager.m_singleton.StopHost();
+        SystemManager.m_singleton.StopClient();
+        SystemManager.m_singleton.StopHost();
     }
 
     // Leaves the game we are in (host and client)
@@ -376,8 +365,8 @@ public class GameManager: NetworkLobbyManager
     private void LeaveGame()
     {
         networkSceneName = "";
-        GameManager.m_singleton.StopClient();
-        GameManager.m_singleton.StopHost();
+        SystemManager.m_singleton.StopClient();
+        SystemManager.m_singleton.StopHost();
     }
 
     //http://molx.us/2016/03/28/1/   above from here

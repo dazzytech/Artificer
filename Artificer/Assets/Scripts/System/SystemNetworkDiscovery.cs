@@ -12,7 +12,7 @@ using Data.Menu;
 /// Listens for server then dispatches event
 /// when one is found
 /// </summary>
-public class GameNetworkDiscovery : NetworkDiscovery
+public class SystemNetworkDiscovery : NetworkDiscovery
 {
     #region EVENTS
 

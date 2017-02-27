@@ -86,10 +86,10 @@ namespace Menu.Matchmaker
 
         public void StartLobbySearch() // filter will be passed through params (maybe create)
         {
-            // GameManager keeps a persistant string that stores 
+            // SystemManager keeps a persistant string that stores 
             // the current version
             SteamMatchmaking.AddRequestLobbyListStringFilter
-                ("ver", GameManager.Version, 
+                ("ver", SystemManager.Version, 
                 ELobbyComparison.k_ELobbyComparisonEqual);
 
             SteamMatchmaking.
@@ -206,7 +206,7 @@ namespace Menu.Matchmaker
             SteamMatchmaking.SetLobbyData(pLobby, "live", "false");
 
             // Assign the game version to the lobby
-            SteamMatchmaking.SetLobbyData(pLobby, "ver", GameManager.Version);
+            SteamMatchmaking.SetLobbyData(pLobby, "ver", SystemManager.Version);
 
             // Add more when games are customized
         }

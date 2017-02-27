@@ -44,8 +44,8 @@ namespace Space.UI.Ship
         {
             get
             {
-                if (GameManager.Space != null)
-                    return GameManager.Space.Team;
+                if (SystemManager.Space != null)
+                    return SystemManager.Space.Team;
                 else
                     return null;
             }
@@ -118,7 +118,7 @@ namespace Space.UI.Ship
             foreach (uint ID in Team.Stations)
             {
                 // Skip if local player
-                if (ID == GameManager.Space.NetID || m_addedIDs.Contains(ID))
+                if (ID == SystemManager.Space.NetID || m_addedIDs.Contains(ID))
                     continue;
 
                 NetworkInstanceId netID = new NetworkInstanceId(ID);

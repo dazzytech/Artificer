@@ -89,7 +89,7 @@ namespace Space
 
         public override void OnStartClient()
         {
-            GameManager.GUI.DisplayMessege(new MsgParam("bold", "Connected to Server Match."));
+            SystemManager.GUI.DisplayMessege(new MsgParam("bold", "Connected to Server Match."));
         }
 
         #endregion
@@ -174,14 +174,14 @@ namespace Space
             m_att.netID = 0;
 
             // Prompt player to pick a spawn
-            GameManager.GUI.SetState(UIState.SpawnPicker);
+            SystemManager.GUI.SetState(UIState.SpawnPicker);
 
             // For now each spawn is 10 seconds
-            GameManager.GUI.SetSpawnDelay(10f);
+            SystemManager.GUI.SetSpawnDelay(10f);
 
-            GameManager.Background.StopBackground();
+            SystemManager.Background.StopBackground();
 
-            // Send this to gamemanager instead
+            // Send this to SystemManager instead
             //_att.TeamSpawn.CmdSpawnNewPlayerShip();
             // Group up all player respawns
             /*GameObject[] spawnObjs = GameObject.FindGameObjectsWithTag("TeamSpawner");
@@ -208,11 +208,11 @@ namespace Space
             }
 
             // Set to popup gui
-            GameManager.GUI.SetState(UIState.Play);
+            SystemManager.GUI.SetState(UIState.Play);
 
-            GameManager.GUI.BuildShipData();
+            SystemManager.GUI.BuildShipData();
 
-            GameManager.Background.StartBackground();
+            SystemManager.Background.StartBackground();
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Space
 
             m_att.station = controller;
 
-            GameManager.GUI.DisplayPrompt("Press Enter to dock at station");
+            SystemManager.GUI.DisplayPrompt("Press Enter to dock at station");
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Space
 
             m_att.station = null;
 
-            GameManager.GUI.ClearPrompt();
+            SystemManager.GUI.ClearPrompt();
         }
 
         #endregion
@@ -262,9 +262,9 @@ namespace Space
             if(destroyed.AggressorTag == "PlayerShip")
             {
                 if(destroyed.AlignmentLabel == "Enemy")
-                    GameManager.GUI.DisplayMessege(new MsgParam("sm-green", "You have destroyed an enemy."));
+                    SystemManager.GUI.DisplayMessege(new MsgParam("sm-green", "You have destroyed an enemy."));
                 if(destroyed.AlignmentLabel == "Friendly")
-                    GameManager.GUI.DisplayMessege(new MsgParam("sm-red", "You have destroyed an friendly."));
+                    SystemManager.GUI.DisplayMessege(new MsgParam("sm-red", "You have destroyed an friendly."));
             }
         }
 
@@ -327,11 +327,11 @@ namespace Space
         public void OnTeamPickerMessage(NetworkMessage netMsg)
         {
             // Set to popup gui
-            GameManager.GUI.SetState(UIState.TeamPicker);
+            SystemManager.GUI.SetState(UIState.TeamPicker);
 
             // Retreive variables and display options
             TeamPickerMessage tpm = netMsg.ReadMessage<TeamPickerMessage>();
-            GameManager.GUI.SetTeamOptions(tpm.teamOne, tpm.teamTwo);
+            SystemManager.GUI.SetTeamOptions(tpm.teamOne, tpm.teamTwo);
         }
 
         /// <summary>
@@ -418,7 +418,7 @@ namespace Space
                 msg.ReadMessage<IntegrityChangedMsg>();
 
             // Display message
-            GameManager.GUI.DisplayIntegrityChange
+            SystemManager.GUI.DisplayIntegrityChange
                     (chgMsg.Location, chgMsg.Amount);
         }
 

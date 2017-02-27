@@ -31,12 +31,12 @@ namespace Menu.Server
         {
             // until we have online servers
             // just start local discovery here
-            GameManager.StartListening();
+            SystemManager.StartListening();
         }
 
         void OnDisable()
         {
-            GameManager.StopListening();
+            SystemManager.StopListening();
         }
 
         void Awake()
@@ -87,6 +87,15 @@ namespace Menu.Server
         /// <param name="serverItem"></param>
         public void ComponentSelected(ServerItemPrefab serverItem)
         {
+            // If server is null then just set selection
+            if(m_att.SelectedServer == null)
+            {
+                m_att.SelectedServer = serverItem;
+                m_att.SelectedServer.SetSelected(true);
+                return;
+            }
+
+            // Server been selected before
             if (!m_att.SelectedServer.Equals(serverItem))
             {
                 m_att.SelectedServer.SetSelected(false);
@@ -97,7 +106,7 @@ namespace Menu.Server
 
         /// <summary>
         /// If we have a server selected 
-        /// then command gamemanager to join 
+        /// then command SystemManager to join 
         /// that IP as client
         /// </summary>
         public void JoinServer()
@@ -108,7 +117,7 @@ namespace Menu.Server
             // We have a selected server
             string ipAddress = m_att.SelectedServer.Server.ServerIP;
 
-            GameManager.JoinAsClient(ipAddress);
+            SystemManager.JoinAsClient(ipAddress);
         }
 
         #endregion

@@ -109,7 +109,7 @@ namespace Space.Segment
             intmsg.Location = transform.position;
             intmsg.PlayerID = -1;
 
-            GameManager.singleton.client.Send((short)MSGCHANNEL.INTEGRITYCHANGE, intmsg);
+            SystemManager.singleton.client.Send((short)MSGCHANNEL.INTEGRITYCHANGE, intmsg);
 
             // if station destroyed then being destroy process
             if (m_att.CurrentIntegrity <= 0)
@@ -118,7 +118,7 @@ namespace Space.Segment
                 msg.SelfID = netId;
                 msg.ID = m_att.ID;
 
-                GameManager.singleton.client.Send((short)MSGCHANNEL.STATIONDESTROYED, msg);
+                SystemManager.singleton.client.Send((short)MSGCHANNEL.STATIONDESTROYED, msg);
 
                 NetworkServer.UnSpawn(this.gameObject);
                 Destroy(this.gameObject);

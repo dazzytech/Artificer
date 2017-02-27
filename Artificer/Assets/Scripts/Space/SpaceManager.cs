@@ -52,7 +52,7 @@ namespace Space
         public override void OnStartLocalPlayer()
         {
             // Enter space segment
-            GameManager.GUI.DisplayMessege(new MsgParam("bold",
+            SystemManager.GUI.DisplayMessege(new MsgParam("bold",
                                                    "Entering space segment"));
 
             base.OnStartLocalPlayer();
@@ -182,7 +182,7 @@ namespace Space
         /// </summary>
         public void ExitLevel()
         {
-            GameManager.Disconnect();
+            SystemManager.Disconnect();
         }
 
         public int ID
@@ -233,7 +233,7 @@ namespace Space
                     NetworkInstanceId netId = ship.GetComponent<NetworkIdentity>().netId;
 
                     // Determine tag based on our reference to team
-                    if (GameManager.Space.Team.PlayerOnTeam(netId))
+                    if (SystemManager.Space.Team.PlayerOnTeam(netId))
                     {
                         ship.name = "AllyShip";
                         ship.tag = "Friendly";
@@ -270,13 +270,13 @@ namespace Space
 
             // Next is to update the HUD to display the
             // micro stationHUD
-            GameManager.GUI.SetState(UIState.Station);
+            SystemManager.GUI.SetState(UIState.Station);
 
             // retrieve ship atts from player object
             ShipAttributes shipAtt = PlayerObj.GetComponent<ShipAttributes>();
 
             // Add message for sending ship attributes
-            GameManager.GUI.InitializeStationHUD(shipAtt);
+            SystemManager.GUI.InitializeStationHUD(shipAtt);
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Space
 
             // Next is to update the HUD to display the
             // micro stationHUD
-            GameManager.GUI.SetState(UIState.Play);
+            SystemManager.GUI.SetState(UIState.Play);
         }
 
         #endregion

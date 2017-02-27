@@ -55,7 +55,7 @@ namespace Space.Ship
             foreach (MaterialData mat in data.Keys)
             {
                 // Set to popup gui
-                GameManager.GUI.DisplayMessege(new MsgParam("small", "You have collected: " +
+                SystemManager.GUI.DisplayMessege(new MsgParam("small", "You have collected: " +
                     (data[mat]).ToString("F2")
                        + " - " + mat.Element));
             }
@@ -432,9 +432,9 @@ namespace Space.Ship
             msg.AggressorTag = m_ship.AggressorTag;
             msg.AlignmentLabel = m_ship.AlignmentLabel;
             msg.SelfID = netId;
-            msg.ID = GameManager.Space.ID;
+            msg.ID = SystemManager.Space.ID;
 
-            GameManager.singleton.client.Send((short)MSGCHANNEL.SHIPDESTROYED, msg);
+            SystemManager.singleton.client.Send((short)MSGCHANNEL.SHIPDESTROYED, msg);
         }
 
         #region CMD & RPC

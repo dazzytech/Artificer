@@ -39,11 +39,11 @@ namespace Space.UI.Spawn
         {
             // For now we don't use spawn or ship info
             SpawnSelectionMessage ssm = new SpawnSelectionMessage();
-            ssm.PlayerID = GameManager.Space.ID;
+            ssm.PlayerID = SystemManager.Space.ID;
             ssm.ShipID = 0;
             ssm.SpawnID = 0;
 
-            GameManager.singleton.client.Send((short)MSGCHANNEL.SPAWNPLAYER, ssm);
+            SystemManager.singleton.client.Send((short)MSGCHANNEL.SPAWNPLAYER, ssm);
         }
 
         /// <summary>
