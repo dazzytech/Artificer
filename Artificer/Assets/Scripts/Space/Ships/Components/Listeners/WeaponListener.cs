@@ -4,7 +4,7 @@ using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 using System.Linq;
 
-using Space.GameFunctions;
+//Artificer
 using Space.Projectiles;
 using Space.Ship;
 using Space.Ship.Components.Attributes;

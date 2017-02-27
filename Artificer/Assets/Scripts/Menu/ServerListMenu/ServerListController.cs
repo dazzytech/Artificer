@@ -32,6 +32,8 @@ namespace Menu.Server
             // until we have online servers
             // just start local discovery here
             SystemManager.StartListening();
+
+            DisplayPlayerSelf();
         }
 
         void OnDisable()
@@ -124,7 +126,24 @@ namespace Menu.Server
 
         #region PRIVATE UTILITIES
 
+        /// <summary>
+        /// If connected to then retrieves the players
+        /// steam information and displays,
+        /// otherwise displays default unregistered player
+        /// </summary>
+        private void DisplayPlayerSelf()
+        {
+            // retreive steam name
+            string name = SteamFriends.GetPersonaName();
 
+            if(name == "")
+            {
+                name = "Non-Steam Player";
+            }
+            
+            // display name
+            m_att.AccountUserName.text = name;
+        }
 
         #endregion
 

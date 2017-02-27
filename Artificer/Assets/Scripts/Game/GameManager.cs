@@ -14,15 +14,15 @@ using Space.Ship.Components.Listener;
 using Space.Projectiles;
 using Networking;
 
-namespace Space.GameFunctions
+namespace Game
 {
-    public enum GameState{Completed, Failed}
+    public enum GameState{Lobby, Play}
 
     /// <summary>
     /// Responsible for game elements such as 
     /// teams, players etc
     /// </summary>
-    public class GameController:NetworkBehaviour
+    public class GameManager:NetworkBehaviour
     {
         #region EVENTS
 
@@ -35,6 +35,8 @@ namespace Space.GameFunctions
 
         private GameAttributes _att;
 
+        private static GameManager m_singleton;
+
         #endregion
 
         #region NETWORK BEHAVIOUR
@@ -46,38 +48,55 @@ namespace Space.GameFunctions
         void Awake()
         {
             _att = GetComponent<GameAttributes>();
-
             _att.Builder = GetComponent<GameBuilder>();
+
+            if (m_singleton == null)
+                m_singleton = this;
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            DontDestroyOnLoad(this);
         }
-
-        /*
-        ContractData Contract;
-        public ContractBuilder Builder;
-        public ContractState ContractStatus;
-        public RewardInfo Rewards;
-
-        // Mission Tracker List
-        public List<MissionData> PrimaryTracker;
-        public List<MissionData> SecondaryTracker;
-        public List<MissionData> Ended;*/
 
         #endregion
 
         #region PUBLIC INTERACTION
+
+        #region SYSTEM MESSAGES
+
+        /// <summary>
+        /// Does nothing atm
+        /// </summary>
+        [Server]
+        public void Initialize()
+        {
+
+        }
+
+        /// <summary>
+        /// Build the Lobby scene for the game
+        /// </summary>
+        [Server]
+        public void InitializeLobbyScene()
+        {
+            _att.currentState = GameState.Lobby;
+        }
 
         /// <summary>
         /// Retreives game parameters and 
         /// initializes the gameplay logic
         /// </summary>
         [Server]
-        public void Initialize(/*GameParameters param*/)
+        public void InitializeSpaceScene()
         {
-            // Move parameters from param to member variables
+            // Change the state on the game
+            _att.currentState = GameState.Play;
 
             // Initialize Teams
             bool teamsCompleted = false;
-
-            //UnityEngine.Random.seed = DateTime.Now.Millisecond;
 
             // pick our two teams first
             FactionData teamAcon = FactionLibrary.ReturnFaction(UnityEngine.Random.Range(0, 3));
@@ -99,37 +118,10 @@ namespace Space.GameFunctions
             // Generated stations for the teams
             _att.Builder.GenerateStations(_att.TeamA, _att.TeamB);
 
-            // Initialize trackers
-            /*
-            PrimaryTracker = new List<MissionData>();
-            SecondaryTracker = new List<MissionData>();
-            Ended = new List<MissionData>();
-
-            Contract = param.Contract;
-
-            ContractStatus = ContractState.Pending;
-
-            Builder.InitializeSpawners();
-
-            // Build space objects
-            Builder.GenerateContractObjects(Contract);
-
-            GameObject.Find("_gui").
-                SendMessage("BuildContractData", Contract);
-
-            foreach (MissionData mission in Contract.PrimaryMissions)
-            {
-                mission.Begin();
-                PrimaryTracker.Add(mission);
-            }
-
-            foreach (MissionData mission in Contract.OptionalMissions)
-            {
-                mission.Begin();
-                SecondaryTracker.Add(mission);
-            }*/
+            // go through each connected player and send messages
+            foreach (PlayerConnectionInfo info in _att.PlayerInfoList)
+                InitializePlayer(info);
         }
-
 
         [Server]
         public void AddNewPlayer
@@ -159,18 +151,9 @@ namespace Space.GameFunctions
                 info.mTeam = -1;
             }
 
-            // Assign our intial ID to the system
-            IntegerMessage iMsg = new IntegerMessage(info.ID);
-            NetworkServer.SendToClient(conn.connectionId,
-                (short)MSGCHANNEL.NEWID, iMsg);
-
-            // prompt player to pick team
-            // Send this to single client via a message
-            TeamPickerMessage msg = new TeamPickerMessage();
-            msg.teamOne = _att.TeamA.ID;
-            msg.teamTwo = _att.TeamB.ID;
-            NetworkServer.SendToClient(conn.connectionId,
-                (short)MSGCHANNEL.TEAMPICKER, msg);
+            // If currently in play the initialize 
+            if (_att.currentState == GameState.Play)
+                InitializePlayer(info);
         }
 
         /// <summary>
@@ -191,6 +174,10 @@ namespace Space.GameFunctions
                 _att.PlayerInfoList.Remove(info);
             }
         }
+
+        #endregion
+
+        #region SPACE MESSAGES
 
         /// <summary>
         /// Player has picked a team
@@ -316,6 +303,28 @@ namespace Space.GameFunctions
                     (short)MSGCHANNEL.DISPLAYINTEGRITYCHANGE, intMsg);
                 }
             }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        private void InitializePlayer(PlayerConnectionInfo info)
+        {
+            // Assign our intial ID to the system
+            IntegerMessage iMsg = new IntegerMessage(info.ID);
+            NetworkServer.SendToClient(info.mConnection.connectionId,
+                (short)MSGCHANNEL.NEWID, iMsg);
+
+            // prompt player to pick team
+            // Send this to single client via a message
+            TeamPickerMessage msg = new TeamPickerMessage();
+            msg.teamOne = _att.TeamA.ID;
+            msg.teamTwo = _att.TeamB.ID;
+            NetworkServer.SendToClient(info.mConnection.connectionId,
+                (short)MSGCHANNEL.TEAMPICKER, msg);
         }
 
         #endregion

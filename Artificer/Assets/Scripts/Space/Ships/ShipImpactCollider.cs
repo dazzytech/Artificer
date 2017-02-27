@@ -7,7 +7,6 @@ using System.Collections.Generic;
 // Artificer defined
 using Data.Space;
 using Space.Segment;
-using Space.GameFunctions;
 using Space.Ship.Components.Attributes;
 using Space.Ship.Components.Listener;
 using Networking;

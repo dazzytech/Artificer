@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 // Artificer defined
 using Data.Space;
-using Space.GameFunctions;
 using Networking;
 
 namespace Space.Segment

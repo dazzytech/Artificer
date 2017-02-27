@@ -4,7 +4,6 @@ using System.Collections;
 //Artificer
 using Data.Space.Library;
 using Space.Segment;
-using Space.GameFunctions;
 
 namespace Space.Segment
 {

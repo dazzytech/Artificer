@@ -4,7 +4,7 @@ using System.Collections;
 
 using Space.Ship;
 
-namespace Space.GameFunctions
+namespace Game
 {
     public class GameEventListener : NetworkBehaviour
     {

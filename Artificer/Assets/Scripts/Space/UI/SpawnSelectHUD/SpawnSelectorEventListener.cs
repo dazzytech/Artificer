@@ -3,7 +3,6 @@ using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 
-using Space.GameFunctions;
 using Networking;
 
 namespace Space.UI.Spawn

@@ -4,7 +4,7 @@ using System.Collections;
 
 using Networking;
 
-namespace Space.GameFunctions
+namespace Game
 {
     /// <summary>
     /// dispatches events that are to trigger 

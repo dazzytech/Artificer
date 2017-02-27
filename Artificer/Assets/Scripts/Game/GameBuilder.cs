@@ -8,7 +8,7 @@ using Data.Space;
 using Space.Segment.Generator;
 using Space.Teams;
 
-namespace Space.GameFunctions
+namespace Game
 {
     /// <summary>
     /// Build game specific space objects e.g.

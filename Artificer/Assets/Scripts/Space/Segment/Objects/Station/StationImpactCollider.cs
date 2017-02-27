@@ -3,7 +3,6 @@ using UnityEngine.Networking;
 
 // Artificer
 using System.Collections;
-using Space.GameFunctions;
 
 namespace Space.Segment
 {

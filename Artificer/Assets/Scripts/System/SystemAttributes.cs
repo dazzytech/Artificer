@@ -9,7 +9,7 @@ using Data.Space.Library;
 using Space;
 using Space.CameraUtils;
 using Space.UI;
-using Space.GameFunctions;
+using Game;
 
 /// <summary>
 /// Stores game parameters retrived from lobby or server

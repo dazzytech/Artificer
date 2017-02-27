@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -35,6 +36,8 @@ namespace Menu.Server
         [Header("HUD Elements")]
 
         public Transform ServerListTransform;
+
+        public Text AccountUserName;
 
         #endregion
 

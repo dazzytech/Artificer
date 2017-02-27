@@ -3,7 +3,6 @@ using UnityEngine.Networking;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Space.GameFunctions;
 
 using Data.Space;
 using Networking;

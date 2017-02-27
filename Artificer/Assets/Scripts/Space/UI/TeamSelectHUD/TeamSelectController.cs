@@ -6,7 +6,6 @@ using System.Collections;
 
 using Data.Space;
 using Data.Space.Library;
-using Space.GameFunctions;
 using Networking;
 
 namespace Space.UI.Teams

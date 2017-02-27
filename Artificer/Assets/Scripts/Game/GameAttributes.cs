@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 using Space.Teams;
 
-namespace Space.GameFunctions
+namespace Game
 {
     #region PLAYER INFO
     /// <summary>
@@ -30,6 +30,8 @@ namespace Space.GameFunctions
 
         // Store a list of all connected players
         public IndexedList<PlayerConnectionInfo> PlayerInfoList;
+
+        public GameState currentState;
 
         // Teams, currently on supports two teams
         public TeamController TeamA;

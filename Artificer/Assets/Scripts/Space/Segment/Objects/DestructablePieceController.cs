@@ -7,7 +7,6 @@ using Data.Space.Library;
 using Space.Segment;
 using Space.Ship;
 using Space.Ship.Components.Listener;
-using Space.GameFunctions;
 
 namespace Space
 {

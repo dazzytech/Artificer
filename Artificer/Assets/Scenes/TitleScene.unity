@@ -4331,6 +4331,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 338404847}
+--- !u!114 &357759209 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11433704, guid: 15d13621195bd06469aadf32f8962ddf,
+    type: 2}
+  m_PrefabInternal: {fileID: 1442607343}
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1 &360749950
 GameObject:
   m_ObjectHideFlags: 0
@@ -17575,6 +17581,7 @@ MonoBehaviour:
   ServerPrefab: {fileID: 1000012187732234, guid: 8d743ae6fad0e1d4fbd71b6481d4b158,
     type: 2}
   ServerListTransform: {fileID: 1813003827}
+  AccountUserName: {fileID: 357759209}
 --- !u!1 &1158886849
 GameObject:
   m_ObjectHideFlags: 0
@@ -26862,7 +26869,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11457418, guid: d706cdeba6af9de498b0ede640deb471, type: 2}
       propertyPath: m_Text
-      value: User Settings
+      value: Player Information
       objectReference: {fileID: 0}
     - target: {fileID: 11457418, guid: d706cdeba6af9de498b0ede640deb471, type: 2}
       propertyPath: m_FontData.m_BestFit

@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 using Data.Shared;
 using Data.Space;
 using Space.Segment;
-using Space.GameFunctions;
+using Game;
 
 namespace Space.Teams.SpawnManagers
 {

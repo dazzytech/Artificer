@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using Data.Shared;
 using Data.Space.Library;
 using Data.Space;
-using Space.Contract;
-using Space.GameFunctions;
 using Space.UI;
 using Space.Ship;
 using Space.Teams;

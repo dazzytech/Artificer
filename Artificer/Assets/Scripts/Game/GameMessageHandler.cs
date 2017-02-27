@@ -8,7 +8,7 @@ using Space.Projectiles;
 using Space.Segment;
 using Networking;
 
-namespace Space.GameFunctions
+namespace Game
 {
     /// <summary>
     /// Handles messages sent from other parts of the program
@@ -16,11 +16,24 @@ namespace Space.GameFunctions
     /// </summary>
     public class GameMessageHandler : NetworkBehaviour
     {
-        public GameController Con;
-        public GameServerEvents Event;
+        #region ATTRIBUTES
+
+        [Header("References")]
+
+        [SerializeField]
+        private GameManager m_con;
+
+        [SerializeField]
+        private GameServerEvents m_event;
+
+        #endregion
+
+        #region MONO BEHAVIOUR
 
         void Awake()
         {
+            #region SPACE MESSAGES
+
             NetworkServer.RegisterHandler((short)MSGCHANNEL.TEAMSELECTED, OnAssignToTeam);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SPAWNPLAYER, OnSpawnPlayerAt);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SHIPHIT, OnShipHit);
@@ -28,9 +41,44 @@ namespace Space.GameFunctions
             NetworkServer.RegisterHandler((short)MSGCHANNEL.OBJECTHIT, OnObjectHit);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.INTEGRITYCHANGE, OnIntegrityChanged);
 
-            // call Server events
+            #endregion
+
+            #region SPACE EVENTS
+            
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SHIPDESTROYED, OnShipDestroyed);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.STATIONDESTROYED, OnStationDestroyed);
+
+            #endregion
+        }
+
+        #endregion
+
+        #region PUBLIC INTERACTION
+
+        #region SYSTEM MESSAGES
+
+        /// <summary>
+        /// Initialize from SystemManager 
+        /// </summary>
+        [Server]
+        public void Initialize()
+        {
+            m_con.Initialize();
+        }
+
+        [Server]
+        public void SceneChanged(string scene)
+        {
+            switch(scene)
+            {
+                case "lobby":
+                    m_con.InitializeLobbyScene();
+                    break;
+                case "play":
+                    m_con.InitializeSpaceScene();
+                    break;
+                
+            }
         }
 
         /// <summary>
@@ -44,7 +92,7 @@ namespace Space.GameFunctions
         public void AddNewPlayer
             (short playerControllerId, NetworkConnection conn)
         {
-            Con.AddNewPlayer(playerControllerId, conn);
+            m_con.AddNewPlayer(playerControllerId, conn);
         }
 
         /// <summary>
@@ -55,8 +103,12 @@ namespace Space.GameFunctions
         public void RemovePlayer
             (NetworkConnection conn)
         {
-            Con.RemovePlayer(conn);
+            m_con.RemovePlayer(conn);
         }
+
+        #endregion
+
+        #region SPACE PLAYER MESSAGES
 
         /// <summary>
         /// Called when the player 
@@ -71,7 +123,7 @@ namespace Space.GameFunctions
         {
             // Retreive variables and display options
             SpawnSelectionMessage ssm = netMsg.ReadMessage<SpawnSelectionMessage>();
-            Con.SpawnPlayer(ssm.PlayerID, ssm.SpawnID, ssm.ShipID);
+            m_con.SpawnPlayer(ssm.PlayerID, ssm.SpawnID, ssm.ShipID);
         }
 
         /// <summary>
@@ -84,56 +136,76 @@ namespace Space.GameFunctions
         {
             // Retreive variables and display options
             TeamSelectionMessage tsm = netMsg.ReadMessage<TeamSelectionMessage>();
-            Con.AssignToTeam(tsm.Selected, tsm.ID);
+            m_con.AssignToTeam(tsm.Selected, tsm.ID);
         }
+
+        #endregion
+
+        #region SPACE MESSAGES
 
         /// <summary>
-        /// Initialize from SystemManager 
+        /// builds a projectile on the server
+        /// and sends spawn info to each client
         /// </summary>
-        [Server]
-        public void InitializeGameParameters(/*GameParameters param*/)
-        {
-            Con.Initialize();
-        }
-
+        /// <param name="msg"></param>
         [Server]
         public void OnBuildProjectile(NetworkMessage msg)
         {
             ProjectileBuildMessage projMsg = msg.ReadMessage<ProjectileBuildMessage>();
-
-            Con.BuildProjectile(projMsg.PrefabIndex, projMsg.shooterID, projMsg.Position, projMsg.WData);
+            m_con.BuildProjectile(projMsg.PrefabIndex, projMsg.shooterID, projMsg.Position, projMsg.WData);
         }
 
+        /// <summary>
+        /// Called when ship has taken damage 
+        /// to update all clients
+        /// </summary>
+        /// <param name="msg"></param>
         [Server]
         public void OnShipHit(NetworkMessage msg)
         {
-            Con.ShipHit(msg.ReadMessage<ShipColliderHitMessage>());
+            m_con.ShipHit(msg.ReadMessage<ShipColliderHitMessage>());
         }
 
+        /// <summary>
+        /// Called when an object in space is hit
+        /// </summary>
+        /// <param name="msg"></param>
         [Server]
         public void OnObjectHit(NetworkMessage msg)
         {
-            Con.ObjectHit(msg.ReadMessage<SOColliderHitMessage>());
+            m_con.ObjectHit(msg.ReadMessage<SOColliderHitMessage>());
         }
 
+        /// <summary>
+        /// Called when ship or station takes damage
+        /// to display on clients
+        /// </summary>
+        /// <param name="msg"></param>
         [Server]
         public void OnIntegrityChanged(NetworkMessage msg)
         {
-            Con.OnIntegrityChanged(msg.ReadMessage<IntegrityChangedMsg>());
+            m_con.OnIntegrityChanged(msg.ReadMessage<IntegrityChangedMsg>());
         }
 
-        // Server Event Calling
+        #endregion
+
+        #region SERVER EVENTS
 
         [Server]
         public void OnShipDestroyed(NetworkMessage msg)
         {
-            Event.ShipDestroyed(msg.ReadMessage<ShipDestroyMessage>());
+            m_event.ShipDestroyed(msg.ReadMessage<ShipDestroyMessage>());
         }
 
         [Server]
         public void OnStationDestroyed(NetworkMessage msg)
         {
-            Event.StationDestroyed(msg.ReadMessage<StationDestroyMessage>());
+            m_event.StationDestroyed(msg.ReadMessage<StationDestroyMessage>());
+
         }
+
+        #endregion
+
+        #endregion
     }
 }

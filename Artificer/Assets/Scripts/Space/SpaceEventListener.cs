@@ -7,8 +7,6 @@ using System.IO;
 // Artificer
 using Data.Shared;
 using Data.Space.Library;
-using Space.GameFunctions;
-using Space.Generator;
 using Space.Ship;
 using Space.Segment;
 using Space.UI;
@@ -287,7 +285,7 @@ namespace Space
             //_att.Contract.ProcessStationReached(ship);
         }
 
-        private void EndLevel(GameState newState)
+        private void EndLevel(/*GameState newState*/)
         {
             m_util.Stop();
 
@@ -313,7 +311,7 @@ namespace Space
         /// </summary>
         /// <param name="newState"></param>
         [ClientRpc]
-        public void RpcEndGame(GameState newState)
+        public void RpcEndGame(/*GameState newState*/)
         {
 
         }

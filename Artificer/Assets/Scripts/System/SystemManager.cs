@@ -9,7 +9,7 @@ using Data.Space;
 using Space;
 using Space.CameraUtils;
 using Space.UI;
-using Space.GameFunctions;
+using Game;
 
 [RequireComponent(typeof(SystemAttributes))]
 
@@ -41,7 +41,7 @@ public class SystemManager: NetworkManager
         {
             // Assign the playerspawn to the scene object if doesnt exist
             if (m_singleton.m_base.GameMsg == null)
-                m_singleton.m_base.GameMsg = GameObject.Find("game")
+                m_singleton.m_base.GameMsg = GameObject.Find("_game")
                     .GetComponent<GameMessageHandler>();
             return m_singleton.m_base.GameMsg;
         }
@@ -117,10 +117,8 @@ public class SystemManager: NetworkManager
     /// <param name="playerControllerId"></param>
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
-        Debug.Log("Server Add Player");
-        // error cause goes to lobby
-        //GameMSG.AddNewPlayer
-        //   (playerControllerId, conn);
+        GameMSG.AddNewPlayer
+           (playerControllerId, conn);
     }
 
     /// <summary>
@@ -135,8 +133,10 @@ public class SystemManager: NetworkManager
         // Initialize space scene
         if (sceneName == "SpaceScene")
         {
-            Space.InitializeSpaceParameters();
-            GameMSG.InitializeGameParameters();
+            //Space.InitializeSpaceParameters();
+            //GameMSG.InitializeGameParameters();
+            // switch to space scene
+            GameMSG.SceneChanged("play");
         }
         else if (sceneName == "LobbyScene")
         {
@@ -144,6 +144,11 @@ public class SystemManager: NetworkManager
             // broadcast your game through NetworkDiscovery
             m_base.Discovery.Initialize();
             m_base.Discovery.StartAsServer();
+
+            // Initialize the Game Manager within
+            // the lobby
+            GameMSG.Initialize();
+            GameMSG.SceneChanged("lobby");
         }
     }
 
@@ -151,11 +156,12 @@ public class SystemManager: NetworkManager
     /// Called when player quits out of a game
     /// </summary>
     /// <param name="conn"></param>
-    /*public override void OnServerDisconnect(NetworkConnection conn)
+    public override void OnServerDisconnect(NetworkConnection conn)
     {
         base.OnServerDisconnect(conn);
+
         GameMSG.RemovePlayer(conn);
-    }*/
+    }
 
     /*
     /// <summary>
