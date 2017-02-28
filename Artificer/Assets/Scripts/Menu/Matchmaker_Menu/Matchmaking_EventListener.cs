@@ -11,7 +11,7 @@ namespace Menu.Matchmaker
     /// </summary>
     [RequireComponent(typeof(Matchmaking_Behaviour))]
     public class Matchmaking_EventListener : MonoBehaviour
-    {
+    {/*
         #region VARIABLE DECLARATION
 
         // event listener causes the behaviour to preform

@@ -10,6 +10,7 @@ using Space;
 using Space.CameraUtils;
 using Space.UI;
 using Game;
+using Lobby;
 
 [RequireComponent(typeof(SystemAttributes))]
 
@@ -88,6 +89,23 @@ public class SystemManager: NetworkManager
                 return null;   
             else
                 return m_singleton.m_base.Space;
+        }
+    }
+
+    /// <summary>
+    /// Returns the lobby manager
+    /// when in the lobby scene
+    /// </summary>
+    public static LobbyManager Lobby
+    {
+        get
+        {
+            if (m_singleton == null)
+                return null;
+            else if (m_singleton.m_base.Lobby == null)
+                return null;
+            else
+                return m_singleton.m_base.Lobby;
         }
     }
 
@@ -201,6 +219,18 @@ public class SystemManager: NetworkManager
             if (m_singleton.m_base.Space == null)
                 Debug.Log("Error: System Manager - Client Scene Changed: " +
                     "SpaceManager not found in space scene.");
+        }
+
+        // Else If we switched to lobby then assign our
+        // lobby manager
+        else if (networkSceneName == "LobbyScene")
+        {
+            m_singleton.m_base.Lobby
+                = GameObject.Find("lobby").GetComponent<LobbyManager>();
+
+            if (m_singleton.m_base.Lobby == null)
+                Debug.Log("Error: System Manager - Client Scene Changed: " +
+                    "LobbyManager not found in space scene.");
         }
     }
 

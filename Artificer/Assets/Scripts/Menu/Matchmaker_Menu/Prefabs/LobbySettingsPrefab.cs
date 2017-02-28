@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-namespace Menu.Matchmaker.Lobby
+namespace Lobby
 {
     public class LobbySettingsPrefab : MonoBehaviour
     {

@@ -10,6 +10,7 @@ using Space;
 using Space.CameraUtils;
 using Space.UI;
 using Game;
+using Lobby;
 
 /// <summary>
 /// Stores game parameters retrived from lobby or server
@@ -43,6 +44,7 @@ public class SystemAttributes:MonoBehaviour
     // Static client accessors
     public UIMessegeHandler GUIMsg;
     public SpaceManager Space;
+    public LobbyManager Lobby;
     public SystemNetworkDiscovery Discovery;
     public CameraMessageHandler CamMsgHandler;
 }

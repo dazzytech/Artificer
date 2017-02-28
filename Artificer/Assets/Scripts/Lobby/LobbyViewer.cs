@@ -2,13 +2,13 @@ using UnityEngine;
 using System.Collections;
 using Steamworks;
 
-namespace Menu.Matchmaker.Lobby
+namespace Lobby
 {
     /// <summary>
-    /// Lobby_ viewer.
+    /// Lobby viewer.
     /// Builds info when lobby is selected
     /// </summary>
-    public class Lobby_Viewer : MonoBehaviour
+    public class LobbyViewer : MonoBehaviour
     {
         // List boxes
         [SerializeField]

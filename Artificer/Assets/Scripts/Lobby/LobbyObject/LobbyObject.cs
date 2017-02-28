@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using Steamworks;
 
-namespace Menu.Matchmaker.Lobby
+namespace Lobby
 {
     /// <summary>
     /// Encapsulated Lobby Object divided into three parts
@@ -13,13 +13,13 @@ namespace Menu.Matchmaker.Lobby
     /// Callback - PersonaStateChange, LobbyDataUpdate, LobbyChatUpdate
     /// Implimentation - Communicates with the Lobby Viewer to display the Lobby Object
     /// </summary>
-    public class Lobby_Object
+    public class LobbyObject
     {
         #region DATA MEMBERS
 
         private CSteamID m_LobbyID;
 
-        private Lobby_Viewer m_Viewer;
+        private LobbyViewer m_Viewer;
 
         // game options or object would be here
 
@@ -27,14 +27,13 @@ namespace Menu.Matchmaker.Lobby
 
         #region CONSTRUCTOR
 
-        public Lobby_Object(CSteamID lobbyID, Lobby_Viewer viewer)
+        public LobbyObject(CSteamID lobbyID, LobbyViewer viewer)
         {
             m_LobbyID = lobbyID;
 
             m_Viewer = viewer;
 
             // Initialize callbacks
-
             m_PersonaStateChange = Callback<PersonaStateChange_t>
                 .Create(OnPersonaStateChange);
 

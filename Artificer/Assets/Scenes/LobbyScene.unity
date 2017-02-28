@@ -117,6 +117,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1540227705}
+  - {fileID: 955731586}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -294,7 +295,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -166.5
+      value: -151.5
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_SizeDelta.x
@@ -302,7 +303,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 111
+      value: 101
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_AnchorMin.x
@@ -437,7 +438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
   m_MinWidth: -1
-  m_MinHeight: 40
+  m_MinHeight: 80
   m_PreferredWidth: -1
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
@@ -562,7 +563,7 @@ GameObject:
   - component: {fileID: 555416827}
   - component: {fileID: 555416826}
   m_Layer: 5
-  m_Name: Matchmaker_Interface
+  m_Name: UIPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -767,7 +768,7 @@ GameObject:
   - component: {fileID: 764681270}
   - component: {fileID: 764681269}
   m_Layer: 5
-  m_Name: _lobbyViewer
+  m_Name: LobbyUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -857,7 +858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.25172415, g: 0.10920386, b: 0.10920386, a: 0.416}
+  m_Color: {r: 0.2794118, g: 0.080125436, b: 0.080125436, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -923,7 +924,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22481518, guid: d706cdeba6af9de498b0ede640deb471, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22481518, guid: d706cdeba6af9de498b0ede640deb471, type: 2}
       propertyPath: m_SizeDelta.x
@@ -931,7 +932,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22481518, guid: d706cdeba6af9de498b0ede640deb471, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22481518, guid: d706cdeba6af9de498b0ede640deb471, type: 2}
       propertyPath: m_AnchorMin.x
@@ -939,7 +940,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22481518, guid: d706cdeba6af9de498b0ede640deb471, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22481518, guid: d706cdeba6af9de498b0ede640deb471, type: 2}
       propertyPath: m_AnchorMax.x
@@ -967,7 +968,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11457418, guid: d706cdeba6af9de498b0ede640deb471, type: 2}
       propertyPath: m_FontData.m_BestFit
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11457418, guid: d706cdeba6af9de498b0ede640deb471, type: 2}
       propertyPath: m_FontData.m_FontSize
@@ -1003,6 +1004,87 @@ MonoBehaviour:
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
+--- !u!1 &955731585
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 955731586}
+  - component: {fileID: 955731590}
+  - component: {fileID: 955731589}
+  - component: {fileID: 955731588}
+  - component: {fileID: 955731587}
+  m_Layer: 0
+  m_Name: Lobby
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &955731586
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 955731585}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 199558915}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &955731587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 955731585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74e1f668438f8e94aa47cfefa2fd0c74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &955731588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 955731585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56aeaecffcccb6f49a15bc7a8c2253e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &955731589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 955731585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2ef0625e586caf409890b1b237a0173, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LobbyViewer: {fileID: 764681270}
+  SearchBtn: {fileID: 0}
+  InviteBtn: {fileID: 0}
+  LeaveBtn: {fileID: 0}
+--- !u!114 &955731590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 955731585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f455367034acc745960f1fe4360b798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_att: {fileID: 955731589}
 --- !u!1 &1068790780
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,7 +1172,7 @@ GameObject:
   - component: {fileID: 1120550289}
   - component: {fileID: 1120550288}
   m_Layer: 0
-  m_Name: _eventSystem
+  m_Name: Event System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1481,7 +1563,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -277.5
+      value: -252.5
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_SizeDelta.x
@@ -1489,7 +1571,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 111
+      value: 101
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_AnchorMin.x
@@ -1658,7 +1740,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1615538476}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
@@ -1866,7 +1948,7 @@ GameObject:
   - component: {fileID: 1749250984}
   - component: {fileID: 1749250983}
   m_Layer: 0
-  m_Name: _mainCamera
+  m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2066,7 +2148,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -55.5
+      value: -50.5
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_SizeDelta.x
@@ -2074,7 +2156,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 111
+      value: 101
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_AnchorMin.x

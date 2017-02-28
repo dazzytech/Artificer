@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-namespace Menu
+namespace Lobby
 {
     public class LobbyCount_Prefab : MonoBehaviour 
     {

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System.Collections;
 using Steamworks;
 
-namespace Menu.Matchmaker.Lobby
+namespace Lobby
 {
     //Displays player info to the panel
     public class LobbyPlayer_Prefab : NetworkLobbyPlayer 

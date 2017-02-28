@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Data.Menu
+namespace Data.UI
 {
     /// <summary>
     /// Data container for server objects

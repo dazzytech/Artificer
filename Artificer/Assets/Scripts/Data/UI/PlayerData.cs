@@ -2,7 +2,7 @@
 using System.Collections;
 using Steamworks;
 
-namespace Data.Menu
+namespace Data.UI
 {
     /// <summary>
     /// Container object for a player reference 

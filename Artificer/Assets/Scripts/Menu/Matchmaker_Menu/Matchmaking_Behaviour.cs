@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections;
 using Steamworks;
-using Menu.Matchmaker.Lobby;
 
 namespace Menu.Matchmaker
 {
     public class Matchmaking_Behaviour : MonoBehaviour
     {
+        /*
         private Matchmaking_Attributes m_att;
         
         // CurrentStored State
@@ -79,7 +79,7 @@ namespace Menu.Matchmaker
             if (!m_att.OnlineState.Equals(CurrentState))
                 OnStateChanged(CurrentState);
         }*/
-
+        /*
         #endregion
 
         #region EVENT LISTENER INTERFACE
@@ -302,6 +302,6 @@ namespace Menu.Matchmaker
             }
         }
 
-        #endregion
+        #endregion*/
     }
 }

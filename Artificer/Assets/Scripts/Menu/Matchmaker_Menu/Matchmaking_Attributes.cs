@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using Steamworks;
-using Menu.Matchmaker.Lobby;
 
 namespace Menu.Matchmaker
 {
@@ -23,7 +22,7 @@ namespace Menu.Matchmaker
         public string dMsg;*/
 
         // Lobby Viewer
-        public Lobby_Viewer LobbyViewer;
+        //public Lobby_Viewer LobbyViewer;
 
         // UI For Lobby Controller
         public Button SearchBtn;
@@ -34,7 +33,7 @@ namespace Menu.Matchmaker
 
         // Steam references
         // Lobby the player is currently in
-        public Lobby_Object CurrentLobby;
+        //public Lobby_Object CurrentLobby;
 
         // List of lobbies for matckmaking
         public CSteamID[] LobbyList;
