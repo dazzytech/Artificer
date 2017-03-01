@@ -11,6 +11,10 @@ using Space.CameraUtils;
 using Space.UI;
 using Game;
 using Lobby;
+using Steamworks;
+using Networking;
+using UnityEngine.Networking.NetworkSystem;
+using Data.UI;
 
 [RequireComponent(typeof(SystemAttributes))]
 
@@ -120,6 +124,14 @@ public class SystemManager: NetworkManager
         }
     }
 
+    public static Data.UI.PlayerData Player
+    {
+        get
+        {
+            return m_singleton.m_base.Player;
+        }
+    }
+
     #endregion
 
     #region NETWORKMANAGER OVERRIDE
@@ -167,6 +179,12 @@ public class SystemManager: NetworkManager
             // the lobby
             GameMSG.Initialize();
             GameMSG.SceneChanged("lobby");
+
+            m_base.Lobby = GameObject.Find("Lobby")
+                .GetComponent<LobbyManager>();
+
+            // Change to server data?
+            Lobby.InitializeLobby("lan", m_base.Server);
         }
     }
 
@@ -199,6 +217,14 @@ public class SystemManager: NetworkManager
 
     #region CLIENT SIDE
 
+    public override void OnStartClient(NetworkClient client)
+    {
+        base.OnStartClient(client);
+
+        // listen for when server is assigned an ID
+        NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
+    }
+
     /// <summary>
     /// Called on each client when the server changes
     /// the server and assigns the space manager when 
@@ -219,28 +245,32 @@ public class SystemManager: NetworkManager
             if (m_singleton.m_base.Space == null)
                 Debug.Log("Error: System Manager - Client Scene Changed: " +
                     "SpaceManager not found in space scene.");
+            
         }
 
         // Else If we switched to lobby then assign our
         // lobby manager
         else if (networkSceneName == "LobbyScene")
         {
-            m_singleton.m_base.Lobby
-                = GameObject.Find("lobby").GetComponent<LobbyManager>();
-
             if (m_singleton.m_base.Lobby == null)
-                Debug.Log("Error: System Manager - Client Scene Changed: " +
-                    "LobbyManager not found in space scene.");
+            {
+                m_singleton.m_base.Lobby
+                    = GameObject.Find("Lobby").GetComponent<LobbyManager>();
+
+                if (m_singleton.m_base.Lobby == null)
+                    Debug.Log("Error: System Manager - Client Scene Changed: " +
+                        "LobbyManager not found in space scene.");
+            }
+
+            PlayerDataMsg playerMsg = new PlayerDataMsg();
+            playerMsg.Player = m_singleton.m_base.Player;
+            // Pass player data to game message
+            SystemManager.singleton.client.Send(
+                (short)MSGCHANNEL.ADDPLAYERDATA, playerMsg);
         }
     }
 
-    /*public override void OnStartClient(NetworkClient client)
-    {
-        Debug.Log("Start Client");
-        base.OnStartClient(client);
-    }
-
-    public override void OnClientNotReady(NetworkConnection conn)
+    /*public override void OnClientNotReady(NetworkConnection conn)
     {
         Debug.Log("Client Not Ready");
         base.OnClientNotReady(conn);
@@ -266,6 +296,19 @@ public class SystemManager: NetworkManager
             Destroy(gameObject);
 
         m_preload.PreloadAssets();
+
+        // Develop our player data
+        m_base.Player = new Data.UI.PlayerData();
+
+        // retreive steam name
+        string name = SteamFriends.GetPersonaName();
+
+        if (name == "")
+        {
+            name = "Non-Steam Player";
+        }
+
+        m_base.Player.PlayerName = name;
     }
 
     #endregion
@@ -321,23 +364,33 @@ public class SystemManager: NetworkManager
         if (m_singleton.isNetworkActive)
             return;
 
-        // Set the IP the Net Manager is going to use to host a game to OUR IP address and Port 7777
-        m_singleton.networkAddress = Network.player.ipAddress;
-        m_singleton.networkPort = 7777;
+        // Build the Server Data we will use
+        ServerData newServer = new ServerData();
+        newServer.ServerIP = Network.player.ipAddress;
+        newServer.ServerPort = 7777;
+        newServer.ServerVersion = m_singleton.m_base.Version;
+        newServer.ServerName = "Game:" + Random.Range(0, 10000);
+        newServer.Host = m_singleton.m_base.Player;
+
+        m_singleton.m_base.Server = newServer;
 
         // in future set text popup to enter name
         // If game name was set...
         //if (ServerName.text != "")
-            //... get the provided name
-            //_name = ServerName.text;
+        //... get the provided name
+        //_name = ServerName.text;
         //else
         //{
-            // ELSE set a game name for our user
-        string name = "Game:" + Random.Range(0, 10000);
+        // ELSE set a game name for our user
         //ServerName.text = _name;
         //}
+
         // This sets the data part of the OnReceivedBroadcast() event 
-        m_singleton.m_base.Discovery.broadcastData = name;
+        m_singleton.m_base.Discovery.broadcastData = newServer.ServerName;
+
+        // Set the IP the Net Manager is going to use to host a game to OUR IP address and Port 7777
+        m_singleton.networkAddress = newServer.ServerIP;
+        m_singleton.networkPort = newServer.ServerPort;
 
         // Startup the host
         m_singleton.TryHost();
@@ -359,6 +412,23 @@ public class SystemManager: NetworkManager
         else
             singleton.StopHost();
     }
+
+    #region SERVER MESSAGES
+
+    /// <summary>
+    /// Stores the ID assigned from the game controller
+    /// </summary>
+    /// <param name="netMsg"></param>
+    public void OnNewIDMessage(NetworkMessage netMsg)
+    {
+        // Retreive variables and display options
+        IntegerMessage im = netMsg.ReadMessage<IntegerMessage>();
+
+        // Store our id on the server
+        m_base.Player.PlayerID = im.value;
+    }
+
+    #endregion
 
     #endregion
 

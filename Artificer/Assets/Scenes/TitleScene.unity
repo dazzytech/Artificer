@@ -2184,6 +2184,7 @@ MonoBehaviour:
   GameMsg: {fileID: 0}
   GUIMsg: {fileID: 0}
   Space: {fileID: 0}
+  Lobby: {fileID: 0}
   Discovery: {fileID: 577028341}
   CamMsgHandler: {fileID: 0}
 --- !u!4 &174379682
@@ -22108,7 +22109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e945844216a8b94bb76c72b4ec2565e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LobbyViewer: {fileID: 118925656}
   SearchBtn: {fileID: 1720070949}
   InviteBtn: {fileID: 675392921}
   LeaveBtn: {fileID: 1070867658}

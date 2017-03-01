@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Steamworks;
 
 namespace Data.UI
 {
@@ -25,7 +26,7 @@ namespace Data.UI
         public string ServerIP;
 
         // Connection port
-        public string ServerPort;
+        public int ServerPort;
 
         public bool Visible;
 
@@ -37,6 +38,8 @@ namespace Data.UI
 
         // Game version host is running
         public string ServerVersion;
+
+        public CSteamID SteamID;
 
         #endregion
 

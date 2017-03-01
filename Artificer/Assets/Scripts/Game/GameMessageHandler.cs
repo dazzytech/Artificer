@@ -7,6 +7,7 @@ using Data.Space;
 using Space.Projectiles;
 using Space.Segment;
 using Networking;
+using Data.UI;
 
 namespace Game
 {
@@ -40,11 +41,12 @@ namespace Game
             NetworkServer.RegisterHandler((short)MSGCHANNEL.BUILDPROJECTILE, OnBuildProjectile);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.OBJECTHIT, OnObjectHit);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.INTEGRITYCHANGE, OnIntegrityChanged);
+            NetworkServer.RegisterHandler((short)MSGCHANNEL.ADDPLAYERDATA, AddLobbyPlayer);
 
             #endregion
 
             #region SPACE EVENTS
-            
+
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SHIPDESTROYED, OnShipDestroyed);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.STATIONDESTROYED, OnStationDestroyed);
 
@@ -104,6 +106,19 @@ namespace Game
             (NetworkConnection conn)
         {
             m_con.RemovePlayer(conn);
+        }
+
+        #endregion
+
+        #region SYSTEM MESSAGES PLAYER
+
+        [Server]
+        public void AddLobbyPlayer(NetworkMessage msg)
+        {
+            PlayerData newPlayer = msg.ReadMessage<PlayerDataMsg>()
+                .Player;
+
+            m_con.AddLobbyPlayer(newPlayer);
         }
 
         #endregion

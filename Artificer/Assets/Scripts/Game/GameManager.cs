@@ -13,6 +13,7 @@ using Space.Teams;
 using Space.Ship.Components.Listener;
 using Space.Projectiles;
 using Networking;
+using Data.UI;
 
 namespace Game
 {
@@ -151,6 +152,11 @@ namespace Game
                 info.mTeam = -1;
             }
 
+            // Assign our intial ID to the system
+            IntegerMessage iMsg = new IntegerMessage(info.ID);
+            NetworkServer.SendToClient(info.mConnection.connectionId,
+                (short)MSGCHANNEL.NEWID, iMsg);
+
             // If currently in play the initialize 
             if (_att.currentState == GameState.Play)
                 InitializePlayer(info);
@@ -173,6 +179,29 @@ namespace Game
             {
                 _att.PlayerInfoList.Remove(info);
             }
+        }
+
+        /// <summary>
+        /// client taken from client to server
+        /// sends data tp lobby
+        /// </summary>
+        /// <param name="Player"></param>
+        [Server]
+        public void AddLobbyPlayer(PlayerData Player)
+        {
+            // Get the connection info required for
+            // spawning with player authority
+            // Send message on server to lobby controller
+            SystemManager.Lobby.AddPlayerToLobby(Player);
+        }
+
+        /// <summary>
+        /// Delete the player item
+        /// </summary>
+        [Server]
+        public void RemoveLobbyPlayer()
+        {
+
         }
 
         #endregion
@@ -313,11 +342,6 @@ namespace Game
 
         private void InitializePlayer(PlayerConnectionInfo info)
         {
-            // Assign our intial ID to the system
-            IntegerMessage iMsg = new IntegerMessage(info.ID);
-            NetworkServer.SendToClient(info.mConnection.connectionId,
-                (short)MSGCHANNEL.NEWID, iMsg);
-
             // prompt player to pick team
             // Send this to single client via a message
             TeamPickerMessage msg = new TeamPickerMessage();

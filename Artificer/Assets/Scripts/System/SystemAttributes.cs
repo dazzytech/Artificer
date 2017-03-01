@@ -47,5 +47,9 @@ public class SystemAttributes:MonoBehaviour
     public LobbyManager Lobby;
     public SystemNetworkDiscovery Discovery;
     public CameraMessageHandler CamMsgHandler;
+
+    // UI Data information
+    public Data.UI.PlayerData Player;
+    public Data.UI.ServerData Server;
 }
 

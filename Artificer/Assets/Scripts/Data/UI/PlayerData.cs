@@ -10,7 +10,7 @@ namespace Data.UI
     /// In steam matchmaker this is built from 
     /// retriving info from SteamID
     /// </summary>
-    public class PlayerData
+    public struct PlayerData
     {
         #region PLAYER INFORMATION
 
@@ -18,7 +18,9 @@ namespace Data.UI
         public string PlayerName;
 
         // public avatar (Steam avatar)
-        public Texture2D PlayerAvatar;
+        //public Texture2D PlayerAvatar;
+
+        public int PlayerID;
 
         #endregion
 

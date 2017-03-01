@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Steamworks;
+using Data.UI;
 
 namespace Lobby
 {
@@ -17,7 +18,7 @@ namespace Lobby
     {
         #region DATA MEMBERS
 
-        private CSteamID m_LobbyID;
+        private ServerData m_serverData;
 
         private LobbyViewer m_Viewer;
 
@@ -27,9 +28,9 @@ namespace Lobby
 
         #region CONSTRUCTOR
 
-        public LobbyObject(CSteamID lobbyID, LobbyViewer viewer)
+        public LobbyObject(ServerData newServer, LobbyViewer viewer)//CSteamID lobbyID, LobbyViewer viewer)
         {
-            m_LobbyID = lobbyID;
+            m_serverData = newServer;
 
             m_Viewer = viewer;
 
@@ -44,7 +45,7 @@ namespace Lobby
                 .Create(OnLobbyChatUpdate);
 
             // Call function to refresh lobby viewer
-            m_Viewer.ViewLobby(m_LobbyID);
+            m_Viewer.ViewLobby(m_serverData);
         }
 
         #endregion
@@ -67,7 +68,7 @@ namespace Lobby
         // Listeners
         private void OnPersonaStateChange(PersonaStateChange_t pCallback)
         {
-            if(!SteamFriends.IsUserInSource((CSteamID)pCallback.m_ulSteamID, m_LobbyID))
+            /*if(!SteamFriends.IsUserInSource((CSteamID)pCallback.m_ulSteamID, m_LobbyID))
             {
                 return;
             }
@@ -75,13 +76,13 @@ namespace Lobby
             Debug.Log("Persona Update");
 
             // Call function to refresh lobby viewer
-            m_Viewer.ViewLobby(m_LobbyID);
+            m_Viewer.ViewLobby(m_LobbyID);*/
         }
 
         private void OnLobbyDataUpdate(LobbyDataUpdate_t pCallback)
         {
             // Make sure this callback is relevent to our lobby
-            if (m_LobbyID != (CSteamID)pCallback.m_ulSteamIDLobby)
+            /*if (m_LobbyID != (CSteamID)pCallback.m_ulSteamIDLobby)
                 return;
 
             Debug.Log("Data Update");
@@ -89,18 +90,18 @@ namespace Lobby
             // When lobby data is created it will be retreived
 
             // Call function to refresh the lobby viewer
-            m_Viewer.ViewLobby(m_LobbyID);
+            m_Viewer.ViewLobby(m_LobbyID);*/
         }
 
         private void OnLobbyChatUpdate(LobbyChatUpdate_t pCallback)
         {
-            if (m_LobbyID != (CSteamID)pCallback.m_ulSteamIDLobby)
+           /* if (m_LobbyID != (CSteamID)pCallback.m_ulSteamIDLobby)
                 return;
 
             Debug.Log("Chat Update");
 
             // call function to refresh lobby viewer
-            m_Viewer.ViewLobby(m_LobbyID);
+            m_Viewer.ViewLobby(m_LobbyID);*/
         }
 
         #endregion
@@ -109,7 +110,7 @@ namespace Lobby
 
         public CSteamID GetID
         {
-            get { return m_LobbyID; }
+            get { return m_serverData.SteamID; }
         }
 
         #endregion

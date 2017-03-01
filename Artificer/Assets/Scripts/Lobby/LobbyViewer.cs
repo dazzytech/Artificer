@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Steamworks;
+using Data.UI;
 
 namespace Lobby
 {
@@ -30,13 +31,13 @@ namespace Lobby
         [SerializeField]
         private GameObject GameSettingsPrefab;
 
-        CSteamID LobbyID;
+        private ServerData m_serverData;
 
         // refreshes the lobby view
-        public void ViewLobby(CSteamID pLobby)
+        public void ViewLobby(ServerData server)
         {
             // assign ID
-            LobbyID = pLobby;
+            m_serverData = server;
 
             // display players to the right
             ClearPlayers();
@@ -59,7 +60,7 @@ namespace Lobby
         private void ViewPlayers()
         {
             // store the player count in int
-            int playerCount = 
+            /*int playerCount = 
                 SteamMatchmaking.GetNumLobbyMembers(LobbyID);
 
             // store max amount
@@ -82,7 +83,7 @@ namespace Lobby
                 PlayerItem.transform.SetParent(PlayerViewerList);
                 LobbyPlayer_Prefab P_Prefab = PlayerItem.GetComponent<LobbyPlayer_Prefab>();
                 P_Prefab.SetPlayer(OtherPlayer, LobbyID);
-            }
+            }*/
         }
 
         #region SETTINGS
@@ -105,11 +106,11 @@ namespace Lobby
         private void ViewSettings()
         {
             // Check if we are the lobby owner
-            if (SteamMatchmaking.GetLobbyOwner(LobbyID)
+            /*if (SteamMatchmaking.GetLobbyOwner(LobbyID)
                 .Equals(SteamUser.GetSteamID()))
                 BuildOwnerSettings();
             else
-                BuildClientSettings();           
+                BuildClientSettings();   */        
         }
 
         /// <summary>
@@ -118,7 +119,7 @@ namespace Lobby
         private void BuildOwnerSettings()
         {
             // create variables to store information we want
-            string version;             // current game version
+            /*string version;             // current game version
 
             // version label
             version = SteamMatchmaking.GetLobbyData(LobbyID, "ver");
@@ -128,7 +129,7 @@ namespace Lobby
             SettingsItem.transform.SetParent(SettingsViewerList);
             LobbySettingsPrefab S_Prefab = SettingsItem.GetComponent<LobbySettingsPrefab>();
             // assign info
-            S_Prefab.BuildSettings("Version", version);
+            S_Prefab.BuildSettings("Version", version);*/
         }
 
         /// <summary>

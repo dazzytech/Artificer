@@ -295,7 +295,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -151.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_SizeDelta.x
@@ -303,7 +303,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 101
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_AnchorMin.x
@@ -389,6 +389,12 @@ RectTransform:
   m_PrefabParentObject: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb,
     type: 2}
   m_PrefabInternal: {fileID: 340501949}
+--- !u!114 &340501951 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11422038, guid: 3b672c4dcb29c154f861eea74e46bfbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 340501949}
+  m_Script: {fileID: 1392445389, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1 &347030979
 GameObject:
   m_ObjectHideFlags: 0
@@ -1070,9 +1076,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LobbyViewer: {fileID: 764681270}
-  SearchBtn: {fileID: 0}
-  InviteBtn: {fileID: 0}
-  LeaveBtn: {fileID: 0}
+  SearchBtn: {fileID: 340501951}
+  InviteBtn: {fileID: 1584178333}
+  LeaveBtn: {fileID: 1883983113}
+  LType: 0
 --- !u!114 &955731590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1563,7 +1570,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -252.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_SizeDelta.x
@@ -1571,7 +1578,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 101
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_AnchorMin.x
@@ -1657,6 +1664,12 @@ RectTransform:
   m_PrefabParentObject: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb,
     type: 2}
   m_PrefabInternal: {fileID: 1584178331}
+--- !u!114 &1584178333 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11422038, guid: 3b672c4dcb29c154f861eea74e46bfbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1584178331}
+  m_Script: {fileID: 1392445389, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1 &1615538476
 GameObject:
   m_ObjectHideFlags: 0
@@ -2148,7 +2161,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -50.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_SizeDelta.x
@@ -2156,7 +2169,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 101
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_AnchorMin.x
@@ -2238,6 +2251,12 @@ RectTransform:
   m_PrefabParentObject: {fileID: 22479244, guid: 3b672c4dcb29c154f861eea74e46bfbb,
     type: 2}
   m_PrefabInternal: {fileID: 1883983111}
+--- !u!114 &1883983113 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11422038, guid: 3b672c4dcb29c154f861eea74e46bfbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1883983111}
+  m_Script: {fileID: 1392445389, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1 &2140120936
 GameObject:
   m_ObjectHideFlags: 0

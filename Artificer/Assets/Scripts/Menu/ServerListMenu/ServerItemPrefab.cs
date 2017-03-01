@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 
 //Artificer
-using Data.Menu;
+using Data.UI;
 
 namespace Menu.Server
 {

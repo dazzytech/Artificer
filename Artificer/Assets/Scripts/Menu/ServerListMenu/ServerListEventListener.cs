@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Data.Menu;
+using Data.UI;
 
 namespace Menu.Server
 {
@@ -76,7 +76,7 @@ namespace Menu.Server
             ServerData server = new ServerData();
             server.ServerIP = serverIP;
             server.ServerName = serverName;
-            server.ServerPort = "7777";
+            server.ServerPort = 7777;
             server.Visible = false;
 
             // send

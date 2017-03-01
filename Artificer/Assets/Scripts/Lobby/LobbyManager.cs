@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using Steamworks;
+using Data.UI;
 
 namespace Lobby
 {
@@ -12,7 +13,7 @@ namespace Lobby
     /// and server messages e.g. display player in lobby
     /// 
     /// </summary>
-    public class LobbyManager : MonoBehaviour
+    public class LobbyManager : NetworkBehaviour
     {
         [SerializeField]
         private LobbyAttributes m_att;
@@ -29,8 +30,6 @@ namespace Lobby
 
         void Awake()
         {
-            // Add Attributes
-            //m_att = GetComponent<LobbyAttributes>();
         }
 
         void Start()
@@ -93,8 +92,9 @@ namespace Lobby
         #region PUBLIC INTERATION
 
         [Server]
-        public void InitializeLobby(string type)
+        public void InitializeLobby(string type, ServerData server)
         {
+            // 
             switch(type)
             {
                 case "lan":
@@ -105,9 +105,25 @@ namespace Lobby
                     break;
             }
 
-            // create empty Lobby (just act as fully LAN)
+            // create new Lobby (just act as fully LAN)
+            m_att.CurrentLobby = new LobbyObject(server, m_att.LobbyViewer);
 
         }
+
+        #region GAME MANAGER CALLS
+
+        /// <summary>
+        /// called from event listener when
+        /// game manager calls to add player to lobby list
+        /// </summary>
+        /// <param name="Player"></param>
+        [Server]
+        public void AddPlayerToLobby(PlayerData Player)
+        {
+            // Spawn icon with player authority
+        }
+
+        #endregion
 
         #endregion
 

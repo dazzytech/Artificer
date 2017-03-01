@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 //Artificer
-using Data.Menu;
+using Data.UI;
 
 namespace Menu.Server
 {
@@ -20,8 +20,6 @@ namespace Menu.Server
         #region SERVER LIST
 
         [Header("Server List Attributes")]
-
-        public PlayerData PlayerSelf;
 
         public List<ServerItemPrefab> ServerList;
 

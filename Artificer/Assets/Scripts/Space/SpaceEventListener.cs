@@ -41,8 +41,7 @@ namespace Space
             m_con = GetComponent<SpaceManager>();
             m_util = GetComponent<SpaceUtilities>();
 
-            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.TEAMPICKER, OnTeamPickerMessage);
-            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
+            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.TEAMPICKER, OnTeamPickerMessage);         
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.ASSIGNTEAM, OnDefineTeam);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSOBJECTHIT, OnProcessHitMsg);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSSHIPHIT, OnProcessHitMsgShip);
@@ -330,19 +329,6 @@ namespace Space
             // Retreive variables and display options
             TeamPickerMessage tpm = netMsg.ReadMessage<TeamPickerMessage>();
             SystemManager.GUI.SetTeamOptions(tpm.teamOne, tpm.teamTwo);
-        }
-
-        /// <summary>
-        /// Stores the ID assigned from the game controller
-        /// </summary>
-        /// <param name="netMsg"></param>
-        public void OnNewIDMessage(NetworkMessage netMsg)
-        {
-            // Retreive variables and display options
-            IntegerMessage im = netMsg.ReadMessage<IntegerMessage>();
-
-            // Store our id on the server
-            m_att.playerID = im.value;
         }
 
         public void OnDefineTeam(NetworkMessage netMsg)

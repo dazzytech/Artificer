@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Steamworks;
 
 // Artificer
-using Data.Menu;
+using Data.UI;
 
 namespace Menu.Server
 {
@@ -47,10 +47,6 @@ namespace Menu.Server
             m_att.SelectedServer = null;
 
             m_att.ServerList = new List<ServerItemPrefab>();
-
-            // Define player information from either
-            // steam or savedinfo?
-            m_att.PlayerSelf = new PlayerData();
         }
 
         #endregion
@@ -133,16 +129,9 @@ namespace Menu.Server
         /// </summary>
         private void DisplayPlayerSelf()
         {
-            // retreive steam name
-            string name = SteamFriends.GetPersonaName();
-
-            if(name == "")
-            {
-                name = "Non-Steam Player";
-            }
-            
             // display name
-            m_att.AccountUserName.text = name;
+            m_att.AccountUserName.text = 
+                SystemManager.Player.PlayerName;
         }
 
         #endregion
