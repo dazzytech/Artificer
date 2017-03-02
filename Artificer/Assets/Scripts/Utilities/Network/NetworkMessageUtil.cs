@@ -27,7 +27,6 @@ namespace Networking
         ASSIGNTEAM,
         INTEGRITYCHANGE,
         DISPLAYINTEGRITYCHANGE,
-        ADDPLAYERDATA,
     };
 
     #endregion
@@ -147,11 +146,6 @@ namespace Networking
         public float Amount;
         public Vector3 Location;
         public int PlayerID;
-    }
-
-    public class PlayerDataMsg: MessageBase
-    {
-        public PlayerData Player;
     }
 
     #endregion

@@ -40,7 +40,10 @@ namespace Lobby
 
         public override void OnStartAuthority()
         {
-            CmdDefinePlayer(SystemManager.Player);
+            if (hasAuthority)
+            {
+                CmdDefinePlayer(SystemManager.Player);
+            }
         }
 
         #endregion

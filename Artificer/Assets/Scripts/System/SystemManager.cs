@@ -261,12 +261,6 @@ public class SystemManager: NetworkManager
                     Debug.Log("Error: System Manager - Client Scene Changed: " +
                         "LobbyManager not found in space scene.");
             }
-
-            PlayerDataMsg playerMsg = new PlayerDataMsg();
-            playerMsg.Player = m_singleton.m_base.Player;
-            // Pass player data to game message
-            SystemManager.singleton.client.Send(
-                (short)MSGCHANNEL.ADDPLAYERDATA, playerMsg);
         }
     }
 

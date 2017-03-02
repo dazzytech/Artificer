@@ -160,6 +160,8 @@ namespace Game
             // If currently in play the initialize 
             if (_att.currentState == GameState.Play)
                 InitializePlayer(info);
+            else if (_att.currentState == GameState.Lobby)
+                InitializeLobbyPlayer(info);
         }
 
         /// <summary>
@@ -181,32 +183,6 @@ namespace Game
                     SystemManager.Lobby.
                         DeletePlayerFromLobby(info.ID);
             }
-        }
-
-        /// <summary>
-        /// client taken from client to server
-        /// sends data tp lobby
-        /// </summary>
-        /// <param name="Player"></param>
-        [Server]
-        public void AddLobbyPlayer(PlayerData Player)
-        {
-            // Test If this player is already joined to the match
-            PlayerConnectionInfo info = _att.PlayerInfoList
-                .Item(Player.PlayerID);
-            // Get the connection info required for
-            // spawning with player authority
-            // Send message on server to lobby controller
-            SystemManager.Lobby.AddPlayerToLobby(Player, info.mConnection);
-        }
-
-        /// <summary>
-        /// Delete the player item
-        /// </summary>
-        [Server]
-        public void RemoveLobbyPlayer(NetworkConnection conn)
-        {
-
         }
 
         #endregion
@@ -354,6 +330,20 @@ namespace Game
             msg.teamTwo = _att.TeamB.ID;
             NetworkServer.SendToClient(info.mConnection.connectionId,
                 (short)MSGCHANNEL.TEAMPICKER, msg);
+        }
+
+        /// <summary>
+        /// client taken from client to server
+        /// sends data tp lobby
+        /// </summary>
+        /// <param name="Player"></param>
+        [Server]
+        public void InitializeLobbyPlayer(PlayerConnectionInfo info)
+        {
+            // Get the connection info required for
+            // spawning with player authority
+            // Send message on server to lobby controller
+            SystemManager.Lobby.AddPlayerToLobby(info.mConnection);
         }
 
         #endregion

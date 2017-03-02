@@ -41,7 +41,6 @@ namespace Game
             NetworkServer.RegisterHandler((short)MSGCHANNEL.BUILDPROJECTILE, OnBuildProjectile);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.OBJECTHIT, OnObjectHit);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.INTEGRITYCHANGE, OnIntegrityChanged);
-            NetworkServer.RegisterHandler((short)MSGCHANNEL.ADDPLAYERDATA, AddLobbyPlayer);
 
             #endregion
 
@@ -111,15 +110,6 @@ namespace Game
         #endregion
 
         #region SYSTEM MESSAGES PLAYER
-
-        [Server]
-        public void AddLobbyPlayer(NetworkMessage msg)
-        {
-            PlayerData newPlayer = msg.ReadMessage<PlayerDataMsg>()
-                .Player;
-
-            m_con.AddLobbyPlayer(newPlayer);
-        }
 
         #endregion
 
