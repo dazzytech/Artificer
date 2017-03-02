@@ -189,10 +189,13 @@ namespace Game
         [Server]
         public void AddLobbyPlayer(PlayerData Player)
         {
+            // Test If this player is already joined to the match
+            PlayerConnectionInfo info = _att.PlayerInfoList
+                .Item(Player.PlayerID);
             // Get the connection info required for
             // spawning with player authority
             // Send message on server to lobby controller
-            SystemManager.Lobby.AddPlayerToLobby(Player);
+            SystemManager.Lobby.AddPlayerToLobby(Player, info.mConnection);
         }
 
         /// <summary>

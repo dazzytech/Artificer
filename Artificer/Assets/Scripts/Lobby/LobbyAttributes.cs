@@ -10,8 +10,8 @@ namespace Lobby
 
     public class LobbyAttributes : NetworkBehaviour
     {
-        // Lobby Viewer
-        public LobbyViewer LobbyViewer;
+        [Header("HUD Elements")]
+        public Transform PlayerList;
 
         // UI For Lobby Controller
         public Button SearchBtn;
@@ -20,10 +20,18 @@ namespace Lobby
 
         public Button LeaveBtn;
 
+        [Header("Prefabs")]
+        public GameObject PlayerPrefab;
+
+        // Lobby Viewer
+        public LobbyViewer LobbyViewer;
+
         // Sync attributes assigned by server
 
         // Lobby the player is currently in
         public LobbyObject CurrentLobby;
+
+        public List<PlayerLobbyItem> PlayerItems;
 
         // What type of lobby are we in
         [SyncVar]

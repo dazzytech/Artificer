@@ -118,9 +118,26 @@ namespace Lobby
         /// </summary>
         /// <param name="Player"></param>
         [Server]
-        public void AddPlayerToLobby(PlayerData Player)
+        public void AddPlayerToLobby
+            (PlayerData Player, NetworkConnection conn)
         {
             // Spawn icon with player authority
+            // Create gameobject for player lobby
+
+            GameObject PlayerLobbyGO = Instantiate(m_att.PlayerPrefab);
+            PlayerLobbyGO.transform.SetParent(m_att.PlayerList);
+
+            // Spawn with player auth
+            NetworkServer.SpawnWithClientAuthority
+                (PlayerLobbyGO, conn);
+
+            // Retrive PlayerItem
+            PlayerLobbyItem PlayerItem =
+                PlayerLobbyGO.GetComponent<PlayerLobbyItem>();
+            PlayerItem.DefinePlayer(Player);
+
+            // Keep reference
+            m_att.PlayerItems.Add(PlayerItem);
         }
 
         #endregion
