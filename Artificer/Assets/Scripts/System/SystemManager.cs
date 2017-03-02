@@ -199,7 +199,7 @@ public class SystemManager: NetworkManager
         GameMSG.RemovePlayer(conn);
     }
 
-    /*
+    
     /// <summary>
     /// Called when the server is unsuccessful in creation
     /// displays a popup alerting the user
@@ -211,7 +211,7 @@ public class SystemManager: NetworkManager
         Debug.Log(errorCode.ToString());
 
         base.OnServerError(conn, errorCode);
-    }*/
+    }
 
     #endregion
 

@@ -36,27 +36,25 @@ namespace Lobby
 
         #endregion
 
-        #region MONOBEHAVIOUR
+        #region NETWORKBEHAVIOUR
 
-        void Awake()
+        public override void OnStartAuthority()
         {
-            if(m_playerData.PlayerName != null)
-            {
-                // update HUD 
-                m_nameText.text = m_playerData.PlayerName;
-
-                transform.SetParent(ParentRect);
-            }
+            CmdDefinePlayer(SystemManager.Player);
         }
 
         #endregion
 
-        #region PUBLIC INTERACTION
+        #region CMD & RPC
 
-        [Server]
-        public void DefinePlayer(PlayerData newPlayer)
+        /// <summary>
+        /// Pull player data from 
+        /// system manager and update all clients
+        /// </summary>
+        [Command]
+        public void CmdDefinePlayer(PlayerData myPlayer)
         {
-            m_playerData = newPlayer;
+            m_playerData = myPlayer;
 
             RpcSetDisplay();
         }

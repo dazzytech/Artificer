@@ -126,7 +126,6 @@ namespace Lobby
         {
             // Spawn icon with player authority
             // Create gameobject for player lobby
-
             GameObject PlayerLobbyGO = Instantiate(m_att.PlayerPrefab);
 
             // Spawn with player auth
@@ -136,10 +135,35 @@ namespace Lobby
             // Retrive PlayerItem
             PlayerLobbyItem PlayerItem =
                 PlayerLobbyGO.GetComponent<PlayerLobbyItem>();
-            PlayerItem.DefinePlayer(Player);
+            //PlayerItem.DefinePlayer(Player);
 
             // Keep reference
             m_att.PlayerItems.Add(PlayerItem);
+        }
+
+        /// <summary>
+        /// iterates through each lobby player
+        /// and deletes the indicated player
+        /// </summary>
+        /// <param name="PlayerID"></param>
+        [Server]
+        public void DeletePlayerFromLobby(int PlayerID)
+        {
+            for(int i = 0; i < m_att.PlayerItems.Count; i++)
+            {
+                if(m_att.PlayerItems[i].ID == PlayerID)
+                {
+                    // the one to delete
+                    NetworkServer.UnSpawn
+                        (m_att.PlayerItems[i].gameObject);
+                    Destroy(m_att.PlayerItems[i].gameObject);
+                    m_att.PlayerItems.RemoveAt(i);
+                    return;
+                }
+            }
+
+            // Shouldn't reach here
+            Debug.Log("Error: Lobby Manager - Delete Player: Player not found.");
         }
 
         #endregion

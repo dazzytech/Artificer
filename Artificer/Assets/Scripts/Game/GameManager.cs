@@ -174,10 +174,12 @@ namespace Game
             PlayerConnectionInfo info = _att.PlayerInfoList
                 .FirstOrDefault(o => o.mConnection == conn);
 
-            // if not match then create new info
             if (info != null)
             {
                 _att.PlayerInfoList.Remove(info);
+                if(SystemManager.Lobby != null)
+                    SystemManager.Lobby.
+                        DeletePlayerFromLobby(info.ID);
             }
         }
 
@@ -202,7 +204,7 @@ namespace Game
         /// Delete the player item
         /// </summary>
         [Server]
-        public void RemoveLobbyPlayer()
+        public void RemoveLobbyPlayer(NetworkConnection conn)
         {
 
         }
