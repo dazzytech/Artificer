@@ -2188,6 +2188,9 @@ MonoBehaviour:
   Lobby: {fileID: 0}
   Discovery: {fileID: 577028341}
   CamMsgHandler: {fileID: 0}
+  Player:
+    PlayerName: 
+    PlayerID: 0
 --- !u!4 &174379682
 Transform:
   m_ObjectHideFlags: 0

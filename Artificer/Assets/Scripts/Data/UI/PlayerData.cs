@@ -10,6 +10,7 @@ namespace Data.UI
     /// In steam matchmaker this is built from 
     /// retriving info from SteamID
     /// </summary>
+    [System.Serializable]
     public struct PlayerData
     {
         #region PLAYER INFORMATION

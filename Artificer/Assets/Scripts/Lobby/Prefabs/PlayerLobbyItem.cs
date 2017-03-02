@@ -36,8 +36,24 @@ namespace Lobby
 
         #endregion
 
+        #region MONOBEHAVIOUR
+
+        void Awake()
+        {
+            if(m_playerData.PlayerName != null)
+            {
+                // update HUD 
+                m_nameText.text = m_playerData.PlayerName;
+
+                transform.SetParent(ParentRect);
+            }
+        }
+
+        #endregion
+
         #region PUBLIC INTERACTION
 
+        [Server]
         public void DefinePlayer(PlayerData newPlayer)
         {
             m_playerData = newPlayer;
