@@ -34,6 +34,9 @@ namespace Lobby
 
         void Start()
         {
+            // Define parent of player lobby items
+            PlayerLobbyItem.ParentRect = m_att.PlayerList;
+
             if (SteamManager.Initialized)
             {
                 //CreateHiddenLobby();
@@ -125,7 +128,6 @@ namespace Lobby
             // Create gameobject for player lobby
 
             GameObject PlayerLobbyGO = Instantiate(m_att.PlayerPrefab);
-            PlayerLobbyGO.transform.SetParent(m_att.PlayerList);
 
             // Spawn with player auth
             NetworkServer.SpawnWithClientAuthority

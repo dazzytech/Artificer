@@ -15,6 +15,8 @@ namespace Lobby
     {
         #region ATTRIBUTES
 
+        public static Transform ParentRect;
+
         [Header("HUD Elements")]
 
         [SerializeField]
@@ -50,6 +52,8 @@ namespace Lobby
         {
             // update HUD 
             m_nameText.text = m_playerData.PlayerName;
+
+            transform.SetParent(ParentRect);
         }
     }
 }
