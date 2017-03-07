@@ -19,7 +19,7 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
-- Completed reload, in  0.100 seconds
+- Completed reload, in  0.041 seconds
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
 <RI> Initializing input.
@@ -30,14 +30,18 @@ The referenced script on this Behaviour (Game Object 'ServerList') is missing!
  
 (Filename:  Line: 1754)
 
-UnloadTime: 1.506591 ms
+UnloadTime: 1.232412 ms
 DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
  
 (Filename:  Line: 447)
 
+[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 3.617810 ms
+UnloadTime: 3.373041 ms
 DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
  
 (Filename:  Line: 447)
@@ -48,25 +52,53 @@ DontDestroyOnLoad only work for root GameObjects or components on root GameObjec
 
 
 Unloading 601 unused Assets to reduce memory usage. Loaded Objects now: 1379.
-Total: 1.761086 ms (FindLiveObjects: 0.139404 ms CreateObjectMapping: 0.052566 ms MarkObjects: 1.132143 ms  DeleteObjects: 0.414509 ms)
+Total: 2.008633 ms (FindLiveObjects: 0.145425 ms CreateObjectMapping: 0.050482 ms MarkObjects: 1.299799 ms  DeleteObjects: 0.504126 ms)
 
 The referenced script on this Behaviour (Game Object 'ShipViewer') is missing!
  
 (Filename:  Line: 1754)
 
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 2.478256 ms
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 3548.
-Total: 3.365862 ms (FindLiveObjects: 0.261210 ms CreateObjectMapping: 0.068081 ms MarkObjects: 3.003919 ms  DeleteObjects: 0.032419 ms)
-
-Large state update of 1739 bytes for netId:2748 from script:Ship(Clone) (Space.Ship.ShipInitializer)
+UnloadTime: 2.633176 ms
+Exception in OnStartServer:Directory 'C:\Users\renderman\Documents\Artificer\Artificer\EXE\Assets\Resources\Textures\PlanetTextures' not found.   at System.IO.Directory.GetFileSystemEntries (System.String path, System.String searchPattern, FileAttributes mask, FileAttributes attrs) [0x00000] in <filename unknown>:0 
+  at System.IO.Directory.GetFiles (System.String path, System.String searchPattern) [0x00000] in <filename unknown>:0 
+  at Space.Segment.SegmentDataBuilder.BuildPlanet (Vector2 planetPos) [0x00000] in <filename unknown>:0 
+  at Space.Segment.SegmentDataBuilder.BuildNewBackground () [0x00000] in <filename unknown>:0 
+  at Space.Segment.SegmentManager.InitializeSegment () [0x00000] in <filename unknown>:0 
+  at Space.Segment.SegmentManager.OnStartServer () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.OnStartServer (Boolean allowNonZeroNetId) [0x00000] in <filename unknown>:0 
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Large state update of 1739 bytes for netId:2748 from script:PlayerShip (Space.Ship.ShipInitializer)
+
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 3830.
+Total: 6.159053 ms (FindLiveObjects: 1.109681 ms CreateObjectMapping: 0.162330 ms MarkObjects: 4.850917 ms  DeleteObjects: 0.035198 ms)
+
+Large state update of 1739 bytes for netId:3875 from script:Ship(Clone) (Space.Ship.ShipInitializer)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Large state update of 1739 bytes for netId:3875 from script:PlayerShip (Space.Ship.ShipInitializer)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Log: connection {1} has been disconnected by timeout; address {::ffff:192.168.0.13:56533}
+Empty player list given to NetworkServer.Destroy(), nothing to do.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ServerDisconnected due to error: Timeout
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Log: connection {1} has been disconnected by timeout; address {::ffff:192.168.0.13:57889}
+Empty player list given to NetworkServer.Destroy(), nothing to do.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ServerDisconnected due to error: Timeout
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 2564 -> priority: 1 
+  Thread -> id: 2c28 -> priority: 1 

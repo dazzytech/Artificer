@@ -262,6 +262,8 @@ public class SystemManager : NetworkManager
                         "LobbyManager not found in space scene.");
             }
         }
+
+        ClientScene.AddPlayer(0);
     }
 
     /*public override void OnClientNotReady(NetworkConnection conn)
