@@ -68,7 +68,7 @@ namespace Menu.Server
 
             // Build gameobject
             GameObject ServerItemGO = Instantiate(m_att.ServerPrefab);
-            ServerItemGO.transform.SetParent(m_att.ServerListTransform);
+            ServerItemGO.transform.SetParent(m_att.ServerListTransform, false);
 
             // retrieve server item prefab
             ServerItemPrefab ServerItem = 

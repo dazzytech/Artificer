@@ -4,19 +4,32 @@ using UnityEngine;
 
 namespace Lobby
 {
-    public class LobbyEventListener : MonoBehaviour
+    /// <summary>
+    /// Listens for events called within the lobby viewer
+    /// </summary>
+    [RequireComponent(typeof(LobbyManager))]
+    public class LobbyEventListener :
+        MonoBehaviour
     {
+        #region ATTRIBUTES
 
-        // Use this for initialization
-        void Start()
+        // Reference to controller obj
+        [SerializeField]
+        private LobbyManager m_con;
+
+        #endregion
+
+        #region EVENT LISTENER
+
+        /// <summary>
+        /// Leave lobby and go back to title
+        /// only act with LAN atm
+        /// /// </summary>
+        public void LeaveLobby()
         {
-
+            SystemManager.Disconnect();
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+        #endregion
     }
 }

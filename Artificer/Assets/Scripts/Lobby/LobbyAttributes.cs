@@ -20,6 +20,8 @@ namespace Lobby
 
         public Button LeaveBtn;
 
+        public Button StartBtn;
+
         [Header("Prefabs")]
         public GameObject PlayerPrefab;
 
@@ -29,7 +31,7 @@ namespace Lobby
         // Sync attributes assigned by server
 
         // Lobby the player is currently in
-        public LobbyObject CurrentLobby;
+        public LobbyObject SteamLobby;
 
         public List<PlayerLobbyItem> PlayerItems;
 

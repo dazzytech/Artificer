@@ -388,12 +388,19 @@ public class SystemManager: NetworkManager
         m_singleton.TryClient();
     }
 
+    /// <summary>
+    /// For now only leave the lobby we have
+    /// </summary>
     public static void Disconnect()
     {
-        if (singleton.client != null)
-            singleton.StopClient();
-        else
-            singleton.StopHost();
+        m_singleton.LeaveLobby();
+
+        // Clear Server Data for us
+        m_singleton.m_base.Server = null;
+        //if (singleton.client != null)
+        //    singleton.StopClient();
+        //else
+        //    singleton.StopHost();
     }
 
     #region SERVER MESSAGES

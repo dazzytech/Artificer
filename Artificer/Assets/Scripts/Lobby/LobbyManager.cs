@@ -35,7 +35,7 @@ namespace Lobby
             }
         }
 
-        void LateUpdate()
+       /* void LateUpdate()
         {
             if (m_att.CurrentLobby != null)
             {
@@ -65,7 +65,7 @@ namespace Lobby
                 m_att.InviteBtn.gameObject.SetActive(false);
                 m_att.LeaveBtn.gameObject.SetActive(false);
             }
-        }
+        }*/
 
         #endregion
 
@@ -74,20 +74,17 @@ namespace Lobby
         [Server]
         public void InitializeLobby(string type, ServerData server)
         {
-            // 
+            // Build server based on parameters
             switch(type)
             {
                 case "lan":
                     m_att.LType = LobbyType.LAN;
+                    BuildLANServer(server);
                     break;
                 case "steam":
                     m_att.LType = LobbyType.Steam;
                     break;
             }
-
-            // create new Lobby (just act as fully LAN)
-            m_att.CurrentLobby = new LobbyObject(server, m_att.LobbyViewer);
-
         }
 
         #region GAME MANAGER CALLS
@@ -140,6 +137,20 @@ namespace Lobby
         }
 
         #endregion
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        private void BuildLANServer(ServerData Server)
+        {
+            // Build control panel based
+            // on LAN lobby. 
+            m_att.StartBtn.gameObject.SetActive(true);
+            m_att.SearchBtn.gameObject.SetActive(false);
+            m_att.InviteBtn.gameObject.SetActive(false);
+            m_att.LeaveBtn.gameObject.SetActive(true);
+        }
 
         #endregion
     }
