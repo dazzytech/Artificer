@@ -25,15 +25,17 @@ namespace Lobby
         [Header("Prefabs")]
         public GameObject PlayerPrefab;
 
+        [Header("Custom Attributes")]
+        public int MinPlayers;
+
         // Lobby Viewer
         public LobbyViewer LobbyViewer;
 
-        // Sync attributes assigned by server
-
-        // Lobby the player is currently in
         public LobbyObject SteamLobby;
 
         public List<PlayerLobbyItem> PlayerItems;
+
+        // Sync attributes assigned by server
 
         // What type of lobby are we in
         [SyncVar]

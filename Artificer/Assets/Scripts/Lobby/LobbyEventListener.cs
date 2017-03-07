@@ -30,6 +30,11 @@ namespace Lobby
             SystemManager.Disconnect();
         }
 
+        public void StartMatch()
+        {
+
+        }
+
         #endregion
     }
 }

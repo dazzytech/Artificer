@@ -18,14 +18,14 @@ using Data.UI;
 
 [RequireComponent(typeof(SystemAttributes))]
 
-public class SystemManager: NetworkManager 
+public class SystemManager : NetworkManager
 {
     #region ATTRIBUTES
 
     [Header("References")]
 
     [SerializeField]
-	private SystemAttributes m_base;
+    private SystemAttributes m_base;
     [SerializeField]
     private AssetPreloader m_preload;
 
@@ -90,7 +90,7 @@ public class SystemManager: NetworkManager
             if (m_singleton == null)
                 return null;
             else if (m_singleton.m_base.Space == null)
-                return null;   
+                return null;
             else
                 return m_singleton.m_base.Space;
         }
@@ -199,7 +199,7 @@ public class SystemManager: NetworkManager
         GameMSG.RemovePlayer(conn);
     }
 
-    
+
     /// <summary>
     /// Called when the server is unsuccessful in creation
     /// displays a popup alerting the user
@@ -245,7 +245,7 @@ public class SystemManager: NetworkManager
             if (m_singleton.m_base.Space == null)
                 Debug.Log("Error: System Manager - Client Scene Changed: " +
                     "SpaceManager not found in space scene.");
-            
+
         }
 
         // Else If we switched to lobby then assign our
@@ -405,6 +405,15 @@ public class SystemManager: NetworkManager
 
         // Clear Server Data for us
         m_singleton.m_base.Server = null;
+    }
+
+    /// <summary>
+    /// Switches from Lobby scene to player scene
+    /// but still broadcasts for client connections
+    /// </summary>
+    public static void StartMatch()
+    {
+        m_singleton.ServerChangeScene("SpaceScene");
     }
 
     #region SERVER MESSAGES

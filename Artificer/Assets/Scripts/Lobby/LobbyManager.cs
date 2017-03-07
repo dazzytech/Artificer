@@ -20,19 +20,17 @@ namespace Lobby
 
         #region MONO BEHAVIOUR
 
-        void Awake()
-        {
-        }
-
         void Start()
         {
             // Define parent of player lobby items
             PlayerLobbyItem.ParentRect = m_att.PlayerList;
 
-            if (SteamManager.Initialized)
+            /*if (SteamManager.Initialized)
             {
                 //CreateHiddenLobby();
-            }
+            }*/
+
+            JoinLANServer();
         }
 
        /* void LateUpdate()
@@ -109,6 +107,9 @@ namespace Lobby
             // Keep reference
             m_att.PlayerItems.Add(PlayerLobbyGO.
                 GetComponent<PlayerLobbyItem>());
+
+            if (m_att.PlayerItems.Count >= m_att.MinPlayers)
+                m_att.StartBtn.interactable = true;
         }
 
         /// <summary>
@@ -128,6 +129,10 @@ namespace Lobby
                         (m_att.PlayerItems[i].gameObject);
                     Destroy(m_att.PlayerItems[i].gameObject);
                     m_att.PlayerItems.RemoveAt(i);
+
+                    if (m_att.PlayerItems.Count < m_att.MinPlayers)
+                        m_att.StartBtn.interactable = false;
+
                     return;
                 }
             }
@@ -146,7 +151,19 @@ namespace Lobby
         {
             // Build control panel based
             // on LAN lobby. 
+            // Create Start Match but disable it for now
             m_att.StartBtn.gameObject.SetActive(true);
+            m_att.StartBtn.interactable = false;
+                
+
+            m_att.SearchBtn.gameObject.SetActive(false);
+            m_att.InviteBtn.gameObject.SetActive(false);
+            m_att.LeaveBtn.gameObject.SetActive(true);
+        }
+
+        private void JoinLANServer()
+        {
+            m_att.StartBtn.gameObject.SetActive(false);
             m_att.SearchBtn.gameObject.SetActive(false);
             m_att.InviteBtn.gameObject.SetActive(false);
             m_att.LeaveBtn.gameObject.SetActive(true);
