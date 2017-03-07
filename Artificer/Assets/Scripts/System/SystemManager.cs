@@ -294,11 +294,19 @@ public class SystemManager: NetworkManager
         // Develop our player data
         m_base.Player = new Data.UI.PlayerData();
 
-        // retreive steam name
-        string name = SteamFriends.GetPersonaName();
+        string name;
 
-        if (name == null)
+        if (SteamManager.Initialized)
         {
+            // Base our player information on Steam Account
+
+            // retreive steam name
+            name = SteamFriends.GetPersonaName();
+
+        }
+        else
+        {
+            // Not connected to Steam
             name = "Non-Steam Player";
         }
 
