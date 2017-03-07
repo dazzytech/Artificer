@@ -112,7 +112,10 @@ namespace Game
                     teamsCompleted = true;
             }
 
-            // Team objects should already be assigned
+            // Retieve Team Items
+            _att.TeamA = GameObject.Find("Team_A").GetComponent<TeamController>();
+            _att.TeamB = GameObject.Find("Team_B").GetComponent<TeamController>();
+
             _att.TeamA.Initialize(teamAcon);
             _att.TeamB.Initialize(teamBcon);
 

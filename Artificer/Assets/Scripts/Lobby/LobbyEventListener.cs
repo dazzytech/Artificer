@@ -32,7 +32,7 @@ namespace Lobby
 
         public void StartMatch()
         {
-
+            SystemManager.StartMatch();
         }
 
         #endregion

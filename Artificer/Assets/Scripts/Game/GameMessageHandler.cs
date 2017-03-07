@@ -33,6 +33,8 @@ namespace Game
 
         void Awake()
         {
+            DontDestroyOnLoad(this);
+
             #region SPACE MESSAGES
 
             NetworkServer.RegisterHandler((short)MSGCHANNEL.TEAMSELECTED, OnAssignToTeam);
