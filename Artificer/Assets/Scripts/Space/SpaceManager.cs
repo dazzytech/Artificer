@@ -187,10 +187,7 @@ namespace Space
         {
             get
             {
-                if (_att == null)
-                    return -1;
-
-                return _att.playerID;
+                return SystemManager.Player.PlayerID;
             }
         }
 
