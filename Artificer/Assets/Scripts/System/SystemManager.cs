@@ -297,7 +297,7 @@ public class SystemManager: NetworkManager
         // retreive steam name
         string name = SteamFriends.GetPersonaName();
 
-        if (name == "")
+        if (name == null)
         {
             name = "Non-Steam Player";
         }
@@ -397,10 +397,6 @@ public class SystemManager: NetworkManager
 
         // Clear Server Data for us
         m_singleton.m_base.Server = null;
-        //if (singleton.client != null)
-        //    singleton.StopClient();
-        //else
-        //    singleton.StopHost();
     }
 
     #region SERVER MESSAGES
@@ -446,21 +442,15 @@ public class SystemManager: NetworkManager
         SystemManager.m_singleton.StartClient();
     }
 
-    // Leaves the lobby we are connected to (host and client)
-    // This method is called by the user clicking Leave Lobby from within the lobby slot panel
+    // Leaves the lobby or match we are connected to (host and client)
+    // This method is called by the user clicking Leave Lobby or Game
     private void LeaveLobby()
     {
         networkSceneName = "";
-        m_base.Discovery.StopBroadcast();
-        SystemManager.m_singleton.StopClient();
-        SystemManager.m_singleton.StopHost();
-    }
 
-    // Leaves the game we are in (host and client)
-    // This method is called by the user clicking Exit Game from within the in-game UI
-    private void LeaveGame()
-    {
-        networkSceneName = "";
+        if(m_base.Discovery.running)
+            m_base.Discovery.StopBroadcast();
+
         SystemManager.m_singleton.StopClient();
         SystemManager.m_singleton.StopHost();
     }
