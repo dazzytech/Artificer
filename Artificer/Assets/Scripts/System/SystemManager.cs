@@ -352,7 +352,7 @@ public class SystemManager: NetworkManager
     /// <summary>
     /// For now just creates a host on local host
     /// </summary>
-    public static void CreateServer()
+    public static void CreateServer(string serverName)
     {
         // check if the network is already active
         if (m_singleton.isNetworkActive)
@@ -363,21 +363,10 @@ public class SystemManager: NetworkManager
         newServer.ServerIP = Network.player.ipAddress;
         newServer.ServerPort = 7777;
         newServer.ServerVersion = m_singleton.m_base.Version;
-        newServer.ServerName = "Game:" + Random.Range(0, 10000);
+        newServer.ServerName = serverName;
         newServer.Host = m_singleton.m_base.Player;
 
         m_singleton.m_base.Server = newServer;
-
-        // in future set text popup to enter name
-        // If game name was set...
-        //if (ServerName.text != "")
-        //... get the provided name
-        //_name = ServerName.text;
-        //else
-        //{
-        // ELSE set a game name for our user
-        //ServerName.text = _name;
-        //}
 
         // This sets the data part of the OnReceivedBroadcast() event 
         m_singleton.m_base.Discovery.broadcastData = newServer.ServerName;

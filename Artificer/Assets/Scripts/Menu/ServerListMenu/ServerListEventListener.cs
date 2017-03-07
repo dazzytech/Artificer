@@ -37,13 +37,21 @@ namespace Menu.Server
         #region EVENT LISTENER
 
         /// <summary>
-        /// Triggered when the user selected the 
-        /// button to create a server
-        /// send host cmd to SystemManager
+        /// Creates a name input popup and then 
+        /// triggers the server creation process
         /// </summary>
         public void CreateServer()
         {
-            SystemManager.CreateServer();
+            string defaultServer = 
+                ("Game_" + Random.Range(0, 10000))
+                        .ToString();
+
+            Popup_Dialog.ShowPopup("Name New Server",
+                "Define the new server's name.", 
+                DialogType.INPUTFIELD,
+                defaultServer);
+
+            Popup_Dialog.OnDialogEvent += GetServerName;
         }
 
         /// <summary>
@@ -81,6 +89,26 @@ namespace Menu.Server
 
             // send
             m_con.BuildServerItem(server);
+        }
+
+        // Listen for a 
+        public void GetServerName(DialogResult result, 
+            object returnValue)
+        {
+            if (result == DialogResult.OK)
+            {
+                string serverName;
+
+                if (returnValue == null)
+                    serverName = ("Game_" + Random.Range(0, 10000))
+                        .ToString();
+                else
+                    serverName = returnValue.ToString();
+
+                SystemManager.CreateServer(serverName);
+            }
+
+            Popup_Dialog.OnDialogEvent -= GetServerName;
         }
 
         #endregion

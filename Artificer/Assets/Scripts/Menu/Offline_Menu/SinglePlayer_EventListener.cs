@@ -232,7 +232,7 @@ namespace Menu
             Popup_Dialog.OnDialogEvent += ConfirmDeletion;
         }
 
-        public void ConfirmDeletion(DialogResult result)
+        public void ConfirmDeletion(DialogResult result, object ignore)
         {
             if (result == DialogResult.YES)
             {

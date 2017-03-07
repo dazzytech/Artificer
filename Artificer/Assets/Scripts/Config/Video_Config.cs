@@ -99,7 +99,7 @@ public class Video_Config : MonoBehaviour
         Menu.Popup_Dialog.OnDialogEvent += ConfirmResolution;
 	}
 
-    public void ConfirmResolution(DialogResult result)
+    public void ConfirmResolution(DialogResult result, object ignore)
     {
         if (result == DialogResult.YES)
         {
