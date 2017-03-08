@@ -110,6 +110,9 @@ namespace Lobby
 
             if (m_att.PlayerItems.Count >= m_att.MinPlayers)
                 m_att.StartBtn.interactable = true;
+
+            // Update counter on all clients
+            UpdateCount(m_att.PlayerItems.Count);
         }
 
         /// <summary>
@@ -132,6 +135,9 @@ namespace Lobby
 
                     if (m_att.PlayerItems.Count < m_att.MinPlayers)
                         m_att.StartBtn.interactable = false;
+
+                    // update player counter
+                    UpdateCount(m_att.PlayerItems.Count);
 
                     return;
                 }
@@ -167,6 +173,14 @@ namespace Lobby
             m_att.SearchBtn.gameObject.SetActive(false);
             m_att.InviteBtn.gameObject.SetActive(false);
             m_att.LeaveBtn.gameObject.SetActive(true);
+        }
+
+        [ClientCallbackAttribute]
+        private void UpdateCount(int current)
+        {
+            m_att.PlayerCount.text = string.Format
+                ("Player Count: {0} | Required to Start: {1}",
+                current, m_att.MinPlayers);
         }
 
         #endregion

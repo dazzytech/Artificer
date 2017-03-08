@@ -22,6 +22,8 @@ namespace Lobby
 
         public Button StartBtn;
 
+        public Text PlayerCount;
+
         [Header("Prefabs")]
         public GameObject PlayerPrefab;
 
