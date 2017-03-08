@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Networking.NetworkSystem;
+using Networking;
 using Steamworks;
 using Data.UI;
 
@@ -24,6 +26,7 @@ namespace Lobby
         {
             // Define parent of player lobby items
             PlayerLobbyItem.ParentRect = m_att.PlayerList;
+            PlayerLobbyItem.Message = m_att.Message;
 
             /*if (SteamManager.Initialized)
             {
@@ -85,6 +88,13 @@ namespace Lobby
             }
         }
 
+        public void UpdateCount(int current)
+        {
+            m_att.PlayerCountText.text = string.Format
+                ("Player Count: {0} | Required to Start: {1}",
+                current, m_att.MinPlayers);
+        }
+
         #region GAME MANAGER CALLS
 
         /// <summary>
@@ -112,7 +122,8 @@ namespace Lobby
                 m_att.StartBtn.interactable = true;
 
             // Update counter on all clients
-            UpdateCount(m_att.PlayerItems.Count);
+            NetworkServer.SendToAll((short)MSGCHANNEL.LOBBYPLAYERJOINED, 
+                new IntegerMessage(m_att.PlayerItems.Count));
         }
 
         /// <summary>
@@ -137,7 +148,8 @@ namespace Lobby
                         m_att.StartBtn.interactable = false;
 
                     // update player counter
-                    UpdateCount(m_att.PlayerItems.Count);
+                    NetworkServer.SendToAll((short)MSGCHANNEL.LOBBYPLAYERLEFT,
+                        new IntegerMessage(m_att.PlayerItems.Count));
 
                     return;
                 }
@@ -173,14 +185,6 @@ namespace Lobby
             m_att.SearchBtn.gameObject.SetActive(false);
             m_att.InviteBtn.gameObject.SetActive(false);
             m_att.LeaveBtn.gameObject.SetActive(true);
-        }
-
-        [ClientCallbackAttribute]
-        private void UpdateCount(int current)
-        {
-            m_att.PlayerCount.text = string.Format
-                ("Player Count: {0} | Required to Start: {1}",
-                current, m_att.MinPlayers);
         }
 
         #endregion

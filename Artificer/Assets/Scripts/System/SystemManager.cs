@@ -90,7 +90,12 @@ public class SystemManager : NetworkManager
             if (m_singleton == null)
                 return null;
             else if (m_singleton.m_base.Space == null)
-                return null;
+                if (GameObject.Find("space") == null)
+                    return null;
+                else
+                    return (m_singleton.m_base.Space = 
+                            GameObject.Find("space")
+                            .GetComponent<SpaceManager>());
             else
                 return m_singleton.m_base.Space;
         }
@@ -107,7 +112,12 @@ public class SystemManager : NetworkManager
             if (m_singleton == null)
                 return null;
             else if (m_singleton.m_base.Lobby == null)
-                return null;
+                if (GameObject.Find("Lobby") == null)
+                    return null;
+                else
+                    return (m_singleton.m_base.Lobby =
+                            GameObject.Find("Lobby")
+                            .GetComponent<LobbyManager>());
             else
                 return m_singleton.m_base.Lobby;
         }
@@ -235,16 +245,20 @@ public class SystemManager : NetworkManager
     {
         base.OnClientSceneChanged(conn);
 
+        ClientScene.AddPlayer(0);
+
         // If we switched to space then assign our
         // space manager
         if (networkSceneName == "SpaceScene")
         {
-            m_singleton.m_base.Space
-                = GameObject.Find("space").GetComponent<SpaceManager>();
+            GameObject space = GameObject.Find("space");
 
-            if (m_singleton.m_base.Space == null)
+            if (space == null)
                 Debug.Log("Error: System Manager - Client Scene Changed: " +
                     "SpaceManager not found in space scene.");
+            else
+                m_singleton.m_base.Space = space
+                    .GetComponent<SpaceManager>();
 
         }
 
@@ -254,16 +268,17 @@ public class SystemManager : NetworkManager
         {
             if (m_singleton.m_base.Lobby == null)
             {
-                m_singleton.m_base.Lobby
-                    = GameObject.Find("Lobby").GetComponent<LobbyManager>();
+                GameObject lobby = GameObject.Find("Lobby");
 
-                if (m_singleton.m_base.Lobby == null)
+                if (lobby == null)
                     Debug.Log("Error: System Manager - Client Scene Changed: " +
                         "LobbyManager not found in space scene.");
+                else
+                    m_singleton.m_base.Lobby
+                        = GameObject.Find("Lobby").GetComponent<LobbyManager>();                
             }
         }
 
-        ClientScene.AddPlayer(0);
     }
 
     /*public override void OnClientNotReady(NetworkConnection conn)

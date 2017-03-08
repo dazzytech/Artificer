@@ -27,6 +27,8 @@ namespace Networking
         ASSIGNTEAM,
         INTEGRITYCHANGE,
         DISPLAYINTEGRITYCHANGE,
+        LOBBYPLAYERJOINED,
+        LOBBYPLAYERLEFT,
     };
 
     #endregion
@@ -146,6 +148,16 @@ namespace Networking
         public float Amount;
         public Vector3 Location;
         public int PlayerID;
+    }
+
+    /// <summary>
+    /// Passes the player count at the time 
+    /// of the change as well as the ID of the player
+    /// </summary>
+    public class LobbyPlayerMsg: MessageBase
+    {
+        public int PlayerCount;
+        public string PlayerName;
     }
 
     #endregion

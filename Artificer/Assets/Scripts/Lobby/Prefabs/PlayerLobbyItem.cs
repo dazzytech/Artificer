@@ -17,6 +17,8 @@ namespace Lobby
 
         public static Transform ParentRect;
 
+        public static Space.UI.MessageHUD Message;
+
         [Header("HUD Elements")]
 
         [SerializeField]
@@ -34,7 +36,18 @@ namespace Lobby
             get { return m_playerData.PlayerID; }
         }
 
+        public string Name
+        {
+            get { return m_playerData.PlayerName; }
+        }
+
         #endregion
+
+        private void OnDestroy()
+        {
+            Message.DisplayMessege(new Space.UI.MsgParam("bold",
+                        Name + " has left the Lobby"));
+        }
 
         #region NETWORKBEHAVIOUR
 
@@ -71,6 +84,8 @@ namespace Lobby
             m_nameText.text = m_playerData.PlayerName;
 
             transform.SetParent(ParentRect);
+
+            Message.DisplayMessege(new Space.UI.MsgParam("bold", m_playerData.PlayerName + " has entered the Lobby"));
         }
     }
 }

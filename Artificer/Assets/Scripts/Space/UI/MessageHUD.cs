@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -26,7 +27,6 @@ namespace Space.UI
 
         private static int messegeCount = 0;
         private static int messegeMax = 20;
-
         
         public Text PromptText;
 

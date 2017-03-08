@@ -22,7 +22,9 @@ namespace Lobby
 
         public Button StartBtn;
 
-        public Text PlayerCount;
+        public Text PlayerCountText;
+
+        public Space.UI.MessageHUD Message;
 
         [Header("Prefabs")]
         public GameObject PlayerPrefab;
