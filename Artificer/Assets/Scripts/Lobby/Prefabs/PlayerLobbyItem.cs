@@ -27,6 +27,9 @@ namespace Lobby
         [SyncVar]
         private PlayerData m_playerData;
 
+        [SyncVar]
+        private int m_spawned;
+
         #endregion
 
         #region ACCESSOR
@@ -53,13 +56,35 @@ namespace Lobby
 
         public override void OnStartAuthority()
         {
-            if (hasAuthority)
-            {
-                CmdDefinePlayer(SystemManager.Player);
-            }
+            CmdDefinePlayer(SystemManager.Player);
         }
 
         #endregion
+
+        #region MONO BEHAVIOUR
+
+        private void Start()
+        {
+            if (m_spawned == 1)
+                SetOtherDisplay();
+        }
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        /// <summary>
+        /// Build display on our client
+        /// because player had already spawned
+        /// </summary>
+        private void SetOtherDisplay()
+        {
+            // update visual text
+            m_nameText.text = m_playerData.PlayerName;
+
+            // Place within lobby player list
+            transform.SetParent(ParentRect);
+        }
 
         #region CMD & RPC
 
@@ -70,22 +95,38 @@ namespace Lobby
         [Command]
         public void CmdDefinePlayer(PlayerData myPlayer)
         {
+            // assign info
             m_playerData = myPlayer;
 
-            RpcSetDisplay();
+            m_spawned = 1;
+
+            // display on clients
+            RpcSetDisplay(myPlayer);
         }
 
         #endregion
 
+        /// <summary>
+        /// Display information for
+        /// player on all clients
+        /// </summary>
+        /// <param name="myPlayer">passed in param because m_playerData
+        /// Won't be assigned yet.</param>
         [ClientRpc]
-        private void RpcSetDisplay()
+        private void RpcSetDisplay(PlayerData myPlayer)
         {
-            // update HUD 
-            m_nameText.text = m_playerData.PlayerName;
+            // update visual text
+            m_nameText.text = myPlayer.PlayerName;
 
+            // Place within lobby player list
             transform.SetParent(ParentRect);
 
-            Message.DisplayMessege(new Space.UI.MsgParam("bold", m_playerData.PlayerName + " has entered the Lobby"));
+            // If we are here than we have just spawned
+            // so add to message list
+            Message.DisplayMessege(new Space.UI.MsgParam
+                ("bold", myPlayer.PlayerName + " has entered the Lobby"));
         }
+
+        #endregion
     }
 }
