@@ -390,6 +390,7 @@ public class SystemManager : NetworkManager
         newServer.ServerVersion = m_singleton.m_base.Version;
         newServer.ServerName = serverName;
         newServer.Host = m_singleton.m_base.Player;
+        m_singleton.m_base.Player.IsHost = true;
 
         m_singleton.m_base.Server = newServer;
 

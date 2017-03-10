@@ -23,6 +23,8 @@ namespace Data.UI
 
         public int PlayerID;
 
+        public bool IsHost;
+
         #endregion
 
         #region PLAYER STATISTICS

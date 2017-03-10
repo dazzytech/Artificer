@@ -28,7 +28,24 @@ namespace Lobby
         private PlayerData m_playerData;
 
         [SyncVar]
-        private int m_spawned;
+        private bool m_spawned;
+
+        [SyncVar]
+        private bool m_host;
+
+        [Header("Colours")]
+
+        // Colour for other players
+        [SerializeField]
+        private Color m_remoteColour;
+
+        // Colour for local players
+        [SerializeField]
+        private Color m_localColour;
+
+        // Colour if hosting game
+        [SerializeField]
+        private Color m_hostColour;
 
         #endregion
 
@@ -65,7 +82,7 @@ namespace Lobby
 
         private void Start()
         {
-            if (m_spawned == 1)
+            if (m_spawned)
                 SetOtherDisplay();
         }
 
@@ -84,6 +101,11 @@ namespace Lobby
 
             // Place within lobby player list
             transform.SetParent(ParentRect);
+
+            if (m_host)
+                GetComponent<Image>().color = m_hostColour;
+            else
+                GetComponent<Image>().color = m_remoteColour;
         }
 
         #region CMD & RPC
@@ -98,7 +120,9 @@ namespace Lobby
             // assign info
             m_playerData = myPlayer;
 
-            m_spawned = 1;
+            m_spawned = true;
+
+            m_host = myPlayer.IsHost;
 
             // display on clients
             RpcSetDisplay(myPlayer);
@@ -120,6 +144,16 @@ namespace Lobby
 
             // Place within lobby player list
             transform.SetParent(ParentRect);
+
+            if (myPlayer.IsHost)
+                GetComponent<Image>().color = m_hostColour;
+            else
+            {
+                if (hasAuthority)
+                    GetComponent<Image>().color = m_localColour;
+                else
+                    GetComponent<Image>().color = m_remoteColour;
+            }
 
             // If we are here than we have just spawned
             // so add to message list
