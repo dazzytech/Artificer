@@ -6,9 +6,10 @@ using Steamworks;
 namespace Data.UI
 {
     /// <summary>
-    /// Data container for server objects
-    /// These are stored in a list within a server 
-    /// list or stored singularly by a Lobby object
+    /// Data container for information regarding a server
+    /// when a steam lobby is successfully joined then
+    /// the information for the server would be copied into
+    /// here
     /// Contains:
     ///     -   Server Name
     ///     -   Population Count
@@ -28,28 +29,16 @@ namespace Data.UI
         // Connection port
         public int ServerPort;
 
-        public bool Visible;
-
-        // Currently how many players in server
-        public int ServerPopulation;
-
-        // Maximum players allowed - Considered server setting not game
-        public int ServerMaxPopulation;
-
         // Game version host is running
         public string ServerVersion;
-
-        public CSteamID SteamID;
 
         #endregion
 
         #region PLAYER INFORMATION
 
         // All connected players
+        // may not be needed
         public List<PlayerData> PlayerList;
-
-        // hosting player (can edit game)
-        public PlayerData Host;
 
         #endregion
 

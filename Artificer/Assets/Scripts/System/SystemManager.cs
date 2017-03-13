@@ -10,11 +10,12 @@ using Space;
 using Space.CameraUtils;
 using Space.UI;
 using Game;
-using Lobby;
+using Server;
 using Steamworks;
 using Networking;
 using UnityEngine.Networking.NetworkSystem;
 using Data.UI;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(SystemAttributes))]
 
@@ -105,21 +106,21 @@ public class SystemManager : NetworkManager
     /// Returns the lobby manager
     /// when in the lobby scene
     /// </summary>
-    public static LobbyManager Lobby
+    public static ServerManager Server
     {
         get
         {
             if (m_singleton == null)
                 return null;
-            else if (m_singleton.m_base.Lobby == null)
-                if (GameObject.Find("Lobby") == null)
+            else if (m_singleton.m_base.Server == null)
+                if (GameObject.Find("ServerViewer") == null)
                     return null;
                 else
-                    return (m_singleton.m_base.Lobby =
-                            GameObject.Find("Lobby")
-                            .GetComponent<LobbyManager>());
+                    return (m_singleton.m_base.Server =
+                            GameObject.Find("ServerViewer")
+                            .GetComponent<ServerManager>());
             else
-                return m_singleton.m_base.Lobby;
+                return m_singleton.m_base.Server;
         }
     }
 
@@ -190,11 +191,11 @@ public class SystemManager : NetworkManager
             GameMSG.Initialize();
             GameMSG.SceneChanged("lobby");
 
-            m_base.Lobby = GameObject.Find("Lobby")
-                .GetComponent<LobbyManager>();
+            m_base.Server = GameObject.Find("ServerViewer")
+                .GetComponent<ServerManager>();
 
             // Change to server data?
-            Lobby.InitializeLobby("lan", m_base.Server);
+            Server.InitializeLobby(m_base.ServerInfo);
         }
     }
 
@@ -264,18 +265,18 @@ public class SystemManager : NetworkManager
 
         // Else If we switched to lobby then assign our
         // lobby manager
-        else if (networkSceneName == "LobbyScene")
+        else if (networkSceneName == "ServerScene")
         {
-            if (m_singleton.m_base.Lobby == null)
+            if (m_singleton.m_base.Server == null)
             {
-                GameObject lobby = GameObject.Find("Lobby");
+                GameObject lobby = GameObject.Find("ServeViewer");
 
                 if (lobby == null)
                     Debug.Log("Error: System Manager - Client Scene Changed: " +
                         "LobbyManager not found in space scene.");
                 else
-                    m_singleton.m_base.Lobby
-                        = GameObject.Find("Lobby").GetComponent<LobbyManager>();                
+                    m_singleton.m_base.Server
+                        = GameObject.Find("ServeViewer").GetComponent<ServerManager>();                
             }
         }
 
@@ -299,15 +300,8 @@ public class SystemManager : NetworkManager
 
     #region MONO BEHAVIOUR
 
-    void Start()
+    private void OnEnable()
     {
-        if (m_singleton == null)
-            m_singleton = this;
-        else
-            Destroy(gameObject);
-
-        m_preload.PreloadAssets();
-
         // Develop our player data
         m_base.Player = new Data.UI.PlayerData();
 
@@ -319,7 +313,6 @@ public class SystemManager : NetworkManager
 
             // retreive steam name
             name = SteamFriends.GetPersonaName();
-
         }
         else
         {
@@ -328,6 +321,18 @@ public class SystemManager : NetworkManager
         }
 
         m_base.Player.PlayerName = name;
+    }
+
+    void Start()
+    {
+        if (m_singleton == null)
+            m_singleton = this;
+        else
+            Destroy(gameObject);
+
+        m_preload.PreloadAssets();
+
+        
     }
 
     #endregion
@@ -374,10 +379,24 @@ public class SystemManager : NetworkManager
 
     #endregion
 
+    public void EnterSteam()
+    {
+        // Build the Server Data we will use 
+        // and will pass to other servers for 
+        ServerData newServer = new ServerData();
+        newServer.ServerIP = Network.player.ipAddress;
+        newServer.ServerPort = 7777;
+        newServer.ServerVersion = m_singleton.m_base.Version;
+
+        m_singleton.m_base.ServerInfo = newServer;
+
+    }
+
     /// <summary>
     /// For now just creates a host on local host
     /// </summary>
-    public static void CreateServer(string serverName)
+    public static void CreateServer
+        (string serverName)
     {
         // check if the network is already active
         if (m_singleton.isNetworkActive)
@@ -389,10 +408,10 @@ public class SystemManager : NetworkManager
         newServer.ServerPort = 7777;
         newServer.ServerVersion = m_singleton.m_base.Version;
         newServer.ServerName = serverName;
-        newServer.Host = m_singleton.m_base.Player;
+
         m_singleton.m_base.Player.IsHost = true;
 
-        m_singleton.m_base.Server = newServer;
+        m_singleton.m_base.ServerInfo = newServer;
 
         // This sets the data part of the OnReceivedBroadcast() event 
         m_singleton.m_base.Discovery.broadcastData = newServer.ServerName;
@@ -422,7 +441,7 @@ public class SystemManager : NetworkManager
         m_singleton.LeaveLobby();
 
         // Clear Server Data for us
-        m_singleton.m_base.Server = null;
+        m_singleton.m_base.ServerInfo = null;
     }
 
     /// <summary>
@@ -454,6 +473,26 @@ public class SystemManager : NetworkManager
     #endregion
 
     #region PRIVATE UTILITIES
+    /*
+    /// <summary>
+    /// Called when attempting to join SteamMatchmaker
+    /// because scene doesn't auto change offline
+    /// </summary>
+    /// <param name="previousScene"></param>
+    /// <param name="newScene"></param>
+    void OfflineSceneChanged
+        (Scene previousScene, Scene newScene)
+    {
+        // Stop listening for this event
+        SceneManager.activeSceneChanged
+            += OfflineSceneChanged;
+
+        // Begin matchmaking process
+        m_base.Lobby = GameObject.Find("Lobby")
+                .GetComponent<Manager>();
+        
+        Lobby.InitilizeSteamLobby();
+    }*/
 
     #region HOST/CLIENT CONTROLS
 

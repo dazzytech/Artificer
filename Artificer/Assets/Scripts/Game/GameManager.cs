@@ -182,9 +182,9 @@ namespace Game
             if (info != null)
             {
                 _att.PlayerInfoList.Remove(info);
-                if(SystemManager.Lobby != null)
-                    SystemManager.Lobby.
-                        DeletePlayerFromLobby(info.ID);
+                if(SystemManager.Server != null)
+                    SystemManager.Server.
+                        DeletePlayerFromServer(info.ID);
             }
         }
 
@@ -346,7 +346,7 @@ namespace Game
             // Get the connection info required for
             // spawning with player authority
             // Send message on server to lobby controller
-            SystemManager.Lobby.AddPlayerToLobby(info.mConnection);
+            SystemManager.Server.AddPlayerToLobby(info.mConnection);
         }
 
         #endregion

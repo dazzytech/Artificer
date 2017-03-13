@@ -57,6 +57,9 @@ namespace Menu
                 case MenuState.None:
                     // set any active windows off
                     break;
+                case MenuState.Play:
+                    _attributes.PlayTab.SetActive(true);
+                    break;
                 case MenuState.Video:
                     // set video tab as active
                         _attributes.VideoTab.SetActive(true);
@@ -69,9 +72,6 @@ namespace Menu
                     break;
                 case MenuState.Credits:
                     _attributes.CreditsTab.SetActive(true);
-                    break;
-                case MenuState.Matchmaker:
-                        _attributes.MatchmakerTab.SetActive(true);
                     break;
                 case MenuState.Servers:
                     _attributes.ServerTab.SetActive(true);
@@ -94,6 +94,10 @@ namespace Menu
         /// </summary>
         private void CloseAllTabs()
         {
+            if (_attributes.PlayTab.activeSelf)
+            {
+                _attributes.PlayTab.SetActive(false);
+            }
             if (_attributes.VideoTab.activeSelf)
             {
                 _attributes.VideoTab.SetActive(false);
@@ -109,10 +113,6 @@ namespace Menu
             if (_attributes.CreditsTab.activeSelf)
             {
                 _attributes.CreditsTab.SetActive(false);
-            }
-            if (_attributes.MatchmakerTab.activeSelf)
-            {
-                _attributes.MatchmakerTab.SetActive(false);
             }
             if (_attributes.ServerTab.activeSelf)
             {

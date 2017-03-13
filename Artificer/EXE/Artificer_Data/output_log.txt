@@ -19,7 +19,7 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
-- Completed reload, in  0.438 seconds
+- Completed reload, in  0.357 seconds
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
 <RI> Initializing input.
@@ -34,106 +34,51 @@ The referenced script on this Behaviour (Game Object 'ServerList') is missing!
  
 (Filename:  Line: 1754)
 
-UnloadTime: 1.751360 ms
-DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
- 
-(Filename:  Line: 447)
-
-[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
+UnloadTime: 1.482044 ms
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
-Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 3.944786 ms
-DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
- 
-(Filename:  Line: 447)
-
-DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
- 
-(Filename:  Line: 447)
-
-
-Unloading 601 unused Assets to reduce memory usage. Loaded Objects now: 1399.
-Total: 2.691300 ms (FindLiveObjects: 0.150983 ms CreateObjectMapping: 0.065765 ms MarkObjects: 1.929900 ms  DeleteObjects: 0.428635 ms)
-
-Initialize engine version: 5.5.1f1 (88d00a7498cd)
-GfxDevice: creating device client; threaded=1
-Direct3D:
-    Version:  Direct3D 11.0 [level 11.1]
-    Renderer: AMD Radeon (TM) R9 200 Series (ID=0x6811)
-    Vendor:   ATI
-    VRAM:     2029 MB
-    Driver:   21.19.137.514
-Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
-- Completed reload, in  0.159 seconds
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
-<RI> Initializing input.
-<RI> Input initialized.
-desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
-<RI> Initialized touch support.
-The referenced script on this Behaviour (Game Object 'ChatWindow') is missing!
- 
-(Filename:  Line: 1754)
-
-The referenced script on this Behaviour (Game Object 'ServerList') is missing!
- 
-(Filename:  Line: 1754)
-
-UnloadTime: 1.751128 ms
-DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
- 
-(Filename:  Line: 447)
-
-[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.
+Creating lobby
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
-Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 22.773933 ms
-Error: System Manager - Client Scene Changed: LobbyManager not found in space scene.
+joined
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
+Building Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Unloading 601 unused Assets to reduce memory usage. Loaded Objects now: 1388.
-Total: 2.055874 ms (FindLiveObjects: 0.167887 ms CreateObjectMapping: 0.059281 ms MarkObjects: 1.314156 ms  DeleteObjects: 0.506442 ms)
+Data Update
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Building Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Data Update
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Building Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Data Update
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Building Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Data Update
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Building Player
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 515c -> priority: 1 
-Log: connection {1} has been disconnected by timeout; address {::ffff:192.168.0.17:7777}
-ClientDisconnected due to error: Timeout
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-The referenced script on this Behaviour (Game Object 'ChatWindow') is missing!
- 
-(Filename:  Line: 1754)
-
-The referenced script on this Behaviour (Game Object 'ServerList') is missing!
- 
-(Filename:  Line: 1754)
-
-Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.736622 ms
-
-Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 3039.
-Total: 2.788096 ms (FindLiveObjects: 0.215359 ms CreateObjectMapping: 0.065765 ms MarkObjects: 2.492150 ms  DeleteObjects: 0.014125 ms)
-
-Setting up 1 worker threads for Enlighten.
-  Thread -> id: 13c8 -> priority: 1 
+  Thread -> id: 3d7c -> priority: 1 

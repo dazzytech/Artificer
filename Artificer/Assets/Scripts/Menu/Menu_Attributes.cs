@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 namespace Menu
 {
-    public enum MenuState{Video, Audio, Controls, Servers, Matchmaker, Credits, Popup, None};
+    public enum MenuState{Play, Video, Audio, Controls, Servers, Credits, Popup, None};
 
     public class Menu_Attributes : MonoBehaviour
     {
@@ -20,13 +21,11 @@ namespace Menu
         public GameObject ControlTab;
         public GameObject CreditsTab;
         public GameObject ServerTab;
-        public GameObject MatchmakerTab;
+        public GameObject PlayTab;
         public GameObject PopupWindow;
         public GameObject TabPanel;
         public GameObject BasePanel;
 
-    	/*
-         * Popup attributes
-         */
+        public Text VersionText;
     }
 }

@@ -85,7 +85,6 @@ namespace Menu.Server
             server.ServerIP = serverIP;
             server.ServerName = serverName;
             server.ServerPort = 7777;
-            server.Visible = false;
 
             // send
             m_con.BuildServerItem(server);

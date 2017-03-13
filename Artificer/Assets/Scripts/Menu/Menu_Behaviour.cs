@@ -1,5 +1,8 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+
+using Steamworks;
 
 namespace Menu
 {
@@ -33,8 +36,22 @@ namespace Menu
             // music
             SoundController.ClearPlayList();
             SoundController.PlayMusic(0);
-    	}
-    	
+
+            // Version string
+            string artificerVersion = "Artificer version: " 
+                + SystemManager.Version + " | ";
+
+            string steamInfo;
+            if (SteamManager.Initialized)
+                steamInfo = "Steam connected: " +
+                    SystemManager.Player.PlayerName;
+            else
+                steamInfo = "Steam not connected";
+
+            _attributes.VersionText.text = 
+                artificerVersion + steamInfo;
+        }
+
         void Update()
         {
             if (!_attributes.MenuState.Equals(CurrentState))

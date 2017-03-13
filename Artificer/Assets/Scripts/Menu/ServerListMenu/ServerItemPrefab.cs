@@ -103,9 +103,9 @@ namespace Menu.Server
 
             m_serverVersion.text = m_serverData.ServerVersion;
 
-            m_playerCount.text = string.Format("{0}/{1}",
-                m_serverData.ServerPopulation, 
-                m_serverData.ServerMaxPopulation);
+            /*m_playerCount.text = string.Format("{0}/{1}",
+                m_serverData.ServerPopulation, *
+                m_serverData.ServerMaxPopulation);*/
         }
 
         /// <summary>

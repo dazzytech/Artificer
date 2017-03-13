@@ -5,13 +5,8 @@ namespace Menu
 {
     public class Tab_EventListener : MonoBehaviour
     {
+        [SerializeField]
         private Menu_Behaviour _controller;
-
-        void Awake()
-        {
-            // retrieve attributes from parents
-            _controller = transform.parent.GetComponent<Menu_Behaviour>();
-        }
 
         /// <summary>
         /// Switchs to user selected tab.
@@ -21,8 +16,8 @@ namespace Menu
         {
             switch (state)
             {
-                case "MM":
-                    _controller.CurrentState = MenuState.Matchmaker;
+                case "mm":
+                    _controller.CurrentState = MenuState.Play;
                     break;
                 case "ser":
                     _controller.CurrentState = MenuState.Servers;
