@@ -23,6 +23,8 @@ namespace Menu.Lobby
         [SerializeField]
         private LobbyCallback m_cal;
 
+
+
         #endregion
 
         #region MONO BEHAVIOUR
@@ -45,12 +47,6 @@ namespace Menu.Lobby
             m_cal.OnLobbyCreationSuccess -= OnCreateSuccess;
         }
 
-        // For now just start matchmaker on Start
-        void Start()
-        {
-            //BeginLobbySearch();
-        }
-
         #endregion
 
         #region CALLBACK EVENTS
@@ -61,7 +57,7 @@ namespace Menu.Lobby
         /// </summary>
         private void OnLobbyListCompleted(CSteamID isNil)
         {
-            //m_con.JoinSuitableLobby();
+            m_con.JoinSuitableLobby();
         }
 
         /// <summary>
@@ -79,7 +75,7 @@ namespace Menu.Lobby
         /// <param name="pLobby"></param>
         private void OnJoinFailed(CSteamID pLobby)
         {
-            //m_con.JoinAttemptFailed(pLobby);
+            m_con.JoinAttemptFailed(pLobby);
         }
 
         /// <summary>
@@ -89,7 +85,7 @@ namespace Menu.Lobby
         /// <param name="isNil"></param>
         private void OnCreateFailed(CSteamID isNil)
         {
-            //m_con.OnLobbyCreationFailed();
+            m_con.OnLobbyCreationFailed();
         }
 
         /// <summary>
@@ -114,7 +110,7 @@ namespace Menu.Lobby
             // game settings for filter
 
             // invoke behaviour function
-            //m_con.StartLobbySearch();
+            m_con.StartLobbySearch();
         }
 
         /// <summary>
@@ -124,7 +120,7 @@ namespace Menu.Lobby
         /// </summary>
         public void LeaveLobby()
         {
-            //m_con.QuitLobby();
+            m_con.QuitLobby();
         }
 
         /// <summary>
@@ -133,7 +129,7 @@ namespace Menu.Lobby
         /// </summary>
         public void InviteFriends()
         {
-            //m_con.InviteFriends();
+            m_con.InviteFriends();
         }
 
         #endregion

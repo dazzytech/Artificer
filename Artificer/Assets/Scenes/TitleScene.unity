@@ -23248,7 +23248,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_att: {fileID: 1520933211}
-  CurrentState: 0
 --- !u!114 &1520933209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23297,9 +23296,6 @@ MonoBehaviour:
   SearchBtn: {fileID: 1720070949}
   InviteBtn: {fileID: 675392921}
   LeaveBtn: {fileID: 1070867658}
-  OnlineState: 0
-  dHeader: 
-  dMsg: 
   LobbyViewer: {fileID: 118925656}
 --- !u!114 &1520933212
 MonoBehaviour:
@@ -26925,7 +26921,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -346
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_SizeDelta.x

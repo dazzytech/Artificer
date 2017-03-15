@@ -5,7 +5,7 @@ using Steamworks;
 
 namespace Menu.Lobby
 {
-    public enum OnlineState{Idle, Searching};
+    //public enum LobbyState{Idle, Searching, Joined};
 
     /// <summary>
     /// Attributes for Lobby manager
@@ -31,12 +31,12 @@ namespace Menu.Lobby
         #region LOBBY CONFIG
 
         // If we are searching or not
-        public OnlineState OnlineState;
+        //public LobbyState LobbyState;
 
         // panel attributes
-        public CSteamID SteamID;
-        public string dHeader;
-        public string dMsg;
+        //public CSteamID SteamID;
+        //public string dHeader;
+        //public string dMsg;
 
         #endregion
 

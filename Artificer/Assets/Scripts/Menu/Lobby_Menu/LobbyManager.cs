@@ -14,21 +14,28 @@ namespace Menu.Lobby
 
         [SerializeField]
         private LobbyAttributes m_att;
-        
-        // Are we searching or not
-        public OnlineState CurrentState;
 
         #endregion
 
         #region EVENTS
 
         // Trigger this event when we switch from idle to searching etc.
-        public delegate void ChangeState(OnlineState newState);
-        public event ChangeState OnStateChanged;
+        public delegate void ChangeState();
+        public event ChangeState OnUpdateState;
 
         #endregion
 
         #region MONO BEHAVIOUR
+
+        private void OnEnable()
+        {
+            OnUpdateState += UpdateState;
+        }
+
+        private void OnDisable()
+        {
+            OnUpdateState -= UpdateState;
+        }
 
         void Start()
         {
@@ -38,57 +45,7 @@ namespace Menu.Lobby
             }
         }
 
-        void LateUpdate()
-        {
-            // Change so this is only implimented when event is triggered
-            if(m_att.CurrentLobby != null)
-            {
-                if(SteamMatchmaking.GetLobbyData(m_att.CurrentLobby.GetID, "live") == "true")
-                {
-                    // we are in a live game, need the leave option and invite option
-                    m_att.SearchBtn.gameObject.SetActive(false);
-                    m_att.InviteBtn.gameObject.SetActive(true);
-                    m_att.LeaveBtn.gameObject.SetActive(true);
-                }
-                else
-                {
-                    //cant leave our private lobby
-                    m_att.LeaveBtn.gameObject.SetActive(false);
-                    m_att.InviteBtn.gameObject.SetActive(true);
-                    // only lobby owners can start search
-                    if(SteamMatchmaking.GetLobbyOwner(m_att.CurrentLobby.GetID).Equals(SteamUser.GetSteamID()))
-                        m_att.SearchBtn.gameObject.SetActive(true);
-                    else
-                        m_att.SearchBtn.gameObject.SetActive(false);
-                }
-            }
-            else
-            {
-                // possible error
-                m_att.SearchBtn.gameObject.SetActive(false);
-                m_att.InviteBtn.gameObject.SetActive(false);
-                m_att.LeaveBtn.gameObject.SetActive(false);
-            }
-        }
-
         #endregion
-
-        // Use this for initialization
-        /*void Start ()
-        {
-            m_att.OnlineState = OnlineState.LobbyList;
-            CurrentState = OnlineState.LobbyList;
-            OnStateChanged(OnlineState.LobbyList);
-        }
-        
-        void Update()
-        {
-
-            if (!m_att.OnlineState.Equals(CurrentState))
-                OnStateChanged(CurrentState);
-        }
-        
-        #endregion*/
 
         #region EVENT LISTENER INTERFACE
 
@@ -148,8 +105,6 @@ namespace Menu.Lobby
         /// </summary>
         public void JoinAttemptSuccess(CSteamID pLobby)
         {
-            Debug.Log("joined");
-
             // Set user data in this section
             // This could be making the lobby build twice
             SteamMatchmaking.SetLobbyMemberData(pLobby, "ready", "false");
@@ -164,6 +119,8 @@ namespace Menu.Lobby
             // create new lobby object within memory
             m_att.CurrentLobby = new LobbyObject(pLobby, 
                 m_att.LobbyViewer);
+
+            OnUpdateState();
         }
 
         /// <summary>
@@ -233,6 +190,8 @@ namespace Menu.Lobby
                 CreateHiddenLobby();
             }
             // else we have no lobby to leave
+
+            OnUpdateState();
         }
 
         /// <summary>
@@ -277,7 +236,10 @@ namespace Menu.Lobby
                 // Update the variable to show that we are now in a live lobby
                 SteamMatchmaking.SetLobbyData(m_att.CurrentLobby.GetID, "live", "true");
             }
+
             // need to consider if failed
+
+            OnUpdateState();
         }
 
         /// <summary>
@@ -306,6 +268,43 @@ namespace Menu.Lobby
             {
                 SteamMatchmaking.LeaveLobby(m_att.CurrentLobby.GetID);
                 m_att.CurrentLobby = null;
+            }
+        }
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        void UpdateState()
+        {
+            // Change so this is only implimented when event is triggered
+            if (m_att.CurrentLobby != null)
+            {
+                if (SteamMatchmaking.GetLobbyData(m_att.CurrentLobby.GetID, "live") == "true")
+                {
+                    // we are in a live game, need the leave option and invite option
+                    m_att.SearchBtn.gameObject.SetActive(false);
+                    m_att.InviteBtn.gameObject.SetActive(true);
+                    m_att.LeaveBtn.gameObject.SetActive(true);
+                }
+                else
+                {
+                    //cant leave our private lobby
+                    m_att.LeaveBtn.gameObject.SetActive(false);
+                    m_att.InviteBtn.gameObject.SetActive(true);
+                    // only lobby owners can start search
+                    if (SteamMatchmaking.GetLobbyOwner(m_att.CurrentLobby.GetID).Equals(SteamUser.GetSteamID()))
+                        m_att.SearchBtn.gameObject.SetActive(true);
+                    else
+                        m_att.SearchBtn.gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                // possible error
+                m_att.SearchBtn.gameObject.SetActive(false);
+                m_att.InviteBtn.gameObject.SetActive(false);
+                m_att.LeaveBtn.gameObject.SetActive(false);
             }
         }
 
