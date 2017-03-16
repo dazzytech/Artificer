@@ -210,6 +210,13 @@ public class SystemManager : NetworkManager
         GameMSG.RemovePlayer(conn);
     }
 
+    public override void OnStopHost()
+    {
+        base.OnStopHost();
+
+        GameObject.Destroy(m_base.GameMsg.gameObject);
+    }
+
 
     /// <summary>
     /// Called when the server is unsuccessful in creation

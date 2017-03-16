@@ -1,0 +1,19 @@
+[2017-03-16 02:33:48]: Starting build for depot 609961, content path is "C:\Users\renderman\Documents\Artificer\sdk\tools\ContentBuilder\content\"
+[2017-03-16 02:33:48]: Building file listing for depot 609961 ...
+[2017-03-16 02:33:48]: Found 62 files for mapping: C:\Users\renderman\Documents\Artificer\sdk\tools\ContentBuilder\content\windows_content * -> .
+[2017-03-16 02:33:48]: Found 62 files (132 MB) for depot 609961
+[2017-03-16 02:33:49]: Building depot 609961, baseline manifest 1881493554279295001 (62 files)
+[2017-03-16 02:33:51]: Found 173 new chunks (173 old ones existed) for depot 609961, took 0 minutes, 2 seconds
+
+[2017-03-16 02:33:51]: Changes to baseline manifest:
+[2017-03-16 02:33:51]: Changed: "Artificer_Data\globalgamemanagers" 143 kB 
+[2017-03-16 02:33:51]: Changed: "Artificer_Data\level0" 240 kB 
+[2017-03-16 02:33:51]: Changed: "Artificer_Data\level1" 183 kB 
+[2017-03-16 02:33:51]: Changed: "Artificer_Data\level2" 19 kB 
+[2017-03-16 02:33:51]: Changed: "Artificer_Data\Managed\Assembly-CSharp.dll" 335 kB 
+[2017-03-16 02:33:51]: Changed: "Artificer_Data\output_log.txt" 3 kB 
+[2017-03-16 02:33:51]: Changed: "steam_appid.txt" 1 kB 
+[2017-03-16 02:33:51]: Summary: 0 files added, 7 files changed, 0 files removed
+[2017-03-16 02:33:52]: Uploading new manifest (13070 bytes).
+[2017-03-16 02:33:52]: Uploading 7 out of 7 missing chunks.
+[2017-03-16 02:33:54]: Success! New manifestID 302182410108182612 created and 7 new chunks uploaded.

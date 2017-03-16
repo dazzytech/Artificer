@@ -28,7 +28,8 @@ namespace Server
             PlayerServerItem.ParentRect = m_att.PlayerList;
             PlayerServerItem.Message = m_att.Message;
 
-            JoinServer();
+            if(!isServer)
+                JoinServer();
         }
 
         #endregion
