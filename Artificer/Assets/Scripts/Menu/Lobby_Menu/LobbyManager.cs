@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Steamworks;
+using Data.UI;
 
 namespace Menu.Lobby
 {
@@ -17,6 +18,15 @@ namespace Menu.Lobby
 
         #endregion
 
+        #region ACCESSOR
+
+        private CSteamID LobbyID
+        {
+            get { return m_att.CurrentLobby.GetID; }
+        }
+
+        #endregion
+
         #region EVENTS
 
         // Trigger this event when we switch from idle to searching etc.
@@ -30,19 +40,20 @@ namespace Menu.Lobby
         private void OnEnable()
         {
             OnUpdateState += UpdateState;
-        }
 
-        private void OnDisable()
-        {
-            OnUpdateState -= UpdateState;
-        }
-
-        void Start()
-        {
             if (SteamManager.Initialized)
             {
                 CreateHiddenLobby();
             }
+        }
+
+        private void OnDisable()
+        {
+            if (m_att.CurrentLobby != null)
+                if (SteamManager.Initialized)
+                    QuitLobby();
+
+            OnUpdateState -= UpdateState;
         }
 
         #endregion
@@ -101,14 +112,9 @@ namespace Menu.Lobby
 
         /// <summary>
         /// Called when player joins a lobby
-        /// func not yet realised
         /// </summary>
         public void JoinAttemptSuccess(CSteamID pLobby)
         {
-            // Set user data in this section
-            // This could be making the lobby build twice
-            SteamMatchmaking.SetLobbyMemberData(pLobby, "ready", "false");
-
             // if we are not already in this lobby then leave the lobby
             // before joining new
             if (!SteamFriends.IsUserInSource(SteamUser.GetSteamID(), pLobby))
@@ -117,8 +123,12 @@ namespace Menu.Lobby
             }
 
             // create new lobby object within memory
-            m_att.CurrentLobby = new LobbyObject(pLobby, 
-                m_att.LobbyViewer);
+            // FIX
+            m_att.CurrentLobby = new LobbyObject(pLobby);
+
+            m_att.CurrentLobby.OnLobbyUpdate += UpdateLobby;    
+
+            m_att.CurrentLobby.Initialize();
 
             OnUpdateState();
         }
@@ -133,6 +143,7 @@ namespace Menu.Lobby
         {
             // remove pLobby from lobbylist
             Debug.Log("failed");
+
             // create new list with one less lobby
             CSteamID[] newLobbyList = new CSteamID[m_att.LobbyList.Length];
 
@@ -178,6 +189,7 @@ namespace Menu.Lobby
         public void QuitLobby()
         {
             Debug.Log("Attempt to leave Lobby");
+
             // Check that we arent already in a hidden lobby
             if (SteamMatchmaking.GetLobbyData(m_att.CurrentLobby.GetID, "live") == "true")
             {
@@ -189,9 +201,10 @@ namespace Menu.Lobby
                 // Create a new private lobby
                 CreateHiddenLobby();
             }
-            // else we have no lobby to leave
 
-            OnUpdateState();
+            // else we have no lobby to leave
+            if(OnUpdateState != null)
+                OnUpdateState();
         }
 
         /// <summary>
@@ -234,7 +247,10 @@ namespace Menu.Lobby
                 ELobbyType.k_ELobbyTypePublic))
             {
                 // Update the variable to show that we are now in a live lobby
-                SteamMatchmaking.SetLobbyData(m_att.CurrentLobby.GetID, "live", "true");
+                SteamMatchmaking.SetLobbyData(LobbyID, "live", "true");
+
+                // Begin starting timer
+                StartCoroutine("BeginTimer");
             }
 
             // need to consider if failed
@@ -248,8 +264,6 @@ namespace Menu.Lobby
         /// </summary>
         private void CreateHiddenLobby()
         {
-            Debug.Log("Creating lobby");
-
             if (SteamManager.Initialized)
             {
                 SteamAPICall_t handle = SteamMatchmaking.CreateLobby
@@ -267,6 +281,12 @@ namespace Menu.Lobby
             if (m_att.CurrentLobby != null)
             {
                 SteamMatchmaking.LeaveLobby(m_att.CurrentLobby.GetID);
+
+                m_att.CurrentLobby.OnLobbyUpdate -= UpdateLobby;
+
+                m_att.CurrentLobby.OnLobbyUpdate
+                    -= m_att.LobbyViewer.ViewLobby;
+
                 m_att.CurrentLobby = null;
             }
         }
@@ -275,7 +295,7 @@ namespace Menu.Lobby
 
         #region PRIVATE UTILITIES
 
-        void UpdateState()
+        private void UpdateState()
         {
             // Change so this is only implimented when event is triggered
             if (m_att.CurrentLobby != null)
@@ -284,7 +304,7 @@ namespace Menu.Lobby
                 {
                     // we are in a live game, need the leave option and invite option
                     m_att.SearchBtn.gameObject.SetActive(false);
-                    m_att.InviteBtn.gameObject.SetActive(true);
+                    m_att.InviteBtn.gameObject.SetActive(false);
                     m_att.LeaveBtn.gameObject.SetActive(true);
                 }
                 else
@@ -306,6 +326,111 @@ namespace Menu.Lobby
                 m_att.InviteBtn.gameObject.SetActive(false);
                 m_att.LeaveBtn.gameObject.SetActive(false);
             }
+        }
+
+        /// <summary>
+        /// Performs any necessary actions when lobby
+        /// has changed e.g. reseting start counter
+        /// or starting match is game has started
+        /// </summary>
+        private void UpdateLobby()
+        {
+            // Update visually
+            m_att.LobbyViewer.ViewLobby();
+
+            // Check if the lobby game has started
+            // for us to start 
+            if (SteamMatchmaking.GetLobbyData(LobbyID, "running") == "true")
+            {
+                SystemManager.JoinOnlineClient
+                    (SteamMatchmaking.GetLobbyData
+                    (LobbyID, "ip"), LobbyID);
+            }
+        }
+
+        /// <summary>
+        /// Called on the host
+        /// to create the online match
+        /// </summary>
+        private void BuildGame()
+        {
+            if (SteamMatchmaking.GetLobbyOwner(LobbyID)
+                    != SteamUser.GetSteamID())
+                // exit if not host
+                return;
+
+            // set game to running
+            SteamMatchmaking.SetLobbyData
+                (LobbyID, "running", "true");
+
+
+            // Build Server with game manager
+            ServerData newServer = new ServerData();
+
+            // Populate connection info
+            newServer.ServerIP = SteamMatchmaking
+                .GetLobbyData(LobbyID, "ip");  
+
+            newServer.ServerPort = 7777;
+
+            newServer.ServerVersion = SteamMatchmaking
+                .GetLobbyData(LobbyID, "version");
+
+            newServer.ServerName = "Steam Game";
+
+            SystemManager.CreateOnlineServer(newServer, LobbyID);
+        }
+
+        #endregion
+
+        #region COROUTINE
+
+        /// <summary>
+        /// A countdown timer that will
+        /// start a match with the minimum amount of
+        /// players
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator BeginTimer()
+        {
+            // Loop through each second
+            int seconds = 0;
+
+            while(seconds < m_att.LobbyTimer)
+            {
+                // Update text item
+                m_att.CounterText.text =
+                    string.Format("Seconds remaining: {0}",
+                    m_att.LobbyTimer - seconds);
+
+                // increment seconds
+                seconds++;
+
+                // check if we reached full pop
+                if (SteamMatchmaking.GetNumLobbyMembers(LobbyID) >=
+                    SteamMatchmaking.GetLobbyMemberLimit(LobbyID))
+                // reached full population
+                {
+                    BuildGame();
+                    yield break;
+                }
+
+                // Wait for a second
+                yield return new WaitForSeconds
+                    (1f);
+            }
+
+            if (SteamMatchmaking.GetNumLobbyMembers(LobbyID)
+                < m_att.MinPlayers)
+            {
+                m_att.CounterText.text = m_att.MinPlayers + " Players Required";
+                // Dont have enough players to start
+                QuitLobby();
+            }
+            else
+                BuildGame();
+
+            yield return null;
         }
 
         #endregion

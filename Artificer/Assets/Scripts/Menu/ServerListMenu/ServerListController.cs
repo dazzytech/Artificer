@@ -115,7 +115,7 @@ namespace Menu.Server
             // We have a selected server
             string ipAddress = m_att.SelectedServer.Server.ServerIP;
 
-            SystemManager.JoinAsClient(ipAddress);
+            SystemManager.JoinLANClient(ipAddress);
         }
 
         #endregion

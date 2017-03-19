@@ -12,12 +12,9 @@ namespace Menu.Lobby
     /// </summary>
     public class LobbyAttributes : MonoBehaviour
     {
-
         #region HUD ELEMENTS
 
         [Header("HUD Elements")]
-
-        public GameObject LobbyPanel;
 
         // UI For Lobby Controller
         public Button SearchBtn;
@@ -26,17 +23,16 @@ namespace Menu.Lobby
 
         public Button LeaveBtn;
 
+        public Text CounterText;
+
         #endregion
 
         #region LOBBY CONFIG
 
-        // If we are searching or not
-        //public LobbyState LobbyState;
+        public int MinPlayers;
 
-        // panel attributes
-        //public CSteamID SteamID;
-        //public string dHeader;
-        //public string dMsg;
+        // How long should we be matchmaking
+        public float LobbyTimer;
 
         #endregion
 

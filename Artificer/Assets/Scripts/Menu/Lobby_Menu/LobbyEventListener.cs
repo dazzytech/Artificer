@@ -23,8 +23,6 @@ namespace Menu.Lobby
         [SerializeField]
         private LobbyCallback m_cal;
 
-
-
         #endregion
 
         #region MONO BEHAVIOUR
@@ -133,120 +131,5 @@ namespace Menu.Lobby
         }
 
         #endregion
-
-        /*
-        /// <summary>
-        /// Raises the enable event.
-        /// </summary>
-        void OnEnable()
-        {
-            m_controller.OnStateChanged += OnStateChanged;
-
-            m_beh.CurrentState = OnlineState.Idle;
-        }
-        
-        /// <summary>
-        /// Raises the disable event.
-        /// </summary>
-        void OnDisable()
-        {
-            m_controller.OnStateChanged -= OnStateChanged;
-        }
-        
-        /// <summary>
-        /// Applys the newly changed menu state
-        /// </summary>
-        void OnStateChanged(OnlineState newState)
-        {
-            CloseAllTabs();
-            
-            switch (newState)
-            {
-                case OnlineState.LobbyList:
-                    m_attributes.LobbyListPanel.SetActive(true);
-                    if(m_attributes.fInfo != null)
-                    {
-                        m_attributes.LobbyListPanel.SendMessage("SetFilterData", m_attributes.fInfo);
-                        m_attributes.fInfo = null;
-                    }
-                    break;
-                case OnlineState.Lobby:
-                    m_attributes.LobbyPanel.SetActive(true);
-                    if(m_attributes.sID != CSteamID.Nil)
-                        m_attributes.LobbyPanel.SendMessage("AssignLobby", m_attributes.sID);
-                    else
-                        m_attributes.LobbyPanel.SendMessage("CreateLobby");
-                    break;
-                case OnlineState.Filter:
-                    m_attributes.FilterPanel.SetActive(true);
-                    break;
-                case OnlineState.Popup:
-                    m_attributes.PopupPanel.SetActive(true);
-                    // Add string messages to popup
-                    m_attributes.PopupPanel.SendMessage("AssignMsg", 
-                        new string[2]{m_attributes.dHeader, m_attributes.dMsg});
-                    break;
-            }
-            
-            m_attributes.OnlineState = newState;
-        }
-        
-        /// <summary>
-        /// Closes all tabs.
-        /// in the menu
-        /// </summary>
-        private void CloseAllTabs()
-        {
-            if (m_attributes.LobbyListPanel.activeSelf)
-            {
-                m_attributes.LobbyListPanel.SetActive(false);
-            }
-            if (m_attributes.LobbyPanel.activeSelf)
-            {
-                m_attributes.LobbyPanel.SendMessage("LeaveLobby");
-                m_attributes.LobbyPanel.SetActive(false);
-            }
-            if (m_attributes.FilterPanel.activeSelf)
-            {
-                m_attributes.FilterPanel.SetActive(false);
-            }
-            if (m_attributes.PopupPanel.activeSelf)
-            {
-                m_attributes.PopupPanel.SetActive(false);
-            }
-        }
-
-        /// <summary>
-        /// Opens the filter window.
-        /// button press
-        /// </summary>
-        public void OpenFilterWindow()
-        {
-            m_controller.CurrentState = OnlineState.Filter;
-        }
-
-        public void OpenLobbyListWindow()
-        {
-            m_controller.CurrentState = OnlineState.LobbyList;
-        }
-
-        public void OpenLobbyListWindowFiltered(FilterInfo filter = null)
-        {
-            m_controller.CurrentState = OnlineState.LobbyList;
-            m_attributes.fInfo = filter;
-        }
-
-        public void OpenLobbyWindow(CSteamID pLobby)
-        {
-            m_controller.CurrentState = OnlineState.Lobby;
-            m_attributes.sID = pLobby;   
-        }
-
-        public void OpenPopupWindow(string[] args)
-        {
-            m_controller.CurrentState = OnlineState.Popup;
-            m_attributes.dHeader = args[0];
-            m_attributes.dMsg = args[1];
-        }*/
     }
 }

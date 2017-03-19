@@ -11,6 +11,7 @@ using Space.CameraUtils;
 using Space.UI;
 using Game;
 using Server;
+using Steamworks;
 
 /// <summary>
 /// Stores game parameters retrived from lobby or server
@@ -51,5 +52,8 @@ public class SystemAttributes:MonoBehaviour
     // UI Data information
     public Data.UI.PlayerData Player;
     public Data.UI.ServerData ServerInfo;
+
+    // Reference to which Steam Lobby we are connected to
+    public CSteamID Lobby;
 }
 

@@ -45,10 +45,6 @@ namespace Menu.Lobby
 
         #region MONO BEHAVIOUR
 
-        void Awake()
-        {
-        }
-
         void OnEnable()
         {
             // Assign functions to callback attributes
@@ -129,7 +125,9 @@ namespace Menu.Lobby
 
         private void OnLobbyCreate(LobbyCreated_t pCallback, bool bIOFailure)
         {
-            if(pCallback.m_eResult == EResult.k_EResultOK)
+            Debug.Log(pCallback.m_eResult);
+
+            if (pCallback.m_eResult == EResult.k_EResultOK)
             {
                 // Allow us to intialize the lobby
                 OnLobbyCreationSuccess((CSteamID)

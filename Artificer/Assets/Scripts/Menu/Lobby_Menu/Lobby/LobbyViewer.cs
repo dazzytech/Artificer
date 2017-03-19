@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Steamworks;
 using Data.UI;
+using UnityEngine.UI;
 
 namespace Menu.Lobby
 {
@@ -11,33 +12,48 @@ namespace Menu.Lobby
     /// </summary>
     public class LobbyViewer : MonoBehaviour
     {
-        // List boxes
-        [SerializeField]
-        private Transform PlayerViewerList;
+        #region ATTRIBUTES
 
         [SerializeField]
-        private Transform ChatViewerList;
+        private LobbyAttributes m_att;
+
+        #region HUD ELEMENTS
+
+        [Header("HUD Elements")]
 
         [SerializeField]
-        private Transform SettingsViewerList;
-
-        // Game item prefabs
-        [SerializeField]
-        private GameObject PlayerCountPrefab;
+        private Transform m_playerViewerList;
 
         [SerializeField]
-        private GameObject PlayerItemPrefab;
+        private Transform m_settingsViewerList;
 
         [SerializeField]
-        private GameObject GameSettingsPrefab;
+        private Text m_playerCounter;
 
-        private CSteamID m_lobbyID;
+        #endregion
 
-        public void AssignLobby(CSteamID newLobby)
+        #region PREFABS
+
+        [Header("Prefabs")]
+
+        [SerializeField]
+        private GameObject m_playerItemPrefab;
+
+        [SerializeField]
+        private GameObject m_gameSettingsPrefab;
+
+        #endregion
+
+        #endregion
+
+        #region ACCESSOR
+
+        private CSteamID LobbyID
         {
-            if(newLobby != CSteamID.Nil)
-                m_lobbyID = newLobby;
+            get { return m_att.CurrentLobby.GetID; }
         }
+
+        #endregion
 
         // refreshes the lobby view
         public void ViewLobby()
@@ -53,9 +69,9 @@ namespace Menu.Lobby
 
         private void ClearPlayers()
         {
-            foreach(Transform child in PlayerViewerList)
+            foreach(Transform child in m_playerViewerList)
             {
-                if(child != PlayerViewerList)
+                if(child != m_playerViewerList)
                     Destroy(child.gameObject);
             }
         }
@@ -64,28 +80,29 @@ namespace Menu.Lobby
         {
             // store the player count in int
             int playerCount = 
-                SteamMatchmaking.GetNumLobbyMembers(m_lobbyID);
+                SteamMatchmaking.GetNumLobbyMembers(LobbyID);
 
             // store max amount
-            int maxAmount = SteamMatchmaking.GetLobbyMemberLimit(m_lobbyID);
+            int maxAmount = SteamMatchmaking.GetLobbyMemberLimit(LobbyID);
 
-            GameObject PCount = Instantiate(PlayerCountPrefab);
-            PCount.transform.SetParent(PlayerViewerList);
-            LobbyCountPrefab LC_Prefab = PCount.GetComponent<LobbyCountPrefab>();
-            LC_Prefab.SetCounter(playerCount, maxAmount);
+            // Display the current player count
+            m_playerCounter.text = string.Format
+                ("Player Count: {0} | Player Limit: {1}",
+                playerCount, maxAmount);
 
             // Iterate through each player and display their name
             for(int i = 0; i < playerCount; i++)
             {
                 // retreive player steam ID
                 CSteamID OtherPlayer = 
-                    SteamMatchmaking.GetLobbyMemberByIndex(m_lobbyID, i);
+                    SteamMatchmaking.GetLobbyMemberByIndex(LobbyID, i);
 
                 // Build player item prefab
-                GameObject PlayerItem = Instantiate(PlayerItemPrefab);
-                PlayerItem.transform.SetParent(PlayerViewerList);
+                GameObject PlayerItem = Instantiate(m_playerItemPrefab);
+                PlayerItem.transform.SetParent(m_playerViewerList, false);
+                PlayerItem.transform.localScale = new Vector3(1, 1, 1);
                 LobbyPlayerPrefab P_Prefab = PlayerItem.GetComponent<LobbyPlayerPrefab>();
-                P_Prefab.SetPlayer(OtherPlayer, m_lobbyID);
+                P_Prefab.SetPlayer(OtherPlayer, LobbyID);
             }
         }
 
@@ -96,9 +113,9 @@ namespace Menu.Lobby
         /// </summary>
         private void ClearSettings()
         {
-            foreach (Transform child in SettingsViewerList)
+            foreach (Transform child in m_settingsViewerList)
             {
-                if (child != SettingsViewerList)
+                if (child != m_settingsViewerList)
                     Destroy(child.gameObject);
             }
         }

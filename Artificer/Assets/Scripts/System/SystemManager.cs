@@ -399,10 +399,41 @@ public class SystemManager : NetworkManager
 
     }
 
+    #region CREATE SERVER
+
+    /// <summary>
+    /// Called from steam match maker
+    /// with pre created Server data
+    /// create reference to steam lobby
+    /// </summary>
+    /// <param name="newServer"></param>
+    public static void CreateOnlineServer
+        (ServerData newServer, CSteamID lobbyID)
+    {
+        // check if the network is already active
+        if (m_singleton.isNetworkActive)
+            return;
+
+        m_singleton.m_base.Lobby = lobbyID;
+
+        m_singleton.m_base.Player.IsHost = true;
+
+        m_singleton.m_base.ServerInfo = newServer;
+
+        // Set the IP the Net Manager is going to use to host a game to OUR IP address and Port 7777
+        m_singleton.networkAddress = newServer.ServerIP;
+        m_singleton.networkPort = newServer.ServerPort;
+
+        m_singleton.onlineScene = "SpaceScene";
+
+        // Startup the host
+        m_singleton.TryHost();
+    }
+
     /// <summary>
     /// For now just creates a host on local host
     /// </summary>
-    public static void CreateServer
+    public static void CreateLANServer
         (string serverName)
     {
         // check if the network is already active
@@ -427,18 +458,40 @@ public class SystemManager : NetworkManager
         m_singleton.networkAddress = newServer.ServerIP;
         m_singleton.networkPort = newServer.ServerPort;
 
+        m_singleton.onlineScene = "ServerScene";
+
         // Startup the host
         m_singleton.TryHost();
     }
 
-    public static void JoinAsClient(string serverAddress)
+    #endregion
+
+    #region JOIN SERVER
+
+    public static void JoinOnlineClient
+        (string serverAddress, CSteamID lobbyID)
+    {
+        m_singleton.networkAddress = serverAddress;
+
+        m_singleton.m_base.Lobby = lobbyID;
+
+        m_singleton.onlineScene = "SpaceScene";
+
+        m_singleton.TryClient();
+    }
+
+    public static void JoinLANClient(string serverAddress)
     {
         // Artificer uses port 7777
 
         NetworkManager.singleton.networkAddress = serverAddress;
 
+        m_singleton.onlineScene = "ServerScene";
+
         m_singleton.TryClient();
     }
+
+    #endregion
 
     /// <summary>
     /// For now only leave the lobby we have

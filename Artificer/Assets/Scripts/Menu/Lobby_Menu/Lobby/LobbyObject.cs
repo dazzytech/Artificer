@@ -16,24 +16,33 @@ namespace Menu.Lobby
     /// </summary>
     public class LobbyObject
     {
-        #region DATA MEMBERS
+        #region ATTRIBUTES
 
         private CSteamID m_lobbyID;
-        private LobbyViewer m_viewer;
 
-        // game options or object would be here
+        #endregion
+
+        #region EVENT
+
+        public delegate void LobbyUpdate();
+
+        public event LobbyUpdate OnLobbyUpdate;
 
         #endregion
 
         #region CONSTRUCTOR
 
-        public LobbyObject(CSteamID lobbyID, LobbyViewer viewer)//CSteamID lobbyID, LobbyViewer viewer)
+        public LobbyObject(CSteamID lobbyID)
         {
-            m_viewer = viewer;
             m_lobbyID = lobbyID;
+        }
 
-            m_viewer.AssignLobby(m_lobbyID);
+        #endregion
 
+        #region PUBLIC INTERACTION
+
+        public void Initialize()
+        {
             // Initialize callbacks
             m_PersonaStateChange = Callback<PersonaStateChange_t>
                 .Create(OnPersonaStateChange);
@@ -43,9 +52,6 @@ namespace Menu.Lobby
 
             m_LobbyChatUpdate = Callback<LobbyChatUpdate_t>
                 .Create(OnLobbyChatUpdate);
-
-            // Call function to refresh lobby viewer
-            m_viewer.ViewLobby();
         }
 
         #endregion
@@ -76,7 +82,7 @@ namespace Menu.Lobby
             Debug.Log("Persona Update");
 
             // Call function to refresh lobby viewer
-            m_viewer.ViewLobby();
+            OnLobbyUpdate();
         }
 
         private void OnLobbyDataUpdate(LobbyDataUpdate_t pCallback)
@@ -90,7 +96,7 @@ namespace Menu.Lobby
             // When lobby data is created it will be retreived
 
             // Call function to refresh the lobby viewer
-            m_viewer.ViewLobby();
+            OnLobbyUpdate();
         }
 
         private void OnLobbyChatUpdate(LobbyChatUpdate_t pCallback)
@@ -101,7 +107,7 @@ namespace Menu.Lobby
             Debug.Log("Chat Update");
 
             // call function to refresh lobby viewer
-            m_viewer.ViewLobby();
+            OnLobbyUpdate();
         }
 
         #endregion

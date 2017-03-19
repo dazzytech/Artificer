@@ -104,7 +104,7 @@ namespace Menu.Server
                 else
                     serverName = returnValue.ToString();
 
-                SystemManager.CreateServer(serverName);
+                SystemManager.CreateLANServer(serverName);
             }
 
             Popup_Dialog.OnDialogEvent -= GetServerName;
