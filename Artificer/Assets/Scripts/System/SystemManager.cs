@@ -532,7 +532,7 @@ public class SystemManager : NetworkManager
         networkSceneName = "";
         NetworkServer.SetAllClientsNotReady();
         ClientScene.DestroyAllClientObjects();
-        SystemManager.m_singleton.StartHost();
+        m_singleton.StartHost();
     }
 
     // Tries to connect as a client
@@ -542,7 +542,7 @@ public class SystemManager : NetworkManager
         networkSceneName = "";
         NetworkServer.SetAllClientsNotReady();
         ClientScene.DestroyAllClientObjects();
-        SystemManager.m_singleton.StartClient();
+        m_singleton.StartClient();
     }
 
     // Leaves the lobby or match we are connected to (host and client)

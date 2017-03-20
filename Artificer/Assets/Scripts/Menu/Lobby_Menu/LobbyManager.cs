@@ -128,7 +128,9 @@ namespace Menu.Lobby
 
             m_att.CurrentLobby.OnDataUpdate += UpdateLobby;
 
-            m_att.CurrentLobby.OnUserUpdate += UpdateLobby; 
+            m_att.CurrentLobby.OnUserUpdate += UpdateLobby;
+
+            m_att.CurrentLobby.OnChatUpdate += UpdateLobby;
 
             m_att.CurrentLobby.Initialize();
 
@@ -187,8 +189,12 @@ namespace Menu.Lobby
             // Set game not running
             SteamMatchmaking.SetLobbyData(pLobby, "running", "false");
 
+            Network.Connect("http://www.google.com");
+
             // Define IP address
-            SteamMatchmaking.SetLobbyData(pLobby, "ip", Network.player.ipAddress);
+            SteamMatchmaking.SetLobbyData(pLobby, "ip", Network.player.externalIP);
+
+            Network.Disconnect();
 
             // Add more when games are customized
         }
@@ -291,6 +297,10 @@ namespace Menu.Lobby
                 SteamMatchmaking.LeaveLobby(m_att.CurrentLobby.GetID);
 
                 m_att.CurrentLobby.OnDataUpdate -= UpdateLobby;
+
+                m_att.CurrentLobby.OnUserUpdate -= UpdateLobby;
+
+                m_att.CurrentLobby.OnChatUpdate -= UpdateLobby;
 
                 m_att.CurrentLobby.OnDataUpdate
                     -= m_att.LobbyViewer.ViewLobby;
