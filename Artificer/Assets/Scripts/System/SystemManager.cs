@@ -458,7 +458,8 @@ public class SystemManager : NetworkManager
     public static void JoinOnlineClient
         (string serverAddress, CSteamID lobbyID)
     {
-        NetworkManager.singleton.networkAddress = serverAddress;
+        m_singleton.networkAddress = serverAddress;
+        m_singleton.networkPort = 7777;
 
         m_singleton.m_base.Lobby = lobbyID;
 
@@ -471,7 +472,8 @@ public class SystemManager : NetworkManager
     {
         // Artificer uses port 7777
 
-        NetworkManager.singleton.networkAddress = serverAddress;
+        m_singleton.networkAddress = serverAddress;
+        m_singleton.networkPort = 7777;
 
         m_singleton.onlineScene = "ServerScene";
 
@@ -520,26 +522,6 @@ public class SystemManager : NetworkManager
     #endregion
 
     #region PRIVATE UTILITIES
-    /*
-    /// <summary>
-    /// Called when attempting to join SteamMatchmaker
-    /// because scene doesn't auto change offline
-    /// </summary>
-    /// <param name="previousScene"></param>
-    /// <param name="newScene"></param>
-    void OfflineSceneChanged
-        (Scene previousScene, Scene newScene)
-    {
-        // Stop listening for this event
-        SceneManager.activeSceneChanged
-            += OfflineSceneChanged;
-
-        // Begin matchmaking process
-        m_base.Lobby = GameObject.Find("Lobby")
-                .GetComponent<Manager>();
-        
-        Lobby.InitilizeSteamLobby();
-    }*/
 
     #region HOST/CLIENT CONTROLS
 

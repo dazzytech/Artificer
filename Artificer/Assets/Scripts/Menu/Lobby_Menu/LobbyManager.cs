@@ -126,7 +126,9 @@ namespace Menu.Lobby
             // FIX
             m_att.CurrentLobby = new LobbyObject(pLobby);
 
-            m_att.CurrentLobby.OnDataUpdate += UpdateLobby;    
+            m_att.CurrentLobby.OnDataUpdate += UpdateLobby;
+
+            m_att.CurrentLobby.OnUserUpdate += UpdateLobby; 
 
             m_att.CurrentLobby.Initialize();
 
@@ -184,6 +186,9 @@ namespace Menu.Lobby
 
             // Set game not running
             SteamMatchmaking.SetLobbyData(pLobby, "running", "false");
+
+            // Define IP address
+            SteamMatchmaking.SetLobbyData(pLobby, "ip", Network.player.ipAddress);
 
             // Add more when games are customized
         }
@@ -344,7 +349,6 @@ namespace Menu.Lobby
 
             // Check if the lobby game has started
             // for us to start 
-            Debug.Log(SteamMatchmaking.GetLobbyData(LobbyID, "running"));
             if (SteamMatchmaking.GetLobbyData(LobbyID, "running") == "true")
             {
                 SystemManager.JoinOnlineClient
