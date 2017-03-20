@@ -26,7 +26,11 @@ namespace Menu.Lobby
 
         public delegate void LobbyUpdate();
 
-        public event LobbyUpdate OnLobbyUpdate;
+        public event LobbyUpdate OnDataUpdate;
+
+        public event LobbyUpdate OnUserUpdate;
+
+        public event LobbyUpdate OnChatUpdate;
 
         #endregion
 
@@ -82,7 +86,7 @@ namespace Menu.Lobby
             Debug.Log("Persona Update");
 
             // Call function to refresh lobby viewer
-            OnLobbyUpdate();
+            OnUserUpdate();
         }
 
         private void OnLobbyDataUpdate(LobbyDataUpdate_t pCallback)
@@ -96,7 +100,7 @@ namespace Menu.Lobby
             // When lobby data is created it will be retreived
 
             // Call function to refresh the lobby viewer
-            OnLobbyUpdate();
+            OnDataUpdate();
         }
 
         private void OnLobbyChatUpdate(LobbyChatUpdate_t pCallback)
@@ -107,7 +111,7 @@ namespace Menu.Lobby
             Debug.Log("Chat Update");
 
             // call function to refresh lobby viewer
-            OnLobbyUpdate();
+            OnChatUpdate();
         }
 
         #endregion

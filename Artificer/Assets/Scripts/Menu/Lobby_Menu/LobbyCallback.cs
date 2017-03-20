@@ -125,8 +125,6 @@ namespace Menu.Lobby
 
         private void OnLobbyCreate(LobbyCreated_t pCallback, bool bIOFailure)
         {
-            Debug.Log(pCallback.m_eResult);
-
             if (pCallback.m_eResult == EResult.k_EResultOK)
             {
                 // Allow us to intialize the lobby

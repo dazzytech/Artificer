@@ -386,19 +386,6 @@ public class SystemManager : NetworkManager
 
     #endregion
 
-    public void EnterSteam()
-    {
-        // Build the Server Data we will use 
-        // and will pass to other servers for 
-        ServerData newServer = new ServerData();
-        newServer.ServerIP = Network.player.ipAddress;
-        newServer.ServerPort = 7777;
-        newServer.ServerVersion = m_singleton.m_base.Version;
-
-        m_singleton.m_base.ServerInfo = newServer;
-
-    }
-
     #region CREATE SERVER
 
     /// <summary>
@@ -471,7 +458,7 @@ public class SystemManager : NetworkManager
     public static void JoinOnlineClient
         (string serverAddress, CSteamID lobbyID)
     {
-        m_singleton.networkAddress = serverAddress;
+        NetworkManager.singleton.networkAddress = serverAddress;
 
         m_singleton.m_base.Lobby = lobbyID;
 

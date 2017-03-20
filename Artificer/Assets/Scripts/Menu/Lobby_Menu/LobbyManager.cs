@@ -126,7 +126,7 @@ namespace Menu.Lobby
             // FIX
             m_att.CurrentLobby = new LobbyObject(pLobby);
 
-            m_att.CurrentLobby.OnLobbyUpdate += UpdateLobby;    
+            m_att.CurrentLobby.OnDataUpdate += UpdateLobby;    
 
             m_att.CurrentLobby.Initialize();
 
@@ -181,6 +181,9 @@ namespace Menu.Lobby
 
             // Assign the game version to the lobby
             SteamMatchmaking.SetLobbyData(pLobby, "ver", SystemManager.Version);
+
+            // Set game not running
+            SteamMatchmaking.SetLobbyData(pLobby, "running", "false");
 
             // Add more when games are customized
         }
@@ -282,9 +285,9 @@ namespace Menu.Lobby
             {
                 SteamMatchmaking.LeaveLobby(m_att.CurrentLobby.GetID);
 
-                m_att.CurrentLobby.OnLobbyUpdate -= UpdateLobby;
+                m_att.CurrentLobby.OnDataUpdate -= UpdateLobby;
 
-                m_att.CurrentLobby.OnLobbyUpdate
+                m_att.CurrentLobby.OnDataUpdate
                     -= m_att.LobbyViewer.ViewLobby;
 
                 m_att.CurrentLobby = null;
@@ -300,7 +303,7 @@ namespace Menu.Lobby
             // Change so this is only implimented when event is triggered
             if (m_att.CurrentLobby != null)
             {
-                if (SteamMatchmaking.GetLobbyData(m_att.CurrentLobby.GetID, "live") == "true")
+                if (SteamMatchmaking.GetLobbyData(LobbyID, "live") == "true")
                 {
                     // we are in a live game, need the leave option and invite option
                     m_att.SearchBtn.gameObject.SetActive(false);
@@ -313,7 +316,8 @@ namespace Menu.Lobby
                     m_att.LeaveBtn.gameObject.SetActive(false);
                     m_att.InviteBtn.gameObject.SetActive(true);
                     // only lobby owners can start search
-                    if (SteamMatchmaking.GetLobbyOwner(m_att.CurrentLobby.GetID).Equals(SteamUser.GetSteamID()))
+                    if (SteamMatchmaking.GetLobbyOwner(LobbyID).
+                            Equals(SteamUser.GetSteamID()))
                         m_att.SearchBtn.gameObject.SetActive(true);
                     else
                         m_att.SearchBtn.gameObject.SetActive(false);
@@ -340,6 +344,7 @@ namespace Menu.Lobby
 
             // Check if the lobby game has started
             // for us to start 
+            Debug.Log(SteamMatchmaking.GetLobbyData(LobbyID, "running"));
             if (SteamMatchmaking.GetLobbyData(LobbyID, "running") == "true")
             {
                 SystemManager.JoinOnlineClient
