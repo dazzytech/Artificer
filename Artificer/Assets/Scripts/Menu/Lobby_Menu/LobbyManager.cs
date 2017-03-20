@@ -189,7 +189,7 @@ namespace Menu.Lobby
             // Set game not running
             SteamMatchmaking.SetLobbyData(pLobby, "running", "false");
 
-            Network.Connect("http://www.google.com");
+            Network.Connect("http://www.dtsoftworks.co.uk");
 
             // Define IP address
             SteamMatchmaking.SetLobbyData(pLobby, "ip", Network.player.externalIP);

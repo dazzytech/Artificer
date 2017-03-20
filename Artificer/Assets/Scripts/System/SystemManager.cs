@@ -16,6 +16,8 @@ using Networking;
 using UnityEngine.Networking.NetworkSystem;
 using Data.UI;
 using UnityEngine.SceneManagement;
+using System.Net;
+using System.Net.Sockets;
 
 [RequireComponent(typeof(SystemAttributes))]
 
@@ -464,6 +466,16 @@ public class SystemManager : NetworkManager
         m_singleton.m_base.Lobby = lobbyID;
 
         m_singleton.onlineScene = "SpaceScene";
+
+        try
+        {
+            Dns.GetHostEntry(serverAddress);
+        }
+        catch (SocketException e)
+        {
+            Debug.LogError("Error: SystemManager: JoinClient - DNS failed");
+            return;
+        }
 
         m_singleton.TryClient();
     }
