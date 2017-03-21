@@ -199,7 +199,7 @@ public class SystemManager : NATTraversal.NetworkManager
             // switch to space scene
             GameMSG.SceneChanged("play");
         }
-        else if (sceneName == "LobbyScene")
+        else if (sceneName == "ServerScene")
         {
             // Use this override to initialize and
             // broadcast your game through NetworkDiscovery
@@ -528,7 +528,7 @@ public class SystemManager : NATTraversal.NetworkManager
         networkSceneName = "";
         NetworkServer.SetAllClientsNotReady();
         ClientScene.DestroyAllClientObjects();
-        m_singleton.StartHost();
+        StartHost();
     }
 
     // Tries to connect as a client
@@ -538,7 +538,7 @@ public class SystemManager : NATTraversal.NetworkManager
         networkSceneName = "";
         NetworkServer.SetAllClientsNotReady();
         ClientScene.DestroyAllClientObjects();
-        m_singleton.StartClient();
+        StartClient();
     }
 
     // Leaves the lobby or match we are connected to (host and client)
@@ -550,8 +550,7 @@ public class SystemManager : NATTraversal.NetworkManager
         if(m_base.Discovery.running)
             m_base.Discovery.StopBroadcast();
 
-        SystemManager.m_singleton.StopClient();
-        SystemManager.m_singleton.StopHost();
+        m_singleton.StopHost();
     }
 
     #endregion
