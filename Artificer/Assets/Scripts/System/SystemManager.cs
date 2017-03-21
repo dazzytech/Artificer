@@ -158,16 +158,7 @@ public class SystemManager : NATTraversal.NetworkManager
     {
         base.OnStartServer();
 
-        Network.Connect("http://www.google.com");
-
-        SteamMatchmaking.SetLobbyData(m_base.Lobby, "guid", NATHelper.singleton.guid.ToString());
-        SteamMatchmaking.SetLobbyData(m_base.Lobby, "publicIP", Network.player.externalIP);
-        SteamMatchmaking.SetLobbyData(m_base.Lobby, "internalIP", Network.player.ipAddress);
-
-        Network.Disconnect();
-
-        // set game to running
-        SteamMatchmaking.SetLobbyData(m_base.Lobby, "running", "true");
+        UpdateLobbyData();
     }
 
     /// <summary>
@@ -424,9 +415,10 @@ public class SystemManager : NATTraversal.NetworkManager
 
         Network.Connect("http://www.google.com");
 
+        //m_singleton.getExternalIP();
         // Set the IP the Net Manager is going to use to host a game to OUR IP address and Port 7777
-        m_singleton.networkAddress = Network.player.externalIP;
-        m_singleton.networkPort = 7777;
+        //m_singleton.networkAddress = ;
+        //m_singleton.networkPort = 7777;
 
         Network.Disconnect();
 
@@ -550,13 +542,34 @@ public class SystemManager : NATTraversal.NetworkManager
 
     #region PRIVATE UTILITIES
 
+    #region LOBBY CONTROLS
+
+    #region COROUTINE
+    
+    /// <summary>
+    /// places information in the steam
+    /// lobby information. sets lobby to running
+    /// </summary>
+    private void UpdateLobbyData()
+    {
+        SteamMatchmaking.SetLobbyData(m_base.Lobby, "guid", NATHelper.singleton.guid.ToString());
+        SteamMatchmaking.SetLobbyData(m_base.Lobby, "publicIP", m_singleton.externalIP);
+        SteamMatchmaking.SetLobbyData(m_base.Lobby, "internalIP", m_singleton.hostInternalIP);
+
+        // set game to running
+        SteamMatchmaking.SetLobbyData(m_base.Lobby, "running", "true");
+    }
+
+    #endregion
+
+    #endregion
+
     #region HOST/CLIENT CONTROLS
 
     // Tries to host a game
     // This method is called by the user clicking Host Game on the main menu
     private void TryHost()
     {
-        
         networkSceneName = "";
         NetworkServer.SetAllClientsNotReady();
         ClientScene.DestroyAllClientObjects();
@@ -585,8 +598,6 @@ public class SystemManager : NATTraversal.NetworkManager
         SystemManager.m_singleton.StopClient();
         SystemManager.m_singleton.StopHost();
     }
-
-    //http://molx.us/2016/03/28/1/   above from here
 
     #endregion
 
