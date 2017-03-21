@@ -18,10 +18,13 @@ using Data.UI;
 using UnityEngine.SceneManagement;
 using System.Net;
 using System.Net.Sockets;
+using UnityEngine.Networking.Match;
+using NATTraversal;
+using UnityEngine.Networking.Types;
 
 [RequireComponent(typeof(SystemAttributes))]
 
-public class SystemManager : NetworkManager
+public class SystemManager : NATTraversal.NetworkManager
 {
     #region ATTRIBUTES
 
@@ -151,6 +154,40 @@ public class SystemManager : NetworkManager
 
     #region SERVER SIDE
 
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+
+        Network.Connect("http://www.dtsoftworks.co.uk");
+
+        SteamMatchmaking.SetLobbyData(m_base.Lobby, "guid", NATHelper.singleton.guid.ToString());
+        SteamMatchmaking.SetLobbyData(m_base.Lobby, "publicIP", Network.player.externalIP);
+        SteamMatchmaking.SetLobbyData(m_base.Lobby, "internalIP", Network.player.ipAddress);
+
+        Network.Disconnect();
+
+        // set game to running
+        SteamMatchmaking.SetLobbyData(m_base.Lobby, "running", "true");
+    }
+
+    public override void OnMatchCreate(bool success, string extendedInfo, MatchInfo matchInfo)
+    {
+        base.OnMatchCreate(success, extendedInfo, matchInfo);
+
+        Network.Connect("http://www.dtsoftworks.co.uk");
+
+        // Define Connection data
+        //SteamMatchmaking.SetLobbyData(m_base.Lobby, "matchID", matchInfo.networkId.ToString());
+        SteamMatchmaking.SetLobbyData(m_base.Lobby, "guid", NATHelper.singleton.guid.ToString());
+        SteamMatchmaking.SetLobbyData(m_base.Lobby, "publicIP", Network.player.externalIP);
+        SteamMatchmaking.SetLobbyData(m_base.Lobby, "internalIP", Network.player.ipAddress);
+
+        Network.Disconnect();
+
+        // set game to running
+        SteamMatchmaking.SetLobbyData(m_base.Lobby, "running", "true");
+    }
+
     /// <summary>
     /// Initailze the player and add it to the 
     /// team spawner to allocate it a position
@@ -242,7 +279,13 @@ public class SystemManager : NetworkManager
         base.OnStartClient(client);
 
         // listen for when server is assigned an ID
-        NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
+        m_singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
+    }
+
+    public override void OnClientError(NetworkConnection conn, int errorCode)
+    {
+        Debug.Log("Client Error");
+        base.OnClientError(conn, errorCode);
     }
 
     /// <summary>
@@ -291,18 +334,6 @@ public class SystemManager : NetworkManager
 
     }
 
-    /*public override void OnClientNotReady(NetworkConnection conn)
-    {
-        Debug.Log("Client Not Ready");
-        base.OnClientNotReady(conn);
-    }
-
-    public override void OnClientError(NetworkConnection conn, int errorCode)
-    {
-        Debug.Log("Client Error");
-        base.OnClientError(conn, errorCode);
-    }*/
-
     #endregion
 
     #endregion
@@ -332,7 +363,7 @@ public class SystemManager : NetworkManager
         m_base.Player.PlayerName = name;
     }
 
-    void Start()
+    public override void Start()
     {
         if (m_singleton == null)
             m_singleton = this;
@@ -341,7 +372,7 @@ public class SystemManager : NetworkManager
 
         m_preload.PreloadAssets();
 
-        
+        base.Start();
     }
 
     #endregion
@@ -409,9 +440,13 @@ public class SystemManager : NetworkManager
 
         m_singleton.m_base.ServerInfo = newServer;
 
+        Network.Connect("http://www.dtsoftworks.co.uk");
+
         // Set the IP the Net Manager is going to use to host a game to OUR IP address and Port 7777
-        m_singleton.networkAddress = newServer.ServerIP;
-        m_singleton.networkPort = newServer.ServerPort;
+        m_singleton.networkAddress = Network.player.externalIP;
+        m_singleton.networkPort = 7777;
+
+        Network.Disconnect();
 
         m_singleton.onlineScene = "SpaceScene";
 
@@ -458,26 +493,24 @@ public class SystemManager : NetworkManager
     #region JOIN SERVER
 
     public static void JoinOnlineClient
-        (string serverAddress, CSteamID lobbyID)
+        (string externalIP, string internalIP,
+        ulong guid, string matchID, CSteamID lobbyID)
     {
-        m_singleton.networkAddress = serverAddress;
+        m_singleton.onlineScene = "SpaceScene";
+
+        m_singleton.StartClientAll
+            (externalIP, internalIP, guid);
+
+        m_singleton.m_base.Lobby = lobbyID;
+
+        /*m_singleton.networkAddress = serverAddress;
         m_singleton.networkPort = 7777;
 
         m_singleton.m_base.Lobby = lobbyID;
 
-        m_singleton.onlineScene = "SpaceScene";
+        
 
-        try
-        {
-            Dns.GetHostEntry(serverAddress);
-        }
-        catch (SocketException e)
-        {
-            Debug.LogError("Error: SystemManager: JoinClient - DNS failed");
-            return;
-        }
-
-        m_singleton.TryClient();
+        m_singleton.TryClient();*/
     }
 
     public static void JoinLANClient(string serverAddress)
@@ -541,10 +574,11 @@ public class SystemManager : NetworkManager
     // This method is called by the user clicking Host Game on the main menu
     private void TryHost()
     {
+        
         networkSceneName = "";
         NetworkServer.SetAllClientsNotReady();
         ClientScene.DestroyAllClientObjects();
-        m_singleton.StartHost();
+        StartHostAll(m_base.ServerInfo.ServerName, 2);
     }
 
     // Tries to connect as a client
@@ -554,7 +588,7 @@ public class SystemManager : NetworkManager
         networkSceneName = "";
         NetworkServer.SetAllClientsNotReady();
         ClientScene.DestroyAllClientObjects();
-        m_singleton.StartClient();
+        //m_singleton.clie();
     }
 
     // Leaves the lobby or match we are connected to (host and client)

@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using Steamworks;
 using Data.UI;
+using UnityEngine.Networking.Types;
+using System;
 
 namespace Menu.Lobby
 {
@@ -41,7 +43,8 @@ namespace Menu.Lobby
         {
             OnUpdateState += UpdateState;
 
-            if (SteamManager.Initialized)
+            if (SteamManager.Initialized &&
+                LobbyID != null)
             {
                 CreateHiddenLobby();
             }
@@ -49,9 +52,9 @@ namespace Menu.Lobby
 
         private void OnDisable()
         {
-            if (m_att.CurrentLobby != null)
+            /*if (m_att.CurrentLobby != null)
                 if (SteamManager.Initialized)
-                    QuitLobby();
+                    QuitLobby();*/
 
             OnUpdateState -= UpdateState;
         }
@@ -188,13 +191,6 @@ namespace Menu.Lobby
 
             // Set game not running
             SteamMatchmaking.SetLobbyData(pLobby, "running", "false");
-
-            Network.Connect("http://www.dtsoftworks.co.uk");
-
-            // Define IP address
-            SteamMatchmaking.SetLobbyData(pLobby, "ip", Network.player.externalIP);
-
-            Network.Disconnect();
 
             // Add more when games are customized
         }
@@ -361,9 +357,7 @@ namespace Menu.Lobby
             // for us to start 
             if (SteamMatchmaking.GetLobbyData(LobbyID, "running") == "true")
             {
-                SystemManager.JoinOnlineClient
-                    (SteamMatchmaking.GetLobbyData
-                    (LobbyID, "ip"), LobbyID);
+                StartCoroutine("JoinDelay");
             }
         }
 
@@ -378,17 +372,12 @@ namespace Menu.Lobby
                 // exit if not host
                 return;
 
-            // set game to running
-            SteamMatchmaking.SetLobbyData
-                (LobbyID, "running", "true");
-
-
             // Build Server with game manager
             ServerData newServer = new ServerData();
 
             // Populate connection info
-            newServer.ServerIP = SteamMatchmaking
-                .GetLobbyData(LobbyID, "ip");  
+            //newServer.ServerIP = SteamMatchmaking
+                //.GetLobbyData(LobbyID, "ip");  
 
             newServer.ServerPort = 7777;
 
@@ -450,6 +439,18 @@ namespace Menu.Lobby
                 BuildGame();
 
             yield return null;
+        }
+
+        private IEnumerator JoinDelay()
+        {
+            yield return new WaitForSeconds(5f);
+
+            SystemManager.JoinOnlineClient
+                (SteamMatchmaking.GetLobbyData(LobbyID, "publicIP"),
+                SteamMatchmaking.GetLobbyData(LobbyID, "internalIP"),
+                Convert.ToUInt64(SteamMatchmaking.GetLobbyData(LobbyID, "guid")),
+                SteamMatchmaking.GetLobbyData(LobbyID, "matchID"),
+                LobbyID);
         }
 
         #endregion
