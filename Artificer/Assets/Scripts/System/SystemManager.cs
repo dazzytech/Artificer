@@ -158,26 +158,8 @@ public class SystemManager : NATTraversal.NetworkManager
     {
         base.OnStartServer();
 
-        Network.Connect("http://www.dtsoftworks.co.uk");
+        Network.Connect("http://www.google.com");
 
-        SteamMatchmaking.SetLobbyData(m_base.Lobby, "guid", NATHelper.singleton.guid.ToString());
-        SteamMatchmaking.SetLobbyData(m_base.Lobby, "publicIP", Network.player.externalIP);
-        SteamMatchmaking.SetLobbyData(m_base.Lobby, "internalIP", Network.player.ipAddress);
-
-        Network.Disconnect();
-
-        // set game to running
-        SteamMatchmaking.SetLobbyData(m_base.Lobby, "running", "true");
-    }
-
-    public override void OnMatchCreate(bool success, string extendedInfo, MatchInfo matchInfo)
-    {
-        base.OnMatchCreate(success, extendedInfo, matchInfo);
-
-        Network.Connect("http://www.dtsoftworks.co.uk");
-
-        // Define Connection data
-        //SteamMatchmaking.SetLobbyData(m_base.Lobby, "matchID", matchInfo.networkId.ToString());
         SteamMatchmaking.SetLobbyData(m_base.Lobby, "guid", NATHelper.singleton.guid.ToString());
         SteamMatchmaking.SetLobbyData(m_base.Lobby, "publicIP", Network.player.externalIP);
         SteamMatchmaking.SetLobbyData(m_base.Lobby, "internalIP", Network.player.ipAddress);
@@ -279,7 +261,7 @@ public class SystemManager : NATTraversal.NetworkManager
         base.OnStartClient(client);
 
         // listen for when server is assigned an ID
-        m_singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
+        //m_singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
     }
 
     public override void OnClientError(NetworkConnection conn, int errorCode)
@@ -440,7 +422,7 @@ public class SystemManager : NATTraversal.NetworkManager
 
         m_singleton.m_base.ServerInfo = newServer;
 
-        Network.Connect("http://www.dtsoftworks.co.uk");
+        Network.Connect("http://www.google.com");
 
         // Set the IP the Net Manager is going to use to host a game to OUR IP address and Port 7777
         m_singleton.networkAddress = Network.player.externalIP;
@@ -553,14 +535,14 @@ public class SystemManager : NATTraversal.NetworkManager
     /// Stores the ID assigned from the game controller
     /// </summary>
     /// <param name="netMsg"></param>
-    public void OnNewIDMessage(NetworkMessage netMsg)
+    /*public void OnNewIDMessage(NetworkMessage netMsg)
     {
         // Retreive variables and display options
         IntegerMessage im = netMsg.ReadMessage<IntegerMessage>();
 
         // Store our id on the server
         m_base.Player.PlayerID = im.value;
-    }
+    }*/
 
     #endregion
 
