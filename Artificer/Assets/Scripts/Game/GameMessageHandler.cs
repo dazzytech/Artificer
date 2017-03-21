@@ -33,6 +33,15 @@ namespace Game
 
         void Awake()
         {
+            if (isServer)
+            {
+                if (!m_con.Build())
+                {
+                    Destroy(gameObject);
+                    return;
+                }
+            }
+
             DontDestroyOnLoad(this);
 
             #region SPACE MESSAGES
@@ -52,6 +61,8 @@ namespace Game
             NetworkServer.RegisterHandler((short)MSGCHANNEL.STATIONDESTROYED, OnStationDestroyed);
 
             #endregion
+
+            SystemManager.GameMSG = this;
         }
 
         #endregion

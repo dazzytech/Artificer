@@ -34,6 +34,7 @@ namespace Game
 
         #region ATTRIBUTES
 
+        [SerializeField]
         private GameAttributes _att;
 
         private static GameManager m_singleton;
@@ -44,27 +45,20 @@ namespace Game
 
         #endregion
 
-        #region MONO BEHAVIOUR
 
-        void Awake()
+        #region PUBLIC INTERACTION
+
+        public bool Build()
         {
-            _att = GetComponent<GameAttributes>();
-            _att.Builder = GetComponent<GameBuilder>();
-
             if (m_singleton == null)
                 m_singleton = this;
             else
             {
-                Destroy(gameObject);
-                return;
+                return false;
             }
 
-            DontDestroyOnLoad(this);
+            return true;
         }
-
-        #endregion
-
-        #region PUBLIC INTERACTION
 
         #region SYSTEM MESSAGES
 
@@ -176,6 +170,9 @@ namespace Game
         public void RemovePlayer
             (NetworkConnection conn)
         {
+            if (_att.PlayerInfoList == null)
+                return;
+
             // Test If this player is already joined to the match
             PlayerConnectionInfo info = _att.PlayerInfoList
                 .FirstOrDefault(o => o.mConnection == conn);
@@ -202,6 +199,9 @@ namespace Game
         [Server]
         public void AssignToTeam(int TeamID, int playerID)
         {
+            if (_att.PlayerInfoList == null)
+                return;
+
             PlayerConnectionInfo pInfo = 
                 _att.PlayerInfoList.Item(playerID);
 

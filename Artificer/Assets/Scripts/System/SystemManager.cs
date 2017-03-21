@@ -51,10 +51,15 @@ public class SystemManager : NATTraversal.NetworkManager
         get
         {
             // Assign the playerspawn to the scene object if doesnt exist
-            if (m_singleton.m_base.GameMsg == null)
-                m_singleton.m_base.GameMsg = GameObject.Find("_game")
-                    .GetComponent<GameMessageHandler>();
-            return m_singleton.m_base.GameMsg;
+            if (m_singleton.m_base != null)
+                return m_singleton.m_base.GameMsg;
+            else
+                return null;
+        }
+
+        set
+        {
+            m_singleton.m_base.GameMsg = value;
         }
     }
 
@@ -154,6 +159,11 @@ public class SystemManager : NATTraversal.NetworkManager
 
     #region SERVER SIDE
 
+    /// <summary>
+    /// When the server is successfully
+    /// made then proceed to update steam lobby
+    /// with connection info
+    /// </summary>
     public override void OnStartServer()
     {
         base.OnStartServer();
@@ -186,8 +196,6 @@ public class SystemManager : NATTraversal.NetworkManager
         // Initialize space scene
         if (sceneName == "SpaceScene")
         {
-            //Space.InitializeSpaceParameters();
-            //GameMSG.InitializeGameParameters();
             // switch to space scene
             GameMSG.SceneChanged("play");
         }
@@ -247,17 +255,16 @@ public class SystemManager : NATTraversal.NetworkManager
 
     #region CLIENT SIDE
 
-    public override void OnStartClient(NetworkClient client)
-    {
-        base.OnStartClient(client);
-
-        // listen for when server is assigned an ID
-        //m_singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
-    }
-
+    /// <summary>
+    /// When client connection is unsuccessful then display
+    /// a popup and leave steam lobby
+    /// </summary>
+    /// <param name="conn"></param>
+    /// <param name="errorCode"></param>
     public override void OnClientError(NetworkConnection conn, int errorCode)
     {
         Debug.Log("Client Error");
+
         base.OnClientError(conn, errorCode);
     }
 
@@ -273,38 +280,8 @@ public class SystemManager : NATTraversal.NetworkManager
 
         ClientScene.AddPlayer(0);
 
-        // If we switched to space then assign our
-        // space manager
-        if (networkSceneName == "SpaceScene")
-        {
-            GameObject space = GameObject.Find("space");
-
-            if (space == null)
-                Debug.Log("Error: System Manager - Client Scene Changed: " +
-                    "SpaceManager not found in space scene.");
-            else
-                m_singleton.m_base.Space = space
-                    .GetComponent<SpaceManager>();
-
-        }
-
-        // Else If we switched to lobby then assign our
-        // lobby manager
-        else if (networkSceneName == "ServerScene")
-        {
-            if (m_singleton.m_base.Server == null)
-            {
-                GameObject lobby = GameObject.Find("ServeViewer");
-
-                if (lobby == null)
-                    Debug.Log("Error: System Manager - Client Scene Changed: " +
-                        "LobbyManager not found in space scene.");
-                else
-                    m_singleton.m_base.Server
-                        = GameObject.Find("ServeViewer").GetComponent<ServerManager>();                
-            }
-        }
-
+        // listen for when server is assigned an ID
+        m_singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
     }
 
     #endregion
@@ -413,19 +390,11 @@ public class SystemManager : NATTraversal.NetworkManager
 
         m_singleton.m_base.ServerInfo = newServer;
 
-        Network.Connect("http://www.google.com");
-
-        //m_singleton.getExternalIP();
-        // Set the IP the Net Manager is going to use to host a game to OUR IP address and Port 7777
-        //m_singleton.networkAddress = ;
-        //m_singleton.networkPort = 7777;
-
-        Network.Disconnect();
-
         m_singleton.onlineScene = "SpaceScene";
 
         // Startup the host
-        m_singleton.TryHost();
+        m_singleton.StartHostAll(m_singleton.
+            m_base.ServerInfo.ServerName, 2);
     }
 
     /// <summary>
@@ -476,21 +445,11 @@ public class SystemManager : NATTraversal.NetworkManager
             (externalIP, internalIP, guid);
 
         m_singleton.m_base.Lobby = lobbyID;
-
-        /*m_singleton.networkAddress = serverAddress;
-        m_singleton.networkPort = 7777;
-
-        m_singleton.m_base.Lobby = lobbyID;
-
-        
-
-        m_singleton.TryClient();*/
     }
 
     public static void JoinLANClient(string serverAddress)
     {
         // Artificer uses port 7777
-
         m_singleton.networkAddress = serverAddress;
         m_singleton.networkPort = 7777;
 
@@ -527,14 +486,14 @@ public class SystemManager : NATTraversal.NetworkManager
     /// Stores the ID assigned from the game controller
     /// </summary>
     /// <param name="netMsg"></param>
-    /*public void OnNewIDMessage(NetworkMessage netMsg)
+    public void OnNewIDMessage(NetworkMessage netMsg)
     {
         // Retreive variables and display options
         IntegerMessage im = netMsg.ReadMessage<IntegerMessage>();
 
         // Store our id on the server
         m_base.Player.PlayerID = im.value;
-    }*/
+    }
 
     #endregion
 
@@ -544,8 +503,6 @@ public class SystemManager : NATTraversal.NetworkManager
 
     #region LOBBY CONTROLS
 
-    #region COROUTINE
-    
     /// <summary>
     /// places information in the steam
     /// lobby information. sets lobby to running
@@ -562,8 +519,6 @@ public class SystemManager : NATTraversal.NetworkManager
 
     #endregion
 
-    #endregion
-
     #region HOST/CLIENT CONTROLS
 
     // Tries to host a game
@@ -573,7 +528,7 @@ public class SystemManager : NATTraversal.NetworkManager
         networkSceneName = "";
         NetworkServer.SetAllClientsNotReady();
         ClientScene.DestroyAllClientObjects();
-        StartHostAll(m_base.ServerInfo.ServerName, 2);
+        m_singleton.StartHost();
     }
 
     // Tries to connect as a client
@@ -583,7 +538,7 @@ public class SystemManager : NATTraversal.NetworkManager
         networkSceneName = "";
         NetworkServer.SetAllClientsNotReady();
         ClientScene.DestroyAllClientObjects();
-        //m_singleton.clie();
+        m_singleton.StartClient();
     }
 
     // Leaves the lobby or match we are connected to (host and client)
