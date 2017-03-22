@@ -55,18 +55,39 @@ namespace Menu.Lobby
 
         #endregion
 
-        // refreshes the lobby view
-        public void ViewLobby()
-        {
-            // display players to the right
-            ClearPlayers();
-            ViewPlayers();
+        #region PUBLIC INTERACTION
 
+        /// <summary>
+        /// Reset settings viewer
+        /// when Lobby data is changed
+        /// </summary>
+        public void UpdateSettings()
+        {
             // display game info
             ClearSettings();
             ViewSettings();
         }
 
+        /// <summary>
+        /// Resets player viewer when player
+        /// state is changed
+        /// </summary>
+        public void UpdatePlayers()
+        {
+            // display players to the right
+            ClearPlayers();
+            ViewPlayers();
+        }
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        #region PLAYERS
+
+        /// <summary>
+        /// Refresh the lobby player list
+        /// </summary>
         private void ClearPlayers()
         {
             foreach(Transform child in m_playerViewerList)
@@ -76,6 +97,10 @@ namespace Menu.Lobby
             }
         }
 
+        /// <summary>
+        /// Build the player list in lobby
+        /// viewer
+        /// </summary>
         private void ViewPlayers()
         {
             // store the player count in int
@@ -105,6 +130,8 @@ namespace Menu.Lobby
                 P_Prefab.SetPlayer(OtherPlayer, LobbyID);
             }
         }
+
+        #endregion
 
         #region SETTINGS
 
@@ -159,6 +186,8 @@ namespace Menu.Lobby
         {
             // dont do anything yet
         }
+
+        #endregion
 
         #endregion
     }

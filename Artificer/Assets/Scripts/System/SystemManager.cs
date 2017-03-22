@@ -275,8 +275,8 @@ public class SystemManager : NATTraversal.NetworkManager
     /// </summary>
     /// <param name="conn"></param>
     public override void OnClientSceneChanged(NetworkConnection conn)
-    {
-        base.OnClientSceneChanged(conn);
+    { 
+        base.OnClientSceneChanged(conn); 
 
         ClientScene.AddPlayer(0);
 
@@ -437,7 +437,7 @@ public class SystemManager : NATTraversal.NetworkManager
 
     public static void JoinOnlineClient
         (string externalIP, string internalIP,
-        ulong guid, string matchID, CSteamID lobbyID)
+        ulong guid, CSteamID lobbyID)
     {
         m_singleton.onlineScene = "SpaceScene";
 
@@ -455,7 +455,9 @@ public class SystemManager : NATTraversal.NetworkManager
 
         m_singleton.onlineScene = "ServerScene";
 
-        m_singleton.TryClient();
+        m_singleton.createClient();
+
+        m_singleton.directClient.Connect(serverAddress, 7777);
     }
 
     #endregion

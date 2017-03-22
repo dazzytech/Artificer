@@ -59,11 +59,21 @@ namespace Menu.Lobby
             OnUpdateState -= UpdateState;
         }
 
+        private void Awake()
+        {
+            m_att.Timeout = false;
+        }
+
         #endregion
 
-        #region EVENT LISTENER INTERFACE
+        #region PUBLIC INTERACTION
 
-        public void StartLobbySearch() // filter will be passed through params (maybe create)
+        /// <summary>
+        /// Retrieve a list of current steam
+        /// lobbies with the same version
+        /// and attempt to join the most suitable one
+        /// </summary>
+        public void StartLobbySearch()
         {
             // SystemManager keeps a persistant string that stores 
             // the current version
@@ -71,10 +81,10 @@ namespace Menu.Lobby
                 ("ver", SystemManager.Version, 
                 ELobbyComparison.k_ELobbyComparisonEqual);
 
+            // Find enough space for everyone within the private lobby
             SteamMatchmaking.
             AddRequestLobbyListFilterSlotsAvailable
                 (SteamMatchmaking.GetNumLobbyMembers(m_att.CurrentLobby.GetID));
-            // Find enough space for everyone within the private lobby
 
             // Apply request to callback
             SteamAPICall_t handle = SteamMatchmaking.RequestLobbyList();
@@ -125,17 +135,7 @@ namespace Menu.Lobby
                 LeaveLobby();
             }
 
-            // create new lobby object within memory
-            // FIX
-            m_att.CurrentLobby = new LobbyObject(pLobby);
-
-            m_att.CurrentLobby.OnDataUpdate += UpdateLobby;
-
-            m_att.CurrentLobby.OnUserUpdate += UpdateLobby;
-
-            m_att.CurrentLobby.OnChatUpdate += UpdateLobby;
-
-            m_att.CurrentLobby.Initialize();
+            BuildLobby(pLobby);
 
             OnUpdateState();
         }
@@ -282,33 +282,15 @@ namespace Menu.Lobby
             }
         } 
 
-        /// <summary>
-        /// If player is currently in a lobby then leave 
-        /// said lobby
-        /// </summary>
-        public void LeaveLobby()
-        {
-            if (m_att.CurrentLobby != null)
-            {
-                SteamMatchmaking.LeaveLobby(m_att.CurrentLobby.GetID);
-
-                m_att.CurrentLobby.OnDataUpdate -= UpdateLobby;
-
-                m_att.CurrentLobby.OnUserUpdate -= UpdateLobby;
-
-                m_att.CurrentLobby.OnChatUpdate -= UpdateLobby;
-
-                m_att.CurrentLobby.OnDataUpdate
-                    -= m_att.LobbyViewer.ViewLobby;
-
-                m_att.CurrentLobby = null;
-            }
-        }
+        
 
         #endregion
 
         #region PRIVATE UTILITIES
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void UpdateState()
         {
             // Change so this is only implimented when event is triggered
@@ -344,20 +326,42 @@ namespace Menu.Lobby
         }
 
         /// <summary>
-        /// Performs any necessary actions when lobby
-        /// has changed e.g. reseting start counter
-        /// or starting match is game has started
+        /// Called when any data relating to the Lobby
+        /// is changed e.g. game rules, game state
         /// </summary>
-        private void UpdateLobby()
+        private void UpdateLobby(object param)
         {
             // Update visually
-            m_att.LobbyViewer.ViewLobby();
+            m_att.LobbyViewer.UpdateSettings();
 
             // Check if the lobby game has started
             // for us to start 
             if (SteamMatchmaking.GetLobbyData(LobbyID, "running") == "true")
             {
-                StartCoroutine("JoinDelay");
+                JoinGame();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="param"></param>
+        private void UpdatePlayers(object param)
+        {
+            // Update visually
+            m_att.LobbyViewer.UpdatePlayers();
+
+            // Only perform if the timeout function is invoked
+            if (m_att.Timeout)
+            {
+                // See if we are called due to player 
+                // Joining the lobby
+                if((int)param == 1)
+                {
+                    // Increase timeout by 5 sec
+                    // if player joined
+                    m_att.TimeoutTimer += 5;
+                }
             }
         }
 
@@ -375,10 +379,6 @@ namespace Menu.Lobby
             // Build Server with game manager
             ServerData newServer = new ServerData();
 
-            // Populate connection info
-            //newServer.ServerIP = SteamMatchmaking
-                //.GetLobbyData(LobbyID, "ip");  
-
             newServer.ServerPort = 7777;
 
             newServer.ServerVersion = SteamMatchmaking
@@ -387,6 +387,48 @@ namespace Menu.Lobby
             newServer.ServerName = "Steam Game";
 
             SystemManager.CreateOnlineServer(newServer, LobbyID);
+        }
+
+        private void JoinGame()
+        {
+            SystemManager.JoinOnlineClient
+                (SteamMatchmaking.GetLobbyData(LobbyID, "publicIP"),
+                SteamMatchmaking.GetLobbyData(LobbyID, "internalIP"),
+                Convert.ToUInt64(SteamMatchmaking.GetLobbyData(LobbyID, "guid")),
+                LobbyID);
+        }
+
+        private void BuildLobby(CSteamID pLobby)
+        {
+            // create new lobby object within memory
+            // FIX
+            m_att.CurrentLobby = new LobbyObject(pLobby);
+
+            m_att.CurrentLobby.OnDataUpdate += UpdateLobby;
+            m_att.CurrentLobby.OnUserUpdate += UpdateLobby;
+            m_att.CurrentLobby.OnChatUpdate += UpdatePlayers;
+
+            m_att.CurrentLobby.Initialize();
+        }
+
+        /// <summary>
+        /// If player is currently in a lobby then leave 
+        /// said lobby
+        /// </summary>
+        private void LeaveLobby()
+        {
+            if (m_att.CurrentLobby != null)
+            {
+                SteamMatchmaking.LeaveLobby(m_att.CurrentLobby.GetID);
+
+                m_att.CurrentLobby.OnDataUpdate -= UpdateLobby;
+
+                m_att.CurrentLobby.OnUserUpdate -= UpdateLobby;
+
+                m_att.CurrentLobby.OnChatUpdate -= UpdatePlayers;
+
+                m_att.CurrentLobby = null;
+            }
         }
 
         #endregion
@@ -404,12 +446,17 @@ namespace Menu.Lobby
             // Loop through each second
             int seconds = 0;
 
-            while(seconds < m_att.LobbyTimer)
+            while(seconds < m_att.StartTimer)
             {
+                float remaining = m_att.StartTimer - seconds;
+
                 // Update text item
+                // Display remaining time in format
+                // 0:00 minutes and seconds
                 m_att.CounterText.text =
-                    string.Format("Seconds remaining: {0}",
-                    m_att.LobbyTimer - seconds);
+                    string.Format("Waiting for players: {0:D1}:{1:D2}",
+                    Mathf.FloorToInt(remaining / 60),
+                    Mathf.CeilToInt(remaining % 60));
 
                 // increment seconds
                 seconds++;
@@ -431,26 +478,62 @@ namespace Menu.Lobby
             if (SteamMatchmaking.GetNumLobbyMembers(LobbyID)
                 < m_att.MinPlayers)
             {
-                m_att.CounterText.text = m_att.MinPlayers + " Players Required";
-                // Dont have enough players to start
-                QuitLobby();
+                // Begin the timeout if we have not 
+                // got enough players
+                yield return TimeoutDelay();
             }
             else
                 BuildGame();
 
-            yield return null;
+            yield break;
         }
 
-        private IEnumerator JoinDelay()
+        /// <summary>
+        /// Called after alloted min start
+        /// time elapsed. causes timeout
+        /// and leaves lobby after alloted time
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator TimeoutDelay()
         {
-            yield return new WaitForSeconds(5f);
+            // Loop through each second
+            int seconds = 0;
 
-            SystemManager.JoinOnlineClient
-                (SteamMatchmaking.GetLobbyData(LobbyID, "publicIP"),
-                SteamMatchmaking.GetLobbyData(LobbyID, "internalIP"),
-                Convert.ToUInt64(SteamMatchmaking.GetLobbyData(LobbyID, "guid")),
-                SteamMatchmaking.GetLobbyData(LobbyID, "matchID"),
-                LobbyID);
+            while (seconds < m_att.TimeoutTimer)
+            {
+                float remaining = m_att.TimeoutTimer - seconds;
+
+                // Display remaining time in format
+                // 0:00 minutes and seconds
+                m_att.CounterText.text =
+                    string.Format("Timeout in: {0:D1}:{1:D2}",
+                    Mathf.FloorToInt(remaining / 60),
+                    Mathf.CeilToInt(remaining % 60));
+
+                // increment seconds
+                seconds++;
+
+                // if we reach the minimum amount of players then 
+                // begin the match
+                if (SteamMatchmaking.GetNumLobbyMembers(LobbyID) >=
+                    m_att.MinPlayers)
+                {
+                    // Attained enough players 
+                    // to begin game
+                    BuildGame();
+                    yield break;
+                }
+
+                // Wait for a second
+                yield return new WaitForSeconds
+                    (1f);
+            }
+
+            // Dont have enough players to start
+            m_att.CounterText.text = "Lobby timed out - not enough players.";
+            QuitLobby();
+
+            yield break;
         }
 
         #endregion

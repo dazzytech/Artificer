@@ -18,13 +18,18 @@ namespace Menu.Lobby
     {
         #region ATTRIBUTES
 
+        // Reference to this lobby
         private CSteamID m_lobbyID;
+
+        // Keeps track of how many players
+        // in population before chat update
+        private int m_archiveCount;
 
         #endregion
 
         #region EVENT
 
-        public delegate void LobbyUpdate();
+        public delegate void LobbyUpdate(object param = null);
 
         public event LobbyUpdate OnDataUpdate;
 
@@ -75,7 +80,7 @@ namespace Menu.Lobby
 
         #region IMPLEMENT
 
-        // Listeners
+        
         private void OnPersonaStateChange(PersonaStateChange_t pCallback)
         {
             if(!SteamFriends.IsUserInSource((CSteamID)pCallback.m_ulSteamID, m_lobbyID))
@@ -103,15 +108,25 @@ namespace Menu.Lobby
             OnDataUpdate();
         }
 
+        /// <summary>
+        /// Invoked when players join or leave 
+        /// the lobby
+        /// </summary>
+        /// <param name="pCallback"></param>
         private void OnLobbyChatUpdate(LobbyChatUpdate_t pCallback)
         {
             if (m_lobbyID != (CSteamID)pCallback.m_ulSteamIDLobby)
                 return;
 
-            Debug.Log("Chat Update");
+            // retrieve our new lobby count
+            int currentLobbyCount = SteamMatchmaking.
+                GetNumLobbyMembers(m_lobbyID);
 
             // call function to refresh lobby viewer
-            OnChatUpdate();
+            OnChatUpdate(currentLobbyCount - m_archiveCount);
+
+            // Store this count as old
+            m_archiveCount = currentLobbyCount;
         }
 
         #endregion

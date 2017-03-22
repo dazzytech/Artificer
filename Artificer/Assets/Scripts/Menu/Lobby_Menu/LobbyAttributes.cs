@@ -32,7 +32,13 @@ namespace Menu.Lobby
         public int MinPlayers;
 
         // How long should we be matchmaking
-        public float LobbyTimer;
+        public float StartTimer;
+
+        // How long time the game timesout
+        public float TimeoutTimer;
+
+        // Are we currently in timeout?
+        public bool Timeout;
 
         #endregion
 
