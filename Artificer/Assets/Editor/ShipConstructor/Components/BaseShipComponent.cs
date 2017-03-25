@@ -66,6 +66,11 @@ namespace Editor
         [XmlAttribute("style")]
         public string current;
 
+        private void OnEnable()
+        {
+
+        }
+
         public BaseShipComponent()
 		{
             // initialize sockets

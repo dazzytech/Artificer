@@ -121,11 +121,13 @@ namespace Space.UI.Spawn
                 {
                     m_att.ShipList = new List<ShipSelectItem>();
 
-                    SelectShip(item);
+                    
                 }
 
                 m_att.ShipList.Add(item);
             }
+
+            SelectShip(m_att.ShipList[0]);
         }
 
         #endregion

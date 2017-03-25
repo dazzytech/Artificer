@@ -5,13 +5,13 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 490930}
-  - 114: {fileID: 11489868}
-  - 114: {fileID: 11405928}
-  - 114: {fileID: 11466604}
-  - 114: {fileID: 11422412}
+  - component: {fileID: 490930}
+  - component: {fileID: 11489868}
+  - component: {fileID: 11405928}
+  - component: {fileID: 11466604}
+  - component: {fileID: 11422412}
   m_Layer: 0
   m_Name: Engine_Left_07
   m_TagString: Body
@@ -24,13 +24,13 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 468968}
-  - 15: {fileID: 1565316}
-  - 12: {fileID: 1279934}
-  - 26: {fileID: 2627504}
-  - 114: {fileID: 11476108}
+  - component: {fileID: 468968}
+  - component: {fileID: 1565316}
+  - component: {fileID: 1279934}
+  - component: {fileID: 2627504}
+  - component: {fileID: 11476108}
   m_Layer: 0
   m_Name: Engine
   m_TagString: Untagged
@@ -43,10 +43,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 497636}
-  - 212: {fileID: 21292774}
+  - component: {fileID: 497636}
+  - component: {fileID: 21292774}
   m_Layer: 0
   m_Name: engine_left_07_default
   m_TagString: Untagged
@@ -59,10 +59,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 409214}
-  - 114: {fileID: 11410106}
+  - component: {fileID: 409214}
+  - component: {fileID: 11410106}
   m_Layer: 0
   m_Name: socket_0
   m_TagString: Untagged
@@ -79,10 +79,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.09, y: 0.015, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 490930}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &468968
 Transform:
   m_ObjectHideFlags: 1
@@ -92,10 +92,10 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.01, y: -0.125, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 490930}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!4 &490930
 Transform:
   m_ObjectHideFlags: 1
@@ -105,13 +105,13 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 497636}
   - {fileID: 409214}
   - {fileID: 468968}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &497636
 Transform:
   m_ObjectHideFlags: 1
@@ -121,10 +121,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 490930}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!12 &1279934
 ParticleAnimator:
   m_ObjectHideFlags: 1
@@ -191,17 +191,22 @@ ParticleRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: 9475698742e944615b0ab2c4b4ecc1b7, type: 2}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -238,6 +243,7 @@ MonoBehaviour:
   ID: 0
   TrackIntegrity: 0
   Integrity: 0
+  MaxIntegrity: 0
   LockedGO: {fileID: 0}
   sockInfo:
     SocketID: 0
@@ -259,7 +265,8 @@ MonoBehaviour:
   componentStyles:
   - sprite: {fileID: 21300000, guid: 88a90892bc15ee349b174b702572cbf9, type: 3}
     name: default
-  ShipAtt: {fileID: 0}
+  iconImage: {fileID: 21300000, guid: 21f433b08b61a01459f7c5f652f701a0, type: 3}
+  Ship: {fileID: 0}
   engineMotion: {x: 0, y: 0, z: 0}
   engineVelocity: {x: 0, y: 0, z: 0}
   acceleration: 20
@@ -343,7 +350,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Weight: 0.01
-  TotalHP: 0
   ComponentType: Engines
 --- !u!212 &21292774
 SpriteRenderer:
@@ -354,17 +360,22 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

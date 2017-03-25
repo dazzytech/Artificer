@@ -34,6 +34,9 @@ namespace Space.UI.Spawn
         private Text m_header;
 
         [SerializeField]
+        private Text m_type;
+
+        [SerializeField]
         private Text m_desc;
 
         [SerializeField]
@@ -117,6 +120,7 @@ namespace Space.UI.Spawn
             // Display Title and description
             m_header.text = newShip.Name;
             m_desc.text = newShip.Description;
+            m_type.text = newShip.Category;
 
             // keep reference
             m_shipData = newShip;
