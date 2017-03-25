@@ -314,6 +314,9 @@ namespace Space.Ship
                 {
                     // Store component in attributes 
                     // and sent attributes to component
+                    if (m_ship.Components == null)
+                        m_ship.Components = new List<ComponentListener>();
+
                     m_ship.Components.Add(comp);
                     comp.SetShip(m_ship);
                 }

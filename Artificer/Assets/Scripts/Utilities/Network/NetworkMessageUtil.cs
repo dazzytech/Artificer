@@ -64,7 +64,7 @@ namespace Networking
     {
         public int PlayerID;
         public int SpawnID;
-        public int ShipID;
+        public string ShipName;
     }
 
     /// <summary>

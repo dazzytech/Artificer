@@ -235,7 +235,7 @@ namespace Game
         }
 
         [Server]
-        public void SpawnPlayer(int playerID, int stationID, int shipID)
+        public void SpawnPlayer(int playerID, int stationID, string shipName)
         {
             PlayerConnectionInfo info = 
                 _att.PlayerInfoList.Item(playerID);
@@ -256,7 +256,7 @@ namespace Game
 
             // assign ship info
             // e.g. ship name 
-            StringMessage sMsg = new StringMessage("");
+            StringMessage sMsg = new StringMessage(shipName);
             NetworkServer.SendToClient(info.mConnection.connectionId, 
                 (short)MSGCHANNEL.SPAWNME, sMsg);
         }

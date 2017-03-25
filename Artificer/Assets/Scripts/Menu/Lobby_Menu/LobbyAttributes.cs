@@ -34,6 +34,9 @@ namespace Menu.Lobby
         // How long should we be matchmaking
         public float StartTimer;
 
+        // if we are running the start timer
+        public bool Starting;
+
         // How long time the game timesout
         public float TimeoutTimer;
 

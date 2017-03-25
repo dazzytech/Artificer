@@ -240,7 +240,8 @@ namespace Space
                     }
                 }
             }
-            //PlayerEnterScene();
+
+
         }
 
         public void DockAtStation()

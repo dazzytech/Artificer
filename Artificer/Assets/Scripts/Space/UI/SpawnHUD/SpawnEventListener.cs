@@ -11,24 +11,39 @@ namespace Space.UI.Spawn
     /// Interaction with spawn selector hud e.g.
     /// Select Ship, Select spawn, Spawn button down
     /// </summary>
-    public class SpawnSelectorEventListener : MonoBehaviour
+    public class SpawnEventListener : MonoBehaviour
     {
         #region ATTRIBUTES
 
-        private SpawnSelectorController _con;
+        [SerializeField]
+        private SpawnController m_con;
 
         #endregion
 
         #region MONO BEHAVIOUR
 
-        void Awake()
+        private void OnEnable()
         {
-            _con = GetComponent<SpawnSelectorController>();
+            ShipSelectItem.OnShipSelected += ShipSelected;
+        }
+
+        private void OnDisable()
+        {
+            ShipSelectItem.OnShipSelected -= ShipSelected;
         }
 
         #endregion
 
-        #region PUBLIC INTERACTION
+        #region EVENT LISTENER
+
+        /// <summary>
+        /// Called when ship icon is selected
+        /// </summary>
+        /// <param name="selected"></param>
+        public void ShipSelected(ShipSelectItem selected)
+        {
+            m_con.SelectShip(selected);
+        }
 
         /// <summary>
         /// Sends our spawn info to the Game Controller
@@ -39,7 +54,7 @@ namespace Space.UI.Spawn
             // For now we don't use spawn or ship info
             SpawnSelectionMessage ssm = new SpawnSelectionMessage();
             ssm.PlayerID = SystemManager.Space.ID;
-            ssm.ShipID = 0;
+            ssm.ShipName = m_con.SelectedName;
             ssm.SpawnID = 0;
 
             SystemManager.singleton.client.Send((short)MSGCHANNEL.SPAWNPLAYER, ssm);
@@ -49,10 +64,10 @@ namespace Space.UI.Spawn
         /// Set the controller countdown and enable spawn button
         /// </summary>
         /// <param name="delay"></param>
-        public void SetSpawnTimer(float delay)
+        public void SetSpawnTimer(int delay)
         {
-            if (_con != null)
-                _con.EnableSpawn(delay);
+            if (m_con != null)
+                m_con.EnableSpawn(delay);
         }
 
         #endregion

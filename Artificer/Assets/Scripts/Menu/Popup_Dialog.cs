@@ -207,7 +207,8 @@ namespace Menu
                     OnDialogEvent(DialogResult.CANCEL);
                     break;
                 case "ok":
-                    OnDialogEvent(DialogResult.OK);
+                    if(OnDialogEvent != null)
+                        OnDialogEvent(DialogResult.OK);
                     break;
                 case "submit":
                     if (m_input.text != "")

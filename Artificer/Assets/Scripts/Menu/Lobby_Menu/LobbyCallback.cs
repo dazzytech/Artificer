@@ -43,12 +43,13 @@ namespace Menu.Lobby
 
         #endregion
 
-        #region MONO BEHAVIOUR
+        #region PUBLIC INTERACTION
 
-        void OnEnable()
+        /// <summary>
+        /// Assigns functions to the callbacks
+        /// </summary>
+        public void Intitialize()
         {
-            // Assign functions to callback attributes
-
             //
             // CALL RESULT ASSIGNMENT
             //

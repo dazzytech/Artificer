@@ -141,7 +141,7 @@ namespace Game
         {
             // Retreive variables and display options
             SpawnSelectionMessage ssm = netMsg.ReadMessage<SpawnSelectionMessage>();
-            m_con.SpawnPlayer(ssm.PlayerID, ssm.SpawnID, ssm.ShipID);
+            m_con.SpawnPlayer(ssm.PlayerID, ssm.SpawnID, ssm.ShipName);
         }
 
         /// <summary>

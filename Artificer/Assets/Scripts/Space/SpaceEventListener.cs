@@ -174,7 +174,7 @@ namespace Space
             SystemManager.GUI.SetState(UIState.SpawnPicker);
 
             // For now each spawn is 10 seconds
-            SystemManager.GUI.SetSpawnDelay(10f);
+            SystemManager.GUI.SetSpawnDelay(10);
 
             SystemManager.Background.StopBackground();
 

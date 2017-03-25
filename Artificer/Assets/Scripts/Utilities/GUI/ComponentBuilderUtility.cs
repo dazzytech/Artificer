@@ -4,6 +4,7 @@ using System.Collections;
 using Space.Ship;
 using Space.Ship.Components.Listener;
 using System.Collections.Generic;
+using Data.Shared;
 
 namespace UI
 {
@@ -31,7 +32,7 @@ namespace UI
         private float m_width, m_height, m_margin;
 
         // refence to ship attributes
-        private ShipAttributes m_ship;
+        private ShipAttributes m_shipAtt;
 
         // Keep track of component list
         private List<ViewerItem> m_viewerItems;
@@ -61,6 +62,33 @@ namespace UI
         #endregion
 
         #region PUBLIC INTERACTION
+        
+        /// <summary>
+        /// Takes the ship data as a param
+        /// builds the ship temporarily and 
+        /// sends that to the ship builder
+        /// then clears shipGO
+        /// </summary>
+        /// <param name="newShip">New ship.</param>
+        public void BuildShipData
+            (ShipData ship, GameObject PiecePrefab)
+        {
+            GameObject tempShip = new GameObject();
+
+            ShipAttributes tempAtt = 
+                tempShip.AddComponent<ShipAttributes>();
+
+            tempShip.AddComponent<ShipMessageController>();
+
+            tempShip.AddComponent<Rigidbody2D>();
+
+            Space.Segment.Generator.ShipGenerator.
+                GenerateShip(ship, tempShip);
+
+            BuildShip(tempAtt, PiecePrefab);
+
+            Destroy(tempShip);
+        }
 
         /// <summary>
         /// Builds ship gameobject to define UI panel
@@ -69,7 +97,7 @@ namespace UI
         public void BuildShip
             (ShipAttributes Ship, GameObject PiecePrefab)
         {
-            m_ship = Ship;
+            m_shipAtt = Ship;
 
             m_componentPrefab = PiecePrefab;
 
@@ -80,13 +108,13 @@ namespace UI
                 Destroy(m_constructPanel.gameObject);
 
             // Begin routines
-            if(m_ship != null)
+            if(m_shipAtt != null)
                 DiscoverSize();
         }
 
         public void ClearShip()
         {
-            m_ship = null;
+            m_shipAtt = null;
 
             m_componentPrefab = null;
 
@@ -151,17 +179,17 @@ namespace UI
             float minX, minY, maxX, maxY;
             minX = minY = maxX = maxY = 0;
 
-            if (m_ship == null)
+            if (m_shipAtt == null)
                 return;
 
             // Find min and max points of total ship 
             // using each component
-            for (int i = 0; i < m_ship.Components.Count; i++)
+            for (int i = 0; i < m_shipAtt.Components.Count; i++)
             {
-                if (m_ship == null)
+                if (m_shipAtt == null)
                     return;
 
-                ComponentListener item = m_ship.Components[i];
+                ComponentListener item = m_shipAtt.Components[i];
 
                 if (item == null)
                 {
@@ -196,17 +224,17 @@ namespace UI
         /// <returns></returns>
         private void BuildComponents()
         {
-            if(m_ship == null)
+            if(m_shipAtt == null)
                 return;
 
             // Find min and max points of total ship 
             // using each component
-            for (int i = 0; i < m_ship.Components.Count; i++)
+            for (int i = 0; i < m_shipAtt.Components.Count; i++)
             {
-                if (m_ship == null)
+                if (m_shipAtt == null)
                     return;
 
-                ComponentListener component = m_ship.Components[i];
+                ComponentListener component = m_shipAtt.Components[i];
 
                 if (component == null)
                 {

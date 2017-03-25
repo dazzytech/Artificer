@@ -74,8 +74,11 @@ namespace Space.Ship
         /// <param name="a_data">ship data to pass</param>
         private void OnSpawnMe(NetworkMessage netMsg)
         {
-            //MessageHUD.DisplayMessege(new MsgParam("bold", "Running Command: " + (a_data.GetComponents() == null).ToString()));
-            CmdSpawnMe(Serializer.ByteSerializer.getBytes(ShipLibrary.GetShip("Mammoth XI")));
+            string shipName = netMsg.
+                ReadMessage<StringMessage>().value;
+            
+            CmdSpawnMe(Serializer.ByteSerializer.getBytes
+                (ShipLibrary.GetShip(shipName)));
         }
 
         [Command]

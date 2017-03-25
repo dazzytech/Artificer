@@ -51,10 +51,6 @@ namespace Space.Segment.Generator
             // create list for storing info
             addedIDs = new List<int>();
             // Create a base ship from empty prefab template
-            /*GameObject baseShip = 
-                Instantiate(Resources.Load
-                            ("Space/Ships/Ship"), pos,
-                            Quaternion.identity) as GameObject;*/
             
             // Set parent of empty ship
             baseShip.transform.parent = Base;
@@ -83,7 +79,8 @@ namespace Space.Segment.Generator
                 (ship.Head, headGO.transform, ship);
 
             baseShip.GetComponent<ShipAttributes>().Ship = ship;
-            baseShip.SendMessage("AddComponentsToList");
+            baseShip.SendMessage("AddComponentsToList", 
+                SendMessageOptions.DontRequireReceiver);
         }
 
     	/// <summary>

@@ -271,7 +271,7 @@ namespace Space.UI
         /// Set the HUD spawn button to enable after a certain period
         /// </summary>
         /// <param name="delay"></param>
-        public void SetSpawnDelay(float delay)
+        public void SetSpawnDelay(int delay)
         {
             m_spawnPickerRect.SendMessage("SetSpawnTimer", delay);
         }

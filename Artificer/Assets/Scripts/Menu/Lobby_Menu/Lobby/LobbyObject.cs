@@ -88,8 +88,6 @@ namespace Menu.Lobby
                 return;
             }
 
-            Debug.Log("Persona Update");
-
             // Call function to refresh lobby viewer
             OnUserUpdate();
         }
@@ -99,8 +97,6 @@ namespace Menu.Lobby
             // Make sure this callback is relevent to our lobby
             if (m_lobbyID != (CSteamID)pCallback.m_ulSteamIDLobby)
                 return;
-
-            Debug.Log("Data Update");
 
             // When lobby data is created it will be retreived
 

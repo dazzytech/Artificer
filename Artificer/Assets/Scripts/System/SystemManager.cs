@@ -217,6 +217,7 @@ public class SystemManager : NATTraversal.NetworkManager
             // Change to server data?
             Server.InitializeLobby(m_base.ServerInfo);
         }
+        base.OnServerSceneChanged(sceneName);
     }
 
     /// <summary>
@@ -225,9 +226,8 @@ public class SystemManager : NATTraversal.NetworkManager
     /// <param name="conn"></param>
     public override void OnServerDisconnect(NetworkConnection conn)
     {
-        base.OnServerDisconnect(conn);
-
         GameMSG.RemovePlayer(conn);
+        base.OnServerDisconnect(conn);
     }
 
     public override void OnStopHost()
@@ -235,8 +235,13 @@ public class SystemManager : NATTraversal.NetworkManager
         base.OnStopHost();
 
         GameObject.Destroy(m_base.GameMsg.gameObject);
-    }
 
+        if (m_base.Lobby != CSteamID.Nil)
+        {
+            SteamMatchmaking.LeaveLobby(m_base.Lobby);
+            m_base.Lobby = CSteamID.Nil;
+        }
+    }
 
     /// <summary>
     /// Called when the server is unsuccessful in creation
@@ -255,6 +260,7 @@ public class SystemManager : NATTraversal.NetworkManager
 
     #region CLIENT SIDE
 
+    /*
     /// <summary>
     /// When client connection is unsuccessful then display
     /// a popup and leave steam lobby
@@ -266,7 +272,7 @@ public class SystemManager : NATTraversal.NetworkManager
         Debug.Log("Client Error");
 
         base.OnClientError(conn, errorCode);
-    }
+    }*/
 
     /// <summary>
     /// Called on each client when the server changes
@@ -275,13 +281,26 @@ public class SystemManager : NATTraversal.NetworkManager
     /// </summary>
     /// <param name="conn"></param>
     public override void OnClientSceneChanged(NetworkConnection conn)
-    { 
-        base.OnClientSceneChanged(conn); 
+    {
+        //base.OnClientSceneChanged(conn);
+        ClientScene.Ready(conn);
 
         ClientScene.AddPlayer(0);
 
-        // listen for when server is assigned an ID
         m_singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
+    }
+
+    public override void OnClientDisconnect(NetworkConnection conn)
+    {
+        if (m_base.Lobby != CSteamID.Nil)
+        {
+            SteamMatchmaking.LeaveLobby(m_base.Lobby);
+            m_base.Lobby = CSteamID.Nil;
+        }
+
+        //ClientScene.RemovePlayer(0);
+
+        base.OnClientDisconnect(conn);
     }
 
     #endregion
@@ -392,9 +411,7 @@ public class SystemManager : NATTraversal.NetworkManager
 
         m_singleton.onlineScene = "SpaceScene";
 
-        // Startup the host
-        m_singleton.StartHostAll(m_singleton.
-            m_base.ServerInfo.ServerName, 2);
+        m_singleton.TryHost();
     }
 
     /// <summary>
@@ -428,7 +445,7 @@ public class SystemManager : NATTraversal.NetworkManager
         m_singleton.onlineScene = "ServerScene";
 
         // Startup the host
-        m_singleton.TryHost();
+        m_singleton.StartHost();
     }
 
     #endregion
@@ -455,9 +472,7 @@ public class SystemManager : NATTraversal.NetworkManager
 
         m_singleton.onlineScene = "ServerScene";
 
-        m_singleton.createClient();
-
-        m_singleton.directClient.Connect(serverAddress, 7777);
+        m_singleton.StartClient();
     }
 
     #endregion
@@ -530,7 +545,8 @@ public class SystemManager : NATTraversal.NetworkManager
         networkSceneName = "";
         NetworkServer.SetAllClientsNotReady();
         ClientScene.DestroyAllClientObjects();
-        StartHost();
+        m_singleton.StartHostAll(m_singleton.
+            m_base.ServerInfo.ServerName, 2);
     }
 
     // Tries to connect as a client
