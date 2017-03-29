@@ -19,6 +19,7 @@ namespace Networking
         SHIPHIT,
         CREATEPROJECTILE,
         BUILDPROJECTILE,
+        BUILDSTATION,
         PROCESSSHIPHIT,
         OBJECTHIT,
         PROCESSOBJECTHIT,
@@ -77,6 +78,13 @@ namespace Networking
         public Vector3 Position;
         public int PrefabIndex, shooterID;
         public WeaponData WData;
+    }
+
+    public class StationBuildMessage : MessageBase
+    {
+        public string PrefabName;
+        public Vector3 Position;
+        public int teamID;
     }
 
     /// <summary>

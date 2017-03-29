@@ -65,6 +65,14 @@ namespace Game
             teamB.AddStationObject(stationB.GetComponent<NetworkIdentity>().netId);
         }
 
+        [Server]
+        public void GenerateStation(TeamController selectedTeam,
+            string prefabName, Vector2 position)
+        {
+            GameObject station = selectedTeam.Spawner.AddStation(position, prefabName);
+            selectedTeam.AddStationObject(station.GetComponent<NetworkIdentity>().netId);
+        }
+
         #endregion
 
         #region INTERNAL BUILDING

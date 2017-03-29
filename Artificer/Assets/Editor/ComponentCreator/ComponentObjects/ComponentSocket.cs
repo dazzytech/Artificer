@@ -12,7 +12,7 @@ namespace Editor.Components
         // numbering sockets
         public int ID;
 
-        public ComponentSocket()
+        void OnEnable()
         {
             compulsary = Resources.Load("Textures/ShipEditor/socket_open", 
                                   typeof(Texture2D))as Texture2D;

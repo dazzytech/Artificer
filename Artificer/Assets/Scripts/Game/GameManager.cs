@@ -285,6 +285,29 @@ namespace Game
                 (short)MSGCHANNEL.CREATEPROJECTILE, spwnMsg);
         }
 
+        /// <summary>
+        /// Sends station information to 
+        /// game builder and assigns station to team
+        /// </summary>
+        /// <param name="prefabIndex"></param>
+        /// <param name="teamID"></param>
+        /// <param name="position"></param>
+        [Server]
+        public void BuildStation(string prefabName, int teamID, Vector3 position)
+        {
+            // Retreive selected team
+            TeamController selectedTeam;
+
+            if(teamID == 0)
+                selectedTeam = _att.TeamA;
+            else
+                selectedTeam = _att.TeamB;
+
+            // send message to builder
+            _att.Builder.GenerateStation(selectedTeam,
+                prefabName, position);
+        }
+
         [Server]
         public void ShipHit(ShipColliderHitMessage hitMsg)
         {

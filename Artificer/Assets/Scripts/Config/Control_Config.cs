@@ -59,6 +59,7 @@ public class Control_Config: MonoBehaviour
         m_data.ShipControls.Add ("changeState", KeyCode.F);
         m_data.ShipControls.Add ("use", KeyCode.Tab);
         m_data.ShipControls.Add ("fire", KeyCode.Space);
+        m_data.ShipControls.Add("deploy", KeyCode.U);
         m_data.ShipControls.Add ("secondary", KeyCode.LeftShift);
         m_data.ShipControls.Add ("tertiary", KeyCode.Tab);
         m_data.ShipControls.Add ("well", KeyCode.Z);
