@@ -16,17 +16,17 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000011467062550}
-  - 212: {fileID: 212000010000100414}
-  - 61: {fileID: 61000012851201306}
-  - 114: {fileID: 114000014222369176}
-  - 114: {fileID: 114000011757007092}
-  - 114: {fileID: 114000013127392902}
-  - 114: {fileID: 114000010738060858}
-  - 61: {fileID: 61000012066848282}
-  - 114: {fileID: 114000013604808810}
+  - component: {fileID: 4000011467062550}
+  - component: {fileID: 212000010000100414}
+  - component: {fileID: 61000012851201306}
+  - component: {fileID: 114000014222369176}
+  - component: {fileID: 114000011757007092}
+  - component: {fileID: 114000013127392902}
+  - component: {fileID: 114000010738060858}
+  - component: {fileID: 61000012066848282}
+  - component: {fileID: 114000013604808810}
   m_Layer: 0
   m_Name: Placeholder_Station
   m_TagString: Station
@@ -43,10 +43,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &61000012066848282
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -137,9 +137,12 @@ MonoBehaviour:
   CurrentIntegrity: 0
   Integrity: 100000
   UnderAttack: 0
+  Interactive: 0
   ID: 0
   Type: 0
   BuildCounter: 0
+  BuildColour: {r: 0, g: 0, b: 0, a: 0}
+  BuildDistance: 100
   MinDistance: 10
   Icon: {fileID: 21300000, guid: dc5625d12dd293e4db7e061f9747c90b, type: 3}
 --- !u!114 &114000013604808810
@@ -187,7 +190,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -195,7 +200,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 1
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

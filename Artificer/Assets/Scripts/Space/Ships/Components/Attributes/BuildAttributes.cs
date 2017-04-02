@@ -14,6 +14,8 @@ namespace Space.Ship.Components.Attributes
 
         public bool StationDeployed;
 
+        public Color PendingColour;
+
         #endregion
     }
 }

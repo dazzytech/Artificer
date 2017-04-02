@@ -402,9 +402,10 @@ MonoBehaviour:
     name: blue
   iconImage: {fileID: 21300000, guid: 764ba223367246942b22c5b977524a86, type: 3}
   Ship: {fileID: 0}
-  StationPrefab: {fileID: 1000013982247906, guid: 7a2be7575710e7b4c93780e3b5226764,
+  StationPrefab: {fileID: 1195609766446620, guid: 6fc3a68a36867654cacc55f3bf4780b5,
     type: 2}
   StationDeployed: 0
+  PendingColour: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114290110216689220
 MonoBehaviour:
   m_ObjectHideFlags: 1

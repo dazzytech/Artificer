@@ -21,6 +21,8 @@ namespace Space.Segment
         public delegate void StationEvent(StationController controller);
         public static event StationEvent EnterStation;
         public static event StationEvent ExitStation;
+        public static event StationEvent InBuildRange;
+        public static event StationEvent OutOfBuildRange;
 
         #endregion
 
@@ -30,6 +32,9 @@ namespace Space.Segment
 
         // stop flickering effect caused by ships mulitple components
         private bool m_dockReady;
+
+        // stop flickering effect caused by ships mulitple components
+        private bool m_buildReady;
 
         #endregion
 
@@ -46,7 +51,14 @@ namespace Space.Segment
 
         void Start()
         {
-            StartCoroutine("DistanceBasedDocking");
+            if(m_att.Type == STATIONTYPE.HOME)
+                StartCoroutine("DistanceBasedDocking");
+
+            if (m_att.Type == STATIONTYPE.HOME || m_att.Type == STATIONTYPE.FOB)
+                StartCoroutine("DistanceBasedConstruction");
+
+            if (!m_att.Interactive)
+                StartCoroutine("CheckForActivity");
         }
 
         void OnDestroy()
@@ -65,13 +77,21 @@ namespace Space.Segment
         /// <param name="newID"></param>
         /// <param name="newType"></param>
         [Server]
-        public void Initialize(int newID, NetworkInstanceId newTeam, STATIONTYPE newType = STATIONTYPE.DEFAULT)
+        public void Initialize(int newID, NetworkInstanceId newTeam)
         {
             // Store our ID for when the station is destroyed
             m_att.ID = newID;
 
-            // What type of station is being constructed
-            m_att.Type = newType;
+            // Only home stations are created immediately
+            if (m_att.Type == STATIONTYPE.HOME)
+                m_att.Interactive = true;
+            else
+            {
+                // Here we would begin construction process
+                m_att.Interactive = false;
+
+                StartCoroutine("GenerateStation");
+            }
 
             // reference to our team
             m_att.TeamID = newTeam;
@@ -156,6 +176,12 @@ namespace Space.Segment
         {
             while (true)
             {
+                if (!m_att.Interactive)
+                {
+                    yield return null;
+                    continue;
+                }
+
                 GameObject playerObj =
                     GameObject.FindGameObjectWithTag("PlayerShip");
 
@@ -172,10 +198,10 @@ namespace Space.Segment
 
                 // only proceed if local player 
                 // is on the correct team
-                //if (!m_att.Team.PlayerOnTeam(localInstID))
-                //{
-                    //StopCoroutine("DistanceBasedDocking");
-                //}
+                if (!m_att.Team.PlayerOnTeam(localInstID))
+                {
+                    yield break;
+                }
 
                 // Find distance between station and player object
                 float distance = Vector2.Distance
@@ -205,6 +231,105 @@ namespace Space.Segment
 
                 yield return null;
             }
+        }
+
+        private IEnumerator DistanceBasedConstruction()
+        {
+            while (true)
+            {
+                // Skip is not currently active
+                if(!m_att.Interactive)
+                {
+                    yield return null;
+                    continue;
+                }
+
+                GameObject playerObj =
+                        GameObject.FindGameObjectWithTag("PlayerShip");
+
+                // Ensure player is alive
+                if (playerObj == null)
+                {
+                    yield return null;
+                    continue;
+                }
+
+                // Retrieve NetworkInstance of player
+                NetworkInstanceId localInstID = playerObj.GetComponent
+                    <NetworkIdentity>().netId;
+
+                // only proceed if local player 
+                // is on the correct team
+                if (!m_att.Team.PlayerOnTeam(localInstID))
+                {
+                    yield break;
+                }
+
+                // Find distance between station and player object
+                float distance = Vector2.Distance
+                    (transform.position, playerObj.transform.position);
+
+                // determine range
+                if (distance <= m_att.BuildDistance)
+                {
+                    if (!m_buildReady)
+                    {
+                        // Call the event
+                        InBuildRange(this);
+
+                        Debug.Log("Within building range.");
+
+                        m_buildReady = true;
+                    }
+                }
+                else
+                {
+                    if (m_buildReady)
+                    {
+                        // Call the event
+                        OutOfBuildRange(this);
+
+                        Debug.Log("Left building range.");
+
+                        m_buildReady = false;
+                    }
+                }
+
+                yield return null;
+            }
+        }
+
+        /// <summary>
+        /// Keep checking if ship has been set
+        /// to active yet and change visual appearance
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator CheckForActivity()
+        {
+            GetComponent<SpriteRenderer>().color = m_att.BuildColour;
+
+            while(!m_att.Interactive)
+            {
+                yield return null;
+            }
+
+            GetComponent<SpriteRenderer>().color = Color.white;
+            yield break;
+        }
+
+        /// <summary>
+        /// runs on server
+        /// slowly builds station and enables when 
+        /// completed
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator GenerateStation()
+        {
+            yield return new WaitForSeconds(m_att.BuildCounter);
+            
+            m_att.Interactive = true;
+
+            yield break;
         }
 
         #endregion

@@ -6,7 +6,7 @@ using Space.Teams;
 namespace Space.Segment
 {
     // only one type current
-    public enum STATIONTYPE {DEFAULT};
+    public enum STATIONTYPE {HOME, FOB};
 
     /// <summary>
     /// Container for attributes for stations 
@@ -28,14 +28,16 @@ namespace Space.Segment
         [SyncVar]
         public bool UnderAttack;
 
+        [SyncVar]
+        public bool Interactive;
+
         #endregion
 
         #region IDENTFIER 
 
         [SyncVar]
         public int ID;
-
-        [SyncVar]
+        
         public STATIONTYPE Type;
 
         #endregion
@@ -44,6 +46,12 @@ namespace Space.Segment
 
         [SyncVar]
         public float BuildCounter;
+
+        public Color BuildColour;
+
+        // diameter of circle that
+        // other ships can build in
+        public int BuildDistance;
 
         #endregion
 

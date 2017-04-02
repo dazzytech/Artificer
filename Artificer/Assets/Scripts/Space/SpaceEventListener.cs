@@ -177,15 +177,6 @@ namespace Space
             SystemManager.GUI.SetSpawnDelay(10);
 
             SystemManager.Background.StopBackground();
-
-            // Send this to SystemManager instead
-            //_att.TeamSpawn.CmdSpawnNewPlayerShip();
-            // Group up all player respawns
-            /*GameObject[] spawnObjs = GameObject.FindGameObjectsWithTag("TeamSpawner");
-            PlayerSpawner PS = spawnObjs [Random.Range(0,
-                      spawnObjs.Length)].GetComponent<PlayerSpawner>();
-
-            PS.Engage();*/
         }
 
         /// <summary>
