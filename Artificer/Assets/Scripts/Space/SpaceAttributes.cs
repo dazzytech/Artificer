@@ -7,6 +7,7 @@ using Data.Shared;
 using Data.Space;
 using Data.Space.Library;
 using Space.Segment;
+using Stations;
 using Space.Teams;
 
 // Add classes for data
@@ -37,6 +38,9 @@ namespace Space
 
         // if the player is within vicinity of station
         public bool overStation;
+
+        // if player is within construction Range
+        public bool buildRange;
 
         // refence to the station we are currently at
         public StationController station;

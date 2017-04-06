@@ -3,10 +3,10 @@ using UnityEngine.Networking;
 using System.Collections;
 using Space.Teams;
 
-namespace Space.Segment
+namespace Stations
 {
     // only one type current
-    public enum STATIONTYPE {HOME, FOB};
+    public enum STATIONTYPE {HOME, FOB, WARP};
 
     /// <summary>
     /// Container for attributes for stations 

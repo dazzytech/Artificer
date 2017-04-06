@@ -3,8 +3,9 @@ using UnityEngine.Networking;
 
 // Artificer
 using System.Collections;
+using Space.Segment;
 
-namespace Space.Segment
+namespace Stations
 {
     /// <summary>
     /// Extends the impact collider on the station 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 //Artificer
-using Space.Segment;
+using Stations;
 using Space.Teams;
 using UnityEngine.Networking;
 
@@ -63,7 +63,7 @@ namespace Space.UI.Ship
             if (Team != null)
             {
                 // event listener here
-                Team.EventPlayerListChanged += GenerateStationList;
+                Team.EventStationListChanged += GenerateStationList;
                 // regenerate team list incase of changes
                 GenerateStationList();
             }

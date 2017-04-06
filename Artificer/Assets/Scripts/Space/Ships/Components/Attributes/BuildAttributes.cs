@@ -12,6 +12,8 @@ namespace Space.Ship.Components.Attributes
         
         public GameObject StationPrefab;
 
+        public bool IsFOB;
+
         public bool StationDeployed;
 
         public Color PendingColour;

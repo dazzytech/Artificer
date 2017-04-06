@@ -2428,6 +2428,7 @@ MonoBehaviour:
   - {fileID: 1000013982247906, guid: 7a2be7575710e7b4c93780e3b5226764, type: 2}
   - {fileID: 1399915413231392, guid: dc56fc5bdbc5d2242ada8190a54cf1ff, type: 2}
   - {fileID: 1195609766446620, guid: 6fc3a68a36867654cacc55f3bf4780b5, type: 2}
+  - {fileID: 1210465998513952, guid: b45d9a91258670d498192367e5ce4ade, type: 2}
   m_CustomConfig: 1
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -27100,7 +27101,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 550
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -27108,7 +27109,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1060
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_SizeDelta.y

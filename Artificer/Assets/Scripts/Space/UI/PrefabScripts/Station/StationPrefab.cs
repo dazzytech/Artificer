@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 //Artificer
-using Space.Segment;
+using Stations;
 
 namespace Space.UI.Ship
 {

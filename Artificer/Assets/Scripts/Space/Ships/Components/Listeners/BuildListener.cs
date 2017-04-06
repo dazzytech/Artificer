@@ -40,6 +40,13 @@ namespace Space.Ship.Components.Listener
         /// </summary>
         public override void Activate()
         {
+            if (!SystemManager.Space.CanBuild && !m_att.IsFOB)
+            {
+                SystemManager.GUI.DisplayPrompt("Not in build out of range of FOB or Home Base");
+                SystemManager.GUI.Invoke("ClearPrompt", 3f);
+                return;
+            }
+
             // For now send desploy immediately
             DeployStation();
 

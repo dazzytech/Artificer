@@ -9,6 +9,7 @@ using Data.Shared;
 using Data.Space.Library;
 using Space.Ship;
 using Space.Segment;
+using Stations;
 using Space.UI;
 using Networking;
 using Space.Teams;
@@ -65,6 +66,8 @@ namespace Space
             // Station events
             StationController.EnterStation += OnEnterStation;
             StationController.ExitStation += OnExitStation;
+            StationController.InBuildRange += OnEnterBuildRange;
+            StationController.OutOfBuildRange += OnExitBuildRange;
         }
 
         void OnDisable()
@@ -78,6 +81,8 @@ namespace Space
             // Station events
             StationController.EnterStation -= OnEnterStation;
             StationController.ExitStation -= OnExitStation;
+            StationController.InBuildRange -= OnEnterBuildRange;
+            StationController.OutOfBuildRange -= OnExitBuildRange;
         }
 
         #endregion
@@ -228,6 +233,20 @@ namespace Space
             m_att.station = null;
 
             SystemManager.GUI.ClearPrompt();
+        }
+
+        private void OnEnterBuildRange(StationController controller)
+        {
+            m_att.buildRange = true;
+        }
+
+        /// <summary>
+        /// When player leaves station vicinity then clear reference
+        /// </summary>
+        /// <param name="controller"></param>
+        private void OnExitBuildRange(StationController controller)
+        {
+            m_att.buildRange = false;
         }
 
         #endregion

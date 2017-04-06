@@ -6,8 +6,9 @@ using System.Collections;
 using Data.Space;
 using Space.Teams;
 using Networking;
+using Space.Segment;
 
-namespace Space.Segment
+namespace Stations
 {
     /// <summary>
     /// Station controller is the functionality of a station as well as 
@@ -28,8 +29,6 @@ namespace Space.Segment
 
         #region ATTRIBUTES
 
-        private StationAttributes m_att;
-
         // stop flickering effect caused by ships mulitple components
         private bool m_dockReady;
 
@@ -42,22 +41,20 @@ namespace Space.Segment
 
         void Awake()
         {
-            m_att = GetComponent<StationAttributes>();
-
-            m_att.CurrentIntegrity = m_att.Integrity;
+            Att.CurrentIntegrity = Att.Integrity;
 
             m_dockReady = false;
         }
 
         void Start()
         {
-            if(m_att.Type == STATIONTYPE.HOME)
+            if(Att.Type == STATIONTYPE.HOME)
                 StartCoroutine("DistanceBasedDocking");
 
-            if (m_att.Type == STATIONTYPE.HOME || m_att.Type == STATIONTYPE.FOB)
+            if (Att.Type == STATIONTYPE.HOME || Att.Type == STATIONTYPE.FOB)
                 StartCoroutine("DistanceBasedConstruction");
 
-            if (!m_att.Interactive)
+            if (!Att.Interactive)
                 StartCoroutine("CheckForActivity");
         }
 
@@ -77,27 +74,27 @@ namespace Space.Segment
         /// <param name="newID"></param>
         /// <param name="newType"></param>
         [Server]
-        public void Initialize(int newID, NetworkInstanceId newTeam)
+        public virtual void Initialize(int newID, NetworkInstanceId newTeam)
         {
             // Store our ID for when the station is destroyed
-            m_att.ID = newID;
+            Att.ID = newID;
 
             // Only home stations are created immediately
-            if (m_att.Type == STATIONTYPE.HOME)
-                m_att.Interactive = true;
+            if (Att.Type == STATIONTYPE.HOME)
+                Att.Interactive = true;
             else
             {
                 // Here we would begin construction process
-                m_att.Interactive = false;
+                Att.Interactive = false;
 
                 StartCoroutine("GenerateStation");
             }
 
             // reference to our team
-            m_att.TeamID = newTeam;
+            Att.TeamID = newTeam;
 
             // place station under correct parent
-            transform.SetParent(m_att.Team.transform);
+            transform.SetParent(Att.Team.transform);
         }
 
         /// <summary>
@@ -110,17 +107,17 @@ namespace Space.Segment
         public void ProcessDamage(HitData hitD)
         {
             // For now ignore friendly fire
-            if (m_att.Team.PlayerOnTeam(hitD.originID))
+            if (Att.Team.PlayerOnTeam(hitD.originID))
                 return;
 
             // First apply damage to station integrity
-            m_att.CurrentIntegrity -= hitD.damage;
+            Att.CurrentIntegrity -= hitD.damage;
 
 
             // After successfully taking damage, set to under attack mode
             StopCoroutine("AttackTimer");
 
-            m_att.UnderAttack = true;
+            Att.UnderAttack = true;
 
             StartCoroutine("AttackTimer");
 
@@ -132,11 +129,11 @@ namespace Space.Segment
             SystemManager.singleton.client.Send((short)MSGCHANNEL.INTEGRITYCHANGE, intmsg);
 
             // if station destroyed then being destroy process
-            if (m_att.CurrentIntegrity <= 0)
+            if (Att.CurrentIntegrity <= 0)
             {
                 StationDestroyMessage msg = new StationDestroyMessage();
                 msg.SelfID = netId;
-                msg.ID = m_att.ID;
+                msg.ID = Att.ID;
 
                 SystemManager.singleton.client.Send((short)MSGCHANNEL.STATIONDESTROYED, msg);
 
@@ -157,11 +154,11 @@ namespace Space.Segment
         /// <returns></returns>
         private IEnumerator AttackTimer()
         {
-            if (m_att.UnderAttack)
+            if (Att.UnderAttack)
             {
                 yield return new WaitForSeconds(20f);
 
-                m_att.UnderAttack = false;
+                Att.UnderAttack = false;
             }
             yield return null;
         }
@@ -176,7 +173,7 @@ namespace Space.Segment
         {
             while (true)
             {
-                if (!m_att.Interactive)
+                if (!Att.Interactive)
                 {
                     yield return null;
                     continue;
@@ -198,7 +195,7 @@ namespace Space.Segment
 
                 // only proceed if local player 
                 // is on the correct team
-                if (!m_att.Team.PlayerOnTeam(localInstID))
+                if (!Att.Team.PlayerOnTeam(localInstID))
                 {
                     yield break;
                 }
@@ -208,7 +205,7 @@ namespace Space.Segment
                     (transform.position, playerObj.transform.position);
 
                 // determine range
-                if(distance <= m_att.MinDistance)
+                if(distance <= Att.MinDistance)
                 {
                     if (!m_dockReady)
                     {
@@ -238,7 +235,7 @@ namespace Space.Segment
             while (true)
             {
                 // Skip is not currently active
-                if(!m_att.Interactive)
+                if(!Att.Interactive)
                 {
                     yield return null;
                     continue;
@@ -260,7 +257,7 @@ namespace Space.Segment
 
                 // only proceed if local player 
                 // is on the correct team
-                if (!m_att.Team.PlayerOnTeam(localInstID))
+                if (!Att.Team.PlayerOnTeam(localInstID))
                 {
                     yield break;
                 }
@@ -270,14 +267,13 @@ namespace Space.Segment
                     (transform.position, playerObj.transform.position);
 
                 // determine range
-                if (distance <= m_att.BuildDistance)
+                if (distance <= Att.BuildDistance)
                 {
                     if (!m_buildReady)
                     {
                         // Call the event
-                        InBuildRange(this);
-
-                        Debug.Log("Within building range.");
+                        if(InBuildRange != null)
+                            InBuildRange(this);
 
                         m_buildReady = true;
                     }
@@ -287,9 +283,8 @@ namespace Space.Segment
                     if (m_buildReady)
                     {
                         // Call the event
-                        OutOfBuildRange(this);
-
-                        Debug.Log("Left building range.");
+                        if (OutOfBuildRange != null)
+                            OutOfBuildRange(this);
 
                         m_buildReady = false;
                     }
@@ -306,9 +301,9 @@ namespace Space.Segment
         /// <returns></returns>
         private IEnumerator CheckForActivity()
         {
-            GetComponent<SpriteRenderer>().color = m_att.BuildColour;
+            GetComponent<SpriteRenderer>().color = Att.BuildColour;
 
-            while(!m_att.Interactive)
+            while(!Att.Interactive)
             {
                 yield return null;
             }
@@ -325,9 +320,9 @@ namespace Space.Segment
         /// <returns></returns>
         private IEnumerator GenerateStation()
         {
-            yield return new WaitForSeconds(m_att.BuildCounter);
+            yield return new WaitForSeconds(Att.BuildCounter);
             
-            m_att.Interactive = true;
+            Att.Interactive = true;
 
             yield break;
         }
@@ -336,9 +331,12 @@ namespace Space.Segment
 
         #region ACCESSORS
 
+        /// <summary>
+        /// Return unique ID
+        /// </summary>
         public int ID
         {
-            get { return m_att.ID; }
+            get { return Att.ID; }
         }
 
         /// <summary>
@@ -346,12 +344,13 @@ namespace Space.Segment
         /// 0 - Safe
         /// 1 - Under Attack
         /// 2 - Destroyed
+        /// 3 - Building
         /// </summary>
         public int Status
         {
             get
             {
-                if (m_att.UnderAttack)
+                if (Att.UnderAttack)
                     return 1;
                 else
                     return 0;
@@ -365,8 +364,8 @@ namespace Space.Segment
         {
             get
             {
-                if(m_att.Icon != null)
-                    return m_att.Icon;
+                if(Att.Icon != null)
+                    return Att.Icon;
                 else
                     return GetComponent<SpriteRenderer>().sprite;
             }
@@ -379,13 +378,16 @@ namespace Space.Segment
         {
             get
             {
-                if (m_att.Integrity == 0)
+                if (Att.Integrity == 0)
                     return 1;
                 else
-                return m_att.CurrentIntegrity / m_att.Integrity;
+                return Att.CurrentIntegrity / Att.Integrity;
             }
         }
 
+        /// <summary>
+        /// Distance between the player and this station
+        /// </summary>
         public float Distance
         {
             get
@@ -406,15 +408,27 @@ namespace Space.Segment
             }
         }
 
-        #endregion 
-
-
-        /*
-        //private SegmentObject _station;
-
-        public SegmentObject Station
+        /// <summary>
+        /// External tools react differently to types
+        /// </summary>
+        public STATIONTYPE Type
         {
-            set { _station = value; }
-        }*/
+            get { return Att.Type; }
+        }
+
+        public StationAttributes Att
+        {
+            get
+            {
+                if (transform == null)
+                    return null;
+                else if (transform.GetComponent<StationAttributes>() != null)
+                    return transform.GetComponent<StationAttributes>();
+                else
+                    return null;
+            }
+        }
+
+        #endregion 
     }
 }

@@ -6,6 +6,7 @@ using System.Collections;
 using UI;
 using Space.Segment;
 using Space.Ship;
+using Stations;
 
 namespace Space.UI.Ship
 {

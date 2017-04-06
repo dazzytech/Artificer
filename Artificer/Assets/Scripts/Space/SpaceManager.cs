@@ -304,6 +304,17 @@ namespace Space
             SystemManager.GUI.SetState(UIState.Play);
         }
 
+        /// <summary>
+        /// determines if able to build or not
+        /// </summary>
+        public bool CanBuild
+        {
+            get
+            {
+                return _att.buildRange;
+            }
+        }
+
         #endregion
     }
 }

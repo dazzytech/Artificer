@@ -110,8 +110,8 @@ namespace Game
             _att.TeamA = GameObject.Find("Team_A").GetComponent<TeamController>();
             _att.TeamB = GameObject.Find("Team_B").GetComponent<TeamController>();
 
-            _att.TeamA.Initialize(teamAcon);
-            _att.TeamB.Initialize(teamBcon);
+            _att.TeamA.Initialize(teamAcon, 0);
+            _att.TeamB.Initialize(teamBcon, 1);
 
             // Generated stations for the teams
             _att.Builder.GenerateStations(_att.TeamA, _att.TeamB);

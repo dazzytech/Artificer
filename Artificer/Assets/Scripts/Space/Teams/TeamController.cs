@@ -48,6 +48,9 @@ namespace Space.Teams
         [SyncVar]
         private FactionData m_faction;
 
+        [SyncVar]
+        private int m_ID;
+
         // Store a list of player connections for that team
         private SyncListUInt m_players = new SyncListUInt();
 
@@ -93,9 +96,11 @@ namespace Space.Teams
         /// local memory
         /// </summary>
         [Server]
-        public void Initialize(FactionData faction)
+        public void Initialize(FactionData faction, int id)
         {
             m_faction = faction;
+
+            m_ID = id;
 
             // Assign callbacks
             m_players.Callback = PlayerListChanged;
@@ -154,7 +159,7 @@ namespace Space.Teams
         /// </summary>
         public int ID
         {
-            get { return m_faction.ID; }
+            get { return m_ID; }
         }
 
         /// <summary>
