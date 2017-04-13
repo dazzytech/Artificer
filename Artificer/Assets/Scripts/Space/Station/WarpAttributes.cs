@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Stations
 {
@@ -10,13 +11,9 @@ namespace Stations
     /// </summary>
     public class WarpAttributes : StationAttributes
     {
-        // Exit point of warp
-        public Vector2 ExitPoint;
-
-        // Radius for ship warping
+        // Radius within warps detect other warps
         public float WarpRadius;
 
-        // How long until cancel build without exit
-        public float WaitForExit;
+        public static List<NetworkInstanceId> WarpList;
     }
 }

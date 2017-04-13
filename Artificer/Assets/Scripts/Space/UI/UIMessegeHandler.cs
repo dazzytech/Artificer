@@ -9,6 +9,8 @@ using Space.Segment;
 using Space.Ship;
 using Space.Teams;
 using System.Collections.Generic;
+using System;
+using Space.Ship.Components.Listener;
 
 namespace Space.UI
 {
@@ -200,6 +202,18 @@ namespace Space.UI
                 .IndicateIntegrity(postion, amount);
         }
 
+        /// <summary>
+        /// displays construction
+        /// heads up display
+        /// </summary>
+        /// <param name="deployFunction"></param>
+        /// <param name="options"></param>
+        public void DisplayBuildWheel(Deploy deployFunction, 
+            List<string> options)
+        {
+
+        }
+
         #endregion
 
         #region PLAYRECT RPC
@@ -312,6 +326,21 @@ namespace Space.UI
 
         #region STATION RECT MESSAGES
 
+        /// <summary>
+        /// prompts the station object to enable
+        /// the warp map portion of the Station HUD
+        /// </summary>
+        public void InitializeWarpMap
+            (List<NetworkInstanceId> surroundingWarpGates)
+        {
+
+        }
+
+        /// <summary>
+        /// Prompts the staton object to enable the ship
+        /// viewer portion of the station HUD. 
+        /// </summary>
+        /// <param name="ship"></param>
         public void InitializeStationHUD(ShipAttributes ship)
         {
             m_stationRect.SendMessage("InitializeHUD", ship);

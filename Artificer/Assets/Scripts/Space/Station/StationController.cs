@@ -20,20 +20,18 @@ namespace Stations
         #region EVENTS
 
         public delegate void StationEvent(StationController controller);
-        public static event StationEvent EnterStation;
-        public static event StationEvent ExitStation;
-        public static event StationEvent InBuildRange;
-        public static event StationEvent OutOfBuildRange;
+
+        public static event StationEvent EnterRange;
+        public static event StationEvent ExitRange;
+        public static event StationEvent EnterBuildRange;
+        public static event StationEvent ExitBuildRange;
 
         #endregion
 
         #region ATTRIBUTES
 
-        // stop flickering effect caused by ships mulitple components
-        private bool m_dockReady;
-
-        // stop flickering effect caused by ships mulitple components
-        private bool m_buildReady;
+        private IEnumerator m_docking;
+        private IEnumerator m_building;
 
         #endregion
 
@@ -42,17 +40,26 @@ namespace Stations
         void Awake()
         {
             Att.CurrentIntegrity = Att.Integrity;
-
-            m_dockReady = false;
         }
 
         void Start()
         {
-            if(Att.Type == STATIONTYPE.HOME)
-                StartCoroutine("DistanceBasedDocking");
+            if (Att.Type == STATIONTYPE.HOME || Att.Type == STATIONTYPE.WARP)
+            {
+                m_docking = CheckRange
+                    (EnterRange, ExitRange, Att.MinDistance);
+
+                StartCoroutine(m_docking);
+            }
 
             if (Att.Type == STATIONTYPE.HOME || Att.Type == STATIONTYPE.FOB)
-                StartCoroutine("DistanceBasedConstruction");
+            {
+                m_building = CheckRange
+                    (EnterBuildRange, ExitBuildRange,
+                    Att.BuildDistance);
+
+                StartCoroutine(m_building);
+            }
 
             if (!Att.Interactive)
                 StartCoroutine("CheckForActivity");
@@ -60,7 +67,11 @@ namespace Stations
 
         void OnDestroy()
         {
-            StopCoroutine("DistanceBasedDocking");
+            if(m_docking != null)
+                StopCoroutine(m_docking);
+
+            if (m_building != null)
+                StopCoroutine(m_building);
         }
 
         #endregion
@@ -74,13 +85,14 @@ namespace Stations
         /// <param name="newID"></param>
         /// <param name="newType"></param>
         [Server]
-        public virtual void Initialize(int newID, NetworkInstanceId newTeam)
+        public virtual void Initialize
+            (int newID, NetworkInstanceId newTeam, bool delayBuild = false)
         {
             // Store our ID for when the station is destroyed
             Att.ID = newID;
 
             // Only home stations are created immediately
-            if (Att.Type == STATIONTYPE.HOME)
+            if (!delayBuild)
                 Att.Interactive = true;
             else
             {
@@ -164,137 +176,6 @@ namespace Stations
         }
 
         /// <summary>
-        /// This function will detect if a ship
-        /// has come into distance with the station
-        /// we will need to check the ship is local player and friendly.
-        /// Continue when working on next step
-        /// </summary>
-        private IEnumerator DistanceBasedDocking()
-        {
-            while (true)
-            {
-                if (!Att.Interactive)
-                {
-                    yield return null;
-                    continue;
-                }
-
-                GameObject playerObj =
-                    GameObject.FindGameObjectWithTag("PlayerShip");
-
-                // Ensure player is alive
-                if (playerObj == null)
-                {
-                    yield return null;
-                    continue;
-                }
-
-                // Retrieve NetworkInstance of player
-                NetworkInstanceId localInstID = playerObj.GetComponent
-                    <NetworkIdentity>().netId;
-
-                // only proceed if local player 
-                // is on the correct team
-                if (!Att.Team.PlayerOnTeam(localInstID))
-                {
-                    yield break;
-                }
-
-                // Find distance between station and player object
-                float distance = Vector2.Distance
-                    (transform.position, playerObj.transform.position);
-
-                // determine range
-                if(distance <= Att.MinDistance)
-                {
-                    if (!m_dockReady)
-                    {
-                        // Call the event
-                        EnterStation(this);
-
-                        m_dockReady = true;
-                    }
-                }
-                else
-                {
-                    if(m_dockReady)
-                    {
-                        // Call the event
-                        ExitStation(this);
-
-                        m_dockReady = false;
-                    }
-                }
-
-                yield return null;
-            }
-        }
-
-        private IEnumerator DistanceBasedConstruction()
-        {
-            while (true)
-            {
-                // Skip is not currently active
-                if(!Att.Interactive)
-                {
-                    yield return null;
-                    continue;
-                }
-
-                GameObject playerObj =
-                        GameObject.FindGameObjectWithTag("PlayerShip");
-
-                // Ensure player is alive
-                if (playerObj == null)
-                {
-                    yield return null;
-                    continue;
-                }
-
-                // Retrieve NetworkInstance of player
-                NetworkInstanceId localInstID = playerObj.GetComponent
-                    <NetworkIdentity>().netId;
-
-                // only proceed if local player 
-                // is on the correct team
-                if (!Att.Team.PlayerOnTeam(localInstID))
-                {
-                    yield break;
-                }
-
-                // Find distance between station and player object
-                float distance = Vector2.Distance
-                    (transform.position, playerObj.transform.position);
-
-                // determine range
-                if (distance <= Att.BuildDistance)
-                {
-                    if (!m_buildReady)
-                    {
-                        // Call the event
-                        if(InBuildRange != null)
-                            InBuildRange(this);
-
-                        m_buildReady = true;
-                    }
-                }
-                else
-                {
-                    if (m_buildReady)
-                    {
-                        // Call the event
-                        if (OutOfBuildRange != null)
-                            OutOfBuildRange(this);
-
-                        m_buildReady = false;
-                    }
-                }
-
-                yield return null;
-            }
-        }
-
-        /// <summary>
         /// Keep checking if ship has been set
         /// to active yet and change visual appearance
         /// </summary>
@@ -325,6 +206,83 @@ namespace Stations
             Att.Interactive = true;
 
             yield break;
+        }
+
+        /// <summary>
+        /// Catch all function that triggered provided events
+        /// when in or out of range of ship
+        /// </summary>
+        /// <param name="InRange"></param>
+        /// <param name="OutRange"></param>
+        protected IEnumerator CheckRange
+            (StationEvent InRange, StationEvent OutRange, float Distance)
+        {
+            // Create bools so only single
+            // events are triggered
+            bool triggered = false;
+
+            // Endless loop
+            while (true)
+            {
+                // Always want to skip if we 
+                // arent currently active
+                if (!Att.Interactive)
+                {
+                    yield return null;
+                    continue;
+                }
+
+                // Only proceed if the player is 
+                // currently deployed
+                GameObject playerObj =
+                    GameObject.FindGameObjectWithTag("PlayerShip");
+
+                // Ensure player is alive
+                if (playerObj == null)
+                {
+                    yield return null;
+                    continue;
+                }
+
+                // Retrieve NetworkInstance of player
+                NetworkInstanceId localInstID = playerObj.GetComponent
+                    <NetworkIdentity>().netId;
+
+                // only proceed if local player 
+                // is on the correct team
+                if (!Att.Team.PlayerOnTeam(localInstID))
+                {
+                    yield break;
+                }
+
+                // Find distance between station and player object
+                float distance = Vector2.Distance
+                    (transform.position, playerObj.transform.position);
+
+                // determine range
+                if (distance <= Distance)
+                {
+                    if (!triggered)
+                    {
+                        // Call the event
+                        InRange(this);
+
+                        triggered = true;
+                    }
+                }
+                else
+                {
+                    if (triggered)
+                    {
+                        // Call the event
+                        OutRange(this);
+
+                        triggered = false;
+                    }
+                }
+
+                yield return null;
+            }
         }
 
         #endregion

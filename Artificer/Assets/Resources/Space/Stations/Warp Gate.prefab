@@ -93,14 +93,15 @@ MonoBehaviour:
   Interactive: 0
   ID: 0
   Type: 0
-  BuildCounter: 0
+  BuildCounter: 30
   BuildColour: {r: 0.0042171315, g: 0.28676468, b: 0.0042171315, a: 0.84}
   BuildDistance: 0
-  MinDistance: 0
+  MinDistance: 10
   Icon: {fileID: 21300000, guid: 4754203794ffacf439e8a1c3e06da90c, type: 3}
   ExitPoint: {x: 0, y: 0}
   WarpRadius: 0
   WaitForExit: 0
+  EnteredWarpRange: 0
 --- !u!114 &114446704263786114
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -193,8 +194,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -743043609
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 1d06a482962b55b4f84c25f7ccd682bf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

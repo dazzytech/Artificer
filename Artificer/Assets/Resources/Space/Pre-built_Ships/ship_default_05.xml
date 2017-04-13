@@ -1,64 +1,27 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <ship xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" player="true" rotorFollow="true">
   <pieces>
-    <body instanceID="0" folder="Construct" name="Construct_FOB_01" direction="up" trigger="deploy" combat="" style="default">
+    <body instanceID="0" folder="Components" name="Ship_Connect_Left_03" direction="up" trigger="" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
-        <x>644.5</x>
-        <y>231.5</y>
+        <x>307.5</x>
+        <y>101.5</y>
         <position>
-          <x>644.5</x>
-          <y>231.5</y>
+          <x>307.5</x>
+          <y>101.5</y>
         </position>
         <center>
-          <x>744.5</x>
-          <y>299.5</y>
+          <x>320</x>
+          <y>137</y>
         </center>
         <min>
-          <x>644.5</x>
-          <y>231.5</y>
+          <x>307.5</x>
+          <y>101.5</y>
         </min>
         <max>
-          <x>844.5</x>
-          <y>367.5</y>
-        </max>
-        <width>200</width>
-        <height>136</height>
-        <size>
-          <x>200</x>
-          <y>136</y>
-        </size>
-        <xMin>644.5</xMin>
-        <yMin>231.5</yMin>
-        <xMax>844.5</xMax>
-        <yMax>367.5</yMax>
-      </Bounds>
-      <rotation>0</rotation>
-      <IsHead>false</IsHead>
-      <StyleSelect>0</StyleSelect>
-    </body>
-    <body instanceID="1" folder="Components" name="Ship_Connect_Left_03" direction="up" trigger="" combat="" style="default">
-      <name />
-      <hideFlags>None</hideFlags>
-      <Bounds>
-        <x>690.5</x>
-        <y>162</y>
-        <position>
-          <x>690.5</x>
-          <y>162</y>
-        </position>
-        <center>
-          <x>703</x>
-          <y>197.5</y>
-        </center>
-        <min>
-          <x>690.5</x>
-          <y>162</y>
-        </min>
-        <max>
-          <x>715.5</x>
-          <y>233</y>
+          <x>332.5</x>
+          <y>172.5</y>
         </max>
         <width>25</width>
         <height>71</height>
@@ -66,36 +29,36 @@
           <x>25</x>
           <y>71</y>
         </size>
-        <xMin>690.5</xMin>
-        <yMin>162</yMin>
-        <xMax>715.5</xMax>
-        <yMax>233</yMax>
+        <xMin>307.5</xMin>
+        <yMin>101.5</yMin>
+        <xMax>332.5</xMax>
+        <yMax>172.5</yMax>
       </Bounds>
       <rotation>0</rotation>
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="2" folder="Components" name="Ship_Connect_Right_03" direction="up" trigger="" combat="" style="default">
+    <body instanceID="1" folder="Components" name="Ship_Connect_Right_03" direction="up" trigger="" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
-        <x>771.5</x>
-        <y>162.000015</y>
+        <x>406.5</x>
+        <y>101.5</y>
         <position>
-          <x>771.5</x>
-          <y>162.000015</y>
+          <x>406.5</x>
+          <y>101.5</y>
         </position>
         <center>
-          <x>784</x>
-          <y>197.500015</y>
+          <x>419</x>
+          <y>137</y>
         </center>
         <min>
-          <x>771.5</x>
-          <y>162.000015</y>
+          <x>406.5</x>
+          <y>101.5</y>
         </min>
         <max>
-          <x>796.5</x>
-          <y>233.000015</y>
+          <x>431.5</x>
+          <y>172.5</y>
         </max>
         <width>25</width>
         <height>71</height>
@@ -103,36 +66,36 @@
           <x>25</x>
           <y>71</y>
         </size>
-        <xMin>771.5</xMin>
-        <yMin>162.000015</yMin>
-        <xMax>796.5</xMax>
-        <yMax>233.000015</yMax>
+        <xMin>406.5</xMin>
+        <yMin>101.5</yMin>
+        <xMax>431.5</xMax>
+        <yMax>172.5</yMax>
       </Bounds>
       <rotation>0</rotation>
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="4" folder="Engines" name="Engine_Right_06" direction="up" trigger="moveUp" combat="moveUp" style="default">
+    <body instanceID="2" folder="Engines" name="Engine_Right_06" direction="up" trigger="moveUp" combat="moveUp" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
-        <x>834.5</x>
-        <y>260.5</y>
+        <x>397</x>
+        <y>260</y>
         <position>
-          <x>834.5</x>
-          <y>260.5</y>
+          <x>397</x>
+          <y>260</y>
         </position>
         <center>
-          <x>856.5</x>
-          <y>282</y>
+          <x>419</x>
+          <y>281.5</y>
         </center>
         <min>
-          <x>834.5</x>
-          <y>260.5</y>
+          <x>397</x>
+          <y>260</y>
         </min>
         <max>
-          <x>878.5</x>
-          <y>303.5</y>
+          <x>441</x>
+          <y>303</y>
         </max>
         <width>44</width>
         <height>43</height>
@@ -140,36 +103,36 @@
           <x>44</x>
           <y>43</y>
         </size>
-        <xMin>834.5</xMin>
-        <yMin>260.5</yMin>
-        <xMax>878.5</xMax>
-        <yMax>303.5</yMax>
+        <xMin>397</xMin>
+        <yMin>260</yMin>
+        <xMax>441</xMax>
+        <yMax>303</yMax>
       </Bounds>
       <rotation>0</rotation>
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="5" folder="Engines" name="Engine_02" direction="right" trigger="strafeRight" combat="strafeRight" style="default">
+    <body instanceID="3" folder="Engines" name="Engine_02" direction="right" trigger="strafeRight" combat="strafeRight" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
-        <x>653.5</x>
-        <y>203</y>
+        <x>316.5</x>
+        <y>203.5</y>
         <position>
-          <x>653.5</x>
-          <y>203</y>
+          <x>316.5</x>
+          <y>203.5</y>
         </position>
         <center>
-          <x>660</x>
-          <y>209.5</y>
+          <x>323</x>
+          <y>210</y>
         </center>
         <min>
-          <x>653.5</x>
-          <y>203</y>
+          <x>316.5</x>
+          <y>203.5</y>
         </min>
         <max>
-          <x>666.5</x>
-          <y>216</y>
+          <x>329.5</x>
+          <y>216.5</y>
         </max>
         <width>13</width>
         <height>13</height>
@@ -177,443 +140,332 @@
           <x>13</x>
           <y>13</y>
         </size>
-        <xMin>653.5</xMin>
-        <yMin>203</yMin>
-        <xMax>666.5</xMax>
-        <yMax>216</yMax>
+        <xMin>316.5</xMin>
+        <yMin>203.5</yMin>
+        <xMax>329.5</xMax>
+        <yMax>216.5</yMax>
       </Bounds>
       <rotation>90</rotation>
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="6" folder="Rotors" name="Rotor_01" direction="right" trigger="turnLeft" combat="" style="default">
+    <body instanceID="4" folder="Rotors" name="Rotor_01" direction="right" trigger="turnLeft" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
-        <x>872</x>
-        <y>260</y>
+        <x>434.5</x>
+        <y>259.5</y>
         <position>
-          <x>872</x>
-          <y>260</y>
+          <x>434.5</x>
+          <y>259.5</y>
         </position>
         <center>
-          <x>883</x>
+          <x>445.5</x>
+          <y>271</y>
+        </center>
+        <min>
+          <x>434.5</x>
+          <y>259.5</y>
+        </min>
+        <max>
+          <x>456.5</x>
+          <y>282.5</y>
+        </max>
+        <width>22</width>
+        <height>23</height>
+        <size>
+          <x>22</x>
+          <y>23</y>
+        </size>
+        <xMin>434.5</xMin>
+        <yMin>259.5</yMin>
+        <xMax>456.5</xMax>
+        <yMax>282.5</yMax>
+      </Bounds>
+      <rotation>90</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
+    <body instanceID="5" folder="Engines" name="Engine_02" direction="down" trigger="moveDown" combat="moveDown" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>408</x>
+        <y>91.5</y>
+        <position>
+          <x>408</x>
+          <y>91.5</y>
+        </position>
+        <center>
+          <x>414.5</x>
+          <y>98</y>
+        </center>
+        <min>
+          <x>408</x>
+          <y>91.5</y>
+        </min>
+        <max>
+          <x>421</x>
+          <y>104.5</y>
+        </max>
+        <width>13</width>
+        <height>13</height>
+        <size>
+          <x>13</x>
+          <y>13</y>
+        </size>
+        <xMin>408</xMin>
+        <yMin>91.5</yMin>
+        <xMax>421</xMax>
+        <yMax>104.5</yMax>
+      </Bounds>
+      <rotation>180</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
+    <body instanceID="6" folder="Engines" name="Engine_02" direction="down" trigger="moveDown" combat="moveDown" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>320</x>
+        <y>90.5</y>
+        <position>
+          <x>320</x>
+          <y>90.5</y>
+        </position>
+        <center>
+          <x>326.5</x>
+          <y>97</y>
+        </center>
+        <min>
+          <x>320</x>
+          <y>90.5</y>
+        </min>
+        <max>
+          <x>333</x>
+          <y>103.5</y>
+        </max>
+        <width>13</width>
+        <height>13</height>
+        <size>
+          <x>13</x>
+          <y>13</y>
+        </size>
+        <xMin>320</xMin>
+        <yMin>90.5</yMin>
+        <xMax>333</xMax>
+        <yMax>103.5</yMax>
+      </Bounds>
+      <rotation>180</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
+    <body instanceID="7" folder="Engines" name="Engine_02" direction="left" trigger="strafeLeft" combat="strafeLeft" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>408.5</x>
+        <y>205.5</y>
+        <position>
+          <x>408.5</x>
+          <y>205.5</y>
+        </position>
+        <center>
+          <x>415</x>
+          <y>212</y>
+        </center>
+        <min>
+          <x>408.5</x>
+          <y>205.5</y>
+        </min>
+        <max>
+          <x>421.5</x>
+          <y>218.5</y>
+        </max>
+        <width>13</width>
+        <height>13</height>
+        <size>
+          <x>13</x>
+          <y>13</y>
+        </size>
+        <xMin>408.5</xMin>
+        <yMin>205.5</yMin>
+        <xMax>421.5</xMax>
+        <yMax>218.5</yMax>
+      </Bounds>
+      <rotation>270</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
+    <body instanceID="8" folder="Rotors" name="Rotor_01" direction="left" trigger="turnRight" combat="" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>284.5</x>
+        <y>258.5</y>
+        <position>
+          <x>284.5</x>
+          <y>258.5</y>
+        </position>
+        <center>
+          <x>295.5</x>
+          <y>270</y>
+        </center>
+        <min>
+          <x>284.5</x>
+          <y>258.5</y>
+        </min>
+        <max>
+          <x>306.5</x>
+          <y>281.5</y>
+        </max>
+        <width>22</width>
+        <height>23</height>
+        <size>
+          <x>22</x>
+          <y>23</y>
+        </size>
+        <xMin>284.5</xMin>
+        <yMin>258.5</yMin>
+        <xMax>306.5</xMax>
+        <yMax>281.5</yMax>
+      </Bounds>
+      <rotation>270</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
+    <body instanceID="9" folder="Rotors" name="Rotor_01" direction="right" trigger="turnLeft" combat="" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>434.5</x>
+        <y>234.5</y>
+        <position>
+          <x>434.5</x>
+          <y>234.5</y>
+        </position>
+        <center>
+          <x>445.5</x>
+          <y>246</y>
+        </center>
+        <min>
+          <x>434.5</x>
+          <y>234.5</y>
+        </min>
+        <max>
+          <x>456.5</x>
+          <y>257.5</y>
+        </max>
+        <width>22</width>
+        <height>23</height>
+        <size>
+          <x>22</x>
+          <y>23</y>
+        </size>
+        <xMin>434.5</xMin>
+        <yMin>234.5</yMin>
+        <xMax>456.5</xMax>
+        <yMax>257.5</yMax>
+      </Bounds>
+      <rotation>90</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
+    <body instanceID="10" folder="Rotors" name="Rotor_01" direction="left" trigger="turnRight" combat="" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>284.5</x>
+        <y>233.5</y>
+        <position>
+          <x>284.5</x>
+          <y>233.5</y>
+        </position>
+        <center>
+          <x>295.5</x>
+          <y>245</y>
+        </center>
+        <min>
+          <x>284.5</x>
+          <y>233.5</y>
+        </min>
+        <max>
+          <x>306.5</x>
+          <y>256.5</y>
+        </max>
+        <width>22</width>
+        <height>23</height>
+        <size>
+          <x>22</x>
+          <y>23</y>
+        </size>
+        <xMin>284.5</xMin>
+        <yMin>233.5</yMin>
+        <xMax>306.5</xMax>
+        <yMax>256.5</yMax>
+      </Bounds>
+      <rotation>270</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
+    <head instanceID="11" folder="Components" name="Ship_CC_05" direction="up" trigger="" combat="" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>322</x>
+        <y>231</y>
+        <position>
+          <x>322</x>
+          <y>231</y>
+        </position>
+        <center>
+          <x>369</x>
           <y>271.5</y>
         </center>
         <min>
-          <x>872</x>
-          <y>260</y>
+          <x>322</x>
+          <y>231</y>
         </min>
         <max>
-          <x>894</x>
-          <y>283</y>
+          <x>416</x>
+          <y>312</y>
         </max>
-        <width>22</width>
-        <height>23</height>
+        <width>94</width>
+        <height>81</height>
         <size>
-          <x>22</x>
-          <y>23</y>
+          <x>94</x>
+          <y>81</y>
         </size>
-        <xMin>872</xMin>
-        <yMin>260</yMin>
-        <xMax>894</xMax>
-        <yMax>283</yMax>
-      </Bounds>
-      <rotation>90</rotation>
-      <IsHead>false</IsHead>
-      <StyleSelect>0</StyleSelect>
-    </body>
-    <body instanceID="7" folder="Engines" name="Engine_02" direction="down" trigger="moveDown" combat="moveDown" style="default">
-      <name />
-      <hideFlags>None</hideFlags>
-      <Bounds>
-        <x>773</x>
-        <y>152.000015</y>
-        <position>
-          <x>773</x>
-          <y>152.000015</y>
-        </position>
-        <center>
-          <x>779.5</x>
-          <y>158.500015</y>
-        </center>
-        <min>
-          <x>773</x>
-          <y>152.000015</y>
-        </min>
-        <max>
-          <x>786</x>
-          <y>165.000015</y>
-        </max>
-        <width>13</width>
-        <height>13</height>
-        <size>
-          <x>13</x>
-          <y>13</y>
-        </size>
-        <xMin>773</xMin>
-        <yMin>152.000015</yMin>
-        <xMax>786</xMax>
-        <yMax>165.000015</yMax>
-      </Bounds>
-      <rotation>180</rotation>
-      <IsHead>false</IsHead>
-      <StyleSelect>0</StyleSelect>
-    </body>
-    <body instanceID="8" folder="Engines" name="Engine_02" direction="down" trigger="moveDown" combat="moveDown" style="default">
-      <name />
-      <hideFlags>None</hideFlags>
-      <Bounds>
-        <x>703</x>
-        <y>151</y>
-        <position>
-          <x>703</x>
-          <y>151</y>
-        </position>
-        <center>
-          <x>709.5</x>
-          <y>157.5</y>
-        </center>
-        <min>
-          <x>703</x>
-          <y>151</y>
-        </min>
-        <max>
-          <x>716</x>
-          <y>164</y>
-        </max>
-        <width>13</width>
-        <height>13</height>
-        <size>
-          <x>13</x>
-          <y>13</y>
-        </size>
-        <xMin>703</xMin>
-        <yMin>151</yMin>
-        <xMax>716</xMax>
-        <yMax>164</yMax>
-      </Bounds>
-      <rotation>180</rotation>
-      <IsHead>false</IsHead>
-      <StyleSelect>0</StyleSelect>
-    </body>
-    <body instanceID="9" folder="Engines" name="Engine_02" direction="left" trigger="strafeLeft" combat="strafeLeft" style="default">
-      <name />
-      <hideFlags>None</hideFlags>
-      <Bounds>
-        <x>823.5</x>
-        <y>206.000015</y>
-        <position>
-          <x>823.5</x>
-          <y>206.000015</y>
-        </position>
-        <center>
-          <x>830</x>
-          <y>212.500015</y>
-        </center>
-        <min>
-          <x>823.5</x>
-          <y>206.000015</y>
-        </min>
-        <max>
-          <x>836.5</x>
-          <y>219.000015</y>
-        </max>
-        <width>13</width>
-        <height>13</height>
-        <size>
-          <x>13</x>
-          <y>13</y>
-        </size>
-        <xMin>823.5</xMin>
-        <yMin>206.000015</yMin>
-        <xMax>836.5</xMax>
-        <yMax>219.000015</yMax>
-      </Bounds>
-      <rotation>270</rotation>
-      <IsHead>false</IsHead>
-      <StyleSelect>0</StyleSelect>
-    </body>
-    <body instanceID="10" folder="Engines" name="Engine_Right_06" direction="up" trigger="moveUp" combat="moveUp" style="default">
-      <name />
-      <hideFlags>None</hideFlags>
-      <Bounds>
-        <x>783</x>
-        <y>200.500015</y>
-        <position>
-          <x>783</x>
-          <y>200.500015</y>
-        </position>
-        <center>
-          <x>805</x>
-          <y>222.000015</y>
-        </center>
-        <min>
-          <x>783</x>
-          <y>200.500015</y>
-        </min>
-        <max>
-          <x>827</x>
-          <y>243.500015</y>
-        </max>
-        <width>44</width>
-        <height>43</height>
-        <size>
-          <x>44</x>
-          <y>43</y>
-        </size>
-        <xMin>783</xMin>
-        <yMin>200.500015</yMin>
-        <xMax>827</xMax>
-        <yMax>243.500015</yMax>
-      </Bounds>
-      <rotation>0</rotation>
-      <IsHead>false</IsHead>
-      <StyleSelect>0</StyleSelect>
-    </body>
-    <body instanceID="11" folder="Engines" name="Engine_Left_06" direction="up" trigger="moveUp" combat="moveUp" style="default">
-      <name />
-      <hideFlags>None</hideFlags>
-      <Bounds>
-        <x>659</x>
-        <y>199.5</y>
-        <position>
-          <x>659</x>
-          <y>199.5</y>
-        </position>
-        <center>
-          <x>681</x>
-          <y>221</y>
-        </center>
-        <min>
-          <x>659</x>
-          <y>199.5</y>
-        </min>
-        <max>
-          <x>703</x>
-          <y>242.5</y>
-        </max>
-        <width>44</width>
-        <height>43</height>
-        <size>
-          <x>44</x>
-          <y>43</y>
-        </size>
-        <xMin>659</xMin>
-        <yMin>199.5</yMin>
-        <xMax>703</xMax>
-        <yMax>242.5</yMax>
-      </Bounds>
-      <rotation>0</rotation>
-      <IsHead>false</IsHead>
-      <StyleSelect>0</StyleSelect>
-    </body>
-    <body instanceID="12" folder="Rotors" name="Rotor_01" direction="left" trigger="turnRight" combat="" style="default">
-      <name />
-      <hideFlags>None</hideFlags>
-      <Bounds>
-        <x>600</x>
-        <y>259</y>
-        <position>
-          <x>600</x>
-          <y>259</y>
-        </position>
-        <center>
-          <x>611</x>
-          <y>270.5</y>
-        </center>
-        <min>
-          <x>600</x>
-          <y>259</y>
-        </min>
-        <max>
-          <x>622</x>
-          <y>282</y>
-        </max>
-        <width>22</width>
-        <height>23</height>
-        <size>
-          <x>22</x>
-          <y>23</y>
-        </size>
-        <xMin>600</xMin>
-        <yMin>259</yMin>
-        <xMax>622</xMax>
-        <yMax>282</yMax>
-      </Bounds>
-      <rotation>270</rotation>
-      <IsHead>false</IsHead>
-      <StyleSelect>0</StyleSelect>
-    </body>
-    <body instanceID="13" folder="Rotors" name="Rotor_01" direction="right" trigger="turnLeft" combat="" style="default">
-      <name />
-      <hideFlags>None</hideFlags>
-      <Bounds>
-        <x>806.5</x>
-        <y>207</y>
-        <position>
-          <x>806.5</x>
-          <y>207</y>
-        </position>
-        <center>
-          <x>817.5</x>
-          <y>218.5</y>
-        </center>
-        <min>
-          <x>806.5</x>
-          <y>207</y>
-        </min>
-        <max>
-          <x>828.5</x>
-          <y>230</y>
-        </max>
-        <width>22</width>
-        <height>23</height>
-        <size>
-          <x>22</x>
-          <y>23</y>
-        </size>
-        <xMin>806.5</xMin>
-        <yMin>207</yMin>
-        <xMax>828.5</xMax>
-        <yMax>230</yMax>
-      </Bounds>
-      <rotation>90</rotation>
-      <IsHead>false</IsHead>
-      <StyleSelect>0</StyleSelect>
-    </body>
-    <body instanceID="14" folder="Rotors" name="Rotor_01" direction="left" trigger="turnRight" combat="" style="default">
-      <name />
-      <hideFlags>None</hideFlags>
-      <Bounds>
-        <x>663.5</x>
-        <y>207</y>
-        <position>
-          <x>663.5</x>
-          <y>207</y>
-        </position>
-        <center>
-          <x>674.5</x>
-          <y>218.5</y>
-        </center>
-        <min>
-          <x>663.5</x>
-          <y>207</y>
-        </min>
-        <max>
-          <x>685.5</x>
-          <y>230</y>
-        </max>
-        <width>22</width>
-        <height>23</height>
-        <size>
-          <x>22</x>
-          <y>23</y>
-        </size>
-        <xMin>663.5</xMin>
-        <yMin>207</yMin>
-        <xMax>685.5</xMax>
-        <yMax>230</yMax>
-      </Bounds>
-      <rotation>270</rotation>
-      <IsHead>false</IsHead>
-      <StyleSelect>0</StyleSelect>
-    </body>
-    <head instanceID="15" folder="Components" name="Ship_CC_03" direction="up" trigger="" combat="" style="default">
-      <name />
-      <hideFlags>None</hideFlags>
-      <Bounds>
-        <x>719</x>
-        <y>139.5</y>
-        <position>
-          <x>719</x>
-          <y>139.5</y>
-        </position>
-        <center>
-          <x>744</x>
-          <y>160.5</y>
-        </center>
-        <min>
-          <x>719</x>
-          <y>139.5</y>
-        </min>
-        <max>
-          <x>769</x>
-          <y>181.5</y>
-        </max>
-        <width>50</width>
-        <height>42</height>
-        <size>
-          <x>50</x>
-          <y>42</y>
-        </size>
-        <xMin>719</xMin>
-        <yMin>139.5</yMin>
-        <xMax>769</xMax>
-        <yMax>181.5</yMax>
+        <xMin>322</xMin>
+        <yMin>231</yMin>
+        <xMax>416</xMax>
+        <yMax>312</yMax>
       </Bounds>
       <rotation>0</rotation>
       <IsHead>true</IsHead>
       <StyleSelect>0</StyleSelect>
     </head>
-    <body instanceID="16" folder="Components" name="Ship_Hull_02" direction="down" trigger="" combat="" style="default">
+    <body instanceID="12" folder="Engines" name="Engine_Right_06" direction="up" trigger="moveUp" combat="moveUp" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
-        <x>706.612732</x>
-        <y>178.038055</y>
+        <x>397</x>
+        <y>235</y>
         <position>
-          <x>706.612732</x>
-          <y>178.038055</y>
+          <x>397</x>
+          <y>235</y>
         </position>
         <center>
-          <x>743</x>
-          <y>224</y>
+          <x>419</x>
+          <y>256.5</y>
         </center>
         <min>
-          <x>706.612732</x>
-          <y>178.038055</y>
+          <x>397</x>
+          <y>235</y>
         </min>
         <max>
-          <x>779.387268</x>
-          <y>269.961945</y>
-        </max>
-        <width>72.77453</width>
-        <height>91.92388</height>
-        <size>
-          <x>72.77453</x>
-          <y>91.92388</y>
-        </size>
-        <xMin>706.612732</xMin>
-        <yMin>178.038055</yMin>
-        <xMax>779.387268</xMax>
-        <yMax>269.961945</yMax>
-      </Bounds>
-      <rotation>180</rotation>
-      <IsHead>false</IsHead>
-      <StyleSelect>0</StyleSelect>
-    </body>
-    <body instanceID="17" folder="Engines" name="Engine_Right_06" direction="up" trigger="moveUp" combat="moveUp" style="default">
-      <name />
-      <hideFlags>None</hideFlags>
-      <Bounds>
-        <x>769</x>
-        <y>207.5</y>
-        <position>
-          <x>769</x>
-          <y>207.5</y>
-        </position>
-        <center>
-          <x>791</x>
-          <y>229</y>
-        </center>
-        <min>
-          <x>769</x>
-          <y>207.5</y>
-        </min>
-        <max>
-          <x>813</x>
-          <y>250.5</y>
+          <x>441</x>
+          <y>278</y>
         </max>
         <width>44</width>
         <height>43</height>
@@ -621,36 +473,36 @@
           <x>44</x>
           <y>43</y>
         </size>
-        <xMin>769</xMin>
-        <yMin>207.5</yMin>
-        <xMax>813</xMax>
-        <yMax>250.5</yMax>
+        <xMin>397</xMin>
+        <yMin>235</yMin>
+        <xMax>441</xMax>
+        <yMax>278</yMax>
       </Bounds>
       <rotation>0</rotation>
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="18" folder="Engines" name="Engine_Left_06" direction="up" trigger="moveUp" combat="moveUp" style="default">
+    <body instanceID="13" folder="Engines" name="Engine_Left_06" direction="up" trigger="moveUp" combat="moveUp" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
-        <x>611.5</x>
-        <y>259.5</y>
+        <x>296</x>
+        <y>259</y>
         <position>
-          <x>611.5</x>
-          <y>259.5</y>
+          <x>296</x>
+          <y>259</y>
         </position>
         <center>
-          <x>633.5</x>
-          <y>281</y>
+          <x>318</x>
+          <y>280.5</y>
         </center>
         <min>
-          <x>611.5</x>
-          <y>259.5</y>
+          <x>296</x>
+          <y>259</y>
         </min>
         <max>
-          <x>655.5</x>
-          <y>302.5</y>
+          <x>340</x>
+          <y>302</y>
         </max>
         <width>44</width>
         <height>43</height>
@@ -658,36 +510,36 @@
           <x>44</x>
           <y>43</y>
         </size>
-        <xMin>611.5</xMin>
-        <yMin>259.5</yMin>
-        <xMax>655.5</xMax>
-        <yMax>302.5</yMax>
+        <xMin>296</xMin>
+        <yMin>259</yMin>
+        <xMax>340</xMax>
+        <yMax>302</yMax>
       </Bounds>
       <rotation>0</rotation>
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="19" folder="Rotors" name="Rotor_01" direction="right" trigger="turnLeft" combat="" style="default">
+    <body instanceID="14" folder="Rotors" name="Rotor_01" direction="right" trigger="turnLeft" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
-        <x>789.5</x>
-        <y>170.000015</y>
+        <x>405.5</x>
+        <y>174.5</y>
         <position>
-          <x>789.5</x>
-          <y>170.000015</y>
+          <x>405.5</x>
+          <y>174.5</y>
         </position>
         <center>
-          <x>800.5</x>
-          <y>181.500015</y>
+          <x>416.5</x>
+          <y>186</y>
         </center>
         <min>
-          <x>789.5</x>
-          <y>170.000015</y>
+          <x>405.5</x>
+          <y>174.5</y>
         </min>
         <max>
-          <x>811.5</x>
-          <y>193.000015</y>
+          <x>427.5</x>
+          <y>197.5</y>
         </max>
         <width>22</width>
         <height>23</height>
@@ -695,36 +547,36 @@
           <x>22</x>
           <y>23</y>
         </size>
-        <xMin>789.5</xMin>
-        <yMin>170.000015</yMin>
-        <xMax>811.5</xMax>
-        <yMax>193.000015</yMax>
+        <xMin>405.5</xMin>
+        <yMin>174.5</yMin>
+        <xMax>427.5</xMax>
+        <yMax>197.5</yMax>
       </Bounds>
       <rotation>90</rotation>
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="20" folder="Rotors" name="Rotor_01" direction="left" trigger="turnRight" combat="" style="default">
+    <body instanceID="15" folder="Rotors" name="Rotor_01" direction="left" trigger="turnRight" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
-        <x>674.5</x>
-        <y>170</y>
+        <x>310.5</x>
+        <y>174.5</y>
         <position>
-          <x>674.5</x>
-          <y>170</y>
+          <x>310.5</x>
+          <y>174.5</y>
         </position>
         <center>
-          <x>685.5</x>
-          <y>181.5</y>
+          <x>321.5</x>
+          <y>186</y>
         </center>
         <min>
-          <x>674.5</x>
-          <y>170</y>
+          <x>310.5</x>
+          <y>174.5</y>
         </min>
         <max>
-          <x>696.5</x>
-          <y>193</y>
+          <x>332.5</x>
+          <y>197.5</y>
         </max>
         <width>22</width>
         <height>23</height>
@@ -732,36 +584,36 @@
           <x>22</x>
           <y>23</y>
         </size>
-        <xMin>674.5</xMin>
-        <yMin>170</yMin>
-        <xMax>696.5</xMax>
-        <yMax>193</yMax>
+        <xMin>310.5</xMin>
+        <yMin>174.5</yMin>
+        <xMax>332.5</xMax>
+        <yMax>197.5</yMax>
       </Bounds>
       <rotation>270</rotation>
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="3" folder="Engines" name="Engine_Left_06" direction="up" trigger="moveUp" combat="moveUp" style="default">
+    <body instanceID="16" folder="Engines" name="Engine_Left_06" direction="up" trigger="moveUp" combat="moveUp" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
-        <x>675</x>
-        <y>207.5</y>
+        <x>296</x>
+        <y>234</y>
         <position>
-          <x>675</x>
-          <y>207.5</y>
+          <x>296</x>
+          <y>234</y>
         </position>
         <center>
-          <x>697</x>
-          <y>229</y>
+          <x>318</x>
+          <y>255.5</y>
         </center>
         <min>
-          <x>675</x>
-          <y>207.5</y>
+          <x>296</x>
+          <y>234</y>
         </min>
         <max>
-          <x>719</x>
-          <y>250.5</y>
+          <x>340</x>
+          <y>277</y>
         </max>
         <width>44</width>
         <height>43</height>
@@ -769,10 +621,84 @@
           <x>44</x>
           <y>43</y>
         </size>
-        <xMin>675</xMin>
-        <yMin>207.5</yMin>
-        <xMax>719</xMax>
-        <yMax>250.5</yMax>
+        <xMin>296</xMin>
+        <yMin>234</yMin>
+        <xMax>340</xMax>
+        <yMax>277</yMax>
+      </Bounds>
+      <rotation>0</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
+    <body instanceID="17" folder="Construct" name="Construct_01" direction="up" trigger="deploy" combat="" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>324</x>
+        <y>136</y>
+        <position>
+          <x>324</x>
+          <y>136</y>
+        </position>
+        <center>
+          <x>369</x>
+          <y>188</y>
+        </center>
+        <min>
+          <x>324</x>
+          <y>136</y>
+        </min>
+        <max>
+          <x>414</x>
+          <y>240</y>
+        </max>
+        <width>90</width>
+        <height>104</height>
+        <size>
+          <x>90</x>
+          <y>104</y>
+        </size>
+        <xMin>324</xMin>
+        <yMin>136</yMin>
+        <xMax>414</xMax>
+        <yMax>240</yMax>
+      </Bounds>
+      <rotation>0</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
+    <body instanceID="18" folder="Engines" name="Engine_05" direction="up" trigger="moveUp" combat="moveUp" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>335</x>
+        <y>297.5</y>
+        <position>
+          <x>335</x>
+          <y>297.5</y>
+        </position>
+        <center>
+          <x>369</x>
+          <y>317</y>
+        </center>
+        <min>
+          <x>335</x>
+          <y>297.5</y>
+        </min>
+        <max>
+          <x>403</x>
+          <y>336.5</y>
+        </max>
+        <width>68</width>
+        <height>39</height>
+        <size>
+          <x>68</x>
+          <y>39</y>
+        </size>
+        <xMin>335</xMin>
+        <yMin>297.5</yMin>
+        <xMax>403</xMax>
+        <yMax>336.5</yMax>
       </Bounds>
       <rotation>0</rotation>
       <IsHead>false</IsHead>
@@ -780,27 +706,24 @@
     </body>
   </pieces>
   <links>
-    <link linkID="0" IDfrom="15" IDto="16" linkToID="3" />
-    <link linkID="0" IDfrom="16" IDto="0" linkToID="0" />
-    <link linkID="1" IDfrom="0" IDto="18" linkToID="0" />
-    <link linkID="1" IDfrom="18" IDto="12" linkToID="0" />
-    <link linkID="5" IDfrom="0" IDto="4" linkToID="1" />
-    <link linkID="0" IDfrom="4" IDto="6" linkToID="0" />
-    <link linkID="1" IDfrom="16" IDto="3" linkToID="0" />
-    <link linkID="1" IDfrom="3" IDto="14" linkToID="0" />
-    <link linkID="2" IDfrom="16" IDto="1" linkToID="2" />
-    <link linkID="0" IDfrom="1" IDto="8" linkToID="0" />
-    <link linkID="4" IDfrom="1" IDto="20" linkToID="0" />
-    <link linkID="6" IDfrom="1" IDto="11" linkToID="0" />
-    <link linkID="1" IDfrom="11" IDto="5" linkToID="0" />
-    <link linkID="3" IDfrom="16" IDto="15" linkToID="0" />
-    <link linkID="4" IDfrom="16" IDto="2" linkToID="2" />
-    <link linkID="0" IDfrom="2" IDto="7" linkToID="0" />
-    <link linkID="5" IDfrom="2" IDto="19" linkToID="0" />
-    <link linkID="7" IDfrom="2" IDto="10" linkToID="1" />
-    <link linkID="0" IDfrom="10" IDto="9" linkToID="0" />
-    <link linkID="5" IDfrom="16" IDto="17" linkToID="1" />
-    <link linkID="0" IDfrom="17" IDto="13" linkToID="0" />
+    <link linkID="0" IDfrom="11" IDto="17" linkToID="8" />
+    <link linkID="1" IDfrom="17" IDto="0" linkToID="3" />
+    <link linkID="0" IDfrom="0" IDto="6" linkToID="0" />
+    <link linkID="2" IDfrom="17" IDto="15" linkToID="0" />
+    <link linkID="3" IDfrom="17" IDto="3" linkToID="0" />
+    <link linkID="4" IDfrom="17" IDto="14" linkToID="0" />
+    <link linkID="5" IDfrom="17" IDto="1" linkToID="3" />
+    <link linkID="0" IDfrom="1" IDto="5" linkToID="0" />
+    <link linkID="6" IDfrom="17" IDto="7" linkToID="0" />
+    <link linkID="4" IDfrom="11" IDto="18" linkToID="0" />
+    <link linkID="6" IDfrom="11" IDto="16" linkToID="0" />
+    <link linkID="1" IDfrom="16" IDto="10" linkToID="0" />
+    <link linkID="7" IDfrom="11" IDto="13" linkToID="0" />
+    <link linkID="1" IDfrom="13" IDto="8" linkToID="0" />
+    <link linkID="8" IDfrom="11" IDto="12" linkToID="1" />
+    <link linkID="0" IDfrom="12" IDto="9" linkToID="0" />
+    <link linkID="9" IDfrom="11" IDto="2" linkToID="1" />
+    <link linkID="0" IDfrom="2" IDto="4" linkToID="0" />
   </links>
   <info>
     <name>Eden FOB Hi</name>

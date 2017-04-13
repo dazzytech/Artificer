@@ -64,10 +64,10 @@ namespace Space
             SpaceManager.PlayerExitScene += PlayerDeath;
 
             // Station events
-            StationController.EnterStation += OnEnterStation;
-            StationController.ExitStation += OnExitStation;
-            StationController.InBuildRange += OnEnterBuildRange;
-            StationController.OutOfBuildRange += OnExitBuildRange;
+            StationController.EnterRange += OnEnterStation;
+            StationController.ExitRange += OnExitStation;
+            StationController.EnterBuildRange += OnEnterBuildRange;
+            StationController.ExitBuildRange += OnExitBuildRange;
         }
 
         void OnDisable()
@@ -79,10 +79,10 @@ namespace Space
             SpaceManager.PlayerExitScene -= PlayerDeath;
 
             // Station events
-            StationController.EnterStation -= OnEnterStation;
-            StationController.ExitStation -= OnExitStation;
-            StationController.InBuildRange -= OnEnterBuildRange;
-            StationController.OutOfBuildRange -= OnExitBuildRange;
+            StationController.EnterRange -= OnEnterStation;
+            StationController.ExitRange -= OnExitStation;
+            StationController.EnterBuildRange -= OnEnterBuildRange;
+            StationController.ExitBuildRange -= OnExitBuildRange;
         }
 
         #endregion
@@ -219,7 +219,10 @@ namespace Space
 
             m_att.station = controller;
 
-            SystemManager.GUI.DisplayPrompt("Press Enter to dock at station");
+            if(m_att.station.Type == STATIONTYPE.WARP)
+                SystemManager.GUI.DisplayPrompt("Press Enter to enter Warp Map");
+            else
+                SystemManager.GUI.DisplayPrompt("Press Enter to dock at station");
         }
 
         /// <summary>

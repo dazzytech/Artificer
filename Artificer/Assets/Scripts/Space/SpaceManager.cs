@@ -9,6 +9,7 @@ using Data.Space;
 using Space.UI;
 using Space.Ship;
 using Space.Teams;
+using Stations;
 
 namespace Space
 {
@@ -246,6 +247,9 @@ namespace Space
 
         public void DockAtStation()
         {
+            // SHARED FUNCTION
+
+            // Only perform if we have a station
             if (!_att.overStation)
                 return;
 
@@ -261,18 +265,29 @@ namespace Space
 
             _att.docked = true;
 
-            PlayerObj.SendMessage("DisableShip",
-                SendMessageOptions.RequireReceiver);
-
             // Next is to update the HUD to display the
             // micro stationHUD
             SystemManager.GUI.SetState(UIState.Station);
 
-            // retrieve ship atts from player object
-            ShipAttributes shipAtt = PlayerObj.GetComponent<ShipAttributes>();
+            // WARP FUNCTION
+            if (_att.station.Type == Stations.STATIONTYPE.WARP)
+            {
+                // call warp map HUD
+                SystemManager.GUI.InitializeWarpMap(
+                    ((WarpController)_att.station).Nearby);
+            }
+            else
+            {
+                // For now every other type does this
+                PlayerObj.SendMessage("DisableShip",
+                    SendMessageOptions.RequireReceiver);
 
-            // Add message for sending ship attributes
-            SystemManager.GUI.InitializeStationHUD(shipAtt);
+                // retrieve ship atts from player object
+                ShipAttributes shipAtt = PlayerObj.GetComponent<ShipAttributes>();
+
+                // Add message for sending ship attributes
+                SystemManager.GUI.InitializeStationHUD(shipAtt);
+            }
         }
 
         /// <summary>

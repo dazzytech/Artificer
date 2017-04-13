@@ -10,13 +10,11 @@ namespace Space.Ship.Components.Attributes
 
         [Header("Builder Attributes")]
         
-        public GameObject StationPrefab;
+        public List<string> SpawnableStations;
 
-        public bool IsFOB;
+        public float StationDelay;
 
-        public bool StationDeployed;
-
-        public Color PendingColour;
+        public bool ReadyToDeploy;
 
         #endregion
     }

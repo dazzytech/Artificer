@@ -12,19 +12,7 @@ namespace Stations
     [RequireComponent(typeof(WarpAttributes))]
     public class WarpController : StationController
     {
-        #region EVENTS
-
-        // When player gets close enough to 
-        // warp then enable warping
-
-        public static event StationEvent EnterWarpRadius;
-        public static event StationEvent ExitWarpRadius;
-
-        #endregion
-
         #region MONOBEHAVIOUR
-        
-        // overwrite these functions for different behaviours
 
         void Awake()
         {
@@ -33,15 +21,9 @@ namespace Stations
             Att.Type = STATIONTYPE.WARP;
         }
 
-        void Start()
+        private void OnDisable()
         {
-            if (!Att.Interactive)
-                StartCoroutine("CheckForActivity");
-        }
-
-        void OnDestroy()
-        {
-
+            WarpAttributes.WarpList.Add(netId);
         }
 
         #endregion
@@ -54,23 +36,21 @@ namespace Stations
         /// </summary>
         /// <param name="newID"></param>
         /// <param name="newTeam"></param>
-        public override void Initialize(int newID, NetworkInstanceId newTeam)
+        public override void Initialize(int newID, NetworkInstanceId newTeam, bool ignore)
         {
-            // Store our ID for when the station is destroyed
-            Att.ID = newID;
+            // For now call the base class till actions are different
+            base.Initialize(newID, newTeam, true);
 
-            // Just set interactive to true for now
-            Att.Interactive = false;
+            if (WarpAttributes.WarpList == null)
+                WarpAttributes.WarpList = 
+                    new List<NetworkInstanceId>();
 
-            // reference to our team
-            Att.TeamID = newTeam;
-
-            // place station under correct parent
-            transform.SetParent(Att.Team.transform);
+            // Add ourselves to static reference list
+            WarpAttributes.WarpList.Add(netId);
         }
 
         /// <summary>
-        /// 
+        /// Returns the attributes in warp type
         /// </summary>
         public new WarpAttributes Att
         {
@@ -82,6 +62,40 @@ namespace Stations
                     return transform.GetComponent<WarpAttributes>();
                 else
                     return null;
+            }
+        }
+
+        #endregion
+
+        #region ACCESSORS
+
+        public List<NetworkInstanceId> Nearby
+        {
+            get
+            {
+                // Create container list for nearby warps
+                List<NetworkInstanceId> nearbyWarps = 
+                    new List<NetworkInstanceId>();
+
+                // find each within distance
+                foreach(NetworkInstanceId warpID in
+                    WarpAttributes.WarpList)
+                {
+                    // ignore self
+                    if (warpID == netId)
+                        continue;
+                    GameObject warpObj = ClientScene.FindLocalObject(warpID);
+
+                    if(Vector2.Distance(transform.position, 
+                        warpObj.transform.position) <= Att.WarpRadius)
+                    {
+                        // Within distance, keep reference
+                        nearbyWarps.Add(warpID);
+                    }
+                }
+
+                // return our retreived list
+                return nearbyWarps;
             }
         }
 

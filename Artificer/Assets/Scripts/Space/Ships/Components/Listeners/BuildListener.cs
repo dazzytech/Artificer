@@ -8,6 +8,8 @@ using Space.Segment;
 
 namespace Space.Ship.Components.Listener
 {
+    public delegate void Deploy(int deployID);
+
     public class BuildListener : ComponentListener
     {
         #region ATTRIBUTES
@@ -27,7 +29,7 @@ namespace Space.Ship.Components.Listener
         void Start()
         {
             base.SetRB();
-            m_att.StationDeployed = false;
+            m_att.ReadyToDeploy = true;
         }
 
         #endregion
@@ -40,22 +42,15 @@ namespace Space.Ship.Components.Listener
         /// </summary>
         public override void Activate()
         {
-            if (!SystemManager.Space.CanBuild && !m_att.IsFOB)
-            {
-                SystemManager.GUI.DisplayPrompt("Not in build out of range of FOB or Home Base");
-                SystemManager.GUI.Invoke("ClearPrompt", 3f);
+            if (!m_att.ReadyToDeploy)
                 return;
-            }
 
-            // For now send desploy immediately
-            DeployStation();
+            // Display info on this component to wheel
+            SystemManager.GUI.DisplayBuildWheel(DeployStation,
+                m_att.SpawnableStations);
 
-            // self destruct this piece
-            HitData hit = new HitData();
-            hit.hitComponent = m_att.ID;
-
-            transform.parent.SendMessage("DestroyComponent", hit,
-                    SendMessageOptions.DontRequireReceiver);
+            // For now desploy first station to the list
+            DeployStation(0);
         }
 
         public void SetTriggerKey(string key)
@@ -70,32 +65,50 @@ namespace Space.Ship.Components.Listener
                 .GetKey(key, "combat");
         }
 
-        #endregion
-
-        #region PRIVATE UTILITIES
-
-        private void DeployStation()
+        public void DeployStation(int stationID)
         {
-            Vector3 deployPoint = transform.position;
+            // retreive name and check can deploy
+            string stationName = 
+                m_att.SpawnableStations[stationID];
 
-            // Test our prefab is contained with the 
-            // spawn objects
-            if(NetworkManager.singleton.spawnPrefabs.
-                Contains(m_att.StationPrefab))
+            if (!SystemManager.Space.CanBuild && !stationName.Contains("FOB"))
             {
-                // Create message for game controller
-                StationBuildMessage sbm = new StationBuildMessage();
-                sbm.Position = deployPoint;
-                sbm.teamID = SystemManager.Space.Team.ID;
-                sbm.PrefabName = m_att.StationPrefab.name;
+                SystemManager.GUI.DisplayPrompt("Not in build out of range of FOB or Home Base");
+                SystemManager.GUI.Invoke("ClearPrompt", 3f);
+                return;
+            }
+
+            // retrive a spawn point away from ship using scalar
+            float distance = Random.Range(3f, 5f) * 
+                Mathf.Sign(Random.Range(-1f,1f));
+
+            Vector3 deployPoint = transform.position;
+            deployPoint.x += distance;
+            deployPoint.y += distance;
+
+            // Create message for game controller
+            StationBuildMessage sbm = new StationBuildMessage();
+            sbm.Position = deployPoint;
+            sbm.teamID = SystemManager.Space.Team.ID;
+            sbm.PrefabName = stationName; 
 
                 // send to server
-                SystemManager.singleton.client.Send((short)MSGCHANNEL.BUILDSTATION, sbm);
-            }
-            else
-            {
-                Debug.Log("Error: Build Listener - Deploy Station: Prefab not added to spawn list.");
-            }
+            SystemManager.singleton.client.Send((short)MSGCHANNEL.BUILDSTATION, sbm);
+
+            m_att.ReadyToDeploy = false;
+
+            StartCoroutine("EngageDelay");
+        }
+
+        #endregion
+
+        #region COROUTINE
+
+        private IEnumerator EngageDelay()
+        {
+            yield return new WaitForSeconds(m_att.StationDelay);
+            m_att.ReadyToDeploy = true;
+            yield return null;
         }
 
         #endregion
