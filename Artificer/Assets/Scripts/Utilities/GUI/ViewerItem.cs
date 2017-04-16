@@ -2,8 +2,8 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
-using Space.UI.Station;
 using Space.Ship.Components.Listener;
+using Space.UI.Station.Viewer;
 
 namespace UI
 {

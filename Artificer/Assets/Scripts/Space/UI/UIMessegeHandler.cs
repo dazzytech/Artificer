@@ -333,7 +333,7 @@ namespace Space.UI
         public void InitializeWarpMap
             (List<NetworkInstanceId> surroundingWarpGates)
         {
-
+            m_stationRect.SendMessage("InitializeWarpMap", surroundingWarpGates);
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace Space.UI
         /// <param name="ship"></param>
         public void InitializeStationHUD(ShipAttributes ship)
         {
-            m_stationRect.SendMessage("InitializeHUD", ship);
+            m_stationRect.SendMessage("InitializeShipViewer", ship);
         }
 
         #endregion

@@ -5,9 +5,8 @@ using System.Collections.Generic;
 using Space.Ship;
 using Space.Ship.Components.Attributes;
 using Space.Ship.Components.Listener;
-using Space.UI.Station.Viewer;
 
-namespace Space.UI.Station
+namespace Space.UI.Station.Viewer
 {
     // Used by both component types when mouse interacts with component 
     // so both items highlight etc
@@ -18,12 +17,12 @@ namespace Space.UI.Station
     /// Performs tasks for the station HUD
     /// such as initializing views
     /// </summary>
-    [RequireComponent(typeof(StationAttributes))]
-    public class StationController : MonoBehaviour
+    [RequireComponent(typeof(ShipViewerAttributes))]
+    public class ShipViewerController : MonoBehaviour
     {
         #region ATTRIBUTES
 
-        private StationAttributes m_att;
+        private ShipViewerAttributes m_att;
 
         #endregion
 
@@ -32,7 +31,7 @@ namespace Space.UI.Station
         // Use this for initialization
         void Awake()
         {
-            m_att = GetComponent<StationAttributes>();
+            m_att = GetComponent<ShipViewerAttributes>();
         }
 
         #endregion

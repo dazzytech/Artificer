@@ -236,6 +236,9 @@ namespace Space
             m_att.station = null;
 
             SystemManager.GUI.ClearPrompt();
+
+            if (m_att.docked)
+                SystemManager.Space.LeaveStation();
         }
 
         private void OnEnterBuildRange(StationController controller)

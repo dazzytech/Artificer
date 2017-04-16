@@ -5,11 +5,10 @@ using System.Collections.Generic;
 
 //Artificer
 using Space.Ship;
-using Space.UI.Station.Viewer;
 
-namespace Space.UI.Station
+namespace Space.UI.Station.Viewer
 {
-    public class StationAttributes : MonoBehaviour
+    public class ShipViewerAttributes : MonoBehaviour
     {
         #region HUD ELEMENTS
 

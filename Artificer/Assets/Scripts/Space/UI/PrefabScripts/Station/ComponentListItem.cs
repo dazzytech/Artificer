@@ -7,7 +7,7 @@ using System.Collections;
 using Space.UI.Ship;
 using Space.Ship.Components.Attributes;
 
-namespace Space.UI.Station
+namespace Space.UI.Station.Viewer
 {
     public class ComponentListItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         IPointerClickHandler

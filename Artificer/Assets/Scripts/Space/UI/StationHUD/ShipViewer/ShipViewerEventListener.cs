@@ -2,22 +2,20 @@
 using UnityEngine.UI;
 using System.Collections;
 using Space.Ship.Components.Listener;
-using Space.UI.Station.Viewer;
 using UI;
 
-namespace Space.UI.Station
+namespace Space.UI.Station.Viewer
 {
     /// <summary>
     /// Listening compoent for player interaction
     /// with 
     /// </summary>
-    [RequireComponent(typeof(StationAttributes))]
-    public class StationEventListener : MonoBehaviour
+    public class ShipViewerEventListener : MonoBehaviour
     {
         #region ATTRIBUTES
 
-        private StationAttributes m_att;
-        private StationController m_con;
+        private ShipViewerAttributes m_att;
+        private ShipViewerController m_con;
 
         #endregion
 
@@ -25,8 +23,8 @@ namespace Space.UI.Station
 
         void Awake()
         {
-            m_att = GetComponent<StationAttributes>();
-            m_con = GetComponent<StationController>();
+            m_att = GetComponent<ShipViewerAttributes>();
+            m_con = GetComponent<ShipViewerController>();
         }
 
         void OnEnable()

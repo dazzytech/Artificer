@@ -28,6 +28,34 @@ namespace Stations
 
         #endregion
 
+        #region PUBLIC INTERACTION
+
+        /// <summary>
+        /// Takes player object and warps it to near the warp gate
+        /// </summary>
+        public void WarpPlayer()
+        {
+            // retrive player game object or quit
+            // if not found
+            GameObject playerGO = GameObject.Find()
+
+            // retreive position around the station
+            // retrive a spawn point away from ship using scalar
+            float distance = Random.Range(3f, 5f) *
+                Mathf.Sign(Random.Range(-1f, 1f));
+
+            Vector3 deployPoint = transform.position;
+            deployPoint.x += distance;
+            deployPoint.y += distance;
+
+            // Now we have the deploy point just pull ship here
+            distance = Distance;
+
+            
+        }
+
+        #endregion
+
         #region OVERRIDE PARENT
 
         /// <summary>
