@@ -468,7 +468,8 @@ namespace Menu.Lobby
 
             if (m_att.CurrentLobby != null)
             {
-                SteamMatchmaking.LeaveLobby(m_att.CurrentLobby.GetID);
+                if(!IsRunning)
+                    SteamMatchmaking.LeaveLobby(m_att.CurrentLobby.GetID);
                 m_att.CurrentLobby.OnDataUpdate -= UpdateLobby;
                 m_att.CurrentLobby.OnUserUpdate -= UpdatePersona;
                 m_att.CurrentLobby.OnChatUpdate -= UpdatePlayers;
