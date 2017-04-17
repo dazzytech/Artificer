@@ -37,7 +37,8 @@ namespace Stations
         {
             // retrive player game object or quit
             // if not found
-            GameObject playerGO = GameObject.Find()
+            GameObject playerGO = GameObject.FindGameObjectWithTag
+                ("PlayerShip");
 
             // retreive position around the station
             // retrive a spawn point away from ship using scalar
@@ -51,7 +52,7 @@ namespace Stations
             // Now we have the deploy point just pull ship here
             distance = Distance;
 
-            
+            playerGO.transform.position = deployPoint;
         }
 
         #endregion

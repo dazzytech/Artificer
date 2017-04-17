@@ -39,6 +39,11 @@ namespace Space.UI.Station.Map
             m_con.SelectGate(warp);
         }
 
+        public void WarpToSelection()
+        {
+            m_con.WarpToGate();
+        }
+
         #endregion
     }
 }

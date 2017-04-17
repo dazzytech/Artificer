@@ -326,7 +326,7 @@ namespace Space
         {
             get
             {
-                return _att.buildRange;
+                return true; // _att.buildRange;
             }
         }
 

@@ -23498,9 +23498,9 @@ MonoBehaviour:
   LeaveBtn: {fileID: 1070867658}
   CounterText: {fileID: 1507820229}
   MinPlayers: 1
-  StartTimer: 3
+  StartTimer: 10
   Starting: 0
-  TimeoutTimer: 10
+  TimeoutTimer: 20
   Timeout: 0
   LobbyViewer: {fileID: 118925656}
 --- !u!1 &1537860115
@@ -27113,7 +27113,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_AnchorMin.x

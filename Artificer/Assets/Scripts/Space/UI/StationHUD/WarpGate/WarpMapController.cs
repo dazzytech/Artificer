@@ -27,6 +27,9 @@ namespace Space.UI.Station.Map
         /// <param name="warpList"></param>
         public void BuildMap(List<NetworkInstanceId> warpList)
         {
+            foreach (Transform child in m_att.WarpGateList)
+                GameObject.Destroy(child.gameObject);
+
             // transfer network instances to transforms
             m_att.NearbyWarpGates = new List<WarpGatePrefab>();
 
@@ -59,6 +62,16 @@ namespace Space.UI.Station.Map
                     wgp.Deselect();
                 else
                     wgp.Select();
+        }
+
+        public void WarpToGate()
+        {
+            if(m_att.SelectedGate == null)
+                return;
+
+            m_att.SelectedGate.WarpGate.WarpPlayer();
+
+            SystemManager.Space.LeaveStation();
         }
 
         #endregion

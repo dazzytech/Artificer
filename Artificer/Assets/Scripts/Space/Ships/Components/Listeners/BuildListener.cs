@@ -71,7 +71,7 @@ namespace Space.Ship.Components.Listener
             string stationName = 
                 m_att.SpawnableStations[stationID];
 
-            if (!SystemManager.Space.CanBuild && !stationName.Contains("FOB"))
+            if (!SystemManager.Space.CanBuild )//&& !stationName.Contains("FOB"))
             {
                 SystemManager.GUI.DisplayPrompt("Not in build out of range of FOB or Home Base");
                 SystemManager.GUI.Invoke("ClearPrompt", 3f);
