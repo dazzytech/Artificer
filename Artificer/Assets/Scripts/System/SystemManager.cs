@@ -456,6 +456,8 @@ public class SystemManager : NATTraversal.NetworkManager
         (string externalIP, string internalIP,
         ulong guid, CSteamID lobbyID)
     {
+        Debug.Log("Joining Client");
+
         m_singleton.onlineScene = "SpaceScene";
 
         m_singleton.StartClientAll

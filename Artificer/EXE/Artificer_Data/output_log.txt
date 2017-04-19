@@ -27,7 +27,7 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\RakNetSwig.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Threading.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Threading.dll into Unity Child Domain
-- Completed reload, in  0.387 seconds
+- Completed reload, in  0.573 seconds
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
 <RI> Initializing input.
@@ -42,15 +42,19 @@ The referenced script on this Behaviour (Game Object 'ServerList') is missing!
  
 (Filename:  Line: 1754)
 
-UnloadTime: 1.502188 ms
+UnloadTime: 1.696706 ms
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/libc
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/.\libc
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/libc
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Mono.Security.dll (this message is harmless)
-NATHelper: Connected to Facilitator: 720576284714905596
+NATHelper: Connected to Facilitator: 689051250200158297
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+No lobbies found
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 252c -> priority: 1 
+  Thread -> id: 31dc -> priority: 1 

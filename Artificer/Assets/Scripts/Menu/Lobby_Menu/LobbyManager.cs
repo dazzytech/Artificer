@@ -289,6 +289,7 @@ namespace Menu.Lobby
         /// <param name="pLobby"></param>
         private void JoinLobby(CSteamID pLobby)
         {
+            Debug.Log("Joined Lobby");
             if (SteamManager.Initialized)
             {
                 LeaveLobby();
@@ -318,6 +319,8 @@ namespace Menu.Lobby
         /// </summary>
         private void CreateHiddenLobby()
         {
+            Debug.Log("Creating Hidden Lobby");
+
             if (SteamManager.Initialized)
             {
                 SteamAPICall_t handle = SteamMatchmaking.CreateLobby
@@ -354,6 +357,9 @@ namespace Menu.Lobby
             {
                 JoinGame();
             }
+
+            Debug.Log(String.Format("Lobby Update: IsHost - {0}, Is Live - {1}, Running - {2} "
+                , IsHost, IsLive,  IsRunning ));
         }
 
         /// <summary>
@@ -419,6 +425,8 @@ namespace Menu.Lobby
         /// </summary>
         private void JoinGame()
         {
+            Debug.Log("Attempting to join Game");
+
             SystemManager.JoinOnlineClient
                 (SteamMatchmaking.GetLobbyData(LobbyID, "publicIP"),
                 SteamMatchmaking.GetLobbyData(LobbyID, "internalIP"),
@@ -437,6 +445,8 @@ namespace Menu.Lobby
         /// <param name="pLobby"></param>
         private void BuildLobby(CSteamID pLobby)
         {
+            Debug.Log("Building Lobby");
+
             // create new lobby object within memory
             m_att.CurrentLobby = new LobbyObject(pLobby);
 
@@ -458,6 +468,8 @@ namespace Menu.Lobby
         /// </summary>
         private void LeaveLobby()
         {
+            Debug.Log("Leaving Lobby - Running: " + IsRunning.ToString());
+
             // Stop any timers that may be happening
             StopAllCoroutines();
 
