@@ -21,6 +21,7 @@ namespace Space.Segment
         public Vector3 hitPosition;
         public float damage;
         public float radius;
+        public string damageTex;
         public NetworkInstanceId originID;
         public int hitComponent;
     }

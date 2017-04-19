@@ -1,23 +1,19 @@
-[2017-04-19 15:11:46]: Starting build for depot 608501, content path is "C:\Users\renderman\Documents\Artificer\sdk\tools\ContentBuilder\content\"
-[2017-04-19 15:11:46]: Building file listing for depot 608501 ...
-[2017-04-19 15:11:47]: Found 63 files for mapping: C:\Users\renderman\Documents\Artificer\sdk\tools\ContentBuilder\content\windows_content * -> .
-[2017-04-19 15:11:47]: Found 63 files (141 MB) for depot 608501
-[2017-04-19 15:11:48]: Building depot 608501, baseline manifest 2176014143495288706 (67 files)
-[2017-04-19 15:11:51]: Found 182 new chunks (185 old ones existed) for depot 608501, took 0 minutes, 3 seconds
+[2017-04-19 17:15:10]: Starting build for depot 608501, content path is "C:\Users\renderman\Documents\Artificer\sdk\tools\ContentBuilder\content\"
+[2017-04-19 17:15:10]: Building file listing for depot 608501 ...
+[2017-04-19 17:15:10]: Found 63 files for mapping: C:\Users\renderman\Documents\Artificer\sdk\tools\ContentBuilder\content\windows_content * -> .
+[2017-04-19 17:15:10]: Found 63 files (141 MB) for depot 608501
+[2017-04-19 17:15:11]: Building depot 608501, baseline manifest 8781240097542585603 (63 files)
+[2017-04-19 17:15:14]: Found 182 new chunks (182 old ones existed) for depot 608501, took 0 minutes, 2 seconds
 
-[2017-04-19 15:11:51]: Changes to baseline manifest:
-[2017-04-19 15:11:51]: Changed: "Artificer_Data\globalgamemanagers" 156 kB 
-[2017-04-19 15:11:51]: Changed: "Artificer_Data\level0" 240 kB 
-[2017-04-19 15:11:51]: Changed: "Artificer_Data\level1" 199 kB 
-[2017-04-19 15:11:51]: Changed: "Artificer_Data\level2" 19 kB 
-[2017-04-19 15:11:51]: Changed: "Artificer_Data\Managed\Assembly-CSharp-firstpass.dll" 275 kB 
-[2017-04-19 15:11:51]: Changed: "Artificer_Data\Managed\Assembly-CSharp.dll" 359 kB 
-[2017-04-19 15:11:51]: Changed: "Artificer_Data\output_log.txt" 5 kB 
-[2017-04-19 15:11:51]: Removed: config (0 kB)
-[2017-04-19 15:11:51]: Removed: config\Audio_Data (1 kB)
-[2017-04-19 15:11:51]: Removed: config\Control_Data (4 kB)
-[2017-04-19 15:11:51]: Removed: config\Video_Data (1 kB)
-[2017-04-19 15:11:51]: Summary: 0 files added, 7 files changed, 4 files removed
-[2017-04-19 15:11:52]: Uploading new manifest (13621 bytes).
-[2017-04-19 15:11:53]: Uploading 7 out of 7 missing chunks.
-[2017-04-19 15:11:56]: Success! New manifestID 8781240097542585603 created and 7 new chunks uploaded.
+[2017-04-19 17:15:14]: Changes to baseline manifest:
+[2017-04-19 17:15:14]: Changed: "Artificer_Data\globalgamemanagers" 156 kB 
+[2017-04-19 17:15:14]: Changed: "Artificer_Data\level0" 240 kB 
+[2017-04-19 17:15:14]: Changed: "Artificer_Data\level1" 199 kB 
+[2017-04-19 17:15:14]: Changed: "Artificer_Data\level2" 19 kB 
+[2017-04-19 17:15:14]: Changed: "Artificer_Data\Managed\Assembly-CSharp-firstpass.dll" 275 kB 
+[2017-04-19 17:15:14]: Changed: "Artificer_Data\Managed\Assembly-CSharp.dll" 360 kB 
+[2017-04-19 17:15:14]: Changed: "Artificer_Data\output_log.txt" 4 kB 
+[2017-04-19 17:15:14]: Summary: 0 files added, 7 files changed, 0 files removed
+[2017-04-19 17:15:15]: Uploading new manifest (13629 bytes).
+[2017-04-19 17:15:15]: Uploading 7 out of 7 missing chunks.
+[2017-04-19 17:15:18]: Success! New manifestID 2701987044935971367 created and 7 new chunks uploaded.

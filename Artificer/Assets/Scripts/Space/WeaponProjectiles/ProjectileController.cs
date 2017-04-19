@@ -160,6 +160,7 @@ namespace Space.Projectiles
             HitData hitD = new HitData();
             hitD.damage = _data.Damage;
             hitD.hitPosition = hit.point;
+            hitD.damageTex = "damage_small_01";
             hitD.originID = _data.Self;
 
 

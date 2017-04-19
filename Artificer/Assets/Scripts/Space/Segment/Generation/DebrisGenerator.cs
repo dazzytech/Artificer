@@ -121,11 +121,11 @@ namespace Space.Segment.Generator
             NetworkServer.Spawn(destroyed);
 
             // send build msg
-            DestructablePieceController dPC
-                = destroyed.GetComponent<DestructablePieceController>();
+            DestroyedComponent dc
+                = destroyed.GetComponent<DestroyedComponent>();
             //dPC.prospect = wData._symbols;
 
-            dPC.SetWreckage(Comps, playerID);
+            dc.SetWreckage(Comps, playerID);
 
             currentWreckage++;
         }

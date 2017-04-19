@@ -2471,14 +2471,14 @@ MonoBehaviour:
   matchSize: 4
   isNetworkActive: 0
   matchMaker: {fileID: 0}
-  connectDirectly: 0
+  connectDirectly: 1
   connectPunchthrough: 1
   connectRelay: 0
   autoConnectToFacilitator: 1
   useUnityMatchmaking: 0
   externalIPSource: http://icanhazip.com
   externalIPv6Source: http://ipv6.icanhazip.com
-  externalIPTimeout: 10
+  externalIPTimeout: 200
   clientPort: 0
   delayDirectConnection: 0
   m_base: {fileID: 174379681}
@@ -23498,7 +23498,7 @@ MonoBehaviour:
   LeaveBtn: {fileID: 1070867658}
   CounterText: {fileID: 1507820229}
   MinPlayers: 1
-  StartTimer: 10
+  StartTimer: 3
   Starting: 0
   TimeoutTimer: 20
   Timeout: 0
@@ -27105,7 +27105,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -346
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_SizeDelta.x
@@ -27121,7 +27121,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_AnchorMax.x
@@ -27129,7 +27129,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_Pivot.x
