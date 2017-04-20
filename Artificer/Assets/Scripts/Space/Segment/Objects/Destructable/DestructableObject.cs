@@ -25,11 +25,11 @@ namespace Space.Segment
 
         #region MONO BEHAVIOUR
 
-        private void Start()
+        private void Awake()
         {
             // retreive texture from sprite
             // renderer
-            SpriteRenderer m_objSprite = GetComponent<SpriteRenderer>();
+            m_objSprite = GetComponent<SpriteRenderer>();
         }
 
         /// <summary>
@@ -66,9 +66,81 @@ namespace Space.Segment
 
         public void ApplyDamage(HitData hData)
         {
-            m_pieceDensity -= hData.damage;
+            if(isServer)
+                m_pieceDensity -= hData.damage;
 
+            if (m_objSprite != null && _hitD.damageTex != null)
+            {
+                // Ref to our texture rect for size
+                Rect size = m_objSprite.sprite.rect;
 
+                // Store scales
+                float scaleX = transform.lossyScale.x;
+                float scaleY = transform.lossyScale.y;
+
+                // Create our mask
+                Texture2D mask = Instantiate(Resources.Load("Textures/Damage/" + _hitD.damageTex,
+                    typeof(Texture2D)) as Texture2D);
+
+                TextureScale.Bilinear(mask,(int)(mask.width / scaleX), 
+                     (int)(mask.height / scaleY));
+
+                // convert hit point from center
+                Vector2 localHit = (_hitD.hitPosition - transform.position);
+
+                // scale to current size
+                localHit.x /= scaleX;
+                localHit.y /= scaleY;
+
+                localHit *= m_objSprite.sprite.pixelsPerUnit;
+
+                // origin top left
+                localHit.x += size.width * .5f;
+                localHit.y += size.height * .5f;
+
+                float left = localHit.x - mask.width * .5f;
+                float right = left + mask.width;
+                float up = localHit.y + mask.height * .5f;
+                float down = up - mask.height;
+                
+                // CREATE NEW TEXTURE
+
+                // Create our new texture with the dimensions
+                // of out sprite
+                Texture2D newAtlas = new Texture2D
+                    ((int)size.width, (int)size.height,
+                    TextureFormat.RGBA32, false);
+
+                // DRAW NEW TEXTURE
+
+                for (int x = 0; x < size.width; x++)
+                    for (int y = 0; y < size.height; y++)
+                    {
+                        if (x > left && x < right &&
+                            y > down && y < up)
+                        {
+                            if (mask.GetPixel
+                               (x - (int)left,
+                                y - (int)down).a > 0f)
+                            {
+                                Color pix = m_objSprite.sprite.texture.GetPixel(x, y);
+                                pix.a -= mask.GetPixel
+                                   (x - (int)left,
+                                    y - (int)down).a;
+
+                                newAtlas.SetPixel(x, y, pix);
+                                continue;
+                            }
+                        }
+                        
+                        newAtlas.SetPixel(x, y, m_objSprite.sprite.texture.GetPixel(x, y));
+                    }
+
+                newAtlas.Apply();
+
+                m_objSprite.sprite = Sprite.Create(newAtlas,
+                    size, new Vector2(.5f,.5f));
+            }
 
             if (m_pieceDensity <= 0)
             {

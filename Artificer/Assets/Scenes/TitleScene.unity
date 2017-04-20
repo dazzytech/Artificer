@@ -2478,7 +2478,7 @@ MonoBehaviour:
   useUnityMatchmaking: 0
   externalIPSource: http://icanhazip.com
   externalIPv6Source: http://ipv6.icanhazip.com
-  externalIPTimeout: 200
+  externalIPTimeout: 2000
   clientPort: 0
   delayDirectConnection: 0
   m_base: {fileID: 174379681}
@@ -16435,6 +16435,60 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1045974312}
+--- !u!1001 &1070220778
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 493460, guid: 070991070974b204e843d6b8141a482c, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 493460, guid: 070991070974b204e843d6b8141a482c, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 493460, guid: 070991070974b204e843d6b8141a482c, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 493460, guid: 070991070974b204e843d6b8141a482c, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 493460, guid: 070991070974b204e843d6b8141a482c, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 493460, guid: 070991070974b204e843d6b8141a482c, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 493460, guid: 070991070974b204e843d6b8141a482c, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 493460, guid: 070991070974b204e843d6b8141a482c, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Points.Array.data[1].y
+      value: -0.19418254
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Points.Array.data[1].x
+      value: 0.0740181
+      objectReference: {fileID: 0}
+    - target: {fileID: 5818884, guid: 070991070974b204e843d6b8141a482c, type: 2}
+      propertyPath: m_Radius
+      value: 0.18
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 070991070974b204e843d6b8141a482c, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1070375882
 GameObject:
   m_ObjectHideFlags: 0
@@ -23500,7 +23554,7 @@ MonoBehaviour:
   MinPlayers: 1
   StartTimer: 3
   Starting: 0
-  TimeoutTimer: 20
+  TimeoutTimer: 60
   Timeout: 0
   LobbyViewer: {fileID: 118925656}
 --- !u!1 &1537860115
@@ -27113,7 +27167,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 18
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_AnchorMin.x

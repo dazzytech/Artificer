@@ -63,7 +63,7 @@ namespace Space.Segment
         public void InitializeParameters(float scale, NetworkInstanceId parentID)
         {
             m_scale = scale;
-            m_pieceDensity = 20f * m_scale;
+            m_pieceDensity = 200f * m_scale;
             m_parentID = parentID;
 
             InitializeAsteroid();
