@@ -14,13 +14,12 @@ namespace Space.Segment.Generator
         public GameObject AsteroidPrefab;
         public GameObject CloudPrefab;
         public GameObject GravePrefab;
-        public GameObject WreckagePrefab;
 
         #endregion
 
         #region GENERATION
 
-        public GameObject GeneratePlanet(SegmentObject planet)
+        public GameObject GeneratePlanet(SegmentObjectData planet)
         {
             // Create game object for station
             GameObject newPlanet = new GameObject();
@@ -37,7 +36,7 @@ namespace Space.Segment.Generator
             return newPlanet;
         }
 
-        public GameObject GenerateSatellite(SegmentObject segObj)
+        public GameObject GenerateSatellite(SegmentObjectData segObj)
         {
             GameObject newSatellite = Instantiate(SatellitePrefab);
             newSatellite.transform.position = segObj._position;
@@ -54,7 +53,7 @@ namespace Space.Segment.Generator
         /// </summary>
         /// <param name="segObj"></param>
         /// <returns></returns>
-        public GameObject GenerateField(SegmentObject segObj)
+        public GameObject GenerateField(SegmentObjectData segObj)
         {
             GameObject field = Instantiate(AsteroidPrefab);
             field.transform.position = segObj._position;
@@ -86,7 +85,7 @@ namespace Space.Segment.Generator
             return field;
         }
 
-        public GameObject GenerateSingle(SegmentObject aData,
+        public GameObject GenerateSingle(SegmentObjectData aData,
                                         Vector2 position, Vector2 velocity)
         {
             GameObject asteroid = (GameObject)Instantiate
@@ -115,7 +114,7 @@ namespace Space.Segment.Generator
 
         #endregion
 
-        public GameObject GenerateCloud(SegmentObject segObj)
+        public GameObject GenerateCloud(SegmentObjectData segObj)
         {
             GameObject newCloud = Instantiate(CloudPrefab);
             newCloud.transform.position = segObj._position;
@@ -146,11 +145,10 @@ namespace Space.Segment.Generator
             return newCloud;
         }
 
-        public GameObject GenerateGrave(SegmentObject segObj)
+        public GameObject GenerateGrave(SegmentObjectData segObj)
         {
             GameObject newGrave = Instantiate(GravePrefab);
             newGrave.transform.position = segObj._position;
-            newGrave.GetComponent<ShipGraveyardBehaviour>().WreckagePrefab = WreckagePrefab;
 
             NetworkServer.Spawn(newGrave);
 

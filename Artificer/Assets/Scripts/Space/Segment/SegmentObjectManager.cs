@@ -155,7 +155,7 @@ namespace Space.Segment
         {
             for(int i = 0; i < _att.SegObjs.Count; i++)
             {
-                SegmentObject segObj = _att.SegObjs[i];
+                SegmentObjectData segObj = _att.SegObjs[i];
                 switch (segObj._type)
                 {
                     case "_asteroids":
@@ -248,7 +248,7 @@ namespace Space.Segment
                 
                 Vector3 playerPos = player.transform.position;
 
-                foreach (SegmentObject segObj
+                foreach (SegmentObjectData segObj
                          in _att.SegObjs)
                 {
                     GameObject segObjGO = ClientScene.FindLocalObject(segObj.netID);

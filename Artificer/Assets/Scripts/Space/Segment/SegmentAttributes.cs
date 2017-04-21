@@ -9,7 +9,7 @@ using Space.CameraUtils;
 namespace Space.Segment
 {
     [Serializable]
-    public struct SegmentObject
+    public struct SegmentObjectData
     {
         public NetworkInstanceId netID;
         public Vector2 _position;
@@ -27,7 +27,7 @@ namespace Space.Segment
         //public string[] _symbols;
     }
 
-    public class SyncListSO : SyncListStruct<SegmentObject>
+    public class SyncListSO : SyncListStruct<SegmentObjectData>
     { }
 
     public class SyncListPI : SyncListStruct<SyncPI>

@@ -30,9 +30,9 @@ namespace Space.Segment
         /// 
         /// </summary>
         /// <returns>The new segment.</returns>
-        public static SegmentObject[] BuildNewSegment()
+        public static SegmentObjectData[] BuildNewSegment()
         {
-            List<SegmentObject> SyncList = new List<SegmentObject>();
+            List<SegmentObjectData> SyncList = new List<SegmentObjectData>();
 
             // Generate a selection of asteroid fields
             int fields = Random.Range(20, 60);
@@ -199,10 +199,10 @@ namespace Space.Segment
             /// </summary>
             /// <param name="station"></param>
             /// <returns></returns>
-        private static SegmentObject BuildSatellite(Vector2 planet)
+        private static SegmentObjectData BuildSatellite(Vector2 planet)
         {
             // build base object
-            SegmentObject satellite = new SegmentObject();
+            SegmentObjectData satellite = new SegmentObjectData();
 
             // Set descriptive info
             satellite._type = "_satellites";
@@ -219,14 +219,14 @@ namespace Space.Segment
             return satellite;
         }
 
-        private static SegmentObject BuildAsteroidField(Vector2 position, string value)
+        private static SegmentObjectData BuildAsteroidField(Vector2 position, string value)
         {
             // build base object
-            SegmentObject aField = new SegmentObject();
+            SegmentObjectData aField = new SegmentObjectData();
 
             // Set descriptive info
             aField._type = "_asteroids";
-            aField._prefabPath = "Space/asteroid";
+            aField._prefabPath = "Space/Destructable/Asteroid";
             aField._name = "asteroid field";
             aField._tag = "Asteroid";
             aField._visibleDistance = 300;
@@ -324,9 +324,9 @@ namespace Space.Segment
             return aField;
         }
 
-        private static SegmentObject BuildInterstellarCloud(Vector2 position)
+        private static SegmentObjectData BuildInterstellarCloud(Vector2 position)
         {
-            SegmentObject cloud = new SegmentObject();
+            SegmentObjectData cloud = new SegmentObjectData();
 
             cloud._type = "_clouds";
             cloud._prefabPath = "Space/Cloud";
@@ -340,9 +340,9 @@ namespace Space.Segment
             return cloud;   
         }
 
-        private static SegmentObject BuildGraveyard(Vector2 position)
+        private static SegmentObjectData BuildGraveyard(Vector2 position)
         {
-            SegmentObject grave = new SegmentObject();
+            SegmentObjectData grave = new SegmentObjectData();
 
             grave._type = "_debris";
             grave._prefabPath = "Space/Wreck";

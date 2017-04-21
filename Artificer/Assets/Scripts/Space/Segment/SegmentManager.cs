@@ -129,9 +129,9 @@ namespace Space.Segment
         {
             // Initialize space segment if not created - server's job
             //SystemManager.GUI.DisplayMessege(new MsgParam("bold", "Generating space..."));
-            SegmentObject[] sObjs = SegmentDataBuilder.BuildNewSegment();
+            SegmentObjectData[] sObjs = SegmentDataBuilder.BuildNewSegment();
 
-            foreach (SegmentObject sObj in sObjs)
+            foreach (SegmentObjectData sObj in sObjs)
                 _att.SegObjs.Add(sObj);
             //MessageHUD.DisplayMessege(new MsgParam("bold", "Finished!"));
 
