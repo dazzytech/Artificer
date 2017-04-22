@@ -34,8 +34,19 @@ namespace Space.Segment
 
         #endregion
 
+        #region DESTRUCTABLE
+
         // Reference to our texture
         private SpriteRenderer m_objSprite;
+
+        // material yields from object
+        [SerializeField]
+        protected string[] m_prospect;
+
+        [SerializeField]
+        protected Texture2D[] m_fragments;
+
+        #endregion
 
         #endregion
 
@@ -130,6 +141,9 @@ namespace Space.Segment
 
                 // convert hit point from center
                 Vector2 localHit = (_hitD.hitPosition - transform.position);
+
+                if (m_prospect.Length > 0)
+                    DisperseFragments(_hitD.hitPosition, localHit.normalized);
 
                 // scale to current size
                 localHit.x /= scaleX;
@@ -233,6 +247,44 @@ namespace Space.Segment
 
             // for now just destroy
             Destroy(this.gameObject);
+        }
+
+        /// <summary>
+        /// Ejects a number of fragments when
+        /// damaged. can be overridden to
+        /// change behaviour
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="dir"></param>
+        protected virtual void DisperseFragments(Vector2 point, Vector2 dir)
+        {
+            int numOfRocks = Mathf.CeilToInt(_hitD.damage * 0.02f);
+
+            for (int i = 0; i < numOfRocks; i++)
+            {
+                GameObject fragment = new GameObject();
+                fragment.transform.position = point;
+                fragment.layer = 8;
+
+                Texture2D fragmentTexture = m_fragments[Random.Range(0, m_fragments.Length)];
+                SpriteRenderer fragmentSprite = fragment.AddComponent<SpriteRenderer>();
+                fragmentSprite.sprite = Sprite.Create(fragmentTexture, 
+                    new Rect(0f,0f,fragmentTexture.width,fragmentTexture.height), new Vector2(.5f,.5f));
+                
+
+                /*CollectableRockBehaviour behaviour =
+                    rock.AddComponent<CollectableRockBehaviour>();
+                behaviour.PopulateWeighted(m_prospect);*/
+                
+                Rigidbody2D rb = fragment.AddComponent<Rigidbody2D>();
+                rb.AddForce(Random.insideUnitCircle * 20f, ForceMode2D.Force);
+                rb.gravityScale = 0;
+
+                BoxCollider2D col = fragment.AddComponent<BoxCollider2D>();
+                Vector3 size = new Vector3(.5f, .5f);
+                col.size = size;
+                col.isTrigger = true;
+            }
         }
 
         /// <summary>

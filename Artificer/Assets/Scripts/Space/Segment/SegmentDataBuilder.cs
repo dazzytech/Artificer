@@ -43,7 +43,7 @@ namespace Space.Segment
                     (new Vector2
                     (Random.Range(100f, 4900f),
                      Random.Range(100f, 4900f)),
-                     value == 0? "low": value == 1? "medium": "high"));
+                     "Space/Destructable/Asteroid"));
             }
 
             // Generate a small amount of satellites (temp)
@@ -107,35 +107,6 @@ namespace Space.Segment
 
                 SyncList.Add(BuildPlanet(newPos));
             }
-
-            // between 2 and 4 galaxies
-            /*int galaxies = Random.Range(1, 3);
-            float galaxyDistance = 1500; 
-            Vector2[] prevGPos = new Vector2[galaxies];
-
-            for (int i = 0; i <= galaxies; i++)
-            {
-                bool tooclose = true;
-
-                Vector2 newPos = Vector2.zero;
-
-                while (tooclose)
-                {
-                    tooclose = false;
-
-                    newPos = new Vector2
-                    (Random.Range(100f, 4900f),
-                     Random.Range(100f, 4900f));
-
-                    foreach (Vector2 prev in prevGPos)
-                    {
-                        if (Vector2.Distance(newPos, prev) < galaxyDistance)
-                            tooclose = true;
-                    }
-                }
-
-                SyncList.Add(BuildGalaxy(newPos));
-            }*/
 
             return SyncList.ToArray();
         }
@@ -226,7 +197,7 @@ namespace Space.Segment
 
             // Set descriptive info
             aField._type = "_asteroids";
-            aField._prefabPath = "Space/Destructable/Asteroid";
+            aField._prefabPath = value;
             aField._name = "asteroid field";
             aField._tag = "Asteroid";
             aField._visibleDistance = 300;
@@ -238,89 +209,6 @@ namespace Space.Segment
                 Random.Range(100, 200));
             aField._count = Random.Range(50, 100);
 
-            /*switch (value)
-            {
-                case "low":
-                    {
-                        // only tin and copper 50/50
-                        aField._symbols = new string[100];
-                        int i = 0;
-                        for (; i < 10; i++)
-                            aField._symbols[i] = "Sn";
-                        for (; i < 20; i++)
-                            aField._symbols[i] = "Cu";
-                        for (; i < 40; i++)
-                            aField._symbols[i] = "Fe";
-                        for (; i < 50; i++)
-                            aField._symbols[i] = "Ni";
-                        for (; i < 60; i++)
-                            aField._symbols[i] = "Co";
-                        for (; i < 70; i++)
-                            aField._symbols[i] = "Zn";
-                        for (; i < 80; i++)
-                            aField._symbols[i] = "Pb";
-                        for (; i < 100; i++)
-                            aField._symbols[i] = "Al";
-                        break;
-                    }
-                case "medium":
-                    {
-                        // only tin and copper 50/50
-                        aField._symbols = new string[100];
-                        int i = 0;
-                        for (; i < 7; i++)
-                            aField._symbols[i] = "Sn";
-                        for (; i < 14; i++)
-                            aField._symbols[i] = "Cu";
-                        for (; i < 30; i++)
-                            aField._symbols[i] = "Fe";
-                        for (; i < 35; i++)
-                            aField._symbols[i] = "Ni";
-                        for (; i < 45; i++)
-                            aField._symbols[i] = "Co";
-                        for (; i < 50; i++)
-                            aField._symbols[i] = "Zn";
-                        for (; i < 70; i++)
-                            aField._symbols[i] = "Pb";
-                        for (; i < 80; i++)
-                            aField._symbols[i] = "Al";
-                        for (; i < 90; i++)
-                            aField._symbols[i] = "Ag";
-                        for (; i < 100; i++)
-                            aField._symbols[i] = "Au";
-                        break;
-                    }
-                case "high":
-                    {
-                        // only tin and copper 50/50
-                        aField._symbols = new string[100];
-                        int i = 0;
-                        for (; i < 7; i++)
-                            aField._symbols[i] = "Sn";
-                        for (; i < 14; i++)
-                            aField._symbols[i] = "Cu";
-                        for (; i < 30; i++)
-                            aField._symbols[i] = "Fe";
-                        for (; i < 35; i++)
-                            aField._symbols[i] = "Ni";
-                        for (; i < 45; i++)
-                            aField._symbols[i] = "Co";
-                        for (; i < 50; i++)
-                            aField._symbols[i] = "Zn";
-                        for (; i < 70; i++)
-                            aField._symbols[i] = "Pb";
-                        for (; i < 80; i++)
-                            aField._symbols[i] = "Al";
-                        for (; i < 87; i++)
-                            aField._symbols[i] = "Ag";
-                        for (; i < 95; i++)
-                            aField._symbols[i] = "Au";
-                        for (; i < 100; i++)
-                            aField._symbols[i] = "Pt";
-                        break;
-                    }
-            }
-            */
             return aField;
         }
 

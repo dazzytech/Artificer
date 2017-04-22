@@ -72,13 +72,12 @@ namespace Space.Segment.Generator
                      Random.Range(0f, segObj._size.y));
                 asteroid.transform.localPosition = location;
 
-                float scale = Random.Range(0f, 5f);
+                float scale = Random.Range(3f, 10f);
  
                 NetworkServer.Spawn(asteroid);
                 
                 asteroid.GetComponent<AsteroidBehaviour>().
                     InitializeParameters(scale, field.GetComponent<NetworkIdentity>().netId);
-                //behaviour.prospect = aData._symbols;
                 ACount++;
             }
 
@@ -106,9 +105,6 @@ namespace Space.Segment.Generator
             rb.AddForce(velocity, ForceMode2D.Force);
 
             AsteroidBehaviour behaviour = asteroid.AddComponent<AsteroidBehaviour>();
-            //behaviour.rockDensity = 20f * scale;
-            //behaviour.prospect = aData._symbols;
-
             return asteroid;
         }
 

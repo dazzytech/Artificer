@@ -127,6 +127,7 @@ namespace Space.Projectiles
                     hitD.damage = data.Damage;
                     hitD.hitPosition = hit.point;
                     hitD.originID = data.Self;
+                    hitD.damageTex = "damage_small_01";
 
                     // retrieve impact controller
                     // and if one exists make ship process hit

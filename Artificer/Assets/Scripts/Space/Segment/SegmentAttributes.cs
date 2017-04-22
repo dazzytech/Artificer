@@ -22,9 +22,6 @@ namespace Space.Segment
         public string _texturePath;
         public string _prefabPath;
         public string _type;
-
-        // material yield when destroyed
-        //public string[] _symbols;
     }
 
     public class SyncListSO : SyncListStruct<SegmentObjectData>

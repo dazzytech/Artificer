@@ -101,6 +101,19 @@ MonoBehaviour:
     damageTex: 
     hitComponent: 0
   m_withinDistance: 0
+  m_prospect:
+  - Fe
+  - Pb
+  - Ni
+  - Al
+  - Sn
+  - Co
+  m_fragments:
+  - {fileID: 2800000, guid: 5428cd7d2ab72ac4aaf8877b55791555, type: 3}
+  - {fileID: 2800000, guid: 161dee3641c0ab44591ad8611141c37a, type: 3}
+  - {fileID: 2800000, guid: 96082c2d7e08e0a4bbd9bc98781ac672, type: 3}
+  - {fileID: 2800000, guid: 63111ca722b3aaf4f91ac45f10a21515, type: 3}
+  - {fileID: 2800000, guid: f3129347ab60d9641a45345d3bd7db2b, type: 3}
 --- !u!114 &11454782
 MonoBehaviour:
   m_ObjectHideFlags: 1
