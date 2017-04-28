@@ -39,9 +39,9 @@ namespace Space.Segment
         // Reference to our texture
         private SpriteRenderer m_objSprite;
 
-        // material yields from object
         [SerializeField]
-        protected string[] m_prospect;
+        // Will be set by child objects
+        private int m_itemIndex = -1;
 
         [SerializeField]
         protected Texture2D[] m_fragments;
@@ -142,7 +142,7 @@ namespace Space.Segment
                 // convert hit point from center
                 Vector2 localHit = (_hitD.hitPosition - transform.position);
 
-                if (m_prospect.Length > 0)
+                if (m_itemIndex > -1)
                     DisperseFragments(_hitD.hitPosition, localHit.normalized);
 
                 // scale to current size
@@ -272,9 +272,10 @@ namespace Space.Segment
                     new Rect(0f,0f,fragmentTexture.width,fragmentTexture.height), new Vector2(.5f,.5f));
                 
 
-                /*CollectableRockBehaviour behaviour =
-                    rock.AddComponent<CollectableRockBehaviour>();
-                behaviour.PopulateWeighted(m_prospect);*/
+                // Set which item is yielded on pickup
+                Collectable behaviour =
+                    fragment.AddComponent<Collectable>();
+                behaviour.InitializeCollectable(m_itemIndex);
                 
                 Rigidbody2D rb = fragment.AddComponent<Rigidbody2D>();
                 rb.AddForce(Random.insideUnitCircle * 20f, ForceMode2D.Force);

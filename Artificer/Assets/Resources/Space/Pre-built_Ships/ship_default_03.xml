@@ -1,6 +1,80 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <ship xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" player="true" rotorFollow="true">
   <pieces>
+    <body instanceID="26" folder="Engines" name="Engine_Left_06" direction="up" trigger="moveUp" combat="moveUp" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>796.5</x>
+        <y>387.5</y>
+        <position>
+          <x>796.5</x>
+          <y>387.5</y>
+        </position>
+        <center>
+          <x>818.5</x>
+          <y>409</y>
+        </center>
+        <min>
+          <x>796.5</x>
+          <y>387.5</y>
+        </min>
+        <max>
+          <x>840.5</x>
+          <y>430.5</y>
+        </max>
+        <width>44</width>
+        <height>43</height>
+        <size>
+          <x>44</x>
+          <y>43</y>
+        </size>
+        <xMin>796.5</xMin>
+        <yMin>387.5</yMin>
+        <xMax>840.5</xMax>
+        <yMax>430.5</yMax>
+      </Bounds>
+      <rotation>0</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
+    <body instanceID="27" folder="Engines" name="Engine_Right_06" direction="up" trigger="moveUp" combat="moveUp" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>900.5</x>
+        <y>388.5</y>
+        <position>
+          <x>900.5</x>
+          <y>388.5</y>
+        </position>
+        <center>
+          <x>922.5</x>
+          <y>410</y>
+        </center>
+        <min>
+          <x>900.5</x>
+          <y>388.5</y>
+        </min>
+        <max>
+          <x>944.5</x>
+          <y>431.5</y>
+        </max>
+        <width>44</width>
+        <height>43</height>
+        <size>
+          <x>44</x>
+          <y>43</y>
+        </size>
+        <xMin>900.5</xMin>
+        <yMin>388.5</yMin>
+        <xMax>944.5</xMax>
+        <yMax>431.5</yMax>
+      </Bounds>
+      <rotation>0</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
     <head instanceID="0" folder="Components" name="Ship_CC_03" direction="up" trigger="" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
@@ -630,7 +704,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="17" folder="Warps" name="Warp_01" direction="down" trigger="well" combat="" style="default">
+    <body instanceID="17" folder="Warps" name="Warp_01" direction="down" trigger="jump" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -963,9 +1037,232 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
+    <body instanceID="28" folder="Engines" name="Engine_Left_07" direction="up" trigger="moveUp" combat="moveUp" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>785</x>
+        <y>387</y>
+        <position>
+          <x>785</x>
+          <y>387</y>
+        </position>
+        <center>
+          <x>794.5</x>
+          <y>400</y>
+        </center>
+        <min>
+          <x>785</x>
+          <y>387</y>
+        </min>
+        <max>
+          <x>804</x>
+          <y>413</y>
+        </max>
+        <width>19</width>
+        <height>26</height>
+        <size>
+          <x>19</x>
+          <y>26</y>
+        </size>
+        <xMin>785</xMin>
+        <yMin>387</yMin>
+        <xMax>804</xMax>
+        <yMax>413</yMax>
+      </Bounds>
+      <rotation>0</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
+    <body instanceID="29" folder="Engines" name="Engine_Right_07" direction="up" trigger="moveUp" combat="moveUp" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>941</x>
+        <y>388</y>
+        <position>
+          <x>941</x>
+          <y>388</y>
+        </position>
+        <center>
+          <x>950.5</x>
+          <y>401</y>
+        </center>
+        <min>
+          <x>941</x>
+          <y>388</y>
+        </min>
+        <max>
+          <x>960</x>
+          <y>414</y>
+        </max>
+        <width>19</width>
+        <height>26</height>
+        <size>
+          <x>19</x>
+          <y>26</y>
+        </size>
+        <xMin>941</xMin>
+        <yMin>388</yMin>
+        <xMax>960</xMax>
+        <yMax>414</yMax>
+      </Bounds>
+      <rotation>0</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
+    <body instanceID="30" folder="Engines" name="Engine_03" direction="down" trigger="moveDown" combat="moveDown" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>786.5</x>
+        <y>232.499969</y>
+        <position>
+          <x>786.5</x>
+          <y>232.499969</y>
+        </position>
+        <center>
+          <x>796</x>
+          <y>241.999969</y>
+        </center>
+        <min>
+          <x>786.5</x>
+          <y>232.499969</y>
+        </min>
+        <max>
+          <x>805.5</x>
+          <y>251.499969</y>
+        </max>
+        <width>19</width>
+        <height>19</height>
+        <size>
+          <x>19</x>
+          <y>19</y>
+        </size>
+        <xMin>786.5</xMin>
+        <yMin>232.499969</yMin>
+        <xMax>805.5</xMax>
+        <yMax>251.499969</yMax>
+      </Bounds>
+      <rotation>180</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
+    <body instanceID="31" folder="Engines" name="Engine_03" direction="down" trigger="moveDown" combat="moveDown" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>933.5</x>
+        <y>233.499969</y>
+        <position>
+          <x>933.5</x>
+          <y>233.499969</y>
+        </position>
+        <center>
+          <x>943</x>
+          <y>242.999969</y>
+        </center>
+        <min>
+          <x>933.5</x>
+          <y>233.499969</y>
+        </min>
+        <max>
+          <x>952.5</x>
+          <y>252.499969</y>
+        </max>
+        <width>19</width>
+        <height>19</height>
+        <size>
+          <x>19</x>
+          <y>19</y>
+        </size>
+        <xMin>933.5</xMin>
+        <yMin>233.499969</yMin>
+        <xMax>952.5</xMax>
+        <yMax>252.499969</yMax>
+      </Bounds>
+      <rotation>180</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
+    <body instanceID="32" folder="Rotors" name="Rotor_01" direction="right" trigger="turnLeft" combat="" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>907</x>
+        <y>423</y>
+        <position>
+          <x>907</x>
+          <y>423</y>
+        </position>
+        <center>
+          <x>918</x>
+          <y>434.5</y>
+        </center>
+        <min>
+          <x>907</x>
+          <y>423</y>
+        </min>
+        <max>
+          <x>929</x>
+          <y>446</y>
+        </max>
+        <width>22</width>
+        <height>23</height>
+        <size>
+          <x>22</x>
+          <y>23</y>
+        </size>
+        <xMin>907</xMin>
+        <yMin>423</yMin>
+        <xMax>929</xMax>
+        <yMax>446</yMax>
+      </Bounds>
+      <rotation>90</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
+    <body instanceID="33" folder="Rotors" name="Rotor_01" direction="left" trigger="turnRight" combat="" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>812</x>
+        <y>423</y>
+        <position>
+          <x>812</x>
+          <y>423</y>
+        </position>
+        <center>
+          <x>823</x>
+          <y>434.5</y>
+        </center>
+        <min>
+          <x>812</x>
+          <y>423</y>
+        </min>
+        <max>
+          <x>834</x>
+          <y>446</y>
+        </max>
+        <width>22</width>
+        <height>23</height>
+        <size>
+          <x>22</x>
+          <y>23</y>
+        </size>
+        <xMin>812</xMin>
+        <yMin>423</yMin>
+        <xMax>834</xMax>
+        <yMax>446</yMax>
+      </Bounds>
+      <rotation>270</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
   </pieces>
   <links>
     <link linkID="0" IDfrom="0" IDto="18" linkToID="0" />
+    <link linkID="0" IDfrom="18" IDto="0" linkToID="0" />
     <link linkID="1" IDfrom="18" IDto="17" linkToID="0" />
     <link linkID="1" IDfrom="17" IDto="13" linkToID="0" />
     <link linkID="2" IDfrom="17" IDto="4" linkToID="0" />
@@ -974,6 +1271,12 @@
     <link linkID="4" IDfrom="17" IDto="5" linkToID="1" />
     <link linkID="0" IDfrom="5" IDto="20" linkToID="0" />
     <link linkID="5" IDfrom="17" IDto="25" linkToID="8" />
+    <link linkID="1" IDfrom="25" IDto="32" linkToID="0" />
+    <link linkID="2" IDfrom="25" IDto="27" linkToID="1" />
+    <link linkID="0" IDfrom="27" IDto="29" linkToID="0" />
+    <link linkID="4" IDfrom="25" IDto="26" linkToID="0" />
+    <link linkID="1" IDfrom="26" IDto="28" linkToID="0" />
+    <link linkID="5" IDfrom="25" IDto="33" linkToID="0" />
     <link linkID="2" IDfrom="18" IDto="12" linkToID="0" />
     <link linkID="3" IDfrom="18" IDto="21" linkToID="1" />
     <link linkID="0" IDfrom="21" IDto="2" linkToID="2" />
@@ -981,6 +1284,7 @@
     <link linkID="1" IDfrom="2" IDto="15" linkToID="0" />
     <link linkID="4" IDfrom="2" IDto="16" linkToID="1" />
     <link linkID="0" IDfrom="16" IDto="9" linkToID="0" />
+    <link linkID="2" IDfrom="16" IDto="31" linkToID="0" />
     <link linkID="5" IDfrom="2" IDto="22" linkToID="0" />
     <link linkID="4" IDfrom="18" IDto="7" linkToID="0" />
     <link linkID="5" IDfrom="18" IDto="1" linkToID="0" />
@@ -989,11 +1293,12 @@
     <link linkID="1" IDfrom="3" IDto="14" linkToID="0" />
     <link linkID="4" IDfrom="3" IDto="24" linkToID="0" />
     <link linkID="1" IDfrom="24" IDto="8" linkToID="0" />
+    <link linkID="2" IDfrom="24" IDto="30" linkToID="0" />
     <link linkID="5" IDfrom="3" IDto="23" linkToID="0" />
   </links>
   <info>
     <name>Mammoth ViE</name>
-    <cat>Light Scout</cat>
+    <cat>Light Deployable</cat>
     <desc>A simple template design from Mammoth Industries. Uses warp capabilities to traverse large expanses of space, unarmed.</desc>
   </info>
 </ship>

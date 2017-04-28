@@ -63,6 +63,7 @@ public class Control_Config: MonoBehaviour
         m_data.ShipControls.Add ("secondary", KeyCode.LeftShift);
         m_data.ShipControls.Add ("tertiary", KeyCode.Tab);
         m_data.ShipControls.Add ("well", KeyCode.Z);
+        m_data.ShipControls.Add("jump", KeyCode.X);
         m_data.ShipControls.Add ("eject", KeyCode.LeftControl);
         m_data.ShipControls.Add ("switchtocombat", KeyCode.F);
         m_data.ShipControls.Add ("Activate Shield", KeyCode.C);

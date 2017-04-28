@@ -34,7 +34,7 @@ namespace Space.Ship.Components.Listener
 
                 foreach(RaycastHit2D hit in hits)
                 {
-                    if(hit.transform.GetComponent<CollectableRockBehaviour>() 
+                    if(hit.transform.GetComponent<Collectable>() 
                        != null)
                     {
                         Vector3 newPos = hit.transform.position;

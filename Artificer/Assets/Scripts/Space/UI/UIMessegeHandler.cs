@@ -211,7 +211,8 @@ namespace Space.UI
         public void DisplayBuildWheel(Deploy deployFunction, 
             List<string> options)
         {
-
+            m_playRect.GetComponent<BuildHUD>().
+                InitializeHUD(deployFunction, options);
         }
 
         #endregion

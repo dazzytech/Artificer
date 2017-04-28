@@ -2430,6 +2430,8 @@ MonoBehaviour:
   - {fileID: 1195609766446620, guid: 6fc3a68a36867654cacc55f3bf4780b5, type: 2}
   - {fileID: 1210465998513952, guid: b45d9a91258670d498192367e5ce4ade, type: 2}
   - {fileID: 1421441126997262, guid: 10655ca0af56bb34692db0a97a088f7c, type: 2}
+  - {fileID: 1735692790398472, guid: e3382dd1f85ee7545b154901954acc58, type: 2}
+  - {fileID: 1086437000325472, guid: 6590eba3a8855dd48bcd51bd90bc7540, type: 2}
   m_CustomConfig: 1
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -27106,7 +27108,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -346
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_SizeDelta.x
@@ -27122,7 +27124,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_AnchorMax.x
@@ -27130,7 +27132,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22419060, guid: 6e9bd1621ba73cb438fec3a7b93c4322, type: 2}
       propertyPath: m_Pivot.x

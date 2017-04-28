@@ -21,9 +21,9 @@ namespace Stations
             Att.Type = STATIONTYPE.WARP;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
-            WarpAttributes.WarpList.Add(netId);
+            WarpAttributes.WarpList.Remove(netId);
         }
 
         #endregion

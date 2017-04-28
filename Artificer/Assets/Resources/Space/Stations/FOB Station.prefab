@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4841924881717370}
   - component: {fileID: 212985745673956908}
-  - component: {fileID: 114559620441077752}
   - component: {fileID: 114940650817503742}
+  - component: {fileID: 114283727026865806}
   - component: {fileID: 114583768692407702}
   - component: {fileID: 114561648742542462}
   - component: {fileID: 61841005825250710}
@@ -60,7 +60,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 2.29, y: 9.81}
---- !u!114 &114559620441077752
+--- !u!114 &114283727026865806
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1195609766446620}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91348db1a508f41a877d6494d19b41, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e522b63f1ce50d48944c007c3977d70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114561648742542462
@@ -86,6 +86,7 @@ MonoBehaviour:
     hitPosition: {x: 0, y: 0, z: 0}
     damage: 0
     radius: 0
+    damageTex: 
     hitComponent: 0
 --- !u!114 &114583768692407702
 MonoBehaviour:
@@ -104,7 +105,7 @@ MonoBehaviour:
   Interactive: 0
   ID: 0
   Type: 1
-  BuildCounter: 2
+  BuildCounter: 30
   BuildColour: {r: 0.024543643, g: 0.32352942, b: 0, a: 0.878}
   BuildDistance: 40
   MinDistance: 3

@@ -33,8 +33,10 @@ namespace Space.Segment
         public static SegmentObjectData[] BuildNewSegment()
         {
             List<SegmentObjectData> SyncList = new List<SegmentObjectData>();
+            
+            // GENERATE ASTEROIDS
 
-            // Generate a selection of asteroid fields
+            // standard asteroid fields
             int fields = Random.Range(20, 60);
             for (int i = 0; i <= fields; i++)
             {
@@ -43,7 +45,34 @@ namespace Space.Segment
                     (new Vector2
                     (Random.Range(100f, 4900f),
                      Random.Range(100f, 4900f)),
-                     "Space/Destructable/Asteroid"));
+                     "Space/Destructable/Asteroid",
+                     "asteroid field"));
+            }
+
+            // high value fields
+            fields = Random.Range(5, 10);
+            for (int i = 0; i <= fields; i++)
+            {
+                int value = Random.Range(0, 3);
+                SyncList.Add(BuildAsteroidField
+                    (new Vector2
+                    (Random.Range(100f, 4900f),
+                     Random.Range(100f, 4900f)),
+                     "Space/Destructable/AsteroidHighVal",
+                     "high val asteroid field"));
+            }
+
+            // plutonium fields
+            fields = Random.Range(5, 10);
+            for (int i = 0; i <= fields; i++)
+            {
+                int value = Random.Range(0, 3);
+                SyncList.Add(BuildAsteroidField
+                    (new Vector2
+                    (Random.Range(100f, 4900f),
+                     Random.Range(100f, 4900f)),
+                     "Space/Destructable/AsteroidPlut",
+                     "plut asteroid field"));
             }
 
             // Generate a small amount of satellites (temp)
@@ -190,7 +219,8 @@ namespace Space.Segment
             return satellite;
         }
 
-        private static SegmentObjectData BuildAsteroidField(Vector2 position, string value)
+        private static SegmentObjectData BuildAsteroidField(Vector2 position, 
+            string value, string name)
         {
             // build base object
             SegmentObjectData aField = new SegmentObjectData();
@@ -198,7 +228,7 @@ namespace Space.Segment
             // Set descriptive info
             aField._type = "_asteroids";
             aField._prefabPath = value;
-            aField._name = "asteroid field";
+            aField._name = name;
             aField._tag = "Asteroid";
             aField._visibleDistance = 300;
 

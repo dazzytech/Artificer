@@ -75,6 +75,7 @@ MonoBehaviour:
     hitPosition: {x: 0, y: 0, z: 0}
     damage: 0
     radius: 0
+    damageTex: 
     hitComponent: 0
 --- !u!114 &114316126808513384
 MonoBehaviour:
@@ -92,8 +93,8 @@ MonoBehaviour:
   UnderAttack: 0
   Interactive: 0
   ID: 0
-  Type: 0
-  BuildCounter: 2
+  Type: 2
+  BuildCounter: 20
   BuildColour: {r: 0.0042171315, g: 0.28676468, b: 0.0042171315, a: 0.84}
   BuildDistance: 0
   MinDistance: 10

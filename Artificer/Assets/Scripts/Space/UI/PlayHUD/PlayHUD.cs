@@ -56,10 +56,6 @@ namespace Space.UI.Ship
                     <ShipAttributes>();
 
             m_targetHUD.SetShipData(shipData);
-
-            //_int.SetShipData(shipData);
-            //_warp.SetShipData(shipData);
-            //_shields.SetShipData(shipData);
     	}
 
         /// <summary>

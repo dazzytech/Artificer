@@ -259,6 +259,17 @@ namespace Space
 
         #region SPACE EVENTS
 
+        /// <summary>
+        /// Alerts the space segment to 
+        /// component collection
+        /// </summary>
+        /// <param name="item"></param>
+        public void ItemCollected(int item)
+        {
+            //_att.Contract.ProcessMaterials
+            //  (newMat);
+        }
+
         // Consider using sync events
 
         /*
@@ -285,12 +296,6 @@ namespace Space
         {
 
         }*/
-
-        public void MaterialCollected(Dictionary<MaterialData, float> newMat)
-        {
-            //_att.Contract.ProcessMaterials
-            //  (newMat);
-        }
 
         public void StationReached(Transform ship)
         {

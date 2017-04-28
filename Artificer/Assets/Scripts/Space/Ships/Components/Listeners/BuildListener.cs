@@ -48,9 +48,6 @@ namespace Space.Ship.Components.Listener
             // Display info on this component to wheel
             SystemManager.GUI.DisplayBuildWheel(DeployStation,
                 m_att.SpawnableStations);
-
-            // For now desploy first station to the list
-            DeployStation(0);
         }
 
         public void SetTriggerKey(string key)
@@ -71,7 +68,7 @@ namespace Space.Ship.Components.Listener
             string stationName = 
                 m_att.SpawnableStations[stationID];
 
-            if (!SystemManager.Space.CanBuild )//&& !stationName.Contains("FOB"))
+            if (!SystemManager.Space.CanBuild && !stationName.Contains("FOB"))
             {
                 SystemManager.GUI.DisplayPrompt("Not in build out of range of FOB or Home Base");
                 SystemManager.GUI.Invoke("ClearPrompt", 3f);
