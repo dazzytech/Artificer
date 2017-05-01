@@ -133,7 +133,7 @@ namespace Space.Ship.Components.Listener
         public void FixToConnected()
         {
             if (GetAttributes().LockedGO != null &&
-                GetAttributes().sockInfo.SocketID == -1)
+                GetAttributes().sockInfo.SocketID != -1)
             {               
                 Vector3 otherPos = transform.Find 
                     (string.Format 
@@ -285,7 +285,6 @@ namespace Space.Ship.Components.Listener
             SetRB();
             this.enabled = false;
         }
-
 
         #endregion
 

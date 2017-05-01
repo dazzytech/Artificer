@@ -17,20 +17,6 @@ namespace Space.Segment.Generator
 
         static Transform Base;
 
-    	/// <summary>
-    	/// Creates player prefab then adds
-    	/// all other objects as children
-    	/// </summary>
-    	/// <param name="">.</param>
-    	/*public GameObject GeneratePlayerShip(ShipData ship, Vector3 pos, Vector2 up)
-    	{
-            GameObject baseShip = GenerateShip(ship, pos, up);
-
-            // For now forget this part
-
-            return baseShip;
-    	}*/
-
         void Awake()
         {
             Base = this.transform;

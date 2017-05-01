@@ -154,9 +154,9 @@ namespace Data.Space.DataImporter
                         = componentInfo.Attributes["combat"].Value;
                 }
 
-                newComponent.AutoLock = true;
-                newComponent.behaviour = 0;
-                newComponent.AutoFire = true;
+                newComponent.AutoLock = false;
+                newComponent.behaviour = 1;
+                newComponent.AutoFire = false;
 
     			// Add to ship
     			switch(componentInfo.Name)

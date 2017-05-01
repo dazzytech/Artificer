@@ -25,7 +25,9 @@ namespace Space.Ship.Components.Attributes
 
     public class ComponentAttributes: MonoBehaviour
     {
-    	[HideInInspector] 
+        #region INPUT INTERACTION
+
+        [HideInInspector] 
     	public KeyCode TriggerKey;
         [HideInInspector] 
         public KeyCode CombatKey;
@@ -33,30 +35,54 @@ namespace Space.Ship.Components.Attributes
     	public bool active;
     	[HideInInspector]
     	public bool CombatState;
+
+        #endregion
+
         public EllipsoidParticleEmitter emitter;
 
+        public ShieldListener Shield;
+
+        #region IDENTIFICATION
+
         public string Name;
+
         public int ID;
+
+        public Sprite iconImage;
+
+        #endregion
+
+        #region INTEGRITY
+
         public bool TrackIntegrity;
     	public float Integrity;
         public float MaxIntegrity;
 
+        #endregion
+
+        #region SHIP STRUCTURE
+
         public Transform LockedGO;
         public Socket sockInfo;
 
-        public ShieldListener Shield;
-
         [HideInInspector]
         public List<ComponentListener> connectedComponents;
-        [HideInInspector]
-        public string currentStyle;
+
+        #endregion
 
         #region CONSTRUCTION DATA
 
         public string Description;
         public ConstructInfo[] RequiredMats;
+
+        #endregion
+
+        #region VISUAL STYLES
+
+        [HideInInspector]
+        public string currentStyle;
+
         public StyleInfo[] componentStyles;
-        public Sprite iconImage;
 
         #endregion
 

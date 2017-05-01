@@ -226,6 +226,18 @@ namespace Space.UI.Ship
             Base.RemoveID(m_ID);
         }
 
+        /// <summary>
+        /// Allow the player to see that the 
+        /// ship has been destroyed before removing
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        private void DelayDestroy()
+        {
+            Destroy(this.gameObject);
+            StopAllCoroutines();
+        }
+
         #endregion
 
         #region IPOINTEREVENTS
@@ -238,22 +250,6 @@ namespace Space.UI.Ship
         public void OnPointerExit(PointerEventData eventData)
         {
             m_selfPanel.color = m_standardColour;
-        }
-
-        #endregion
-
-        #region COROUTINES
-
-        /// <summary>
-        /// Allow the player to see that the 
-        /// ship has been destroyed before removing
-        /// </summary>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        private void DelayDestroy()
-        {
-            Destroy(this.gameObject);
-            StopAllCoroutines();
         }
 
         #endregion

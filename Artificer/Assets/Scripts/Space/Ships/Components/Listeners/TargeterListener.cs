@@ -230,6 +230,8 @@ namespace Space.Ship.Components.Listener
 
         private void LerpTowardsMouse()
         {
+            Debug.Log(FindHomeUp());
+
             // Find angle between
             float tAngle = Angle(transform, Camera.main.ScreenToWorldPoint(Input.mousePosition));
             // between min and max angle
