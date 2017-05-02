@@ -288,6 +288,8 @@ public class SystemManager : NATTraversal.NetworkManager
         ClientScene.AddPlayer(0);
 
         m_singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
+
+        m_base.Space.InitializeSpaceParameters();
     }
 
     public override void OnClientDisconnect(NetworkConnection conn)

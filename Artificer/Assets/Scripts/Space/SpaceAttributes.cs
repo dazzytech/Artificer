@@ -9,6 +9,7 @@ using Data.Space.Library;
 using Space.Segment;
 using Stations;
 using Space.Teams;
+using Space.Map;
 
 // Add classes for data
 // that can be serialized and saved
@@ -51,6 +52,8 @@ namespace Space
         public TeamController Team;
 
         #endregion
+
+        public MapController Map;
 
         //
         // Contract

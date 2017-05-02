@@ -10959,6 +10959,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1688872186}
+  - {fileID: 2012517426}
   - {fileID: 1368435019}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -15769,7 +15770,7 @@ Transform:
   - {fileID: 434335259}
   - {fileID: 42667831}
   m_Father: {fileID: 910198705}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1368435020
 MonoBehaviour:
@@ -15855,6 +15856,7 @@ MonoBehaviour:
   station: {fileID: 0}
   docked: 0
   Team: {fileID: 0}
+  Map: {fileID: 2012517428}
 --- !u!1001 &1368782869
 Prefab:
   m_ObjectHideFlags: 0
@@ -25299,6 +25301,65 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2009729206}
+--- !u!1 &2012517425
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2012517426}
+  - component: {fileID: 2012517428}
+  - component: {fileID: 2012517427}
+  m_Layer: 0
+  m_Name: map
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2012517426
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2012517425}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 910198705}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2012517427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2012517425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f62fc5b218685c8488546f2f8accac94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SearchItems:
+  - _ships
+  - _satellites
+  - _asteroids
+  - _debris
+  - _teams
+--- !u!114 &2012517428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2012517425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7b83677af90b554eafe37eb6286c308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_att: {fileID: 2012517427}
 --- !u!1001 &2015225020
 Prefab:
   m_ObjectHideFlags: 0
