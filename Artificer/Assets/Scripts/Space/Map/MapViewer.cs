@@ -10,7 +10,14 @@ namespace Space.Map
     /// </summary>
     public class MapViewer : MonoBehaviour
     {
-        
+        #region ATTRIBUTES
+
+        [SerializeField]
+        private Transform m_baseMap;
+
+        #endregion
+
+
         // Use this for initialization
         void Start()
         {
@@ -22,5 +29,26 @@ namespace Space.Map
         {
 
         }
+
+        #region PRIVATE UTILITIES
+
+        /// <summary>
+        /// Clears all the icons within the map UI
+        /// </summary>
+        private void ClearIcons()
+        {
+
+        }
+
+        #endregion
+
+        #region COROUTINE
+
+        private IEnumerator BuildIcons()
+        {
+
+        }
+
+        #endregion
     }
 }
