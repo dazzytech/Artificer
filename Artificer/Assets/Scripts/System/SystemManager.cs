@@ -289,7 +289,9 @@ public class SystemManager : NATTraversal.NetworkManager
 
         m_singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
 
-        m_base.Space.InitializeSpaceParameters();
+        // initialize differently between space and lobby
+        if(m_base.Space != null)
+            m_base.Space.InitializeSpaceParameters();
     }
 
     public override void OnClientDisconnect(NetworkConnection conn)

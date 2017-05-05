@@ -16,7 +16,7 @@ namespace Space.Map
     [System.Serializable]
     public class MapObject
     {
-        public Texture2D Icon;
+        public Transform Icon;
         public Vector2 Location;
         public MapObjectType Type;
         public Transform Ref;

@@ -5,6 +5,7 @@ using System.Timers;
 using Data.Shared;
 using Data.Space.Library;
 using System.Collections.Generic;
+using Space.Map;
 
 namespace Space.UI.Spawn
 {
@@ -56,6 +57,10 @@ namespace Space.UI.Spawn
             // This code should only be called once
 
             BuildSelection();
+
+            m_att.Map.InitializeMap(new MapObjectType[2] { MapObjectType.SHIP,
+                SystemManager.Space.TeamID == 0? MapObjectType.STATIONA :
+                    MapObjectType.STATIONB });
         }
 
         #endregion

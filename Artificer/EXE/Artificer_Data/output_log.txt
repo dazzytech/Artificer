@@ -27,7 +27,7 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\RakNetSwig.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Threading.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Threading.dll into Unity Child Domain
-- Completed reload, in  0.072 seconds
+- Completed reload, in  0.462 seconds
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
 <RI> Initializing input.
@@ -42,13 +42,14 @@ The referenced script on this Behaviour (Game Object 'ServerList') is missing!
  
 (Filename:  Line: 1754)
 
-UnloadTime: 1.453556 ms
+UnloadTime: 1.702034 ms
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/libc
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/.\libc
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/libc
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Mono.Security.dll (this message is harmless)
-NATHelper: Connected to Facilitator: 977281165692840266
+NATTraversal: External ip source responded with something other than an IP: 2a02:0c7f:bc09:a900:b8d4:07fe:4127:3c9a
+
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
@@ -68,19 +69,31 @@ Lobby Update: IsHost - True, Is Live - False, Running - False
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
+No lobbies found
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
 Leaving Lobby - Running: False
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
+Creating Hidden Lobby
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+NATHelper: Connected to Facilitator: 513410376697964015
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.181665 ms
+UnloadTime: 4.378744 ms
 DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
  
 (Filename:  Line: 447)
 
 
-Unloading 1541 unused Assets to reduce memory usage. Loaded Objects now: 1315.
-Total: 2.324022 ms (FindLiveObjects: 0.165803 ms CreateObjectMapping: 0.080817 ms MarkObjects: 1.313457 ms  DeleteObjects: 0.737314 ms)
+Unloading 1525 unused Assets to reduce memory usage. Loaded Objects now: 1355.
+Total: 3.227381 ms (FindLiveObjects: 0.486758 ms CreateObjectMapping: 0.104437 ms MarkObjects: 1.347733 ms  DeleteObjects: 1.237043 ms)
 
 The referenced script on this Behaviour (Game Object 'RightPanel') is missing!
  
@@ -91,16 +104,24 @@ The referenced script on this Behaviour (Game Object 'ShipViewer') is missing!
 (Filename:  Line: 1754)
 
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 2.781833 ms
+UnloadTime: 2.735297 ms
 
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 3571.
-Total: 3.489043 ms (FindLiveObjects: 0.251715 ms CreateObjectMapping: 0.069470 ms MarkObjects: 3.139375 ms  DeleteObjects: 0.027788 ms)
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 3652.
+Total: 3.845208 ms (FindLiveObjects: 0.263525 ms CreateObjectMapping: 0.074102 ms MarkObjects: 3.476087 ms  DeleteObjects: 0.031030 ms)
 
-Large state update of 1739 bytes for netId:3397 from script:Ship(Clone) (Space.Ship.ShipInitializer)
+Large state update of 2589 bytes for netId:3820 from script:Ship(Clone) (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Large state update of 1739 bytes for netId:3397 from script:PlayerShip (Space.Ship.ShipInitializer)
+Large state update of 2589 bytes for netId:3820 from script:PlayerShip (Space.Ship.ShipInitializer)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Large state update of 1739 bytes for netId:3821 from script:Ship(Clone) (Space.Ship.ShipInitializer)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Large state update of 1739 bytes for netId:3821 from script:AllyShip (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
@@ -120,20 +141,12 @@ NullReferenceException: Object reference not set to an instance of an object
  
 (Filename:  Line: -1)
 
-Large state update of 1679 bytes for netId:3399 from script:Ship(Clone) (Space.Ship.ShipInitializer)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Large state update of 1679 bytes for netId:3399 from script:AllyShip (Space.Ship.ShipInitializer)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
 NullReferenceException: Object reference not set to an instance of an object
   at Space.Segment.SegmentObject.OnDestroy () [0x00000] in <filename unknown>:0 
  
 (Filename:  Line: -1)
 
-Large state update of 1679 bytes for netId:3400 from script:Ship(Clone) (Space.Ship.ShipInitializer)
+Large state update of 2589 bytes for netId:3823 from script:Ship(Clone) (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
@@ -141,14 +154,1151 @@ ERROR: Friendly HUD - GenerateTeamList: Friendly ship not found in client scene.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Large state update of 1679 bytes for netId:3400 from script:PlayerShip (Space.Ship.ShipInitializer)
+Large state update of 2589 bytes for netId:3823 from script:PlayerShip (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Log: connection {1} has been disconnected by timeout; address {::ffff:192.168.0.17:49324}
-ServerDisconnected due to error: Timeout
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleReader (UnityEngine.Networking.NetworkReader reader, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleBytes (System.Byte[] buffer, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.TransportRecieve (System.Byte[] bytes, Int32 numBytes, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer+ServerSimpleWrapper.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.HandleData (Int32 connectionId, Int32 channelId, Int32 receivedSize, Byte error) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InternalUpdate () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleReader (UnityEngine.Networking.NetworkReader reader, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleBytes (System.Byte[] buffer, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.TransportRecieve (System.Byte[] bytes, Int32 numBytes, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer+ServerSimpleWrapper.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.HandleData (Int32 connectionId, Int32 channelId, Int32 receivedSize, Byte error) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InternalUpdate () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleReader (UnityEngine.Networking.NetworkReader reader, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleBytes (System.Byte[] buffer, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.TransportRecieve (System.Byte[] bytes, Int32 numBytes, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer+ServerSimpleWrapper.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.HandleData (Int32 connectionId, Int32 channelId, Int32 receivedSize, Byte error) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InternalUpdate () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleReader (UnityEngine.Networking.NetworkReader reader, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleBytes (System.Byte[] buffer, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.TransportRecieve (System.Byte[] bytes, Int32 numBytes, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer+ServerSimpleWrapper.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.HandleData (Int32 connectionId, Int32 channelId, Int32 receivedSize, Byte error) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InternalUpdate () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleReader (UnityEngine.Networking.NetworkReader reader, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleBytes (System.Byte[] buffer, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.TransportRecieve (System.Byte[] bytes, Int32 numBytes, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer+ServerSimpleWrapper.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.HandleData (Int32 connectionId, Int32 channelId, Int32 receivedSize, Byte error) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InternalUpdate () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleReader (UnityEngine.Networking.NetworkReader reader, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleBytes (System.Byte[] buffer, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.TransportRecieve (System.Byte[] bytes, Int32 numBytes, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer+ServerSimpleWrapper.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.HandleData (Int32 connectionId, Int32 channelId, Int32 receivedSize, Byte error) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InternalUpdate () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleReader (UnityEngine.Networking.NetworkReader reader, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleBytes (System.Byte[] buffer, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.TransportRecieve (System.Byte[] bytes, Int32 numBytes, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer+ServerSimpleWrapper.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.HandleData (Int32 connectionId, Int32 channelId, Int32 receivedSize, Byte error) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InternalUpdate () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleReader (UnityEngine.Networking.NetworkReader reader, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleBytes (System.Byte[] buffer, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.TransportRecieve (System.Byte[] bytes, Int32 numBytes, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer+ServerSimpleWrapper.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.HandleData (Int32 connectionId, Int32 channelId, Int32 receivedSize, Byte error) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InternalUpdate () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleReader (UnityEngine.Networking.NetworkReader reader, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleBytes (System.Byte[] buffer, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.TransportRecieve (System.Byte[] bytes, Int32 numBytes, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer+ServerSimpleWrapper.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.HandleData (Int32 connectionId, Int32 channelId, Int32 receivedSize, Byte error) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InternalUpdate () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleReader (UnityEngine.Networking.NetworkReader reader, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleBytes (System.Byte[] buffer, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.TransportRecieve (System.Byte[] bytes, Int32 numBytes, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer+ServerSimpleWrapper.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.HandleData (Int32 connectionId, Int32 channelId, Int32 receivedSize, Byte error) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InternalUpdate () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleReader (UnityEngine.Networking.NetworkReader reader, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleBytes (System.Byte[] buffer, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.TransportRecieve (System.Byte[] bytes, Int32 numBytes, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer+ServerSimpleWrapper.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.HandleData (Int32 connectionId, Int32 channelId, Int32 receivedSize, Byte error) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InternalUpdate () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleReader (UnityEngine.Networking.NetworkReader reader, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleBytes (System.Byte[] buffer, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.TransportRecieve (System.Byte[] bytes, Int32 numBytes, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer+ServerSimpleWrapper.OnData (UnityEngine.Networking.NetworkConnection conn, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.HandleData (Int32 connectionId, Int32 channelId, Int32 receivedSize, Byte error) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServerSimple.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InternalUpdate () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+ERROR: Friendly HUD - GenerateTeamList: Friendly ship not found in client scene.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ERROR: Friendly HUD - GenerateTeamList: Friendly ship not found in client scene.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Large state update of 1739 bytes for netId:3842 from script:Ship(Clone) (Space.Ship.ShipInitializer)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Large state update of 1739 bytes for netId:3842 from script:AllyShip (Space.Ship.ShipInitializer)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Game.GameEventListener.ProcessShipDestroyed (.DestroyDespatch destroyed) [0x00000] in <filename unknown>:0 
+  at (wrapper delegate-invoke) Game.GameServerEvents/DestroyedEvent:invoke_void__this___DestroyDespatch (DestroyDespatch)
+  at Game.GameServerEvents.ShipDestroyed (Networking.ShipDestroyMessage msg) [0x00000] in <filename unknown>:0 
+  at Game.GameMessageHandler.OnShipDestroyed (UnityEngine.Networking.NetworkMessage msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.Destroy () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipMessageController.ShipDestroyed () [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipInputReceiver.ReceiveKey (System.Collections.Generic.List`1 keys) [0x00000] in <filename unknown>:0 
+  at Space.Ship.ShipPlayerInputController.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+The referenced script on this Behaviour (Game Object 'Game Settings Prefab') is missing!
+ 
+(Filename:  Line: 1754)
+
+The referenced script on this Behaviour (Game Object 'ServerList') is missing!
+ 
+(Filename:  Line: 1754)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+NullReferenceException: Object reference not set to an instance of an object
+  at Space.Segment.SegmentObject.OnDestroy () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Space.Segment.SegmentObject.OnDestroy () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Space.Segment.SegmentObject.OnDestroy () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Space.Segment.SegmentObject.OnDestroy () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Space.Segment.SegmentObject.OnDestroy () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Space.Segment.SegmentObject.OnDestroy () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Space.Segment.SegmentObject.OnDestroy () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Space.Segment.SegmentObject.OnDestroy () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Space.Segment.SegmentObject.OnDestroy () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+UnloadTime: 3.204224 ms
+
+Unloading 1313 unused Assets to reduce memory usage. Loaded Objects now: 3327.
+Total: 16.017187 ms (FindLiveObjects: 0.338322 ms CreateObjectMapping: 0.129678 ms MarkObjects: 15.006156 ms  DeleteObjects: 0.542335 ms)
+
+Creating Hidden Lobby
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Building Lobby
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Lobby Update: IsHost - True, Is Live - False, Running - False 
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Leaving Lobby - Running: False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Object reference not set to an instance of an object
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.527579 ms
+DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
+ 
+(Filename:  Line: 447)
+
+A connection has already been set as ready. There can only be one.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Local invoke: Failed to find local connection to invoke handler on [connectionId=0] for MsgId:37
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+
+Unloading 224 unused Assets to reduce memory usage. Loaded Objects now: 1617.
+Total: 13.751283 ms (FindLiveObjects: 0.123889 ms CreateObjectMapping: 0.044692 ms MarkObjects: 13.277954 ms  DeleteObjects: 0.303818 ms)
 
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 16b8 -> priority: 1 
+  Thread -> id: 2f78 -> priority: 1 

@@ -1,4 +1,5 @@
 ﻿using Data.Shared;
+using Space.Map;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,6 +39,8 @@ namespace Space.UI.Spawn
         public Button SpawnButton;
 
         public Text SpawnDelayText;
+
+        public MapViewer Map;
 
         #endregion
 

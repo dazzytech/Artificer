@@ -50,6 +50,52 @@ namespace Space
             get { return _att.Map.Map; }
         }
 
+        public int ID
+        {
+            get
+            {
+                return SystemManager.Player.PlayerID;
+            }
+        }
+
+        public uint NetID
+        {
+            get
+            {
+                if (_att == null)
+                    return 0u;
+
+                return _att.netID;
+            }
+        }
+
+        public TeamController Team
+        {
+            get
+            {
+                if (_att == null)
+                    return null;
+
+                return _att.Team;
+            }
+        }
+
+        public int TeamID
+        {
+            get { return _att.Team.ID; }
+        }
+
+        /// <summary>
+        /// determines if able to build or not
+        /// </summary>
+        public bool CanBuild
+        {
+            get
+            {
+                return _att.buildRange;
+            }
+        }
+
         #endregion
 
         #region NETWORK BEHAVIOUR
@@ -195,36 +241,6 @@ namespace Space
             SystemManager.Disconnect();
         }
 
-        public int ID
-        {
-            get
-            {
-                return SystemManager.Player.PlayerID;
-            }
-        }
-
-        public uint NetID
-        {
-            get
-            {
-                if (_att == null)
-                    return 0u;
-
-                return _att.netID;
-            }
-        }
-
-        public TeamController Team
-        {
-            get
-            {
-                if (_att == null)
-                    return null;
-
-                return _att.Team;
-            }
-        }
-
         /// <summary>
         /// Called by the team selector once a team is
         /// selected to start the process of spawning a player
@@ -328,17 +344,6 @@ namespace Space
             // Next is to update the HUD to display the
             // micro stationHUD
             SystemManager.GUI.SetState(UIState.Play);
-        }
-
-        /// <summary>
-        /// determines if able to build or not
-        /// </summary>
-        public bool CanBuild
-        {
-            get
-            {
-                return _att.buildRange;
-            }
         }
 
         #endregion

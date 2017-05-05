@@ -14,7 +14,7 @@ namespace Space.Map
     {
         #region EVENTS
 
-        public delegate void MapUpdate();
+        public delegate void MapUpdate(MapObject obj);
 
         public static event MapUpdate OnMapUpdate;
 
@@ -64,7 +64,8 @@ namespace Space.Map
 
                 m_att.MapItems.Add(mapObj);
 
-                OnMapUpdate();
+                if(OnMapUpdate != null)
+                    OnMapUpdate(mapObj);
             }
         }
 
@@ -100,7 +101,7 @@ namespace Space.Map
                             topContainer.GetChild(0);
 
                         // Build a map object for each transform
-                        foreach (Transform child in container.transform)
+                        foreach (Transform child in container)
                         {
                             BuildObject(child, i);
 
@@ -126,7 +127,7 @@ namespace Space.Map
                             SystemManager.Space.transform.Find(category);
 
                         // Build a map object for each transform
-                        foreach (Transform child in container.transform)
+                        foreach (Transform child in container)
                         {
                             BuildObject(child, i);
 
@@ -159,12 +160,17 @@ namespace Space.Map
                     // e.g. object destroyed
                     if (mObj.Ref == null)
                         m_att.MapItems.RemoveAt(i--); // will dec after completed
-                    else
+
+                    else if (mObj.Location.x != mObj.Ref.position.x
+                        || mObj.Location.y != mObj.Ref.position.y)
                         // update location
                         mObj.Location = mObj.Ref.position;
+                    else
+                        continue;
 
                     // Update any viewers
-                    OnMapUpdate();
+                    if (OnMapUpdate != null)
+                        OnMapUpdate(mObj);
                 }
 
                 yield return null;
