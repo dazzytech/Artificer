@@ -10,6 +10,7 @@ using Space.UI;
 using Space.Ship;
 using Space.Teams;
 using Stations;
+using Space.Map;
 
 namespace Space
 {
@@ -39,6 +40,15 @@ namespace Space
 
         public delegate void PlayerUpdate(Transform data);
         public static event PlayerUpdate OnPlayerUpdate;
+
+        #endregion
+
+        #region ACCESSORS
+
+        public List<MapObject> Map
+        {
+            get { return _att.Map.Map; }
+        }
 
         #endregion
 

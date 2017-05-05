@@ -12,10 +12,27 @@ namespace Space.Map
     [RequireComponent(typeof(MapAttributes))]
     public class MapController : MonoBehaviour
     {
+        #region EVENTS
+
+        public delegate void MapUpdate();
+
+        public static event MapUpdate OnMapUpdate;
+
+        #endregion
+
         #region ATTRIBUTES
 
         [SerializeField]
         private MapAttributes m_att;
+
+        #endregion
+
+        #region ACCESSORS
+
+        public List<MapObject> Map
+        {
+            get { return m_att.MapItems; }
+        }
 
         #endregion
 
@@ -25,6 +42,7 @@ namespace Space.Map
         public void InitializeMap()
         {
             StartCoroutine("BuildMap");
+            StartCoroutine("UpdateList");
         }
 
         #endregion
@@ -45,6 +63,8 @@ namespace Space.Map
                 mapObj.Type = (MapObjectType)i;
 
                 m_att.MapItems.Add(mapObj);
+
+                OnMapUpdate();
             }
         }
 
@@ -66,10 +86,10 @@ namespace Space.Map
                 int i = 0;
 
                 // loop through each sub object for physical items
-                foreach(string category in m_att.SearchItems)
+                foreach (string category in m_att.SearchItems)
                 {
                     // behave differently if teams
-                    if(category == "_teams")
+                    if (category == "_teams")
                     {
                         // retrieve object
                         Transform topContainer =
@@ -94,7 +114,7 @@ namespace Space.Map
                         // Build a map object for each transform
                         foreach (Transform child in container.transform)
                         {
-                            BuildObject(child, i+1);
+                            BuildObject(child, i + 1);
 
                             yield return null;
                         }
@@ -102,11 +122,11 @@ namespace Space.Map
                     else
                     {
                         // retrieve object
-                        Transform container = 
+                        Transform container =
                             SystemManager.Space.transform.Find(category);
 
                         // Build a map object for each transform
-                        foreach(Transform child in container.transform)
+                        foreach (Transform child in container.transform)
                         {
                             BuildObject(child, i);
 
@@ -118,6 +138,35 @@ namespace Space.Map
 
                     yield return null;
                 }
+                yield return null;
+            }
+        }
+
+        /// <summary>
+        /// Loops through each map
+        /// item and update current state
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator UpdateList()
+        {
+            while (true)
+            {
+                for(int i = 0; i < m_att.MapItems.Count; i++)
+                {
+                    MapObject mObj = m_att.MapItems[i];
+
+                    // Remove from list if transform is null
+                    // e.g. object destroyed
+                    if (mObj.Ref == null)
+                        m_att.MapItems.RemoveAt(i--); // will dec after completed
+                    else
+                        // update location
+                        mObj.Location = mObj.Ref.position;
+
+                    // Update any viewers
+                    OnMapUpdate();
+                }
+
                 yield return null;
             }
         }

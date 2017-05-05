@@ -10,7 +10,7 @@ namespace Space.Map
     /// </summary>
     public class MapViewer : MonoBehaviour
     {
-
+        
         // Use this for initialization
         void Start()
         {
