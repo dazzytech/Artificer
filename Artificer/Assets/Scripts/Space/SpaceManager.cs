@@ -20,7 +20,7 @@ namespace Space
     /// (E.G Spawning, Objectives)
     /// </summary>
     [RequireComponent(typeof(SpaceAttributes))]
-    public class SpaceManager :  NetworkBehaviour
+    public class SpaceManager : NetworkBehaviour
     {
         // External attributes class
         private SpaceAttributes _att;
@@ -239,6 +239,16 @@ namespace Space
         public void ExitLevel()
         {
             SystemManager.Disconnect();
+        }
+
+        /// <summary>
+        /// Retreives the map object for a given transform
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public MapObject GetMapObject(Transform item)
+        {
+            return  _att.Map.GetMapObject(item);
         }
 
         /// <summary>

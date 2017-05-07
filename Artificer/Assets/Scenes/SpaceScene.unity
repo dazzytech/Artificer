@@ -23520,8 +23520,10 @@ MonoBehaviour:
   m_satIcon: {fileID: 2800000, guid: e441bc019c6151140bd0d848156ef35f, type: 3}
   m_astIcon: {fileID: 2800000, guid: 1b016caf3b30dff439ed5a12c9f1e77c, type: 3}
   m_wreckIcon: {fileID: 2800000, guid: afa8c575b77523a44ae4839546ad6ad0, type: 3}
-  m_AIcon: {fileID: 2800000, guid: 26281da389d1a074db4014f1ba4d20e1, type: 3}
-  m_BIcon: {fileID: 2800000, guid: 41bb4a4589b90614984baffb50d0ba6e, type: 3}
+  m_FriendlyStationIcon: {fileID: 2800000, guid: 26281da389d1a074db4014f1ba4d20e1,
+    type: 3}
+  m_EnemyStationIcon: {fileID: 2800000, guid: 41bb4a4589b90614984baffb50d0ba6e, type: 3}
+  m_RegionIcon: {fileID: 2800000, guid: 0b82c97e0aab06447962eaf6226311c7, type: 3}
 --- !u!1 &1906192424
 GameObject:
   m_ObjectHideFlags: 0
@@ -25363,12 +25365,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MapItems: []
-  SearchItems:
-  - _ships
-  - _satellites
-  - _asteroids
-  - _debris
-  - _teams
 --- !u!114 &2012517428
 MonoBehaviour:
   m_ObjectHideFlags: 0

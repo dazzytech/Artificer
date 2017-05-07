@@ -37,7 +37,7 @@ namespace Space.Segment
             // GENERATE ASTEROIDS
 
             // standard asteroid fields
-            int fields = Random.Range(20, 60);
+            int fields = Random.Range(10, 20);
             for (int i = 0; i <= fields; i++)
             {
                 int value = Random.Range(0, 3);
@@ -50,7 +50,7 @@ namespace Space.Segment
             }
 
             // high value fields
-            fields = Random.Range(5, 10);
+            fields = Random.Range(2, 5);
             for (int i = 0; i <= fields; i++)
             {
                 int value = Random.Range(0, 3);
@@ -63,7 +63,7 @@ namespace Space.Segment
             }
 
             // plutonium fields
-            fields = Random.Range(5, 10);
+            fields = Random.Range(3, 5);
             for (int i = 0; i <= fields; i++)
             {
                 int value = Random.Range(0, 3);
@@ -76,7 +76,7 @@ namespace Space.Segment
             }
 
             // Generate a small amount of satellites (temp)
-            int satellites = Random.Range(12, 24);
+            int satellites = Random.Range(2, 10);
             for (int i = 0; i <= satellites; i++)
             {
                 SyncList.Add(BuildSatellite(new Vector2
@@ -230,13 +230,13 @@ namespace Space.Segment
             aField._prefabPath = value;
             aField._name = name;
             aField._tag = "Asteroid";
-            aField._visibleDistance = 300;
+            aField._visibleDistance = 1010;
 
             // Set numeric data
             aField._position = position;
             aField._size =
-                new Vector2(Random.Range(100, 200),
-                Random.Range(100, 200));
+                new Vector2(Random.Range(300, 1000),
+                Random.Range(300, 1000));
             aField._count = Random.Range(50, 100);
 
             return aField;
@@ -266,9 +266,13 @@ namespace Space.Segment
             grave._prefabPath = "Space/Wreck";
             grave._name = "ship graveyard";
             grave._tag = "Untagged";
-            grave._visibleDistance = 600;
+            grave._visibleDistance = 110;
 
             grave._position = position;
+            grave._size =
+                 new Vector2(Random.Range(20, 100),
+                 Random.Range(20, 100));
+            grave._count = Random.Range(5, 20);
 
             return grave;
         }

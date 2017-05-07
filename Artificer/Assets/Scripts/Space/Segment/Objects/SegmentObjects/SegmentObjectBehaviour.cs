@@ -6,30 +6,41 @@ using Data.Space;
 namespace Space.Segment
 {
     /// <summary>
-    /// 
+    /// Base class for objects that are 
+    /// spawned within 
     /// </summary>
     public class SegmentObjectBehaviour : NetworkBehaviour
     {
         #region EVENTS
 
-        // Some objs will want to know when said obj 
-        // is destroyed
-        public delegate void ObjEvent(SegmentObjectData segObj);
+        #region OBJECT
+
+        // Objects such as map controller will
+        // listen for the creation and destruction of these object
+        public delegate void ObjEvent(SegmentObjectData segObj, Transform obj);
+        public static event ObjEvent Created;
         public static event ObjEvent Destroyed;
 
+        #endregion
+
+        #region STATE
+
+        // Child objects listen to this for their active state
         public delegate void ObjState();
         public event ObjState ObjEnable;
         public event ObjState ObjDisable;
 
         #endregion
 
+        #endregion
+
         #region ATTRIBUTES
 
         [SyncVar]
-        SegmentObjectData _segObject;
+        private SegmentObjectData m_segObject;
 
         [SerializeField]
-        bool _physicalObject;
+        bool m_physicalObject;
 
         public bool Active;
 
@@ -44,21 +55,25 @@ namespace Space.Segment
 
             // If this isn't a container, render object
             // and begin distance checking
-            if (_physicalObject)
+            if (m_physicalObject)
             {
-                if (_segObject._texturePath != "")
+                if (m_segObject._texturePath != "")
                     Render();
 
             }
 
             // disable as we wont have spawned
             DisableObj();
+
+            // Alert that create have created this object
+            if (Created != null)
+                Created(m_segObject, transform);
         }
 
         void OnDestroy()
         {
             if(Destroyed != null)
-                Destroyed(_segObject);
+                Destroyed(m_segObject, transform);
         }
 
         #endregion
@@ -73,13 +88,13 @@ namespace Space.Segment
         [Server]
         public void Create(SegmentObjectData Obj)
         {
-            _segObject = Obj;
+            m_segObject = Obj;
 
             Position();
 
-            if (_physicalObject)
+            if (m_physicalObject)
             {
-                if (_segObject._texturePath != "")
+                if (m_segObject._texturePath != "")
                     Render();
 
             }
@@ -96,7 +111,7 @@ namespace Space.Segment
         {
             Active = true;
 
-            if (_physicalObject)
+            if (m_physicalObject)
             {
                 // Only activate object if physical
                 if (GetComponent<SpriteRenderer>() != null)
@@ -124,7 +139,7 @@ namespace Space.Segment
             if (!isServer)
             {
                 if (Destroyed != null)
-                    Destroyed(_segObject);
+                    Destroyed(m_segObject, transform);
 
                 this.gameObject.SetActive(false);
             }
@@ -135,7 +150,7 @@ namespace Space.Segment
 
                 Active = false;
 
-                if (_physicalObject)
+                if (m_physicalObject)
                 {
                     // Only disable this object if it is physical
                     if (GetComponent<SpriteRenderer>() != null)
@@ -165,7 +180,7 @@ namespace Space.Segment
             if (GetComponent<SpriteRenderer>() == null)
                 return;                     //error check
 
-            Sprite img = Resources.Load(_segObject._texturePath, typeof(Sprite)) as Sprite;
+            Sprite img = Resources.Load(m_segObject._texturePath, typeof(Sprite)) as Sprite;
             GetComponent<SpriteRenderer>().sprite = img;
         }
 
@@ -174,10 +189,10 @@ namespace Space.Segment
         /// </summary>
         private void Position()
         {
-            transform.parent = GameObject.Find(_segObject._type).transform;
-            transform.name = _segObject._name;
-            transform.tag = _segObject._tag;
-            transform.position = _segObject._position;
+            transform.parent = GameObject.Find(m_segObject._type).transform;
+            transform.name = m_segObject._name;
+            transform.tag = m_segObject._tag;
+            transform.position = m_segObject._position;
         }
 
         #endregion
@@ -206,7 +221,7 @@ namespace Space.Segment
 
                 Vector3 thisPos = transform.position;
 
-                if (Vector3.Distance(thisPos, playerPos) > _segObject._visibleDistance)
+                if (Vector3.Distance(thisPos, playerPos) > m_segObject._visibleDistance)
                 {
                     DisableObj();
                 }

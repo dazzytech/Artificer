@@ -26,6 +26,8 @@ namespace Stations
         public static event StationEvent EnterBuildRange;
         public static event StationEvent ExitBuildRange;
 
+        public static event StationEvent StationCreated;
+
         #endregion
 
         #region ATTRIBUTES
@@ -63,6 +65,9 @@ namespace Stations
 
             if (!Att.Interactive)
                 StartCoroutine("CheckForActivity");
+
+            if (StationCreated != null)
+                StationCreated(this);
         }
 
         void OnDestroy()

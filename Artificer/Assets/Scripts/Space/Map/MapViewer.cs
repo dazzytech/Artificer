@@ -29,11 +29,11 @@ namespace Space.Map
 
         #endregion
 
-        // Create icons for each viewer as may be different
-
         #region ICONS
 
         [Header("Icon Textures")]
+
+        // Create icons for each viewer as may be different
 
         [SerializeField]
         private Texture2D m_shipIcon;
@@ -48,10 +48,13 @@ namespace Space.Map
         private Texture2D m_wreckIcon;
 
         [SerializeField]
-        private Texture2D m_AIcon;
+        private Texture2D m_FriendlyStationIcon;
 
         [SerializeField]
-        private Texture2D m_BIcon;
+        private Texture2D m_EnemyStationIcon;
+
+        [SerializeField]
+        private Texture2D m_RegionIcon;
 
         #endregion
 
@@ -61,7 +64,7 @@ namespace Space.Map
 
         private void OnDisable()
         {
-            MapController.OnMapUpdate -= MapChanged;
+            MapController.OnMapUpdate -= OnIconChanged;
 
             StopCoroutine("BuildIcons");
 
@@ -72,7 +75,7 @@ namespace Space.Map
         {
             if (m_running)
             {
-                MapController.OnMapUpdate += MapChanged;
+                MapController.OnMapUpdate += OnIconChanged;
                 StartCoroutine("BuildIcons");
             }
         }
@@ -82,7 +85,7 @@ namespace Space.Map
         #region PUBLIC INTERACTION
 
         // Use this for initialization
-        public void InitializeMap(MapObjectType[] filter)
+        public void InitializeMap(MapObjectType[] filter = null)
         {
             // determine our scale
             m_scale.x = m_baseMap.rect.width / 5000f;
@@ -92,17 +95,187 @@ namespace Space.Map
             m_filter = filter;
 
             // Add listeners
-            MapController.OnMapUpdate += MapChanged;
+            MapController.OnMapUpdate += OnIconChanged;
 
             // Start initial map build
-            StartCoroutine("BuildIcons");
+            BuildIcons();
 
             m_running = true;
+        }
+
+        /// <summary>
+        /// Destroys a given map object and replaces it with
+        /// a prefab
+        /// </summary>
+        /// <param name="mObj"></param>
+        /// <param name="prefab"></param>
+        public void DeployPrefab(MapObject mObj, GameObject prefab)
+        {
+            // destroy the texture
+            // to replace with our prefab
+            if (mObj.Icon != null)
+                GameObject.Destroy(mObj.Icon.gameObject);
+
+            // put our prefab on map
+            prefab.transform.SetParent(m_baseMap);
+
+            // Scale and then position on map
+            Vector2 newLoc = mObj.Location;
+            newLoc.Scale(m_scale);
+            prefab.transform.localPosition = newLoc;
         }
 
         #endregion
 
         #region PRIVATE UTILITIES
+        
+        /// <summary>
+        /// Creates an icon for each item
+        /// </summary>
+        /// <returns></returns>
+        private void BuildIcons()
+        {
+            ClearIcons();
+
+            List<MapObject> filteredList;
+
+            if (m_filter == null)
+                filteredList = SystemManager.Space.Map;
+            else
+                // Retrieve list based on what filters we are having
+                filteredList = SystemManager.Space.Map.Where
+                (c => m_filter.Contains(c.Type)).ToList();
+
+            // create each map object as an icon
+            for (int i = 0; i < filteredList.Count; i++)
+            {
+                MapObject mObj = filteredList[i];
+
+                if (mObj.Type == MapObjectType.SHIP ||
+                    mObj.Type == MapObjectType.SATELLITE ||
+                    mObj.Type == MapObjectType.STATION)
+                    // send object to be built
+                    BuildIcon(mObj);
+                else
+                    BuildSegmentIcon(mObj);
+            }
+        }
+
+        /// <summary>
+        /// Builds an icon that represents 
+        /// a single transform in the scene 
+        /// with a single texture
+        /// </summary>
+        /// <param name="mObj"></param>
+        private void BuildIcon(MapObject mObj)
+        {
+            if (mObj.Ref != null)
+            {
+                // create go for our icon
+                GameObject GO = new GameObject();
+                GO.transform.SetParent(m_baseMap);
+
+                // Create texture
+                RawImage img = GO.AddComponent<RawImage>();
+                // Set tex based on type
+                switch (mObj.Type)
+                {
+                    case MapObjectType.SHIP:
+                        // Resize object based on texture
+                        GO.GetComponent<RectTransform>().sizeDelta =
+                            new Vector2(30, 30);
+                        img.texture = m_shipIcon;
+                        break;
+                    case MapObjectType.SATELLITE:
+                        // Resize object based on texture
+                        GO.GetComponent<RectTransform>().sizeDelta =
+                            new Vector2(50, 30);
+                        img.texture = m_satIcon;
+                        break;
+                    case MapObjectType.STATION:
+                        // Resize object based on texture
+                        GO.GetComponent<RectTransform>().sizeDelta =
+                            new Vector2(30, 30);
+                        if (mObj.TeamID == SystemManager.Space.TeamID)
+                            img.texture = m_FriendlyStationIcon;
+                        else
+                            img.texture = m_EnemyStationIcon;
+                        break;
+                }
+
+                // Scale and then position on map
+                Vector2 newLoc = mObj.Location;
+                newLoc.Scale(m_scale);
+                GO.transform.localPosition = newLoc;
+
+                mObj.Icon = GO.transform;
+            }
+        }
+
+        /// <summary>
+        /// builds an icon that represents a
+        /// field within space e.g. asteroids
+        /// </summary>
+        /// <param name="mObj"></param>
+        private void BuildSegmentIcon(MapObject mObj)
+        {
+            if (mObj.Ref != null)
+            {
+                // create go for our icon
+                GameObject Base = new GameObject();
+                Base.transform.SetParent(m_baseMap);
+
+                // Create texture
+                RawImage img = Base.AddComponent<RawImage>();
+                img.texture = m_RegionIcon;
+
+                // Resize object based on texture
+                Vector2 newSize = mObj.Size;
+                newSize.Scale(m_scale);
+                Base.GetComponent<RectTransform>().sizeDelta =
+                    newSize;
+
+                // Scale and then position on map
+                Vector2 newLoc = mObj.Location;
+                newLoc.Scale(m_scale);
+                Base.transform.localPosition = newLoc + newSize*.5f;
+
+                mObj.Icon = Base.transform;
+
+                // Create overlaying icon
+                GameObject Icon = new GameObject();
+                Icon.transform.SetParent(Base.transform);
+                Icon.transform.localPosition = new Vector3(0, 0, 0);
+
+                // Create texture
+                RawImage iconImg = Icon.AddComponent<RawImage>();
+                iconImg.texture = m_RegionIcon;
+
+                switch (mObj.Type)
+                {
+                    case MapObjectType.ASTEROID:
+                        {
+                            iconImg.texture = m_astIcon;
+
+                            float scale = Mathf.Max(Mathf.Min(newSize.x, newSize.y), 30);
+                            Icon.GetComponent<RectTransform>().sizeDelta =
+                                new Vector2(scale, scale);
+
+                            break;
+                        }
+                    case MapObjectType.DEBRIS:
+                        {
+                            iconImg.texture = m_wreckIcon;
+
+                            float scale = Mathf.Max(Mathf.Min(newSize.x, newSize.y), 30);
+                            Icon.GetComponent<RectTransform>().sizeDelta =
+                                new Vector2(scale + scale * .5f, scale);
+                            break;
+                        }
+                }
+                
+            }
+        }
 
         /// <summary>
         /// Clears all the icons within the map UI
@@ -115,96 +288,41 @@ namespace Space.Map
             }
         }
 
-        private void BuildIcon(MapObject mObj)
-        {
-            if(mObj.Ref != null)
-            {
-                // create go for our icon
-                GameObject GO = new GameObject();
-                GO.transform.SetParent(m_baseMap);
-
-                // Create texture
-                RawImage img = GO.AddComponent<RawImage>();
-                // Set tex based on type
-                switch(mObj.Type)
-                {
-                    case MapObjectType.SHIP:
-                        img.texture = m_shipIcon;
-                        break;
-                    case MapObjectType.SATELLITE:
-                        img.texture = m_satIcon;
-                        break;
-                    case MapObjectType.ASTEROID:
-                        img.texture = m_astIcon;
-                        break;
-                    case MapObjectType.DEBRIS:
-                        img.texture = m_wreckIcon;
-                        break;
-                    case MapObjectType.STATIONA:
-                        img.texture = m_AIcon;
-                        break;
-                    case MapObjectType.STATIONB:
-                        img.texture = m_BIcon;
-                        break;
-                }
-
-                // Scale and then position on map
-                Vector2 newLoc = mObj.Location;
-                newLoc.Scale(m_scale);
-                GO.transform.localPosition = newLoc;
-
-                // Resize object based on texture
-                GO.GetComponent<RectTransform>().sizeDelta =
-                    new Vector2(30, 30);
-
-                mObj.Icon = GO.transform;
-            }
-        }
-
-        private void MapChanged(MapObject mObj)
-        {
-            if (m_filter.Contains(mObj.Type))
-            {
-                if (mObj.Icon != null)
-                    GameObject.Destroy(mObj.Icon.gameObject);
-
-                if (mObj.Ref != null)
-                    BuildIcon(mObj);
-                else
-                    mObj.Icon = null;
-            }
-        }
-
-        #endregion
-
-        #region COROUTINE
-
         /// <summary>
-        /// Creates an icon for each item
+        /// Updates an icon when 
+        /// the map object is changed in some way
         /// </summary>
-        /// <returns></returns>
-        private IEnumerator BuildIcons()
+        /// <param name="mObj"></param>
+        private void OnIconChanged(MapObject mObj)
         {
-            ClearIcons();
+            if (m_filter != null)
+                if (!m_filter.Contains(mObj.Type))
+                    return;
 
-            // Retrieve list based on what filters we are having
-            List<MapObject> filteredList = SystemManager.Space.Map.Where
-                (c => m_filter.Contains(c.Type)).ToList();
-
-            // create each map object as an icon
-            for (int i = 0; i < filteredList.Count; i++)
-            {
-                MapObject mObj = filteredList[i];
-
-                // filter will be applied here
-
-                // send object to be built
-                BuildIcon(mObj);
-
-                yield return null;
-            }
-
-            yield return null;
+                if (mObj.Icon != null)
+                {
+                    if (mObj.Ref == null)
+                    {
+                        // Destroy icon, map controller will delete item
+                        GameObject.Destroy(mObj.Icon.gameObject);
+                        mObj.Icon = null;
+                    }
+                    else
+                    {
+                        // Scale and then reposition on map
+                        Vector2 newLoc = mObj.Location;
+                        newLoc.Scale(m_scale);
+                        mObj.Icon.localPosition = newLoc;
+                    }
+                }
+                else
+                    if (mObj.Type == MapObjectType.SHIP ||
+                    mObj.Type == MapObjectType.SATELLITE ||
+                    mObj.Type == MapObjectType.STATION)
+                        // send object to be built
+                        BuildIcon(mObj);
+                    else
+                        BuildSegmentIcon(mObj);
         }
 
         #endregion

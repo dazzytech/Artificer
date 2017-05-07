@@ -19,15 +19,15 @@ namespace Space.Ship
     {
         #region EVENTS
 
-        public delegate void ShipEvent();
+        public delegate void ShipEvent(ShipAttributes Ship);
 
-        public event ShipEvent OnShipCreated;
+        public static event ShipEvent OnShipCreated;
 
         #endregion
 
         #region ATTRIBUTES
 
-        public ShipAttributes _ship;
+        public ShipAttributes ShipAtt;
 
         // Store a reference to the ships data
         [SyncVar]
@@ -38,6 +38,7 @@ namespace Space.Ship
         #endregion
 
         #region ONSTART OVERRIDES
+
         /// <summary>
         /// Builds the ship if it was build on server already
         /// </summary>
@@ -106,10 +107,10 @@ namespace Space.Ship
             //this function anyway to be sure.
             Ship = Serializer.ByteSerializer.fromBytes(shipInfo);
             SetUpPlayer();
-            _ship.instID = this.netId;
+            
 
             if(OnShipCreated != null)
-                OnShipCreated();
+                OnShipCreated(ShipAtt);
         }
 
         /// <summary>
@@ -119,6 +120,9 @@ namespace Space.Ship
         {
             if (!Ship.Initialized)
                 return;
+
+            ShipAtt = GetComponent<ShipAttributes>();
+            ShipAtt.instID = netId;
 
             //Build the object with spawnData
             ShipGenerator.GenerateShip(Ship, this.gameObject);
@@ -138,7 +142,7 @@ namespace Space.Ship
                 tag = "PlayerShip";
 
                 gameObject.AddComponent<ShipPlayerInputController>();
-                GetComponent<ShipAttributes>().AlignmentLabel = "Player";
+                ShipAtt.AlignmentLabel = "Player";
 
                 SendMessage("BuildColliders");
             }
@@ -171,7 +175,7 @@ namespace Space.Ship
         private void RpcFinishCreate()
         {
             if (OnShipCreated != null)
-                OnShipCreated();
+                OnShipCreated(ShipAtt);
         }
 
         #endregion

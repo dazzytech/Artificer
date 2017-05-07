@@ -58,9 +58,7 @@ namespace Space.UI.Spawn
 
             BuildSelection();
 
-            m_att.Map.InitializeMap(new MapObjectType[2] { MapObjectType.SHIP,
-                SystemManager.Space.TeamID == 0? MapObjectType.STATIONA :
-                    MapObjectType.STATIONB });
+            m_att.Map.InitializeMap();       
         }
 
         #endregion

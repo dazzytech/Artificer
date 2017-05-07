@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿using Space.Segment;
+using Space.Ship;
+using Stations;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -41,15 +44,30 @@ namespace Space.Map
         // Use this for initialization
         public void InitializeMap()
         {
-            StartCoroutine("BuildMap");
+            // Assign listeners
+            ShipInitializer.OnShipCreated += CreateShip;
+            StationController.StationCreated += CreateStation;
+            SegmentObjectBehaviour.Created += CreateSegmentObject;
+
             StartCoroutine("UpdateList");
+        }
+
+        /// <summary>
+        /// Uses linq to find the corresponding map object
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public MapObject GetMapObject(Transform obj)
+        {
+            return m_att.MapItems.
+                FirstOrDefault(x => x.Ref == obj);
         }
 
         #endregion
 
         #region PRIVATE UTILITIES
 
-        private void BuildObject(Transform child, int i)
+        private MapObject BuildObject(Transform child)
         {
             MapObject mapObj = m_att.MapItems.FirstOrDefault
                                 (x => x.Ref == child);
@@ -60,88 +78,66 @@ namespace Space.Map
                 mapObj = new MapObject();
                 mapObj.Location = child.position;
                 mapObj.Ref = child;
-                mapObj.Type = (MapObjectType)i;
 
                 m_att.MapItems.Add(mapObj);
-
-                if(OnMapUpdate != null)
-                    OnMapUpdate(mapObj);
             }
+
+            return mapObj;
+        }
+
+        #endregion
+
+        #region EVENT LISTENERS
+
+        private void CreateShip(ShipAttributes ship)
+        {
+            // for now just create the object 
+            // (dont need to store additional data this build)
+            MapObject mapObj = BuildObject(ship.transform);
+            mapObj.Type = MapObjectType.SHIP;
+
+            if (OnMapUpdate != null)
+                OnMapUpdate(mapObj);
+        }
+
+        private void CreateStation(StationController station)
+        {
+            MapObject mapObj = BuildObject(station.transform);
+            mapObj.Type = MapObjectType.STATION;
+            mapObj.TeamID = station.Att.Team.ID;
+
+            if (OnMapUpdate != null)
+                OnMapUpdate(mapObj);
+        }
+
+        private void CreateSegmentObject(SegmentObjectData segObj, Transform trans)
+        {
+            MapObjectType mType = MapObjectType.NULL;
+            switch (segObj._type)
+            {
+                case "_asteroids":
+                    mType = MapObjectType.ASTEROID; break;
+                case "_debris":
+                    mType = MapObjectType.DEBRIS; break;
+                case "_satellites":
+                    mType = MapObjectType.SATELLITE; break;
+            }
+
+            if (mType == MapObjectType.NULL)
+                return;
+
+            MapObject mapObj = BuildObject(trans);
+            mapObj.Type = mType;
+
+            mapObj.Size = segObj._size;
+
+            if (OnMapUpdate != null)
+                OnMapUpdate(mapObj);
         }
 
         #endregion
 
         #region COROUTINES
-
-        /// <summary>
-        /// Loops through each item in the game
-        /// Scene and creates a map item and stores it
-        /// if not already stored
-        /// </summary>
-        /// <returns></returns>
-        private IEnumerator BuildMap()
-        {
-            // forever loop
-            while (true)
-            {
-                int i = 0;
-
-                // loop through each sub object for physical items
-                foreach (string category in m_att.SearchItems)
-                {
-                    // behave differently if teams
-                    if (category == "_teams")
-                    {
-                        // retrieve object
-                        Transform topContainer =
-                            SystemManager.Space.transform.Find(category);
-
-                        // retrieve object
-                        Transform container =
-                            topContainer.GetChild(0);
-
-                        // Build a map object for each transform
-                        foreach (Transform child in container)
-                        {
-                            BuildObject(child, i);
-
-                            yield return null;
-                        }
-
-                        // retrieve object
-                        container =
-                            topContainer.GetChild(1);
-
-                        // Build a map object for each transform
-                        foreach (Transform child in container.transform)
-                        {
-                            BuildObject(child, i + 1);
-
-                            yield return null;
-                        }
-                    }
-                    else
-                    {
-                        // retrieve object
-                        Transform container =
-                            SystemManager.Space.transform.Find(category);
-
-                        // Build a map object for each transform
-                        foreach (Transform child in container)
-                        {
-                            BuildObject(child, i);
-
-                            yield return null;
-                        }
-
-                        i++;
-                    }
-
-                    yield return null;
-                }
-                yield return null;
-            }
-        }
 
         /// <summary>
         /// Loops through each map

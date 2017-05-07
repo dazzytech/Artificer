@@ -148,6 +148,20 @@ namespace Space.Segment.Generator
 
             NetworkServer.Spawn(newGrave);
 
+            // for now only spawn one asteroid to make sure it works
+            int WCount = 0;
+            while (WCount < segObj._count)
+            {
+                // Give a random location and size;
+                Vector2 location = new Vector2
+                    (Random.Range(0f, segObj._size.x),
+                     Random.Range(0f, segObj._size.y));
+
+                newGrave.SendMessage("BuildWreck", location);
+                
+                WCount++;
+            }
+
             return newGrave;
         }
 

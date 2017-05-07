@@ -104,7 +104,7 @@ namespace Space.UI.Ship
         void OnDestroy()
         {
             if(m_ship != null)
-                m_ship.Init.OnShipCreated -= OnShipCreated;
+                ShipInitializer.OnShipCreated -= OnShipCreated;
         }
 
         #endregion
@@ -141,7 +141,7 @@ namespace Space.UI.Ship
             {
                 // If ship is still pending creation then 
                 // assign listener for when item is created
-                newShip.Init.OnShipCreated += OnShipCreated;
+                ShipInitializer.OnShipCreated += OnShipCreated;
             }
         }
 
@@ -149,13 +149,16 @@ namespace Space.UI.Ship
 
         #region EVENT LISTENER
 
-        private void OnShipCreated()
+        private void OnShipCreated(ShipAttributes ship)
         {
-            ViewerPanel.BuildShip(m_ship, PiecePrefab);
+            if (m_ship.Equals(ship))
+            {
+                ViewerPanel.BuildShip(m_ship, PiecePrefab);
 
-            // Begin tracking process if active
-            if (isActiveAndEnabled)
-                StartCoroutine("Step");
+                // Begin tracking process if active
+                if (isActiveAndEnabled)
+                    StartCoroutine("Step");
+            }
         }
 
         #endregion
