@@ -89,8 +89,8 @@ GameObject:
   m_Component:
   - component: {fileID: 224842234142234928}
   - component: {fileID: 222147943246562122}
-  - component: {fileID: 114980691076515674}
   - component: {fileID: 114409187099842428}
+  - component: {fileID: 114047819920569426}
   - component: {fileID: 114040815405689612}
   m_Layer: 5
   m_Name: ShipSelectItem
@@ -110,6 +110,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fefbf9f278db72a4081e28271d999561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_background: {fileID: 114047819920569426}
+  m_standardColour: {r: 0.24313726, g: 0.1882353, b: 0.09411765, a: 0.7921569}
+  m_highlightColour: {r: 0.61764705, g: 0.45051903, b: 0.199827, a: 0.847}
+  m_selectedColour: {r: 0, g: 0.71323526, b: 0.6246957, a: 0.872}
   m_shipData:
     components: []
     Name: 
@@ -123,9 +127,6 @@ MonoBehaviour:
   m_header: {fileID: 114657879382940338}
   m_type: {fileID: 114395949957742198}
   m_desc: {fileID: 114044159425085444}
-  m_background: {fileID: 114980691076515674}
-  m_highlight: {r: 0.5514706, g: 0.3566102, b: 0.008109869, a: 0.909}
-  m_selected: {r: 0, g: 0.61764705, b: 0.43874252, a: 0.816}
   m_builder: {fileID: 114526809274289932}
   m_piecePrefab: {fileID: 1000013815724100, guid: 98c0888ad76ba414587887299164745f,
     type: 2}
@@ -162,6 +163,32 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: placeholder text
+--- !u!114 &114047819920569426
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1715437385194132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.24264705, g: 0.18890049, b: 0.09277681, a: 0.791}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!114 &114395949957742198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -271,33 +298,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.3897059, g: 0.051578723, b: 0.051578723, a: 0.497}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!114 &114980691076515674
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1715437385194132}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.20588237, g: 0.1043193, b: 0.012110727, a: 0.791}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

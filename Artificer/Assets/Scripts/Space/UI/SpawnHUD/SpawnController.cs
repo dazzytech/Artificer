@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Collections;
 using System.Timers;
@@ -6,6 +7,9 @@ using Data.Shared;
 using Data.Space.Library;
 using System.Collections.Generic;
 using Space.Map;
+using Stations;
+
+using UI;
 
 namespace Space.UI.Spawn
 {
@@ -37,6 +41,11 @@ namespace Space.UI.Spawn
             }
         }
 
+        public int SelectedSpawn
+        {
+            get { return m_att.SelectedSpawn.SpawnID; }
+        }
+
         #endregion
 
         #region MONO BEHAVIOUR
@@ -58,7 +67,9 @@ namespace Space.UI.Spawn
 
             BuildSelection();
 
-            m_att.Map.InitializeMap();       
+            m_att.Map.InitializeMap(new MapObjectType[] { MapObjectType.SHIP });
+
+            BuildStations();     
         }
 
         #endregion
@@ -92,6 +103,17 @@ namespace Space.UI.Spawn
                     ship.Select();
         }
 
+        public void SelectSpawn(SpawnSelectItem selected)
+        {
+            m_att.SelectedSpawn = selected;
+
+            foreach(SpawnSelectItem spawn in m_att.SpawnList)
+                if (!m_att.SelectedShip.Equals(spawn))
+                    spawn.Deselect();
+                else
+                    spawn.Select();
+        }
+
         #endregion
 
         #region PRIVATE UTILITIES
@@ -114,23 +136,65 @@ namespace Space.UI.Spawn
                 shipObj.transform
                     .SetParent(m_att.ShipSelectList);
 
-
                 ShipSelectItem item =
                     shipObj.GetComponent<ShipSelectItem>();
 
+                item.Initialize(m_event.ShipSelected);
+
                 item.AssignShipData(ship);
 
-                if(m_att.ShipList == null)
+                if (m_att.ShipList == null)
                 {
                     m_att.ShipList = new List<ShipSelectItem>();
-
-                    
                 }
 
                 m_att.ShipList.Add(item);
             }
 
             SelectShip(m_att.ShipList[0]);
+        }
+
+        /// <summary>
+        /// Creates spawn prefabs for all stations with 
+        /// spawn capability and sends them to the map
+        /// </summary>
+        private void BuildStations()
+        {
+            // create a list to store these in future
+            foreach(uint netId in SystemManager.Space.Team.Stations)
+            {
+                GameObject stationObj = ClientScene.FindLocalObject
+                    (new NetworkInstanceId(netId));
+
+                int SpawnID = stationObj.GetComponent
+                    <StationController>().SpawnID;
+
+                if(SpawnID != -1)
+                {
+                    // Station is spawnable, create prefab instance
+                    GameObject spawnObj = Instantiate(m_att.StationSelectPrefab);
+
+                    // Initialize the selectable item
+                    SpawnSelectItem spawnItem = 
+                        spawnObj.GetComponent<SpawnSelectItem>();
+                    spawnItem.Initialize(m_event.SpawnSelected);
+                    spawnItem.SpawnID = SpawnID;
+
+                    // Add new prefab to list
+                    if (m_att.SpawnList == null)
+                        m_att.SpawnList = new List<SpawnSelectItem>();
+
+                    m_att.SpawnList.Add(spawnItem);
+
+                    // Update map
+                    MapObject mObj = SystemManager.Space.GetMapObject
+                        (stationObj.transform);
+
+                    m_att.Map.DeployPrefab(mObj, spawnObj);
+                }
+            }
+
+            SelectSpawn(m_att.SpawnList[0]);
         }
 
         #endregion

@@ -91,11 +91,8 @@ namespace Stations
         /// <param name="newType"></param>
         [Server]
         public virtual void Initialize
-            (int newID, NetworkInstanceId newTeam, bool delayBuild = false)
+            (NetworkInstanceId newTeam, bool delayBuild = false)
         {
-            // Store our ID for when the station is destroyed
-            Att.ID = newID;
-
             // Only home stations are created immediately
             if (!delayBuild)
                 Att.Interactive = true;
@@ -150,7 +147,7 @@ namespace Stations
             {
                 StationDestroyMessage msg = new StationDestroyMessage();
                 msg.SelfID = netId;
-                msg.ID = Att.ID;
+                msg.ID = Att.SpawnID;
 
                 SystemManager.singleton.client.Send((short)MSGCHANNEL.STATIONDESTROYED, msg);
 
@@ -297,9 +294,10 @@ namespace Stations
         /// <summary>
         /// Return unique ID
         /// </summary>
-        public int ID
+        public int SpawnID
         {
-            get { return Att.ID; }
+            get { return Att.SpawnID; }
+            set { Att.SpawnID = value; }
         }
 
         /// <summary>

@@ -218,7 +218,6 @@ namespace Space
         /// <summary>
         /// Builds game related instances and adds us to the server game environment
         /// </summary>
-        [Server]
         public void InitializeSpaceParameters()//GameParameters param)
         {
             _att.Map.InitializeMap();

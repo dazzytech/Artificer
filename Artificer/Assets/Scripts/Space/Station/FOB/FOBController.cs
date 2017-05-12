@@ -30,10 +30,10 @@ namespace Stations
         /// </summary>
         /// <param name="newID"></param>
         /// <param name="newTeam"></param>
-        public override void Initialize(int newID, NetworkInstanceId newTeam, bool ignore)
+        public override void Initialize(NetworkInstanceId newTeam, bool ignore)
         {
             // For now call the base class till actions are different
-            base.Initialize(newID, newTeam, true);
+            base.Initialize(newTeam, true);
         }
 
         #endregion

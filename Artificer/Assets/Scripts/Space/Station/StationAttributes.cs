@@ -36,7 +36,7 @@ namespace Stations
         #region IDENTFIER 
 
         [SyncVar]
-        public int ID;
+        public int SpawnID;
         
         public STATIONTYPE Type;
 

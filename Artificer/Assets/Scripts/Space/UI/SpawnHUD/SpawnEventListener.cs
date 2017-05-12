@@ -4,6 +4,7 @@ using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 
 using Networking;
+using UI;
 
 namespace Space.UI.Spawn
 {
@@ -20,29 +21,24 @@ namespace Space.UI.Spawn
 
         #endregion
 
-        #region MONO BEHAVIOUR
-
-        private void OnEnable()
-        {
-            ShipSelectItem.OnShipSelected += ShipSelected;
-        }
-
-        private void OnDisable()
-        {
-            ShipSelectItem.OnShipSelected -= ShipSelected;
-        }
-
-        #endregion
-
         #region EVENT LISTENER
 
         /// <summary>
         /// Called when ship icon is selected
         /// </summary>
         /// <param name="selected"></param>
-        public void ShipSelected(ShipSelectItem selected)
+        public void ShipSelected(SelectableHUDItem selected)
         {
-            m_con.SelectShip(selected);
+            m_con.SelectShip((ShipSelectItem)selected);
+        }
+
+        /// <summary>
+        /// Called when ship icon is selected
+        /// </summary>
+        /// <param name="selected"></param>
+        public void SpawnSelected(SelectableHUDItem selected)
+        {
+            m_con.SelectSpawn((SpawnSelectItem)selected);
         }
 
         /// <summary>
@@ -55,7 +51,7 @@ namespace Space.UI.Spawn
             SpawnSelectionMessage ssm = new SpawnSelectionMessage();
             ssm.PlayerID = SystemManager.Space.ID;
             ssm.ShipName = m_con.SelectedName;
-            ssm.SpawnID = 0;
+            ssm.SpawnID = m_con.SelectedSpawn;
 
             SystemManager.singleton.client.Send((short)MSGCHANNEL.SPAWNPLAYER, ssm);
         }

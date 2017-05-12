@@ -18,6 +18,9 @@ namespace Space.Teams.SpawnManagers
     {
         public List<Vector2> Spawns;
 
+        // Accessor for the origin point
+        public Transform SpawnOrigin;
+
         public SpawnPointInformation()
         {
             Spawns = new List<Vector2>();
@@ -53,6 +56,22 @@ namespace Space.Teams.SpawnManagers
 
             NetworkServer.Spawn(newStation);
 
+            // Retrieve behaviour for making changes
+            StationController stationCon =
+                newStation.GetComponent<StationController>();
+
+            // init with team object
+            stationCon.Initialize(netId);
+            
+            // if station is a type that we spawn then add to spawn list
+            if(stationCon.Type != STATIONTYPE.HOME)
+            {
+                // Set the station to non- spawning and return
+                stationCon.SpawnID = -1;
+                return newStation;
+            }
+
+            // add to spawn if correct type
             if (_spawns == null)
                 _spawns = new IndexedList<SpawnPointInformation>();
 
@@ -108,16 +127,14 @@ namespace Space.Teams.SpawnManagers
 
             _spawns.Add(sPInfo);
 
-            // Pass ID to station for later access
-            newStation.GetComponent<StationController>().Initialize
-                (sPInfo.ID, netId);
+            // Log our spawn info
+            stationCon.SpawnID = sPInfo.ID;
 
             return newStation;
         }
 
         #endregion
 
-        // Maybe combine regions?
         #region PLAYER SPAWNING
 
         /// <summary>
@@ -167,6 +184,8 @@ namespace Space.Teams.SpawnManagers
 
             return playerObject;
         }
+
+
 
         #endregion
     }

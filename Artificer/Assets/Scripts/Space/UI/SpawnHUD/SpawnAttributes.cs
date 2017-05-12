@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using UI;
+
 namespace Space.UI.Spawn
 {
     /// <summary>
@@ -30,6 +32,14 @@ namespace Space.UI.Spawn
 
         #endregion
 
+        #region SPAWN
+
+        public SpawnSelectItem SelectedSpawn;
+
+        public List<SpawnSelectItem> SpawnList;
+
+        #endregion
+
         #region HUD ELEMENTS
 
         [Header("HUD Elements")]
@@ -48,6 +58,8 @@ namespace Space.UI.Spawn
 
         [Header("Prefabs")]
         public GameObject ShipSelectPrefab;
+
+        public GameObject StationSelectPrefab;
 
         #endregion
     }
