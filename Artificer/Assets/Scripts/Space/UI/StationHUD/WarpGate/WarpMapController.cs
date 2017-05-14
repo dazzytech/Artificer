@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Space.Map;
+using Stations;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -10,12 +12,16 @@ namespace Space.UI.Station.Map
     /// 
     /// </summary>
     [RequireComponent(typeof(WarpMapAttributes))]
+    [RequireComponent(typeof(WarpMapEventListener))]
     public class WarpMapController : MonoBehaviour
     {
         #region ATTRIBUTES
 
         [SerializeField]
         private WarpMapAttributes m_att;
+
+        [SerializeField]
+        private WarpMapEventListener m_event;
 
         #endregion
 
@@ -27,11 +33,10 @@ namespace Space.UI.Station.Map
         /// <param name="warpList"></param>
         public void BuildMap(List<NetworkInstanceId> warpList)
         {
-            foreach (Transform child in m_att.WarpGateList)
-                GameObject.Destroy(child.gameObject);
+            m_att.Map.InitializeMap(new MapObjectType[] { MapObjectType.SHIP });
 
             // transfer network instances to transforms
-            m_att.NearbyWarpGates = new List<WarpGatePrefab>();
+            m_att.NearbyWarpGates = new List<SelectGateItem>();
 
             foreach(NetworkInstanceId netGate in warpList)
             {
@@ -40,28 +45,31 @@ namespace Space.UI.Station.Map
                 if (GO != null)
                 {
                     // change to Warp gate storage in future
-                    m_att.NearbyWarpGates.Add(BuildWarpGate(netGate));
+                    m_att.NearbyWarpGates.Add(BuildWarpGate(GO.transform));
                 }
                 else
                     Debug.Log("Error: WarpMapController - BuildMap: Warp Gate not found");
             }
 
+            m_att.WarpButton.interactable = false;
         }
 
         /// <summary>
         /// Set gate to selected and deselect all others
         /// </summary>
         /// <param name="gate"></param>
-        public void SelectGate(WarpGatePrefab gate)
+        public void SelectGate(SelectGateItem gate)
         {
             m_att.SelectedGate = gate;
 
-            foreach (WarpGatePrefab wgp
+            foreach (SelectGateItem wgp
                 in m_att.NearbyWarpGates)
                 if (!m_att.SelectedGate.Equals(wgp))
                     wgp.Deselect();
                 else
                     wgp.Select();
+
+            m_att.WarpButton.interactable = true;
         }
 
         public void WarpToGate()
@@ -69,9 +77,9 @@ namespace Space.UI.Station.Map
             if(m_att.SelectedGate == null)
                 return;
 
-            m_att.SelectedGate.WarpGate.WarpPlayer();
-
             SystemManager.Space.LeaveStation();
+
+            m_att.SelectedGate.WarpGate.WarpPlayer();
         }
 
         #endregion
@@ -82,15 +90,22 @@ namespace Space.UI.Station.Map
         /// Add Warp gate to list and map
         /// </summary>
         /// <param name="gate"></param>
-        private WarpGatePrefab BuildWarpGate(NetworkInstanceId gate)
+        private SelectGateItem BuildWarpGate(Transform gate)
         {
-            GameObject warpGateItem = Instantiate(m_att.WarpGatePrefab);
-            warpGateItem.transform.SetParent(m_att.WarpGateList);
+            GameObject warpGateObj= Instantiate(m_att.WarpGatePrefab);
 
             // init behaviour and return
-            WarpGatePrefab warpGateCon = 
-                warpGateItem.GetComponent<WarpGatePrefab>();
-            warpGateCon.InitializeWarpGate(gate);
+            SelectGateItem warpGateCon =
+                warpGateObj.GetComponent<SelectGateItem>();
+
+            warpGateCon.WarpGate = gate.gameObject.
+                GetComponent<WarpController>();
+
+            warpGateCon.Initialize(m_event.WarpSelected);
+
+            MapObject mObj = SystemManager.Space.GetMapObject(gate);
+            m_att.Map.DeployPrefab(mObj, warpGateObj);
+
             return warpGateCon;
         }
 

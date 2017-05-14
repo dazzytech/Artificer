@@ -1,18 +1,22 @@
-﻿using System.Collections;
+﻿using Space.Map;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Space.UI.Station.Map
 {
     public class WarpMapAttributes : MonoBehaviour
     {
-        public List<WarpGatePrefab> NearbyWarpGates;
+        public List<SelectGateItem> NearbyWarpGates;
 
-        public WarpGatePrefab SelectedGate;
+        public SelectGateItem SelectedGate;
 
-        #region HUD ELEMENTS
+        #region HUD ELEMENT
 
-        public Transform WarpGateList;
+        public Button WarpButton;
+             
+        public MapViewer Map;
 
         #endregion
 

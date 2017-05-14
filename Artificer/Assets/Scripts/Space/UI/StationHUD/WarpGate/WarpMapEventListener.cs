@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 
 namespace Space.UI.Station.Map
@@ -13,20 +14,6 @@ namespace Space.UI.Station.Map
 
         #endregion
 
-        #region MONO BEHAVIOUR
-
-        private void OnEnable()
-        {
-            WarpGatePrefab.OnWarpSelected += WarpSelected;
-        }
-
-        private void OnDisable()
-        {
-            WarpGatePrefab.OnWarpSelected -= WarpSelected;
-        }
-
-        #endregion
-
         #region EVENTS
 
         public void ExitStation()
@@ -34,9 +21,9 @@ namespace Space.UI.Station.Map
             SystemManager.Space.LeaveStation();
         }
 
-        private void WarpSelected(WarpGatePrefab warp)
+        public void WarpSelected(SelectableHUDItem warp)
         {
-            m_con.SelectGate(warp);
+            m_con.SelectGate((SelectGateItem)warp);
         }
 
         public void WarpToSelection()
