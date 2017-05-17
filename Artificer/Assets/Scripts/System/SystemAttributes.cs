@@ -43,7 +43,12 @@ public class SystemAttributes:MonoBehaviour
     public GameMessageHandler GameMsg;
 
     // Static client accessors
-    public UIMessegeHandler GUIMsg;
+    // ui
+    public UIMessegeHandler UI;
+    public UIStateController UIState;
+    public UIMessageController UIMsg;
+    public UIInputController UIInput;
+
     public SpaceManager Space;
     public ServerManager Server;
     public SystemNetworkDiscovery Discovery;

@@ -37,28 +37,9 @@ namespace Game
         [SerializeField]
         private GameAttributes _att;
 
-        private static GameManager m_singleton;
-
         #endregion
-
-        #region NETWORK BEHAVIOUR
-
-        #endregion
-
 
         #region PUBLIC INTERACTION
-
-        public bool Build()
-        {
-            if (m_singleton == null)
-                m_singleton = this;
-            else
-            {
-                return false;
-            }
-
-            return true;
-        }
 
         #region SYSTEM MESSAGES
 

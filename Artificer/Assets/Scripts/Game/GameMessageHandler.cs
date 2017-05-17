@@ -27,19 +27,20 @@ namespace Game
         [SerializeField]
         private GameServerEvents m_event;
 
+        private static GameMessageHandler m_singleton;
+
         #endregion
 
         #region MONO BEHAVIOUR
 
         void Awake()
         {
-            if (isServer)
+            if (m_singleton == null)
+                m_singleton = this;
+            else
             {
-                if (!m_con.Build())
-                {
-                    Destroy(gameObject);
-                    return;
-                }
+                Destroy(gameObject);
+                return;
             }
 
             DontDestroyOnLoad(this);

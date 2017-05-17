@@ -76,11 +76,12 @@ namespace Space
         {
             if(!_pauseDelay)
             {
-                Time.timeScale = _isPaused?1:0;
                 _isPaused = !_isPaused;
 
-                GameObject.Find("_gui").
-                    SendMessage("SetState", _isPaused? UIState.Pause: UIState.Play);
+                if (_isPaused)
+                    SystemManager.UIState.SetState(UIState.Pause);
+                else
+                    SystemManager.UIState.RevertState();
 
                 if(keyed)
                 {
@@ -90,17 +91,24 @@ namespace Space
             }
         }
 
+        public void Map(bool keyed)
+        {
+
+        }
+
         public void Stop()
         {
-            Time.timeScale = 0;
-                
-            GameObject.Find("_gui").
-                SendMessage("SetState", UIState.Popup);
+            SystemManager.UIState.SetState(UIState.Popup);
         }
 
         public void PauseRelease()
         {
             _pauseDelay = false;
+        }
+
+        public void MapRelease()
+        {
+
         }
 
         #endregion

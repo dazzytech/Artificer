@@ -55,7 +55,7 @@ namespace Space.Ship
             foreach (MaterialData mat in data.Keys)
             {
                 // Set to popup gui
-                SystemManager.GUI.DisplayMessege(new MsgParam("small", "You have collected: " +
+                SystemManager.UIMsg.DisplayMessege(new MsgParam("small", "You have collected: " +
                     (data[mat]).ToString("F2")
                        + " - " + mat.Element));
             }

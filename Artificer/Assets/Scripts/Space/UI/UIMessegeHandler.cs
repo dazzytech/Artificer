@@ -11,11 +11,13 @@ using Space.Teams;
 using System.Collections.Generic;
 using System;
 using Space.Ship.Components.Listener;
+using Space.UI.Station.Map;
+using Space.UI.Station;
+using Space.UI.Spawn;
+using Space.UI.Teams;
 
 namespace Space.UI
 {
-    public enum UIState {Play, Pause, Popup, TeamPicker, SpawnPicker, Station}
-
     /// <summary>
     /// Redirects incoming messages
     /// from non-UI elements as well was server messages
@@ -24,121 +26,40 @@ namespace Space.UI
     {
         #region ATTRIBUTES
 
-        [Header("HUD Rects")]
+        #region UI BEHAVIOURS
+
+        [Header("UI Behaviours")]
 
         [SerializeField]
-        private GameObject m_playRect;
+        private TeamSelectController m_team;
 
         [SerializeField]
-        private GameObject m_pauseRect;
+        private SpawnController m_spawn;
 
         [SerializeField]
-        private GameObject m_popupRect;
+        private StationMessageHandler m_stationMsg;
+
+        #region PLAYHUD BEHAVIOUR
+
+        [Header("PLAYHUD Behaviours")]
 
         [SerializeField]
-        private GameObject m_teamSelectRect;
+        private PlayHUD m_play;
 
         [SerializeField]
-        private GameObject m_spawnPickerRect;
+        private BuildHUD m_build;
 
         [SerializeField]
-        private GameObject m_stationRect;
-
-        private bool m_keyDelay = false;
-
-        [Header("HUD Additions")]
+        private IndicatorHUD m_indicator;
 
         [SerializeField]
-        private MessageHUD m_messageHUD;
-
-        [Header("Message Docks")]
-
-        [SerializeField]
-        private Transform m_playDock;
-
-        [SerializeField]
-        private Transform m_pauseDock;
-
-        [SerializeField]
-        private Transform m_spawnDock;
-
-        [SerializeField]
-        private Transform m_stationDock;
+        private TrackerHUD m_tracker;
 
         #endregion
 
-        #region STATE MANAGEMENT
-
-        /// <summary>
-        /// Called externally to change the UIState when the game state changes
-        /// </summary>
-        /// <param name="state"></param>
-        public void SetState(UIState state)
-        {
-            switch (state)
-            {
-                case UIState.Pause:
-                    m_pauseRect.SetActive(true);
-                    m_playRect.SetActive(false);
-                    m_popupRect.SetActive(false);
-                    m_teamSelectRect.SetActive(false);
-                    m_spawnPickerRect.SetActive(false);
-                    m_messageHUD.gameObject.SetActive(true);
-                    m_messageHUD.transform.SetParent(m_pauseDock, false);
-                    m_stationRect.SetActive(false);
-                    break;
-                case UIState.Play:
-                    m_pauseRect.SetActive(false);
-                    m_playRect.SetActive(true);
-                    m_popupRect.SetActive(false);
-                    m_teamSelectRect.SetActive(false);
-                    m_spawnPickerRect.SetActive(false);
-                    m_messageHUD.gameObject.SetActive(true);
-                    m_messageHUD.transform.SetParent(m_playDock, false);
-                    m_stationRect.SetActive(false);
-                    break;
-                case UIState.Popup:
-                    m_pauseRect.SetActive(false);
-                    m_playRect.SetActive(false);
-                    m_popupRect.SetActive(true);
-                    m_teamSelectRect.SetActive(false);
-                    m_spawnPickerRect.SetActive(false);
-                    m_messageHUD.gameObject.SetActive(false);
-                    m_stationRect.SetActive(false);
-                    break;
-                case UIState.TeamPicker:
-                    m_pauseRect.SetActive(false);
-                    m_playRect.SetActive(false);
-                    m_popupRect.SetActive(false);
-                    m_teamSelectRect.SetActive(true);
-                    m_spawnPickerRect.SetActive(false);
-                    m_messageHUD.gameObject.SetActive(false);
-                    m_stationRect.SetActive(false);
-                    break;
-                case UIState.SpawnPicker:
-                    m_pauseRect.SetActive(false);
-                    m_playRect.SetActive(false);
-                    m_popupRect.SetActive(false);
-                    m_teamSelectRect.SetActive(false);
-                    m_spawnPickerRect.SetActive(true);
-                    m_messageHUD.gameObject.SetActive(true);
-                    m_messageHUD.transform.SetParent(m_spawnDock, false);
-                    m_stationRect.SetActive(false);
-                    break;
-                case UIState.Station:
-                    m_pauseRect.SetActive(false);
-                    m_playRect.SetActive(false);
-                    m_popupRect.SetActive(false);
-                    m_teamSelectRect.SetActive(false);
-                    m_spawnPickerRect.SetActive(false);
-                    m_messageHUD.gameObject.SetActive(true);
-                    m_messageHUD.transform.SetParent(m_stationDock, false);
-                    m_stationRect.SetActive(true);
-                    break;
-            }
-        }
-
         #endregion
+
+        #endregion  
 
         #region PLAYRECT UI MESSAGES
 
@@ -148,40 +69,7 @@ namespace Space.UI
         /// </summary>
         public void BuildShipData()
         {
-            m_playRect.GetComponent<PlayHUD>().
-                BuildShipData();
-        }
-
-        /// <summary>
-        /// Redraw the HUD
-        /// </summary>
-        public void RebuildGUI()
-        {
-            m_playRect.SendMessage("RebuildGUI");
-        }
-
-        /// <summary>
-        /// Sends message to the UI text towards the 
-        /// bottom of the screen
-        /// </summary>
-        /// <param name="message"></param>
-        public void DisplayPrompt(string message)
-        {
-            if (m_messageHUD.gameObject.activeSelf)
-            {
-                m_messageHUD.DisplayPrompt(message);
-            }
-        }
-
-        /// <summary>
-        /// Clears the text at the bottom of the screen
-        /// </summary>
-        public void ClearPrompt()
-        {
-            if (m_messageHUD.gameObject.activeSelf)
-            {
-                m_messageHUD.HidePrompt();
-            }
+            m_play.BuildShipData();
         }
 
         /// <summary>
@@ -191,15 +79,19 @@ namespace Space.UI
         /// <param name="piece"></param>
         public void AddUIPiece(Transform piece)
         {
-            m_playRect.GetComponent<TrackerHUD>().
-                AddUIPiece(piece);
+            m_tracker.AddUIPiece(piece);
         }
 
+        /// <summary>
+        /// Creates a popup text displaying
+        /// damage taken by collider
+        /// </summary>
+        /// <param name="postion"></param>
+        /// <param name="amount"></param>
         public void DisplayIntegrityChange
             (Vector2 postion, float amount)
         {
-            m_playRect.GetComponent<IndicatorHUD>()
-                .IndicateIntegrity(postion, amount);
+            m_indicator.IndicateIntegrity(postion, amount);
         }
 
         /// <summary>
@@ -211,11 +103,8 @@ namespace Space.UI
         public void DisplayBuildWheel(Deploy deployFunction, 
             List<string> options)
         {
-            m_playRect.GetComponent<BuildHUD>().
-                InitializeHUD(deployFunction, options);
+            m_build.InitializeHUD(deployFunction, options);
         }
-
-        #endregion
 
         #region PLAYRECT RPC
 
@@ -235,37 +124,10 @@ namespace Space.UI
 
         #endregion
 
-        #region POPUP UI MESSAGES
-
-        /// <summary>
-        /// Sets the value for the ship spawn counter 
-        /// and triggers the countdown
-        /// </summary>
-        /// <param name="val"></param>
-        public void SetCounter(float val)
-        {
-            m_popupRect.SendMessage("SetShipRespawnCounter", val);
-        }
-
-        /// <summary>
-        /// Displays endgame display with boolean that
-        /// states if win
-        /// </summary>
-        /// <param name="val"></param>
-        public void EndGame(bool val)
-        {
-            m_popupRect.SendMessage("EndGame", val);
-        }
-
-        /*public void UpdateReward(object val)
-        {
-            PopupRect.SendMessage("UpdateReward", val);
-        }*/
-
         #endregion
 
         #region TEAM PICKER MESSAGES
-            
+
         /// <summary>
         /// Sets the team picker rect to show 
         /// which team objects can be chosen
@@ -274,8 +136,7 @@ namespace Space.UI
         /// <param name="teamB"></param>
         public void SetTeamOptions(int teamA, int teamB)
         {
-            m_teamSelectRect.SendMessage("SetTeams", 
-                new int[2] { teamA, teamB });
+            m_team.SetTeams(new int[2] { teamA, teamB });
         }
 
         #endregion
@@ -288,39 +149,7 @@ namespace Space.UI
         /// <param name="delay"></param>
         public void SetSpawnDelay(int delay)
         {
-            m_spawnPickerRect.SendMessage("SetSpawnTimer", delay);
-        }
-
-        #endregion
-
-        #region INTERACTIVE
-
-        /// <summary>
-        /// Sets the HUD visible or not if on playHUD
-        /// </summary>
-        public void ToggleHUD()
-        {
-            if (!m_keyDelay && !m_popupRect.activeSelf)
-            {
-                m_playRect.SetActive(!m_playRect.activeSelf);
-                m_keyDelay = true;
-                Invoke("PauseRelease", 0.3f);
-            }
-        }
-
-        /// <summary>
-        /// The player can set the mission HUD visible and invisible alone
-        /// due to its size
-        /// </summary>
-        public void ToggleStationHUD()
-        {
-            if(!m_popupRect.activeSelf && m_playRect.activeSelf)
-                m_playRect.SendMessage("HidePanel", "station");
-        }
-
-        public void PauseRelease()
-        {
-            m_keyDelay = false;
+            m_spawn.EnableSpawn(delay);
         }
 
         #endregion
@@ -332,9 +161,11 @@ namespace Space.UI
         /// the warp map portion of the Station HUD
         /// </summary>
         public void InitializeWarpMap
-            (List<NetworkInstanceId> surroundingWarpGates)
+            (List<NetworkInstanceId> surroundingWarpGates,
+            Transform homeGate)
         {
-            m_stationRect.SendMessage("InitializeWarpMap", surroundingWarpGates);
+            m_stationMsg.InitializeWarpMap
+                (surroundingWarpGates, homeGate);
         }
 
         /// <summary>
@@ -344,19 +175,9 @@ namespace Space.UI
         /// <param name="ship"></param>
         public void InitializeStationHUD(ShipAttributes ship)
         {
-            m_stationRect.SendMessage("InitializeShipViewer", ship);
+            m_stationMsg.InitializeShipViewer(ship);
         }
 
         #endregion
-
-        /// <summary>
-        /// Updates the chat window with a message
-        /// sent within a MsgParam
-        /// </summary>
-        /// <param name="param"></param>
-        public void DisplayMessege(MsgParam param)
-        {
-            m_messageHUD.DisplayMessege(param);
-        }
     }
 }

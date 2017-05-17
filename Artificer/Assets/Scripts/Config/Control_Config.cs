@@ -91,7 +91,7 @@ public class Control_Config: MonoBehaviour
         m_data.SystemControls.Add("zoomIn", KeyCode.Plus);
         m_data.SystemControls.Add("zoomOut", KeyCode.Minus);
         m_data.SystemControls.Add("dock", KeyCode.Return);
-        m_data.SystemControls.Add("toggle objectives", KeyCode.O);
+        m_data.SystemControls.Add("toggle map", KeyCode.M);
         m_data.SystemControls.Add("toggle hud", KeyCode.H);
         Save();
     }

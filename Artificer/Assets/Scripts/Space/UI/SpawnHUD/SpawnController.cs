@@ -50,17 +50,6 @@ namespace Space.UI.Spawn
 
         #region MONO BEHAVIOUR
 
-        private void OnEnable()
-        {
-            // disable Spawn UI Elements
-            m_att.SpawnButton.interactable = false;
-        }
-
-        private void OnDisable()
-        {
-            StopAllCoroutines();
-        }
-
         private void Awake()
         {
             // This code should only be called once
@@ -82,8 +71,7 @@ namespace Space.UI.Spawn
         public void EnableSpawn(int delay)
         {
             m_att.SpawnDelay = delay;
-
-            StartCoroutine("DelaySpawn");
+            InvokeRepeating("DelaySpawn", 1f, 1f);
         }
 
         /// <summary>
@@ -206,27 +194,29 @@ namespace Space.UI.Spawn
         /// and update timer
         /// </summary>
         /// <returns></returns>
-        private IEnumerator DelaySpawn()
+        private void DelaySpawn()
         {
-            int seconds = 0;
-            while(seconds <= m_att.SpawnDelay)
+            if (m_att.SpawnDelay > 0)
             {
                 m_att.SpawnDelayText.text = string.Format
                     ("Ready to spawn in: {0:D2} sec.",
-                    m_att.SpawnDelay - seconds);
+                    m_att.SpawnDelay);
 
-                seconds++;
+                if (m_att.SpawnButton.interactable)
+                    m_att.SpawnButton.interactable = false;
 
-                yield return new WaitForSeconds(1f);
+                m_att.SpawnDelay--;
             }
+            else
+            {
+                // Delay finished, enable spawn
+                m_att.SpawnDelayText.text = "Ready to spawn.";
 
-            // Delay finished, enable spawn
-            m_att.SpawnDelayText.text = "Ready to spawn.";
+                if (!m_att.SpawnButton.interactable)
+                    m_att.SpawnButton.interactable = true;
 
-            if (!m_att.SpawnButton.interactable)
-                m_att.SpawnButton.interactable = true;
-
-            yield break;
+                CancelInvoke("DelaySpawn");
+            }
         }
 
         #endregion

@@ -52,15 +52,6 @@ namespace Game
             {
                 m_att.TeamB.RemovePlayerObject(destroyed.Self);
             }
-
-            /*foreach (MissionData mission in PrimaryTracker)
-                {
-                    mission.AddShipKilled(destroyed);
-                }
-                foreach (MissionData mission in SecondaryTracker)
-                {
-                    mission.AddShipKilled(destroyed);
-                }*/
         }
 
         public void ProcessStationDestroyed(DestroyDespatch destroyed)

@@ -24,6 +24,8 @@ namespace Space.UI.Station.Map
 
         public GameObject WarpGatePrefab;
 
+        public GameObject HomeGatePrefab;
+
         #endregion
     }
 }

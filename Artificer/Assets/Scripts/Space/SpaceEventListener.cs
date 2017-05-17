@@ -91,7 +91,7 @@ namespace Space
 
         public override void OnStartClient()
         {
-            SystemManager.GUI.DisplayMessege(new MsgParam("bold", "Connected to Server Match."));
+            SystemManager.UIMsg.DisplayMessege(new MsgParam("bold", "Connected to Server Match."));
         }
 
         #endregion
@@ -129,9 +129,10 @@ namespace Space
                 {
                     GameObject.Find("_gui").SendMessage("ToggleHUD");
                 }
-                if (key == Control_Config.GetKey("toggle objectives", "sys"))
+                if (key == Control_Config.GetKey("toggle map", "sys"))
                 {
-                    GameObject.Find("_gui").SendMessage("ToggleMissionHUD");
+                    // show and hide map
+                    m_util.Map(true);
                 }
                 if (key == Control_Config.GetKey("dock", "sys"))
                 {
@@ -145,6 +146,10 @@ namespace Space
             if (key == Control_Config.GetKey("pause", "sys"))
             {
                 m_util.PauseRelease();
+            }
+            if (key == Control_Config.GetKey("toggle map", "sys"))
+            {
+                m_util.MapRelease();
             }
         }
 
@@ -176,10 +181,10 @@ namespace Space
             m_att.netID = 0;
 
             // Prompt player to pick a spawn
-            SystemManager.GUI.SetState(UIState.SpawnPicker);
+            SystemManager.UIState.SetState(UIState.SpawnPicker);
 
             // For now each spawn is 10 seconds
-            SystemManager.GUI.SetSpawnDelay(10);
+            SystemManager.UI.SetSpawnDelay(10);
 
             SystemManager.Background.StopBackground();
         }
@@ -201,9 +206,9 @@ namespace Space
             }
 
             // Set to popup gui
-            SystemManager.GUI.SetState(UIState.Play);
+            SystemManager.UIState.SetState(UIState.Play);
 
-            SystemManager.GUI.BuildShipData();
+            SystemManager.UI.BuildShipData();
 
             SystemManager.Background.StartBackground();
         }
@@ -220,9 +225,9 @@ namespace Space
             m_att.station = controller;
 
             if(m_att.station.Type == STATIONTYPE.WARP)
-                SystemManager.GUI.DisplayPrompt("Press Enter to enter Warp Map");
+                SystemManager.UIMsg.DisplayPrompt("Press Enter to enter Warp Map");
             else
-                SystemManager.GUI.DisplayPrompt("Press Enter to dock at station");
+                SystemManager.UIMsg.DisplayPrompt("Press Enter to dock at station");
         }
 
         /// <summary>
@@ -235,7 +240,7 @@ namespace Space
 
             m_att.station = null;
 
-            SystemManager.GUI.ClearPrompt();
+            SystemManager.UIMsg.ClearPrompt();
 
             if (m_att.docked)
                 SystemManager.Space.LeaveStation();
@@ -345,11 +350,11 @@ namespace Space
         public void OnTeamPickerMessage(NetworkMessage netMsg)
         {
             // Set to popup gui
-            SystemManager.GUI.SetState(UIState.TeamPicker);
+            SystemManager.UIState.SetState(UIState.TeamPicker);
 
             // Retreive variables and display options
             TeamPickerMessage tpm = netMsg.ReadMessage<TeamPickerMessage>();
-            SystemManager.GUI.SetTeamOptions(tpm.teamOne, tpm.teamTwo);
+            SystemManager.UI.SetTeamOptions(tpm.teamOne, tpm.teamTwo);
         }
 
         public void OnDefineTeam(NetworkMessage netMsg)
@@ -423,7 +428,7 @@ namespace Space
                 msg.ReadMessage<IntegrityChangedMsg>();
 
             // Display message
-            SystemManager.GUI.DisplayIntegrityChange
+            SystemManager.UI.DisplayIntegrityChange
                     (chgMsg.Location, chgMsg.Amount);
         }
 

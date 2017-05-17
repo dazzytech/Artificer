@@ -30,7 +30,13 @@ namespace Menu
 
         public void OnPointerExit(PointerEventData data)
         {
-            if(!m_listener.Selected.Equals(this) || m_listener.Selected == null)
+            if (m_listener.Selected == null)
+            {
+                GetComponent<Image>().color = new Color(0, 0, 0);
+                return;
+            }
+
+            if(!m_listener.Selected.Equals(this))
                 GetComponent<Image>().color = new Color(0, 0, 0);
             else
                 GetComponent<Image>().color = new Color(.8f, .2f, .2f, .5f);

@@ -31,9 +31,16 @@ namespace Space.UI.Station.Map
         /// populates the warp HUD with maps
         /// </summary>
         /// <param name="warpList"></param>
-        public void BuildMap(List<NetworkInstanceId> warpList)
+        public void BuildMap(List<NetworkInstanceId> warpList, Transform homeGate)
         {
             m_att.Map.InitializeMap(new MapObjectType[] { MapObjectType.SHIP });
+
+            // build gate we currently reside at
+            GameObject hGate = Instantiate(m_att.HomeGatePrefab);
+
+            // Deploy it
+            m_att.Map.DeployPrefab(
+                SystemManager.Space.GetMapObject(homeGate), hGate);
 
             // transfer network instances to transforms
             m_att.NearbyWarpGates = new List<SelectGateItem>();

@@ -39,7 +39,7 @@ namespace Space.UI.Station
             m_shipViewer.InitializeHUD(ship);
         }
 
-        public void InitializeWarpMap(List<NetworkInstanceId> warpList)
+        public void InitializeWarpMap(List<NetworkInstanceId> warpList, Transform home)
         {
             if (!m_warpMap.gameObject.activeSelf)
                 m_warpMap.gameObject.SetActive(true);
@@ -47,7 +47,7 @@ namespace Space.UI.Station
             if (m_shipViewer.gameObject.activeSelf)
                 m_shipViewer.gameObject.SetActive(false);
 
-            m_warpMap.BuildMap(warpList);
+            m_warpMap.BuildMap(warpList, home);
         }
 
         #endregion

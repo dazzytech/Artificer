@@ -63,15 +63,51 @@ public class SystemManager : NATTraversal.NetworkManager
         }
     }
 
-    public static UIMessegeHandler GUI
+    public static UIMessegeHandler UI
     {
         get
         {
             // Add new spawned ship to 
-            if (m_singleton.m_base.GUIMsg == null)
-                m_singleton.m_base.GUIMsg = GameObject.Find("_gui").GetComponent<UIMessegeHandler>();
+            if (m_singleton.m_base.UI == null)
+                m_singleton.m_base.UI = GameObject.Find("_gui").GetComponent<UIMessegeHandler>();
 
-            return m_singleton.m_base.GUIMsg;
+            return m_singleton.m_base.UI;
+        }
+    }
+
+    public static UIStateController UIState
+    {
+        get
+        {
+            // Add new spawned ship to 
+            if (m_singleton.m_base.UIState == null)
+                m_singleton.m_base.UIState = GameObject.Find("_gui").GetComponent<UIStateController>();
+
+            return m_singleton.m_base.UIState;
+        }
+    }
+
+    public static UIMessageController UIMsg
+    {
+        get
+        {
+            // Add new spawned ship to 
+            if (m_singleton.m_base.UIMsg == null)
+                m_singleton.m_base.UIMsg = GameObject.Find("_gui").GetComponent<UIMessageController>();
+
+            return m_singleton.m_base.UIMsg;
+        }
+    }
+
+    public static UIInputController UIInput
+    {
+        get
+        {
+            // Add new spawned ship to 
+            if (m_singleton.m_base.UIInput == null)
+                m_singleton.m_base.UIInput = GameObject.Find("_gui").GetComponent<UIInputController>();
+
+            return m_singleton.m_base.UIInput;
         }
     }
 

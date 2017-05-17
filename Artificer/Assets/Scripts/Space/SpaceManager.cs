@@ -98,23 +98,6 @@ namespace Space
 
         #endregion
 
-        #region NETWORK BEHAVIOUR
-
-        /// <summary>
-        /// Runs an event to add the player ship to the 
-        /// scene when local player starts.
-        /// </summary>
-        public override void OnStartLocalPlayer()
-        {
-            // Enter space segment
-            SystemManager.GUI.DisplayMessege(new MsgParam("bold",
-                                                   "Entering space segment"));
-
-            base.OnStartLocalPlayer();
-        }
-
-        #endregion
-
         #region MONO BEHAVIOUR
 
         void Awake()
@@ -303,14 +286,14 @@ namespace Space
 
             // Next is to update the HUD to display the
             // micro stationHUD
-            SystemManager.GUI.SetState(UIState.Station);
+            SystemManager.UIState.SetState(UIState.Station);
 
             // WARP FUNCTION
             if (_att.station.Type == Stations.STATIONTYPE.WARP)
             {
                 // call warp map HUD
-                SystemManager.GUI.InitializeWarpMap(
-                    ((WarpController)_att.station).Nearby);
+                SystemManager.UI.InitializeWarpMap(
+                    ((WarpController)_att.station).Nearby, _att.station.transform);
             }
             else
             {
@@ -322,7 +305,7 @@ namespace Space
                 ShipAttributes shipAtt = PlayerObj.GetComponent<ShipAttributes>();
 
                 // Add message for sending ship attributes
-                SystemManager.GUI.InitializeStationHUD(shipAtt);
+                SystemManager.UI.InitializeStationHUD(shipAtt);
             }
         }
 
@@ -352,7 +335,7 @@ namespace Space
 
             // Next is to update the HUD to display the
             // micro stationHUD
-            SystemManager.GUI.SetState(UIState.Play);
+            SystemManager.UIState.SetState(UIState.Play);
         }
 
         #endregion

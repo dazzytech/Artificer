@@ -51,7 +51,7 @@ namespace Space.Ship
                 SetUpPlayer();
                 // Add this item to local UI list
                 // p.s should be performed on each client without cmd
-                SystemManager.GUI.AddUIPiece(transform);
+                SystemManager.UI.AddUIPiece(transform);
             }
         }
 
@@ -92,7 +92,7 @@ namespace Space.Ship
             Ship = Serializer.ByteSerializer.fromBytes(shipInfo);
             RpcSpawnMe(shipInfo);
 
-            SystemManager.GUI.RpcAddRemotePlayer(netId);
+            SystemManager.UI.RpcAddRemotePlayer(netId);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Space.Ship
         [Command]
         private void CmdUpdateHUD()
         {
-            SystemManager.GUI.RpcAddRemotePlayer(netId);
+            SystemManager.UI.RpcAddRemotePlayer(netId);
             RpcFinishCreate();
         }
 

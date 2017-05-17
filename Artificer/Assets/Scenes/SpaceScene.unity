@@ -628,6 +628,8 @@ MonoBehaviour:
   Map: {fileID: 1270586524}
   WarpGatePrefab: {fileID: 1349983111700190, guid: 60151f7d8042a3a4896fe5916a591a73,
     type: 2}
+  HomeGatePrefab: {fileID: 1741283899514100, guid: dc9f6cebd5690f04fa98c616dabc3c20,
+    type: 2}
 --- !u!114 &43940454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6147,7 +6149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f9b34cbc4da88c4d9581226f2fbe535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_controller: {fileID: 0}
+  m_controller: {fileID: 551692662}
   Selected: {fileID: 0}
 --- !u!114 &551692661
 MonoBehaviour:
@@ -19559,6 +19561,9 @@ GameObject:
   - component: {fileID: 1653808578}
   - component: {fileID: 1653808576}
   - component: {fileID: 1653808579}
+  - component: {fileID: 1653808581}
+  - component: {fileID: 1653808583}
+  - component: {fileID: 1653808582}
   - component: {fileID: 1653808580}
   - component: {fileID: 1653808577}
   m_Layer: 5
@@ -19661,17 +19666,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e7b6d0ae4ff7fc4fb8cb40411ae6f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playRect: {fileID: 766316681}
-  m_pauseRect: {fileID: 163248338}
-  m_popupRect: {fileID: 1559320749}
-  m_teamSelectRect: {fileID: 1933346439}
-  m_spawnPickerRect: {fileID: 1378598535}
-  m_stationRect: {fileID: 1874999454}
-  m_messageHUD: {fileID: 873041642}
-  m_playDock: {fileID: 1137989019}
-  m_pauseDock: {fileID: 1451758692}
-  m_spawnDock: {fileID: 520500436}
-  m_stationDock: {fileID: 1649825559}
+  m_team: {fileID: 1933346443}
+  m_spawn: {fileID: 1378598541}
+  m_stationMsg: {fileID: 1874999458}
+  m_play: {fileID: 766316689}
+  m_build: {fileID: 766316694}
+  m_indicator: {fileID: 766316693}
+  m_tracker: {fileID: 766316688}
 --- !u!114 &1653808580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19704,6 +19705,52 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &1653808581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1653808574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33a0ff5c936a31e4b805fcae57e6b98e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_msg: {fileID: 1653808582}
+  m_playRect: {fileID: 766316681}
+  m_pauseRect: {fileID: 163248338}
+  m_popupRect: {fileID: 1559320749}
+  m_teamSelectRect: {fileID: 1933346439}
+  m_spawnPickerRect: {fileID: 1378598535}
+  m_stationRect: {fileID: 1874999454}
+--- !u!114 &1653808582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1653808574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95c8098f7652814468ed45987ab124ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_messageHUD: {fileID: 873041642}
+  m_playDock: {fileID: 1137989019}
+  m_pauseDock: {fileID: 1451758692}
+  m_spawnDock: {fileID: 520500436}
+  m_stationDock: {fileID: 1649825559}
+--- !u!114 &1653808583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1653808574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d99d40c4c55e21f4a8be4db3e1098b91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_play: {fileID: 766316689}
 --- !u!1001 &1658477784
 Prefab:
   m_ObjectHideFlags: 0
@@ -21867,6 +21914,10 @@ Prefab:
     - target: {fileID: 11416028, guid: d46540b9ca90f2f41bcf9142e364e53b, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11416028, guid: d46540b9ca90f2f41bcf9142e364e53b, type: 2}
+      propertyPath: m_Interactable
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d46540b9ca90f2f41bcf9142e364e53b, type: 2}

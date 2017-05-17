@@ -56,16 +56,6 @@ namespace Space.UI.Spawn
             SystemManager.singleton.client.Send((short)MSGCHANNEL.SPAWNPLAYER, ssm);
         }
 
-        /// <summary>
-        /// Set the controller countdown and enable spawn button
-        /// </summary>
-        /// <param name="delay"></param>
-        public void SetSpawnTimer(int delay)
-        {
-            if (m_con != null)
-                m_con.EnableSpawn(delay);
-        }
-
         #endregion
     }
 }

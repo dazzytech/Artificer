@@ -46,7 +46,7 @@ namespace Space.Ship.Components.Listener
                 return;
 
             // Display info on this component to wheel
-            SystemManager.GUI.DisplayBuildWheel(DeployStation,
+            SystemManager.UI.DisplayBuildWheel(DeployStation,
                 m_att.SpawnableStations);
         }
 
@@ -70,8 +70,8 @@ namespace Space.Ship.Components.Listener
 
             if (!SystemManager.Space.CanBuild && !stationName.Contains("FOB"))
             {
-                SystemManager.GUI.DisplayPrompt("Not in build out of range of FOB or Home Base");
-                SystemManager.GUI.Invoke("ClearPrompt", 3f);
+                SystemManager.UIMsg.DisplayPrompt("Not in build out of range of FOB or Home Base");
+                SystemManager.UI.Invoke("ClearPrompt", 3f);
                 return;
             }
 
