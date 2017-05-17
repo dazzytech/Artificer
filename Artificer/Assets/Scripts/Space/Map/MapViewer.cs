@@ -67,7 +67,10 @@ namespace Space.Map
             MapController.OnMapUpdate -= OnIconChanged;
 
             StopCoroutine("BuildIcons");
+        }
 
+        private void OnDestroy()
+        {
             ClearIcons();
         }
 
@@ -76,7 +79,6 @@ namespace Space.Map
             if (m_running)
             {
                 MapController.OnMapUpdate += OnIconChanged;
-                StartCoroutine("BuildIcons");
             }
         }
 

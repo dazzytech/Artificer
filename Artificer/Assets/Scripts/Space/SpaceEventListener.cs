@@ -52,7 +52,7 @@ namespace Space
 
         void Start()
         {
-            m_util.Init();
+            m_util.Initialize();
         }
 
         void OnEnable()
@@ -106,7 +106,7 @@ namespace Space
         private void PlayerSystemInput(KeyCode key)
         {
             // only interact if not docked
-            if (m_att.docked)
+            if (m_att.docked || key == KeyCode.None)
                 return;
 
             if (key == Control_Config.GetKey("pause", "sys"))
@@ -114,7 +114,8 @@ namespace Space
                 m_util.Pause(true);
             }
 
-            if (Time.timeScale == 1f)
+            if (SystemManager.UIState.Current == UIState.Play ||
+                SystemManager.UIState.Current == UIState.Map)
             {
                 if (key == Control_Config.GetKey("zoomOut", "sys"))
                 {

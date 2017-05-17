@@ -14,8 +14,12 @@ namespace Space
         #region ATTRIBUTES
 
         // pause vars
-        private bool _isPaused = false;
-        private bool _pauseDelay = false;
+        private bool m_isPaused = false;
+        private bool m_pauseDelay = false;
+
+        // map vars
+        private bool m_viewingMap = false;
+        private bool m_mapDelay;
 
         #endregion
 
@@ -24,21 +28,13 @@ namespace Space
         /// <summary>
         /// Sets default values
         /// </summary>
-        public void Init()
+        public void Initialize()
         {
-            Time.timeScale = 1f;
-            _isPaused = false;
-            _pauseDelay = false;
-        }
+            m_isPaused = false;
+            m_pauseDelay = false;
 
-        #endregion
-
-        #region MONOBEHAVIOUR
-
-        // restore time when exiting
-        void OnDestroy()
-        {
-            Time.timeScale = 1f;
+            m_mapDelay = false;
+            m_pauseDelay = false;
         }
 
         #endregion
@@ -74,11 +70,11 @@ namespace Space
 
         public void Pause(bool keyed)
         {
-            if(!_pauseDelay)
+            if(!m_pauseDelay)
             {
-                _isPaused = !_isPaused;
+                m_isPaused = !m_isPaused;
 
-                if (_isPaused)
+                if (m_isPaused)
                     SystemManager.UIState.SetState(UIState.Pause);
                 else
                     SystemManager.UIState.RevertState();
@@ -86,14 +82,28 @@ namespace Space
                 if(keyed)
                 {
                     // stop the ability to pause until key is released
-                    _pauseDelay = true;
+                    m_pauseDelay = true;
                 }
             }
         }
 
         public void Map(bool keyed)
         {
+            if (!m_mapDelay)
+            {
+                m_viewingMap = !m_viewingMap;
 
+                if (m_viewingMap)
+                    SystemManager.UIState.SetState(UIState.Map);
+                else
+                    SystemManager.UIState.RevertState();
+
+                if (keyed)
+                {
+                    // stop the ability to pause until key is released
+                    m_mapDelay = true;
+                }
+            }
         }
 
         public void Stop()
@@ -103,12 +113,12 @@ namespace Space
 
         public void PauseRelease()
         {
-            _pauseDelay = false;
+            m_pauseDelay = false;
         }
 
         public void MapRelease()
         {
-
+            m_mapDelay = false;
         }
 
         #endregion

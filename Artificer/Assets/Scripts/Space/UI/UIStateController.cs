@@ -39,6 +39,9 @@ namespace Space.UI
         [SerializeField]
         private GameObject m_stationRect;
 
+        [SerializeField]
+        private GameObject m_mapRect;
+
         #endregion
 
         #region STATE CONTROL
@@ -50,6 +53,18 @@ namespace Space.UI
         private UIState m_previousState;
 
         #endregion
+
+        #endregion
+
+        #region ACCESSORS
+
+        public UIState Current
+        {
+            get
+            {
+                return m_currentState;
+            }
+        }
 
         #endregion
 
@@ -74,55 +89,30 @@ namespace Space.UI
             // update reliant windows
             m_msg.SetState(state);
 
+            ClearRects();
+
             switch (state)
             {
                 case UIState.Pause:
                     m_pauseRect.SetActive(true);
-                    m_playRect.SetActive(false);
-                    m_popupRect.SetActive(false);
-                    m_teamSelectRect.SetActive(false);
-                    m_spawnPickerRect.SetActive(false);
-                    m_stationRect.SetActive(false);
                     break;
                 case UIState.Play:
-                    m_pauseRect.SetActive(false);
                     m_playRect.SetActive(true);
-                    m_popupRect.SetActive(false);
-                    m_teamSelectRect.SetActive(false);
-                    m_spawnPickerRect.SetActive(false);
-                    m_stationRect.SetActive(false);
                     break;
                 case UIState.Popup:
-                    m_pauseRect.SetActive(false);
-                    m_playRect.SetActive(false);
                     m_popupRect.SetActive(true);
-                    m_teamSelectRect.SetActive(false);
-                    m_spawnPickerRect.SetActive(false);
-                    m_stationRect.SetActive(false);
                     break;
                 case UIState.TeamPicker:
-                    m_pauseRect.SetActive(false);
-                    m_playRect.SetActive(false);
-                    m_popupRect.SetActive(false);
                     m_teamSelectRect.SetActive(true);
-                    m_spawnPickerRect.SetActive(false);
-                    m_stationRect.SetActive(false);
                     break;
                 case UIState.SpawnPicker:
-                    m_pauseRect.SetActive(false);
-                    m_playRect.SetActive(false);
-                    m_popupRect.SetActive(false);
-                    m_teamSelectRect.SetActive(false);
                     m_spawnPickerRect.SetActive(true);
-                    m_stationRect.SetActive(false);
                     break;
                 case UIState.Station:
-                    m_pauseRect.SetActive(false);
-                    m_playRect.SetActive(false);
-                    m_popupRect.SetActive(false);
-                    m_teamSelectRect.SetActive(false);
-                    m_spawnPickerRect.SetActive(false);
                     m_stationRect.SetActive(true);
+                    break;
+                case UIState.Map:
+                    m_mapRect.SetActive(true);
                     break;
             }
         }
@@ -134,6 +124,17 @@ namespace Space.UI
         public void RevertState()
         {
             SetState(m_previousState);
+        }
+
+        public void ClearRects()
+        {
+            m_pauseRect.SetActive(false);
+            m_playRect.SetActive(false);
+            m_popupRect.SetActive(false);
+            m_teamSelectRect.SetActive(false);
+            m_spawnPickerRect.SetActive(false);
+            m_stationRect.SetActive(false);
+            m_mapRect.SetActive(false);
         }
 
         #endregion
