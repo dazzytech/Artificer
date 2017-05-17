@@ -203,7 +203,6 @@ namespace Space
         /// </summary>
         public void InitializeSpaceParameters()//GameParameters param)
         {
-            _att.Map.InitializeMap();
             /// Dont run these yet
             // Initialize space attributes
             //_att.Contract.Initialize(param);

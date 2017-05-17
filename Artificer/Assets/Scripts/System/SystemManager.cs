@@ -318,10 +318,7 @@ public class SystemManager : NATTraversal.NetworkManager
     /// <param name="conn"></param>
     public override void OnClientSceneChanged(NetworkConnection conn)
     {
-        //base.OnClientSceneChanged(conn);
-        ClientScene.Ready(conn);
-
-        ClientScene.AddPlayer(0);
+        base.OnClientSceneChanged(conn);
 
         m_singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
 
@@ -436,29 +433,8 @@ public class SystemManager : NATTraversal.NetworkManager
     /// create reference to steam lobby
     /// </summary>
     /// <param name="newServer"></param>
-    public static void CreateOnlineServer
-        (ServerData newServer, CSteamID lobbyID)
-    {
-        // check if the network is already active
-        if (m_singleton.isNetworkActive)
-            return;
-
-        m_singleton.m_base.Lobby = lobbyID;
-
-        m_singleton.m_base.Player.IsHost = true;
-
-        m_singleton.m_base.ServerInfo = newServer;
-
-        m_singleton.onlineScene = "SpaceScene";
-
-        m_singleton.TryHost();
-    }
-
-    /// <summary>
-    /// For now just creates a host on local host
-    /// </summary>
-    public static void CreateLANServer
-        (string serverName)
+    public static void CreateServer
+        (string serverName, CSteamID lobbyID)
     {
         // check if the network is already active
         if (m_singleton.isNetworkActive)
@@ -466,38 +442,37 @@ public class SystemManager : NATTraversal.NetworkManager
 
         // Build the Server Data we will use
         ServerData newServer = new ServerData();
-        newServer.ServerIP = Network.player.ipAddress;
-        newServer.ServerPort = 7777;
         newServer.ServerVersion = m_singleton.m_base.Version;
         newServer.ServerName = serverName;
-
-        m_singleton.m_base.Player.IsHost = true;
+        newServer.GUID = NATHelper.singleton.guid;
+        newServer.PublicIP = m_singleton.externalIP;
+        newServer.InternalIP = m_singleton.hostInternalIP;
 
         m_singleton.m_base.ServerInfo = newServer;
 
-        // This sets the data part of the OnReceivedBroadcast() event 
-        m_singleton.m_base.Discovery.broadcastData = newServer.ServerName;
+        m_singleton.m_base.Player.IsHost = true;
 
-        // Set the IP the Net Manager is going to use to host a game to OUR IP address and Port 7777
-        m_singleton.networkAddress = newServer.ServerIP;
-        m_singleton.networkPort = newServer.ServerPort;
 
-        m_singleton.onlineScene = "ServerScene";
 
-        // Startup the host
-        m_singleton.StartHost();
+        m_singleton.m_base.Lobby = lobbyID;
+        if (lobbyID != CSteamID.Nil)
+        {
+            m_singleton.onlineScene = "SpaceScene";
+        }
+        else
+            m_singleton.onlineScene = "ServerScene";
+
+        m_singleton.TryHost();
     }
 
     #endregion
 
     #region JOIN SERVER
 
-    public static void JoinOnlineClient
+    public static void JoinClient
         (string externalIP, string internalIP,
         ulong guid, CSteamID lobbyID)
     {
-        Debug.Log("Joining Client");
-
         m_singleton.onlineScene = "SpaceScene";
 
         m_singleton.StartClientAll
@@ -506,15 +481,15 @@ public class SystemManager : NATTraversal.NetworkManager
         m_singleton.m_base.Lobby = lobbyID;
     }
 
-    public static void JoinLANClient(string serverAddress)
+    public static void JoinClient(ServerData serverData)
     {
-        // Artificer uses port 7777
-        m_singleton.networkAddress = serverAddress;
-        m_singleton.networkPort = 7777;
+        m_singleton.m_base.ServerInfo = serverData;
 
         m_singleton.onlineScene = "ServerScene";
 
-        m_singleton.StartClient();
+        m_singleton.StartClientAll
+            (serverData.PublicIP, serverData.InternalIP, 
+                serverData.GUID);
     }
 
     #endregion
@@ -568,12 +543,23 @@ public class SystemManager : NATTraversal.NetworkManager
     /// </summary>
     private void UpdateLobbyData()
     {
-        SteamMatchmaking.SetLobbyData(m_base.Lobby, "guid", NATHelper.singleton.guid.ToString());
-        SteamMatchmaking.SetLobbyData(m_base.Lobby, "publicIP", m_singleton.externalIP);
-        SteamMatchmaking.SetLobbyData(m_base.Lobby, "internalIP", m_singleton.hostInternalIP);
+        if (m_base.Lobby != CSteamID.Nil)
+        {
+            SteamMatchmaking.SetLobbyData(m_base.Lobby, "guid", m_base.ServerInfo.GUID.ToString());
+            SteamMatchmaking.SetLobbyData(m_base.Lobby, "publicIP", m_base.ServerInfo.PublicIP);
+            SteamMatchmaking.SetLobbyData(m_base.Lobby, "internalIP", m_base.ServerInfo.InternalIP);
 
-        // set game to running
-        SteamMatchmaking.SetLobbyData(m_base.Lobby, "running", "true");
+            // set game to running
+            SteamMatchmaking.SetLobbyData(m_base.Lobby, "running", "true");
+        }
+        else
+        {
+            m_singleton.m_base.Discovery.broadcastData =
+                string.Format("{0}/{1}/{2}/{3}",
+                new string[] {m_base.ServerInfo.ServerName,
+                    m_base.ServerInfo.PublicIP, m_base.ServerInfo.InternalIP,
+                    m_base.ServerInfo.GUID.ToString() });
+        }
     }
 
     #endregion

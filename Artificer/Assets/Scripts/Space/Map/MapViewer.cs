@@ -79,6 +79,8 @@ namespace Space.Map
             if (m_running)
             {
                 MapController.OnMapUpdate += OnIconChanged;
+
+                StartCoroutine("BuildIcons");
             }
         }
 

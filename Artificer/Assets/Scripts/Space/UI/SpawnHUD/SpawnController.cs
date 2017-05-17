@@ -50,15 +50,17 @@ namespace Space.UI.Spawn
 
         #region MONO BEHAVIOUR
 
+        private void OnEnable()
+        {
+            BuildStations();
+        }
+
         private void Awake()
         {
             // This code should only be called once
-
             BuildSelection();
 
-            m_att.Map.InitializeMap(new MapObjectType[] { MapObjectType.SHIP });
-
-            BuildStations();     
+            m_att.Map.InitializeMap(new MapObjectType[] { MapObjectType.SHIP });  
         }
 
         #endregion
@@ -149,7 +151,7 @@ namespace Space.UI.Spawn
         private void BuildStations()
         {
             // create a list to store these in future
-            foreach(uint netId in SystemManager.Space.Team.Stations)
+            foreach (uint netId in SystemManager.Space.Team.Stations)
             {
                 GameObject stationObj = ClientScene.FindLocalObject
                     (new NetworkInstanceId(netId));
@@ -157,8 +159,14 @@ namespace Space.UI.Spawn
                 int SpawnID = stationObj.GetComponent
                     <StationController>().SpawnID;
 
-                if(SpawnID != -1)
+                SystemManager.UIMsg.DisplayMessege
+                (new MsgParam("small", "map object count: " + SystemManager.Space.Map.Count));
+
+                if (SpawnID != -1)
                 {
+                    SystemManager.UIMsg.DisplayMessege
+                        (new MsgParam("small", "deploying station"));
+
                     // Station is spawnable, create prefab instance
                     GameObject spawnObj = Instantiate(m_att.StationSelectPrefab);
 
@@ -178,11 +186,21 @@ namespace Space.UI.Spawn
                     MapObject mObj = SystemManager.Space.GetMapObject
                         (stationObj.transform);
 
-                    m_att.Map.DeployPrefab(mObj, spawnObj);
+                    if(mObj != null)
+                        m_att.Map.DeployPrefab(mObj, spawnObj);
+                    else
+                        SystemManager.UIMsg.DisplayMessege
+                        (new MsgParam("small", "Object we want to spawn on map is false"));
+
+                    SystemManager.UIMsg.DisplayMessege
+                        (new MsgParam("small", "station deployed"));
                 }
             }
 
             SelectSpawn(m_att.SpawnList[0]);
+
+            SystemManager.UIMsg.DisplayMessege
+                (new MsgParam("md-red", "map object count: " + m_att.Map.transform.childCount));
         }
 
         #endregion

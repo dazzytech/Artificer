@@ -406,17 +406,7 @@ namespace Menu.Lobby
                 // exit if not host
                 return;
 
-            // Build Server with game manager
-            ServerData newServer = new ServerData();
-
-            newServer.ServerPort = 7777;
-
-            newServer.ServerVersion = SteamMatchmaking
-                .GetLobbyData(LobbyID, "version");
-
-            newServer.ServerName = "Steam Game";
-
-            SystemManager.CreateOnlineServer(newServer, LobbyID);
+            SystemManager.CreateServer("Steam Game", LobbyID);
         }
 
         /// <summary>
@@ -425,9 +415,7 @@ namespace Menu.Lobby
         /// </summary>
         private void JoinGame()
         {
-            Debug.Log("Attempting to join Game");
-
-            SystemManager.JoinOnlineClient
+            SystemManager.JoinClient
                 (SteamMatchmaking.GetLobbyData(LobbyID, "publicIP"),
                 SteamMatchmaking.GetLobbyData(LobbyID, "internalIP"),
                 Convert.ToUInt64(SteamMatchmaking.GetLobbyData(LobbyID, "guid")),

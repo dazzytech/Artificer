@@ -123,7 +123,7 @@ namespace Space.Segment
                 GetComponent<Rigidbody2D>().AddForce(dir * magnitude, ForceMode2D.Force);
             }
 
-            if (m_objSprite != null && _hitD.damageTex != null)
+            if (m_objSprite != null && _hitD.damageTex != "")
             {
                 // Ref to our texture rect for size
                 Rect size = m_objSprite.sprite.rect;

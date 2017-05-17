@@ -12,8 +12,6 @@ namespace Data.UI
     /// here
     /// Contains:
     ///     -   Server Name
-    ///     -   Population Count
-    ///     -   Player List
     ///     -   Game Settings
     /// </summary>
     public class ServerData
@@ -24,21 +22,14 @@ namespace Data.UI
         public string ServerName;
 
         // Hosts IP
-        public string ServerIP;
+        public string PublicIP;
 
-        // Connection port
-        public int ServerPort;
+        public string InternalIP;
+
+        public ulong GUID;
 
         // Game version host is running
         public string ServerVersion;
-
-        #endregion
-
-        #region PLAYER INFORMATION
-
-        // All connected players
-        // may not be needed
-        public List<PlayerData> PlayerList;
 
         #endregion
 

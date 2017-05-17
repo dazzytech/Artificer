@@ -52,6 +52,9 @@ namespace Space.Ship
                 // Add this item to local UI list
                 // p.s should be performed on each client without cmd
                 SystemManager.UI.AddUIPiece(transform);
+
+                if (OnShipCreated != null)
+                    OnShipCreated(ShipAtt);
             }
         }
 

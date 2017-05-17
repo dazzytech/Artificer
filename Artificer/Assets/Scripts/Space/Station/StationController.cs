@@ -66,6 +66,9 @@ namespace Stations
             if (!Att.Interactive)
                 StartCoroutine("CheckForActivity");
 
+            if (Att.TeamID != NetworkInstanceId.Invalid)
+                transform.SetParent(ClientScene.FindLocalObject(Att.TeamID).transform);
+
             if (StationCreated != null)
                 StationCreated(this);
         }

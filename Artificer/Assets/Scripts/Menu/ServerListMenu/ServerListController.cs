@@ -62,7 +62,7 @@ namespace Menu.Server
         {
             // quit if we already have this item
             if (m_att.ServerList.Find
-                (x => x.Server.ServerIP == serverData.ServerIP)
+                (x => x.Server.InternalIP == serverData.InternalIP)
                 != null)
                 return;
 
@@ -112,10 +112,7 @@ namespace Menu.Server
             if (m_att.SelectedServer == null)
                 return;
 
-            // We have a selected server
-            string ipAddress = m_att.SelectedServer.Server.ServerIP;
-
-            SystemManager.JoinLANClient(ipAddress);
+            SystemManager.JoinClient(m_att.SelectedServer.Server);
         }
 
         #endregion

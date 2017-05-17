@@ -39,6 +39,11 @@ namespace Space.Map
 
         #endregion
 
+        private void Awake()
+        {
+            InitializeMap();
+        }
+
         #region PUBLIC INTERACTION
 
         // Use this for initialization

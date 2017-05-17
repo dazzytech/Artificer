@@ -78,13 +78,16 @@ namespace Menu.Server
         /// </summary>
         /// <param name="serverIP"></param>
         /// <param name="serverName"></param>
-        public void ServerDiscovered(string serverIP, string serverName)
+        public void ServerDiscovered(string serverIP, string serverDataSingle)
         {
+            string[] serverData = serverDataSingle.Split('/');
+
             // Build server
             ServerData server = new ServerData();
-            server.ServerIP = serverIP;
-            server.ServerName = serverName;
-            server.ServerPort = 7777;
+            server.ServerName = serverData[0];
+            server.PublicIP = serverData[1];
+            server.InternalIP = serverData[2];
+            server.GUID = System.Convert.ToUInt64(serverData[3]);
 
             // send
             m_con.BuildServerItem(server);
@@ -104,7 +107,8 @@ namespace Menu.Server
                 else
                     serverName = returnValue.ToString();
 
-                SystemManager.CreateLANServer(serverName);
+                SystemManager.CreateServer(serverName,
+                    Steamworks.CSteamID.Nil);
             }
 
             Popup_Dialog.OnDialogEvent -= GetServerName;

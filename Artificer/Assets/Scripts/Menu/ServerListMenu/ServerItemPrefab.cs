@@ -102,10 +102,6 @@ namespace Menu.Server
             m_gameType.text = "default";
 
             m_serverVersion.text = m_serverData.ServerVersion;
-
-            /*m_playerCount.text = string.Format("{0}/{1}",
-                m_serverData.ServerPopulation, *
-                m_serverData.ServerMaxPopulation);*/
         }
 
         /// <summary>

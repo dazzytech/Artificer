@@ -23,7 +23,7 @@ namespace Space.Teams
     /// <summary>
     /// Create synced material lists for networking objects
     /// </summary>
-    public class MaterialListSync : SyncListStruct<MaterialData> { }
+    public class MaterialSyncList : SyncListStruct<MaterialData> { }
 
     #endregion
 
