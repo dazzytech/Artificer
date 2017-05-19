@@ -159,14 +159,8 @@ namespace Space.UI.Spawn
                 int SpawnID = stationObj.GetComponent
                     <StationController>().SpawnID;
 
-                SystemManager.UIMsg.DisplayMessege
-                (new MsgParam("small", "map object count: " + SystemManager.Space.Map.Count));
-
                 if (SpawnID != -1)
                 {
-                    SystemManager.UIMsg.DisplayMessege
-                        (new MsgParam("small", "deploying station"));
-
                     // Station is spawnable, create prefab instance
                     GameObject spawnObj = Instantiate(m_att.StationSelectPrefab);
 
@@ -188,19 +182,10 @@ namespace Space.UI.Spawn
 
                     if(mObj != null)
                         m_att.Map.DeployPrefab(mObj, spawnObj);
-                    else
-                        SystemManager.UIMsg.DisplayMessege
-                        (new MsgParam("small", "Object we want to spawn on map is false"));
-
-                    SystemManager.UIMsg.DisplayMessege
-                        (new MsgParam("small", "station deployed"));
                 }
             }
 
             SelectSpawn(m_att.SpawnList[0]);
-
-            SystemManager.UIMsg.DisplayMessege
-                (new MsgParam("md-red", "map object count: " + m_att.Map.transform.childCount));
         }
 
         #endregion

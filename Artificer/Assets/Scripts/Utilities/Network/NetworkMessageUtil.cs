@@ -30,6 +30,8 @@ namespace Networking
         DISPLAYINTEGRITYCHANGE,
         LOBBYPLAYERJOINED,
         LOBBYPLAYERLEFT,
+        CHATMESSAGESERVER,
+        CHATMESSAGECLIENT,
     };
 
     #endregion
@@ -166,6 +168,12 @@ namespace Networking
     {
         public int PlayerCount;
         public string PlayerName;
+    }
+
+    public class ChatParamMsg: MessageBase
+    {
+        public string style;
+        public string messege;
     }
 
     #endregion

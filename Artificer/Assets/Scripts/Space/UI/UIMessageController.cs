@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Networking;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,13 +31,17 @@ namespace Space.UI
         #region PUBLIC INTERACTION
 
         /// <summary>
-        /// Updates the chat window with a message
-        /// sent within a MsgParam
+        /// Creates a message parameter 
+        /// and sends message to server
         /// </summary>
         /// <param name="param"></param>
-        public void DisplayMessege(MsgParam param)
+        public void DisplayMessege(string style, string text)
         {
-            m_messageHUD.DisplayMessege(param);
+            ChatParamMsg msg = new ChatParamMsg();
+            msg.style = style;
+            msg.messege = text;
+
+            SystemManager.singleton.client.Send((short)MSGCHANNEL.CHATMESSAGESERVER, msg);
         }
 
         /// <summary>

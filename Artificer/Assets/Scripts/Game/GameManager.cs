@@ -167,6 +167,17 @@ namespace Game
             }
         }
 
+        [Server]
+        public void ChatMessage(ChatParamMsg msg)
+        {
+            foreach (PlayerConnectionInfo info in _att.PlayerInfoList)
+            {
+                // Message would be sent to client here
+                NetworkServer.SendToClient(info.mConnection.connectionId,
+                    (short)MSGCHANNEL.CHATMESSAGECLIENT, msg);
+            }
+        }
+
         #endregion
 
         #region SPACE MESSAGES

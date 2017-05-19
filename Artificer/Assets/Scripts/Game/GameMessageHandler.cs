@@ -54,6 +54,7 @@ namespace Game
             NetworkServer.RegisterHandler((short)MSGCHANNEL.BUILDSTATION, OnBuildStation);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.OBJECTHIT, OnObjectHit);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.INTEGRITYCHANGE, OnIntegrityChanged);
+            NetworkServer.RegisterHandler((short)MSGCHANNEL.CHATMESSAGESERVER, OnChatMessage);
 
             #endregion
 
@@ -120,6 +121,12 @@ namespace Game
             (NetworkConnection conn)
         {
             m_con.RemovePlayer(conn);
+        }
+
+        [Server]
+        public void OnChatMessage(NetworkMessage msg)
+        {
+            m_con.ChatMessage(msg.ReadMessage<ChatParamMsg>());
         }
 
         #endregion

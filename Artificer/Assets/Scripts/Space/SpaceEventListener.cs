@@ -91,7 +91,8 @@ namespace Space
 
         public override void OnStartClient()
         {
-            SystemManager.UIMsg.DisplayMessege(new MsgParam("bold", "Connected to Server Match."));
+            SystemManager.UIMsg.DisplayMessege
+                ("bold", "Connected to Server Match.");
         }
 
         #endregion

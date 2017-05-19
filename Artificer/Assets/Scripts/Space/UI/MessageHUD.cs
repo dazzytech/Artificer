@@ -4,20 +4,10 @@ using UnityEngine.UI;
 using System.Collections;
 
 using UI.Effects;
+using Networking;
 
 namespace Space.UI
 {
-    public class MsgParam
-    {
-        public string style;
-        public string messege;
-        public MsgParam(string style, string messege)
-        {
-            this.style = style;
-            this.messege = messege;
-        }
-    }
-
     public class MessageHUD: MonoBehaviour
     {
         private static MessageHUD instance = null;
@@ -38,6 +28,8 @@ namespace Space.UI
         {
             messegeCount = 0;
             messegeMax = 20;
+
+            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.CHATMESSAGECLIENT, DisplayMessege);
         }
 
         #endregion
@@ -49,8 +41,10 @@ namespace Space.UI
         /// with formatting
         /// </summary>
         /// <param name="param"></param>
-        public void DisplayMessege(MsgParam param)
+        public void DisplayMessege(NetworkMessage msg)
         {
+            ChatParamMsg param = msg.ReadMessage<ChatParamMsg>();
+
             GameObject disp = new GameObject();
             Text text = disp.AddComponent<Text>();
             //disp.transform.localScale = new Vector3(1f, 1f, 1f);

@@ -1,11 +1,11 @@
-Initialize engine version: 5.5.1f1 (88d00a7498cd)
+Initialize engine version: 5.6.1f1 (2860b30f0b54)
 GfxDevice: creating device client; threaded=1
 Direct3D:
     Version:  Direct3D 11.0 [level 11.1]
     Renderer: AMD Radeon (TM) R9 200 Series (ID=0x6811)
     Vendor:   ATI
     VRAM:     2029 MB
-    Driver:   21.19.137.514
+    Driver:   22.19.162.4
 Begin MonoManager ReloadAssembly
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.dll into Unity Child Domain
@@ -17,8 +17,6 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
-Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\NATTraversalForUNET.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\NATTraversalForUNET.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Open.Nat.dll (this message is harmless)
@@ -27,14 +25,14 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\RakNetSwig.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Threading.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Threading.dll into Unity Child Domain
-- Completed reload, in  0.076 seconds
+- Completed reload, in  0.047 seconds
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
 OnLevelWasLoaded was found on Reporter
 This message has been deprecated and will be removed in a later version of Unity.
 Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed
  
-(Filename:  Line: 382)
+(Filename:  Line: 376)
 
 <RI> Initializing input.
 <RI> Input initialized.
@@ -42,104 +40,143 @@ desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 <RI> Initialized touch support.
 The referenced script on this Behaviour (Game Object 'Game Settings Prefab') is missing!
  
-(Filename:  Line: 1754)
+(Filename:  Line: 1743)
 
 The referenced script on this Behaviour (Game Object 'ServerList') is missing!
  
-(Filename:  Line: 1754)
+(Filename:  Line: 1743)
 
-UnloadTime: 1.586716 ms
+UnloadTime: 1.674709 ms
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/libc
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/.\libc
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/libc
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Mono.Security.dll (this message is harmless)
-NATTraversal: External ip source responded with something other than an IP: 2a02:0c7f:bc09:a900:7402:9ed0:4f2e:4f70
+NATTraversal: External ip source responded with something other than an IP: 2a02:0c7f:bc09:a900:684c:8071:9604:b647
 
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-NATHelper: Connected to Facilitator: 729583213807016937
+NATHelper: Connected to Facilitator: 99079377635761088
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-NATTraversal: RakNet guid missing. Punch-through not possible.
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+NATTraversal: Unable to determine public IP. Direct connect will fail.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-NATTraversal: Attempting to connect directly: 
+MatchMakingClient Create :https://mm.unet.unity3d.com/json/reply/CreateMatchRequest
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+UnloadTime: 4.059872 ms
+Scene ServerScene is loaded
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
+ 
+(Filename:  Line: 462)
+
+
+Unloading 1524 unused Assets to reduce memory usage. Loaded Objects now: 1392.
+Total: 3.745633 ms (FindLiveObjects: 0.160014 ms CreateObjectMapping: 0.094943 ms MarkObjects: 2.550735 ms  DeleteObjects: 0.939245 ms)
+
+NATTraversal: Failed to create match. We'll still try and host but it doesn't look good.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 The referenced script on this Behaviour (Game Object 'Footer') is missing!
  
-(Filename:  Line: 1754)
+(Filename:  Line: 1743)
 
 The referenced script on this Behaviour (Game Object 'ShipViewer') is missing!
  
-(Filename:  Line: 1754)
+(Filename:  Line: 1743)
 
-Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 14.675270 ms
-Attaching listeners
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 4.266200 ms
 Scene SpaceScene is loaded
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 
-Unloading 1460 unused Assets to reduce memory usage. Loaded Objects now: 3031.
-Total: 5.184615 ms (FindLiveObjects: 0.295483 ms CreateObjectMapping: 0.134078 ms MarkObjects: 3.848689 ms  DeleteObjects: 0.878575 ms)
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 3838.
+Total: 4.957203 ms (FindLiveObjects: 0.283440 ms CreateObjectMapping: 0.077344 ms MarkObjects: 4.563304 ms  DeleteObjects: 0.032188 ms)
 
-SyncList not initialized
+Large state update of 2589 bytes for netId:2038 from script:Ship(Clone) (Space.Ship.ShipInitializer)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-SyncList not initialized
+StackOverflowException: The requested operation caused a stack overflow.
+  at (wrapper managed-to-native) UnityEngine.GameObject:Internal_AddComponentWithType (System.Type)
+  at UnityEngine.GameObject.AddComponent (System.Type componentType) [0x00000] in <filename unknown>:0 
+  at UnityEngine.GameObject.AddComponent[RawImage] () [0x00000] in <filename unknown>:0 
+  at Space.Map.MapViewer.BuildIcon (Space.Map.MapObject mObj) [0x00000] in <filename unknown>:0 
+  at Space.Map.MapViewer.BuildIcons () [0x00000] in <filename unknown>:0 
+  at (wrapper managed-to-native) UnityEngine.MonoBehaviour:StartCoroutine (string,object)
+  at UnityEngine.MonoBehaviour.StartCoroutine (System.String methodName) [0x00000] in <filename unknown>:0 
+  at Space.Map.MapViewer.OnEnable () [0x00000] in <filename unknown>:0 
+UnityEngine.GameObject:Internal_AddComponentWithType(Type)
+UnityEngine.GameObject:AddComponent(Type)
+UnityEngine.GameObject:AddComponent()
+Space.Map.MapViewer:BuildIcon(MapObject)
+Space.Map.MapViewer:BuildIcons()
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+UnityEngine.MonoBehaviour:StartCoroutine(String)
+Space.Map.MapViewer:OnEnable()
+UnityEngine.GameObject:Internal_AddComponentWithType(Type)
+UnityEngine.GameObject:AddComponent(Type)
+UnityEngine.GameObject:AddComponent()
+Space.Map.MapViewer:BuildIcon(MapObject)
+Space.Map.MapViewer:BuildIcons()
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+UnityEngine.MonoBehaviour:StartCoroutine(String)
+Space.Map.MapViewer:OnEnable()
+UnityEngine.GameObject:Internal_AddComponentWithType(Type)
+UnityEngine.GameObject:AddComponent(Type)
+UnityEngine.GameObject:AddComponent()
+Space.Map.MapViewer:BuildIcon(MapObject)
+Space.Map.MapViewer:BuildIcons()
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+UnityEngine.MonoBehaviour:StartCoroutine(String)
+Space.Map.MapViewer:OnEnable()
+UnityEngine.GameObject:Internal_AddComponentWithType(Type)
+UnityEngine.GameObject:AddComponent(Type)
+UnityEngine.GameObject:AddComponent()
+Space.Map.MapViewer:BuildIcon(MapObject)
+Space.Map.MapViewer:BuildIcons()
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+UnityEngine.MonoBehaviour:StartCoroutine(String)
+Space.Map.MapViewer:OnEnable()
+UnityEngine.GameObject:Internal_AddComponentWithType(Type)
+UnityEngine.GameObject:AddComponent(Type)
+UnityEngine.GameObject:AddComponent()
+Space.Map.MapViewer:BuildIcon(MapObject)
+Space.Map.MapViewer:BuildIcons()
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+UnityEngine.MonoBehaviour:StartCoroutine(String)
+Space.Map.MapViewer:OnEnable()
+UnityEngine.GameObject:Internal_AddComponentWithType(Type)
+UnityEngine.GameObject:AddComponent(Type)
+UnityEngine.GameObject:AddComponent()
+Space.Map.MapViewer:BuildIcon(MapObject)
+Space.Map.MapViewer:BuildIcons()
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+UnityEngine.GameObject:Internal_AddComponentWithType(Type)
+UnityEngine.GameObject:AddComponent(Type)
+UnityEngine.GameObject:AddComponent()
+Space.Map.MapViewer:BuildIcon(MapObject)
+Space.Map.MapViewer:BuildIcons()
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+UnityEngine.MonoBehaviour:StartCoroutine(String)
+Space.Map.MapViewer:OnEnable()
+UnityEngine.GameObject:Internal_AddComponentWithType(Type)
+UnityEngine.GameObject:AddComponent(Type)
+UnityEngine.GameObject:AddComponent()
+Space.Map.MapViewer:BuildIcon(MapObject)
+Space.Map.MapViewer:BuildIcons()
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+(Filename:  Line: -1)
 
-Spawn scene object not found for 3
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Ready to trigger
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Station added
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Ready to trigger
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Station added
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Space.Map.MapObject
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-SelectSpawnItem(Clone) (UnityEngine.RectTransform)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Map (UnityEngine.RectTransform)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Ship added
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Ship added
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Setting up 1 worker threads for Enlighten.
-  Thread -> id: 3aa0 -> priority: 1 
