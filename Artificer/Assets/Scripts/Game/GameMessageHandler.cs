@@ -126,7 +126,8 @@ namespace Game
         [Server]
         public void OnChatMessage(NetworkMessage msg)
         {
-            m_con.ChatMessage(msg.ReadMessage<ChatParamMsg>());
+            NetworkServer.SendToAll((short)MSGCHANNEL.CHATMESSAGECLIENT,
+                msg.ReadMessage<ChatParamMsg>());
         }
 
         #endregion

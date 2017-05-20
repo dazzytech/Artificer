@@ -433,8 +433,6 @@ namespace Menu.Lobby
         /// <param name="pLobby"></param>
         private void BuildLobby(CSteamID pLobby)
         {
-            Debug.Log("Building Lobby");
-
             // create new lobby object within memory
             m_att.CurrentLobby = new LobbyObject(pLobby);
 
@@ -456,8 +454,6 @@ namespace Menu.Lobby
         /// </summary>
         private void LeaveLobby()
         {
-            Debug.Log("Leaving Lobby - Running: " + IsRunning.ToString());
-
             // Stop any timers that may be happening
             StopAllCoroutines();
 

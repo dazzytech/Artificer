@@ -30,17 +30,8 @@ namespace Space.UI.Spawn
         [SerializeField]
         private Text m_desc;
 
-        #endregion
-
-        #region SHIP BUILDER
-
-        [Header("Ship Builder")]
-
         [SerializeField]
-        private ComponentBuilderUtility m_builder;
-
-        [SerializeField]
-        private GameObject m_piecePrefab;
+        private RawImage m_img;
 
         #endregion
 
@@ -51,15 +42,6 @@ namespace Space.UI.Spawn
         public string Name
         {
             get { return m_shipData.Name; }
-        }
-
-        #endregion
-
-        #region MONO BEHAVIOUR
-
-        private void OnDestroy()
-        {
-            m_builder.ClearShip();
         }
 
         #endregion
@@ -83,7 +65,15 @@ namespace Space.UI.Spawn
             m_shipData = newShip;
 
             // build ship to window
-            m_builder.BuildShipData(m_shipData, m_piecePrefab);
+            Texture2D shipIcon = Resources.Load("Space/Ships/Icon/" 
+                + m_shipData.Name, typeof(Texture2D)) as Texture2D;
+
+            m_img.texture = shipIcon;
+
+            // height = 150
+            float sizeScale = 150f / m_img.texture.height;
+
+            m_img.transform.localScale = new Vector3(sizeScale, sizeScale, 1);
         }
 
         #endregion

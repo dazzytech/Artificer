@@ -263,6 +263,7 @@ public class SystemManager : NATTraversal.NetworkManager
     public override void OnServerDisconnect(NetworkConnection conn)
     {
         GameMSG.RemovePlayer(conn);
+
         base.OnServerDisconnect(conn);
     }
 
@@ -475,10 +476,10 @@ public class SystemManager : NATTraversal.NetworkManager
     {
         m_singleton.onlineScene = "SpaceScene";
 
-        m_singleton.StartClientAll
-            (externalIP, internalIP, guid);
-
         m_singleton.m_base.Lobby = lobbyID;
+
+        m_singleton.TryClient
+            (externalIP, internalIP, guid);
     }
 
     public static void JoinClient(ServerData serverData)
@@ -487,8 +488,8 @@ public class SystemManager : NATTraversal.NetworkManager
 
         m_singleton.onlineScene = "ServerScene";
 
-        m_singleton.StartClientAll
-            (serverData.PublicIP, serverData.InternalIP, 
+        m_singleton.TryClient
+            (serverData.PublicIP, serverData.InternalIP,
                 serverData.GUID);
     }
 
@@ -579,12 +580,16 @@ public class SystemManager : NATTraversal.NetworkManager
 
     // Tries to connect as a client
     // This method is called by the user clicking Join Game on a server info panel
-    private void TryClient()
+    private void TryClient(string externalIP, string internalIP,
+        ulong guid)
     {
         networkSceneName = "";
         NetworkServer.SetAllClientsNotReady();
         ClientScene.DestroyAllClientObjects();
-        StartClient();
+
+        m_singleton.StartClientAll
+            (externalIP, internalIP,
+                guid);
     }
 
     // Leaves the lobby or match we are connected to (host and client)

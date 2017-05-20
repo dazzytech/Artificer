@@ -63,23 +63,11 @@ namespace Server
 
         #endregion
 
-        private void OnDestroy()
-        {
-            if(isLocalPlayer)
-                SystemManager.UIMsg.DisplayMessege
-                    ("bold", Name + " has left the Lobby");
-        }
-
         #region NETWORKBEHAVIOUR
 
         public override void OnStartAuthority()
         {
-            CmdDefinePlayer(SystemManager.Player);
-
-            // If we are here than we have just spawned
-            // so add to message list
-            SystemManager.UIMsg.DisplayMessege
-                ("bold", Name + " has entered the Lobby");
+            CmdDefinePlayer(SystemManager.Player);            
         }
 
         #endregion
@@ -156,7 +144,13 @@ namespace Server
             else
             {
                 if (hasAuthority)
+                {
                     GetComponent<Image>().color = m_localColour;
+                    // If we are here than we have just spawned
+                    // so add to message list
+                    SystemManager.UIMsg.DisplayMessege
+                        ("bold", myPlayer.PlayerName + " has entered the Lobby");
+                }
                 else
                     GetComponent<Image>().color = m_remoteColour;
             }

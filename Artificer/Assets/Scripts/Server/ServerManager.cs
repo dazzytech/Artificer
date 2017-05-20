@@ -30,6 +30,9 @@ namespace Server
 
             if(!isServer)
                 JoinServer();
+            else
+                SystemManager.UIMsg.DisplayMessege
+                    ("bold", "Server successfully created.");
         }
 
         #endregion
@@ -98,6 +101,10 @@ namespace Server
             {
                 if(m_att.PlayerItems[i].ID == PlayerID)
                 {
+                    SystemManager.UIMsg.DisplayMessege
+                        ("bold", m_att.PlayerItems[i].Name + 
+                        " has left the Lobby");
+
                     // the one to delete
                     NetworkServer.UnSpawn
                         (m_att.PlayerItems[i].gameObject);

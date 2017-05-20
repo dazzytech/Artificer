@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 7
+  serializedVersion: 8
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -25,6 +25,7 @@ RenderSettings:
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 3
+  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -41,7 +42,7 @@ RenderSettings:
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 7
+  serializedVersion: 9
   m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -53,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 4
+    serializedVersion: 8
     m_Resolution: 2
     m_BakeResolution: 40
     m_TextureWidth: 1024
@@ -66,13 +67,27 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_DirectLightInLightProbes: 1
     m_FinalGather: 0
     m_FinalGatherFiltering: 1
     m_FinalGatherRayCount: 1024
     m_ReflectionCompression: 2
+    m_MixedBakeMode: 1
+    m_BakeBackend: 0
+    m_PVRSampling: 1
+    m_PVRDirectSampleCount: 32
+    m_PVRSampleCount: 500
+    m_PVRBounces: 2
+    m_PVRFiltering: 0
+    m_PVRFilteringMode: 1
+    m_PVRCulling: 1
+    m_PVRFilteringGaussRadiusDirect: 1
+    m_PVRFilteringGaussRadiusIndirect: 5
+    m_PVRFilteringGaussRadiusAO: 2
+    m_PVRFilteringAtrousColorSigma: 1
+    m_PVRFilteringAtrousNormalSigma: 1
+    m_PVRFilteringAtrousPositionSigma: 1
   m_LightingDataAsset: {fileID: 0}
-  m_RuntimeCPUUsage: 25
+  m_ShadowMaskMode: 2
 --- !u!196 &5
 NavMeshSettings:
   serializedVersion: 2
@@ -89,6 +104,8 @@ NavMeshSettings:
     minRegionArea: 2
     manualCellSize: 0
     cellSize: 0.16666667
+    manualTileSize: 0
+    tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1001 &23174059
@@ -2475,7 +2492,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 509.99997, y: -56.666656}
+  m_AnchoredPosition: {x: 509.99997, y: -56.666626}
   m_SizeDelta: {x: 1019.99994, y: 113.33331}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &226913225
@@ -3253,7 +3270,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 375, y: -39.698566}
+  m_AnchoredPosition: {x: 375, y: -39.698563}
   m_SizeDelta: {x: 750, y: 79.39713}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &265307514
@@ -3374,7 +3391,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22481518, guid: d706cdeba6af9de498b0ede640deb471, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -30.034966
+      value: -30.034973
       objectReference: {fileID: 0}
     - target: {fileID: 22481518, guid: d706cdeba6af9de498b0ede640deb471, type: 2}
       propertyPath: m_SizeDelta.x
@@ -5064,7 +5081,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.7, y: 0}
+  m_AnchoredPosition: {x: 0.70000005, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &449953179
@@ -5368,7 +5385,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -3.7}
+  m_AnchoredPosition: {x: 0, y: -3.6999998}
   m_SizeDelta: {x: -1, y: 7.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &473892586
@@ -8476,7 +8493,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 50, y: -1.0000006}
+  m_AnchoredPosition: {x: 50, y: -1.0000005}
   m_SizeDelta: {x: -100.1, y: -2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &704873476
@@ -8550,7 +8567,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -48.6, y: -17.9}
+  m_AnchoredPosition: {x: -48.6, y: -17.900002}
   m_SizeDelta: {x: 173.3, y: 22.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &712218351
@@ -8781,6 +8798,11 @@ Prefab:
         type: 2}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010975282678, guid: ecba89731557578468050b40d1c5b0be,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ecba89731557578468050b40d1c5b0be, type: 2}
@@ -12631,7 +12653,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -355.065, y: 93.538}
+  m_AnchoredPosition: {x: -355.06503, y: 93.537964}
   m_SizeDelta: {x: -729.87, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1137989020
@@ -13292,7 +13314,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 451, y: 80.30025}
+  m_AnchoredPosition: {x: 451, y: 80.30023}
   m_SizeDelta: {x: 155, y: 123.600006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1236416561
@@ -15430,7 +15452,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.19999313, y: -19.999998}
+  m_AnchoredPosition: {x: -0.19999313, y: -19.999996}
   m_SizeDelta: {x: 64.2, y: 17.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1356310571
@@ -17983,7 +18005,7 @@ Canvas:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1534258494}
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
@@ -17992,6 +18014,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -18694,7 +18717,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 177.34375, y: -519.23114}
+  m_AnchoredPosition: {x: 177.34375, y: -519.2312}
   m_SizeDelta: {x: 354.6875, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1590881421
@@ -19644,7 +19667,7 @@ Canvas:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1653808574}
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 1684609966}
   m_PlaneDistance: 100
@@ -19653,6 +19676,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -20235,6 +20259,8 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
+  m_AllowMSAA: 1
+  m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
@@ -22472,7 +22498,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 694.49994, y: -282.49997}
+  m_AnchoredPosition: {x: 694.4999, y: -282.49997}
   m_SizeDelta: {x: 462.99997, y: 564.99994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1829518923
@@ -23365,7 +23391,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: -477.96497}
+  m_AnchoredPosition: {x: 0, y: -477.965}
   m_SizeDelta: {x: 700.88885, y: 477.965}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1902120806
@@ -23881,7 +23907,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22498294, guid: 15d13621195bd06469aadf32f8962ddf, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 485.41666
+      value: 485.4167
       objectReference: {fileID: 0}
     - target: {fileID: 22498294, guid: 15d13621195bd06469aadf32f8962ddf, type: 2}
       propertyPath: m_AnchoredPosition.y

@@ -163,18 +163,7 @@ namespace Game
                 _att.PlayerInfoList.Remove(info);
                 if(SystemManager.Server != null)
                     SystemManager.Server.
-                        DeletePlayerFromServer(info.ID);
-            }
-        }
-
-        [Server]
-        public void ChatMessage(ChatParamMsg msg)
-        {
-            foreach (PlayerConnectionInfo info in _att.PlayerInfoList)
-            {
-                // Message would be sent to client here
-                NetworkServer.SendToClient(info.mConnection.connectionId,
-                    (short)MSGCHANNEL.CHATMESSAGECLIENT, msg);
+                        DeletePlayerFromServer(info.ID); 
             }
         }
 
