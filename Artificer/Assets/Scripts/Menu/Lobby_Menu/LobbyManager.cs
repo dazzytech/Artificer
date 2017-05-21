@@ -417,7 +417,7 @@ namespace Menu.Lobby
         {
             SystemManager.JoinClient
                 (SteamMatchmaking.GetLobbyData(LobbyID, "publicIP"),
-                SteamMatchmaking.GetLobbyData(LobbyID, "internalIP"),
+                SteamMatchmaking.GetLobbyData(LobbyID, "privateIP"),
                 Convert.ToUInt64(SteamMatchmaking.GetLobbyData(LobbyID, "guid")),
                 LobbyID);
         }

@@ -336,8 +336,6 @@ public class SystemManager : NATTraversal.NetworkManager
             m_base.Lobby = CSteamID.Nil;
         }
 
-        //ClientScene.RemovePlayer(0);
-
         base.OnClientDisconnect(conn);
     }
 
@@ -441,19 +439,14 @@ public class SystemManager : NATTraversal.NetworkManager
         if (m_singleton.isNetworkActive)
             return;
 
+        m_singleton.m_base.Player.IsHost = true;
+
         // Build the Server Data we will use
         ServerData newServer = new ServerData();
         newServer.ServerVersion = m_singleton.m_base.Version;
         newServer.ServerName = serverName;
-        newServer.GUID = NATHelper.singleton.guid;
-        newServer.PublicIP = m_singleton.externalIP;
-        newServer.InternalIP = m_singleton.hostInternalIP;
 
         m_singleton.m_base.ServerInfo = newServer;
-
-        m_singleton.m_base.Player.IsHost = true;
-
-
 
         m_singleton.m_base.Lobby = lobbyID;
         if (lobbyID != CSteamID.Nil)
@@ -544,11 +537,15 @@ public class SystemManager : NATTraversal.NetworkManager
     /// </summary>
     private void UpdateLobbyData()
     {
+        m_base.ServerInfo.GUID = NATHelper.singleton.guid;
+        m_base.ServerInfo.PublicIP = m_singleton.externalIP;
+        m_base.ServerInfo.InternalIP = m_singleton.hostInternalIP;
+
         if (m_base.Lobby != CSteamID.Nil)
         {
             SteamMatchmaking.SetLobbyData(m_base.Lobby, "guid", m_base.ServerInfo.GUID.ToString());
             SteamMatchmaking.SetLobbyData(m_base.Lobby, "publicIP", m_base.ServerInfo.PublicIP);
-            SteamMatchmaking.SetLobbyData(m_base.Lobby, "internalIP", m_base.ServerInfo.InternalIP);
+            SteamMatchmaking.SetLobbyData(m_base.Lobby, "privateIP", m_base.ServerInfo.InternalIP);
 
             // set game to running
             SteamMatchmaking.SetLobbyData(m_base.Lobby, "running", "true");
