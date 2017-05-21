@@ -12938,7 +12938,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 375, y: -57.995613}
+  m_AnchoredPosition: {x: 375, y: -57.995617}
   m_SizeDelta: {x: 730, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &741
@@ -13388,7 +13388,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 530, y: -511.125}
+  m_AnchoredPosition: {x: 530, y: -511.12497}
   m_SizeDelta: {x: 1060, y: 99.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &764
@@ -18259,7 +18259,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 160, y: -407.1283}
+  m_AnchoredPosition: {x: 160, y: -407.12827}
   m_SizeDelta: {x: 320, y: 98.08554}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1012
@@ -20817,7 +20817,7 @@ MonoBehaviour:
   connectRelay: 0
   autoConnectToFacilitator: 1
   useUnityMatchmaking: 0
-  externalIPSource: http://icanhazip.com
+  externalIPSource: http://1pv4.icanhazip.com/
   externalIPv6Source: http://ipv6.icanhazip.com
   externalIPTimeout: 2000
   clientPort: 0

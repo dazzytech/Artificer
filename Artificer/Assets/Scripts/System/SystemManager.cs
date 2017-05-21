@@ -207,6 +207,11 @@ public class SystemManager : NATTraversal.NetworkManager
         UpdateLobbyData();
     }
 
+    public override void OnServerConnect(NetworkConnection conn)
+    {
+        base.OnServerConnect(conn);
+    }
+
     /// <summary>
     /// Initailze the player and add it to the 
     /// team spawner to allocate it a position
@@ -378,6 +383,9 @@ public class SystemManager : NATTraversal.NetworkManager
         m_preload.PreloadAssets();
 
         base.Start();
+
+        base.connectionConfig.AcksType = ConnectionAcksType.Acks64; // larger ack buffer, 64 bit
+        base.connectionConfig.MaxSentMessageQueueSize = 512;
     }
 
     #endregion
