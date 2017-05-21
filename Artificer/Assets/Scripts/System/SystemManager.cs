@@ -546,9 +546,6 @@ public class SystemManager : NATTraversal.NetworkManager
             SteamMatchmaking.SetLobbyData(m_base.Lobby, "guid", m_base.ServerInfo.GUID.ToString());
             SteamMatchmaking.SetLobbyData(m_base.Lobby, "publicIP", m_base.ServerInfo.PublicIP);
             SteamMatchmaking.SetLobbyData(m_base.Lobby, "privateIP", m_base.ServerInfo.InternalIP);
-
-            // set game to running
-            SteamMatchmaking.SetLobbyData(m_base.Lobby, "running", "true");
         }
         else
         {

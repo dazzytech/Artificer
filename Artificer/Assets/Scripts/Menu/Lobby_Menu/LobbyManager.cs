@@ -407,6 +407,9 @@ namespace Menu.Lobby
                 return;
 
             SystemManager.CreateServer("Steam Game", LobbyID);
+
+            // set game to running
+            SteamMatchmaking.SetLobbyData(LobbyID, "running", "true");
         }
 
         /// <summary>
