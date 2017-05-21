@@ -17,6 +17,8 @@ namespace Server
         [Header("HUD Elements")]
         public Transform PlayerList;
 
+        public Transform ServerHUD;
+
         public Button LeaveBtn;
 
         public Button StartBtn;

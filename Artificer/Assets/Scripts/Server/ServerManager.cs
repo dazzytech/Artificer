@@ -24,6 +24,8 @@ namespace Server
 
         void Start()
         {
+            m_att.ServerHUD.transform.localPosition = Vector3.zero;
+
             // Define parent of player lobby items
             PlayerServerItem.ParentRect = m_att.PlayerList;
             PlayerServerItem.Message = m_att.Message;
