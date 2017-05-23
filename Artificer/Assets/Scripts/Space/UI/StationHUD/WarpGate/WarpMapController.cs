@@ -31,7 +31,7 @@ namespace Space.UI.Station.Map
         /// populates the warp HUD with maps
         /// </summary>
         /// <param name="warpList"></param>
-        public void BuildMap(List<NetworkInstanceId> warpList, Transform homeGate)
+        public void BuildMap(List<uint> warpList, Transform homeGate)
         {
             m_att.Map.InitializeMap(new MapObjectType[] { MapObjectType.SHIP });
 
@@ -45,9 +45,10 @@ namespace Space.UI.Station.Map
             // transfer network instances to transforms
             m_att.NearbyWarpGates = new List<SelectGateItem>();
 
-            foreach(NetworkInstanceId netGate in warpList)
+            foreach(uint netGate in warpList)
             {
-                GameObject GO = ClientScene.FindLocalObject(netGate);
+                GameObject GO = ClientScene.FindLocalObject
+                    (new NetworkInstanceId(netGate));
 
                 if (GO != null)
                 {

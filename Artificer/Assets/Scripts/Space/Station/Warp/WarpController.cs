@@ -23,7 +23,7 @@ namespace Stations
 
         private void OnDestroy()
         {
-            WarpAttributes.WarpList.Remove(netId);
+            Att.Team.WarpSyncList.Remove(netId.Value);
         }
 
         #endregion
@@ -70,12 +70,8 @@ namespace Stations
             // For now call the base class till actions are different
             base.Initialize(newTeam, true);
 
-            if (WarpAttributes.WarpList == null)
-                WarpAttributes.WarpList = 
-                    new List<NetworkInstanceId>();
-
             // Add ourselves to static reference list
-            WarpAttributes.WarpList.Add(netId);
+            Att.Team.WarpSyncList.Add(netId.Value);
         }
 
         /// <summary>
@@ -98,22 +94,23 @@ namespace Stations
 
         #region ACCESSORS
 
-        public List<NetworkInstanceId> Nearby
+        public List<uint> Nearby
         {
             get
             {
                 // Create container list for nearby warps
-                List<NetworkInstanceId> nearbyWarps = 
-                    new List<NetworkInstanceId>();
+                List<uint> nearbyWarps = 
+                    new List<uint>();
 
                 // find each within distance
-                foreach(NetworkInstanceId warpID in
-                    WarpAttributes.WarpList)
+                foreach(uint warpID in
+                    Att.Team.WarpSyncList)
                 {
                     // ignore self
-                    if (warpID == netId)
+                    if (warpID == netId.Value)
                         continue;
-                    GameObject warpObj = ClientScene.FindLocalObject(warpID);
+                    GameObject warpObj = ClientScene.FindLocalObject
+                        (new NetworkInstanceId(warpID));
 
                     if(Vector2.Distance(transform.position, 
                         warpObj.transform.position) <= Att.WarpRadius)

@@ -96,11 +96,6 @@ namespace Game
 
             // Generated stations for the teams
             _att.Builder.GenerateStations(_att.TeamA, _att.TeamB);
-
-            if(_att.PlayerInfoList != null)
-                // go through each connected player and send messages
-                foreach (PlayerConnectionInfo info in _att.PlayerInfoList)
-                    InitializePlayer(info);
         }
 
         [Server]

@@ -117,7 +117,6 @@ namespace Serializer
                         ship.CombatResponsive = reader.ReadBoolean();
                         ship.CombatActive = reader.ReadBoolean();
                         ship.Aligned = reader.ReadBoolean();
-                        ship.Initialized = true;
                     }
                     return ship;
                 }

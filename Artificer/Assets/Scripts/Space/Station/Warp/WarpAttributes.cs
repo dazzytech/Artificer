@@ -12,8 +12,6 @@ namespace Stations
     public class WarpAttributes : StationAttributes
     {
         // Radius within warps detect other warps
-        public float WarpRadius;
-
-        public static List<NetworkInstanceId> WarpList;
+        public float WarpRadius;     
     }
 }

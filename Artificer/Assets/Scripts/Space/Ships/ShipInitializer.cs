@@ -31,7 +31,7 @@ namespace Space.Ship
 
         // Store a reference to the ships data
         [SyncVar]
-        public ShipData Ship;
+        public string Ship;
         [SyncVar]
         public bool hasSpawned;
 
@@ -81,19 +81,18 @@ namespace Space.Ship
             string shipName = netMsg.
                 ReadMessage<StringMessage>().value;
             
-            CmdSpawnMe(Serializer.ByteSerializer.getBytes
-                (ShipLibrary.GetShip(shipName)));
+            CmdSpawnMe(shipName);
         }
 
         [Command]
-        private void CmdSpawnMe(byte[] shipInfo)
+        private void CmdSpawnMe(string shipName)
         {
             if (hasSpawned)
                 return; 
 
             hasSpawned = true;
-            Ship = Serializer.ByteSerializer.fromBytes(shipInfo);
-            RpcSpawnMe(shipInfo);
+            Ship = shipName;
+            RpcSpawnMe(shipName);
 
             SystemManager.UI.RpcAddRemotePlayer(netId);
         }
@@ -103,12 +102,12 @@ namespace Space.Ship
         /// </summary>
         /// <param name="a_data">ship data to pass</param>
         [ClientRpc]
-        private void RpcSpawnMe(byte[] shipInfo)
+        private void RpcSpawnMe(string shipName)
         {
             //spawnData will be synced by the server automatically,
             //but I don't trust it to arrive before this call, so I pass it into
             //this function anyway to be sure.
-            Ship = Serializer.ByteSerializer.fromBytes(shipInfo);
+            Ship = shipName;
             SetUpPlayer();
             
 
@@ -121,14 +120,11 @@ namespace Space.Ship
         /// </summary>
         private void SetUpPlayer()
         {
-            if (!Ship.Initialized)
-                return;
-
             ShipAtt = GetComponent<ShipAttributes>();
             ShipAtt.instID = netId;
 
             //Build the object with spawnData
-            ShipGenerator.GenerateShip(Ship, this.gameObject);
+            ShipGenerator.GenerateShip(ShipLibrary.GetShip(Ship), this.gameObject);
 
             // add network proximity checker
             NetworkProximityChecker npc = gameObject.AddComponent<NetworkProximityChecker>();
@@ -182,50 +178,7 @@ namespace Space.Ship
         }
 
         #endregion
-
-        #region SERIALIZE OVERRIDES
-
-        int byteSize;
-
-        public override bool OnSerialize(NetworkWriter writer, bool initialState)
-        {
-            if (this.Ship.Initialized)
-            {
-                writer.Write(true);
-
-                byte[] rawData = ByteSerializer.getBytes(this.Ship);
-
-                int byteSize = rawData.Length;
-
-                // Let us know in advance the size of array
-                writer.WritePackedUInt32((uint)byteSize);
-
-                // Write out the information for the head component
-                writer.Write(rawData, byteSize);
-            }
-            else
-                writer.Write(false);
-
-            writer.Write(this.hasSpawned);
-
-            return true;
-        }
-
-        public override void OnDeserialize(NetworkReader reader, bool initialState)
-        {
-            if (reader.ReadBoolean())
-            {
-                this.byteSize = (int)reader.ReadPackedUInt32();
-
-                this.Ship = ByteSerializer.fromBytes(reader.ReadBytes(this.byteSize));
-
-                this.Ship.Initialized = true;
-            }
-
-            this.hasSpawned = reader.ReadBoolean();
-        }
-
-        #endregion
+        
     }
 }
 

@@ -67,8 +67,6 @@ namespace Data.Space.DataImporter
             ShipData newShip = new ShipData ();
 
             newShip.CombatResponsive = true;
-            newShip.Initialized = true;
-
             newShip.Name = shipName;
             if(shipInfo.Attributes ["player"] != null)
                 newShip.PlayerMade = shipInfo.Attributes ["player"].Value == "true"? true: false;

@@ -57,6 +57,8 @@ namespace Space.Teams
         // Store a list of Net IDs of stations that the stations owns
         private SyncListUInt m_stations = new SyncListUInt();
 
+        public SyncListUInt WarpSyncList = new SyncListUInt();
+
         /*private List<Transform> _attackPoints;
         //private List<Transform> _homePoints;
 

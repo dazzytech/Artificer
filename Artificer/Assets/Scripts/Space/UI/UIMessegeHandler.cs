@@ -161,7 +161,7 @@ namespace Space.UI
         /// the warp map portion of the Station HUD
         /// </summary>
         public void InitializeWarpMap
-            (List<NetworkInstanceId> surroundingWarpGates,
+            (List<uint> surroundingWarpGates,
             Transform homeGate)
         {
             m_stationMsg.InitializeWarpMap

@@ -166,8 +166,16 @@ namespace Space.Ship
             }
         }
 
+        /// <summary>
+        /// Sets our ship in a combative 
+        /// agaisnt the passed transform
+        /// </summary>
+        /// <param name="Combatant"></param>
         public void SetCombatant(Transform Combatant)
         {
+            if (!hasAuthority)
+                return; 
+
             m_ship.Target = Combatant;
 
             CmdSetCombat(true);

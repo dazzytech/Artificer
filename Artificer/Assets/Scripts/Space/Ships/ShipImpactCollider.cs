@@ -100,7 +100,7 @@ namespace Space.Ship
 
             StartCoroutine(CycleComponentDamage(damaged, vals));
 
-            if (isLocalPlayer)
+            if (hasAuthority)
             {
                 if (GetComponent<ShipPlayerInputController>() != null)
                 {
@@ -149,10 +149,6 @@ namespace Space.Ship
             // Send message to server to process damage
             if (damagedComps.Count > 0)
             {
-                ClientScene.FindLocalObject(_hitD.originID).
-                    SendMessage("SetCombatant", this.transform,
-                    SendMessageOptions.DontRequireReceiver);
-
                 ShipColliderHitMessage msg = new ShipColliderHitMessage();
                 msg.HitComponents = damagedComps.ToArray();
                 msg.ShipID = this.netId;
@@ -200,9 +196,6 @@ namespace Space.Ship
             // Send message to server to process damage
             if (damagedComps.Count > 0)
             {
-                ClientScene.FindLocalObject(_hitD.originID).
-                    SendMessage("SetCombatant", this.transform);
-
                 ShipColliderHitMessage msg = new ShipColliderHitMessage();
                 msg.HitComponents = damagedComps.ToArray();
                 msg.ShipID = this.netId;

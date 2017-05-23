@@ -78,8 +78,6 @@ namespace Data.Shared
         // -                                    // Ship is aligned with mouse
         public bool Aligned;
 
-        public bool Initialized;
-
         //[NonSerialized]
         //public Texture2D IconTex;
 

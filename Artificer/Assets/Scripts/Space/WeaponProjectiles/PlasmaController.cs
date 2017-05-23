@@ -349,6 +349,13 @@ namespace Space.Projectiles
         /// <returns></returns>
         private bool ApplyDamage(RaycastHit2D hit)
         {
+            // Find the ship that fired the projectile
+            GameObject aggressor = ClientScene.FindLocalObject(_data.Self);
+
+            if (aggressor == null)
+            {
+                return false;
+            }
 
             if (hit.transform.Equals(Aggressor.transform))
             {
@@ -417,18 +424,12 @@ namespace Space.Projectiles
         /// </summary>
         public void DestroyProjectileDelay()
         {
-            CmdSetDestroy();
+            destroyed = true;
 
             _system.Clear();
 
             // Create destroy with delay of one sec
             Invoke("DestroyProjectile", 1f);
-        }
-
-        [Command]
-        public void CmdSetDestroy()
-        {
-            destroyed = true;
         }
 
         #endregion
