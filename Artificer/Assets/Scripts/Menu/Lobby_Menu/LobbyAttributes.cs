@@ -29,19 +29,11 @@ namespace Menu.Lobby
 
         #region LOBBY CONFIG
 
-        public int MinPlayers;
-
         // How long should we be matchmaking
         public float StartTimer;
 
         // if we are running the start timer
         public bool Starting;
-
-        // How long time the game timesout
-        public float TimeoutTimer;
-
-        // Are we currently in timeout?
-        public bool Timeout;
 
         #endregion
 

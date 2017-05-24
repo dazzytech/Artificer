@@ -79,6 +79,14 @@ namespace Menu.Lobby
             }
         }
 
+        private int MinPlayers
+        {
+            get
+            {
+                return SystemManager.MinPlayers;
+            }
+        }
+
         #endregion
 
         #region MONO BEHAVIOUR
@@ -110,7 +118,6 @@ namespace Menu.Lobby
 
         private void Awake()
         {
-            m_att.Timeout = false;
             m_att.Starting = false;
 
             // Do not display buttons first
@@ -118,7 +125,7 @@ namespace Menu.Lobby
             m_att.InviteBtn.gameObject.SetActive(false);
             m_att.LeaveBtn.gameObject.SetActive(false);
 
-            m_att.CounterText.text = "Initializing Matchmaker";
+            m_att.CounterText.text = "Connecting to Matchmaker";
         }
 
         #endregion
@@ -169,15 +176,11 @@ namespace Menu.Lobby
                 return;
             }
 
-            Debug.Log("attemping to join lobby");
-
             // As filters are already applied join the first available lobby
             CSteamID newLobby = m_att.LobbyList[0];
 
             if (newLobby != CSteamID.Nil)
                 JoinLobby(newLobby);
-            else
-                Debug.Log("Something went wrong..");
         }
 
         /// <summary>
@@ -346,9 +349,25 @@ namespace Menu.Lobby
 
             UpdateLobbyState();
 
-            if (IsHost && IsLive && !m_att.Starting)
+            if (m_att.Starting)
+            {
+                int remaining = int.Parse
+                    (SteamMatchmaking.GetLobbyData(LobbyID, "timer"));
+
+                // Update text item
+                // Display remaining time in format
+                // 0:00 minutes and seconds
+                m_att.CounterText.text =
+                    string.Format("Ready to start in: {0:D1}:{1:D2}",
+                    Mathf.FloorToInt(remaining / 60), Mathf.CeilToInt(remaining % 60));
+            }
+
+            // if we have enough players then begin the starting countdown
+            if (SteamMatchmaking.GetNumLobbyMembers(LobbyID) >=
+                    MinPlayers && IsHost && !m_att.Starting && IsLive)
             {
                 StartCoroutine("StartDelay");
+                m_att.Starting = true;
             }
 
             // Check if the lobby game has started
@@ -357,9 +376,6 @@ namespace Menu.Lobby
             {
                 JoinGame();
             }
-
-            Debug.Log(String.Format("Lobby Update: IsHost - {0}, Is Live - {1}, Running - {2} "
-                , IsHost, IsLive,  IsRunning ));
         }
 
         /// <summary>
@@ -372,18 +388,14 @@ namespace Menu.Lobby
             // Update visually
             m_att.LobbyViewer.UpdatePlayers();
 
-            // Only perform if the timeout function is invoked
-            if (m_att.Timeout)
+            // if we have enough players then begin the starting countdown
+            if ( SteamMatchmaking.GetNumLobbyMembers(LobbyID) >=
+                    MinPlayers && IsHost && !m_att.Starting && IsLive)
             {
-                // See if we are called due to player 
-                // Joining the lobby
-                if((int)param == 1)
-                {
-                    // Increase timeout by 5 sec
-                    // if player joined
-                    m_att.TimeoutTimer += 5;
-                }
+                StartCoroutine("StartDelay");
+                m_att.Starting = true;
             }
+
         }
 
         private void UpdatePersona(object param)
@@ -461,7 +473,6 @@ namespace Menu.Lobby
             StopAllCoroutines();
 
             m_att.Starting = false;
-            m_att.Timeout = false;
 
             m_att.CounterText.text = "Left lobby";
 
@@ -520,19 +531,11 @@ namespace Menu.Lobby
             // Loop through each second
             int seconds = 0;
 
-            m_att.Starting = true;
-
             while(seconds < m_att.StartTimer)
             {
                 float remaining = m_att.StartTimer - seconds;
 
-                // Update text item
-                // Display remaining time in format
-                // 0:00 minutes and seconds
-                m_att.CounterText.text =
-                    string.Format("Waiting for players: {0:D1}:{1:D2}",
-                    Mathf.FloorToInt(remaining / 60),
-                    Mathf.CeilToInt(remaining % 60));
+                SteamMatchmaking.SetLobbyData(LobbyID, "timer", remaining.ToString());
 
                 // increment seconds
                 seconds++;
@@ -551,73 +554,9 @@ namespace Menu.Lobby
                     (1f);
             }
 
-            if (SteamMatchmaking.GetNumLobbyMembers(LobbyID)
-                < m_att.MinPlayers)
-            {
-                // Begin the timeout if we have not 
-                // got enough players
-                yield return TimeoutDelay();
-            }
-            else
-                BuildGame();
+            BuildGame();
 
             m_att.Starting = false;
-
-            yield break;
-        }
-
-        /// <summary>
-        /// Called after alloted min start
-        /// time elapsed. causes timeout
-        /// and leaves lobby after alloted time
-        /// </summary>
-        /// <returns></returns>
-        private IEnumerator TimeoutDelay()
-        {
-            m_att.Timeout = true;
-
-            // Loop through each second
-            int seconds = 0;
-
-            while (seconds < m_att.TimeoutTimer)
-            {
-                float remaining = m_att.TimeoutTimer - seconds;
-
-                // Display remaining time in format
-                // 0:00 minutes and seconds
-                m_att.CounterText.text =
-                    string.Format("Timeout in: {0:D1}:{1:D2}",
-                    Mathf.FloorToInt(remaining / 60),
-                    Mathf.CeilToInt(remaining % 60));
-
-                // increment seconds
-                seconds++;
-
-                // if we reach the minimum amount of players then 
-                // begin the match
-                if (SteamMatchmaking.GetNumLobbyMembers(LobbyID) >=
-                    m_att.MinPlayers)
-                {
-                    // Attained enough players 
-                    // to begin game
-                    BuildGame();
-                    yield break;
-                }
-
-                // Wait for a second
-                yield return new WaitForSeconds
-                    (1f);
-            }
-
-            // Dont have enough players to start
-            m_att.CounterText.text = "Lobby timed out - not enough players.";
-            QuitLobby();
-
-            m_att.Timeout = false;
-
-            Popup_Dialog.ShowPopup("Not Enough Players",
-                "Not enough players have been found, please try again.",
-                DialogType.IMAGE, true);
 
             yield break;
         }

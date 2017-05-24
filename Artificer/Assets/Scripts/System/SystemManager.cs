@@ -46,6 +46,11 @@ public class SystemManager : NATTraversal.NetworkManager
         get { return m_singleton.m_base.Version; }
     }
 
+    public static int MinPlayers
+    {
+        get { return m_singleton.m_base.minimumPlayers; }
+    }
+
     public static GameMessageHandler GameMSG
     {
         get
@@ -221,7 +226,6 @@ public class SystemManager : NATTraversal.NetworkManager
     /// <param name="playerControllerId"></param>
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
-        Debug.Log("add player");
         GameMSG.AddNewPlayer
            (playerControllerId, conn);
     }

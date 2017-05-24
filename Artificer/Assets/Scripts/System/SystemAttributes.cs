@@ -40,17 +40,24 @@ public class SystemAttributes:MonoBehaviour
     public FactionLibrary FactionLibrary;
 
     // Server Objects
+    [HideInInspector]
     public GameMessageHandler GameMsg;
 
     // Static client accessors
     // ui
+    [HideInInspector]
     public UIMessegeHandler UI;
+    [HideInInspector]
     public UIStateController UIState;
+    [HideInInspector]
     public UIMessageController UIMsg;
+    [HideInInspector]
     public UIInputController UIInput;
 
+    [HideInInspector]
     public SpaceManager Space;
     public ServerManager Server;
+    [HideInInspector]
     public SystemNetworkDiscovery Discovery;
     public CameraMessageHandler CamMsgHandler;
 
@@ -60,5 +67,6 @@ public class SystemAttributes:MonoBehaviour
 
     // Reference to which Steam Lobby we are connected to
     public CSteamID Lobby;
+    public int minimumPlayers;
 }
 
