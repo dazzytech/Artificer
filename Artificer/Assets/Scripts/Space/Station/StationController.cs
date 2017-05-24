@@ -108,10 +108,7 @@ namespace Stations
             }
 
             // reference to our team
-            Att.TeamID = newTeam;
-
-            // place station under correct parent
-            transform.SetParent(Att.Team.transform);
+            Att.TeamID = newTeam;          
         }
 
         /// <summary>

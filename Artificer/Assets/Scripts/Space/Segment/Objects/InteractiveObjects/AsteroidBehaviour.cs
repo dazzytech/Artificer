@@ -13,6 +13,17 @@ namespace Space.Segment
 
         #endregion
 
+        #region MONO BEHAVIOUR
+
+        private void Start()
+        {
+            transform.localScale =
+                        new Vector3(m_scale,
+                                    m_scale, 1f);
+        }
+
+        #endregion
+
         #region SERVER INTERACTION
 
         /// <summary>
