@@ -12938,7 +12938,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 375, y: -57.995617}
+  m_AnchoredPosition: {x: 375, y: -57.995613}
   m_SizeDelta: {x: 730, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &741
@@ -13388,7 +13388,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 530, y: -511.12497}
+  m_AnchoredPosition: {x: 530, y: -511.125}
   m_SizeDelta: {x: 1060, y: 99.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &764
@@ -18259,7 +18259,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 160, y: -407.12827}
+  m_AnchoredPosition: {x: 160, y: -407.1283}
   m_SizeDelta: {x: 320, y: 98.08554}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1012
@@ -18449,9 +18449,9 @@ RectTransform:
   m_Father: {fileID: 791}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 550, y: -346}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 550, y: 0}
   m_SizeDelta: {x: 1060, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &1022
@@ -19823,6 +19823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6386971fbdfd8be40bb32af4a21348e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _controller: {fileID: 0}
 --- !u!114 &1087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19834,6 +19835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbe6be3b34e3d64384ba239f430c125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _listener: {fileID: 0}
   ContractPanel: {fileID: 218}
   contractPrefab: {fileID: 186752, guid: ff094f805b26b8b4086dc09a2973401f, type: 2}
   ShipImage: {fileID: 1128}
@@ -22896,6 +22898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Scroller: {fileID: 1032}
   MatButtonPrefab: {fileID: 135644, guid: 92d7140572ec8b44499a711b52cb0cde, type: 2}
+  _MatListItems: []
 --- !u!114 &1190
 MonoBehaviour:
   m_ObjectHideFlags: 0

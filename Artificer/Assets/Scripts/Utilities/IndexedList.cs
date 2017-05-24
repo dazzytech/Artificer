@@ -87,14 +87,9 @@ public class IndexedList<T>: List<T> where T: IndexedObject
 
     private IDManagerClass m_IDManager;
 
-    //inner ArrayList object
-    //protected ArrayList m_list;
-
     public IndexedList()
     {
         m_IDManager = new IDManagerClass();
-
-       // m_list = new ArrayList();
     }
 
     /// <summary>
@@ -107,7 +102,6 @@ public class IndexedList<T>: List<T> where T: IndexedObject
         newItem.ID = m_IDManager.Next();
 
         base.Add(newItem);
-        //m_list.Add(newItem);
     }
 
     new public void Remove(T obj)

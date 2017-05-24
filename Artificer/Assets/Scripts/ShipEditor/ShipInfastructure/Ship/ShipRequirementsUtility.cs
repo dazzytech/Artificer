@@ -18,7 +18,7 @@ namespace Construction.ShipEditor
     /// add amount to player cargo instead and remove component
     /// </summary>
     public class ShipRequirementsUtility
-    {
+    {/*
         // shared dictionary of requirements
         public Dictionary<MaterialData, float> Requirements;
 
@@ -79,7 +79,7 @@ namespace Construction.ShipEditor
                     else
                     {
                         Requirements.Add(mat, info.amount);
-                    }*/
+                    }
                 }
             }
         }
@@ -138,7 +138,7 @@ namespace Construction.ShipEditor
                         } else
                         {
                             Reimbursed.Add(mat, info.amount);
-                        }*/
+                        }
                     }
                     // Reimburse player
                     //SystemManager.GetPlayer.AddMaterial(ReturnAmt);
@@ -165,7 +165,7 @@ namespace Construction.ShipEditor
                             if(Requirements[mat] <= 0)
                                 Requirements.Remove(mat);
                         }
-                    }*/
+                    }
                 }
             }
         }
@@ -189,13 +189,13 @@ namespace Construction.ShipEditor
                         if(SystemManager.GetPlayer.Cargo[mat] <= 0)
                             SystemManager.GetPlayer.Cargo.Remove(mat);
                     }
-                }*/
+                }
             }
 
             Requirements.Clear();
             Reimbursed.Clear();
             Existing.Clear();
-        }
+        }*/
     }
 }
 

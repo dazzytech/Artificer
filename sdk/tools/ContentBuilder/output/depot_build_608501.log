@@ -1,26 +1,45 @@
-[2017-04-20 14:07:05]: Starting build for depot 608501, content path is "C:\Users\renderman\Documents\Artificer\sdk\tools\ContentBuilder\content\"
-[2017-04-20 14:07:05]: Building file listing for depot 608501 ...
-[2017-04-20 14:07:05]: Found 63 files for mapping: C:\Users\renderman\Documents\Artificer\sdk\tools\ContentBuilder\content\windows_content * -> .
-[2017-04-20 14:07:05]: Found 63 files (141 MB) for depot 608501
-[2017-04-20 14:07:06]: Building depot 608501, baseline manifest 2701987044935971367 (63 files)
-[2017-04-20 14:07:11]: Found 182 new chunks (182 old ones existed) for depot 608501, took 0 minutes, 4 seconds
+[2017-05-24 03:26:21]: Starting build for depot 608501, content path is "C:\Users\renderman\Documents\Artificer\sdk\tools\ContentBuilder\content\"
+[2017-05-24 03:26:21]: Building file listing for depot 608501 ...
+[2017-05-24 03:26:22]: Found 64 files for mapping: C:\Users\renderman\Documents\Artificer\sdk\tools\ContentBuilder\content\windows_content * -> .
+[2017-05-24 03:26:22]: Found 64 files (140 MB) for depot 608501
+[2017-05-24 03:26:22]: Building depot 608501, baseline manifest 5469568572606304551 (63 files)
+[2017-05-24 03:26:33]: Found 183 new chunks (182 old ones existed) for depot 608501, took 0 minutes, 10 seconds
 
-[2017-04-20 14:07:11]: Changes to baseline manifest:
-[2017-04-20 14:07:11]: Changed: "Artificer_Data\globalgamemanagers" 155 kB 
-[2017-04-20 14:07:11]: Changed: "Artificer_Data\globalgamemanagers.assets" 73 kB 
-[2017-04-20 14:07:11]: Changed: "Artificer_Data\level0" 240 kB 
-[2017-04-20 14:07:11]: Changed: "Artificer_Data\level1" 199 kB 
-[2017-04-20 14:07:11]: Changed: "Artificer_Data\level2" 19 kB 
-[2017-04-20 14:07:11]: Changed: "Artificer_Data\Managed\Assembly-CSharp-firstpass.dll" 275 kB 
-[2017-04-20 14:07:11]: Changed: "Artificer_Data\Managed\Assembly-CSharp.dll" 359 kB 
-[2017-04-20 14:07:11]: Changed: "Artificer_Data\output_log.txt" 7 kB 
-[2017-04-20 14:07:11]: Changed: "Artificer_Data\resources.assets" 6168 kB 
-[2017-04-20 14:07:11]: Changed: "Artificer_Data\resources.assets.resS" 24867 kB 
-[2017-04-20 14:07:11]: Changed: "Artificer_Data\sharedassets0.assets" 3070 kB 
-[2017-04-20 14:07:11]: Changed: "Artificer_Data\sharedassets0.assets.resS" 64359 kB 
-[2017-04-20 14:07:11]: Changed: "Artificer_Data\sharedassets1.assets" 40 kB 
-[2017-04-20 14:07:11]: Changed: "Artificer_Data\sharedassets2.assets" 6 kB 
-[2017-04-20 14:07:11]: Summary: 0 files added, 14 files changed, 0 files removed
-[2017-04-20 14:07:11]: Uploading new manifest (13658 bytes).
-[2017-04-20 14:07:12]: Uploading 25 out of 25 missing chunks.
-[2017-04-20 14:07:22]: Success! New manifestID 5469568572606304551 created and 25 new chunks uploaded.
+[2017-05-24 03:26:33]: Changes to baseline manifest:
+[2017-05-24 03:26:33]: Changed: "Artificer.exe" 22258 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\globalgamemanagers" 151 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\globalgamemanagers.assets" 71 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\level0" 239 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\level1" 201 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\level2" 19 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\Managed\Assembly-CSharp-firstpass.dll" 279 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\Managed\Assembly-CSharp.dll" 372 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\Managed\Mono.Security.dll" 287 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\Managed\mscorlib.dll" 2439 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\Managed\NATTraversalForUNET.dll" 64 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\Managed\System.Core.dll" 260 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\Managed\System.dll" 1045 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\Managed\System.Xml.dll" 1204 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\Managed\UnityEngine.dll" 1359 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\Managed\UnityEngine.dll.mdb" 439 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\Managed\UnityEngine.Networking.dll" 248 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\Managed\UnityEngine.UI.dll" 240 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\Mono\mono.dll" 2556 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\Mono\MonoPosixHelper.dll" 111 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\output_log.txt" 4 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\resources.assets" 6105 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\resources.assets.resS" 22945 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\Resources\unity default resources" 735 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\Resources\unity_builtin_extra" 368 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\sharedassets0.assets" 2789 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\sharedassets0.assets.resS" 62612 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\sharedassets1.assets" 46 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\sharedassets1.assets.resS" 2868 kB 
+[2017-05-24 03:26:33]: Changed: "Artificer_Data\sharedassets2.assets" 6 kB 
+[2017-05-24 03:26:33]: Added  : "Artificer_Data\StreamingAssets" 0 kB ,Flags: 64
+[2017-05-24 03:26:33]: Added  : "Artificer_Data\StreamingAssets\build_info.txt" 1 kB 
+[2017-05-24 03:26:33]: Removed: Artificer_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (30 kB)
+[2017-05-24 03:26:33]: Summary: 2 files added, 30 files changed, 1 files removed
+[2017-05-24 03:26:34]: Uploading new manifest (13857 bytes).
+[2017-05-24 03:26:34]: Uploading 95 out of 95 missing chunks.
+[2017-05-24 03:27:06]: Success! New manifestID 8951586187732173447 created and 95 new chunks uploaded.

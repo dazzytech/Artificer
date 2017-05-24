@@ -5,12 +5,15 @@ using System.Xml;
 // Artificer
 using Data.Shared;
 using Data.Space.Library;
+using Data.Space.Collectable;
 
 namespace Data.Space.DataImporter
 {
-    public class ElementDataImporter
+    public class ItemDataImporter
     {
-        public static void BuildElementLibrary(ElementLibrary library)
+        #region PUBLIC INTERACTION
+
+        public static void BuildItemLibrary(ItemLibrary library)
         {
             TextAsset txtAsset = (TextAsset)Resources.Load 
                 ("Space/Keys/element_key") as TextAsset;
@@ -20,21 +23,37 @@ namespace Data.Space.DataImporter
 
             XmlNode elementContainer = baseElement.LastChild;
 
-            List<MaterialData> mats = new List<MaterialData>();
+            BuildElements(library, baseElement, elementContainer);
+        }
 
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        /// <summary>
+        /// Populates the element item region
+        /// of the itemlist
+        /// </summary>
+        /// <param name="library"></param>
+        /// <param name="baseElement"></param>
+        /// <param name="elementContainer"></param>
+        private static void BuildElements
+            (ItemLibrary library, XmlDocument baseElement, XmlNode elementContainer)
+        {
             foreach (XmlNode xmlElement
                     in elementContainer.ChildNodes)
             {
-                MaterialData material = new MaterialData();
+                ElementItem material = new ElementItem();
                 material.Name = xmlElement.Attributes["name"].Value;
                 material.Element = xmlElement.Attributes["PTE"].Value;
                 material.Description = xmlElement.Attributes["desc"].Value;
                 material.Density = float.Parse(xmlElement.Attributes["dens"].Value);
 
-                mats.Add(material);
+                library.Add(material);
             }
-
-            library.AssignData(mats.ToArray());
         }
+
+        #endregion
+
     }
 }

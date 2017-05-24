@@ -8,7 +8,7 @@ using Menu; // use material list item till we create our own
 namespace Construction.ShipEditor
 {
     public class RequirementInventory : MonoBehaviour
-    {
+    {/*
         // Panel to manipulate
         public Transform _Scroller;
         
@@ -58,7 +58,7 @@ namespace Construction.ShipEditor
                         item.SetAmount(0f);
                     }
                 } CreateListboxItem(mat).SetPlayerAmount(current [mat]);;
-            }*/
+            }
         }
         
         /// <summary>
@@ -68,7 +68,7 @@ namespace Construction.ShipEditor
         /// <param name="import">Import.</param>
         public void AddMatsToList(Dictionary<MaterialData, float> requirements)
         {
-            /*
+            
             // Add player cargo into current
             Dictionary<MaterialData, float> current = SystemManager.GetPlayer.Cargo;
 
@@ -111,7 +111,7 @@ namespace Construction.ShipEditor
                 }
                 if(!itemExists) 
                     CreateListboxItem(mat).SetPlayerAmount(current [mat]);
-            }*/
+            }
         }
         
         private MaterialListItem CreateListboxItem(MaterialData mat)
@@ -134,6 +134,6 @@ namespace Construction.ShipEditor
             // Add to LB list
             _MatListItems.Add(matItem);
             return matItem;
-        }
+        }*/
     }
 }

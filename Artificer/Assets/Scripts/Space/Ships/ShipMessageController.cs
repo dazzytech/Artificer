@@ -46,7 +46,7 @@ namespace Space.Ship
         /// ship internal resources
         /// </summary>
         /// <param name="data"></param>
-        public void AddMaterial(Dictionary<MaterialData, float> data)
+        /*public void AddMaterial(Dictionary<MaterialData, float> data)
         {
 
             // Can't add material yet
@@ -60,7 +60,7 @@ namespace Space.Ship
                         (data[mat]).ToString("F2")
                        + " - " + mat.Element);
             }
-        }
+        }*/
 
         /// <summary>
         /// Creates a list of components that is 

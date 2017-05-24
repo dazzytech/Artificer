@@ -25,7 +25,7 @@ namespace Data.Shared
             _localUp;
             
         //-                                     // Player storage
-        public Dictionary<MaterialData, float> Cargo;
+        //public Dictionary<MaterialData, float> Cargo;
 
         //public Dictionary<Data.Shared.Component, int> StoredComps;
 

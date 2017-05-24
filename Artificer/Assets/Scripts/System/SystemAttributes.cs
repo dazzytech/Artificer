@@ -36,7 +36,7 @@ public class SystemAttributes:MonoBehaviour
 
     // Libraries
     public ShipLibrary PrebuiltShips;
-    public ElementLibrary ElementLibrary;
+    public ItemLibrary ItemLibrary;
     public FactionLibrary FactionLibrary;
 
     // Server Objects

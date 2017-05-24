@@ -17,7 +17,7 @@ public class AssetPreloader : MonoBehaviour
     public void PreloadAssets()
     {
         PreloadShips();
-        PreloadMaterials();
+        PreloadItemAssets();
         PreloadFactions();
     }
     
@@ -30,15 +30,15 @@ public class AssetPreloader : MonoBehaviour
                 (_att.PrebuiltShips);
     }
     
-    private void PreloadMaterials()
+    private void PreloadItemAssets()
     {
         // Does not have a directory as is always loaded within 
         // preload
-        _att.ElementLibrary = new ElementLibrary();
+        _att.ItemLibrary = new ItemLibrary();
         
-        ElementDataImporter
-            .BuildElementLibrary
-                (_att.ElementLibrary);
+        ItemDataImporter
+            .BuildItemLibrary
+                (_att.ItemLibrary);
     }
 
     private void PreloadFactions()
