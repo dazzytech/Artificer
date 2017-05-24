@@ -40,6 +40,7 @@ namespace Game
             else
             {
                 Destroy(gameObject);
+                NetworkServer.UnSpawn(gameObject);
                 return;
             }
 
@@ -66,6 +67,8 @@ namespace Game
             #endregion
 
             SystemManager.GameMSG = this;
+
+            //GetComponent<NetworkIdentity>().ForceSceneId(1);
         }
 
         #endregion

@@ -221,6 +221,7 @@ public class SystemManager : NATTraversal.NetworkManager
     /// <param name="playerControllerId"></param>
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
+        Debug.Log("add player");
         GameMSG.AddNewPlayer
            (playerControllerId, conn);
     }
