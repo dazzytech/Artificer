@@ -21,6 +21,7 @@ using System.Net.Sockets;
 using UnityEngine.Networking.Match;
 using NATTraversal;
 using UnityEngine.Networking.Types;
+using Data.Space.Library;
 
 [RequireComponent(typeof(SystemAttributes))]
 
@@ -41,6 +42,12 @@ public class SystemManager : NATTraversal.NetworkManager
 
     #region ACCESSORS
 
+
+    public static ItemLibrary Items
+    {
+        get { return m_singleton.m_base.ItemLibrary; }
+    }
+       
     public static string Version
     {
         get { return m_singleton.m_base.Version; }
