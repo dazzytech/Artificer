@@ -20,6 +20,9 @@ public class Collectable : MonoBehaviour
     public void InitializeCollectable(int itemID = -1)
     {
         m_itemYield = itemID;
+
+        gameObject.layer = LayerMask.NameToLayer("Collectable");
+        GetComponent<SpriteRenderer>().sortingLayerName = "BackgroundObjects";
     }
 
     /// <summary>
@@ -30,11 +33,15 @@ public class Collectable : MonoBehaviour
     /// <param name="col"></param>
     void OnTriggerEnter2D(Collider2D col)
     {
+        //if (col.transform.parent == null)
+            return;
         if (col.transform.parent.tag == "PlayerShip")
         {
-            SystemManager.Space.SendMessage
+            // discover a way to pass loot info
+            // class?
+            /*SystemManager.Space.SendMessage
                 ("ItemCollected", m_itemYield,
-                SendMessageOptions.RequireReceiver);
+                SendMessageOptions.RequireReceiver);*/
 
             Destroy(this.gameObject);
         }

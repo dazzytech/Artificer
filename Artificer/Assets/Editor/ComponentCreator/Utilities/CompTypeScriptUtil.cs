@@ -23,7 +23,8 @@ namespace Editor.Components
             {"Wells", typeof(WellListener)},
             {"Targeter", typeof(TargeterListener)},
             {"Shields", typeof(ShieldListener)},
-            {"Construct", typeof(BuildListener)}};
+            {"Construct", typeof(BuildListener)},
+            {"Storage", typeof(StorageListener)}};
         
         private static Dictionary<string, System.Type> 
             _ComponentAttributesReference = new Dictionary<string, System.Type>()
@@ -37,8 +38,9 @@ namespace Editor.Components
             {"Wells", typeof(WellAttributes)},
             {"Targeter", typeof(TargeterAttributes)},
             {"Shields", typeof(ShieldAttributes)},
-            {"Construct", typeof(BuildAttributes)}};
-        
+            {"Construct", typeof(BuildAttributes)},
+            {"Storage", typeof(StorageAttributes)}};
+
         // For now just create an instance of every 
         public static void AddBehavioursToObject(GameObject go, string type, GameObject old)
         {

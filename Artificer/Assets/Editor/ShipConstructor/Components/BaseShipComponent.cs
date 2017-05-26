@@ -68,29 +68,26 @@ namespace Editor
 
         private void OnEnable()
         {
-
-        }
-
-        public BaseShipComponent()
-		{
-            // initialize sockets
-            sockets = new List<SocketBehaviour>();
             connect = ScriptableObject.CreateInstance<Editor.ConnectionBehaviour>()
                 as ConnectionBehaviour;
 
+            // initialize sockets
+            sockets = new List<SocketBehaviour>();
+
+
             // initialize texture and position
             componentSprites = new Dictionary<string, Sprite>();
-            Bounds = new Rect(0,0,50,50);
+            Bounds = new Rect(0, 0, 50, 50);
 
             // initialize socket textures
-            open = Resources.Load("Textures/ShipEditor/socket_open", 
-                                  typeof(Texture2D))as Texture2D;
+            open = Resources.Load("Textures/ShipEditor/socket_open",
+                                  typeof(Texture2D)) as Texture2D;
 
-            pending =  Resources.Load("Textures/ShipEditor/socket_pending", 
-                                      typeof(Texture2D))as Texture2D;
+            pending = Resources.Load("Textures/ShipEditor/socket_pending",
+                                      typeof(Texture2D)) as Texture2D;
 
-            closed = Resources.Load("Textures/ShipEditor/socket_closed", 
-                                    typeof(Texture2D))as Texture2D;
+            closed = Resources.Load("Textures/ShipEditor/socket_closed",
+                                    typeof(Texture2D)) as Texture2D;
 
             pieceName = "Unassigned";
             pieceType = "Unassigned";
@@ -101,7 +98,7 @@ namespace Editor
             //default tex size
             Bounds.size = NoObject.
                 textureRect.size;
-		}
+        }
 
         [XmlIgnore]
         public GameObject SetGO

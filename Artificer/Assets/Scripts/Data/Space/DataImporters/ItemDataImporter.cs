@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 // Artificer
-using Data.Shared;
 using Data.Space.Library;
 using Data.Space.Collectable;
 
@@ -16,14 +15,18 @@ namespace Data.Space.DataImporter
         public static void BuildItemLibrary(ItemLibrary library)
         {
             TextAsset txtAsset = (TextAsset)Resources.Load 
-                ("Space/Keys/element_key") as TextAsset;
+                ("Space/Keys/item_key") as TextAsset;
 
             XmlDocument baseElement = new XmlDocument();
             baseElement.LoadXml(txtAsset.text);
 
             XmlNode elementContainer = baseElement.LastChild;
 
-            BuildElements(library, baseElement, elementContainer);
+            foreach (XmlNode xmlElement
+                    in elementContainer.ChildNodes)
+            {
+                BuildElements(library, xmlElement, xmlElement.Name);
+            }
         }
 
         #endregion
@@ -38,18 +41,46 @@ namespace Data.Space.DataImporter
         /// <param name="baseElement"></param>
         /// <param name="elementContainer"></param>
         private static void BuildElements
-            (ItemLibrary library, XmlDocument baseElement, XmlNode elementContainer)
+            (ItemLibrary library, XmlNode elementContainer, string type)
         {
             foreach (XmlNode xmlElement
                     in elementContainer.ChildNodes)
             {
-                ElementItem material = new ElementItem();
-                material.Name = xmlElement.Attributes["name"].Value;
-                material.Element = xmlElement.Attributes["PTE"].Value;
-                material.Description = xmlElement.Attributes["desc"].Value;
-                material.Density = float.Parse(xmlElement.Attributes["dens"].Value);
+                if (xmlElement.Name == "#comment")
+                    continue;
 
-                library.Add(material);
+                ItemData item = null;
+
+                if (type == "elements")
+                    item = new ElementItem();
+                if (type == "materials")
+                    item = new MaterialItem();
+
+                if (item == null)
+                    return;
+
+                item.Name = xmlElement.Attributes["name"].Value;
+                item.Description = xmlElement.Attributes["desc"].Value;
+                item.Density = float.Parse(xmlElement.Attributes["dens"].Value);
+
+                if (type == "materials")
+                {
+                    // Cast the material as child node and init yield keys
+                    MaterialItem material = item as MaterialItem;
+                    material.Composition = new string[xmlElement.ChildNodes.Count-1];
+                    int i = 0;
+
+                    foreach (XmlNode elemKey
+                        in xmlElement.ChildNodes)
+                    {
+                        if (elemKey.Name == "#comment")
+                            continue;
+
+                        material.Composition[i++] = 
+                            elemKey.Attributes["key"].Value;
+                    }
+                }
+                library.Add(item);
             }
         }
 

@@ -15,7 +15,7 @@ namespace Space.Segment
 
         #region MONO BEHAVIOUR
 
-        private void Start()
+        private void Awake()
         {
             transform.localScale =
                         new Vector3(m_scale,

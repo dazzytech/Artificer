@@ -12,6 +12,8 @@ namespace Space.Ship.Components.Attributes
     /// </summary>
     public class StorageAttributes: ComponentAttributes
     {
+        [Header("Storage Attributes")]
+
         public Dictionary<int, float> storage;                // <itemID, amount (kg)>
 
         public float dimensions;                                       // ft^3 (cubic foot)

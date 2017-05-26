@@ -10,6 +10,7 @@ namespace Data.Space.Collectable
     /// </summary>
     public class MaterialItem : ItemData
     {
-        public int[] Yield;         // item ID of elements returned when refined
+        // change to inc yeild chance and yeild amount
+        public string[] Composition;         // elements that item is made of
     }
 }

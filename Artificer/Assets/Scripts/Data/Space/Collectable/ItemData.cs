@@ -12,8 +12,8 @@ namespace Data.Space.Collectable
     {
         #region ITEM DESCRIPTION
 
-        public string Name;            // e.g. "Gold"
-        public string Description;      // e.g. "Conductive unresponsive metal
+        public string Name;            // e.g. "Au"
+        public string Description;      // e.g. "Gold"
         public float Density;            // 547 kg per cubic foot (ft^3)
 
         #endregion

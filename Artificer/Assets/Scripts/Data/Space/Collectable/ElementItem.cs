@@ -8,8 +8,7 @@ using System.Collections;
 /// </summary>
 namespace Data.Space.Collectable
 {
-    public class ElementData: ItemData
+    public class ElementItem: ItemData
     {
-        public string Element;         // e.g. "Au"
     }
 }
