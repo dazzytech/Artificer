@@ -125,8 +125,8 @@ namespace Construction.ShipEditor
                     break;
                 case "Wells":
                     WellPanel.gameObject.SetActive(true);
-                    WellPanel.Find("Radius").GetComponent<Text>().text = ((WellAttributes)att).WellRadius.ToString()+"m";
-                    WellPanel.Find("Force").GetComponent<Text>().text = ((WellAttributes)att).PullForce.ToString();
+                    WellPanel.Find("Radius").GetComponent<Text>().text = ((CollectorAttributes)att).Radius.ToString()+"m";
+                    WellPanel.Find("Force").GetComponent<Text>().text = ((CollectorAttributes)att).PullForce.ToString();
                     break;
                 case "Warps":
                     WarpPanel.gameObject.SetActive(true);

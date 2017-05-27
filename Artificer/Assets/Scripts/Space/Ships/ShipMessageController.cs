@@ -46,21 +46,21 @@ namespace Space.Ship
         /// ship internal resources
         /// </summary>
         /// <param name="data"></param>
-        /*public void AddMaterial(Dictionary<MaterialData, float> data)
+        public void CollectItem(Collectable data)
         {
 
             // Can't add material yet
             //_ship.Ship.AddMaterial(data);
 
-            foreach (MaterialData mat in data.Keys)
+            /*foreach (MaterialData mat in data.Keys)
             {
                 // Set to popup gui
                 SystemManager.UIMsg.DisplayMessege
                     ("small", "You have collected: " +
                         (data[mat]).ToString("F2")
                        + " - " + mat.Element);
-            }
-        }*/
+            }*/
+        }
 
         /// <summary>
         /// Creates a list of components that is 

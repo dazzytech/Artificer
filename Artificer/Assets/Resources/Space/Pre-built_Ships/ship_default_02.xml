@@ -112,7 +112,7 @@
       <IsHead>true</IsHead>
       <StyleSelect>0</StyleSelect>
     </head>
-    <body instanceID="3" folder="Components" name="Ship_Hull_03" direction="up" trigger="" combat="" style="default">
+    <body instanceID="3" folder="Storage" name="Ship_Hull_03" direction="up" trigger="" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -264,23 +264,23 @@
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
-        <x>506</x>
-        <y>252</y>
+        <x>502</x>
+        <y>258</y>
         <position>
-          <x>506</x>
-          <y>252</y>
+          <x>502</x>
+          <y>258</y>
         </position>
         <center>
-          <x>528</x>
-          <y>273.5</y>
+          <x>524</x>
+          <y>279.5</y>
         </center>
         <min>
-          <x>506</x>
-          <y>252</y>
+          <x>502</x>
+          <y>258</y>
         </min>
         <max>
-          <x>550</x>
-          <y>295</y>
+          <x>546</x>
+          <y>301</y>
         </max>
         <width>44</width>
         <height>43</height>
@@ -288,10 +288,10 @@
           <x>44</x>
           <y>43</y>
         </size>
-        <xMin>506</xMin>
-        <yMin>252</yMin>
-        <xMax>550</xMax>
-        <yMax>295</yMax>
+        <xMin>502</xMin>
+        <yMin>258</yMin>
+        <xMax>546</xMax>
+        <yMax>301</yMax>
       </Bounds>
       <rotation>0</rotation>
       <IsHead>false</IsHead>
@@ -597,23 +597,23 @@
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
-        <x>500.5</x>
-        <y>255.5</y>
+        <x>496.5</x>
+        <y>261.5</y>
         <position>
-          <x>500.5</x>
-          <y>255.5</y>
+          <x>496.5</x>
+          <y>261.5</y>
         </position>
         <center>
-          <x>507</x>
-          <y>262</y>
+          <x>503</x>
+          <y>268</y>
         </center>
         <min>
-          <x>500.5</x>
-          <y>255.5</y>
+          <x>496.5</x>
+          <y>261.5</y>
         </min>
         <max>
-          <x>513.5</x>
-          <y>268.5</y>
+          <x>509.5</x>
+          <y>274.5</y>
         </max>
         <width>13</width>
         <height>13</height>
@@ -621,10 +621,10 @@
           <x>13</x>
           <y>13</y>
         </size>
-        <xMin>500.5</xMin>
-        <yMin>255.5</yMin>
-        <xMax>513.5</xMax>
-        <yMax>268.5</yMax>
+        <xMin>496.5</xMin>
+        <yMin>261.5</yMin>
+        <xMax>509.5</xMax>
+        <yMax>274.5</yMax>
       </Bounds>
       <rotation>90</rotation>
       <IsHead>false</IsHead>
@@ -741,44 +741,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="20" folder="Wells" name="Well_02" direction="down" trigger="well" combat="" style="default">
-      <name />
-      <hideFlags>None</hideFlags>
-      <Bounds>
-        <x>543</x>
-        <y>286.5</y>
-        <position>
-          <x>543</x>
-          <y>286.5</y>
-        </position>
-        <center>
-          <x>571</x>
-          <y>316.5</y>
-        </center>
-        <min>
-          <x>543</x>
-          <y>286.5</y>
-        </min>
-        <max>
-          <x>599</x>
-          <y>346.5</y>
-        </max>
-        <width>56</width>
-        <height>60</height>
-        <size>
-          <x>56</x>
-          <y>60</y>
-        </size>
-        <xMin>543</xMin>
-        <yMin>286.5</yMin>
-        <xMax>599</xMax>
-        <yMax>346.5</yMax>
-      </Bounds>
-      <rotation>180</rotation>
-      <IsHead>false</IsHead>
-      <StyleSelect>0</StyleSelect>
-    </body>
-    <body instanceID="21" folder="Components" name="Ship_Hull_06" direction="down" trigger="" combat="" style="default">
+    <body instanceID="20" folder="Components" name="Ship_Hull_06" direction="down" trigger="" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -815,15 +778,51 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
+    <body instanceID="21" folder="Collectors" name="Well_02" direction="down" trigger="" combat="" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>543</x>
+        <y>286.5</y>
+        <position>
+          <x>543</x>
+          <y>286.5</y>
+        </position>
+        <center>
+          <x>571</x>
+          <y>316.5</y>
+        </center>
+        <min>
+          <x>543</x>
+          <y>286.5</y>
+        </min>
+        <max>
+          <x>599</x>
+          <y>346.5</y>
+        </max>
+        <width>56</width>
+        <height>60</height>
+        <size>
+          <x>56</x>
+          <y>60</y>
+        </size>
+        <xMin>543</xMin>
+        <yMin>286.5</yMin>
+        <xMax>599</xMax>
+        <yMax>346.5</yMax>
+      </Bounds>
+      <rotation>180</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
   </pieces>
   <links>
     <link linkID="0" IDfrom="2" IDto="3" linkToID="0" />
-    <link linkID="0" IDfrom="3" IDto="2" linkToID="0" />
-    <link linkID="1" IDfrom="3" IDto="21" linkToID="1" />
-    <link linkID="0" IDfrom="21" IDto="20" linkToID="0" />
-    <link linkID="3" IDfrom="21" IDto="7" linkToID="0" />
+    <link linkID="1" IDfrom="3" IDto="20" linkToID="1" />
+    <link linkID="0" IDfrom="20" IDto="21" linkToID="0" />
+    <link linkID="3" IDfrom="20" IDto="7" linkToID="0" />
     <link linkID="1" IDfrom="7" IDto="16" linkToID="0" />
-    <link linkID="5" IDfrom="21" IDto="8" linkToID="1" />
+    <link linkID="5" IDfrom="20" IDto="8" linkToID="1" />
     <link linkID="0" IDfrom="8" IDto="9" linkToID="0" />
     <link linkID="4" IDfrom="3" IDto="5" linkToID="1" />
     <link linkID="0" IDfrom="5" IDto="19" linkToID="0" />
