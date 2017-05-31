@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using Space.AI.State;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace Space.AI.Agent
 {
@@ -10,7 +12,26 @@ namespace Space.AI.Agent
     /// </summary>
     public class GuardAgent : FSM
     {
+        #region ATTRIBUTES 
+
+        [Header("State Management")]
+
+        public int hi;
+
+        [SerializeField]
+        protected List<FSMState> m_fsmStates = new List<FSMState>()
+        {
+            new AttackState()
+        };
+
+        #endregion
+
         #region FSM 
+
+        protected override List<FSMState> StateMap()
+        {
+            return m_fsmStates;
+        }
 
         protected override void Initialize()
         {

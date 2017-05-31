@@ -2,11 +2,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using Space.Ship;
+using System;
 
 namespace Space.AI
 {
-    public abstract class FSMState
+    [System.Serializable]
+    public class FSMState
     {
+        #region DICTIONARY
+
+        // Create dummy entry type
+        [Serializable]
+        public class Entry : GenericDictionaryItem<Transition, FSMStateID>
+        {
+        }
+
+        [System.Serializable]
+        public class StateDictionary: GenericDictionary<Transition, FSMStateID, Entry> { }
+
+        #endregion
+
         #region ATTRIBUTES
 
         #region STATE MANAGEMENT
@@ -15,8 +30,8 @@ namespace Space.AI
         /// Possible states it is capable of transitioning to
         /// </summary>
         [SerializeField]
-        protected Dictionary<Transition, FSMStateID>
-            m_stateMap = new Dictionary<Transition, FSMStateID>();
+        private StateDictionary
+            m_transitionMap;
 
         protected FSMStateID m_stateID;
 
@@ -48,49 +63,14 @@ namespace Space.AI
             get { return m_self.Con; }
         }
 
+        protected FSM Self
+        {
+            get { return m_self; }
+        }
+
         #endregion
 
         #region PUBLIC INTERACTION
-
-        public void AddTransition(Transition transition, FSMStateID id)
-        {
-            if (transition == Transition.None || ID == FSMStateID.None)
-            {
-                Debug.LogWarning("FSMState : Null transition not allowed");
-                return;
-            }
-
-            // siince this is a deterministic FSM
-            // check if trans is already in map
-            if (m_stateMap.ContainsKey(transition))
-            {
-                Debug.LogWarning("FSMState ERROR: transition is already inside the map");
-                return;
-            }
-
-            m_stateMap.Add(transition, id);
-        }
-
-        /// <summary>
-        /// This method deletes a pair transition-state from this state´s map.
-        /// If the transition was not inside the state´s map, an ERROR message is printed.
-        /// </summary>
-        public void DeleteTransition(Transition trans)
-        {
-            // check null
-            if (trans == Transition.None)
-            {
-                Debug.LogError("FSMState ERROR: NullTransition is not allowed");
-                return;
-            }
-
-            if (m_stateMap.ContainsKey(trans))
-            {
-                m_stateMap.Remove(trans);
-                return;
-            }
-            Debug.LogError("FSMState ERROR: Transition passed was not on this State´s List");
-        }
 
         /// <summary>
         /// This method returns the new state the FSM should be if
@@ -104,9 +84,9 @@ namespace Space.AI
                 return FSMStateID.None;
             }
 
-            if (m_stateMap.ContainsKey(trans))
+            if (m_transitionMap.ContainsKey(trans))
             {
-                return m_stateMap[trans];
+                return m_transitionMap[trans];
             }
 
             Debug.LogError("FSMState ERROR: " + trans + " Transition passed to the State was not on the list");
@@ -115,20 +95,20 @@ namespace Space.AI
 
         #endregion
 
-        #region ABSTRACT FUNCTIONALITY
+        #region VIRTUAL FUNCTIONALITY
 
         /// <summary>
         /// Decides if the state should transition to another on its list
         /// NPC is a reference to the npc tha is controlled by this class
         /// </summary>
-        public abstract void Reason(List<Transform> objs, Transform npc);
+        public virtual void Reason(List<Transform> objs, Transform npc) { }
 
         /// <summary>
         /// This method controls the behavior of the NPC in the game World.
         /// Every action, movement or communication the NPC does should be placed here
         /// NPC is a reference to the npc tha is controlled by this class
         /// </summary>
-        public abstract void Act(List<Transform> objs, Transform npc);
+        public virtual void Act(List<Transform> objs, Transform npc) { }
 
         #endregion
     }

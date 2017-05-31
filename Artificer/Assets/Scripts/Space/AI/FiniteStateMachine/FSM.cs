@@ -47,20 +47,15 @@ namespace Space.AI
     /// allows each agent to be assigned a specific set of 
     /// behaviours
     /// </summary>
-    public class FSM : MonoBehaviour
+    public abstract class FSM : MonoBehaviour
     {
         #region ATTRIBUTES
 
         #region STATE MANAGEMENT 
 
-        [SerializeField]
-        private List<FSMState> _fsmStates = new List<FSMState>();
+        private FSMStateID m_currentStateID;
 
-        private FSMStateID _currentStateID;
-        public FSMStateID CurrentStateID { get { return _currentStateID; } }
-
-        private FSMState _currentState;
-        public FSMState CurrentState { get { return _currentState; } }
+        private FSMState m_currentState;
 
         #endregion
 
@@ -78,6 +73,10 @@ namespace Space.AI
         #endregion
 
         #region ACCESSOR
+
+        public FSMStateID CurrentStateID { get { return m_currentStateID; } }
+
+        public FSMState CurrentState { get { return m_currentState; } }
 
         public ShipInputReceiver Con
         {
@@ -97,77 +96,13 @@ namespace Space.AI
 
         #endregion
 
-        #region NEED REMOVAL
-
-        /*
-         * STATE MANAGEMENT UTILITIES
-         * */
-
-        /// <summary>
-        /// Add new state into the list
-        /// </summary>
-        /// <param name="fsmState">Fsm state.</param>
-        public void AddFSMState(FSMState fsmState)
-        {
-            if (fsmState == null)
-            {
-                Debug.LogError("FSM ERROR: Null reference is not allowed");
-            }
-
-            // First state inserted is also the initial state
-            // the state the machine is in when the simulation begins
-            if (_fsmStates.Count == 0)
-            {
-                _fsmStates.Add(fsmState);
-                _currentState = fsmState;
-                _currentStateID = fsmState.ID;
-                return;
-            }
-
-            foreach (FSMState state in _fsmStates)
-            {
-                if (state.ID == fsmState.ID)
-                {
-                    Debug.LogError("FSM ERROR: Trying to add a state that was already instantiated");
-                    return;
-                }
-            }
-
-            _fsmStates.Add(fsmState);
-        }
-
-        /// <summary>
-        /// Deletes the state.
-        /// </summary>
-        /// <param name="fsmState">Fsm state.</param>
-        public void DeleteState(FSMStateID fsmState)
-        {
-            if (fsmState == FSMStateID.None)
-            {
-                Debug.LogError("FSM ERROR: null id is not allowed");
-                return;
-            }
-
-            foreach (FSMState state in _fsmStates)
-            {
-                if (state.ID == fsmState)
-                {
-                    _fsmStates.Remove(state);
-                    return;
-                }
-            }
-            Debug.LogError("FSM ERROR: The state passed was not on the list. Impossible to delete it");
-        }
-
-        #endregion
-
         /// <summary>
         /// This method tries to change the state the FSM is in based on
         /// the current state and the transition passed. If current state
         ///  doesn´t have a target state for the transition passed, 
         /// an ERROR message is printed.
         /// </summary>
-        public void PerformTransition(Transition trans)
+        public void SetTransition(Transition trans)
         {
             if (trans == Transition.None)
             {
@@ -175,7 +110,7 @@ namespace Space.AI
                 return;
             }
 
-            FSMStateID id = _currentState.GetOutputState(trans);
+            FSMStateID id = m_currentState.GetOutputState(trans);
             if (id == FSMStateID.None)
             {
                 Debug.LogError("FSM ERROR: Current State does not have a target state for this transition");
@@ -183,18 +118,20 @@ namespace Space.AI
             }
 
             // Update the currentStateID and currentState
-            _currentStateID = id;
-            foreach (FSMState state in _fsmStates)
+            m_currentStateID = id;
+            foreach (FSMState state in StateMap())
             {
-                if (state.ID == _currentStateID)
+                if (state.ID == m_currentStateID)
                 {
-                    _currentState = state;
+                    m_currentState = state;
                     break;
                 }
             }
         }
 
         #region VIRTUAL FUNCTIONS
+
+        protected abstract List<FSMState> StateMap();
 
         // virtual functions for AIAgents
         protected virtual void Initialize()

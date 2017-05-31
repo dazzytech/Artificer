@@ -1,18 +1,23 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 namespace Space.AI.State
 {
     /// <summary>
-    /// 
+    /// When within attack range of target
+    /// open fire.
+    /// Used by attack and guard agents
     /// </summary>
     public class AttackState : FSMState
     {
-        private Vector3 _dest;
+        private Vector3 m_attackPoint;
 
+        // Defined in editor
+        // how long the angle
         [SerializeField]
-        private float _angleAccuracy;
+        private float m_angleAccuracy;
 
         public AttackState()
         {
@@ -20,7 +25,7 @@ namespace Space.AI.State
             Keys = new List<KeyCode>();
         }
 
-        public override void Reason(List<Transform> enemies, Transform npc)
+        public override void Reason(List<Transform> targets, Transform npc)
         {
             // Test for emergency eject
             if (ShipStatus.EvacNeeded(npc))
@@ -30,15 +35,15 @@ namespace Space.AI.State
             }
 
             // Check that we have enemies to fight
-            if (enemies.Count <= 0 || enemies[0] == null)
+            if (targets.Count <= 0 || targets[0] == null)
             {
                 npc.SendMessage("SetTransition", Transition.LostEnemy);
                 return;
             }
 
-            Transform target = DestUtil.FindClosestEnemy(enemies, npc.position);
-            _dest = target.position;
-            float dist = Vector3.Distance(npc.position, _dest);
+            Transform target = DestUtil.FindClosestEnemy(targets, npc.position);
+            m_attackPoint = target.position;
+            float dist = Vector3.Distance(npc.position, m_attackPoint);
 
             //if(CombUtil.EnemyIsVisible(_dest, dist, npc, target) != null)
             //npc.SendMessage("SetTransition", Transition.GoAround);
@@ -51,23 +56,28 @@ namespace Space.AI.State
                 npc.SendMessage("SetTransition", Transition.PullOff);
         }
 
-        public override void Act(List<Transform> enemies, Transform npc)
+        /// <summary>
+        /// Attempt to fire on the target
+        /// </summary>
+        /// <param name="enemies"></param>
+        /// <param name="npc"></param>
+        public override void Act(List<Transform> targets, Transform npc)
         {
             Keys.Clear();
 
             Con.ReleaseKey(Control_Config.GetKey("fire", "ship"));
             Con.ReleaseKey(Control_Config.GetKey("moveDown", "ship"));
 
-            float angleDiff = DestUtil.FindAngleDifference(npc, _dest);
+            float angleDiff = DestUtil.FindAngleDifference(npc, m_attackPoint);
 
             Keys.Add(Control_Config.GetKey("moveUp", "ship"));
 
-            if (angleDiff >= _angleAccuracy)
+            if (angleDiff >= m_angleAccuracy)
             {
                 Con.ReleaseKey(Control_Config.GetKey("turnRight", "ship"));
                 Keys.Add(Control_Config.GetKey("turnLeft", "ship"));
             }
-            else if (angleDiff <= -_angleAccuracy)
+            else if (angleDiff <= -m_angleAccuracy)
             {
                 Con.ReleaseKey(Control_Config.GetKey("turnLeft", "ship"));
                 Keys.Add(Control_Config.GetKey("turnRight", "ship"));

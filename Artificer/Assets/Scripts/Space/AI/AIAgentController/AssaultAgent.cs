@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Space.AI.State;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,22 @@ namespace Space.AI.Agent
     /// </summary>
     public class AssaultAgent : FSM
     {
-        #region FSM 
+        #region ATTRIBUTES 
+
+        [SerializeField]
+        protected List<FSMState> m_fsmStates = new List<FSMState>()
+        {
+            new AttackState()
+        };
+
+        #endregion
+
+        #region FSM
+
+        protected override List<FSMState> StateMap()
+        {
+            return m_fsmStates;
+        }
 
         protected override void Initialize()
         {
