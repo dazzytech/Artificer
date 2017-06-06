@@ -48,7 +48,7 @@ namespace Space.Ship
             // so if that's the case, spawn it now. Otherwise, just wait for the RpcSpawnMe call.
             if (hasSpawned)
             {
-                SetUpPlayer();
+                SetUpPlayer(SystemManager.Space.TeamID);
                 // Add this item to local UI list
                 // p.s should be performed on each client without cmd
                 SystemManager.UI.AddUIPiece(transform);
@@ -81,18 +81,18 @@ namespace Space.Ship
             string shipName = netMsg.
                 ReadMessage<StringMessage>().value;
             
-            CmdSpawnMe(shipName);
+            CmdSpawnMe(shipName, SystemManager.Space.TeamID);
         }
 
         [Command]
-        private void CmdSpawnMe(string shipName)
+        private void CmdSpawnMe(string shipName, int teamID)
         {
             if (hasSpawned)
                 return; 
 
             hasSpawned = true;
             Ship = shipName;
-            RpcSpawnMe(shipName);
+            RpcSpawnMe(shipName, teamID);
 
             SystemManager.UI.RpcAddRemotePlayer(netId);
         }
@@ -102,13 +102,13 @@ namespace Space.Ship
         /// </summary>
         /// <param name="a_data">ship data to pass</param>
         [ClientRpc]
-        private void RpcSpawnMe(string shipName)
+        private void RpcSpawnMe(string shipName, int teamID)
         {
             //spawnData will be synced by the server automatically,
             //but I don't trust it to arrive before this call, so I pass it into
             //this function anyway to be sure.
             Ship = shipName;
-            SetUpPlayer();
+            SetUpPlayer(teamID);
             
 
             if(OnShipCreated != null)
@@ -118,10 +118,11 @@ namespace Space.Ship
         /// <summary>
         /// Construct the ship object for the player
         /// </summary>
-        private void SetUpPlayer()
+        private void SetUpPlayer(int teamID)
         {
             ShipAtt = GetComponent<ShipAttributes>();
             ShipAtt.instID = netId;
+            ShipAtt.TeamID = teamID;
 
             //Build the object with spawnData
             ShipGenerator.GenerateShip(ShipLibrary.GetShip(Ship), this.gameObject);

@@ -38,6 +38,8 @@ namespace Space.Ship
 
         [SyncVar]
         public bool InCombat;
+        
+        public int TeamID;
 
         public NetworkInstanceId instID;
 

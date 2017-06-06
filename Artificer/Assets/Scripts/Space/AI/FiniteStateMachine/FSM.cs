@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using Space.Ship;
+using Stations;
 
 namespace Space.AI
 {
@@ -72,6 +73,9 @@ namespace Space.AI
         /// </summary>
         protected List<ShipAttributes> m_ships
             = new List<ShipAttributes>();
+
+        protected List<StationAttributes> m_stations
+            = new List<StationAttributes>();
 
         /// <summary>
         /// Stores a reference to what we have targetted
@@ -228,6 +232,8 @@ namespace Space.AI
 
         #region VIRTUAL FUNCTIONS
 
+        #region FSM
+
         // virtual functions for AIAgents
         protected virtual void Initialize()
         {
@@ -248,22 +254,112 @@ namespace Space.AI
 
         #endregion
 
+        /// <summary>
+        /// A one shot coroutine that finds the target
+        /// closest to this agent
+        /// </summary>
+        /// <param name="maxDistance"></param>
+        /// <returns></returns>
+        protected virtual void GetClosestTarget(float maxDistance)
+        {
+            if (m_targets == null)
+                return;
+
+            // This is used to find the closest object 
+            float minDistance = float.MaxValue;
+
+            // If target exists include it
+            if (m_target != null)
+                minDistance = Vector3.Distance(transform.position,
+                    m_target.position);
+
+            foreach (Transform target in m_targets)
+            {
+                // basic error proofing 
+                if (target == null)
+                    continue;
+
+                // Discover the distance between this and target
+                float distance = Vector3.Distance(transform.position, target.position);
+
+                // skip if this exceeds maximum distance 
+                if (distance > maxDistance)
+                    continue;
+
+                // Check if this is closer then our current target
+                if (distance < minDistance)
+                {
+                    // This object is closer
+
+                    // Assign as target
+                    m_target = target;
+
+                    // Assign distance
+                    minDistance = distance;
+                }
+            }
+        }
+
+        #endregion
+
         #region COROUTINES
 
         private IEnumerator FindShips()
         {
             while (true)
             {
-                m_ships.Clear();
+                // Clear any m_ships that are now null
+                int i = 0;
+                while(i < m_ships.Count)
+                {
+                    if (m_ships[i] == null)
+                        m_ships.RemoveAt(i);
+                }
 
-                // Get every transform
-                // within _ships
+                // Get every ship and store if we dont have them
                 GameObject root = GameObject.Find("_ships");
                 foreach (ShipAttributes child in
                          root.GetComponentsInChildren<ShipAttributes>())
                 {
                     if (!m_ships.Contains(child))
                         m_ships.Add(child);
+
+                    yield return null;
+                }
+
+                yield return null;
+            }
+        }
+
+        private IEnumerator FindStations()
+        {
+            while (true)
+            {
+                // Clear any m_ships that are now null
+                int i = 0;
+                while (i < m_stations.Count)
+                {
+                    if (m_stations[i] == null)
+                        m_stations.RemoveAt(i);
+                }
+
+                // Get every ship and store if we dont have them
+                GameObject root = GameObject.Find("Team_A");
+                foreach (StationAttributes child in
+                         root.GetComponentsInChildren<StationAttributes>())
+                {
+                    if (!m_stations.Contains(child))
+                        m_stations.Add(child);
+
+                    yield return null;
+                }
+
+                root = GameObject.Find("Team_B");
+                foreach (StationAttributes child in
+                         root.GetComponentsInChildren<StationAttributes>())
+                {
+                    if (!m_stations.Contains(child))
+                        m_stations.Add(child);
 
                     yield return null;
                 }
