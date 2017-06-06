@@ -9,19 +9,6 @@ namespace Space.AI
     [System.Serializable]
     public class FSMState
     {
-        #region DICTIONARY
-
-        // Create dummy entry type
-        [Serializable]
-        public class Entry : GenericDictionaryItem<Transition, FSMStateID>
-        {
-        }
-
-        [System.Serializable]
-        public class StateDictionary: GenericDictionary<Transition, FSMStateID, Entry> { }
-
-        #endregion
-
         #region ATTRIBUTES
 
         #region STATE MANAGEMENT
@@ -29,8 +16,7 @@ namespace Space.AI
         /// <summary>
         /// Possible states it is capable of transitioning to
         /// </summary>
-        [SerializeField]
-        private StateDictionary
+        private Dictionary<Transition, FSMStateID>
             m_transitionMap;
 
         protected FSMStateID m_stateID;
@@ -71,6 +57,52 @@ namespace Space.AI
         #endregion
 
         #region PUBLIC INTERACTION
+
+        /// <summary>
+        /// Adds what behaviour will happen when 
+        /// a transition is called
+        /// </summary>
+        /// <param name="transition"></param>
+        /// <param name="id"></param>
+        public void AddTransition(Transition transition, FSMStateID id)
+        {
+            if (transition == Transition.None || ID == FSMStateID.None)
+            {
+                Debug.LogWarning("FSMState : Null transition not allowed");
+                return;
+            }
+
+            // siince this is a deterministic FSM
+            // check if trans is already in map
+            if (m_transitionMap.ContainsKey(transition))
+            {
+                Debug.LogWarning("FSMState ERROR: transition is already inside the map");
+                return;
+            }
+
+            m_transitionMap.Add(transition, id);
+        }
+
+        /// <summary>
+        /// This method deletes a pair transition-state from this state´s map.
+        /// If the transition was not inside the state´s map, an ERROR message is printed.
+        /// </summary>
+        public void DeleteTransition(Transition trans)
+        {
+            // check null
+            if (trans == Transition.None)
+            {
+                Debug.LogError("FSMState ERROR: NullTransition is not allowed");
+                return;
+            }
+
+            if (m_transitionMap.ContainsKey(trans))
+            {
+                m_transitionMap.Remove(trans);
+                return;
+            }
+            Debug.LogError("FSMState ERROR: Transition passed was not on this State´s List");
+        }
 
         /// <summary>
         /// This method returns the new state the FSM should be if

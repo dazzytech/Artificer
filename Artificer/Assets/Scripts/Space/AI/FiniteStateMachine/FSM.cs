@@ -1,13 +1,14 @@
 using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using Space.Ship;
 
 namespace Space.AI
 {
-    /*
-     * STATES AND TRANSITIONS
-     * */
+
+    #region STATES AND TRANSITIONS
+
     public enum Transition
     {
         None = 0,
@@ -42,12 +43,14 @@ namespace Space.AI
         Ejecting,
     }
 
+    #endregion
+
     /// <summary>
     /// Basic Finite State Machine that all AI agents extend from
     /// allows each agent to be assigned a specific set of 
     /// behaviours
     /// </summary>
-    public abstract class FSM : MonoBehaviour
+    public abstract class FSM : NetworkBehaviour
     {
         #region ATTRIBUTES
 
@@ -57,15 +60,49 @@ namespace Space.AI
 
         private FSMState m_currentState;
 
+        protected List<FSMState> m_fsmStates;
+
         #endregion
 
         #region AGENT ATTRIBUTES
 
+        /// <summary>
+        /// Stores reference to all other ships
+        /// of all alignments
+        /// </summary>
         protected List<ShipAttributes> m_ships
             = new List<ShipAttributes>();
 
+        /// <summary>
+        /// Stores a reference to what we have targetted
+        /// </summary>
         protected List<Transform> m_targets;
 
+        /// <summary>
+        /// Currently selected target
+        /// </summary>
+        protected Transform m_target;
+
+        /// <summary>
+        /// The other ships that this ship is in a squad with
+        /// </summary>
+        protected List<Transform> m_team;
+
+        /// <summary>
+        /// What team this AI belongs to
+        /// </summary>
+        protected int m_teamID;
+
+        /// <summary>
+        /// Defines the behaviour of the ship defined by its class
+        /// </summary>
+        protected string m_shipCategory;
+
+        /// <summary>
+        /// How close the agent needs to be for the attack state
+        /// </summary>
+        protected float m_attackRange;
+        
         #endregion
 
         protected ShipInputReceiver m_message;
@@ -88,13 +125,71 @@ namespace Space.AI
         #region MONO BEHAVIOUR
 
         // Use this for initialization
-        void Start() { Initialize(); }
+        void Start() { if(hasAuthority) Initialize(); }
         // Update is called once per frame
-        void Update() { FSMUpdate(); }
+        void Update() { if (hasAuthority) FSMUpdate(); }
         // Called strictly once per frame
-        void LateUpdate() { FSMLateUpdate(); }
+        void LateUpdate() { if (hasAuthority) FSMLateUpdate(); }
 
         #endregion
+
+        #region PUBLIC INTERACTION
+
+        /// <summary>
+        /// Add new state into the list
+        /// </summary>
+        /// <param name="fsmState">Fsm state.</param>
+        public void AddFSMState(FSMState fsmState)
+        {
+            if (fsmState == null)
+            {
+                Debug.LogError("FSM ERROR: Null reference is not allowed");
+            }
+
+            // First state inserted is also the initial state
+            // the state the machine is in when the simulation begins
+            if (m_fsmStates.Count == 0)
+            {
+                m_fsmStates.Add(fsmState);
+                m_currentState = fsmState;
+                m_currentStateID = fsmState.ID;
+                return;
+            }
+
+            foreach (FSMState state in m_fsmStates)
+            {
+                if (state.ID == fsmState.ID)
+                {
+                    Debug.LogError("FSM ERROR: Trying to add a state that was already instantiated");
+                    return;
+                }
+            }
+
+            m_fsmStates.Add(fsmState);
+        }
+
+        /// <summary>
+        /// Deletes the state.
+        /// </summary>
+        /// <param name="fsmState">Fsm state.</param>
+        public void DeleteState(FSMStateID fsmState)
+        {
+            if (fsmState == FSMStateID.None)
+            {
+                Debug.LogError("FSM ERROR: null id is not allowed");
+                return;
+            }
+
+            foreach (FSMState state in m_fsmStates)
+            {
+                if (state.ID == fsmState)
+                {
+                    m_fsmStates.Remove(state);
+                    return;
+                }
+            }
+            Debug.LogError("FSM ERROR: The state passed was not on the list. Impossible to delete it");
+        }
 
         /// <summary>
         /// This method tries to change the state the FSM is in based on
@@ -119,7 +214,7 @@ namespace Space.AI
 
             // Update the currentStateID and currentState
             m_currentStateID = id;
-            foreach (FSMState state in StateMap())
+            foreach (FSMState state in m_fsmStates)
             {
                 if (state.ID == m_currentStateID)
                 {
@@ -129,9 +224,9 @@ namespace Space.AI
             }
         }
 
-        #region VIRTUAL FUNCTIONS
+        #endregion
 
-        protected abstract List<FSMState> StateMap();
+        #region VIRTUAL FUNCTIONS
 
         // virtual functions for AIAgents
         protected virtual void Initialize()

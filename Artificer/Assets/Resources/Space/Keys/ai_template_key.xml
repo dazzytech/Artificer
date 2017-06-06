@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<agents>
+	<agent name = "guard">
+		<state name ="patrol">
+			<transition transID = "1" stateID = "1">
+			<transition transID = "10" stateID = "11">
+			<transition transID = "12" stateID = "12">
+			<transition transID = "11" stateID = "9">
+		</state>
+	</agent>
+</agents>

@@ -9,6 +9,7 @@ namespace Data.Space.DataImporter
     public class FactionDataImporter
     {
         #region STATIC IMPORTER
+
         public static bool LoadFactions(FactionLibrary library)
         {
             // load all the ship schematics within 
