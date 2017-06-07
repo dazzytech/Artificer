@@ -88,6 +88,16 @@ namespace Space.AI
         protected Transform m_target;
 
         /// <summary>
+        /// How close we get to the target before moving to engage/pursue
+        /// </summary>
+        protected float m_engageDistance;
+
+        /// <summary>
+        /// Distance before agent breaks off
+        /// </summary>
+        protected float m_pursuitDistance;
+
+        /// <summary>
         /// The other ships that this ship is in a squad with
         /// </summary>
         protected List<Transform> m_team;

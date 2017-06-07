@@ -20,7 +20,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 950, y: 542}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -43,7 +43,7 @@ MonoBehaviour:
     y: 0
     width: 1536
     height: 781
-  m_MinSize: {x: 950, y: 542}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
 MonoBehaviour:
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_MinSize: {x: 583, y: 492}
   m_MaxSize: {x: 14004, y: 14042}
   vertical: 0
-  controlID: 45
+  controlID: 93
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_MinSize: {x: 306, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 46
+  controlID: 94
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_MinSize: {x: 306, y: 221}
   m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
-  controlID: 47
+  controlID: 95
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -438,9 +438,9 @@ MonoBehaviour:
     height: 395
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 602e0000
+    m_SelectedIDs: 66070000
     m_LastClickedID: 0
-    m_ExpandedIDs: ecefffff00f8ffffe4fbffff000000007a570000aa5a00000a5c0000
+    m_ExpandedIDs: e4fbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -526,18 +526,18 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scenes
+    - Assets/Scripts/Space/AI/AIAgentController
   m_ViewMode: 1
   m_StartGridSize: 41
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Scripts/Space/AI/AIAgentController
   m_LastFoldersGridSize: 41
   m_LastProjectPath: C:\Users\Daryl\Documents\Artificer\Artificer
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 571}
-    m_SelectedIDs: 16360000
-    m_LastClickedID: 13846
+    m_SelectedIDs: 962e0000
+    m_LastClickedID: 11926
     m_ExpandedIDs: 00000000b2280000122900004e2a0000662a00007c2a0000d42a0000a02b0000582c0000642c0000cc2c0000da2c0000e22c0000fe2c0000142d0000a62d0000a82d0000e62d0000322f0000342f00004a2f0000f62f00008e3200006c330000a833000098350000ca350000e63600008037000052380000303900009a390000d4390000264c0000284c00002a4c00002c4c000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0

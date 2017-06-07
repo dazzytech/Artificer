@@ -13,16 +13,6 @@ namespace Space.AI.Agent
     /// </summary>
     public class AssaultAgent : FSM
     {
-        #region ATTRIBUTES
-
-        // Distance before agent breaks off
-        private float m_pursuitDistance;
-
-        // How close to get to ship before attacking
-        private float m_engageDistance;
-
-        #endregion
-
         #region FSM
 
         protected override void Initialize()
