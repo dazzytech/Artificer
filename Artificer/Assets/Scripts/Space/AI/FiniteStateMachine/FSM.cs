@@ -14,13 +14,12 @@ namespace Space.AI
     {
         None = 0,
         Wait,
-        ContinueSearch,
-        ContinuePatrol,
+        Resume,
         Follow,
         Shift,
-        SawEnemy,
+        ChaseEnemy,
         ReachEnemy,
-        PullOff,
+        Evade,
         LostEnemy,
         Guard,
         GoAround,
@@ -35,10 +34,10 @@ namespace Space.AI
         Shifting,
         Following,
         Patrolling,
-        Chasing,
+        Pursue,
         Attacking,
         Scatter,
-        Divert,
+        Evade,
         CombatDivert,
         Defensive,
         Ejecting,
@@ -88,6 +87,11 @@ namespace Space.AI
         protected Transform m_target;
 
         /// <summary>
+        /// Target that is assignable by the states
+        /// </summary>
+        protected Transform m_tempTarget;
+
+        /// <summary>
         /// How close we get to the target before moving to engage/pursue
         /// </summary>
         protected float m_engageDistance;
@@ -96,6 +100,11 @@ namespace Space.AI
         /// Distance before agent breaks off
         /// </summary>
         protected float m_pursuitDistance;
+
+        /// <summary>
+        /// How close a ship can get before the ship pulls off
+        /// </summary>
+        protected float m_pullOffDistance;
 
         /// <summary>
         /// The other ships that this ship is in a squad with
@@ -132,6 +141,31 @@ namespace Space.AI
         public ShipInputReceiver Con
         {
             get { return m_message; } 
+        }
+
+        public Transform Target
+        {
+            get
+            {
+                if (m_tempTarget == null)
+                    return m_target;
+                else
+                    return m_tempTarget;
+            }
+            set
+            {
+                m_tempTarget = value;
+            }
+        }
+
+        public float PullOffDistance
+        {
+            get { return m_pullOffDistance; }
+        }
+
+        public float AttackRange
+        {
+            get { return m_attackRange; }
         }
 
         #endregion
@@ -257,9 +291,9 @@ namespace Space.AI
         }
 
         protected virtual void FSMLateUpdate()
-        {
-            CurrentState.Reason(m_targets, this.transform);
-            CurrentState.Act(m_targets, this.transform);
+        { 
+            CurrentState.Reason();
+            CurrentState.Act();
         }
 
         #endregion

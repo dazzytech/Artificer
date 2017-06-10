@@ -4,32 +4,6 @@ using System.Collections.Generic;
 
 public class DestUtil 
 {
-    /// <summary>
-    /// Finds the closest enemy.
-    /// and returns that transform
-    /// </summary>
-    /// <returns>The closest enemy.</returns>
-    /// <param name="pos">Position.</param>
-    /// <param name="position">Position.</param>
-    public static Transform FindClosestEnemy
-        (List<Transform> pos, Vector3 position)
-    {
-        if (pos.Count == 0)
-            return null;
-
-        Transform ret = pos[0].transform;
-
-        // Grab the closest enemy
-        foreach (Transform e in pos) 
-        {
-            if(Vector3.Distance(position, e.position)
-               < Vector3.Distance(position, ret.position))
-                ret = e;
-        }
-        return ret;
-    }
-
-
     public static Transform FrontIsClear
         (Transform trans, float distance, float arc)
     {
@@ -82,7 +56,14 @@ public class DestUtil
         return false;
     }
 
-    public static Transform ShipWithinProximity(Transform trans, float radius)
+    /// <summary>
+    /// Used by AI systems to avoid colloisions 
+    /// with objects
+    /// </summary>
+    /// <param name="trans"></param>
+    /// <param name="radius"></param>
+    /// <returns></returns>
+    public static Transform ObjectWithinProximity(Transform trans, float radius)
     {
         RaycastHit2D[] hits =
             Physics2D.CircleCastAll(trans.position, radius, Vector2.zero);

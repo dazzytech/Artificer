@@ -130,17 +130,51 @@ namespace Space.AI
         #region VIRTUAL FUNCTIONALITY
 
         /// <summary>
+        /// Used to initialize the state and
+        /// the  first thing to be called
+        /// can be overriden to init vars in child
+        /// </summary>
+        /// <param name="selfRef"></param>
+        public virtual void Initialize(FSM selfRef)
+        {
+            m_self = selfRef;
+        }
+
+        /// <summary>
         /// Decides if the state should transition to another on its list
         /// NPC is a reference to the npc tha is controlled by this class
         /// </summary>
-        public virtual void Reason(List<Transform> objs, Transform npc) { }
+        public virtual void Reason()
+        {
+            // Test for emergency eject
+            // If ship is too damaged then depart
+            if (ShipStatus.EvacNeeded(Self.transform))
+            {
+                Self.SetTransition(Transition.Eject);
+                return;
+            }
+
+            // Check if there is an object imminent with
+            // the ship and attempt to evade
+            Transform obsticle = DestUtil.ObjectWithinProximity
+                (Self.transform, Self.PullOffDistance);
+
+            if(obsticle != null)
+            {
+                // we have an obsticle too close
+                // target and pulloff
+                Self.Target = obsticle;
+                Self.SetTransition(Transition.Evade);
+                return; 
+            }
+        }
 
         /// <summary>
         /// This method controls the behavior of the NPC in the game World.
         /// Every action, movement or communication the NPC does should be placed here
         /// NPC is a reference to the npc tha is controlled by this class
         /// </summary>
-        public virtual void Act(List<Transform> objs, Transform npc) { }
+        public virtual void Act() { }
 
         #endregion
     }

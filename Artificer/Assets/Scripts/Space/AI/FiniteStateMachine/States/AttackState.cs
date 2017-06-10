@@ -12,8 +12,6 @@ namespace Space.AI.State
     /// </summary>
     public class AttackState : FSMState
     {
-        private Vector3 m_attackPoint;
-
         // Defined in editor
         // how long the angle
         [SerializeField]
@@ -25,35 +23,29 @@ namespace Space.AI.State
             Keys = new List<KeyCode>();
         }
 
-        public override void Reason(List<Transform> targets, Transform npc)
+        public override void Reason()
         {
-            // Test for emergency eject
-            if (ShipStatus.EvacNeeded(npc))
-            {
-                npc.SendMessage("SetTransition", Transition.Eject);
-                return;
-            }
-
             // Check that we have enemies to fight
-            if (targets.Count <= 0 || targets[0] == null)
+            if (Self.Target == null)
             {
-                npc.SendMessage("SetTransition", Transition.LostEnemy);
+                Self.SetTransition(Transition.LostEnemy);
                 return;
             }
+           
+            float dist = Vector3.Distance
+                (Self.transform.position, Self.Target.position);
 
-            Transform target = DestUtil.FindClosestEnemy(targets, npc.position);
-            m_attackPoint = target.position;
-            float dist = Vector3.Distance(npc.position, m_attackPoint);
-
+            // Incorperate go around method
             //if(CombUtil.EnemyIsVisible(_dest, dist, npc, target) != null)
             //npc.SendMessage("SetTransition", Transition.GoAround);
 
-            if (dist >= 100.0f && dist < 200.0f)
-                npc.SendMessage("SetTransition", Transition.SawEnemy);
-            else if (dist > 200.0f)
-                npc.SendMessage("SetTransition", Transition.LostEnemy);
-            else if (dist < 30f)
-                npc.SendMessage("SetTransition", Transition.PullOff);
+            // Check if we are out of attack range
+            if (dist > Self.AttackRange)
+                Self.SetTransition(Transition.ChaseEnemy);
+            
+            // TODO INCORPERATE SHIP TYPEs
+
+            base.Reason();
         }
 
         /// <summary>
@@ -61,16 +53,19 @@ namespace Space.AI.State
         /// </summary>
         /// <param name="enemies"></param>
         /// <param name="npc"></param>
-        public override void Act(List<Transform> targets, Transform npc)
+        public override void Act()
         {
             Keys.Clear();
 
             Con.ReleaseKey(Control_Config.GetKey("fire", "ship"));
             Con.ReleaseKey(Control_Config.GetKey("moveDown", "ship"));
+            Con.ReleaseKey(Control_Config.GetKey("moveUp", "ship"));
 
-            float angleDiff = DestUtil.FindAngleDifference(npc, m_attackPoint);
+            float angleDiff = DestUtil.FindAngleDifference(Self.transform, Self.Target.position);
 
-            Keys.Add(Control_Config.GetKey("moveUp", "ship"));
+            // Changed so that the doesnt move towards target 
+            // change when applying types
+            // Keys.Add(Control_Config.GetKey("moveUp", "ship"));
 
             if (angleDiff >= m_angleAccuracy)
             {
