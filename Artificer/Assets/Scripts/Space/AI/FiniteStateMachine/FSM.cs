@@ -22,7 +22,7 @@ namespace Space.AI
         Evade,
         LostEnemy,
         Guard,
-        GoAround,
+        Strafe,
         Eject,
     }
 
@@ -31,7 +31,7 @@ namespace Space.AI
         None = 0,
         Static,
         Searching,
-        Shifting,
+        Strafing,
         Following,
         Patrolling,
         Pursue,

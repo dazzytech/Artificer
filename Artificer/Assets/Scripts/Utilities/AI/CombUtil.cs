@@ -22,11 +22,21 @@ public class CombUtil
         return false;
     }
 
-    public static Transform EnemyIsVisible
-        (Vector3 dest, float dist, Transform trans, Transform target)
+    /// <summary>
+    /// Returns the transform of any collider
+    /// between this ship and its target
+    /// </summary>
+    /// <param name="dest"></param>
+    /// <param name="dist"></param>
+    /// <param name="trans"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public static Transform ObjectIsVisible
+        ( Transform trans, Transform target)
     {
         Vector3 pos = trans.position;
-        Vector3 dir = (dest - pos).normalized;
+        float dist = Vector3.Distance(target.position, pos);
+        Vector3 dir = (target.position - pos).normalized;
         
         // raycast of short distance to detect if an object is between self and enemy
         // push origin forward so shooters body isnt affected

@@ -35,9 +35,13 @@ namespace Space.AI.State
             float dist = Vector3.Distance
                 (Self.transform.position, Self.Target.position);
 
-            // Incorperate go around method
-            //if(CombUtil.EnemyIsVisible(_dest, dist, npc, target) != null)
-            //npc.SendMessage("SetTransition", Transition.GoAround);
+            // Check we currently have a line of site with the object 
+            // If not then strafe around the blocking obj
+            if(CombUtil.ObjectIsVisible(Self.transform, Self.Target) != null)
+            {
+                Self.SetTransition(Transition.Strafe);
+                return;
+            }
 
             // Check if we are out of attack range
             if (dist > Self.AttackRange)

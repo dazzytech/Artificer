@@ -29,6 +29,8 @@ namespace Space.AI.State
             if (dist < Self.AttackRange)
                 Self.SetTransition(Transition.ReachEnemy);
 
+            // TODO add travel equivilent to strafe
+
             base.Reason();
             
             /* TODO go around similar to 

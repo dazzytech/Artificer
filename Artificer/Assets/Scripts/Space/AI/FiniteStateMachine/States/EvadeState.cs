@@ -8,18 +8,21 @@ namespace Space.AI.Agent
     {
         public EvadeState()
         {
-            m_stateID = FSMStateID.Shifting;
+            m_stateID = FSMStateID.Evade;
             Keys = new List<KeyCode>();
         }
 
         public override void Reason()
         {
             // Run untill we are far away objects
-            Self.Target = DestUtil.ObjectWithinProximity(Self.transform, Self.PullOffDistance);
-            if (Self.Target == null)
+            Transform block = DestUtil.ObjectWithinProximity(Self.transform, Self.PullOffDistance);
+            
+            if (block == null)
             {
                 Self.SetTransition(Transition.Resume);
             }
+
+            Self.Target = block;
         }
 
         public override void Act()
