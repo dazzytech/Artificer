@@ -28,6 +28,8 @@ namespace Space.AI
         void Start()
         {
             StartCoroutine("SeekShips");
+
+            StartCoroutine("HeartbeatClient");
         }
 
         #endregion
@@ -93,6 +95,48 @@ namespace Space.AI
                 }
 
                 yield return null;
+            }
+        }
+
+        /// <summary>
+        /// After an alloted time
+        /// perform client side e.g. 
+        /// Ship tracking
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator HeartbeatClient()
+        {
+            while (true)
+            {
+                // set the timer before repeating 
+                yield return new WaitForSeconds
+                    (Random.Range(10, 30));
+
+                // Loop through each ship tracking item
+                foreach(ShipState ship in m_att.TrackedShips)
+                {
+                    int level = ship.ThreatLevel;
+
+                    // 5% - 50% chance of spawning
+                    if(Random.Range(-10, 10) >= level)
+                    {
+                        // we are able to spawn a ship
+
+                        // determine a max of persuers from
+                        // Threat level
+                        int shipCount = level < 4 ? 3 : level < 8 ? 2 : 1;
+
+                        // add a ship we have no reached cap
+                        if(ship.PersuitCount < shipCount)
+                        {
+                            // We have the space
+                            // Spawn the ship
+
+                        }
+                    }
+
+                    yield return null;
+                }
             }
         }
 

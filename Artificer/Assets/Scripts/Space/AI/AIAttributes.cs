@@ -206,6 +206,6 @@ namespace Space.AI
     {
         public List<ShipState> TrackedShips;
 
-
+        
     }
 }
