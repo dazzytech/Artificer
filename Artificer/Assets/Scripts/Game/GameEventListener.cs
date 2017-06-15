@@ -19,15 +19,15 @@ namespace Game
         void OnEnable()
         {
             // Assign Events
-            GameServerEvents.OnShipDestroyed += ProcessShipDestroyed;
-            GameServerEvents.OnStationDestroyed += ProcessStationDestroyed;
+            GameServerEvents.EventShipDestroyed += ProcessShipDestroyed;
+            GameServerEvents.EventStationDestroyed += ProcessStationDestroyed;
         }
 
         void OnDisable()
         {
             // De-assign events
-            GameServerEvents.OnShipDestroyed -= ProcessShipDestroyed;
-            GameServerEvents.OnStationDestroyed -= ProcessStationDestroyed;
+            GameServerEvents.EventShipDestroyed -= ProcessShipDestroyed;
+            GameServerEvents.EventStationDestroyed -= ProcessStationDestroyed;
         }
 
         // Use this for initialization

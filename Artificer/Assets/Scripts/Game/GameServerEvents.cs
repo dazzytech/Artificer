@@ -15,13 +15,16 @@ namespace Game
         #region EVENTS
 
         public delegate void DestroyedEvent(DestroyDespatch DD);
-        public static event DestroyedEvent OnShipDestroyed;
-        public static event DestroyedEvent OnStationDestroyed;
+        [SyncEvent]
+        public static event DestroyedEvent EventShipDestroyed;
+        [SyncEvent]
+        public static event DestroyedEvent EventStationDestroyed;
 
         #endregion
 
         #region PUBLIC INTERACTION
 
+        [Server]
         public void ShipDestroyed(ShipDestroyMessage msg)
         {
             DestroyDespatch DD = new DestroyDespatch();
@@ -30,16 +33,17 @@ namespace Game
             DD.Self = msg.SelfID;
             DD.MiscID = msg.ID;
 
-            OnShipDestroyed(DD);
+            EventShipDestroyed(DD);
         }
 
+        [Server]
         public void StationDestroyed(StationDestroyMessage msg)
         {
             DestroyDespatch DD = new DestroyDespatch();
             DD.Self = msg.SelfID;
             DD.MiscID = msg.ID;
 
-            OnStationDestroyed(DD);
+            EventStationDestroyed(DD);
         }
 
         #endregion

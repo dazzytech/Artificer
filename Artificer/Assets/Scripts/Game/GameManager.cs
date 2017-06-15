@@ -58,7 +58,7 @@ namespace Game
         [Server]
         public void InitializeLobbyScene()
         {
-            _att.currentState = GameState.Lobby;
+            _att.CurrentState = GameState.Lobby;
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Game
         public void InitializeSpaceScene()
         {
             // Change the state on the game
-            _att.currentState = GameState.Play;
+            _att.CurrentState = GameState.Play;
 
             // Initialize Teams
             bool teamsCompleted = false;
@@ -132,9 +132,9 @@ namespace Game
                 (short)MSGCHANNEL.NEWID, iMsg);
 
             // If currently in play the initialize 
-            if (_att.currentState == GameState.Play)
+            if (_att.CurrentState == GameState.Play)
                 InitializePlayer(info);
-            else if (_att.currentState == GameState.Lobby)
+            else if (_att.CurrentState == GameState.Lobby)
                 InitializeLobbyPlayer(info);
         }
 

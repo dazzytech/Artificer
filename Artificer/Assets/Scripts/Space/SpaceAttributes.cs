@@ -10,6 +10,7 @@ using Space.Segment;
 using Stations;
 using Space.Teams;
 using Space.Map;
+using Space.AI;
 
 // Add classes for data
 // that can be serialized and saved
@@ -53,7 +54,13 @@ namespace Space
 
         #endregion
 
+        #region SPACE ASSETS
+
         public MapController Map;
+
+        public AIManager AI;
+
+        #endregion
 
         //
         // Contract

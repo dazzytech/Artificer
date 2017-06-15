@@ -31,7 +31,7 @@ namespace Game
         // Store a list of all connected players
         public IndexedList<PlayerConnectionInfo> PlayerInfoList;
 
-        public GameState currentState;
+        public GameState CurrentState;
 
         // Teams, currently on supports two teams
         public TeamController TeamA;

@@ -11,6 +11,7 @@ using Space.Ship;
 using Space.Teams;
 using Stations;
 using Space.Map;
+using Space.AI;
 
 namespace Space
 {
@@ -48,6 +49,14 @@ namespace Space
         public List<MapObject> Map
         {
             get { return _att.Map.Map; }
+        }
+
+        private AIManager AI
+        {
+            get
+            {
+                return _att.AI;
+            }
         }
 
         public int ID
