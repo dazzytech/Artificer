@@ -16,6 +16,11 @@ namespace Data.Space.DataImporter
     {
         #region PUBLIC INTERACTION
 
+        /// <summary>
+        /// Builds the list of templates that
+        /// the ai agents 
+        /// </summary>
+        /// <param name="library"></param>
         public static void BuildTemplates(AITemplateLibrary library)
         {
             TextAsset txtAsset = (TextAsset)Resources.Load
@@ -33,6 +38,15 @@ namespace Data.Space.DataImporter
             {
                 library.Add(BuildTemplate(xmlElement));
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static Dictionary<string, AgentData> BuildAgents()
+        {
+
         }
 
         #endregion

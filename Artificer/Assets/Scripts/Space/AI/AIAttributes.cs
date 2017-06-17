@@ -205,10 +205,8 @@ namespace Space.AI
 
     public class AIAttributes : MonoBehaviour
     {
-        public AgentData[] AgentTemplates;
+        public Dictionary<string, AgentData> Agents;
 
         public List<ShipState> TrackedShips;
-
-        
     }
 }
