@@ -33,7 +33,7 @@ namespace Space.AI
             StartCoroutine("HeartbeatClient");
 
             // Begin the process of importing agent data
-            // m_att.AgentTemplates = AgentDataImporter.BuildAgents();
+            m_att.Agents = AgentDataImporter.BuildAgents();
         }
 
         #endregion
