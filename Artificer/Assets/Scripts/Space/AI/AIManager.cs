@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using Space.Ship;
+using Data.Space.DataImporter;
 
 namespace Space.AI
 {
@@ -30,11 +31,37 @@ namespace Space.AI
             StartCoroutine("SeekShips");
 
             StartCoroutine("HeartbeatClient");
+
+            // Begin the process of importing agent data
+            // m_att.AgentTemplates = AgentDataImporter.BuildAgents();
         }
 
         #endregion
 
         #region PRIVATE UTILITIES
+
+        /// <summary>
+        /// Builds the ship item and then 
+        /// calls the command to network spawn the object
+        /// and to send the spawn me message
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        //private NetworkInstanceId BuildAgent(Transform target)
+        //{
+
+
+        //}
+
+        /// <summary>
+        /// Spawns the object with this player's
+        /// authority and sets the spawn process message
+        /// </summary>
+        [Command]
+        private void CmdSpawnShip(GameObject agent, string ship)
+        {
+
+        }
 
         #endregion
 

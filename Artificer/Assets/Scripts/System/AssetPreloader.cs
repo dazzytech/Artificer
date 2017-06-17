@@ -47,5 +47,12 @@ public class AssetPreloader : MonoBehaviour
 
         FactionDataImporter.LoadFactions(_att.FactionLibrary);
     }
+
+    private void PreloadAITemplates()
+    {
+        _att.AILibrary = new AITemplateLibrary();
+
+        AgentDataImporter.BuildTemplates(_att.AILibrary);
+    }
 }
 

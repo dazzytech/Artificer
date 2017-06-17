@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game;
 using UnityEngine.Networking;
+using Data.Space;
 
 namespace Space.AI
 {
@@ -204,6 +205,8 @@ namespace Space.AI
 
     public class AIAttributes : MonoBehaviour
     {
+        public AgentData[] AgentTemplates;
+
         public List<ShipState> TrackedShips;
 
         

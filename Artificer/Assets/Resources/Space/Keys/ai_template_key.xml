@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <agents>
-	<agent name = "guard">
+	<agent name = "attack">
 		<state name ="patrol">
 			<transition transID = "1" stateID = "1">
 			<transition transID = "10" stateID = "11">

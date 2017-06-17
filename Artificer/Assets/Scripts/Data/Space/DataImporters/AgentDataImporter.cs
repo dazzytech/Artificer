@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
 
+using Data.Space.Library;
+
 namespace Data.Space.DataImporter
 {
 
@@ -10,35 +12,32 @@ namespace Data.Space.DataImporter
     /// Used by a centralized AI manager to import 
     /// agent data
     /// </summary>
-    public class AgentDataImporter : MonoBehaviour
+    public class AgentDataImporter
     {
         #region PUBLIC INTERACTION
 
-        public static AgentData[] BuildTemplates()
+        public static void BuildTemplates(AITemplateLibrary library)
         {
             TextAsset txtAsset = (TextAsset)Resources.Load
-               ("Space/Keys/item_key") as TextAsset;
+               ("Space/Keys/ai_template_key") as TextAsset;
 
             XmlDocument baseElement = new XmlDocument();
             baseElement.LoadXml(txtAsset.text);
 
             XmlNode elementContainer = baseElement.LastChild;
 
-            AgentData[] templates = new AgentData
-                [elementContainer.ChildNodes.Count];
-
             int i = 0;
 
             foreach (XmlNode xmlElement
                     in elementContainer.ChildNodes)
             {
-                templates[i++] = BuildAgent(xmlElement);
+                library.Add(BuildTemplate(xmlElement));
             }
-
-            return templates;
         }
 
         #endregion
+
+        #region PRIVATE UTILITIES
 
         /// <summary>
         /// Build an returns an AI template dependant on 
@@ -46,14 +45,14 @@ namespace Data.Space.DataImporter
         /// </summary>
         /// <param name="agentNode"></param>
         /// <returns></returns>
-        private static AgentData BuildAgent(XmlNode agentNode)
+        private static AITemplateData BuildTemplate(XmlNode agentNode)
         {
-            AgentData returnValue = new AgentData();
+            AITemplateData returnValue = new AITemplateData();
 
             returnValue.Type = agentNode.Attributes["name"].Value;
 
             returnValue.States = new
-                AgentData.StateData[agentNode.ChildNodes.Count];
+                AITemplateData.StateData[agentNode.ChildNodes.Count];
 
             int i = 0;
 
@@ -86,5 +85,7 @@ namespace Data.Space.DataImporter
 
             return returnValue;
         }
+
+        #endregion
     }
 }
