@@ -37,6 +37,7 @@ namespace Space.Ship.Components
                 if (info.name == style)
                     _att.currentStyle = style;
             }
+
             // possibly call function to apply texture
             ApplyStyle();
         }

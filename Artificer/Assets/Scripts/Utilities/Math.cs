@@ -13,5 +13,17 @@ public class Math
     {
         return angle * (point - pivot) + pivot;
     }
+
+    public static Vector2 RandomWithinRange(Vector3 position, float minDistance, float maxDistance)
+    {
+        // create an x value between maxDistance to -maxDistance 
+        float x = position.x + (Random.Range(minDistance, maxDistance) 
+            * Mathf.Abs(Random.Range(-1f, 1f)));
+
+        float y = position.y + (Random.Range(minDistance, maxDistance)
+            * Mathf.Abs(Random.Range(-1f, 1f)));
+
+        return new Vector2(x, y);
+    }
 }
 

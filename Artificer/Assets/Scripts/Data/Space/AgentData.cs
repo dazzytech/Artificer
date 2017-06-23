@@ -18,5 +18,8 @@ namespace Data.Space
 
         // The template for the agent behaviour
         public string Template;
+
+        // Ship that the agent uses
+        public string Ship;
     }
 }

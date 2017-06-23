@@ -42,6 +42,10 @@ public class SystemManager : NATTraversal.NetworkManager
 
     #region ACCESSORS
 
+    public static NetworkConnection Conn
+    {
+        get { return m_singleton.m_base.Conn; }
+    }
 
     public static ItemLibrary Items
     {
@@ -332,6 +336,11 @@ public class SystemManager : NATTraversal.NetworkManager
 
         base.OnClientError(conn, errorCode);
     }*/
+
+    public override void OnClientConnect(NetworkConnection conn)
+    {
+        m_base.Conn = conn;
+    }
 
     /// <summary>
     /// Called on each client when the server changes

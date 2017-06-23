@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<agents>
+<template>
 	<agent name = "attack">
 		<state name ="patrol">
 			<transition transID = "1" stateID = "1">
@@ -8,4 +8,4 @@
 			<transition transID = "11" stateID = "9">
 		</state>
 	</agent>
-</agents>
+</template>

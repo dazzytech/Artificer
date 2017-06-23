@@ -238,6 +238,26 @@ namespace Game
         }
 
         [Server]
+        public void SpawnAI(int playerID, AgentData agent, Vector2 spawnPoint)
+        {
+            PlayerConnectionInfo info =
+                _att.PlayerInfoList.Item(playerID);
+
+            GameObject Prefab = SystemManager.singleton.playerPrefab;
+
+            GameObject GO = Instantiate(Prefab, spawnPoint, Quaternion.identity) as GameObject;
+
+            // Projectile can run command to display self
+            NetworkServer.SpawnWithClientAuthority(GO, info.mConnection);
+
+            // assign ship info
+            // e.g. ship name 
+            StringMessage sMsg = new StringMessage(agent.Ship);
+            NetworkServer.SendToClient(info.mConnection.connectionId,
+                (short)MSGCHANNEL.SPAWNME, sMsg);
+        }
+
+        [Server]
         public void BuildProjectile(int prefabIndex, int playerID, Vector3 position, WeaponData wData)
         {
             PlayerConnectionInfo info =
@@ -249,9 +269,6 @@ namespace Game
 
             // Projectile can run command to display self
             NetworkServer.SpawnWithClientAuthority(GO, info.mConnection);
-
-            // currently down nothing..
-            //GO.transform.GetComponent<WeaponController>().Init();
 
             ProjectileSpawnedMessage spwnMsg = new ProjectileSpawnedMessage();
             spwnMsg.WData = wData;

@@ -62,6 +62,9 @@ public class SystemAttributes:MonoBehaviour
     public SystemNetworkDiscovery Discovery;
     public CameraMessageHandler CamMsgHandler;
 
+    // Player Information
+    public NetworkConnection Conn;
+
     // UI Data information
     public Data.UI.PlayerData Player;
     public Data.UI.ServerData ServerInfo;

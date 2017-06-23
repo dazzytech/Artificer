@@ -179,7 +179,6 @@ namespace Space.Ship
         }
 
         #endregion
-        
     }
 }
 

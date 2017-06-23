@@ -31,8 +31,6 @@ namespace Data.Space.DataImporter
 
             XmlNode elementContainer = baseElement.LastChild;
 
-            int i = 0;
-
             foreach (XmlNode xmlElement
                     in elementContainer.ChildNodes)
             {
@@ -41,12 +39,33 @@ namespace Data.Space.DataImporter
         }
 
         /// <summary>
-        /// 
+        /// Build the different agent types
+        /// and returns them in an accessible format
         /// </summary>
         /// <returns></returns>
         public static Dictionary<string, AgentData> BuildAgents()
         {
+            Dictionary<string, AgentData> returnVal 
+                = new Dictionary<string, AgentData>();
 
+            TextAsset txtAsset = (TextAsset)Resources.Load
+               ("Space/Keys/ai_agent_key") as TextAsset;
+
+            XmlDocument baseElement = new XmlDocument();
+            baseElement.LoadXml(txtAsset.text);
+
+            XmlNode elementContainer = baseElement.LastChild;
+
+            foreach (XmlNode xmlElement
+                    in elementContainer.ChildNodes)
+            {
+                string[] agentData = BuildAgent(xmlElement);
+                returnVal.Add(agentData[0], new AgentData()
+                    { Name = agentData[0], Type = agentData[1],
+                    Template = agentData[2], Ship = agentData[3] });
+            }
+
+            return returnVal;
         }
 
         #endregion
@@ -98,6 +117,22 @@ namespace Data.Space.DataImporter
             }
 
             return returnValue;
+        }
+
+        /// <summary>
+        /// returns the string attributes as 
+        /// an array for assignment
+        /// </summary>
+        /// <param name="agentNode"></param>
+        /// <returns></returns>
+        private static string[] BuildAgent(XmlNode agentNode)
+        {
+            string[] returnVals = new string[4];
+            returnVals[0] = agentNode.Attributes["name"].Value;
+            returnVals[1] = agentNode.Attributes["type"].Value;
+            returnVals[2] = agentNode.Attributes["template"].Value;
+            returnVals[3] = agentNode.Attributes["ship"].Value;
+            return returnVals;
         }
 
         #endregion

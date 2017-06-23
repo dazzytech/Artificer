@@ -4,6 +4,7 @@ using System.Collections;
 using Space.Projectiles;
 using Space.Segment;
 using Data.UI;
+using Data.Space;
 
 namespace Networking
 {
@@ -15,6 +16,7 @@ namespace Networking
         NEWID,
         TEAMSELECTED,
         SPAWNPLAYER,
+        SPAWNAI,
         SPAWNME,
         SHIPHIT,
         CREATEPROJECTILE,
@@ -68,6 +70,17 @@ namespace Networking
         public int PlayerID;
         public int SpawnID;
         public string ShipName;
+    }
+
+    /// <summary>
+    /// Information sent to the 
+    /// server to spawn an ai agent
+    /// </summary>
+    public class SpawnAIMessage : MessageBase
+    {
+        public int ID;
+        public AgentData Agent;
+        public Vector2 Point;
     }
 
     /// <summary>

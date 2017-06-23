@@ -7,6 +7,13 @@ using Data.Space;
 
 namespace Space.AI
 {
+    public class AIAttributes : MonoBehaviour
+    {
+        public Dictionary<string, AgentData> Agents;
+
+        public List<ShipState> TrackedShips;
+    }
+
     #region SHIPSTATETRACKER
 
     /// <summary>
@@ -44,12 +51,11 @@ namespace Space.AI
         /// pursuing this one
         /// </summary>
         /// <param name="ship"></param>
-        public void AddPersuit(Transform ship)
+        public void AddPersuit(NetworkInstanceId ship)
         {
             if (ship != null)
                 m_persuingShips.Add
-                    (ship.GetComponent<NetworkIdentity>().
-                        netId);
+                    (ship);
         }
 
         #endregion
@@ -154,6 +160,11 @@ namespace Space.AI
             
         }
 
+        private void ShipCreatedEvent()
+        {
+
+        }
+
         #endregion
 
         #region ACCESSORS
@@ -201,12 +212,5 @@ namespace Space.AI
         #endregion
     }
 
-    #endregion
-
-    public class AIAttributes : MonoBehaviour
-    {
-        public Dictionary<string, AgentData> Agents;
-
-        public List<ShipState> TrackedShips;
-    }
+    #endregion  
 }
