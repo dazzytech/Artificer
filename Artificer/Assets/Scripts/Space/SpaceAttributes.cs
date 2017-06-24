@@ -29,14 +29,18 @@ namespace Space
         // track if the player is currently on stage
         public bool PlayerOnStage;
 
-        // store shipdata for playership
-        //public ShipData PlayerShip;
+        // store reference for playership
+        public GameObject PlayerShip;
 
         // store local client ID on server
         public int playerID;
 
         // Network instance ID for player's ship
         public uint netID;
+
+        #endregion
+
+        #region STATION TRACKING
 
         // if the player is within vicinity of station
         public bool overStation;
@@ -61,16 +65,5 @@ namespace Space
         public AIManager AI;
 
         #endregion
-
-        //
-        // Contract
-        //public ContractTracker Contract;
-
-        // Spawn Managers
-        //public EnemySpawnManager EnemySpawn;
-
-        //public FriendlySpawnManager FriendlySpawn;
-
-        // Add game parameters here
     }
 }

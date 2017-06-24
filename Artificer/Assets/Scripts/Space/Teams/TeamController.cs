@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using Data.Shared;
 using Data.Space;
 using Space.Ship;
-using Space.Teams.SpawnManagers;
+using Space.SpawnManagers;
 using Networking;
 
 /// <summary>

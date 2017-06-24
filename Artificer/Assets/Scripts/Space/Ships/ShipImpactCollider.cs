@@ -109,6 +109,11 @@ namespace Space.Ship
 
                 SendMessage("SetCombatant", 
                     ClientScene.FindLocalObject(_hitD.originID).transform);
+
+                GameObject attacker =
+                ClientScene.FindLocalObject(hData.originID);
+                    attacker.SendMessage("SetCombatant", this.transform,
+                        SendMessageOptions.DontRequireReceiver);
             }
         }
         

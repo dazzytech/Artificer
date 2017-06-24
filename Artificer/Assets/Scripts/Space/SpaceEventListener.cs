@@ -180,6 +180,8 @@ namespace Space
         /// </summary>
         private void PlayerDeath()
         {
+            m_att.PlayerShip = null;
+
             m_att.netID = 0;
 
             // Prompt player to pick a spawn
@@ -198,12 +200,12 @@ namespace Space
         private void LoadPlayerDataIntoScene()
         {
             // Run checks for player entry
-            GameObject PlayerObj = GameObject.FindGameObjectWithTag
+            m_att.PlayerShip = GameObject.FindGameObjectWithTag
                 ("PlayerShip");
 
-            if (PlayerObj != null)
+            if (m_att.PlayerShip != null)
             {
-                m_att.netID = PlayerObj.GetComponent<NetworkIdentity>().
+                m_att.netID = m_att.PlayerShip.GetComponent<NetworkIdentity>().
                     netId.Value;
             }
 

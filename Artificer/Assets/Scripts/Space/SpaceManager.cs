@@ -59,6 +59,22 @@ namespace Space
             }
         }
 
+        /// <summary>
+        /// Access to the client connection
+        /// 
+        /// </summary>
+        public NetworkConnection PlayerConn
+        {
+            get
+            {
+                if (_att.PlayerShip != null)
+                    return _att.PlayerShip.GetComponent<NetworkIdentity>()
+                        .connectionToClient;
+                else
+                    return null;
+            }
+        }
+
         public int ID
         {
             get

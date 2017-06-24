@@ -7,7 +7,7 @@ using Space.Segment;
 using Stations;
 using Game;
 
-namespace Space.Teams.SpawnManagers
+namespace Space.SpawnManagers
 {
     #region SPAWN POINT
 
@@ -185,8 +185,6 @@ namespace Space.Teams.SpawnManagers
 
             return playerObject;
         }
-
-
 
         #endregion
     }
