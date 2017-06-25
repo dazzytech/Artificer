@@ -34,10 +34,10 @@ namespace Space.AI
         Strafing,
         Following,
         Patrolling,
-        Pursue,
+        Pursuing,
         Attacking,
         Scatter,
-        Evade,
+        Evading,
         CombatDivert,
         Defensive,
         Ejecting,
@@ -60,7 +60,7 @@ namespace Space.AI
 
         private FSMState m_currentState;
 
-        protected List<FSMState> m_fsmStates;
+        protected List<FSMState> m_fsmStates = new List<FSMState>();
 
         #endregion
 
@@ -91,10 +91,12 @@ namespace Space.AI
         /// </summary>
         protected Transform m_tempTarget;
 
+        #region DISTANCE VARIABLES
+        
         /// <summary>
         /// How close we get to the target before moving to engage/pursue
         /// </summary>
-        protected float m_engageDistance;
+        protected float m_engageDistance; 
 
         /// <summary>
         /// Distance before agent breaks off
@@ -105,6 +107,13 @@ namespace Space.AI
         /// How close a ship can get before the ship pulls off
         /// </summary>
         protected float m_pullOffDistance;
+
+        /// <summary>
+        /// How close the agent needs to be for the attack state
+        /// </summary>
+        protected float m_attackRange;
+
+        #endregion
 
         /// <summary>
         /// The other ships that this ship is in a squad with
@@ -122,9 +131,10 @@ namespace Space.AI
         protected string m_shipCategory;
 
         /// <summary>
-        /// How close the agent needs to be for the attack state
+        /// The function previous always called 
+        /// when the resume transition is invoked
         /// </summary>
-        protected float m_attackRange;
+        protected FSMStateID m_previousState;
         
         #endregion
 
@@ -168,6 +178,11 @@ namespace Space.AI
             get { return m_attackRange; }
         }
 
+        public float PersuitRange
+        {
+            get { return m_pursuitDistance; }
+        }
+
         #endregion
 
         #region MONO BEHAVIOUR
@@ -184,6 +199,24 @@ namespace Space.AI
         #region PUBLIC INTERACTION
 
         /// <summary>
+        /// called to init the ranges 
+        /// for shared agent behaviour
+        /// </summary>
+        /// <param name="engage"></param>
+        /// <param name="pursue"></param>
+        /// <param name="attack"></param>
+        /// <param name="pulloff"></param>
+        public void EstablishRanges
+            (float engage, float pursue, 
+             float attack, float pulloff)
+        {
+            m_engageDistance = engage;
+            m_pursuitDistance = pursue;
+            m_attackRange = attack;
+            m_pullOffDistance = pulloff;
+        }
+
+        /// <summary>
         /// Add new state into the list
         /// </summary>
         /// <param name="fsmState">Fsm state.</param>
@@ -193,6 +226,8 @@ namespace Space.AI
             {
                 Debug.LogError("FSM ERROR: Null reference is not allowed");
             }
+
+            fsmState.Initialize(this);
 
             // First state inserted is also the initial state
             // the state the machine is in when the simulation begins
@@ -253,15 +288,30 @@ namespace Space.AI
                 return;
             }
 
-            FSMStateID id = m_currentState.GetOutputState(trans);
-            if (id == FSMStateID.None)
+            // If we are resuming then state will
+            // be previously ran
+            if (trans == Transition.Resume)
             {
-                Debug.LogError("FSM ERROR: Current State does not have a target state for this transition");
-                return;
+                m_currentStateID = m_previousState;
+            }
+            else
+            {
+                // Else we have a new state
+                FSMStateID id = m_currentState.GetOutputState(trans);
+                if (id == FSMStateID.None)
+                {
+                    Debug.LogError("FSM ERROR: Current State does not have a target state for this transition");
+                    return;
+                }
+
+                // Keep track of our last state incase we 
+                // want to return to it
+                m_previousState = m_currentStateID;
+
+                // Update the currentStateID and currentState
+                m_currentStateID = id;
             }
 
-            // Update the currentStateID and currentState
-            m_currentStateID = id;
             foreach (FSMState state in m_fsmStates)
             {
                 if (state.ID == m_currentStateID)
@@ -282,6 +332,8 @@ namespace Space.AI
         protected virtual void Initialize()
         {
             StartCoroutine("FindShips");
+
+            m_message = GetComponent<ShipInputReceiver>();
         }
 
         protected virtual void FSMUpdate()
@@ -358,6 +410,8 @@ namespace Space.AI
                 {
                     if (m_ships[i] == null)
                         m_ships.RemoveAt(i);
+
+                    yield return null;
                 }
 
                 // Get every ship and store if we dont have them
@@ -385,6 +439,8 @@ namespace Space.AI
                 {
                     if (m_stations[i] == null)
                         m_stations.RemoveAt(i);
+
+                    yield return null;
                 }
 
                 // Get every ship and store if we dont have them

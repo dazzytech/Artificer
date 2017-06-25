@@ -19,7 +19,21 @@ namespace Space.AI.Agent
         {
             base.Initialize();
 
+            // Add all possible states the agent will
+            // perform
+            AddFSMState(new IdleState());
+            AddFSMState(new AttackState());
+            AddFSMState(new EvadeState());
+            AddFSMState(new PursueState());
+            AddFSMState(new StrafeState());
+            AddFSMState(new EjectState());
+
             StartCoroutine("SearchTargets");
+
+            /*if (Target != null)
+                SetTransition(Transition.ChaseEnemy);
+            else
+                SetTransition(Transition.Wait);*/
         }
 
         protected override void FSMUpdate()
@@ -51,6 +65,15 @@ namespace Space.AI.Agent
 
         #endregion
 
+        #region PUBLIC INTERACTION
+
+        public void DefineTarget(Transform target)
+        {
+            Target = target;
+        }
+
+        #endregion
+
         #region COROUTINE
 
         /// <summary>
@@ -70,6 +93,8 @@ namespace Space.AI.Agent
                     {
                         m_targets.Add(ship.transform);
                     }
+
+                    yield return null;
                 }
 
                 foreach (StationAttributes station in m_stations)
@@ -78,6 +103,8 @@ namespace Space.AI.Agent
                     {
                         m_targets.Add(station.transform);
                     }
+
+                    yield return null;
                 }
 
                 yield return null;

@@ -17,7 +17,7 @@ namespace Space.AI
         /// Possible states it is capable of transitioning to
         /// </summary>
         private Dictionary<Transition, FSMStateID>
-            m_transitionMap;
+            m_transitionMap = new Dictionary<Transition, FSMStateID>();
 
         protected FSMStateID m_stateID;
 
@@ -138,6 +138,9 @@ namespace Space.AI
         public virtual void Initialize(FSM selfRef)
         {
             m_self = selfRef;
+
+            AddTransition(Transition.Evade, FSMStateID.Evading);
+            AddTransition(Transition.Eject, FSMStateID.Ejecting);
         }
 
         /// <summary>
@@ -148,11 +151,11 @@ namespace Space.AI
         {
             // Test for emergency eject
             // If ship is too damaged then depart
-            if (ShipStatus.EvacNeeded(Self.transform))
+            /*if (ShipStatus.EvacNeeded(Self.transform))
             {
                 Self.SetTransition(Transition.Eject);
                 return;
-            }
+            }*/
 
             // Check if there is an object imminent with
             // the ship and attempt to evade

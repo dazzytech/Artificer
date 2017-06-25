@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
+using System;
 
 using Data.Space.Library;
 
@@ -62,7 +63,9 @@ namespace Data.Space.DataImporter
                 string[] agentData = BuildAgent(xmlElement);
                 returnVal.Add(agentData[0], new AgentData()
                     { Name = agentData[0], Type = agentData[1],
-                    Template = agentData[2], Ship = agentData[3] });
+                    Template = agentData[2], Ship = agentData[3],
+                    EngageDistance = agentData[4], PursuitDistance = agentData[5],
+                    AttackDistance = agentData[6], PullOffDistance = agentData[7]});
             }
 
             return returnVal;
@@ -127,11 +130,15 @@ namespace Data.Space.DataImporter
         /// <returns></returns>
         private static string[] BuildAgent(XmlNode agentNode)
         {
-            string[] returnVals = new string[4];
+            string[] returnVals = new string[8];
             returnVals[0] = agentNode.Attributes["name"].Value;
             returnVals[1] = agentNode.Attributes["type"].Value;
             returnVals[2] = agentNode.Attributes["template"].Value;
             returnVals[3] = agentNode.Attributes["ship"].Value;
+            returnVals[4] = agentNode.Attributes["engage"].Value;
+            returnVals[5] = agentNode.Attributes["pursue"].Value;
+            returnVals[6] = agentNode.Attributes["attack"].Value;
+            returnVals[7] = agentNode.Attributes["pulloff"].Value;
             return returnVals;
         }
 

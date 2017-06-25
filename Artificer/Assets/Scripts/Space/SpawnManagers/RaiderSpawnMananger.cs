@@ -2,7 +2,9 @@
 using Game;
 using Networking;
 using Space.AI;
+using Space.AI.Agent;
 using Space.Ship;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -274,8 +276,16 @@ namespace Space.SpawnManager
 
             CmdSpawnShip(newAgent, agent.Ship);
 
-            // Here we would build and init the actual agent behaviour
+            AssaultAgent agentFSM = newAgent.AddComponent<AssaultAgent>();
 
+            // Apply variables
+            agentFSM.EstablishRanges
+                (Convert.ToInt32(agent.EngageDistance),
+                 Convert.ToInt32(agent.PursuitDistance),
+                 Convert.ToInt32(agent.AttackDistance),
+                 Convert.ToInt32(agent.PullOffDistance));
+
+            agentFSM.DefineTarget(target);
 
             // Return the network ID of our new raider
             return newAgent.GetComponent<NetworkIdentity>().netId;
@@ -379,14 +389,13 @@ namespace Space.SpawnManager
             {
                 // set the timer before repeating 
                 yield return new WaitForSeconds
-                    (Random.Range(10, 30));
+                    (UnityEngine.Random.Range(10, 30));
 
                 // Loop through each ship tracking item
 
                 int i = 0;
                 while (i < m_raidTargets.Count)
                 {
-
                     RaiderTarget target = m_raidTargets[i];
 
                     if (m_raidTargets[i].Self == null)
@@ -401,7 +410,7 @@ namespace Space.SpawnManager
                     int level = target.ThreatLevel;
 
                     // 5% - 50% chance of spawning
-                    if (Random.Range(-10, 10) >= level 
+                    if (UnityEngine.Random.Range(-10, 10) >= level 
                         && SystemManager.Space.PlayerConn != null
                         /*Add additional check for if currently pursued*/)
                     {
@@ -413,19 +422,9 @@ namespace Space.SpawnManager
                         // add a ship we have no reached cap
                         if (target.PersuitCount < shipCount)
                         {
-                            // Send the ai message 
-                            /*SpawnAIMessage ssm = new SpawnAIMessage();
-                            ssm.Agent = m_AI.AgentLibrary["raider_small"];
-                            ssm.ID = SystemManager.Space.ID;
-                            ssm.Point = Math.RandomWithinRange
-                                (target.Self.position, 100, 200);
-
-                            SystemManager.singleton.client.Send((short)MSGCHANNEL.SPAWNAI, ssm);*/
-
                             // We have the space
                             // Spawn the ship
                             target.AddPersuit(BuildAgent(target.Self));
-
                         }
                     }
 

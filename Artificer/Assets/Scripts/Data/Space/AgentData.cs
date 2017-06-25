@@ -21,5 +21,29 @@ namespace Data.Space
 
         // Ship that the agent uses
         public string Ship;
+
+        #region FSM VARIABLES
+
+        /// <summary>
+        /// How close we get to the target before moving to engage/pursue
+        /// </summary>
+        public string EngageDistance;
+
+        /// <summary>
+        /// Distance before agent breaks off
+        /// </summary>
+        public string PursuitDistance;
+
+        /// <summary>
+        /// How close the agent needs to be for the attack state
+        /// </summary>
+        public string AttackDistance;
+
+        /// <summary>
+        /// How close a ship can get before the ship pulls off
+        /// </summary>
+        public string PullOffDistance;
+
+        #endregion
     }
 }

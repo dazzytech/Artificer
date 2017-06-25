@@ -8,8 +8,22 @@ namespace Space.AI.State
     {
         public PursueState()
         {
-            m_stateID = FSMStateID.Pursue;
+            m_stateID = FSMStateID.Pursuing;
             Keys = new List<KeyCode>();
+        }
+
+        #region FSM STATE
+
+        /// <summary>
+        /// Assign transitions unique to pursue
+        /// </summary>
+        /// <param name="selfRef"></param>
+        public override void Initialize(FSM selfRef)
+        {
+            base.Initialize(selfRef);
+
+            AddTransition(Transition.LostEnemy, FSMStateID.Searching);
+            AddTransition(Transition.ReachEnemy, FSMStateID.Attacking);
         }
 
         public override void Reason()
@@ -28,7 +42,6 @@ namespace Space.AI.State
 
             if (dist < Self.AttackRange)
                 Self.SetTransition(Transition.ReachEnemy);
-
             // TODO add travel equivilent to strafe
 
             base.Reason();
@@ -65,5 +78,7 @@ namespace Space.AI.State
                 Con.ReleaseKey(Control_Config.GetKey("turnLeft", "ship"));
             }
         }
+
+        #endregion
     }
 }

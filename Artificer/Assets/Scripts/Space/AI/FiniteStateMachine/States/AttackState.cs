@@ -23,6 +23,21 @@ namespace Space.AI.State
             Keys = new List<KeyCode>();
         }
 
+        #region FSM STATE
+
+        /// <summary>
+        /// Assign transitions unique to attack
+        /// </summary>
+        /// <param name="selfRef"></param>
+        public override void Initialize(FSM selfRef)
+        {
+            base.Initialize(selfRef);
+
+            AddTransition(Transition.LostEnemy, FSMStateID.Searching);
+            AddTransition(Transition.Strafe, FSMStateID.Strafing);
+            AddTransition(Transition.ChaseEnemy, FSMStateID.Pursuing);
+        }
+
         public override void Reason()
         {
             // Check that we have enemies to fight
@@ -47,7 +62,7 @@ namespace Space.AI.State
             if (dist > Self.AttackRange)
                 Self.SetTransition(Transition.ChaseEnemy);
             
-            // TODO INCORPERATE SHIP TYPEs
+            // TODO INCORPERATE SHIP TYPES
 
             base.Reason();
         }
@@ -69,7 +84,6 @@ namespace Space.AI.State
 
             // Changed so that the doesnt move towards target 
             // change when applying types
-            // Keys.Add(Control_Config.GetKey("moveUp", "ship"));
 
             if (angleDiff >= m_angleAccuracy)
             {
@@ -88,5 +102,7 @@ namespace Space.AI.State
                 Keys.Add(Control_Config.GetKey("fire", "ship"));
             }
         }
+
+        #endregion
     }
 }

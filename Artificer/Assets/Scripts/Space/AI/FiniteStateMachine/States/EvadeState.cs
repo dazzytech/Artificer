@@ -8,9 +8,11 @@ namespace Space.AI.Agent
     {
         public EvadeState()
         {
-            m_stateID = FSMStateID.Evade;
+            m_stateID = FSMStateID.Evading;
             Keys = new List<KeyCode>();
         }
+
+        #region FSM STATE
 
         public override void Reason()
         {
@@ -61,6 +63,8 @@ namespace Space.AI.Agent
                 }
             }
         }
+
+        #endregion
     }
 }
 
