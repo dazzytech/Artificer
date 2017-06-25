@@ -12,10 +12,10 @@ namespace Space.AI.State
     /// </summary>
     public class AttackState : FSMState
     {
-        // Defined in editor
-        // how long the angle
+        // how close the angle should be (have default value)
+        // todo editable
         [SerializeField]
-        private float m_angleAccuracy;
+        private float m_angleAccuracy = 5f;
 
         public AttackState()
         {
@@ -79,6 +79,9 @@ namespace Space.AI.State
             Con.ReleaseKey(Control_Config.GetKey("fire", "ship"));
             Con.ReleaseKey(Control_Config.GetKey("moveDown", "ship"));
             Con.ReleaseKey(Control_Config.GetKey("moveUp", "ship"));
+
+            if (Self.Target == null)
+                return;
 
             float angleDiff = DestUtil.FindAngleDifference(Self.transform, Self.Target.position);
 

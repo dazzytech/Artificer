@@ -21,19 +21,16 @@ namespace Space.AI.Agent
 
             // Add all possible states the agent will
             // perform
-            AddFSMState(new IdleState());
             AddFSMState(new AttackState());
             AddFSMState(new EvadeState());
             AddFSMState(new PursueState());
             AddFSMState(new StrafeState());
+            AddFSMState(new IdleState());
             AddFSMState(new EjectState());
 
             StartCoroutine("SearchTargets");
 
-            /*if (Target != null)
-                SetTransition(Transition.ChaseEnemy);
-            else
-                SetTransition(Transition.Wait);*/
+            SetTransition(Transition.ChaseEnemy);
         }
 
         protected override void FSMUpdate()

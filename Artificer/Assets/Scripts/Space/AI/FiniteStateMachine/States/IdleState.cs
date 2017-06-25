@@ -35,11 +35,17 @@ namespace Space.AI.State
                 }
             }*/
 
-            m_curTime += Time.deltaTime;
+            /*m_curTime += Time.deltaTime;
             if (m_curTime >= waitTime)
             {
                 Self.SetTransition(Transition.Resume);
                 m_curTime = 0.0f;
+            }*/
+
+            if(Self.Target != null)
+            {
+                Self.SetTransition(Transition.Resume);
+                return;
             }
 
             base.Reason();
