@@ -351,8 +351,9 @@ namespace Space.SpawnManager
                 // its appropriate for us to monitor
                 foreach (Transform ship in shipContainer.transform)
                 {
+                    // change in future so can target other ai ships
                     if (ship.GetComponent<NetworkIdentity>
-                        ().hasAuthority)
+                        ().isLocalPlayer)
                     {
                         if (ship.GetComponent<ShipAttributes>().TeamID != -1)
                         {
@@ -408,6 +409,8 @@ namespace Space.SpawnManager
                         i++;
 
                     int level = target.ThreatLevel;
+
+                    // Skip random for now
 
                     // 5% - 50% chance of spawning
                     if (UnityEngine.Random.Range(-10, 10) >= level 

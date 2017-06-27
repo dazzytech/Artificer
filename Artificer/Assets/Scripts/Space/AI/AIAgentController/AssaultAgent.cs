@@ -4,6 +4,8 @@ using Stations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
+using Game;
 
 namespace Space.AI.Agent
 {
@@ -13,6 +15,12 @@ namespace Space.AI.Agent
     /// </summary>
     public class AssaultAgent : FSM
     {
+        #region MONO BEHAVIOUR
+
+        #endregion
+
+        #region OVERRIDE FUNCTIONS
+
         #region FSM
 
         protected override void Initialize()
@@ -27,8 +35,6 @@ namespace Space.AI.Agent
             AddFSMState(new StrafeState());
             AddFSMState(new IdleState());
             AddFSMState(new EjectState());
-
-            StartCoroutine("SearchTargets");
 
             SetTransition(Transition.ChaseEnemy);
         }
@@ -62,6 +68,51 @@ namespace Space.AI.Agent
 
         #endregion
 
+        /// <summary>
+        /// Searchs all possible targets
+        /// infinite loop
+        /// </summary>
+        protected override void SeekTargets()
+        {
+            for (int i = 0; i < m_ships.Count; i++)
+            {
+                ShipAttributes ship = m_ships[i];
+                if (ship == null)
+                    continue;
+
+                if (Att.TeamID != ship.TeamID)// TODO TEAM && !m_team.Contains(ship.transform))
+                {
+                    if (!m_targets.Contains(ship.transform))
+                        m_targets.Add(ship.transform);
+                }
+            }
+
+            /*for (int i = 0; i < m_stations.Count; i++)
+            {
+                StationAttributes station = m_stations[i];
+                if (station == null)
+                    continue;
+
+                if (Att.TeamID != station.Team.ID)
+                {
+                    m_targets.Add(station.transform);
+                }
+
+                yield return null;
+            }*/
+
+            for (int i = 0; i < m_targets.Count; i++)
+            {
+                if (m_targets[i] == null)
+                {
+                    m_targets.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
+
+        #endregion
+
         #region PUBLIC INTERACTION
 
         public void DefineTarget(Transform target)
@@ -72,41 +123,6 @@ namespace Space.AI.Agent
         #endregion
 
         #region COROUTINE
-
-        /// <summary>
-        /// Searchs all possible targets
-        /// infinite loop
-        /// </summary>
-        private IEnumerator SearchTargets()
-        {
-            // initialize variables
-            m_targets = new List<Transform>();
-
-            while(true)
-            {
-                foreach(ShipAttributes ship in m_ships)
-                {
-                    if(m_teamID != ship.TeamID && !m_team.Contains(ship.transform))
-                    {
-                        m_targets.Add(ship.transform);
-                    }
-
-                    yield return null;
-                }
-
-                foreach (StationAttributes station in m_stations)
-                {
-                    if (m_teamID != station.Team.ID)
-                    {
-                        m_targets.Add(station.transform);
-                    }
-
-                    yield return null;
-                }
-
-                yield return null;
-            }
-        }
 
         #endregion
     }

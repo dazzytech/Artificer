@@ -72,11 +72,14 @@ namespace Space.Segment
             // Release the event listener
             if (transform.parent != null)
             {
-                transform.parent.GetComponent<SegmentObjectBehaviour>().ObjEnable
-                    -= ParentEnabled;
+                if (transform.parent.GetComponent<SegmentObjectBehaviour>() != null)
+                {
+                    transform.parent.GetComponent<SegmentObjectBehaviour>().ObjEnable
+                        -= ParentEnabled;
 
-                transform.parent.GetComponent<SegmentObjectBehaviour>().ObjDisable
-                    -= ParentDisabled;
+                    transform.parent.GetComponent<SegmentObjectBehaviour>().ObjDisable
+                        -= ParentDisabled;
+                }
             }
             else
                 StopCoroutine("PopCheck");
@@ -123,7 +126,8 @@ namespace Space.Segment
                 GetComponent<Rigidbody2D>().AddForce(dir * magnitude, ForceMode2D.Force);
             }
 
-            if (m_objSprite != null && _hitD.damageTex != "")
+            if (m_objSprite != null && _hitD.damageTex != null
+                && _hitD.damageTex != "")
             {
                 // Ref to our texture rect for size
                 Rect size = m_objSprite.sprite.rect;

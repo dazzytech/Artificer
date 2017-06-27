@@ -22,7 +22,7 @@ namespace Space.AI.State
         {
             base.Initialize(selfRef);
 
-            AddTransition(Transition.LostEnemy, FSMStateID.Searching);
+            AddTransition(Transition.LostEnemy, FSMStateID.Static);
             AddTransition(Transition.ReachEnemy, FSMStateID.Attacking);
         }
 
@@ -41,7 +41,8 @@ namespace Space.AI.State
                 (Self.transform.position, Self.Target.position);
 
             if (dist < Self.AttackRange)
-                Self.SetTransition(Transition.ReachEnemy);
+                Self.SetTransition(Transition.ReachEnemy, 1.0f, Transition.Wait);
+
             // TODO add travel equivilent to strafe
 
             base.Reason();
@@ -57,6 +58,9 @@ namespace Space.AI.State
         public override void Act()
         {
             Keys.Clear();
+
+            if (Self.Target == null)
+                return;
 
             Keys.Add(Control_Config.GetKey("moveUp", "ship"));
 

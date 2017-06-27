@@ -12,11 +12,6 @@ namespace Space.AI.State
     /// </summary>
     public class AttackState : FSMState
     {
-        // how close the angle should be (have default value)
-        // todo editable
-        [SerializeField]
-        private float m_angleAccuracy = 5f;
-
         public AttackState()
         {
             m_stateID = FSMStateID.Attacking;
@@ -27,17 +22,24 @@ namespace Space.AI.State
 
         /// <summary>
         /// Assign transitions unique to attack
+        /// and any variables
         /// </summary>
         /// <param name="selfRef"></param>
         public override void Initialize(FSM selfRef)
         {
             base.Initialize(selfRef);
 
-            AddTransition(Transition.LostEnemy, FSMStateID.Searching);
+            // Assgin all the transitions this state can perform
+            AddTransition(Transition.Wait, FSMStateID.Static);
+            AddTransition(Transition.LostEnemy, FSMStateID.Static);
             AddTransition(Transition.Strafe, FSMStateID.Strafing);
             AddTransition(Transition.ChaseEnemy, FSMStateID.Pursuing);
         }
 
+        /// <summary>
+        /// Checks that we haven't 
+        /// lost the enemy or gone out of range
+        /// </summary>
         public override void Reason()
         {
             // Check that we have enemies to fight
@@ -69,6 +71,7 @@ namespace Space.AI.State
 
         /// <summary>
         /// Attempt to fire on the target
+        /// or face the target
         /// </summary>
         /// <param name="enemies"></param>
         /// <param name="npc"></param>

@@ -70,7 +70,7 @@ public class DestUtil
         
         foreach (RaycastHit2D hit in hits)
         {
-            if(hit.transform != trans)
+            if(!hit.transform.IsChildOf(trans))
             {
                 return hit.collider.transform;
             }

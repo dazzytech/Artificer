@@ -6,14 +6,9 @@ namespace Space.AI.State
 {
     public class IdleState : FSMState
     {
-        public float waitTime;
-        private float m_curTime;
-
         public IdleState()
         {
-            //waitTime = waitFor; NEEDS ASSIGNING
             m_stateID = FSMStateID.Static;
-            m_curTime = 0.0f;
             Keys = new List<KeyCode>();
         }
 
@@ -23,26 +18,9 @@ namespace Space.AI.State
         /// </summary>
         public override void Reason()
         {
-            /* If this is an attack ship then check for enemies in range
-            foreach (Transform e in enemies)
-            {
-                // check the distance with player tank
-                if (Vector3.Distance(npc.position, e.position)
-                    <= eng)
-                {
-                    npc.SendMessage("SetTransition", Transition.SawEnemy);
-                    return;
-                }
-            }*/
-
-            /*m_curTime += Time.deltaTime;
-            if (m_curTime >= waitTime)
-            {
-                Self.SetTransition(Transition.Resume);
-                m_curTime = 0.0f;
-            }*/
-
-            if(Self.Target != null)
+            // If we are not waiting for a timer
+            // then we are waiting for a target to appear
+            if(!Timed && Self.Target != null)
             {
                 Self.SetTransition(Transition.Resume);
                 return;
@@ -57,8 +35,30 @@ namespace Space.AI.State
 
             Con.ReleaseKey(Control_Config.GetKey("moveUp", "ship"));
             Con.ReleaseKey(Control_Config.GetKey("moveDown", "ship"));
-            Con.ReleaseKey(Control_Config.GetKey("turnRight", "ship"));
-            Con.ReleaseKey(Control_Config.GetKey("turnLeft", "ship"));
+
+
+            if (Self.Target == null)
+            {
+                Con.ReleaseKey(Control_Config.GetKey("turnRight", "ship"));
+                Con.ReleaseKey(Control_Config.GetKey("turnLeft", "ship"));
+                return;
+            }
+
+            float angleDiff = DestUtil.FindAngleDifference(Self.transform, Self.Target.position);
+
+            // Changed so that the doesnt move towards target 
+            // change when applying types
+
+            if (angleDiff >= m_angleAccuracy)
+            {
+                Con.ReleaseKey(Control_Config.GetKey("turnRight", "ship"));
+                Keys.Add(Control_Config.GetKey("turnLeft", "ship"));
+            }
+            else if (angleDiff <= -m_angleAccuracy)
+            {
+                Con.ReleaseKey(Control_Config.GetKey("turnLeft", "ship"));
+                Keys.Add(Control_Config.GetKey("turnRight", "ship"));
+            }
         }
     }
 }

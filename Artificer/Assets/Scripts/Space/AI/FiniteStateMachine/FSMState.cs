@@ -26,15 +26,59 @@ namespace Space.AI
 
         #endregion
 
+        #region TIMER
+
+        /// <summary>
+        /// How long the state will be active for
+        /// </summary>
+        private float m_waitTime;
+
+        /// <summary>
+        /// Current time alloted since
+        /// state has started
+        /// </summary>
+        private float m_curTime;
+
+        /// <summary>
+        /// What transition is performed
+        /// when time has passed
+        /// </summary>
+        private Transition m_timeoutID;
+
+        #endregion
+
         #region AI AGENT
 
         public List<KeyCode> Keys;
+
+        // how close the angle should be (have default value)
+        // todo editable
+        [SerializeField]
+        protected float m_angleAccuracy = 1f;
 
         #endregion
 
         #endregion
 
         #region ACCESSOR
+
+        #region EXTERNAL UTILITIES
+
+        /// <summary>
+        /// The pending previous transition
+        /// </summary>
+        public Transition TimeoutTransition
+        {
+            get { return m_timeoutID; }
+        }
+
+        /// <summary>
+        /// How long the 
+        /// </summary>
+        public float TimeoutTimer
+        {
+            get { return m_waitTime; }
+        }
 
         /// <summary>
         /// Returns state we are currently in
@@ -44,19 +88,38 @@ namespace Space.AI
             get { return m_stateID; }
         }
 
+        #endregion
+
+        /// <summary>
+        /// Access the ship input component
+        /// </summary>
         protected ShipInputReceiver Con
         {
             get { return m_self.Con; }
         }
 
+        /// <summary>
+        /// Access to the agent controller
+        /// </summary>
         protected FSM Self
         {
             get { return m_self; }
         }
 
+        /// <summary>
+        /// If this state is working
+        /// for only a duration
+        /// </summary>
+        protected bool Timed
+        {
+            get { return m_timeoutID != Transition.None; }
+        }
+
         #endregion
 
         #region PUBLIC INTERACTION
+
+        #region TRANSITION CONTROL
 
         /// <summary>
         /// Adds what behaviour will happen when 
@@ -127,6 +190,22 @@ namespace Space.AI
 
         #endregion
 
+        /// <summary>
+        /// Sets the time duration of a state
+        /// to run for that period
+        /// </summary>
+        /// <param name="timer"></param>
+        /// <param name="timeoutTrans"></param>
+        public void SetDuration(float timer, Transition timeoutTrans)
+        {
+            m_curTime = 0;
+            m_waitTime = timer;
+
+            m_timeoutID = timeoutTrans;
+        }
+
+        #endregion
+
         #region VIRTUAL FUNCTIONALITY
 
         /// <summary>
@@ -149,13 +228,16 @@ namespace Space.AI
         /// </summary>
         public virtual void Reason()
         {
+            if (Self.transform == null)
+                return;
+
             // Test for emergency eject
             // If ship is too damaged then depart
-            /*if (ShipStatus.EvacNeeded(Self.transform))
+            if (ShipStatus.EvacNeeded(Self.transform))
             {
                 Self.SetTransition(Transition.Eject);
                 return;
-            }*/
+            }
 
             // Check if there is an object imminent with
             // the ship and attempt to evade
@@ -170,6 +252,21 @@ namespace Space.AI
                 Self.SetTransition(Transition.Evade);
                 return; 
             }
+
+            // Some states have a limited time they
+            // are active
+            if(Timed)
+            {
+                // increment time and change when ready
+                m_curTime += Time.deltaTime;
+                if (m_curTime >= m_waitTime)
+                {
+                    Self.SetTransition(m_timeoutID);
+                    m_curTime = 0.0f;
+
+                    m_timeoutID = Transition.None;
+                }
+            }
         }
 
         /// <summary>
@@ -177,7 +274,10 @@ namespace Space.AI
         /// Every action, movement or communication the NPC does should be placed here
         /// NPC is a reference to the npc tha is controlled by this class
         /// </summary>
-        public virtual void Act() { }
+        public virtual void Act()
+        {
+            // release all keys?
+        }
 
         #endregion
     }

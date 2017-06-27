@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Space.Ship;
 using Stations;
+using Game;
 
 namespace Space.AI
 {
@@ -60,11 +61,13 @@ namespace Space.AI
 
         private FSMState m_currentState;
 
-        protected List<FSMState> m_fsmStates = new List<FSMState>();
+        private List<FSMState> m_fsmStates = new List<FSMState>();
 
         #endregion
 
         #region AGENT ATTRIBUTES
+
+        #region TARGET ATTRIBUTES
 
         /// <summary>
         /// Stores reference to all other ships
@@ -79,7 +82,7 @@ namespace Space.AI
         /// <summary>
         /// Stores a reference to what we have targetted
         /// </summary>
-        protected List<Transform> m_targets;
+        protected List<Transform> m_targets = new List<Transform>();
 
         /// <summary>
         /// Currently selected target
@@ -91,8 +94,10 @@ namespace Space.AI
         /// </summary>
         protected Transform m_tempTarget;
 
+        #endregion
+
         #region DISTANCE VARIABLES
-        
+
         /// <summary>
         /// How close we get to the target before moving to engage/pursue
         /// </summary>
@@ -115,6 +120,8 @@ namespace Space.AI
 
         #endregion
 
+        #region TEAM ATTRIBUTES
+
         /// <summary>
         /// The other ships that this ship is in a squad with
         /// </summary>
@@ -125,20 +132,47 @@ namespace Space.AI
         /// </summary>
         protected int m_teamID;
 
-        /// <summary>
-        /// Defines the behaviour of the ship defined by its class
-        /// </summary>
-        protected string m_shipCategory;
+        #endregion
+
+        #region HISTORICAL DATA
 
         /// <summary>
         /// The function previous always called 
         /// when the resume transition is invoked
         /// </summary>
-        protected FSMStateID m_previousState;
-        
+        private FSMStateID m_previousStateID;
+
+        /// <summary>
+        /// If the previous state only ran for an alloted 
+        /// time then we will only want to run it for that
+        /// period again
+        /// </summary>
+        private float m_previousTimer;
+
+        /// <summary>
+        /// If the previous state only ran for a 
+        /// duration then we may want the same
+        /// trans to occur on timeout
+        /// </summary>
+        private Transition m_previousTimeout;
+
         #endregion
 
-        protected ShipInputReceiver m_message;
+        #endregion
+
+        #region SHIP ATTRIBUTES
+
+        /// <summary>
+        /// Defines the behaviour of the ship defined by its class
+        /// TODO: GET THIS FROM SHIP DATA
+        /// </summary>
+        protected string m_shipCategory;
+
+        private ShipInputReceiver m_message;
+
+        private ShipAttributes m_att;
+
+        #endregion
 
         #endregion
 
@@ -151,6 +185,11 @@ namespace Space.AI
         public ShipInputReceiver Con
         {
             get { return m_message; } 
+        }
+
+        public ShipAttributes Att
+        {
+            get { return m_att; }
         }
 
         public Transform Target
@@ -188,7 +227,19 @@ namespace Space.AI
         #region MONO BEHAVIOUR
 
         // Use this for initialization
-        void Start() { if(hasAuthority) Initialize(); }
+        void Start()
+        {
+            if (!hasAuthority)
+                return;
+
+            // Assign ship references
+            m_message = GetComponent<ShipInputReceiver>();
+            m_att = GetComponent<ShipAttributes>();
+
+            // Listen for creation of ship
+            ShipInitializer.OnShipCreated += ShipCreatedEvent;
+        } 
+
         // Update is called once per frame
         void Update() { if (hasAuthority) FSMUpdate(); }
         // Called strictly once per frame
@@ -288,12 +339,26 @@ namespace Space.AI
                 return;
             }
 
+            ReleaseAllKeys();
+
             // If we are resuming then state will
             // be previously ran
             if (trans == Transition.Resume)
             {
-                m_currentStateID = m_previousState;
+                // create temp id to store new so not overwritten
+                FSMStateID newState = m_previousStateID;
+
+                RecordState();
+
+                m_currentStateID = newState;
+
+                ApplyChanges();
+
+                if (m_previousTimeout == Transition.None)
+                    m_currentState.SetDuration
+                        (m_previousTimer, m_previousTimeout);
             }
+
             else
             {
                 // Else we have a new state
@@ -304,14 +369,40 @@ namespace Space.AI
                     return;
                 }
 
-                // Keep track of our last state incase we 
-                // want to return to it
-                m_previousState = m_currentStateID;
+                RecordState();
 
                 // Update the currentStateID and currentState
                 m_currentStateID = id;
-            }
 
+                ApplyChanges();
+            }
+        }
+
+        /// <summary>
+        /// invokes the set transition function above
+        /// but then sets it to only occur for a set period
+        /// before resuming
+        /// </summary>
+        /// <param name="trans"></param>
+        /// <param name="timer"></param>
+        public void SetTransition(Transition trans, float timer, Transition timeout)
+        {
+            SetTransition(trans);
+
+            // Set our new current state to operate on a timer
+            m_currentState.SetDuration(timer, timeout);
+        }
+
+        #endregion
+
+        #region PRIVATE UTILTIES
+
+        /// <summary>
+        /// Makes the new state
+        /// the current state
+        /// </summary>
+        private void ApplyChanges()
+        {
             foreach (FSMState state in m_fsmStates)
             {
                 if (state.ID == m_currentStateID)
@@ -322,18 +413,57 @@ namespace Space.AI
             }
         }
 
+        /// <summary>
+        /// Takes a snapshot of the current state
+        /// for resuming
+        /// </summary>
+        private void RecordState()
+        {
+            // Keep track of our last state incase we 
+            // want to return to it
+            m_previousStateID = m_currentStateID;
+
+            // Clear timer info
+            m_previousTimer = 0f;
+            m_previousTimeout = Transition.None;
+
+            // snapshot timer info if needed
+            if (m_currentState.TimeoutTransition != Transition.None)
+                m_previousTimeout =
+                    m_currentState.TimeoutTransition;
+
+            if (m_currentState.TimeoutTimer != 0)
+                m_previousTimer =
+                    m_currentState.TimeoutTimer;
+        }
+
+        /// <summary>
+        /// Called to release all keys 
+        /// that are being currently processed
+        /// </summary>
+        private void ReleaseAllKeys()
+        {
+            m_message.ReleaseKey(Control_Config.GetKey("moveUp", "ship"));
+            m_message.ReleaseKey(Control_Config.GetKey("moveDown", "ship"));
+            m_message.ReleaseKey(Control_Config.GetKey("turnLeft", "ship"));
+            m_message.ReleaseKey(Control_Config.GetKey("turnRight", "ship"));
+            m_message.ReleaseKey(Control_Config.GetKey("strafeLeft", "ship"));
+            m_message.ReleaseKey(Control_Config.GetKey("strafeRight", "ship"));
+            m_message.ReleaseKey(Control_Config.GetKey("fire", "ship"));
+        }
+
         #endregion
 
         #region VIRTUAL FUNCTIONS
 
         #region FSM
-
-        // virtual functions for AIAgents
+        
         protected virtual void Initialize()
         {
-            StartCoroutine("FindShips");
+            GameServerEvents.EventShipDestroyed
+                    += ShipDestroyedEvent;
 
-            m_message = GetComponent<ShipInputReceiver>();
+            InvokeRepeating("SeekShips", 0, 1f);
         }
 
         protected virtual void FSMUpdate()
@@ -350,6 +480,15 @@ namespace Space.AI
 
         #endregion
 
+        #region TARGET UTILITIES
+
+        /// <summary>
+        /// Overridden by child agents
+        /// to assign targets from their requirements
+        /// </summary>
+        protected virtual void SeekTargets()
+        {}
+
         /// <summary>
         /// A one shot coroutine that finds the target
         /// closest to this agent
@@ -360,6 +499,8 @@ namespace Space.AI
         {
             if (m_targets == null)
                 return;
+
+            SeekTargets();
 
             // This is used to find the closest object 
             float minDistance = float.MaxValue;
@@ -398,21 +539,54 @@ namespace Space.AI
 
         #endregion
 
+        #endregion
+
+        #region EVENTS
+
+        /// <summary>
+        /// Finds out if our target was destroyed
+        /// </summary>
+        /// <param name="DD"></param>
+        private void ShipDestroyedEvent(DestroyDespatch DD)
+        {
+            Transform destroyed =
+                ClientScene.FindLocalObject(DD.Self).transform;
+
+            if (destroyed == m_target)
+                m_target = null;
+            if (destroyed == m_tempTarget)
+                m_tempTarget = null;
+
+            if (m_targets.Contains(destroyed))
+                m_targets.Remove(destroyed);
+
+            if (m_ships.Contains(destroyed.GetComponent<ShipAttributes>()))
+                m_ships.Remove(destroyed.GetComponent<ShipAttributes>());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="att"></param>
+        private void ShipCreatedEvent(ShipAttributes att)
+        {
+            if(att == m_att)
+            {
+                ShipInitializer.OnShipCreated -= ShipCreatedEvent;
+                Initialize();
+            }
+        }
+
+        #endregion
+
         #region COROUTINES
 
-        private IEnumerator FindShips()
+        private void SeekShips()
         {
-            while (true)
-            {
                 // Clear any m_ships that are now null
-                int i = 0;
-                while(i < m_ships.Count)
-                {
+                for(int i = 0;i < m_ships.Count; i++)
                     if (m_ships[i] == null)
                         m_ships.RemoveAt(i);
-
-                    yield return null;
-                }
 
                 // Get every ship and store if we dont have them
                 GameObject root = GameObject.Find("_ships");
@@ -421,12 +595,7 @@ namespace Space.AI
                 {
                     if (!m_ships.Contains(child))
                         m_ships.Add(child);
-
-                    yield return null;
                 }
-
-                yield return null;
-            }
         }
 
         private IEnumerator FindStations()

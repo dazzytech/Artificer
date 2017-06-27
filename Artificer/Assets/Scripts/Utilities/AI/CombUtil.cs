@@ -34,6 +34,9 @@ public class CombUtil
     public static Transform ObjectIsVisible
         ( Transform trans, Transform target)
     {
+        if (target == null)
+            return null;
+
         Vector3 pos = trans.position;
         float dist = Vector3.Distance(target.position, pos);
         Vector3 dir = (target.position - pos).normalized;

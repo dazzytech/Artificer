@@ -161,6 +161,13 @@ namespace Space.Ship
                     name = "EnemyShip";
                     tag = "Enemy";
                 }
+
+                if (hasAuthority)
+                {
+                    // nice lil hack to know we are dealing 
+                    // with a raider
+                    ShipAtt.TeamID = -1;
+                }
             }
         }
 
