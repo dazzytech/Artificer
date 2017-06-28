@@ -5,17 +5,17 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 414528}
-  - 114: {fileID: 11452598}
-  - 114: {fileID: 11400014}
-  - 114: {fileID: 11460230}
-  - 114: {fileID: 11464192}
-  - 114: {fileID: 11455752}
-  - 50: {fileID: 5016586}
-  - 114: {fileID: 11433328}
-  - 114: {fileID: 11440530}
+  - component: {fileID: 414528}
+  - component: {fileID: 11452598}
+  - component: {fileID: 11400014}
+  - component: {fileID: 11460230}
+  - component: {fileID: 11464192}
+  - component: {fileID: 11455752}
+  - component: {fileID: 5016586}
+  - component: {fileID: 11433328}
+  - component: {fileID: 11440530}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -32,23 +32,26 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &5016586
 Rigidbody2D:
-  serializedVersion: 2
+  serializedVersion: 4
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120812}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_IsKinematic: 0
+  m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -113,6 +116,7 @@ MonoBehaviour:
   m_RotationSyncCompression: 0
   m_SyncSpin: 0
   m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
@@ -127,18 +131,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6984d34a0708e9d4b90b3873bfb13643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ship: {fileID: 11455752}
-  Ship:
-    components: []
-    Name: 
-    Description: 
-    Category: 
-    PlayerMade: 0
-    CombatResponsive: 0
-    CombatActive: 0
-    Aligned: 0
-    Initialized: 0
+  ShipAtt: {fileID: 0}
+  Ship: 
   hasSpawned: 0
+  m_shipContainer: {fileID: 0}
 --- !u!114 &11455752
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -162,11 +158,10 @@ MonoBehaviour:
     CombatResponsive: 1
     CombatActive: 0
     Aligned: 0
-    Initialized: 0
   AggressorTag: 
-  Targets: []
-  SelfTargeted: []
-  HighlightedTargets: []
+  ShipDocked: 0
+  InCombat: 0
+  TeamID: 0
   HighlightRect:
     serializedVersion: 2
     x: 0
@@ -174,6 +169,7 @@ MonoBehaviour:
     width: 0
     height: 0
   TargetDistance: 0
+  Target: {fileID: 0}
 --- !u!114 &11460230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -185,6 +181,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb353829a31fbaa4b879a53d64504bc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hitD:
+    hitPosition: {x: 0, y: 0, z: 0}
+    damage: 0
+    radius: 0
+    damageTex: 
+    hitComponent: 0
 --- !u!114 &11464192
 MonoBehaviour:
   m_ObjectHideFlags: 1
