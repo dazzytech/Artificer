@@ -27,6 +27,7 @@ namespace Space.Ship
         public string AlignmentLabel;
 
         // Store a reference to the ships data
+        [SyncVar]
         public ShipData Ship;
 
         // Last ship to attack ship
@@ -39,6 +40,7 @@ namespace Space.Ship
         [SyncVar]
         public bool InCombat;
         
+        [SyncVar]
         public int TeamID;
 
         public NetworkInstanceId instID;

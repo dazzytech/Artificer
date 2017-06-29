@@ -182,7 +182,7 @@ namespace Game
         public void OnBuildAI(NetworkMessage msg)
         {
             SpawnAIMessage spawnAI = msg.ReadMessage<SpawnAIMessage>();
-            m_con.SpawnAI(spawnAI.ID, spawnAI.Agent, spawnAI.Point);
+            //m_con.SpawnAI(spawnAI.ID, spawnAI.Agent, spawnAI.Point);
         }
 
         /// <summary>

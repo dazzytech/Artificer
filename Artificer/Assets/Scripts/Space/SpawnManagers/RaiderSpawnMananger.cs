@@ -299,14 +299,13 @@ namespace Space.SpawnManager
         private void CmdSpawnShip(GameObject agent,
             string ship)
         {
+            // Spawn the ship on the network
             NetworkServer.SpawnWithClientAuthority
                 (agent, SystemManager.Space.PlayerConn);
 
-            // assign ship info
-            // e.g. ship name 
-            StringMessage sMsg = new StringMessage(ship);
-            NetworkServer.SendToClient(SystemManager.Space.PlayerConn.connectionId,
-                (short)MSGCHANNEL.SPAWNME, sMsg);
+            // Assign the information while on the server
+            agent.GetComponent<ShipInitializer>().
+                AssignShipData(ship, -1);
         }
 
         #endregion

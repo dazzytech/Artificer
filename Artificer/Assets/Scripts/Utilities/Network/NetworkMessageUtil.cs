@@ -17,7 +17,6 @@ namespace Networking
         TEAMSELECTED,
         SPAWNPLAYER,
         SPAWNAI,
-        SPAWNME,
         SHIPHIT,
         CREATEPROJECTILE,
         BUILDPROJECTILE,

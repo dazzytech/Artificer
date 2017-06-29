@@ -230,13 +230,11 @@ namespace Game
                 _att.TeamB.AddPlayerObject(GO.GetComponent<NetworkIdentity>().netId);
             }
 
-            // assign ship info
-            // e.g. ship name 
-            StringMessage sMsg = new StringMessage(shipName);
-            NetworkServer.SendToClient(info.mConnection.connectionId, 
-                (short)MSGCHANNEL.SPAWNME, sMsg);
+            GO.GetComponent<ShipInitializer>()
+                .AssignShipData(shipName, info.mTeam);
         }
 
+        /*
         [Server]
         public void SpawnAI(int playerID, AgentData agent, Vector2 spawnPoint)
         {
@@ -255,7 +253,7 @@ namespace Game
             StringMessage sMsg = new StringMessage(agent.Ship);
             NetworkServer.SendToClient(info.mConnection.connectionId,
                 (short)MSGCHANNEL.SPAWNME, sMsg);
-        }
+        }*/
 
         [Server]
         public void BuildProjectile(int prefabIndex, int playerID, Vector3 position, WeaponData wData)
@@ -367,136 +365,6 @@ namespace Game
         }
 
         #endregion
-
-        /*
-        public void RunUpdate()
-        {
-            if (Contract != null)
-            {
-                bool CycleCompletion = true;
-                bool CycleFailure = false;
-
-                foreach (MissionData mission in PrimaryTracker)
-                {
-                    mission.UpdateStatus();
-                    if (!mission.Success)
-                    {
-                        CycleCompletion = false;
-                    }
-                    else
-                    {
-                        // Display success messege and remove item
-                        MessageHUD.DisplayMessege(new MsgParam("md-green", string.Format("Primary Mission Completed: {0}", mission.Title)));
-                        Ended.Add(mission);
-                    }
-                    if (mission.Failure)
-                    {
-                        CycleFailure = true;
-                        MessageHUD.DisplayMessege(new MsgParam("md-red", string.Format("Primary Mission Failed: {0}", mission.Title)));
-                    }
-                }
-
-                foreach (MissionData mission in SecondaryTracker)
-                {
-                    mission.UpdateStatus();
-                    if (mission.Success)
-                    {
-                        // Display success messege and remove item
-                        MessageHUD.DisplayMessege(new MsgParam("md-yellow", string.Format("Optional Mission Completed: {0}", mission.Title)));
-                        Ended.Add(mission);
-                    }
-                    if (mission.Failure)
-                    {
-                        MessageHUD.DisplayMessege(new MsgParam("md-yellow", string.Format("Optional Mission Failed: {0}", mission.Title)));
-                        Ended.Add(mission);
-                    }
-                }
-
-                foreach(MissionData mission in Ended)
-                {
-                    if(PrimaryTracker.Contains(mission))
-                        PrimaryTracker.Remove(mission);
-                }
-
-                foreach(MissionData mission in Ended)
-                {
-                    if(SecondaryTracker.Contains(mission))
-                        SecondaryTracker.Remove(mission);
-                }
-
-                if (CycleFailure)
-                    ContractStatus = ContractState.Failed;
-                else if (CycleCompletion)
-                {
-                    // Test that contract list exists
-                    /*if(SystemManager.GetPlayer.Completedlevels == null)
-                        SystemManager.GetPlayer.Completedlevels = new List<int>();
-
-                    // test contract is not already completed
-                    if(!SystemManager.GetPlayer.Completedlevels.Contains(Contract.ID))
-                    {
-                        SystemManager.GetPlayer.Completedlevels.Add(Contract.ID);
-                    }
-
-                    StoreRewards();
-
-                    // cycle through each ended mission and transfer rewards to player
-                    foreach(MissionData mission in Ended)
-                    {
-                        if(mission.Success)
-                        {
-                            if(mission.Reward != null)
-                            {
-                                // Transfer materials
-                                if(mission.Reward.Materials != null)
-                                    SystemManager.GetPlayer.AddMaterial(mission.Reward.Materials);
-
-                                // Transfer components
-                                if(mission.Reward.Components != null)
-                                    SystemManager.GetPlayer.AddComponent(mission.Reward.Components);
-
-                                SystemManager.GetPlayer.AddXP(mission.Reward.Xp);
-                            }
-                        }
-                    }
-                    
-
-                    ContractStatus = ContractState.Completed;
-                }
-            }
-        }
-
-        public void StoreRewards()
-        {
-            Rewards = new RewardInfo();
-            // cycle through each ended mission and transfer rewards to player
-            foreach (MissionData mission in Ended)
-            {
-                if (mission.Success)
-                {
-                    if (mission.Reward != null)
-                    {
-                        Rewards.Xp += mission.Reward.Xp;
-
-                        foreach(MaterialData key in mission.Reward.Materials.Keys)
-                        {
-                            if(Rewards.Materials.ContainsKey(key))
-                                Rewards.Materials[key] += mission.Reward.Materials[key];
-                            else
-                                Rewards.Materials.Add(key, mission.Reward.Materials[key]);
-                        }
-
-                        foreach(string comp in mission.Reward.Components)
-                        {
-                            if(!Rewards.Components.Contains(comp))
-                            {
-                                Rewards.Components.Add(comp);
-                            }
-                        }
-                    }
-                }
-            }
-        }*/
     }
 }
 

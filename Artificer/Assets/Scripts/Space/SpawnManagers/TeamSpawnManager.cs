@@ -145,7 +145,7 @@ namespace Space.SpawnManagers
         [Server]
         public GameObject SpawnPlayer(PlayerConnectionInfo info, int spawnID)
         {
-            SpawnPointInformation toSpawn = (SpawnPointInformation)_spawns.Item(spawnID);
+            SpawnPointInformation toSpawn = _spawns.Item(spawnID);
 
             // used to track if the immediate vicinity for spawning is clear
             bool areaClear = false;
@@ -177,6 +177,7 @@ namespace Space.SpawnManagers
             }
 
             GameObject playerObject = Instantiate(SystemManager.singleton.playerPrefab);
+
             // apply position
             playerObject.transform.position = newPosition;
 

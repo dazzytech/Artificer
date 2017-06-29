@@ -32,17 +32,14 @@ namespace Space.Ship
 
         #region ATTRIBUTES
 
-        public ShipAttributes ShipAtt;
-
-        // Store a reference to the ships data
-        [SyncVar]
-        public string Ship;
-        [SyncVar]
-        public bool hasSpawned;
+        private ShipAttributes m_att;
 
         #region GENERATION VARIABLES
 
         private List<int> m_addedIDs;
+
+        [SyncVar]
+        public bool hasSpawned;
 
         #endregion
 
@@ -72,7 +69,7 @@ namespace Space.Ship
                 SystemManager.UI.AddUIPiece(transform);
 
                 if (OnShipCreated != null)
-                    OnShipCreated(ShipAtt);
+                    OnShipCreated(m_att);
             }
 
             transform.SetParent(m_shipContainer);
@@ -82,11 +79,77 @@ namespace Space.Ship
 
         #region MONO BEHAVIOUR
 
-        void Awake()
+        private void Awake()
         {
             // Retrive container object
             m_shipContainer = 
                 GameObject.Find("_ships").transform;
+
+            // assign atriubutes for the ship
+            m_att = GetComponent<ShipAttributes>();
+        }
+
+        void Start()
+        {
+            //NetworkProximityChecker npc = gameObject.AddComponent<NetworkProximityChecker>();
+            //npc.checkMethod = NetworkProximityChecker.CheckMethod.Physics2D;
+
+            // we will add player interaction if this is our ship
+            if (isLocalPlayer)
+            {
+                // Set after ship created
+                // we will need to check this is ours in future
+                //GameObject.Find("PlayerCamera").SendMessage("SetFollowObj",
+                                   //                       transform.GetChild(0));
+
+                name = "PlayerShip";
+                tag = "PlayerShip";
+
+                gameObject.AddComponent<ShipPlayerInputController>();
+                m_att.AlignmentLabel = "Player";
+
+                //SendMessage("BuildColliders");
+            }
+            // Any ships spawned before we pick team will need
+            // assigning when team is assigned
+            else if (SystemManager.Space.Team)
+            {
+                // Determine tag based on our reference to team
+                if (SystemManager.Space.Team.PlayerOnTeam(netId))
+                {
+                    name = "AllyShip";
+                    tag = "Friendly";
+                }
+                else
+                {
+                    name = "EnemyShip";
+                    tag = "Enemy";
+                }
+            }
+        }
+
+        #endregion
+
+        #region PUBLIC INTERACTION
+
+        /// <summary>
+        /// Initializes and Assigns ship attributes
+        /// based on parameters
+        /// </summary>
+        [Server]
+        public void AssignShipData(string shipItem, int alignment)
+        {
+            // Assign the shipdata to the attributes
+            m_att.Ship = ShipLibrary.GetShip(shipItem);
+
+            // Assign the team information to the attributes
+            m_att.TeamID = alignment;
+
+            // Spawn the ship on server
+            GenerateShip();
+
+            // Add to other uis
+            SystemManager.UI.RpcAddRemotePlayer(netId);
         }
 
         #endregion
@@ -113,7 +176,6 @@ namespace Space.Ship
                 return; 
 
             hasSpawned = true;
-            Ship = shipName;
             RpcSpawnMe(shipName, teamID);
 
             SystemManager.UI.RpcAddRemotePlayer(netId);
@@ -129,12 +191,11 @@ namespace Space.Ship
             //spawnData will be synced by the server automatically,
             //but I don't trust it to arrive before this call, so I pass it into
             //this function anyway to be sure.
-            Ship = shipName;
             SetUpPlayer(teamID);
             
 
             if(OnShipCreated != null)
-                OnShipCreated(ShipAtt);
+                OnShipCreated(m_att);
         }
 
         /// <summary>
@@ -142,12 +203,12 @@ namespace Space.Ship
         /// </summary>
         private void SetUpPlayer(int teamID)
         {
-            ShipAtt = GetComponent<ShipAttributes>();
-            ShipAtt.instID = netId;
-            ShipAtt.TeamID = teamID;
+            
+            m_att.instID = netId;
+            m_att.TeamID = teamID;
 
             //Build the object with spawnData
-            ShipGenerator.GenerateShip(ShipLibrary.GetShip(Ship), this.gameObject);
+            //ShipGenerator.GenerateShip(ShipLibrary.GetShip(Ship), this.gameObject);
 
             // add network proximity checker
             NetworkProximityChecker npc = gameObject.AddComponent<NetworkProximityChecker>();
@@ -164,7 +225,7 @@ namespace Space.Ship
                 tag = "PlayerShip";
 
                 gameObject.AddComponent<ShipPlayerInputController>();
-                ShipAtt.AlignmentLabel = "Player";
+                m_att.AlignmentLabel = "Player";
 
                 SendMessage("BuildColliders");
             }
@@ -183,13 +244,6 @@ namespace Space.Ship
                     name = "EnemyShip";
                     tag = "Enemy";
                 }
-
-                if (hasAuthority)
-                {
-                    // nice lil hack to know we are dealing 
-                    // with a raider
-                    ShipAtt.TeamID = -1;
-                }
             }
         }
 
@@ -204,7 +258,7 @@ namespace Space.Ship
         private void RpcFinishCreate()
         {
             if (OnShipCreated != null)
-                OnShipCreated(ShipAtt);
+                OnShipCreated(m_att);
         }
 
         #endregion
@@ -220,9 +274,9 @@ namespace Space.Ship
         /// <returns>The AI ship.</returns>
         /// <param name="ship">ShipData template 
         /// to ship the ship with.</param>
-        [Command]
-        public void CmdGenerateShip
-            (ShipData ship)
+        [Server]
+        public void GenerateShip
+            ()
         {
             // create list for storing info
             m_addedIDs = new List<int>();
@@ -230,23 +284,23 @@ namespace Space.Ship
             // Add head to this game object
             GameObject headGO =
                 Instantiate(Resources.Load
-                            ("Space/Ships/" + ship.Head.Path))
+                            ("Space/Ships/" + m_att.Ship.Head.Path))
                     as GameObject;
 
             // set transform
             headGO.transform.parent = transform;
             headGO.transform.localPosition = Vector3.zero;
             headGO.tag = "Head";
-            headGO.SendMessage("SetStyle", ship.Head.Style,
+            headGO.SendMessage("SetStyle", m_att.Ship.Head.Style,
                                SendMessageOptions.DontRequireReceiver);
-            headGO.SendMessage("SetID", ship.Head.InstanceID,
+            headGO.SendMessage("SetID", m_att.Ship.Head.InstanceID,
                 SendMessageOptions.DontRequireReceiver);
 
-            m_addedIDs.Add(ship.Head.InstanceID);
+            m_addedIDs.Add(m_att.Ship.Head.InstanceID);
 
             // build the body around this
             ShipGenerator.BuildConnectedPieces
-                (ship.Head, headGO.transform, ship);
+                (m_att.Ship.Head, headGO.transform, m_att.Ship);
 
             //baseShip.GetComponent<ShipAttributes>().Ship = ship;
             SendMessage("AddComponentsToList",
@@ -264,8 +318,7 @@ namespace Space.Ship
         /// <param name="ship">Ship.</param>
         [Server]
         public void BuildConnectedPieces
-            (Data.Shared.Component component, Transform componentTransform,
-             ShipData ship)
+            (Data.Shared.Component component, Transform componentTransform)
         {
             Vector3 otherPos;
             Vector3 thisPos;
@@ -300,7 +353,7 @@ namespace Space.Ship
                          ("socket_{0}", socket.SocketID)).position;
 
                 // find the second piece through the socket
-                Data.Shared.Component piece = ship.GetComponent(socket.OtherID);
+                Data.Shared.Component piece = m_att.Ship.GetComponent(socket.OtherID);
                 if (piece.Path == "")
                 {
                     Debug.Log("Ship Generator - " +
@@ -409,10 +462,10 @@ namespace Space.Ship
                     pieceGO.GetComponent<TargeterAttributes>().homeForward = pieceGO.transform.up;
                 }
 
-                addedIDs.Add(piece.InstanceID);
+                m_addedIDs.Add(piece.InstanceID);
 
-                ShipGenerator.BuildConnectedPieces
-                    (piece, pieceGO.transform, ship);
+                BuildConnectedPieces
+                    (piece, pieceGO.transform);
             }
         }
 

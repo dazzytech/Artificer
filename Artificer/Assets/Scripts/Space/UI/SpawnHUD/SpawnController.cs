@@ -188,9 +188,7 @@ namespace Space.UI.Spawn
             SelectSpawn(m_att.SpawnList[0]);
         }
 
-        #endregion
-
-        #region COROUTINES
+        #region INVOKED
 
         /// <summary>
         /// Enable spawner after delay period
@@ -223,5 +221,7 @@ namespace Space.UI.Spawn
         }
 
         #endregion
+
+        #endregion 
     }
 }
