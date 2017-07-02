@@ -23,7 +23,7 @@ namespace Space.Ship.Components.Attributes
         public string name;
     }
 
-    public class ComponentAttributes: MonoBehaviour
+    public class ComponentAttributes: NetworkBehaviour
     {
         #region INPUT INTERACTION
 
@@ -42,6 +42,15 @@ namespace Space.Ship.Components.Attributes
 
         public ShieldListener Shield;
 
+        #region SPAWN INFORMATION
+
+        [SyncVar]
+        public bool ServerReady;
+
+        public bool HasSpawned;
+
+        #endregion
+
         #region IDENTIFICATION
 
         public string Name;
@@ -49,6 +58,9 @@ namespace Space.Ship.Components.Attributes
         public int ID;
 
         public Sprite iconImage;
+
+        [SyncVar]
+        public NetworkInstanceId ParentID;
 
         #endregion
 
@@ -62,9 +74,31 @@ namespace Space.Ship.Components.Attributes
 
         #region SHIP STRUCTURE
 
-        public Transform LockedGO;
-        public Socket sockInfo;
+        /// <summary>
+        /// The Component that this 
+        /// component is attached to
+        /// </summary>
+        [SyncVar]
+        public NetworkInstanceId ConnectedObjectNetID;
 
+        /// <summary>
+        /// The Socket that this 
+        /// component is attached to
+        /// </summary>
+        [SyncVar]
+        public Socket Socket;
+
+        /// <summary>
+        /// Synced list over network 
+        /// of components that this 
+        /// ship is connected to
+        /// </summary>
+        public SyncListUInt ConnectedIDs = new SyncListUInt();
+
+        /// <summary>
+        /// Contains list of connected 
+        /// component listener made on startup
+        /// </summary>
         [HideInInspector]
         public List<ComponentListener> connectedComponents;
 
@@ -80,6 +114,7 @@ namespace Space.Ship.Components.Attributes
         #region VISUAL STYLES
 
         [HideInInspector]
+        [SyncVar]
         public string currentStyle;
 
         public StyleInfo[] componentStyles;
@@ -88,7 +123,18 @@ namespace Space.Ship.Components.Attributes
 
         #region SHIP DATA REFERENCE
 
-        public ShipAttributes Ship;
+        [SyncVar]
+        public Data.Shared.Component Data;
+
+        public ShipAttributes Ship
+        {
+            get
+            {
+                return transform.
+                  GetComponentInParent
+                  <ShipAttributes>();
+            }
+        }
 
         public ShipData ShipData
         {

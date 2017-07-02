@@ -70,6 +70,10 @@ namespace Space.CameraUtils
         /// </summary>
         public void JmpToObj()
         {
+            if (objToFollow == null)
+                SetFollowObj(GameObject.
+                    FindGameObjectWithTag("PlayerShip").transform);
+
             thisTransform.position = objToFollow.position;
         }
 

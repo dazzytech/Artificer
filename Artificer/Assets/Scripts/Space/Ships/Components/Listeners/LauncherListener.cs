@@ -7,6 +7,7 @@ using System.Linq;
 using Space.Projectiles;
 using Space.Ship.Components.Attributes;
 using Networking;
+using Data.Shared;
 
 namespace Space.Ship.Components.Listener
 {
@@ -14,27 +15,8 @@ namespace Space.Ship.Components.Listener
     {
         LauncherAttributes _attr;
 
-        void Awake()
-        {
-            ComponentType = "Launchers";
-            _attr = GetComponent<LauncherAttributes>();
-        }
-        
-        void Start ()
-        {
-            base. SetRB();
-            //_attr.Ship = transform.parent.GetComponent<ShipAttributes>();
-            _attr.readyToFire = true;
+        #region PUBLIC INTERACTION
 
-            if (_attr.AutoTarget)
-                StartCoroutine("FindArcTargets");
-        }
-
-        void Update()
-        {
-
-        }
-        
         public override void Activate()
         {
             /*if (_attr.readyToFire && _attr.Ship.Targets.Count != 0)
@@ -44,12 +26,38 @@ namespace Space.Ship.Components.Listener
                 StartCoroutine("LaunchRockets"); 
             }*/
         }
-        
-        public override void Deactivate()
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        protected override void InitializeComponent()
         {
-            
+            base.InitializeComponent();
+
+            ComponentType = "Launchers";
+            _attr = GetComponent<LauncherAttributes>();
+
+            if (hasAuthority)
+            {
+                _attr.AutoTarget = _attr.Data.AutoLock;
+
+                _attr.readyToFire = true;
+
+                if (_attr.AutoTarget)
+                    StartCoroutine("FindArcTargets");
+            }
         }
-        
+
+        #endregion
+
+        #region COROUTINE
+
+        /// <summary>
+        /// Once fired the coroutine will
+        /// reenable the weapon after an alotted time
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator EngageDelay()
         {
             yield return new WaitForSeconds (_attr.WeaponDelay);
@@ -57,18 +65,6 @@ namespace Space.Ship.Components.Listener
             yield return null;
         }
         
-        public void SetTriggerKey(string key)
-        {
-            _attr.TriggerKey = Control_Config
-                .GetKey(key, "ship");
-        }
-        
-        public void SetCombatKey(string key)
-        {
-            _attr.CombatKey = Control_Config
-                .GetKey(key, "combat");
-        }
-
         /// <summary>
         /// Finds targets within the targeters firing arc.
         /// </summary>
@@ -183,5 +179,7 @@ namespace Space.Ship.Components.Listener
                 yield return new WaitForSeconds(_attr.RocketDelay);
             }*/
         }
+
+        #endregion
     }
 }

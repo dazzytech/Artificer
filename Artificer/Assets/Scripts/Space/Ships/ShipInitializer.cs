@@ -12,6 +12,7 @@ using Networking;
 using System.Collections.Generic;
 using Space.Ship.Components.Listener;
 using Space.Ship.Components.Attributes;
+using Game;
 
 namespace Space.Ship
 {
@@ -22,14 +23,6 @@ namespace Space.Ship
     /// </summary>
     public class ShipInitializer : NetworkBehaviour
     {
-        #region EVENTS
-
-        public delegate void ShipEvent(ShipAttributes Ship);
-
-        public static event ShipEvent OnShipCreated;
-
-        #endregion
-
         #region ATTRIBUTES
 
         private ShipAttributes m_att;
@@ -37,9 +30,6 @@ namespace Space.Ship
         #region GENERATION VARIABLES
 
         private List<int> m_addedIDs;
-
-        [SyncVar]
-        public bool hasSpawned;
 
         #endregion
 
@@ -52,80 +42,35 @@ namespace Space.Ship
 
         #endregion
 
-        #region ONSTART OVERRIDES
-
-        /// <summary>
-        /// Builds the ship if it was build on server already
-        /// </summary>
-        public override void OnStartClient()
-        {
-            // This player may have spawned before this client joined the game, 
-            // so if that's the case, spawn it now. Otherwise, just wait for the RpcSpawnMe call.
-            if (hasSpawned)
-            {
-                SetUpPlayer(SystemManager.Space.TeamID);
-                // Add this item to local UI list
-                // p.s should be performed on each client without cmd
-                SystemManager.UI.AddUIPiece(transform);
-
-                if (OnShipCreated != null)
-                    OnShipCreated(m_att);
-            }
-
-            transform.SetParent(m_shipContainer);
-        }
-
-        #endregion
-
         #region MONO BEHAVIOUR
 
-        private void Awake()
+        public override void OnStartClient()
         {
             // Retrive container object
             m_shipContainer = 
                 GameObject.Find("_ships").transform;
 
+            transform.SetParent(m_shipContainer);
+
             // assign atriubutes for the ship
             m_att = GetComponent<ShipAttributes>();
-        }
 
-        void Start()
-        {
-            //NetworkProximityChecker npc = gameObject.AddComponent<NetworkProximityChecker>();
-            //npc.checkMethod = NetworkProximityChecker.CheckMethod.Physics2D;
-
-            // we will add player interaction if this is our ship
-            if (isLocalPlayer)
+            // Define transform if ship has been already created
+            if (m_att.hasSpawned)
             {
-                // Set after ship created
-                // we will need to check this is ours in future
-                //GameObject.Find("PlayerCamera").SendMessage("SetFollowObj",
-                                   //                       transform.GetChild(0));
-
-                name = "PlayerShip";
-                tag = "PlayerShip";
-
-                gameObject.AddComponent<ShipPlayerInputController>();
-                m_att.AlignmentLabel = "Player";
-
-                //SendMessage("BuildColliders");
-            }
-            // Any ships spawned before we pick team will need
-            // assigning when team is assigned
-            else if (SystemManager.Space.Team)
-            {
-                // Determine tag based on our reference to team
-                if (SystemManager.Space.Team.PlayerOnTeam(netId))
-                {
-                    name = "AllyShip";
-                    tag = "Friendly";
-                }
+                if (isLocalPlayer)
+                    SetPlayer();
                 else
-                {
-                    name = "EnemyShip";
-                    tag = "Enemy";
-                }
+                    SystemManager.Space.TeamSelected += SetNonPlayer;
+
+                SystemManager.UI.AddUIPiece(transform);
+
+                
             }
+            else
+                // Begin listening for the ship created 
+                // event
+                SystemManager.Events.EventShipCreated += ShipCreated;
         }
 
         #endregion
@@ -145,93 +90,50 @@ namespace Space.Ship
             // Assign the team information to the attributes
             m_att.TeamID = alignment;
 
+            // Assign the network instance for this ship
+            m_att.NetworkID = netId;
+
             // Spawn the ship on server
             GenerateShip();
 
             // Add to other uis
             SystemManager.UI.RpcAddRemotePlayer(netId);
+
+            SystemManager.GameMSG.OnShipCreated(netId, SystemManager.Space.ID);
+
+            m_att.hasSpawned = true;
         }
 
         #endregion
 
-        #region SHIP INITIALIZATION
+        #region PRIVATE UTILITIES
+
+        #region SET TRANSFORM
 
         /// <summary>
-        /// Assigns the passed ship data
-        /// to the player's own ship data variable
+        /// Defines our player ship
+        /// within its transform
         /// </summary>
-        /// <param name="a_data">ship data to pass</param>
-        private void OnSpawnMe(NetworkMessage netMsg)
+        private void SetPlayer()
         {
-            string shipName = netMsg.
-                ReadMessage<StringMessage>().value;
-            
-            CmdSpawnMe(shipName, SystemManager.Space.TeamID);
-        }
+            // We have the authority on this ship
+            // we will need to check this is ours in future
+            name = "PlayerShip";
+            tag = "PlayerShip";
 
-        [Command]
-        private void CmdSpawnMe(string shipName, int teamID)
-        {
-            if (hasSpawned)
-                return; 
+            gameObject.AddComponent<ShipPlayerInputController>();
+            m_att.AlignmentLabel = "Player";
 
-            hasSpawned = true;
-            RpcSpawnMe(shipName, teamID);
-
-            SystemManager.UI.RpcAddRemotePlayer(netId);
+            SendMessage("BuildColliders");
         }
 
         /// <summary>
-        /// Sent to each client to instruct them to build the ship
+        /// Set the transform data
+        /// as an NonPlayer object
         /// </summary>
-        /// <param name="a_data">ship data to pass</param>
-        [ClientRpc]
-        private void RpcSpawnMe(string shipName, int teamID)
+        private void SetNonPlayer()
         {
-            //spawnData will be synced by the server automatically,
-            //but I don't trust it to arrive before this call, so I pass it into
-            //this function anyway to be sure.
-            SetUpPlayer(teamID);
-            
-
-            if(OnShipCreated != null)
-                OnShipCreated(m_att);
-        }
-
-        /// <summary>
-        /// Construct the ship object for the player
-        /// </summary>
-        private void SetUpPlayer(int teamID)
-        {
-            
-            m_att.instID = netId;
-            m_att.TeamID = teamID;
-
-            //Build the object with spawnData
-            //ShipGenerator.GenerateShip(ShipLibrary.GetShip(Ship), this.gameObject);
-
-            // add network proximity checker
-            NetworkProximityChecker npc = gameObject.AddComponent<NetworkProximityChecker>();
-            npc.checkMethod = NetworkProximityChecker.CheckMethod.Physics2D;
-
-            // we will add player interaction if this is our ship
-            if (isLocalPlayer)
-            {
-                // we will need to check this is ours in future
-                GameObject.Find("PlayerCamera").SendMessage("SetFollowObj",
-                                                            transform.GetChild(0));
-
-                name = "PlayerShip";
-                tag = "PlayerShip";
-
-                gameObject.AddComponent<ShipPlayerInputController>();
-                m_att.AlignmentLabel = "Player";
-
-                SendMessage("BuildColliders");
-            }
-            // Any ships spawned before we pick team will need
-            // assigning when team is assigned
-            else if (SystemManager.Space.Team)
+            if (SystemManager.Space.Team)
             {
                 // Determine tag based on our reference to team
                 if (SystemManager.Space.Team.PlayerOnTeam(netId))
@@ -244,26 +146,14 @@ namespace Space.Ship
                     name = "EnemyShip";
                     tag = "Enemy";
                 }
+
+                SystemManager.Space.TeamSelected -= SetNonPlayer;
             }
-        }
-
-        [Command]
-        private void CmdUpdateHUD()
-        {
-            SystemManager.UI.RpcAddRemotePlayer(netId);
-            RpcFinishCreate();
-        }
-
-        [ClientRpc]
-        private void RpcFinishCreate()
-        {
-            if (OnShipCreated != null)
-                OnShipCreated(m_att);
+            else
+                SystemManager.Space.TeamSelected += SetNonPlayer;
         }
 
         #endregion
-
-        #region PRIVATE UTILITIES
 
         #region SHIP GENERATION
 
@@ -291,20 +181,18 @@ namespace Space.Ship
             headGO.transform.parent = transform;
             headGO.transform.localPosition = Vector3.zero;
             headGO.tag = "Head";
-            headGO.SendMessage("SetStyle", m_att.Ship.Head.Style,
-                               SendMessageOptions.DontRequireReceiver);
-            headGO.SendMessage("SetID", m_att.Ship.Head.InstanceID,
-                SendMessageOptions.DontRequireReceiver);
+
+            NetworkServer.SpawnWithClientAuthority(headGO, connectionToClient);
+
+            ComponentListener head = headGO.GetComponent<ComponentListener>();
+
+            head.InitializeData(m_att.Ship.Head, netId, NetworkInstanceId.Invalid, new Socket());
 
             m_addedIDs.Add(m_att.Ship.Head.InstanceID);
 
             // build the body around this
-            ShipGenerator.BuildConnectedPieces
-                (m_att.Ship.Head, headGO.transform, m_att.Ship);
-
-            //baseShip.GetComponent<ShipAttributes>().Ship = ship;
-            SendMessage("AddComponentsToList",
-                SendMessageOptions.DontRequireReceiver);
+            BuildConnectedPieces
+                (m_att.Ship.Head, headGO.transform);
         }
 
         /// <summary>
@@ -320,9 +208,6 @@ namespace Space.Ship
         public void BuildConnectedPieces
             (Data.Shared.Component component, Transform componentTransform)
         {
-            Vector3 otherPos;
-            Vector3 thisPos;
-
             Socket[] socketList = component.sockets;
 
             // no sockets = no body
@@ -331,32 +216,23 @@ namespace Space.Ship
 
             foreach (Socket socket in socketList)
             {
-                // Get position of this socket
-                // through the components transform
-                Transform thisTrans = componentTransform.Find
-                    (String.Format
-                     ("socket_{0}", socket.SocketID));
-
                 // test we successfully found the socket 
-                if (thisTrans == null)
+                if (componentTransform.Find
+                    (String.Format
+                     ("socket_{0}", socket.SocketID)) == null)
                 {
-                    Debug.Log("Ship Generator - " +
+                    Debug.Log("Ship Initializer - " +
                             "BuildConnectedPieces:" +
                               "socket Transform not found - "
                               + socket.SocketID);
                     return;
                 }
 
-                thisPos =
-                    componentTransform.Find
-                        (String.Format
-                         ("socket_{0}", socket.SocketID)).position;
-
                 // find the second piece through the socket
                 Data.Shared.Component piece = m_att.Ship.GetComponent(socket.OtherID);
                 if (piece.Path == "")
                 {
-                    Debug.Log("Ship Generator - " +
+                    Debug.Log("Ship Initializer - " +
                         "BuildConnectedPieces: other " +
                         "socket not found!");
                     return;
@@ -374,93 +250,38 @@ namespace Space.Ship
                 if (Resources.Load
                     ("Space/Ships/" + piece.Path) == null)
                 {
-                    Debug.Log("Ship Generator - " +
+                    Debug.Log("Ship Initializer - " +
                               "BuildConnectedPieces: other " +
                               "Could not find: " + piece.Path);
                     return;
                 }
 
-                //Add the component piece to the game world
+                // Add the component piece to the game world
+                // and give it local player authority
+                // which isn't always the pilot
                 pieceGO =
                     Instantiate(Resources.Load
                                 ("Space/Ships/" + piece.Path))
                             as GameObject;
 
-                // Set the direction of the new piece
-                Vector3 dirEuler = new Vector3(0, 0, 0);
-                switch (piece.Direction)
-                {
-                    case "up":
-                        dirEuler.z = 0f; break;
-                    case "down":
-                        dirEuler.z = 180f; break;
-                    case "left":
-                        dirEuler.z = 90; break;
-                    case "right":
-                        dirEuler.z = 270f; break;
-                }
+                NetworkServer.SpawnWithClientAuthority
+                    (pieceGO, connectionToClient);
 
-                // Apply direction to obj and sockets
-                pieceGO.transform.eulerAngles = dirEuler;
+                // Retrieve the component listener
+                ComponentListener pieceCon =
+                    pieceGO.GetComponent<ComponentListener>();
 
-                // Set trigger - none interactive components will ignore this
-                pieceGO.SendMessage("SetTriggerKey", piece.Trigger,
-                                    SendMessageOptions.DontRequireReceiver);
+                NetworkInstanceId connectID = componentTransform.
+                    GetComponent<NetworkIdentity>().netId;
 
-                // Combat trigger - activation key when the ship enters combat mode
-                if (piece.CTrigger != null)
-                    pieceGO.SendMessage("SetCombatKey", piece.CTrigger,
-                                    SendMessageOptions.DontRequireReceiver);
-
-                // Sets the ship's visual style
-                pieceGO.SendMessage("SetStyle", piece.Style,
-                                    SendMessageOptions.DontRequireReceiver);
-
-                pieceGO.SendMessage("SetID", piece.InstanceID,
-                                    SendMessageOptions.DontRequireReceiver);
-
-                // make child of ship
-                pieceGO.transform.parent =
-                    componentTransform.parent;
-
-                // find position of other piece and then
-                // snap the pieces together
-                otherPos = pieceGO.transform.Find
-                    (String.Format
-                     ("socket_{0}", socket.OtherLinkID)).position;
-
-                Vector3 snapDistance = otherPos - thisPos;
-
-                pieceGO.transform.position -= snapDistance;
-
-                // Initiailize the connector list for this piece
-                pieceGO.SendMessage("InitCL");
-
-                pieceGO.SendMessage("SetSock", socket);
-
-                pieceGO.SendMessage("LockTo", componentTransform);
+                // Send the data the component needs to init on the
+                // server
+                pieceCon.InitializeData(piece, netId, connectID, socket);
 
                 // Add this piece to the parent piece connector list
                 componentTransform.gameObject.SendMessage
-                    ("AddConnection", pieceGO.GetComponent<ComponentListener>());
-
-                // Finally assign autolock and autofire if component is the right type
-                if (piece.Folder == "Launchers")
-                {
-                    pieceGO.GetComponent<LauncherAttributes>().AutoTarget =
-                        piece.AutoLock;
-                }
-
-                if (piece.Folder == "Targeter")
-                {
-                    pieceGO.GetComponent<TargeterAttributes>().Behaviour =
-                        (TargeterBehaviour)piece.behaviour;
-
-                    pieceGO.GetComponent<TargeterAttributes>().EngageFire =
-                        piece.AutoFire;
-
-                    pieceGO.GetComponent<TargeterAttributes>().homeForward = pieceGO.transform.up;
-                }
+                    ("AddConnection", pieceGO.
+                    GetComponent<NetworkIdentity>().netId);
 
                 m_addedIDs.Add(piece.InstanceID);
 
@@ -470,6 +291,35 @@ namespace Space.Ship
         }
 
         #endregion
+
+        #endregion
+
+        #region EVENTS
+
+        /// <summary>
+        /// Initializes ship object
+        /// once creation event is triggered
+        /// </summary>
+        /// <param name="CD"></param>
+        private void ShipCreated(CreateDispatch CD)
+        {
+            if (!(CD.Self == netId.Value))
+                // this isn't our ship
+                return;
+
+            //NetworkProximityChecker npc = gameObject.AddComponent<NetworkProximityChecker>();
+            //npc.checkMethod = NetworkProximityChecker.CheckMethod.Physics2D;
+
+            // Check if this is the player ship
+            if(isLocalPlayer)
+                // this is a player ship
+                SetPlayer();
+            else
+                // this is a non player ship
+                SetNonPlayer();
+
+            SystemManager.Events.EventShipCreated -= ShipCreated;
+        }
 
         #endregion
     }

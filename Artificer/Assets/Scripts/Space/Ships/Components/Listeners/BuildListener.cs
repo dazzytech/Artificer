@@ -18,22 +18,6 @@ namespace Space.Ship.Components.Listener
 
         #endregion
 
-        #region MONOBEHAVIOUR
-
-        void Awake()
-        {
-            ComponentType = "Builder";
-            m_att = GetComponent<BuildAttributes>();
-        }
-
-        void Start()
-        {
-            base.SetRB();
-            m_att.ReadyToDeploy = true;
-        }
-
-        #endregion
-
         #region PUBLIC INTERACTION  
 
         /// <summary>
@@ -95,6 +79,21 @@ namespace Space.Ship.Components.Listener
             m_att.ReadyToDeploy = false;
 
             StartCoroutine("EngageDelay");
+        }
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        protected override void InitializeComponent()
+        {
+            base.InitializeComponent();
+
+            ComponentType = "Builder";
+            m_att = GetComponent<BuildAttributes>();
+
+            if(hasAuthority)
+                m_att.ReadyToDeploy = true;
         }
 
         #endregion

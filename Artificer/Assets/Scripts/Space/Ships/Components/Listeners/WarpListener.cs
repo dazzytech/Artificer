@@ -7,29 +7,14 @@ namespace Space.Ship.Components.Listener
 {
     public class WarpListener : ComponentListener 
     {
+        #region ATTRIBUTES
+
         WarpAttributes _attr;
         bool warping;
-        
-        void Awake()
-        {
-            ComponentType = "Warps";
-            _attr = GetComponent<WarpAttributes>();
-        }
-        
-        void Start ()
-        {
-            base. SetRB();
-            _attr.readyToFire = true;
-            warping = false;
-        }
-    	
-    	// Update is called once per frame
-    	void Update () {
-    	    if (_attr.readyToFire)
-                _attr.TimeCount = 0;
-            else
-                _attr.TimeCount += Time.deltaTime;
-    	}
+
+        #endregion
+
+        #region PUBLIC INTERACTION
 
         public override void Activate()
         {
@@ -44,22 +29,42 @@ namespace Space.Ship.Components.Listener
             }
         }
 
-        public override void Deactivate()
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        protected override void InitializeComponent()
         {
-            
+            base.InitializeComponent();
+
+            ComponentType = "Warps";
+            _attr = GetComponent<WarpAttributes>();
+
+            if (hasAuthority)
+            {
+                _attr.readyToFire = true;
+                warping = false;
+            }
         }
+        
+        // Update is called once per frame
+        protected override void RunUpdate()
+        {
+            if (_attr.readyToFire)
+                _attr.TimeCount = 0;
+            else
+                _attr.TimeCount += Time.deltaTime;
+        }
+
+        #endregion
+
+        #region COROUTINES
 
         private IEnumerator EngageDelay()
         {
             yield return new WaitForSeconds (_attr.WarpDelay);
             _attr.readyToFire = true;
             yield return null;
-        }
-        
-        public void SetTriggerKey(string key)
-        {
-            _attr.TriggerKey = Control_Config
-                .GetKey(key, "ship");
         }
 
         IEnumerator FireWarp()
@@ -75,5 +80,7 @@ namespace Space.Ship.Components.Listener
             
             StartCoroutine("EngageDelay");
         }
+
+        #endregion
     }
 }

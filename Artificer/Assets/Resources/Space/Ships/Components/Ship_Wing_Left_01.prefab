@@ -5,10 +5,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 441890}
-  - 114: {fileID: 11480764}
+  - component: {fileID: 441890}
+  - component: {fileID: 11480764}
   m_Layer: 0
   m_Name: socket_2
   m_TagString: Untagged
@@ -21,10 +21,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 476670}
-  - 114: {fileID: 11481374}
+  - component: {fileID: 476670}
+  - component: {fileID: 11481374}
   m_Layer: 0
   m_Name: socket_0
   m_TagString: Untagged
@@ -37,10 +37,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 470070}
-  - 114: {fileID: 11450484}
+  - component: {fileID: 470070}
+  - component: {fileID: 11450484}
   m_Layer: 0
   m_Name: socket_3
   m_TagString: Untagged
@@ -53,14 +53,14 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 423836}
-  - 61: {fileID: 6159792}
-  - 114: {fileID: 11435020}
-  - 114: {fileID: 11491650}
-  - 114: {fileID: 11499774}
-  - 114: {fileID: 11479438}
+  - component: {fileID: 423836}
+  - component: {fileID: 6159792}
+  - component: {fileID: 11435020}
+  - component: {fileID: 11491650}
+  - component: {fileID: 11499774}
+  - component: {fileID: 11479438}
   m_Layer: 0
   m_Name: Ship_Wing_Left_01
   m_TagString: Body
@@ -73,10 +73,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 486092}
-  - 212: {fileID: 21293282}
+  - component: {fileID: 486092}
+  - component: {fileID: 21293282}
   m_Layer: 0
   m_Name: ship_left_wing_01_default
   m_TagString: Untagged
@@ -89,10 +89,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 474932}
-  - 114: {fileID: 11425968}
+  - component: {fileID: 474932}
+  - component: {fileID: 11425968}
   m_Layer: 0
   m_Name: socket_4
   m_TagString: Untagged
@@ -105,10 +105,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 429898}
-  - 114: {fileID: 11408636}
+  - component: {fileID: 429898}
+  - component: {fileID: 11408636}
   m_Layer: 0
   m_Name: socket_1
   m_TagString: Untagged
@@ -125,7 +125,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 486092}
   - {fileID: 476670}
@@ -135,6 +134,7 @@ Transform:
   - {fileID: 474932}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &429898
 Transform:
   m_ObjectHideFlags: 1
@@ -144,10 +144,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.14, y: 0.045, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 423836}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &441890
 Transform:
   m_ObjectHideFlags: 1
@@ -157,10 +157,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.14, y: -0.135, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 423836}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &470070
 Transform:
   m_ObjectHideFlags: 1
@@ -170,10 +170,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.01, y: 0.255, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 423836}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &474932
 Transform:
   m_ObjectHideFlags: 1
@@ -183,10 +183,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.305, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 423836}
   m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &476670
 Transform:
   m_ObjectHideFlags: 1
@@ -196,10 +196,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.16, y: -0.145, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 423836}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &486092
 Transform:
   m_ObjectHideFlags: 1
@@ -209,10 +209,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 423836}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &6159792
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -224,9 +224,20 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.34, y: 0.77}
+  m_EdgeRadius: 0
 --- !u!114 &11408636
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -353,19 +364,20 @@ MonoBehaviour:
   active: 0
   CombatState: 0
   emitter: {fileID: 0}
+  Shield: {fileID: 0}
+  ServerReady: 0
+  HasSpawned: 0
   Name: Wing
   ID: 0
+  iconImage: {fileID: 21300000, guid: 4a27486a115e264428b46ac83d64e526, type: 3}
   TrackIntegrity: 1
   Integrity: 300
   MaxIntegrity: 0
-  LockedGO: {fileID: 0}
-  sockInfo:
+  Socket:
     SocketID: 0
     OtherID: 0
     OtherLinkID: 0
-  Shield: {fileID: 0}
   connectedComponents: []
-  currentStyle: default
   Description: 
   RequiredMats:
   - material: Fe
@@ -376,6 +388,7 @@ MonoBehaviour:
     amount: 4.6
   - material: Cu
     amount: 2
+  currentStyle: default
   componentStyles:
   - sprite: {fileID: 21300000, guid: d6efb912a49543e4aa75485dd2af09d6, type: 3}
     name: default
@@ -387,8 +400,18 @@ MonoBehaviour:
     name: red
   - sprite: {fileID: 21300000, guid: d3a08db6ca1a03e43a3cc215e9de94ea, type: 3}
     name: green
-  iconImage: {fileID: 21300000, guid: 4a27486a115e264428b46ac83d64e526, type: 3}
-  Ship: {fileID: 0}
+  Data:
+    InstanceID: 0
+    Direction: 
+    Trigger: 
+    CTrigger: 
+    Folder: 
+    Name: 
+    Style: 
+    sockets: []
+    AutoLock: 0
+    behaviour: 0
+    AutoFire: 0
 --- !u!114 &11499774
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -414,7 +437,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -422,17 +447,22 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 1
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d6efb912a49543e4aa75485dd2af09d6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

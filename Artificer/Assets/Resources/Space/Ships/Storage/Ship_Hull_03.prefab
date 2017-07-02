@@ -561,14 +561,15 @@ MonoBehaviour:
   CombatState: 0
   emitter: {fileID: 0}
   Shield: {fileID: 0}
+  ServerReady: 0
+  HasSpawned: 0
   Name: Hull
   ID: 0
   iconImage: {fileID: 21300000, guid: b9247c6ea737db04f9080adf21351e13, type: 3}
   TrackIntegrity: 0
   Integrity: 500
   MaxIntegrity: 0
-  LockedGO: {fileID: 0}
-  sockInfo:
+  Socket:
     SocketID: 0
     OtherID: 0
     OtherLinkID: 0
@@ -595,7 +596,18 @@ MonoBehaviour:
     name: red
   - sprite: {fileID: 21300000, guid: c6a84261bf209a042bd662b64f7d55d1, type: 3}
     name: green
-  Ship: {fileID: 0}
+  Data:
+    InstanceID: 0
+    Direction: 
+    Trigger: 
+    CTrigger: 
+    Folder: 
+    Name: 
+    Style: 
+    sockets: []
+    AutoLock: 0
+    behaviour: 0
+    AutoFire: 0
   dimensions: 0
   currentCapacity: 0
   currentWeight: 0
@@ -643,7 +655,7 @@ MonoBehaviour:
     i14: 212
     i15: 231
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &114678451393790112
 MonoBehaviour:
   m_ObjectHideFlags: 1

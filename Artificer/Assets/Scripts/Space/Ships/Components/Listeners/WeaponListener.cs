@@ -16,24 +16,10 @@ namespace Space.Ship.Components.Listener
     public class WeaponListener : ComponentListener 
     {
         WeaponAttributes _attr;
-    	
-        void Awake()
-    	{
-            ComponentType = "Weapons";
-    		_attr = GetComponent<WeaponAttributes>();
-        }
-    	
-    	void Start ()
-    	{
-            base. SetRB();
-    		_attr.readyToFire = true;
-    	}
 
-        void Update()
-        {
-        }
+        #region PUBLIC INTERACTION
 
-    	public override void Activate()
+        public override void Activate()
     	{
     		if (_attr.readyToFire) 
             {
@@ -58,7 +44,7 @@ namespace Space.Ship.Components.Listener
                 data.Damage = _attr.WeaponDamage;
                 data.Direction = forward;
                 data.Distance = _attr.WeaponRange;
-                data.Self = _attr.Ship.instID;
+                data.Self = _attr.Ship.NetworkID;
 
                 int prefabIndex = NetworkManager.singleton.spawnPrefabs.IndexOf(_attr.ProjectilePrefab);
 
@@ -75,28 +61,28 @@ namespace Space.Ship.Components.Listener
             }
     	}
 
-        public override void Deactivate()
-    	{
+        #endregion
 
-    	}
+        #region PRIVATE UTILITIES
 
-    	private IEnumerator EngageDelay()
+        protected override void InitializeComponent()
+        {
+            base.InitializeComponent();
+
+            ComponentType = "Weapons";
+            _attr = GetComponent<WeaponAttributes>();
+
+            if (hasAuthority)
+                _attr.readyToFire = true;
+        }
+
+        private IEnumerator EngageDelay()
     	{
     		yield return new WaitForSeconds (_attr.WeaponDelay);
     		_attr.readyToFire = true;
     		yield return null;
     	}
-    	
-    	public void SetTriggerKey(string key)
-    	{
-    		_attr.TriggerKey = Control_Config
-    			.GetKey(key, "ship");
-    	}
 
-        public void SetCombatKey(string key)
-        {
-            _attr.CombatKey = Control_Config
-                .GetKey(key, "combat");
-        }
+        #endregion
     }
 }

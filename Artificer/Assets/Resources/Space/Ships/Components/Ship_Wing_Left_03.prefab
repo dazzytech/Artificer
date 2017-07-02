@@ -254,9 +254,20 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.29999998, y: 0.59999996}
+  m_EdgeRadius: 0
 --- !u!114 &11402328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -355,19 +366,20 @@ MonoBehaviour:
   active: 0
   CombatState: 0
   emitter: {fileID: 0}
+  Shield: {fileID: 0}
+  ServerReady: 0
+  HasSpawned: 0
   Name: Wing
   ID: 0
+  iconImage: {fileID: 21300000, guid: 1296b166f36ae9745a96cafa69d2376f, type: 3}
   TrackIntegrity: 1
   Integrity: 300
   MaxIntegrity: 0
-  LockedGO: {fileID: 0}
-  sockInfo:
+  Socket:
     SocketID: 0
     OtherID: 0
     OtherLinkID: 0
-  Shield: {fileID: 0}
   connectedComponents: []
-  currentStyle: default
   Description: 
   RequiredMats:
   - material: Fe
@@ -378,6 +390,7 @@ MonoBehaviour:
     amount: 4.6
   - material: Cu
     amount: 2
+  currentStyle: default
   componentStyles:
   - sprite: {fileID: 21300000, guid: a46ce03e46ecdc6468f70f8fdd70213e, type: 3}
     name: default
@@ -389,8 +402,18 @@ MonoBehaviour:
     name: red
   - sprite: {fileID: 21300000, guid: 58e8fe982025e014ebb7f04428d637d6, type: 3}
     name: green
-  iconImage: {fileID: 21300000, guid: 1296b166f36ae9745a96cafa69d2376f, type: 3}
-  Ship: {fileID: 0}
+  Data:
+    InstanceID: 0
+    Direction: 
+    Trigger: 
+    CTrigger: 
+    Folder: 
+    Name: 
+    Style: 
+    sockets: []
+    AutoLock: 0
+    behaviour: 0
+    AutoFire: 0
 --- !u!114 &11484914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -473,11 +496,16 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a46ce03e46ecdc6468f70f8fdd70213e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

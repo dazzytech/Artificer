@@ -15,22 +15,14 @@ namespace Space.Ship.Components.Listener
     /// </summary>
     public class StorageListener : ComponentListener
     {
+        #region ATTRIBUTES
+
         StorageAttributes _attr;
         float totalWeight;
 
-        void Awake()
-        {
-            ComponentType = "Storage";
-            _attr = GetComponent<StorageAttributes>();
-            _attr.storage = new Dictionary<int, float>();
-            totalWeight = 0;
-        }
+        #endregion
 
-        // Use this for initialization
-        void Start()
-        {
-            SetRB();
-        }
+        #region PUBLIC INTERACTION
 
         /// <summary>
         /// Adds the item to the storage attributes.
@@ -124,19 +116,30 @@ namespace Space.Ship.Components.Listener
             return ejectedMat;
         }
 
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        protected override void InitializeComponent()
+        {
+            base.InitializeComponent();
+
+            ComponentType = "Storage";
+
+            _attr = GetComponent<StorageAttributes>();
+            _attr.storage = new Dictionary<int, float>();
+
+            if (hasAuthority)
+                totalWeight = 0;
+        }
+
         private void SetShipWeight()
         {
-            if(rb == null)
-                SetRB();
-
             rb.mass -= totalWeight;
             totalWeight = _attr.currentWeight * 0.00001f;
             rb.mass += totalWeight;
         }
 
-        public new ComponentAttributes GetAttributes()
-        {
-            return _attr;
-        }
+        #endregion
     }
 }

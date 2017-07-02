@@ -34,7 +34,7 @@ namespace Space.Ship
         // Use this for initialization
         void Awake()
         {
-            m_ship = GetComponent<ShipAttributes>();
+            m_ship = GetComponent<ShipAttributes>();   
         }
 
         #endregion
@@ -308,31 +308,24 @@ namespace Space.Ship
         #region SHIP INITIALIZATION
 
         /// <summary>
-        /// Adds the components to list
+        /// Adds the component to list
         /// stored within shipattributes and
         /// defines the head
         /// </summary>
-        public void AddComponentsToList()
+        public void AddComponent(ComponentListener component)
         {
-            foreach (Transform child in transform)
-            {
-                ComponentListener comp =
-                    child.gameObject.
-                        GetComponent<ComponentListener>();
-                if (comp != null)
+                if (component != null)
                 {
                     // Store component in attributes 
                     // and sent attributes to component
                     if (m_ship.Components == null)
                         m_ship.Components = new List<ComponentListener>();
 
-                    m_ship.Components.Add(comp);
-                    comp.SetShip(m_ship);
+                    m_ship.Components.Add(component);
                 }
 
-                if (child.tag == "Head")
-                    m_ship.Head = comp;
-            }
+                if (component.transform.tag == "Head")
+                    m_ship.Head = component;
         }
 
         /// <summary>

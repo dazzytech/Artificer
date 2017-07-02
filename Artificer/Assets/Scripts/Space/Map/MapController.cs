@@ -1,10 +1,12 @@
-﻿using Space.Segment;
+﻿using Game;
+using Space.Segment;
 using Space.Ship;
 using Stations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Space.Map
 {
@@ -13,7 +15,7 @@ namespace Space.Map
     /// in a central area
     /// </summary>
     [RequireComponent(typeof(MapAttributes))]
-    public class MapController : MonoBehaviour
+    public class MapController : NetworkBehaviour
     {
         #region EVENTS
 
@@ -50,7 +52,7 @@ namespace Space.Map
         public void InitializeMap()
         {
             // Assign listeners
-            ShipInitializer.OnShipCreated += CreateShip;
+            SystemManager.Events.EventShipCreated += CreateShip;
             StationController.StationCreated += CreateStation;
             SegmentObjectBehaviour.Created += CreateSegmentObject;
 
@@ -94,11 +96,14 @@ namespace Space.Map
 
         #region EVENT LISTENERS
 
-        private void CreateShip(ShipAttributes ship)
+        private void CreateShip(CreateDispatch CD)
         {
             // for now just create the object 
             // (dont need to store additional data this build)
-            MapObject mapObj = BuildObject(ship.transform);
+            MapObject mapObj = BuildObject
+                (ClientScene.FindLocalObject
+                (new NetworkInstanceId(CD.Self)).transform);
+
             mapObj.Type = MapObjectType.SHIP;
 
             if (OnMapUpdate != null)

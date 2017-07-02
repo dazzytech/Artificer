@@ -82,8 +82,8 @@ namespace UI
 
             tempShip.AddComponent<Rigidbody2D>();
 
-            Space.Segment.Generator.ShipGenerator.
-                GenerateShip(ship, tempShip);
+            //Space.Segment.Generator.ShipGenerator.
+               // GenerateShip(ship, tempShip);
 
             BuildShip(tempAtt, PiecePrefab);
 

@@ -24,9 +24,6 @@ namespace Game
         [SerializeField]
         private GameManager m_con;
 
-        [SerializeField]
-        private GameServerEvents m_event;
-
         private static GameMessageHandler m_singleton;
 
         #endregion
@@ -248,16 +245,21 @@ namespace Game
         #region SERVER EVENTS
 
         [Server]
+        public void OnShipCreated(NetworkInstanceId Self, int ID)
+        {
+            SystemManager.Events.ShipCreated(Self, ID);
+        }
+
+        [Server]
         public void OnShipDestroyed(NetworkMessage msg)
         {
-            m_event.ShipDestroyed(msg.ReadMessage<ShipDestroyMessage>());
+            SystemManager.Events.ShipDestroyed(msg.ReadMessage<ShipDestroyMessage>());
         }
 
         [Server]
         public void OnStationDestroyed(NetworkMessage msg)
         {
-            m_event.StationDestroyed(msg.ReadMessage<StationDestroyMessage>());
-
+            SystemManager.Events.StationDestroyed(msg.ReadMessage<StationDestroyMessage>());
         }
 
         #endregion

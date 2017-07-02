@@ -6,6 +6,7 @@ using Networking;
 using Data.Shared;
 using Space.Segment;
 using Space.Ship.Components.Attributes;
+using System;
 
 namespace Space.Ship.Components.Listener
 {
@@ -14,11 +15,14 @@ namespace Space.Ship.Components.Listener
         #region ATTRIBUTES
 
         protected Rigidbody2D rb;
+
     	public float Weight;
         
         // Used by editor tools to determine type
         public string ComponentType;
 
+        #endregion
+        
         #region ACCESSORS
 
         public ComponentAttributes GetAttributes()
@@ -29,6 +33,19 @@ namespace Space.Ship.Components.Listener
                 return transform.GetComponent<ComponentAttributes>();
             else
                 return null;
+        }
+
+        private ComponentStyleUtility Style
+        {
+            get
+            {
+                if (transform == null)
+                    return null;
+                else if (transform.GetComponent<ComponentStyleUtility>() != null)
+                    return transform.GetComponent<ComponentStyleUtility>();
+                else
+                    return null;
+            }
         }
 
         public int ID
@@ -43,134 +60,182 @@ namespace Space.Ship.Components.Listener
             }
         }
 
-        #endregion
+        public NetworkInstanceId ConnectedID
+        {
+            get { return GetAttributes().ConnectedObjectNetID; }
+            set { GetAttributes().ConnectedObjectNetID = value; }
+        }
+
+        private Transform ConnectedObj
+        {
+            get { return ClientScene.FindLocalObject(ConnectedID).transform; }
+        }
+
+        public Socket Socket
+        {
+            get { return GetAttributes().Socket; }
+            set { GetAttributes().Socket = value; }
+        }
+
+        private Data.Shared.Component Data
+        {
+            get { return GetAttributes().Data; }
+            set { GetAttributes().Data = value; }
+        }
+
+        private bool HasSpawned
+        {
+            get { return GetAttributes().HasSpawned; }
+            set { GetAttributes().HasSpawned = value; }
+        }
+
+        private bool ServerReady
+        {
+            get { return GetAttributes().ServerReady; }
+            set { GetAttributes().ServerReady = value; }
+        }
+
+        private NetworkInstanceId ParentID
+        {
+            get { return GetAttributes().ParentID; }
+            set { GetAttributes().ParentID = value; }
+        }
+
+        /// <summary>
+        /// Returns the UI icon of this components
+        /// </summary>
+        /// <returns></returns>
+        public Sprite Icon
+        {
+            get
+            {
+                ComponentAttributes att = GetAttributes();
+                if (att.iconImage == null)
+                    return GetComponentInChildren<SpriteRenderer>().sprite;
+                else
+                    return att.iconImage;
+            }
+        }
+
+        /// <summary>
+        /// Lower left point of component
+        /// item in world space units
+        /// </summary>
+        public Vector2 Min
+        {
+            get
+            {
+                return (Vector2)(transform.localPosition -
+                    GetComponentInChildren<SpriteRenderer>().
+                    sprite.bounds.extents);
+            }
+        }
+
+        /// <summary>
+        /// Upper Right point of component item 
+        /// in world space units
+        /// </summary>
+        public Vector2 Max
+        {
+            get
+            {
+                return (Vector2)(transform.localPosition +
+                    GetComponentInChildren<SpriteRenderer>().
+                    sprite.bounds.extents);
+            }
+        }
+
+        /// <summary>
+        /// Quick access local position world units
+        /// </summary>
+        public Vector3 Postion
+        {
+            get { return transform.localPosition; }
+        }
+
+        public float NormalizedHealth
+        {
+            get
+            {
+                ComponentAttributes att = GetAttributes();
+                if (att.MaxIntegrity == 0)
+                    return 1;
+                else
+                    return att.Integrity / att.MaxIntegrity;
+            }
+        }
 
         #endregion
 
         #region MONO BEHAVIOUR
 
-        void Start()
-    	{
-            ComponentType = "Components";
-            SetRB();
-    	}
-
-        #endregion
-
-        #region INITIALZATION
-
         /// <summary>
-        /// Initialise the physics component
-        /// of the listener
+        /// Builds the ship if it was built on server
         /// </summary>
-        protected void SetRB()
+        public override void OnStartClient()
         {
-            rb = transform.parent.GetComponent<Rigidbody2D> ();
-            rb.mass += Weight;
-
-            GetAttributes().MaxIntegrity = GetAttributes().Integrity;
-        }
-
-        /// <summary>
-        /// Keeps a reference to the ship it belongs 
-        /// to for component configuration
-        /// </summary>
-        /// <param name="Ship"></param>
-        public void SetShip(ShipAttributes Ship)
-        {
-            GetAttributes().Ship = Ship;
-
-            // If ship is already docked then we must hide it
-            if (Ship.ShipDocked)
+            if (ServerReady)
             {
-                if (GetComponent<Collider2D>() != null)
-                    GetComponent<Collider2D>().enabled = false;
-
-                GetComponentInChildren<SpriteRenderer>().color =
-                    new Color(1.0f, 1.0f, 1.0f, 0f);
+                InitializeComponent();
             }
         }
 
-        /// <summary>
-        /// Initialized the connected object list
-        /// </summary>
-        public void InitCL()
+        private void Update()
         {
-            ComponentAttributes att = GetAttributes();
+            // Check that data has synced accross network
+            if (ServerReady && !HasSpawned)
+                InitializeComponent();
 
-            att.connectedComponents = new 
-                System.Collections.Generic.List<ComponentListener>();
+            if (ServerReady && hasAuthority)
+                RunUpdate();
         }
 
         #endregion
 
-        #region CONSTRUCTION
+        #region PUBLIC INTERACTION
+
+        #region INITIALIZE COMPONENT
 
         /// <summary>
-        /// Pass reference to other component 
-        /// this component will attach to
+        /// Receives the component data
+        /// for the component that assigns all the 
+        /// synced data for initialization
         /// </summary>
-        /// <param name="trans"></param>
-        public void LockTo(Transform trans)
+        /// <param name="cData"></param>
+        [Server]
+        public virtual void InitializeData
+            (Data.Shared.Component cData, NetworkInstanceId parent,
+            NetworkInstanceId connected, Socket socket)
         {
-            GetAttributes().LockedGO = trans;
-        }
+            // Assign the data to the att
+            Data = cData;
 
-        /// <summary>
-        /// Pass reference to connected sockets we
-        /// will use to attach components
-        /// </summary>
-        /// <param name="sock"></param>
-        public void SetSock(Socket sock)
-        {
-            GetAttributes().sockInfo = sock;
-        }
+            // Assign our parent netID
+            ParentID = parent;
 
-        /// <summary>
-        /// Snap this component to the component
-        /// passed via reference with socket information
-        /// </summary>
-        public void FixToConnected()
-        {
-            if (GetAttributes().LockedGO != null &&
-                GetAttributes().sockInfo.SocketID != -1)
-            {               
-                Vector3 otherPos = transform.Find 
-                    (string.Format 
-                     ("socket_{0}", GetAttributes().sockInfo.OtherLinkID)).position;
-                
-                Vector3 thisPos = 
-                    GetAttributes().LockedGO.Find 
-                        (string.Format 
-                         ("socket_{0}", GetAttributes().sockInfo.SocketID)).position;
-                
-                Vector3 snapDistance = new Vector3();
-                snapDistance.x = Math.Round(otherPos.x - thisPos.x, 2);
-                snapDistance.y = Math.Round(otherPos.y - thisPos.y, 2);
-                snapDistance.z = 0f;
-                
-                if(snapDistance.x != 0f || snapDistance.y != 0f)
-                {
-                    transform.position -= snapDistance;
-                    transform.rotation = GetAttributes().LockedGO.rotation;
-                }
-            }
+            // Assign connection data
+            ConnectedID = connected;
+            Socket = socket;
+
+            // Allow comp to init
+            ServerReady = true;
         }
 
         /// <summary>
         /// Adds the connected component to the list
         /// </summary>
         /// <param name="connected">Connected.</param>
-        public void AddConnection(ComponentListener connected)
+        [Server]
+        public void AddConnection(NetworkInstanceId connected)
         {
             ComponentAttributes att = GetAttributes();
-            
-            att.connectedComponents.Add(connected);
+
+            att.ConnectedIDs.Add(connected.Value);
         }
 
         #endregion
 
-        #region PUBLIC INTERACTION
+        #region COMPONENT DAMAGE
 
         /// <summary>
         /// Applys damage from impact collider to the
@@ -210,7 +275,7 @@ namespace Space.Ship.Components.Listener
                 msg.PlayerID = SystemManager.Space.ID;
 
                 SystemManager.singleton.client.Send((short)MSGCHANNEL.INTEGRITYCHANGE, msg);
-            }         
+            }
         }
 
         public void HealComponent(float amount)
@@ -223,11 +288,6 @@ namespace Space.Ship.Components.Listener
             {
                 att.Integrity = att.MaxIntegrity;
             }
-        }
-
-        public void SetID(int val)
-        {
-            ID = val;
         }
 
         /// <summary>
@@ -245,6 +305,20 @@ namespace Space.Ship.Components.Listener
         }
 
         /// <summary>
+        /// called to disable this component
+        /// </summary>
+        public virtual void Destroy()
+        {
+            // will be important when able to loot, and stop locking
+            SetRB();
+            this.enabled = false;
+        }
+
+        #endregion
+
+        #region COMPONENT VISIBILITY
+
+        /// <summary>
         /// disables all external interaction
         /// with component and gradually fades out
         /// visual
@@ -256,9 +330,9 @@ namespace Space.Ship.Components.Listener
 
             // Deactivate collider object so other components 
             // do not interact
-            if(GetComponent<Collider2D>() != null)
+            if (GetComponent<Collider2D>() != null)
                 GetComponent<Collider2D>().enabled = false;
-            
+
             // begin fading process
             StartCoroutine("FadeOut");
         }
@@ -276,83 +350,228 @@ namespace Space.Ship.Components.Listener
             StartCoroutine("FadeIn");
         }
 
+        #endregion
+
+        #region COMPONENT STATE
+
+        public virtual void Activate() { }
+
+        public virtual void Deactivate() { }
+
+        #endregion
+
         /// <summary>
-        /// called to disable this component
+        /// Snap this component to the component
+        /// used from external
         /// </summary>
-        public virtual void Destroy()
+        public void FixToConnected()
         {
-            // will be important when able to loot, and stop locking
-            SetRB();
-            this.enabled = false;
+            SetLocation();
+
+            transform.rotation = ConnectedObj.rotation;
         }
 
         #endregion
 
-        #region ACCESSORS
+        #region PRIVATE UTILTIES
+
+        protected virtual void RunUpdate()
+        { }
+
+        #region VISUAL FX
+
+
+        #endregion
+
+        #region INITIALZATION
 
         /// <summary>
-        /// Returns the UI icon of this components
+        /// Called when the ship data has been set
+        /// to populate variables
         /// </summary>
-        /// <returns></returns>
-        public Sprite Icon
+        protected virtual void InitializeComponent()
         {
-            get
+            ComponentType = "Components";
+
+            transform.SetParent(ClientScene.FindLocalObject
+                (ParentID).transform);
+
+            ID = Data.InstanceID;
+
+            Style.SetStyle(Data.Style);
+
+            InitEmitter();
+
+            // If we are interacting with the ship then
+            // Define the interactive variables
+            if(hasAuthority)
             {
-                ComponentAttributes att = GetAttributes();
-                if (att.iconImage == null)
-                    return GetComponentInChildren<SpriteRenderer>().sprite;
-                else
-                    return att.iconImage;
+                SetRB();
+
+                SetTriggers(Data.Trigger, Data.CTrigger);
+            }
+
+            SetRotation();
+
+            SetLocation();
+
+            // If ship is already docked then we must hide it
+            if (GetAttributes().Ship.ShipDocked)
+            {
+                if (GetComponent<Collider2D>() != null)
+                    GetComponent<Collider2D>().enabled = false;
+
+                GetComponentInChildren<SpriteRenderer>().color =
+                    new Color(1.0f, 1.0f, 1.0f, 0f);
+            }
+
+            SendMessageUpwards("AddComponent", this);
+
+            HasSpawned = true;
+        }
+
+        /// <summary>
+        /// Initializes visual engine particle effects
+        /// on components. 
+        /// </summary>
+        private void InitEmitter()
+        {
+            Transform GO = transform.Find
+                ("Engine");
+
+            if(GO != null)
+                GetAttributes().emitter = GO.GetComponent
+                    <EllipsoidParticleEmitter>();
+        }
+
+        /// <summary>
+        /// Initialise the physics component
+        /// of the listener
+        /// </summary>
+        private void SetRB()
+        {
+            rb = transform.parent.GetComponent<Rigidbody2D>();
+            rb.mass += Weight;
+
+            GetAttributes().MaxIntegrity = GetAttributes().Integrity;
+        }
+
+        /// <summary>
+        /// Defines the triggers to 
+        /// activate a component
+        /// </summary>
+        private void SetTriggers(string trigger, string combat)
+        {
+            if(trigger != null)
+                GetAttributes().TriggerKey = Control_Config
+                    .GetKey(trigger, "ship");
+
+            if(combat != null)
+                GetAttributes().CombatKey = Control_Config
+                    .GetKey(combat, "combat");
+        }
+
+        /// <summary>
+        /// Applies the rotation
+        /// of the component to the transform
+        /// </summary>
+        private void SetRotation()
+        {
+            // Set the direction of the new piece
+            Vector3 dirEuler = new Vector3(0, 0, 0);
+
+            switch (Data.Direction)
+            {
+                case "up":
+                    dirEuler.z = 0f; break;
+                case "down":
+                    dirEuler.z = 180f; break;
+                case "left":
+                    dirEuler.z = 90; break;
+                case "right":
+                    dirEuler.z = 270f; break;
+            }
+
+            // Apply direction to obj and sockets
+            transform.eulerAngles = dirEuler;
+        }
+
+        /// <summary>
+        /// Applies the location 
+        /// of the component to the transform
+        /// </summary>
+        private void SetLocation()
+        {
+            // Heads arent connected and should be at center
+            if (ConnectedID == NetworkInstanceId.Invalid)
+            {
+                transform.localPosition = Vector3.zero;
+                return;
+            }
+
+            // Get position of this socket
+            // through the components transform
+            Vector3 socketPos = ConnectedObj.Find
+                (String.Format
+                 ("socket_{0}", Socket.SocketID)).position;
+
+            // find position of other piece and then
+            // snap the pieces together
+            Vector3 compPos = transform.Find
+                (String.Format
+                 ("socket_{0}", Socket.OtherLinkID)).position;
+
+            Vector3 snapDistance = compPos - socketPos;
+
+            transform.position -= snapDistance;
+        }
+
+        /// <summary>
+        /// creates the connected object list
+        /// </summary>
+        private void InitCL()
+        {
+            ComponentAttributes att = GetAttributes();
+
+            att.connectedComponents = new
+                System.Collections.Generic.List<ComponentListener>();
+
+            // Add the local side components that 
+            // are attached to this component
+            foreach (uint cID in att.ConnectedIDs)
+            {
+                // Find the component in our local scene
+                GameObject cGO = ClientScene.FindLocalObject
+                    (new NetworkInstanceId(cID));
+
+                if (cGO == null)
+                {
+                    Debug.Log("Component Listener - " +
+                            "InitCL:" +
+                              "Component not found locally - "
+                              + cID);
+                    continue;
+                }
+
+                // extract the component listener
+                ComponentListener cListener = cGO.GetComponent
+                    <ComponentListener>();
+
+                if(cListener == null)
+                {
+                    Debug.Log("Component Listener - " +
+                            "InitCL:" +
+                              "ID doesnt belong to a component- "
+                              + cID);
+                    continue;
+                }
+
+                // finally we can add our component
+                att.connectedComponents.Add(cListener);
             }
         }
 
-        /// <summary>
-        /// Lower left point of component
-        /// item in world space units
-        /// </summary>
-        public Vector2 Min
-        {
-            get
-            {
-                return (Vector2)(transform.localPosition - 
-                    GetComponentInChildren<SpriteRenderer>().
-                    sprite.bounds.extents);
-            }
-        }
-
-        /// <summary>
-        /// Upper Right point of component item 
-        /// in world space units
-        /// </summary>
-        public Vector2 Max
-        {
-            get
-            {
-                return (Vector2)(transform.localPosition + 
-                    GetComponentInChildren<SpriteRenderer>().
-                    sprite.bounds.extents);
-            }
-        }
-
-        /// <summary>
-        /// Quick access local position world units
-        /// </summary>
-        public Vector3 Postion
-        {
-            get { return transform.localPosition; }
-        }
-
-        public float NormalizedHealth
-        {
-            get
-            {
-                ComponentAttributes att = GetAttributes();
-                if (att.MaxIntegrity == 0)
-                    return 1;
-                else
-                    return att.Integrity / att.MaxIntegrity;
-            }
-        }
+        #endregion
 
         #endregion
 
@@ -383,15 +602,6 @@ namespace Space.Ship.Components.Listener
         }
 
         #endregion
-
-        #region VIRTUAL FUNCTIONS
-
-        public virtual void Activate(){}
-
-    	public virtual void Deactivate(){}
-
-        #endregion
-
     }
 }
 

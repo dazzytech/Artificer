@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 using Space.Ship.Components.Attributes;
+using UnityEngine.Networking;
 
 namespace Space.Ship.Components
 {
@@ -10,20 +11,35 @@ namespace Space.Ship.Components
     /// a shorthand way for access to the ship's style modifiers and accessors
     /// </summary>
     [RequireComponent(typeof(ComponentAttributes))]
-    public class ComponentStyleUtility : MonoBehaviour
+    public class ComponentStyleUtility : NetworkBehaviour
     {
-        ComponentAttributes _att;
+        private ComponentAttributes _att;
 
-        // Use to add the current style to the component
-        void Start()
+        #region ONSTART OVERRIDES
+
+        /// <summary>
+        /// Apply the ship style if it 
+        /// was build on server already
+        /// </summary>
+        public override void OnStartClient()
         {
             _att = transform.GetComponent<ComponentAttributes>();
+
+            if (_att.HasSpawned)
+            {
+                ApplyStyle();
+            }
         }
-    	
+
+        #endregion
+
+        #region PUBLIC INTERACTION
+
         /// <summary>
         /// Sets the style of the ship component.
         /// </summary>
         /// <param name="style">Style.</param>
+        [Server]
         public void SetStyle(string style)
         {
             if(_att == null)
@@ -56,11 +72,15 @@ namespace Space.Ship.Components
             return null;
         }
 
+        #endregion
+
+        #region PRIVATE UTILITIES
+
         /// <summary>
         /// Applies the style to the component by swaping out the texture
         /// with the renderer.
         /// </summary>
-        public void ApplyStyle()
+        private void ApplyStyle()
         {
             SpriteRenderer render = GetComponentInChildren<SpriteRenderer>();
 
@@ -83,6 +103,8 @@ namespace Space.Ship.Components
             else
                 render.sprite = newStyle;
         }
+
+        #endregion
     }
 }
 

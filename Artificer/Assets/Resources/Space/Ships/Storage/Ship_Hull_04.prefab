@@ -409,7 +409,7 @@ MonoBehaviour:
     i14: 91
     i15: 234
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &114429740359046404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -503,14 +503,15 @@ MonoBehaviour:
   CombatState: 0
   emitter: {fileID: 0}
   Shield: {fileID: 0}
+  ServerReady: 0
+  HasSpawned: 0
   Name: Storage
   ID: 0
   iconImage: {fileID: 21300000, guid: 85d97903e59c3c045848dac9abb768ac, type: 3}
   TrackIntegrity: 0
   Integrity: 400
   MaxIntegrity: 0
-  LockedGO: {fileID: 0}
-  sockInfo:
+  Socket:
     SocketID: 0
     OtherID: 0
     OtherLinkID: 0
@@ -537,7 +538,18 @@ MonoBehaviour:
     name: red
   - sprite: {fileID: 21300000, guid: bf2273e157dd93746be992206e2796e3, type: 3}
     name: green
-  Ship: {fileID: 0}
+  Data:
+    InstanceID: 0
+    Direction: 
+    Trigger: 
+    CTrigger: 
+    Folder: 
+    Name: 
+    Style: 
+    sockets: []
+    AutoLock: 0
+    behaviour: 0
+    AutoFire: 0
   dimensions: 0
   currentCapacity: 0
   currentWeight: 0

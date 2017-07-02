@@ -15,7 +15,6 @@ namespace Editor.Components
             _ComponentListenerReference = new Dictionary<string, System.Type>()
         {{"Components", typeof(ComponentListener)},
             {"Engines", typeof(EngineListener)},
-            {"Maneuvers", typeof(ManeuverListener)},
             {"Rotors", typeof(RotorListener)},
             {"Launchers", typeof(LauncherListener)},
             {"Warps", typeof(WarpListener)},
@@ -30,7 +29,6 @@ namespace Editor.Components
             _ComponentAttributesReference = new Dictionary<string, System.Type>()
         {{"Components", typeof(Space.Ship.Components.Attributes.ComponentAttributes)},
             {"Engines", typeof(EngineAttributes)},
-            {"Maneuvers", typeof(ManeuverAttributes)},
             {"Rotors", typeof(RotorAttributes)},
             {"Launchers", typeof(LauncherAttributes)},
             {"Warps", typeof(WarpAttributes)},

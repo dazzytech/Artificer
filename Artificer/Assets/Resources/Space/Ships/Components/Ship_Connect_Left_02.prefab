@@ -198,19 +198,20 @@ MonoBehaviour:
   active: 0
   CombatState: 0
   emitter: {fileID: 0}
+  Shield: {fileID: 0}
+  ServerReady: 0
+  HasSpawned: 0
   Name: Connect
   ID: 0
+  iconImage: {fileID: 21300000, guid: 085d3ba44b993f64da044bd6ca3317ba, type: 3}
   TrackIntegrity: 1
   Integrity: 200
   MaxIntegrity: 0
-  LockedGO: {fileID: 0}
-  sockInfo:
+  Socket:
     SocketID: 0
     OtherID: 0
     OtherLinkID: 0
-  Shield: {fileID: 0}
   connectedComponents: []
-  currentStyle: default
   Description: 
   RequiredMats:
   - material: Fe
@@ -221,6 +222,7 @@ MonoBehaviour:
     amount: 5
   - material: Ni
     amount: 2
+  currentStyle: default
   componentStyles:
   - sprite: {fileID: 21300000, guid: 3f7ff523595f38242a2f1dee8cf390e4, type: 3}
     name: default
@@ -232,8 +234,18 @@ MonoBehaviour:
     name: red
   - sprite: {fileID: 21300000, guid: 6730400f99951a048bef75fe9dc17d08, type: 3}
     name: green
-  iconImage: {fileID: 21300000, guid: 085d3ba44b993f64da044bd6ca3317ba, type: 3}
-  Ship: {fileID: 0}
+  Data:
+    InstanceID: 0
+    Direction: 
+    Trigger: 
+    CTrigger: 
+    Folder: 
+    Name: 
+    Style: 
+    sockets: []
+    AutoLock: 0
+    behaviour: 0
+    AutoFire: 0
 --- !u!114 &11416542
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -372,11 +384,16 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3f7ff523595f38242a2f1dee8cf390e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

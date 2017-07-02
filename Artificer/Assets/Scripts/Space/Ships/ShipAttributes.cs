@@ -26,6 +26,9 @@ namespace Space.Ship
         // Assigned by the local player to the ship
         public string AlignmentLabel;
 
+        [SyncVar]
+        public bool hasSpawned;
+
         // Store a reference to the ships data
         [SyncVar]
         public ShipData Ship;
@@ -43,7 +46,11 @@ namespace Space.Ship
         [SyncVar]
         public int TeamID;
 
-        public NetworkInstanceId instID;
+        /// <summary>
+        /// The netID if the ship this is attached to
+        /// </summary>
+        [SyncVar]
+        public NetworkInstanceId NetworkID;
 
         #endregion
 

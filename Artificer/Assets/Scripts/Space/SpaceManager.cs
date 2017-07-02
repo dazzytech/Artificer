@@ -38,6 +38,7 @@ namespace Space
         public delegate void SceneEvent();
         public event SceneEvent PlayerEnterScene;
         public static event SceneEvent PlayerExitScene;
+        public event SceneEvent TeamSelected;
 
         public delegate void PlayerUpdate(Transform data);
         public static event PlayerUpdate OnPlayerUpdate;
@@ -83,6 +84,10 @@ namespace Space
             }
         }
 
+        /// <summary>
+        /// Network instance of 
+        /// the player's ship
+        /// </summary>
         public uint NetID
         {
             get
@@ -265,7 +270,12 @@ namespace Space
         {
             _att.PlayerOnStage = true;
 
-            foreach(Transform ship in GameObject.Find("_ships").transform)
+            // Trigger that team has been selected
+            if(TeamSelected != null)
+                TeamSelected();
+
+            // Instead of doing this create a team selected event
+            /*foreach(Transform ship in GameObject.Find("_ships").transform)
             {
                 if(ship.tag == "Untagged")
                 {
@@ -283,9 +293,7 @@ namespace Space
                         ship.tag = "Enemy";
                     }
                 }
-            }
-
-
+            }*/
         }
 
         public void DockAtStation()

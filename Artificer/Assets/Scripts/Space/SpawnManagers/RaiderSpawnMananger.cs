@@ -55,7 +55,7 @@ namespace Space.SpawnManager
                 m_target = target;
                 m_raiders = new List<NetworkInstanceId>();
 
-                GameServerEvents.EventShipDestroyed
+                SystemManager.Events.EventShipDestroyed
                     += ShipDestroyedEvent;
             }
 

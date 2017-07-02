@@ -237,7 +237,7 @@ namespace Space.AI
             m_att = GetComponent<ShipAttributes>();
 
             // Listen for creation of ship
-            ShipInitializer.OnShipCreated += ShipCreatedEvent;
+            SystemManager.Events.EventShipCreated += ShipCreatedEvent;
         } 
 
         // Update is called once per frame
@@ -460,7 +460,7 @@ namespace Space.AI
         
         protected virtual void Initialize()
         {
-            GameServerEvents.EventShipDestroyed
+            SystemManager.Events.EventShipDestroyed
                     += ShipDestroyedEvent;
 
             InvokeRepeating("SeekShips", 0, 1f);
@@ -568,11 +568,11 @@ namespace Space.AI
         /// 
         /// </summary>
         /// <param name="att"></param>
-        private void ShipCreatedEvent(ShipAttributes att)
+        private void ShipCreatedEvent(CreateDispatch CD)
         {
-            if(att == m_att)
+            if(netId.Value == CD.Self)
             {
-                ShipInitializer.OnShipCreated -= ShipCreatedEvent;
+                SystemManager.Events.EventShipCreated -= ShipCreatedEvent;
                 Initialize();
             }
         }

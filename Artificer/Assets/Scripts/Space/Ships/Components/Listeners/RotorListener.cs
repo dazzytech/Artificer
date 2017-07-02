@@ -11,70 +11,10 @@ namespace Space.Ship.Components.Listener
     public class RotorListener : ComponentListener{
 
     	RotorAttributes _attr;
-    	
-    	void Awake()
-    	{
-            ComponentType = "Rotors";
-    		_attr = GetComponent<RotorAttributes>();
-    	}
 
-        void OnDisable()
-        {}
+        #region PUBLIC FUNCTIONALITY
 
-        void Start ()
-    	{
-            base.SetRB();
-    		InitEmitter ();
-    	}
-
-    	void Update()
-    	{
-            // Perform automated turning if in combat mode
-            if (_attr.ShipData.CombatActive && _attr.ShipData.CombatResponsive)
-            {
-                float difference = CalcAngle();
-                if (Mathf.Sign(transform.localEulerAngles.z - 180) < 0)
-                {
-                    if (difference < -5f)
-                    {
-                        Activate();
-                    } else
-                        Deactivate();
-                } else
-                {
-                    if (difference > 5f)
-                    {
-                        Activate();
-                    } else
-                        Deactivate();
-                }
-
-                if(difference < 1f && difference > -1f)
-                    rb.angularVelocity = 0f;
-            }
-
-            // Apply rotation force
-            float turnAmount = _attr.turnSpeed * Mathf.Sign(transform.localEulerAngles.z - 180);
-
-            rb.AddTorque(turnAmount * Time.deltaTime);
-            
-
-            // add friction
-    		if (!_attr.active)
-            {
-                _attr.turnSpeed = 0f;          
-                rb.angularDrag = 1f;
-            }
-            else
-            {
-                _attr.turnSpeed += _attr.turnAcceleration;
-
-                if (Mathf.Abs(_attr.turnSpeed) > _attr.maxTurnSpeed)
-                    _attr.turnSpeed = _attr.maxTurnSpeed;
-            }
-    	}
-
-    	public override void Activate()
+        public override void Activate()
     	{
     		_attr.emitter.emit = true;
     		_attr.active = true;
@@ -98,12 +38,78 @@ namespace Space.Ship.Components.Listener
     		_attr.turnVector.z = -transform.right.y;
     	}
 
-    	private void InitEmitter()
-    	{
-    		_attr.emitter = transform.Find
-    			("Engine").GetComponent
-    				<EllipsoidParticleEmitter> ();
-    	}
+        public override void Destroy()
+        {
+            base.Destroy();
+            
+            Deactivate();
+        }
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        protected override void InitializeComponent()
+        {
+            base.InitializeComponent();
+
+            ComponentType = "Rotors";
+            _attr = GetComponent<RotorAttributes>();
+        }
+
+        protected override void RunUpdate()
+        {
+            // make sure we have assigned ship yet
+            if (_attr.Ship == null)
+                return;
+
+            // Perform automated turning if in combat mode
+            if (_attr.ShipData.CombatActive && _attr.ShipData.CombatResponsive)
+            {
+                float difference = CalcAngle();
+                if (Mathf.Sign(transform.localEulerAngles.z - 180) < 0)
+                {
+                    if (difference < -5f)
+                    {
+                        Activate();
+                    }
+                    else
+                        Deactivate();
+                }
+                else
+                {
+                    if (difference > 5f)
+                    {
+                        Activate();
+                    }
+                    else
+                        Deactivate();
+                }
+
+                if (difference < 1f && difference > -1f)
+                    rb.angularVelocity = 0f;
+            }
+
+            // Apply rotation force
+            float turnAmount = _attr.turnSpeed * Mathf.Sign(transform.localEulerAngles.z - 180);
+
+            rb.AddTorque(turnAmount * Time.deltaTime);
+
+
+            // add friction
+            if (!_attr.active)
+            {
+                _attr.turnSpeed = 0f;
+                rb.angularDrag = 1f;
+            }
+            else
+            {
+                _attr.turnSpeed += _attr.turnAcceleration;
+
+                if (Mathf.Abs(_attr.turnSpeed) > _attr.maxTurnSpeed)
+                    _attr.turnSpeed = _attr.maxTurnSpeed;
+            }
+        }
 
         private float CalcAngle()
         {
@@ -113,11 +119,6 @@ namespace Space.Ship.Components.Listener
             return Mathf.DeltaAngle(transform.parent.eulerAngles.z, angle);
         }
 
-        public override void Destroy()
-        {
-            base.Destroy();
-            
-            Deactivate();
-        }
+        #endregion
     }
 }

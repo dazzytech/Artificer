@@ -84,6 +84,28 @@ public class SystemManager : NATTraversal.NetworkManager
         }
     }
 
+    public static GameServerEvents Events
+    {
+        get
+        {
+            // Assign the playerspawn to the scene object if doesnt exist
+            if (m_singleton.m_base != null)
+                if (GameObject.Find("_event") == null)
+                    return null;
+                else
+                    return (m_singleton.m_base.Events =
+                            GameObject.Find("_event")
+                            .GetComponent<GameServerEvents>());
+            else
+                return null;
+        }
+
+        set
+        {
+            m_singleton.m_base.Events = value;
+        }
+    }
+
     public static UIMessegeHandler UI
     {
         get

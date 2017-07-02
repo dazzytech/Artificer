@@ -14,16 +14,39 @@ namespace Game
     {
         #region EVENTS
 
+        public delegate void CreatedEvent(CreateDispatch CD);
+        [SyncEvent]
+        public event CreatedEvent EventShipCreated;
+
         public delegate void DestroyedEvent(DestroyDespatch DD);
         [SyncEvent]
-        public static event DestroyedEvent EventShipDestroyed;
+        public event DestroyedEvent EventShipDestroyed;
         [SyncEvent]
-        public static event DestroyedEvent EventStationDestroyed;
+        public event DestroyedEvent EventStationDestroyed;
 
         #endregion
 
         #region PUBLIC INTERACTION
 
+        /// <summary>
+        /// Sends an event across the server
+        /// that the ship has been created
+        /// </summary>
+        /// <param name="msg"></param>
+        [Server]
+        public void ShipCreated(NetworkInstanceId Self, int ID)
+        {
+            CreateDispatch CD = new CreateDispatch();
+            CD.PlayerID = ID;
+            CD.Self = Self.Value;
+            EventShipCreated(CD);
+        }
+
+        /// <summary>
+        /// Sends across the server that 
+        /// a ship has been destroyed
+        /// </summary>
+        /// <param name="msg"></param>
         [Server]
         public void ShipDestroyed(ShipDestroyMessage msg)
         {
@@ -36,6 +59,11 @@ namespace Game
             EventShipDestroyed(DD);
         }
 
+        /// <summary>
+        /// Sends across the server that
+        /// a station has been destroyed
+        /// </summary>
+        /// <param name="msg"></param>
         [Server]
         public void StationDestroyed(StationDestroyMessage msg)
         {

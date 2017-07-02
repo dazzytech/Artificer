@@ -7,64 +7,11 @@ using Space.Ship.Components.Attributes;
 
 namespace Space.Ship.Components.Listener
 {
-    public class ShieldListener: ComponentListener{
-
+    public class ShieldListener: ComponentListener
+    {
         ShieldAttributes _attr;
-    	
-    	void Awake()
-    	{
-            ComponentType = "Shields";
-            _attr = GetComponent<ShieldAttributes>();
-            _attr.ShieldGO = transform.Find("ShieldObject").gameObject;
-    	}
 
-        void Start ()
-    	{
-            base.SetRB();
-
-            _attr.Ready = true;
-            _attr.Delay = 1f;
-            _attr.Destroyed = false;
-            _attr.CurrentIntegrity = _attr.ShieldIntegrity;
-    	}
-
-    	void Update()
-    	{
-            if (_attr.active)
-            {
-                if(!_attr.ShieldGO.activeSelf)
-                {
-                    CreateShield();
-
-                    RaycastHit2D[] colliderList = Physics2D.CircleCastAll(transform.position, _attr.ShieldRadius, Vector2.up, 0, 1);
-                    foreach (RaycastHit2D hit in colliderList)
-                    {
-                        if(hit.transform.Equals(transform.parent))
-                        {
-                            // Set Component to shielded
-                            ComponentAttributes att = 
-                                hit.collider.transform.gameObject.GetComponent<ComponentAttributes>();
-                            if(att != null)
-                                att.Shield = this;
-                        }
-                    }
-                }
-            } else
-            {
-                if(_attr.ShieldGO.activeSelf)
-                    DestroyShield();
-
-                RaycastHit2D[] colliderList = Physics2D.CircleCastAll(transform.position, _attr.ShieldRadius, Vector2.up, 0, 1);
-                foreach (RaycastHit2D hit in colliderList)
-                {
-                    if(hit.transform.Equals(transform.parent))
-                    {
-                        // Set Component to shielded
-                        hit.collider.transform.gameObject.GetComponent<ComponentAttributes>().Shield = null;
-                    }
-                }
-            }
-    	}
+        #region PUBLIC INTERACTION
 
         public void Impact(HitData hit)
         {
@@ -94,23 +41,91 @@ namespace Space.Ship.Components.Listener
                 StartCoroutine("EngageDelay");
             }
     	}
-    	
-    	public override void Deactivate()
-    	{
 
-    	}
-    	
-    	public void SetTriggerKey(string key)
-    	{
-    		_attr.TriggerKey =
-    			Control_Config.GetKey(key, "ship");
-    	}
-
-        public void SetCombatKey(string key)
+        public override void Destroy()
         {
-            _attr.CombatKey = Control_Config
-                .GetKey(key, "combat");
+            base.Destroy();
+            
+            Deactivate();
         }
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        protected override void RunUpdate()
+        {
+            if (_attr.active)
+            {
+                if (!_attr.ShieldGO.activeSelf)
+                {
+                    CreateShield();
+
+                    RaycastHit2D[] colliderList = Physics2D.CircleCastAll(transform.position, _attr.ShieldRadius, Vector2.up, 0, 1);
+                    foreach (RaycastHit2D hit in colliderList)
+                    {
+                        if (hit.transform.Equals(transform.parent))
+                        {
+                            // Set Component to shielded
+                            ComponentAttributes att =
+                                hit.collider.transform.gameObject.GetComponent<ComponentAttributes>();
+                            if (att != null)
+                                att.Shield = this;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (_attr.ShieldGO.activeSelf)
+                    DestroyShield();
+
+                RaycastHit2D[] colliderList = Physics2D.CircleCastAll(transform.position, _attr.ShieldRadius, Vector2.up, 0, 1);
+                foreach (RaycastHit2D hit in colliderList)
+                {
+                    if (hit.transform.Equals(transform.parent))
+                    {
+                        // Set Component to shielded
+                        hit.collider.transform.gameObject.GetComponent<ComponentAttributes>().Shield = null;
+                    }
+                }
+            }
+        }
+
+        protected override void InitializeComponent()
+        {
+            base.InitializeComponent();
+
+            ComponentType = "Shields";
+            _attr = GetComponent<ShieldAttributes>();
+
+            if (hasAuthority)
+            {
+                _attr.ShieldGO = transform.Find("ShieldObject").gameObject;
+
+                _attr.Ready = true;
+                _attr.Delay = 1f;
+                _attr.Destroyed = false;
+                _attr.CurrentIntegrity = _attr.ShieldIntegrity;
+            }
+        }
+
+        private void CreateShield()
+        {
+            _attr.ShieldGO.SetActive(true);
+
+            _attr.ShieldGO.GetComponent<ShieldController>().ConstructShield
+                (_attr.ShieldRadius);
+        }
+
+        private void DestroyShield()
+        {
+            _attr.ShieldGO.GetComponent<ShieldController>().DestroyShield();
+        }
+
+        #endregion
+
+        #region COROUTINES
 
         /// <summary>
         /// Engages the delay for key press
@@ -118,7 +133,7 @@ namespace Space.Ship.Components.Listener
         /// <returns>The delay.</returns>
         private IEnumerator EngageDelay()
         {
-            yield return new WaitForSeconds (_attr.Delay);
+            yield return new WaitForSeconds(_attr.Delay);
             _attr.Ready = true;
             yield return null;
         }
@@ -128,7 +143,7 @@ namespace Space.Ship.Components.Listener
         /// </summary>
         private IEnumerator Recharge()
         {
-            yield return new WaitForSeconds (_attr.RechargeDelay);
+            yield return new WaitForSeconds(_attr.RechargeDelay);
             _attr.Destroyed = false;
             _attr.active = true;
 
@@ -137,7 +152,7 @@ namespace Space.Ship.Components.Listener
             {
                 _attr.CurrentIntegrity += 5;
                 amtToAdd -= 5;
-                if(_attr.CurrentIntegrity > _attr.ShieldIntegrity)
+                if (_attr.CurrentIntegrity > _attr.ShieldIntegrity)
                     _attr.CurrentIntegrity = _attr.ShieldIntegrity;
 
                 yield return null;
@@ -145,24 +160,6 @@ namespace Space.Ship.Components.Listener
             yield return null;
         }
 
-        private void CreateShield()
-    	{
-            _attr.ShieldGO.SetActive(true);
-
-            _attr.ShieldGO.GetComponent<ShieldController>().ConstructShield
-                (_attr.ShieldRadius);
-    	}
-
-        private void DestroyShield()
-        {
-            _attr.ShieldGO.GetComponent<ShieldController>().DestroyShield();
-        }
-
-        public override void Destroy()
-        {
-            base.Destroy();
-            
-            Deactivate();
-        }
+        #endregion
     }
 }

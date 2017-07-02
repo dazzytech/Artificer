@@ -265,9 +265,20 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.76, y: 0.97999996}
+  m_EdgeRadius: 0
 --- !u!114 &114258215217300526
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -299,7 +310,7 @@ MonoBehaviour:
     i14: 229
     i15: 0
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &114351419760397394
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -392,19 +403,20 @@ MonoBehaviour:
   active: 0
   CombatState: 0
   emitter: {fileID: 0}
+  Shield: {fileID: 0}
+  ServerReady: 0
+  HasSpawned: 0
   Name: Warp
   ID: 0
+  iconImage: {fileID: 21300000, guid: 57a3ca16a70ec8c4ea5a0053e47ae3f8, type: 3}
   TrackIntegrity: 1
   Integrity: 600
   MaxIntegrity: 0
-  LockedGO: {fileID: 0}
-  sockInfo:
+  Socket:
     SocketID: 0
     OtherID: 0
     OtherLinkID: 0
-  Shield: {fileID: 0}
   connectedComponents: []
-  currentStyle: default
   Description: 
   RequiredMats:
   - material: Fe
@@ -415,6 +427,7 @@ MonoBehaviour:
     amount: 5
   - material: Pb
     amount: 20
+  currentStyle: default
   componentStyles:
   - sprite: {fileID: 21300000, guid: d9143d489a32c8341a94202e7be14956, type: 3}
     name: default
@@ -426,8 +439,18 @@ MonoBehaviour:
     name: red
   - sprite: {fileID: 21300000, guid: 8050ff9667d15ed41844c5cc34d537f5, type: 3}
     name: green
-  iconImage: {fileID: 21300000, guid: 57a3ca16a70ec8c4ea5a0053e47ae3f8, type: 3}
-  Ship: {fileID: 0}
+  Data:
+    InstanceID: 0
+    Direction: 
+    Trigger: 
+    CTrigger: 
+    Folder: 
+    Name: 
+    Style: 
+    sockets: []
+    AutoLock: 0
+    behaviour: 0
+    AutoFire: 0
   WarpDistance: 1000
   MinDistance: 100
   MaxDistance: 1000
@@ -492,8 +515,13 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d9143d489a32c8341a94202e7be14956, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0

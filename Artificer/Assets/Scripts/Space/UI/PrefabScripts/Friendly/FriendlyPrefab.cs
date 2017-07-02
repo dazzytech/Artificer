@@ -6,6 +6,7 @@ using System.Collections;
 using Space.Ship;
 using UnityEngine.EventSystems;
 using UI;
+using Game;
 
 namespace Space.UI.Ship
 {
@@ -104,7 +105,7 @@ namespace Space.UI.Ship
         void OnDestroy()
         {
             if(m_ship != null)
-                ShipInitializer.OnShipCreated -= OnShipCreated;
+                SystemManager.Events.EventShipCreated -= OnShipCreated;
         }
 
         #endregion
@@ -141,7 +142,7 @@ namespace Space.UI.Ship
             {
                 // If ship is still pending creation then 
                 // assign listener for when item is created
-                ShipInitializer.OnShipCreated += OnShipCreated;
+                SystemManager.Events.EventShipCreated += OnShipCreated;
             }
         }
 
@@ -149,9 +150,9 @@ namespace Space.UI.Ship
 
         #region EVENT LISTENER
 
-        private void OnShipCreated(ShipAttributes ship)
+        private void OnShipCreated(CreateDispatch CD)
         {
-            if (m_ship.Equals(ship))
+            if (m_ship.NetworkID.Equals(CD.Self))
             {
                 ViewerPanel.BuildShip(m_ship, PiecePrefab);
 

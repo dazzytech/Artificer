@@ -7,21 +7,16 @@ namespace Space.Ship.Components.Listener
 {
     public class CollectorListener : ComponentListener
     {
+        #region ATTRIBUTES
+
         CollectorAttributes _attr;
         GameObject _GravityWell;
 
-        void Awake()
-        {
-            ComponentType = "Collectors";
-            _attr = GetComponent<CollectorAttributes>();
-        }
-        
-        void Start ()
-        {
-            base.SetRB();
-        }
-        
-        void Update()
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        protected override void RunUpdate()
         {
             // Begin process of searching for collectable objects within in range
             RaycastHit2D[] hits =
@@ -52,5 +47,15 @@ namespace Space.Ship.Components.Listener
                 }
             }
         }
+
+        protected override void InitializeComponent()
+        {
+            base.InitializeComponent();
+
+            ComponentType = "Collectors";
+            _attr = GetComponent<CollectorAttributes>();
+        }
+
+        #endregion
     }
 }
