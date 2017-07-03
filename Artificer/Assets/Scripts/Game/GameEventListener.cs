@@ -16,13 +16,6 @@ namespace Game
 
         #region MONO BEHAVIOUR
 
-        void OnEnable()
-        {
-            // Assign Events
-           //// SystemManager.Events.EventShipDestroyed += ProcessShipDestroyed;
-            //SystemManager.Events.EventStationDestroyed += ProcessStationDestroyed;
-        }
-
         void OnDisable()
         {
             // De-assign events
@@ -38,19 +31,51 @@ namespace Game
 
         #endregion
 
+        #region PUBLIC INTERACTION
+
+        /// <summary>
+        /// Assigns server side event listeners
+        /// </summary>
+        public void InitSpaceScene()
+        {
+            if (SystemManager.Events == null)
+                return;
+
+            SystemManager.Events.EventShipDestroyed += ProcessShipDestroyed;
+            SystemManager.Events.EventStationDestroyed += ProcessStationDestroyed;
+
+            SystemManager.Events.EventShipCreated += ProcessShipCreated;
+        }
+
+        #endregion
+
         #region EVENT LISTENERS
 
-        public void ProcessShipDestroyed(DestroyDespatch destroyed)
+        public void ProcessShipCreated(CreateDispatch CD)
         {
-            PlayerConnectionInfo info = m_att.PlayerInfoList.Item(destroyed.MiscID);
+            PlayerConnectionInfo info = m_att.PlayerInfoList.Item(CD.PlayerID);
 
-            if (info.mTeam == 0)
+            /*if (info.mTeam == 0)
             {
-                m_att.TeamA.RemovePlayerObject(destroyed.Self);
+                m_att.TeamA.RemovePlayerObject(DD.Self);
             }
             else
             {
-                m_att.TeamB.RemovePlayerObject(destroyed.Self);
+                m_att.TeamB.RemovePlayerObject(DD.Self);
+            }*/
+        }
+
+        public void ProcessShipDestroyed(DestroyDespatch DD)
+        {
+            PlayerConnectionInfo info = m_att.PlayerInfoList.Item(DD.MiscID);
+
+            if (info.mTeam == 0)
+            {
+                m_att.TeamA.RemovePlayerObject(DD.Self);
+            }
+            else
+            {
+                m_att.TeamB.RemovePlayerObject(DD.Self);
             }
         }
 

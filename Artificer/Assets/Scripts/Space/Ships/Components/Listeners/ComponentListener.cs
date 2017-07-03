@@ -354,9 +354,11 @@ namespace Space.Ship.Components.Listener
 
         #region COMPONENT STATE
 
-        public virtual void Activate() { }
+        public virtual void Activate()
+        { CmdActivateFx(); }
 
-        public virtual void Deactivate() { }
+        public virtual void Deactivate()
+        { CmdDeactivateFx(); }
 
         #endregion
 
@@ -380,6 +382,39 @@ namespace Space.Ship.Components.Listener
 
         #region VISUAL FX
 
+        [Command]
+        private void CmdActivateFx()
+        {
+            RpcActivateFx();
+        }
+
+        [ClientRpc]
+        private void RpcActivateFx()
+        {
+            ActivateFx();
+        }
+
+        protected virtual void ActivateFx()
+        {
+
+        }
+
+        [Command]
+        private void CmdDeactivateFx()
+        {
+            RpcDeactivateFx();
+        }
+
+        [ClientRpc]
+        private void RpcDeactivateFx()
+        {
+            DeactivateFx();
+        }
+
+        protected virtual void DeactivateFx()
+        {
+
+        }
 
         #endregion
 

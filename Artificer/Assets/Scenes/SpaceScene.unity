@@ -5242,7 +5242,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -17.8, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 162, y: 203.00003}
+  m_AnchoredPosition: {x: 162, y: 203.00002}
   m_SizeDelta: {x: 279, y: 68.70001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &467004138
@@ -6017,7 +6017,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 375, y: -61.897133}
+  m_AnchoredPosition: {x: 375, y: -61.897137}
   m_SizeDelta: {x: 730, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &545647790
@@ -16275,7 +16275,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_con: {fileID: 2064934874}
-  m_event: {fileID: 1086536900}
 --- !u!114 &1395517808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23567,7 +23566,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -477.965}
+  m_AnchoredPosition: {x: 0, y: -477.96497}
   m_SizeDelta: {x: 700.88885, y: 477.965}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1902120806
@@ -26243,7 +26242,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Builder: {fileID: 2064934869}
-  Events: {fileID: 1086536900}
   CurrentState: 0
   TeamA: {fileID: 0}
   TeamB: {fileID: 0}
@@ -26303,7 +26301,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2434c23a44798a447aeec3fe75c1c807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _att: {fileID: 2064934871}
+  m_att: {fileID: 2064934871}
+  m_event: {fileID: 2064934870}
 --- !u!1 &2075570352
 GameObject:
   m_ObjectHideFlags: 0

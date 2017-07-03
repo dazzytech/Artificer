@@ -14,21 +14,6 @@ namespace Space.Ship.Components.Listener
 
         #region PUBLIC FUNCTIONALITY
 
-        public override void Activate()
-    	{
-    		_attr.emitter.emit = true;
-    		_attr.active = true;
-    	}
-    	
-    	public override void Deactivate()
-    	{
-            if (_attr.emitter != null)
-            {
-                _attr.emitter.emit = false;
-                _attr.active = false;
-            }
-    	}
-
     	public void SetTriggerKey(string key)
     	{
     		_attr.TriggerKey =
@@ -37,6 +22,18 @@ namespace Space.Ship.Components.Listener
     		_attr.turnVector = new Vector3();
     		_attr.turnVector.z = -transform.right.y;
     	}
+
+        public override void Activate()
+        {
+            if (!_attr.emitter.emit)
+                base.Activate();
+        }
+
+        public override void Deactivate()
+        {
+            if (_attr.emitter.emit)
+                base.Deactivate();
+        }
 
         public override void Destroy()
         {
@@ -117,6 +114,25 @@ namespace Space.Ship.Components.Listener
             Vector2 pos = transform.parent.position;
             float angle = Mathf.Atan2(dest.y-pos.y, dest.x-pos.x)*180 / Mathf.PI -90;
             return Mathf.DeltaAngle(transform.parent.eulerAngles.z, angle);
+        }
+
+        protected override void ActivateFx()
+        {
+            base.ActivateFx();
+
+            _attr.emitter.emit = true;
+            _attr.active = true;
+        }
+
+        protected override void DeactivateFx()
+        {
+            base.DeactivateFx();
+
+            if (_attr.emitter != null)
+            {
+                _attr.emitter.emit = false;
+                _attr.active = false;
+            }
         }
 
         #endregion

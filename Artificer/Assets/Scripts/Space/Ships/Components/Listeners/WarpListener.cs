@@ -23,9 +23,7 @@ namespace Space.Ship.Components.Listener
                 // Create warp affects and start the warp warm up proccess
                 StartCoroutine("FireWarp");
                 warping = true;
-                GameObject warpFX = (GameObject)Instantiate(_attr.WarpFXPrefab, 
-                                      transform.position, Quaternion.identity);
-                warpFX.transform.parent = transform;
+                base.Activate();
             }
         }
 
@@ -54,6 +52,15 @@ namespace Space.Ship.Components.Listener
                 _attr.TimeCount = 0;
             else
                 _attr.TimeCount += Time.deltaTime;
+        }
+
+        protected override void ActivateFx()
+        {
+            base.ActivateFx();
+
+            GameObject warpFX = (GameObject)Instantiate(_attr.WarpFXPrefab,
+                                      transform.position, Quaternion.identity);
+            warpFX.transform.parent = transform;
         }
 
         #endregion

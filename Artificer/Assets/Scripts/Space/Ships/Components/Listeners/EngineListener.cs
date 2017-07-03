@@ -16,19 +16,16 @@ namespace Space.Ship.Components.Listener
         #region PUBLIC INTERACTION
 
         public override void Activate()
-    	{
-    		_attr.emitter.emit = true;
-    		_attr.active = true;
-    	}
-    	
-    	public override void Deactivate()
-    	{
-            if (_attr.emitter != null)
-            {
-                _attr.emitter.emit = false;
-                _attr.active = false;
-            }
-    	}
+        {
+            if(!_attr.emitter.emit)
+                base.Activate();
+        }
+
+        public override void Deactivate()
+        {
+            if (_attr.emitter.emit)
+                base.Deactivate();
+        }
 
         public override void Destroy()
         {
@@ -74,6 +71,25 @@ namespace Space.Ship.Components.Listener
                 if (Mathf.Abs(_attr.engineVelocity.magnitude) > _attr.maxSpeed)
                     _attr.engineVelocity = (_attr.engineVelocity.normalized
                                             * _attr.maxSpeed) * _attr.engineMotion.magnitude;
+            }
+        }
+
+        protected override void ActivateFx()
+        {
+            base.ActivateFx();
+
+            _attr.emitter.emit = true;
+    		_attr.active = true;
+        }
+
+        protected override void DeactivateFx()
+        {
+            base.DeactivateFx();
+
+            if (_attr.emitter != null)
+            {
+                _attr.emitter.emit = false;
+                _attr.active = false;
             }
         }
 

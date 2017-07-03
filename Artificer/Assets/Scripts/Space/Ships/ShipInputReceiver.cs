@@ -23,9 +23,6 @@ namespace Space.Ship
         // delays key when switching combat states
         bool inputDelay;
 
-        // Used to track active rotors in combat mode
-        List<int> activeRotors = new List<int>();
-
         #endregion
 
         #region MONO BEHAVIOUR
@@ -39,15 +36,8 @@ namespace Space.Ship
 
             GetComponent<Rigidbody2D>().angularDrag = 0.9f;
 
-            // init lists
-            /*_ship.Targets = new List<Transform>();
-            _ship.SelfTargeted = new List<Transform>();
-            _ship.HighlightedTargets = new List<Transform>();*/
             _ship.TargetedShips = new List<ShipSelect>();
             _ship.TargetDistance = 300f;
-
-            // rotor vars
-            activeRotors = new List<int>();
         }
 
         void Update()
@@ -136,39 +126,6 @@ namespace Space.Ship
             {
                 _ship.SelfTargeted.Remove(t);
             }*/
-
-            // if player ship find out if turning
-            // by checking if rotor is active
-            // also send message to server if true
-            _ship.Ship.Aligned = true;
-            List<int> inactiveRotors = new List<int>();
-            foreach (ComponentListener list in _ship.Components)
-            {
-                if (list is RotorListener)
-                {
-                    int id = list.GetAttributes().ID;
-                    if (list.GetAttributes().active)
-                    {
-                        _ship.Ship.Aligned = false;
-                        if (!activeRotors.Contains(id))
-                            activeRotors.Add(id);
-                    }
-                    else if (activeRotors.Contains(id))
-                    {
-                        inactiveRotors.Add(id);
-                        activeRotors.Remove(id);
-                    }
-                }
-            }
-
-            if (_ship.Ship.CombatActive)
-            {
-                if (activeRotors.Count > 0)
-                    CmdProcessComps(activeRotors.ToArray());
-
-                if (inactiveRotors.Count > 0)
-                    CmdReleaseComps(inactiveRotors.ToArray());
-            }
         }
 
         #endregion
@@ -197,8 +154,6 @@ namespace Space.Ship
         {
             if (Time.timeScale == 0)
                 return;
-
-            List<int> comps = new List<int>();
 
             foreach (KeyCode key in keys)
             {
@@ -240,7 +195,6 @@ namespace Space.Ship
                                     if (att.TriggerKey == key)
                                     {
                                         listener.Activate();
-                                        comps.Add(listener.GetAttributes().ID);
                                     }
 
                                 }
@@ -251,7 +205,6 @@ namespace Space.Ship
                                         if (att.CombatKey == key)
                                         {
                                             listener.Activate();
-                                            comps.Add(att.ID);
                                         }
                                     }
                                 }
@@ -264,16 +217,11 @@ namespace Space.Ship
                                     if (att.CombatKey == key)
                                     {
                                         listener.Activate();
-                                        comps.Add(att.ID);
                                     }
                                 }
                             }
                         }
                     }
-
-                    if (comps.Count > 0)
-                        CmdProcessComps(comps.ToArray());
-
                     return;
                 }
 
@@ -287,47 +235,11 @@ namespace Space.Ship
                             if (att.TriggerKey == key)
                             {
                                 listener.Activate();
-                                comps.Add(att.ID);
                             }
                     }
                 }
 
                 
-            }
-
-            if (comps.Count > 0)
-                CmdProcessComps(comps.ToArray());
-        }
-
-        /// <summary>
-        /// Relays activated components to 
-        /// client machines
-        /// </summary>
-        [Command]
-        private void CmdProcessComps(int[] comps)
-        {
-            RpcProcessComps(comps);
-        }
-
-        /// <summary>
-        /// Gives the remote player ships 
-        /// the illusion of activated components
-        /// e.g. engine exhausts
-        /// </summary>
-        /// <param name="comps"></param>
-        [ClientRpc]
-        private void RpcProcessComps(int[] comps)
-        {
-            if (isLocalPlayer)
-                return;
-
-            foreach (ComponentListener listener in _ship.SelectedComponents(comps))
-            {
-                if (listener is RotorListener || listener is EngineListener)
-                {
-                    if(listener.GetAttributes() != null)
-                        listener.GetAttributes().emitter.emit = true;
-                }
             }
         }
 
@@ -341,8 +253,6 @@ namespace Space.Ship
         {
             if (key != KeyCode.None)
             {
-                List<int> comps = new List<int>();
-
                 // Components
                 if (_ship.Ship.CombatActive)
                 {
@@ -359,7 +269,6 @@ namespace Space.Ship
                                     if (listener.GetAttributes().TriggerKey == key)
                                     {
                                         listener.Deactivate();
-                                        comps.Add(att.ID);
                                     }
                                 }
                                 else
@@ -370,7 +279,6 @@ namespace Space.Ship
                                         if (att.CombatKey == key)
                                         {
                                             listener.Deactivate();
-                                            comps.Add(att.ID);
                                         }
                                     }
                                 }
@@ -383,16 +291,11 @@ namespace Space.Ship
                                     if (att.CombatKey == key)
                                     {
                                         listener.Deactivate();
-                                        comps.Add(att.ID);
                                     }
                                 }
                             }
                         }
                     }
-
-                    if (comps.Count > 0)
-                        CmdReleaseComps(comps.ToArray());
-
                     return;
                 }
 
@@ -405,43 +308,8 @@ namespace Space.Ship
                             if (att.TriggerKey == key)
                             {
                                 listener.Deactivate();
-                                comps.Add(listener.GetAttributes().ID);
                             }
-
                     }
-                }
-
-                if (comps.Count > 0)
-                    CmdReleaseComps(comps.ToArray());
-            }
-        }
-
-        /// <summary>
-        /// Relays deactivated components to
-        /// client players
-        /// </summary>
-        [Command]
-        private void CmdReleaseComps(int[] comps)
-        {
-            RpcReleaseComps(comps);
-        }
-
-        /// <summary>
-        /// Runs on clients and turns of 
-        /// visual activation for remote player ships
-        /// </summary>
-        /// <param name="comps"></param>
-        [ClientRpc]
-        private void RpcReleaseComps(int[] comps)
-        {
-            if (isLocalPlayer)
-                return;
-
-            foreach (ComponentListener listener in _ship.SelectedComponents(comps))
-            {
-                if (listener is RotorListener || listener is EngineListener)
-                {
-                    listener.GetAttributes().emitter.emit = false;
                 }
             }
         }

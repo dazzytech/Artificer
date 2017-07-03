@@ -35,7 +35,10 @@ namespace Game
         #region ATTRIBUTES
 
         [SerializeField]
-        private GameAttributes _att;
+        private GameAttributes m_att;
+
+        [SerializeField]
+        private GameEventListener m_event;
 
         #endregion
 
@@ -58,7 +61,7 @@ namespace Game
         [Server]
         public void InitializeLobbyScene()
         {
-            _att.CurrentState = GameState.Lobby;
+            m_att.CurrentState = GameState.Lobby;
         }
 
         /// <summary>
@@ -69,7 +72,7 @@ namespace Game
         public void InitializeSpaceScene()
         {
             // Change the state on the game
-            _att.CurrentState = GameState.Play;
+            m_att.CurrentState = GameState.Play;
 
             // Initialize Teams
             bool teamsCompleted = false;
@@ -88,25 +91,27 @@ namespace Game
             }
 
             // Retieve Team Items
-            _att.TeamA = GameObject.Find("Team_A").GetComponent<TeamController>();
-            _att.TeamB = GameObject.Find("Team_B").GetComponent<TeamController>();
+            m_att.TeamA = GameObject.Find("Team_A").GetComponent<TeamController>();
+            m_att.TeamB = GameObject.Find("Team_B").GetComponent<TeamController>();
 
-            _att.TeamA.Initialize(teamAcon, 0);
-            _att.TeamB.Initialize(teamBcon, 1);
+            m_att.TeamA.Initialize(teamAcon, 0);
+            m_att.TeamB.Initialize(teamBcon, 1);
 
             // Generated stations for the teams
-            _att.Builder.GenerateStations(_att.TeamA, _att.TeamB);
+            m_att.Builder.GenerateStations(m_att.TeamA, m_att.TeamB);
+
+            m_event.InitSpaceScene();
         }
 
         [Server]
         public void AddNewPlayer
             (short playerControllerId, NetworkConnection conn)
         {
-            if (_att.PlayerInfoList == null)
-                _att.PlayerInfoList = new IndexedList<PlayerConnectionInfo>();
+            if (m_att.PlayerInfoList == null)
+                m_att.PlayerInfoList = new IndexedList<PlayerConnectionInfo>();
 
             // Test If this player is already joined to the match
-            PlayerConnectionInfo info = _att.PlayerInfoList
+            PlayerConnectionInfo info = m_att.PlayerInfoList
                 .FirstOrDefault(o => o.mConnection == conn);
 
             // if not match then create new info
@@ -118,7 +123,7 @@ namespace Game
                 info.mTeam = -1;
 
                 // add player to tracking list
-                _att.PlayerInfoList.Add(info);
+                m_att.PlayerInfoList.Add(info);
             }
             else
             {
@@ -132,9 +137,9 @@ namespace Game
                 (short)MSGCHANNEL.NEWID, iMsg);
 
             // If currently in play the initialize 
-            if (_att.CurrentState == GameState.Play)
+            if (m_att.CurrentState == GameState.Play)
                 InitializePlayer(info);
-            else if (_att.CurrentState == GameState.Lobby)
+            else if (m_att.CurrentState == GameState.Lobby)
                 InitializeLobbyPlayer(info);
         }
 
@@ -146,16 +151,16 @@ namespace Game
         public void RemovePlayer
             (NetworkConnection conn)
         {
-            if (_att.PlayerInfoList == null)
+            if (m_att.PlayerInfoList == null)
                 return;
 
             // Test If this player is already joined to the match
-            PlayerConnectionInfo info = _att.PlayerInfoList
+            PlayerConnectionInfo info = m_att.PlayerInfoList
                 .FirstOrDefault(o => o.mConnection == conn);
 
             if (info != null)
             {
-                _att.PlayerInfoList.Remove(info);
+                m_att.PlayerInfoList.Remove(info);
                 if(SystemManager.Server != null)
                     SystemManager.Server.
                         DeletePlayerFromServer(info.ID); 
@@ -175,11 +180,11 @@ namespace Game
         [Server]
         public void AssignToTeam(int TeamID, int playerID)
         {
-            if (_att.PlayerInfoList == null)
+            if (m_att.PlayerInfoList == null)
                 return;
 
             PlayerConnectionInfo pInfo = 
-                _att.PlayerInfoList.Item(playerID);
+                m_att.PlayerInfoList.Item(playerID);
 
             // network instance ID of our team object
             NetworkInstanceId teamNetID;
@@ -195,9 +200,9 @@ namespace Game
 
             // Pass that player team to an instance ID
             if (TeamID == 0)
-                teamNetID = _att.TeamA.netId;
+                teamNetID = m_att.TeamA.netId;
             else
-                teamNetID = _att.TeamB.netId;
+                teamNetID = m_att.TeamB.netId;
 
             // Create netID message
             NetMsgMessage netMsg = new NetMsgMessage();
@@ -214,20 +219,20 @@ namespace Game
         public void SpawnPlayer(int playerID, int stationID, string shipName)
         {
             PlayerConnectionInfo info = 
-                _att.PlayerInfoList.Item(playerID);
+                m_att.PlayerInfoList.Item(playerID);
 
             GameObject GO = null;
 
             // Spawn player using correct team
             if (info.mTeam == 0)
             {
-                GO = _att.TeamA.Spawner.SpawnPlayer(info, stationID);
-                _att.TeamA.AddPlayerObject(GO.GetComponent<NetworkIdentity>().netId);
+                GO = m_att.TeamA.Spawner.SpawnPlayer(info, stationID);
+                m_att.TeamA.AddPlayerObject(GO.GetComponent<NetworkIdentity>().netId);
             }
             else
             {
-                GO = _att.TeamB.Spawner.SpawnPlayer(info, stationID);
-                _att.TeamB.AddPlayerObject(GO.GetComponent<NetworkIdentity>().netId);
+                GO = m_att.TeamB.Spawner.SpawnPlayer(info, stationID);
+                m_att.TeamB.AddPlayerObject(GO.GetComponent<NetworkIdentity>().netId);
             }
 
             GO.GetComponent<ShipInitializer>()
@@ -259,7 +264,7 @@ namespace Game
         public void BuildProjectile(int prefabIndex, int playerID, Vector3 position, WeaponData wData)
         {
             PlayerConnectionInfo info =
-                _att.PlayerInfoList.Item(playerID);
+                m_att.PlayerInfoList.Item(playerID);
 
             GameObject Prefab = NetworkManager.singleton.spawnPrefabs[prefabIndex];
 
@@ -290,19 +295,19 @@ namespace Game
             TeamController selectedTeam;
 
             if(teamID == 0)
-                selectedTeam = _att.TeamA;
+                selectedTeam = m_att.TeamA;
             else
-                selectedTeam = _att.TeamB;
+                selectedTeam = m_att.TeamB;
 
             // send message to builder
-            _att.Builder.GenerateStation(selectedTeam,
+            m_att.Builder.GenerateStation(selectedTeam,
                 prefabName, position);
         }
 
         [Server]
         public void ShipHit(ShipColliderHitMessage hitMsg)
         {
-            foreach(PlayerConnectionInfo info in _att.PlayerInfoList)
+            foreach(PlayerConnectionInfo info in m_att.PlayerInfoList)
             {
                 NetworkServer.SendToClient(info.mConnection.connectionId,
                     (short)MSGCHANNEL.PROCESSSHIPHIT, hitMsg);
@@ -312,7 +317,7 @@ namespace Game
         [Server]
         public void ObjectHit(SOColliderHitMessage hitMsg)
         {
-            foreach (PlayerConnectionInfo info in _att.PlayerInfoList)
+            foreach (PlayerConnectionInfo info in m_att.PlayerInfoList)
             {
                 NetworkServer.SendToClient(info.mConnection.connectionId,
                     (short)MSGCHANNEL.PROCESSOBJECTHIT, hitMsg);
@@ -322,7 +327,7 @@ namespace Game
         [Server]
         public void OnIntegrityChanged(IntegrityChangedMsg intMsg)
         {
-            foreach (PlayerConnectionInfo info in _att.PlayerInfoList)
+            foreach (PlayerConnectionInfo info in m_att.PlayerInfoList)
             {
                 if(info.ID != intMsg.PlayerID)
                 {
@@ -344,8 +349,8 @@ namespace Game
             // prompt player to pick team
             // Send this to single client via a message
             TeamPickerMessage msg = new TeamPickerMessage();
-            msg.teamOne = _att.TeamA.ID;
-            msg.teamTwo = _att.TeamB.ID;
+            msg.teamOne = m_att.TeamA.ID;
+            msg.teamTwo = m_att.TeamB.ID;
             NetworkServer.SendToClient(info.mConnection.connectionId,
                 (short)MSGCHANNEL.TEAMPICKER, msg);
         }
