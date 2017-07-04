@@ -307,8 +307,8 @@ namespace Space.Ship
                 // this isn't our ship
                 return;
 
-            //NetworkProximityChecker npc = gameObject.AddComponent<NetworkProximityChecker>();
-            //npc.checkMethod = NetworkProximityChecker.CheckMethod.Physics2D;
+            NetworkProximityChecker npc = gameObject.AddComponent<NetworkProximityChecker>();
+            npc.checkMethod = NetworkProximityChecker.CheckMethod.Physics2D;
 
             // Check if this is the player ship
             if(isLocalPlayer)

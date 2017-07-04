@@ -92,7 +92,6 @@ namespace Space.UI.Station.Viewer
 
         public void ShipEditor()
         {
-
         }
 
         public void ComponentSelected(int ID)

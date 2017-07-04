@@ -7,15 +7,22 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/TitleScene.unity
+    guid: 88f994f484a09aa438ca2995570b57e0
   - enabled: 0
     path: Assets/Scenes/SpaceSegment.unity
-  - enabled: 0
-    path: Assets/Scenes/ConstructionScene.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/Scenes/LoadingScene.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/Scenes/LobbyScene.unity
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/SpaceScene.unity
+    guid: 3c50dfe8442b3414b8a8c3899fbcea86
   - enabled: 1
     path: Assets/Scenes/ServerScene.unity
+    guid: 3dc6d2d2f9e44704291d8032d99d3dc7
+  - enabled: 1
+    path: Assets/Scenes/ConstructionScene.unity
+    guid: cc1455c6d0fd156469a0b35faf764ff9
