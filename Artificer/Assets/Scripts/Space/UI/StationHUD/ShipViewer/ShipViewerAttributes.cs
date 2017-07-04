@@ -8,6 +8,12 @@ using Space.Ship;
 
 namespace Space.UI.Station.Viewer
 {
+    #region SHIP VIEWER STATE
+    
+    public enum ViewerState { MANAGE, EDIT };
+
+    #endregion
+
     public class ShipViewerAttributes : MonoBehaviour
     {
         #region HUD ELEMENTS
@@ -16,9 +22,18 @@ namespace Space.UI.Station.Viewer
         public GameObject SelectionListPanel;
         public Scrollbar SelectionListScroll;
 
+        public GameObject[] ManageGOs;
+        public GameObject[] EditGOs;
+
         #endregion
 
+        #region VIEWER ATTRIUBTES
+
         public bool Busy;
+
+        public ViewerState State;
+
+        #endregion
 
         #region SHIP REFERENCE
 

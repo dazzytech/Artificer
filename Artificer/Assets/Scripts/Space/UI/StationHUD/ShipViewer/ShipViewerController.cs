@@ -38,6 +38,8 @@ namespace Space.UI.Station.Viewer
 
         #region PUBLIC INTERACTION
 
+        #region INITIALIZE
+
         /// <summary>
         /// Initializes the station HUD.
         /// for now only pass ship atts
@@ -50,10 +52,40 @@ namespace Space.UI.Station.Viewer
 
             m_att.Items = new List<ComponentListItem>();
 
-            BuildComponentPanel();
+            m_att.State = ViewerState.MANAGE;
+            InitializeManage();
 
             m_att.Viewer.BuildShip(ship);
         }
+
+        /// <summary>
+        /// Builds the manage specific HUD
+        /// and initializes it
+        /// </summary>
+        public void InitializeManage()
+        {
+            foreach (GameObject GO in m_att.EditGOs)
+                GO.SetActive(false);
+
+            foreach (GameObject GO in m_att.ManageGOs)
+                GO.SetActive(true);
+
+            // Initialize Manage Elements
+            BuildComponentPanel();
+        }
+
+        public void InitializeEdit()
+        {
+            foreach (GameObject GO in m_att.ManageGOs)
+                GO.SetActive(false);
+
+            foreach (GameObject GO in m_att.EditGOs)
+                GO.SetActive(true);
+
+            // Initialize Edit Elements
+        }
+
+        #endregion
 
         public void ClearItem(int ID)
         {

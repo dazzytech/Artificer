@@ -59,6 +59,30 @@ namespace Space.UI.Station.Viewer
 
         #region EVENTS
 
+        #region VIEWER STATE
+
+        /// <summary>
+        /// Called when state is changed
+        /// Activates all GOs associated with that state
+        /// </summary>
+        public void OnStateChanged(int newState)
+        {
+            switch (newState)
+            {
+                case 0:
+                    m_att.State = ViewerState.MANAGE;
+                    m_con.InitializeManage();
+                    break;
+                case 1:
+                    m_att.State = ViewerState.EDIT;
+                    m_con.InitializeEdit();
+                    break;
+            }
+            
+        }
+
+        #endregion
+
         public void ExitStation()
         {
             if(!m_att.Busy)
@@ -88,10 +112,6 @@ namespace Space.UI.Station.Viewer
 
             if (m_att.SelectedIDs.Count > 0)
                 m_con.StartCoroutine("HealComponents");
-        }
-
-        public void ShipEditor()
-        {
         }
 
         public void ComponentSelected(int ID)
