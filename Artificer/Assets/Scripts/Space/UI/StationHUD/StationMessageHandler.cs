@@ -19,7 +19,7 @@ namespace Space.UI.Station
 
         [Header("HUD Elements")]
         [SerializeField]
-        private ShipViewerController m_shipViewer;
+        private ShipDockController m_shipDock;
 
         [SerializeField]
         private WarpMapController m_warpMap;
@@ -33,10 +33,10 @@ namespace Space.UI.Station
             if (m_warpMap.gameObject.activeSelf)
                 m_warpMap.gameObject.SetActive(false);
 
-            if (!m_shipViewer.gameObject.activeSelf)
-                m_shipViewer.gameObject.SetActive(true);
+            if (!m_shipDock.gameObject.activeSelf)
+                m_shipDock.gameObject.SetActive(true);
 
-            m_shipViewer.InitializeHUD(ship);
+            m_shipDock.InitializeHUD(ship);
         }
 
         public void InitializeWarpMap(List<uint> warpList, Transform home)
@@ -44,8 +44,8 @@ namespace Space.UI.Station
             if (!m_warpMap.gameObject.activeSelf)
                 m_warpMap.gameObject.SetActive(true);
 
-            if (m_shipViewer.gameObject.activeSelf)
-                m_shipViewer.gameObject.SetActive(false);
+            if (m_shipDock.gameObject.activeSelf)
+                m_shipDock.gameObject.SetActive(false);
 
             m_warpMap.BuildMap(warpList, home);
         }

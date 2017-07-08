@@ -85,7 +85,8 @@ namespace Space.UI.Station.Viewer
 
         public void Reset(bool Deselect)
         {
-            SelfPanel.color = StandardColor;
+            if (SelfPanel != null)
+                SelfPanel.color = StandardColor;
 
             if (Deselect)
                 Selected = false;
@@ -93,12 +94,14 @@ namespace Space.UI.Station.Viewer
 
         public void Highlight()
         {
-            SelfPanel.color = HighlightColor;
+            if(SelfPanel != null)
+                SelfPanel.color = HighlightColor;
         }
 
         public void Select()
         {
-            SelfPanel.color = SelectedColor;
+            if (SelfPanel != null)
+                SelfPanel.color = SelectedColor;
 
             Selected = true;
         }
