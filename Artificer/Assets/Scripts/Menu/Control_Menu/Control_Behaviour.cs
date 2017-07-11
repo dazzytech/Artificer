@@ -88,6 +88,11 @@ namespace Menu
                 {
                     CreateButton(key, Control_Config.GetKeyList("combat")[key].ToString(), "combat");
                 }
+                CreateDivider("Ship Editor");
+                foreach (string key in Control_Config.GetKeyList("edi").Keys)
+                {
+                    CreateButton(key, Control_Config.GetKeyList("edi")[key].ToString(), "edi");
+                }
                 // build ship controls
                 CreateDivider("System");
                 foreach(string key in Control_Config.GetKeyList("sys").Keys)

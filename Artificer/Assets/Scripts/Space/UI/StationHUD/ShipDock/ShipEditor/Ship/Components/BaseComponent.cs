@@ -10,15 +10,17 @@ using Space.Ship.Components.Listener;
 using Space.Ship.Components.Attributes;
 using System;
 using UI.Effects;
+using Space.UI.Station.Editor.Socket;
 
-namespace Space.UI.Station.Editor
+namespace Space.UI.Station.Editor.Component
 {
     
     public enum WeaponType {PRIMARY, SECONDARY, TERTIARY};
 
     // UI Component that shows draggable ship image
     public class BaseComponent : MonoBehaviour, 
-        IPointerEnterHandler, IPointerExitHandler
+        IPointerEnterHandler, IPointerExitHandler,
+        IDragHandler
     {
         #region EVENT
 
@@ -32,6 +34,8 @@ namespace Space.UI.Station.Editor
 
         public event MouseEvent OnMouseUp;
 
+        public event MouseEvent OnDragComponent;
+
         #endregion
 
         #region ATTRIBUTES
@@ -42,7 +46,7 @@ namespace Space.UI.Station.Editor
         /// Reference to the component data
         /// </summary>
         [HideInInspector]
-        public Data.Shared.Component ShipComponent;
+        public Data.Shared.ComponentData ShipComponent;
 
         /// <summary>
         /// Reference to the Resource
@@ -62,6 +66,12 @@ namespace Space.UI.Station.Editor
         /// trigger
         /// </summary>
         public WeaponType WType;
+
+        /// <summary>
+        /// detects if selected but not 
+        /// dragged
+        /// </summary>
+        private bool m_selected = true;
 
         /// <summary>
         /// If our component is currently
@@ -237,9 +247,9 @@ namespace Space.UI.Station.Editor
 
         private void Update()
         {
-            if(m_isDragging)
+            if (m_isDragging)
             {
-                if(!Input.GetMouseButton(0))
+                if (!Input.GetMouseButton(0))
                 {
                     if (OnMouseUp != null)
                         OnMouseUp(this);
@@ -257,6 +267,13 @@ namespace Space.UI.Station.Editor
                 UpdateDirection();
 
                 UpdatePosition();
+            }
+            else if (m_selected)
+            {
+                if (ShipEditor.SelectedObj == this)
+                    m_componentImage.color = new Color(.2f, .1f, .867f, .8f);
+                else
+                    m_selected = false;
             }
             else
             {
@@ -276,7 +293,7 @@ namespace Space.UI.Station.Editor
                             if (OnMouseDown != null)
                                 OnMouseDown(this);
 
-                            m_isDragging = true;
+                            m_selected = true;
                         }
                     }
                 }
@@ -306,10 +323,10 @@ namespace Space.UI.Station.Editor
         /// Initialize the component using the provided data
         /// </summary>
         /// <param name="param"></param>
-        public void InitComponent(Data.Shared.Component param)
+        public void InitComponent(Data.Shared.ComponentData param)
         {
             // Set data
-            Data.Shared.Component temp = new Data.Shared.Component();
+            Data.Shared.ComponentData temp = new Data.Shared.ComponentData();
             temp.Folder = param.Folder;
             temp.Direction = param.Direction;
             temp.Name = param.Name;
@@ -531,7 +548,7 @@ namespace Space.UI.Station.Editor
 
                     // If socketdata exists then use that otherwise 
                     // calc direction
-                    SocketData sock = t.GetComponent<SocketData>();
+                    Data.Space.SocketData sock = t.GetComponent<Data.Space.SocketData>();
                     if(sock != null)
                     {
                         SocketAttributes.Alignment up = SocketAttributes.Alignment.UP;
@@ -756,6 +773,17 @@ namespace Space.UI.Station.Editor
         public void OnPointerExit(PointerEventData eventData)
         {
             
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            if (ShipEditor.DraggedObj == null)
+            {
+                if (OnDragComponent != null)
+                    OnDragComponent(this);
+
+                m_isDragging = true;
+            }
         }
 
         #endregion

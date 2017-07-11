@@ -9,6 +9,7 @@ public class Control_Data
     public Dictionary<string, KeyCode> ShipControls;
     public Dictionary<string, KeyCode> CombatControls;
     public Dictionary<string, KeyCode> SystemControls;
+    public Dictionary<string, KeyCode> EditorControls;
 }
 
 public class Control_Config: MonoBehaviour
@@ -32,6 +33,7 @@ public class Control_Config: MonoBehaviour
             m_data.ShipControls = new Dictionary<string, KeyCode> ();
             m_data.CombatControls = new Dictionary<string, KeyCode> ();
             m_data.SystemControls = new Dictionary<string, KeyCode> ();
+            m_data.EditorControls = new Dictionary<string, KeyCode> ();
             SetDefaults();
         }
     }
@@ -41,10 +43,12 @@ public class Control_Config: MonoBehaviour
 		m_data.ShipControls.Clear();
         m_data.CombatControls.Clear();
         m_data.SystemControls.Clear();
+        m_data.EditorControls.Clear();
 
 		SetShipDefaults();
 		SetCombatDefaults();
         SetSystemDefaults();
+        SetEditorDefaults();
 	}
 
 	private static void SetShipDefaults()
@@ -87,11 +91,23 @@ public class Control_Config: MonoBehaviour
     private static void SetSystemDefaults()
     {
         m_data.SystemControls.Add("pause", KeyCode.Escape);
-        m_data.SystemControls.Add("zoomIn", KeyCode.Plus);
-        m_data.SystemControls.Add("zoomOut", KeyCode.Minus);
+        m_data.SystemControls.Add("zoomIn", KeyCode.KeypadPlus);
+        m_data.SystemControls.Add("zoomOut", KeyCode.KeypadMinus);
         m_data.SystemControls.Add("dock", KeyCode.Return);
         m_data.SystemControls.Add("toggle map", KeyCode.M);
         m_data.SystemControls.Add("toggle hud", KeyCode.H);
+        Save();
+    }
+
+    private static void SetEditorDefaults()
+    {
+        m_data.EditorControls.Add("dragUp", KeyCode.W);
+        m_data.EditorControls.Add("dragDown", KeyCode.S);
+        m_data.EditorControls.Add("dragLeft", KeyCode.A);
+        m_data.EditorControls.Add("dragRight", KeyCode.D);
+        m_data.EditorControls.Add("zoomIn", KeyCode.KeypadPlus);
+        m_data.EditorControls.Add("zoomOut", KeyCode.KeypadMinus);
+        m_data.EditorControls.Add("reset", KeyCode.Space);
         Save();
     }
 
@@ -110,6 +126,10 @@ public class Control_Config: MonoBehaviour
             case "sys":
                 if (m_data.SystemControls.ContainsKey (KeyToSet))
                     m_data.SystemControls [KeyToSet] = SetTo;
+                break;
+            case "edi":
+                if (m_data.EditorControls.ContainsKey(KeyToSet))
+                    m_data.EditorControls[KeyToSet] = SetTo;
                 break;
         }
         Save();
@@ -130,6 +150,10 @@ public class Control_Config: MonoBehaviour
             case "sys":
                 if (m_data.SystemControls.ContainsKey (KeyToGet)) 
                     return m_data.SystemControls [KeyToGet];
+                break;
+            case "edi":
+                if (m_data.EditorControls.ContainsKey(KeyToGet))
+                    return m_data.EditorControls[KeyToGet];
                 break;
             default:
                 break;
@@ -155,6 +179,8 @@ public class Control_Config: MonoBehaviour
                 return m_data.CombatControls;
             case "sys":
                 return m_data.SystemControls;
+            case "edi":
+                return m_data.EditorControls;
         }
         return null;
     }

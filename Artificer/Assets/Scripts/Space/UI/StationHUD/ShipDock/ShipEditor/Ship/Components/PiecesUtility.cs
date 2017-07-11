@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Space.UI.Station.Editor.Socket;
 
-namespace Space.UI.Station.Editor
+namespace Space.UI.Station.Editor.Component
 {
     public class PiecesUtility
     {

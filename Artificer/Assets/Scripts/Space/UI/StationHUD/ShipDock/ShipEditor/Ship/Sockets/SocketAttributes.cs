@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Space.UI.Station.Editor.Socket;
 
-namespace Space.UI.Station.Editor
+namespace Space.UI.Station.Editor.Socket
 {
     public class SocketAttributes {
 

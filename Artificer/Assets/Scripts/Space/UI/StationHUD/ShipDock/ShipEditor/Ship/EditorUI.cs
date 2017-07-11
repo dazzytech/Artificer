@@ -6,13 +6,15 @@ using System.Text.RegularExpressions;
 // Artificer
 using Data.Shared;
 using Space.Ship.Components.Listener;
+using Space.UI.Station.Editor.Component;
+using UI.Effects;
 
 namespace Space.UI.Station.Editor
 {
     /// <summary>
-    /// Ship storage controller.
-    /// script that controls and manages all the ship
-    /// components 
+    /// Script that interacts with the UI
+    /// e.g. placing pieces, updating
+    /// text.
     /// </summary>
     public class EditorUI
         : MonoBehaviour
@@ -25,12 +27,69 @@ namespace Space.UI.Station.Editor
 
         [Header("HUD Elements")]
 
-        public Text WeightText;
+        #region SHIP INFORMATION
 
-        public Transform ChangeTrans;
+        /// <summary>
+        /// Displays the weight of the ship
+        /// in tons
+        /// </summary>
+        [SerializeField]
+        private Text m_weightText;
 
-        public Toggle RotorFollowsMouse;
-        public RectTransform RFRect;
+        /// <summary>
+        /// Highlights if the ship has been
+        /// edited in any way
+        /// </summary>
+        [SerializeField]
+        private Transform m_changedText;
+
+        /// <summary>
+        /// Text field for editing the ship name
+        /// </summary>
+        [SerializeField]
+        private InputField m_shipName;
+
+        #region ROTOR FOLLOW
+
+        /// <summary>
+        /// Toggle box that determines 
+        /// if the rotors follow the mouse
+        /// when the ship is in combat mode
+        /// </summary>
+        [SerializeField]
+        private Toggle m_rotorFollowsMouse;
+        [SerializeField]
+        private RectTransform m_RFRect;
+
+        #endregion
+
+        #endregion
+
+        #region CONSTRUCTION
+
+        /// <summary>
+        /// The panel that the ship is built on
+        /// </summary>
+        [SerializeField]
+        private Transform m_shipConstructPanel;
+
+        /// <summary>
+        /// The transform that limits the movement
+        /// of the ship construct panel
+        /// </summary>
+        [SerializeField]
+        private Transform m_shipBoundsPanel;
+
+        /// <summary>
+        /// Prefab interactable object for base component
+        /// object
+        /// </summary>
+        [SerializeField]
+        private GameObject m_componentPrefab;
+
+        #endregion
+
+        #region RIGHT CLICK
 
         // Right click items
         public GameObject RCPrefab;
@@ -41,38 +100,36 @@ namespace Space.UI.Station.Editor
 
         #endregion
 
+        #endregion
+
+        #region PUBLIC INTERACTION
+
         // Reset Data function and clear panel here
-        public void Initialize(ShipEditor editor)
+        public void Initialize(ShipEditor editor, string newShipName)
         {
             m_editor = editor;
+
+            m_shipName.text = newShipName;
 
             //RotorFollowsMouse.isOn = _ship.Ship.CombatResponsive;
         }
 
-        public delegate void DelegateHead(BaseComponent newHead);
-
-        public void SetHead(BaseComponent newHead)
-        {
-            m_editor.Ship.Head = newHead;
-        }
-
         public void UpdateUI()
         {
-            /*HintBoxController.Clear("Use Right-Click to display additional options");
+            HintBoxController.Clear("Use Right-Click to display additional options");
+            HintBoxController.Clear("Use the directional keys to change direction the component is facing.");
 
-            foreach (BaseComponent component in m_editor.Ship.Components)
-            {
-                // Update and drag if mouse button is down over object
-                // Store rotation and face upwards
-                Quaternion orig = component.GetComponent<RectTransform>().rotation;
-                component.GetComponent<RectTransform>().rotation = Quaternion.Euler(0,0,0);
-                bool MouseOver = InBounds(component.GetComponent<RectTransform>(), Input.mousePosition);
-                // Reapply old rotation
-                component.GetComponent<RectTransform>().rotation = orig;
+            if (ShipEditor.DraggedObj != null)
+                HintBoxController.Display("Use the directional keys to change direction the component is facing.");
+            else if(ShipEditor.HighlightedObj != null)
+                HintBoxController.Display("Use Right-Click to display additional options");
 
+
+            /*
+            
                 if(RCWindow != null && !RCDelay)
                 {
-                    if (Input.GetMouseButtonDown(0)|| Input.GetMouseButtonDown(1))
+                    if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
                     {
                         if(!InBounds(RCWindow.GetComponent<RectTransform>(), Input.mousePosition)
                            || Input.GetMouseButtonDown(1))
@@ -87,13 +144,6 @@ namespace Space.UI.Station.Editor
                             return;
                         }
                     }
-                }
-
-                if (Input.GetMouseButtonDown(0))
-                {
-                    // Use utility function
-                    //if(MouseOver)
-                       //StartDrag(component);
                 }
                 else if(Input.GetMouseButtonDown(1))
                 {
@@ -116,16 +166,7 @@ namespace Space.UI.Station.Editor
                         Invoke("RCDel", .3f);
                     }
                 }
-                else if(Input.GetMouseButtonUp(0))
-                {
-                    //ReleaseDrag();
-                }
-                else
-                {
-                    if(MouseOver && RCWindow == null)
-                        HintBoxController.Display("Use Right-Click to display additional options");
-                }
-            }
+            
 
             // if mouse over combat style panel will display message
             if (InBounds(RFRect, Input.mousePosition))
@@ -143,10 +184,53 @@ namespace Space.UI.Station.Editor
             }*/
         }
 
-        public void RCDel()
+        #region EDITOR UTILITY
+
+        /// <summary>
+        /// Returns if a given component (change to position?)
+        /// it within bounds of the ui editor
+        /// </summary>
+        /// <param name="BC"></param>
+        /// <returns></returns>
+        public bool IsWithinBounds(BaseComponent BC)
+        {
+            return RectTransformExtension.InBounds
+                            (m_shipBoundsPanel.GetComponent<RectTransform>(),
+                            BC.transform.position);
+        }
+
+        /// <summary>
+        /// Places the component GameObject to the panel.
+        /// </summary>
+        /// <returns>The component.</returns>
+        /// <param name="component"></param>
+        public BaseComponent PlaceComponentGO(Data.Shared.ComponentData component)
+        {
+            // Create Ship Object and apply transform parent
+            GameObject newObj = Instantiate(m_componentPrefab);
+            newObj.transform.SetParent(m_shipConstructPanel);
+
+            // Create BaseShipComponent
+            BaseComponent BC = newObj.GetComponent<BaseComponent>();
+            BC.InitComponent(component);
+
+            //UpdateWeight();
+
+            return BC;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        private void RCDel()
         {
             RCDelay = false;
         }
+
+        #endregion
 
 
         /*public int ReturnNextAvailableInstance()
@@ -191,8 +275,6 @@ namespace Space.UI.Station.Editor
 
             return ShipName;
         }*/
-
-
 
         /*public void UpdateWeight()
         {

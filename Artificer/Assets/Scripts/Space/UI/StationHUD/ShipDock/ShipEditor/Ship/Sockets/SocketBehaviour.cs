@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Space.UI.Station.Editor.Component;
 
-namespace Space.UI.Station.Editor
+namespace Space.UI.Station.Editor.Socket
 {
     public class SocketBehaviour : MonoBehaviour {
 

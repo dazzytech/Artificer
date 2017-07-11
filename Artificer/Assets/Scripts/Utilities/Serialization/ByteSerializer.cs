@@ -13,14 +13,14 @@ namespace Serializer
 { 
     public class ByteSerializer
     {
-        public static void WriteSock(BinaryWriter writer, Data.Shared.Socket sock)
+        public static void WriteSock(BinaryWriter writer, Data.Shared.SocketData sock)
         {
             writer.Write(sock.SocketID);
             writer.Write(sock.OtherID);
             writer.Write(sock.OtherLinkID);
         }
 
-        public static void WriteComp(BinaryWriter writer, Data.Shared.Component comp)
+        public static void WriteComp(BinaryWriter writer, Data.Shared.ComponentData comp)
         {
             writer.Write(comp.Name);
             writer.Write(comp.InstanceID);
@@ -33,7 +33,7 @@ namespace Serializer
             writer.Write(comp.behaviour);
             writer.Write(comp.AutoFire);
             writer.Write(comp.sockets.Length);
-            foreach (Socket sock in comp.sockets)
+            foreach (SocketData sock in comp.sockets)
                 WriteSock(writer, sock);
         }
 
@@ -45,7 +45,7 @@ namespace Serializer
                 {
                     WriteComp(writer, ship.Head);
                     writer.Write(ship.GetComponents().Length);
-                    foreach (Data.Shared.Component comp in ship.components)
+                    foreach (Data.Shared.ComponentData comp in ship.components)
                         WriteComp(writer, comp);
                     writer.Write(ship.Name);
                     writer.Write(ship.Description);
@@ -59,9 +59,9 @@ namespace Serializer
             }
         }
 
-        public static Data.Shared.Socket ReadSock(BinaryReader reader)
+        public static Data.Shared.SocketData ReadSock(BinaryReader reader)
         {
-            Data.Shared.Socket sock = new Socket();
+            Data.Shared.SocketData sock = new SocketData();
 
             sock.SocketID = reader.ReadInt32();
             sock.OtherID = reader.ReadInt32();
@@ -70,9 +70,9 @@ namespace Serializer
             return sock;
         }
 
-        public static Data.Shared.Component ReadComp(BinaryReader reader)
+        public static Data.Shared.ComponentData ReadComp(BinaryReader reader)
         {
-            Data.Shared.Component comp = new Data.Shared.Component();
+            Data.Shared.ComponentData comp = new Data.Shared.ComponentData();
 
             comp.Name = reader.ReadString();
             comp.InstanceID = reader.ReadInt32();
@@ -86,7 +86,7 @@ namespace Serializer
             comp.AutoFire = reader.ReadBoolean();
 
             int length = reader.ReadInt32();
-            comp.sockets = new Socket[length];
+            comp.sockets = new SocketData[length];
 
             for (int i = 0; i < length; i++)
             {

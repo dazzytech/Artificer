@@ -86,7 +86,7 @@ namespace Space.Ship.Components.Attributes
         /// component is attached to
         /// </summary>
         [SyncVar]
-        public Socket Socket;
+        public SocketData Socket;
 
         /// <summary>
         /// Synced list over network 
@@ -124,7 +124,7 @@ namespace Space.Ship.Components.Attributes
         #region SHIP DATA REFERENCE
 
         [SyncVar]
-        public Data.Shared.Component Data;
+        public Data.Shared.ComponentData Data;
 
         public ShipAttributes Ship
         {

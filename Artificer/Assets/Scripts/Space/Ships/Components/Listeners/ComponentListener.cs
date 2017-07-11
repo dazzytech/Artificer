@@ -71,13 +71,13 @@ namespace Space.Ship.Components.Listener
             get { return ClientScene.FindLocalObject(ConnectedID).transform; }
         }
 
-        public Socket Socket
+        public SocketData Socket
         {
             get { return GetAttributes().Socket; }
             set { GetAttributes().Socket = value; }
         }
 
-        private Data.Shared.Component Data
+        private Data.Shared.ComponentData Data
         {
             get { return GetAttributes().Data; }
             set { GetAttributes().Data = value; }
@@ -204,8 +204,8 @@ namespace Space.Ship.Components.Listener
         /// <param name="cData"></param>
         [Server]
         public virtual void InitializeData
-            (Data.Shared.Component cData, NetworkInstanceId parent,
-            NetworkInstanceId connected, Socket socket)
+            (Data.Shared.ComponentData cData, NetworkInstanceId parent,
+            NetworkInstanceId connected, SocketData socket)
         {
             // Assign the data to the att
             Data = cData;

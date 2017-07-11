@@ -186,7 +186,7 @@ namespace Space.Ship
 
             ComponentListener head = headGO.GetComponent<ComponentListener>();
 
-            head.InitializeData(m_att.Ship.Head, netId, NetworkInstanceId.Invalid, new Socket());
+            head.InitializeData(m_att.Ship.Head, netId, NetworkInstanceId.Invalid, new SocketData());
 
             m_addedIDs.Add(m_att.Ship.Head.InstanceID);
 
@@ -206,15 +206,15 @@ namespace Space.Ship
         /// <param name="ship">Ship.</param>
         [Server]
         public void BuildConnectedPieces
-            (Data.Shared.Component component, Transform componentTransform)
+            (Data.Shared.ComponentData component, Transform componentTransform)
         {
-            Socket[] socketList = component.sockets;
+            SocketData[] socketList = component.sockets;
 
             // no sockets = no body
             if (socketList == null)
                 return;
 
-            foreach (Socket socket in socketList)
+            foreach (SocketData socket in socketList)
             {
                 // test we successfully found the socket 
                 if (componentTransform.Find
@@ -229,7 +229,7 @@ namespace Space.Ship
                 }
 
                 // find the second piece through the socket
-                Data.Shared.Component piece = m_att.Ship.GetComponent(socket.OtherID);
+                Data.Shared.ComponentData piece = m_att.Ship.GetComponent(socket.OtherID);
                 if (piece.Path == "")
                 {
                     Debug.Log("Ship Initializer - " +

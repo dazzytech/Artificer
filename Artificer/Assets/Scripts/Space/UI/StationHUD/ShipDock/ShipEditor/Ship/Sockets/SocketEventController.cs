@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Space.UI.Station.Editor
+namespace Space.UI.Station.Editor.Socket
 {
     public class SocketEventController
     {

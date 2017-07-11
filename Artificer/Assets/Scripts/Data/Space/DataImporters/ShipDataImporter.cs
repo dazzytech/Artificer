@@ -116,8 +116,8 @@ namespace Data.Space.DataImporter
     		        in componentList.ChildNodes)
     		{
     			// Create component empty
-                Data.Shared.Component newComponent
-                    = new Data.Shared.Component();
+                Data.Shared.ComponentData newComponent
+                    = new Data.Shared.ComponentData();
 
     			// Populate values
                 // unique instance ID

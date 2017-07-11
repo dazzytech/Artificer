@@ -11,7 +11,7 @@ using Space.Ship.Components.Attributes;
 namespace Data.Shared
 {
     [System.Serializable]
-    public struct Socket
+    public struct SocketData
     {
         public int SocketID;
         public int OtherID;
@@ -19,7 +19,7 @@ namespace Data.Shared
     }
 
     [System.Serializable]
-    public struct Component
+    public struct ComponentData
     {
         // Unique ID of piece
         public int InstanceID;
@@ -36,7 +36,7 @@ namespace Data.Shared
         // visual colour of component
         public string Style;
         // list of socket links to other pieces
-        public Socket[] sockets;
+        public SocketData[] sockets;
 
         // Targeter and listener specific data
         public bool AutoLock;
@@ -57,15 +57,15 @@ namespace Data.Shared
             Name = "null";
             Style = "null";
 
-            sockets = new Socket[0];
+            sockets = new SocketData[0];
         }
     }
 
     [System.Serializable]
     public struct ShipData 
     {
-        public Component[] components;
-        private Component _head;
+        public ComponentData[] components;
+        private ComponentData _head;
         public string Name;
         //private Dictionary<string, float> _requirements;
         public string Description;
@@ -84,7 +84,7 @@ namespace Data.Shared
         public void Init()
         {
             if (components == null)
-                components = new Component[0];
+                components = new ComponentData[0];
 
             Name = "null";
             Description = "null";
@@ -100,11 +100,11 @@ namespace Data.Shared
     	/// <param name="newComponent">New component.</param>
     	/// <param name="isHead">If set to <c>true</c> is head.</param>
     	public void AddComponent
-    		(Component newComponent,
+    		(ComponentData newComponent,
     		 bool isHead)
     	{
             if(components == null)
-                components = new Component[0];
+                components = new ComponentData[0];
             GameObject GO = Resources.Load("Space/Ships/" + newComponent.Folder + "/" + newComponent.Name, typeof(GameObject)) as GameObject;
             ComponentAttributes att = GO.GetComponent<ComponentAttributes>();
             if(att.RequiredMats != null)
@@ -114,7 +114,7 @@ namespace Data.Shared
             }
 
             if(newComponent.sockets == null)
-                newComponent.sockets = new Socket[0];
+                newComponent.sockets = new SocketData[0];
 
             if (isHead)
             {
@@ -124,8 +124,8 @@ namespace Data.Shared
 
             // Initialize the list
             int index = 0;
-            Component[] temp = components;
-            components = new Component[components.Length+1];
+            ComponentData[] temp = components;
+            components = new ComponentData[components.Length+1];
             while(index < components.Length-1)
             {
                 components[index] = temp[index++];
@@ -160,7 +160,7 @@ namespace Data.Shared
             return null;
         }
 
-    	public Component Head
+    	public ComponentData Head
     	{
             get { return _head;}
             set { _head = value; }
@@ -172,12 +172,12 @@ namespace Data.Shared
     	/// </summary>
     	/// <returns>The component.</returns>
     	/// <param name="ID">I.</param>
-    	public Component GetComponent
+    	public ComponentData GetComponent
     		(int ID)
     	{
             if(components != null)
             {
-        		foreach (Component piece
+        		foreach (ComponentData piece
         		        in components)
         		{
         			if(piece.InstanceID == ID)
@@ -188,13 +188,13 @@ namespace Data.Shared
     		if (_head.InstanceID == ID)
     			return _head;
 
-    		return new Component();
+    		return new ComponentData();
     	}
 
         public void AddSocket(int toID, int linkID, 
                               int otherLinkID, int OtherID)
         {
-            Socket newSocket = new Socket ();
+            SocketData newSocket = new SocketData ();
             newSocket.SocketID = linkID;
             newSocket.OtherLinkID = otherLinkID;
             newSocket.OtherID = OtherID;
@@ -206,8 +206,8 @@ namespace Data.Shared
                     if(components[i].InstanceID == toID)
                     {
                         int index = 0;
-                        Socket[] temp = components[i].sockets;
-                        components[i].sockets = new Socket[components[i].sockets.Length + 1];
+                        SocketData[] temp = components[i].sockets;
+                        components[i].sockets = new SocketData[components[i].sockets.Length + 1];
                         while (index < components[i].sockets.Length - 1)
                         {
                             components[i].sockets[index] = temp[index++];
@@ -222,8 +222,8 @@ namespace Data.Shared
             if (_head.InstanceID == toID)
             {
                 int index = 0;
-                Socket[] temp = _head.sockets;
-                _head.sockets = new Socket[_head.sockets.Length + 1];
+                SocketData[] temp = _head.sockets;
+                _head.sockets = new SocketData[_head.sockets.Length + 1];
                 while (index < _head.sockets.Length - 1)
                 {
                     _head.sockets[index] = temp[index++];
@@ -236,7 +236,7 @@ namespace Data.Shared
         /// Gets all the components stored.
         /// </summary>
         /// <returns>The components.</returns>
-    	public Component[] GetComponents
+    	public ComponentData[] GetComponents
     		()
     	{
     		return components;

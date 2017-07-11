@@ -7,16 +7,23 @@ using System.Collections.Generic;
 using Data.Shared;
 using Data.Space.Library;
 using UI.Effects;
+using Space.UI.Station.Editor.Component;
 
 namespace Space.UI.Station.Editor
 {
     [RequireComponent(typeof(EditorUI))]
     /// <summary>
-    /// Ship editor controller.
-    /// script that controls and manages all the editor window
+    /// Manages the data side of the ship
+    /// editing. Sends messages to ui editor
     /// </summary>
     public class ShipEditor : MonoBehaviour
     {
+        #region DELEGATES
+
+        public delegate void DelegateHead(BaseComponent newHead);
+
+        #endregion
+
         #region ATTRIBUTES
 
         #region SHIP VARIABLES
@@ -37,6 +44,9 @@ namespace Space.UI.Station.Editor
         [HideInInspector]
         public static BaseComponent HighlightedObj;
 
+        [HideInInspector]
+        public static BaseComponent SelectedObj;
+
         #endregion
 
         #region REFERENCES
@@ -52,38 +62,6 @@ namespace Space.UI.Station.Editor
         //private ShipRequirementsUtility _req;
 
         //public RequirementInventory Inventory;
-
-        #endregion
-
-        #region HUD ELEMENTS
-
-        [Header("UI Elements")]
-
-        /// <summary>
-        /// The panel that the ship is built on
-        /// </summary>
-        [SerializeField]
-        private Transform m_shipConstructPanel;
-
-        /// <summary>
-        /// The transform that limits the movement
-        /// of the ship construct panel
-        /// </summary>
-        [SerializeField]
-        private Transform m_shipBoundsPanel;
-
-        /// <summary>
-        /// Prefab interactable object for base component
-        /// object
-        /// </summary>
-        [SerializeField]
-        private GameObject m_componentPrefab;
-
-        /// <summary>
-        /// Text field for editing the ship name
-        /// </summary>
-        [SerializeField]
-        private InputField m_shipName;
 
         #endregion
 
@@ -131,9 +109,7 @@ namespace Space.UI.Station.Editor
 
                     if(DraggedObj == component && !component.Dragging)
                     {
-                        if (!RectTransformExtension.InBounds
-                            (m_shipBoundsPanel.GetComponent<RectTransform>(), 
-                            DraggedObj.transform.position))
+                        if (!m_UI.IsWithinBounds(DraggedObj))
                         {
                             DeletePiece(DraggedObj);
                             i--;
@@ -181,7 +157,12 @@ namespace Space.UI.Station.Editor
  */
 
         #region PUBLIC INTERACTION
-            
+
+        public void SetHead(BaseComponent newHead)
+        {
+            Ship.Head = newHead;
+        }
+
         /// <summary>
         /// Event listener
         /// loads the selected ship to the panel
@@ -197,10 +178,10 @@ namespace Space.UI.Station.Editor
             //_req.StoreExisting = true;
             DraggedObj = null;
             Ship.Ship = newShip;
-            m_UI.Initialize(this);
+            m_UI.Initialize(this, newShip.Name);
 
             // initialize head object 
-            Ship.Head = PlaceComponentGO(newShip.Head);
+            Ship.Head = CreateComponent(newShip.Head);
 
             // Align ship head to be 3/4s up center of screen
             Ship.Head.GetComponent<RectTransform>().localPosition = new Vector3(
@@ -210,8 +191,6 @@ namespace Space.UI.Station.Editor
             LoadConnectedObjects(Ship.Head, newShip.Head);
 
             LoadConnections();
-
-            m_shipName.text = newShip.Name;
 
             // finish adding existing
             //_req.StoreExisting = false;
@@ -230,26 +209,23 @@ namespace Space.UI.Station.Editor
         /// </summary>
         /// <returns>The component G.</returns>
         /// <param name="component">Component.</param>
-        private BaseComponent PlaceComponentGO(Data.Shared.Component component)
+        private BaseComponent CreateComponent(ComponentData component)
         {
-            // Create Ship Object and apply transform parent
-            GameObject newObj = Instantiate(m_componentPrefab);
-            newObj.transform.SetParent(m_shipConstructPanel);
-
-            // Create BaseShipComponent and add it to our list
-            BaseComponent BC = newObj.GetComponent<BaseComponent>();
-            BC.InitComponent(component);
-            BC.OnMouseDown += StartDrag;
+            // Create BaseShipComponent 
+            // using UI
+            BaseComponent BC = m_UI.PlaceComponentGO(component);
+            // assign events
+            BC.OnDragComponent += StartDrag;
+            BC.OnMouseDown += MouseDown;
             BC.OnMouseOver += MouseEnter;
             BC.OnMouseOut += MouseLeave;
+
             //_req.AddComponent(component);
             //Inventory.AddMatsToList(_req.Requirements);
             Ship.Components.Add(BC);
 
             // Add the ID to the existing list
             Ship.AddedIDs.Add(component.InstanceID);
-
-            //_util.UpdateWeight();
 
             return BC;
         }
@@ -258,16 +234,16 @@ namespace Space.UI.Station.Editor
         /// Loads the connected objects to a component recursively
         /// </summary>
         /// <param name="component">Component.</param>
-        private void LoadConnectedObjects(BaseComponent home, Data.Shared.Component component)
+        private void LoadConnectedObjects(BaseComponent home, ComponentData component)
         {
             if (component.sockets == null)
                 return;
 
-            foreach (Socket socket in component.sockets)
+            foreach (SocketData socket in component.sockets)
             {
                 // find the second piece through the socket
                 //print(string.Format("Component: {0} attemping to load component ID: {1}", component.Name, socket.OtherID));
-                Data.Shared.Component piece = Ship.Ship.GetComponent (socket.OtherID);
+                ComponentData piece = Ship.Ship.GetComponent (socket.OtherID);
                 if(piece.Path == "")
                 {
                     Debug.Log("Ship Editor - " +
@@ -282,7 +258,7 @@ namespace Space.UI.Station.Editor
                     continue;
 
                 // Place the component onto the editor
-                BaseComponent BC = PlaceComponentGO(piece);
+                BaseComponent BC = CreateComponent(piece);
 
                 // Add Socket to our link list for loading
                 Ship.Links.Add(socket, home);
@@ -298,7 +274,7 @@ namespace Space.UI.Station.Editor
         private void LoadConnections()
         {
             // Assign and connect socket
-            foreach (Socket s in Ship.Links.Keys)
+            foreach (SocketData s in Ship.Links.Keys)
             {
                 // find first object
                 BaseComponent firstObj = Ship.Links[s];
@@ -343,7 +319,8 @@ namespace Space.UI.Station.Editor
                     Ship.Head = null;
             }
 
-            BC.OnMouseDown -= StartDrag;
+            BC.OnDragComponent -= StartDrag;
+            BC.OnMouseDown -= MouseDown;
             BC.OnMouseOver -= MouseEnter;
             BC.OnMouseOut -= MouseLeave;
 
@@ -358,6 +335,11 @@ namespace Space.UI.Station.Editor
         public void StartDrag(BaseComponent comp)
         {
             DraggedObj = comp;
+        }
+
+        public void MouseDown(BaseComponent comp)
+        {
+            SelectedObj = comp;
         }
 
         public void MouseEnter(BaseComponent comp)

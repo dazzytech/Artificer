@@ -2,12 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Space.UI.Station.Editor.Socket;
 
-namespace Space.UI.Station.Editor
+namespace Space.UI.Station.Editor.Component
 {
-    public class ConnectionBehaviour {
-
-        
+    public class ConnectionBehaviour
+    {
         public List<SocketBehaviour> sockets;                       // Sockets belonging to this object 
         public List<SocketBehaviour> connectedSockets;
         public List<SocketBehaviour> socketsToConfirm;
