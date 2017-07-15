@@ -195,8 +195,8 @@ namespace Space.UI.Station.Prefabs
                 m_hoverWindow.transform.SetParent(GameObject.Find("_gui").transform);
                 m_hoverWindow.transform.localPosition = Vector3.zero;
 
-                m_hoverWindow.GetComponent<ComponentHoverPrefab>().DisplayComp
-                    (m_componentPrefab.GetComponent<ComponentListener>(), m_icon.texture);
+                m_hoverWindow.GetComponent<ComponentHoverPrefab>().Display
+                    (m_componentPrefab);
 
                 m_hovering = true;
             }

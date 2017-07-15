@@ -142,30 +142,30 @@ namespace Space.UI.Station.Editor
                             return;
                         }
                     }
-                }
-                else if(Input.GetMouseButtonDown(1))
+            }
+            else if(Input.GetMouseButtonDown(1))
+            {
+                // Player has clicked the right mouse button
+                if(RCWindow == null && ShipEditor.HighlightedObj != null)
                 {
-                    // Player has clicked the right mouse button
-                    if(RCWindow == null && ShipEditor.HighlightedObj != null)
-                    {
-                        // Create the Right Click Window
-                        RCWindow = Instantiate(RCPrefab);
-                        RCWindow.transform.SetParent(GameObject.Find("_gui").transform);
+                    // Create the Right Click Window
+                    RCWindow = Instantiate(RCPrefab);
+                    RCWindow.transform.SetParent(GameObject.Find("_gui").transform);
 
-                        RCWindow.transform.position = Input.mousePosition
-                            + new Vector3(-RCWindow.GetComponent<RectTransform>().rect.width*.5f-10,
-                                          RCWindow.GetComponent<RectTransform>().rect.height*.5f+10, 1);
+                    RCWindow.transform.position = Input.mousePosition
+                        + new Vector3(-RCWindow.GetComponent<RectTransform>().rect.width*.5f-10,
+                                        RCWindow.GetComponent<RectTransform>().rect.height*.5f+10, 1);
 
-                        // Create delegate function
+                    // Create delegate function
 
-                        RCWindow.GetComponent<ComponentRCPrefab>().DisplayComp
-                            (ShipEditor.HighlightedObj, m_editor.Ship.Head,
-                            new ShipEditor.DelegateHead(m_editor.SetHead));
+                    RCWindow.GetComponent<ComponentRCPrefab>().DisplayBC
+                        (ShipEditor.HighlightedObj, m_editor.Ship.Head,
+                        new ShipEditor.DelegateHead(m_editor.SetHead));
 
-                        RCDelay = true;
-                        Invoke("RCDel", .3f);
-                    }
+                    RCDelay = true;
+                    Invoke("RCDel", .3f);
                 }
+            }
             
             /*
             // if mouse over combat style panel will display message
