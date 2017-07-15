@@ -14,7 +14,6 @@ using Space.UI.Station.Editor.Socket;
 
 namespace Space.UI.Station.Editor.Component
 {
-    
     public enum WeaponType {PRIMARY, SECONDARY, TERTIARY};
 
     // UI Component that shows draggable ship image
@@ -239,6 +238,7 @@ namespace Space.UI.Station.Editor.Component
         public bool Dragging
         {
             get { return m_isDragging; }
+            set { m_isDragging = value; }
         }
 
         #endregion
@@ -387,6 +387,96 @@ namespace Space.UI.Station.Editor.Component
                 Connect.collidedObjects.Add(collider);
         }
 
+        /// <summary>
+        /// Auto-assigns key depending 
+        /// on component type
+        /// </summary>
+        public void AssignKey()
+        {
+            switch (ShipComponent.Folder)
+            {
+                case "Rotors":
+                    switch (direction)
+                    {
+                        case "left":
+                            ShipComponent.Trigger = "turnRight";
+                            break;
+                        case "right":
+                            ShipComponent.Trigger = "turnLeft";
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "Engines":
+                    switch (direction)
+                    {
+                        case "up":
+                            ShipComponent.Trigger = "moveUp";
+                            ShipComponent.CTrigger = "moveUp";
+                            break;
+                        case "down":
+                            ShipComponent.Trigger = "moveDown";
+                            ShipComponent.CTrigger = "moveDown";
+                            break;
+                        case "left":
+                            ShipComponent.Trigger = "strafeRight";
+                            ShipComponent.CTrigger = "strafeRight";
+                            break;
+                        case "right":
+                            ShipComponent.Trigger = "strafeLeft";
+                            ShipComponent.CTrigger = "strafeLeft";
+                            break;
+                    }
+                    break;
+                case "Weapons":
+                    switch (WType)
+                    {
+                        case WeaponType.PRIMARY:
+                            ShipComponent.Trigger = "fire";
+                            ShipComponent.CTrigger = "fire";
+                            break;
+                        case WeaponType.SECONDARY:
+                            ShipComponent.Trigger = "secondary";
+                            ShipComponent.CTrigger = "secondary";
+                            break;
+                        case WeaponType.TERTIARY:
+                            ShipComponent.Trigger = "tertiary";
+                            ShipComponent.CTrigger = "tertiary";
+                            break;
+                    }
+                    break;
+                case "Launchers":
+                    switch (WType)
+                    {
+                        case WeaponType.PRIMARY:
+                            ShipComponent.Trigger = "fire";
+                            ShipComponent.CTrigger = "fire";
+                            break;
+                        case WeaponType.SECONDARY:
+                            ShipComponent.Trigger = "secondary";
+                            ShipComponent.CTrigger = "secondary";
+                            break;
+                        case WeaponType.TERTIARY:
+                            ShipComponent.Trigger = "tertiary";
+                            ShipComponent.CTrigger = "tertiary";
+                            break;
+                    }
+                    break;
+                case "Warps":
+                    ShipComponent.Trigger = "use";
+                    break;
+                case "Wells":
+                    ShipComponent.Trigger = "well";
+                    break;
+                case "Shields":
+                    ShipComponent.Trigger = "Activate Shield";
+                    ShipComponent.CTrigger = "Activate Shield";
+                    break;
+            }
+            ChangePending = true;
+        }
+
         #region SOCKETS
 
         /// <summary>
@@ -499,11 +589,6 @@ namespace Space.UI.Station.Editor.Component
                     AssignDirection("left");
                 if (Input.GetKeyUp(KeyCode.RightArrow))
                     AssignDirection("right");
-            //else
-            //{
-                //HintBoxController.Clear("When dragging an object - use the directional keys " +
-                    //"to change the direction the object is facing");
-            //}
         }
 
         /// <summary>
@@ -638,96 +723,6 @@ namespace Space.UI.Station.Editor.Component
             AssignSockets();
             AssignKey();
             ShipComponent.Direction = direction;
-        }
-
-        /// <summary>
-        /// Auto-assigns key depending 
-        /// on component type
-        /// </summary>
-        private void AssignKey()
-        {
-            switch (ShipComponent.Folder)
-            {
-                case "Rotors":
-                    switch (direction)
-                    {
-                        case "left":
-                            ShipComponent.Trigger = "turnRight";
-                            break;
-                        case "right":
-                            ShipComponent.Trigger = "turnLeft";
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                case "Engines":
-                    switch (direction)
-                    {
-                        case "up":
-                            ShipComponent.Trigger = "moveUp";
-                            ShipComponent.CTrigger = "moveUp";
-                            break;
-                        case "down":
-                            ShipComponent.Trigger = "moveDown";
-                            ShipComponent.CTrigger = "moveDown";
-                            break;
-                        case "left":
-                            ShipComponent.Trigger = "strafeRight";
-                            ShipComponent.CTrigger = "strafeRight";
-                            break;
-                        case "right":
-                            ShipComponent.Trigger = "strafeLeft";
-                            ShipComponent.CTrigger = "strafeLeft";
-                            break;
-                    }
-                    break;
-                case "Weapons":
-                    switch (WType)
-                    {
-                        case WeaponType.PRIMARY:
-                            ShipComponent.Trigger = "fire";
-                            ShipComponent.CTrigger = "fire";
-                            break;
-                        case WeaponType.SECONDARY:
-                            ShipComponent.Trigger = "secondary";
-                            ShipComponent.CTrigger = "secondary";
-                            break;
-                        case WeaponType.TERTIARY:
-                            ShipComponent.Trigger = "tertiary";
-                            ShipComponent.CTrigger = "tertiary";
-                            break;
-                    }
-                    break;
-                case "Launchers":
-                    switch (WType)
-                    {
-                        case WeaponType.PRIMARY:
-                            ShipComponent.Trigger = "fire";
-                            ShipComponent.CTrigger = "fire";
-                            break;
-                        case WeaponType.SECONDARY:
-                            ShipComponent.Trigger = "secondary";
-                            ShipComponent.CTrigger = "secondary";
-                            break;
-                        case WeaponType.TERTIARY:
-                            ShipComponent.Trigger = "tertiary";
-                            ShipComponent.CTrigger = "tertiary";
-                            break;
-                    }
-                    break;
-                case "Warps":
-                    ShipComponent.Trigger = "use";
-                    break;
-                case "Wells":
-                    ShipComponent.Trigger = "well";
-                    break;
-                case "Shields":
-                    ShipComponent.Trigger = "Activate Shield";
-                    ShipComponent.CTrigger = "Activate Shield";
-                    break;
-            }
-            ChangePending = true;
         }
 
         /// <summary>

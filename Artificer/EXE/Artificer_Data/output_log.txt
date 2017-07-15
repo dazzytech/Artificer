@@ -25,7 +25,7 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\RakNetSwig.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Threading.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Threading.dll into Unity Child Domain
-- Completed reload, in  0.054 seconds
+- Completed reload, in  0.049 seconds
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
 OnLevelWasLoaded was found on Reporter
@@ -46,25 +46,25 @@ The referenced script on this Behaviour (Game Object 'ServerList') is missing!
  
 (Filename:  Line: 1743)
 
-UnloadTime: 1.570271 ms
+UnloadTime: 1.762937 ms
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/libc
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/.\libc
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/libc
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Mono.Security.dll (this message is harmless)
-NATHelper: Connected to Facilitator: 315252716026795496
+NATHelper: Connected to Facilitator: 635009353444745364
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.383839 ms
+UnloadTime: 4.290285 ms
 DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
  
 (Filename:  Line: 462)
 
 
-Unloading 163 unused Assets to reduce memory usage. Loaded Objects now: 3660.
-Total: 6.070358 ms (FindLiveObjects: 0.446465 ms CreateObjectMapping: 0.428171 ms MarkObjects: 4.387775 ms  DeleteObjects: 0.806787 ms)
+Unloading 163 unused Assets to reduce memory usage. Loaded Objects now: 3661.
+Total: 4.717530 ms (FindLiveObjects: 0.362174 ms CreateObjectMapping: 0.196139 ms MarkObjects: 3.644901 ms  DeleteObjects: 0.513157 ms)
 
 The referenced script on this Behaviour (Game Object '_spawn') is missing!
  
@@ -74,12 +74,8 @@ The referenced script on this Behaviour (Game Object 'Footer') is missing!
  
 (Filename:  Line: 1743)
 
-The referenced script on this Behaviour (Game Object 'ShipViewer') is missing!
- 
-(Filename:  Line: 1743)
-
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 2.665594 ms
+UnloadTime: 3.167405 ms
 NullReferenceException: Object reference not set to an instance of an object
   at Space.Map.MapController.InitializeMap () [0x00000] in <filename unknown>:0 
   at Space.Map.MapController.Awake () [0x00000] in <filename unknown>:0 
@@ -87,153 +83,9 @@ NullReferenceException: Object reference not set to an instance of an object
 (Filename:  Line: -1)
 
 
-Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 6161.
-Total: 5.509497 ms (FindLiveObjects: 0.444149 ms CreateObjectMapping: 0.202160 ms MarkObjects: 4.819189 ms  DeleteObjects: 0.043303 ms)
-
-NATHelper: Hole is punched on port: 51417
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-NATHelper: Connected to Facilitator: 315252716026795496
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at UnityEngine.Networking.NetworkServer.SpawnWithClientAuthority (UnityEngine.GameObject obj, UnityEngine.Networking.NetworkConnection conn) [0x00000] in <filename unknown>:0 
-  at Space.Ship.ShipInitializer.GenerateShip () [0x00000] in <filename unknown>:0 
-  at Space.Ship.ShipInitializer.AssignShipData (System.String shipItem, Int32 alignment) [0x00000] in <filename unknown>:0 
-  at Space.SpawnManager.RaiderSpawnMananger.CmdSpawnShip (UnityEngine.GameObject agent, System.String ship) [0x00000] in <filename unknown>:0 
-  at Space.SpawnManager.RaiderSpawnMananger.CallCmdSpawnShip (UnityEngine.GameObject agent, System.String ship) [0x00000] in <filename unknown>:0 
-  at Space.SpawnManager.RaiderSpawnMananger.BuildAgent (UnityEngine.Transform target) [0x00000] in <filename unknown>:0 
-  at Space.SpawnManager.RaiderSpawnMananger+<HeartbeatRaiderSpawn>c__Iterator1.MoveNext () [0x00000] in <filename unknown>:0 
-  at UnityEngine.SetupCoroutine.InvokeMoveNext (IEnumerator enumerator, IntPtr returnValueAddress) [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-Log: connection {1} has been disconnected by timeout; address {::ffff:127.0.0.1:53177}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-ServerDisconnected due to error: Timeout
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 6945.
+Total: 6.791465 ms (FindLiveObjects: 0.521725 ms CreateObjectMapping: 0.551598 ms MarkObjects: 5.677153 ms  DeleteObjects: 0.039598 ms)
 
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 371c -> priority: 1 
-  Thread -> id: 2424 -> priority: 1 
+  Thread -> id: 3728 -> priority: 1 
+  Thread -> id: 50ec -> priority: 1 

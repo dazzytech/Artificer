@@ -12,23 +12,33 @@ namespace Construction.ShipEditor
     [RequireComponent(typeof(EditorListener))]
     public class EditorController : MonoBehaviour
     {
-        private EditorAttributes _att;
-        private EditorListener _listener;
         
-        void Awake()
-        {
-            _att = GetComponent<EditorAttributes>();
-            _listener = GetComponent<EditorListener>();
 
-            _att.PiecesPlaced = 0;
-            _att.ShipsCreated = 0;
-            _att.ShipsDeleted = 0;
+        /*#region ATTRIBUTES
+
+        [SerializeField]
+        private EditorAttributes m_att;
+        [SerializeField]
+        private EditorListener m_listener;
+
+        #endregion
+
+        #region MONO BEHAVIOUR
+
+        void OnEnable()
+        {
+            m_att.PiecesPlaced = 0;
+            m_att.ShipsCreated = 0;
+            m_att.ShipsDeleted = 0;
+
+            m_att.ComponentList = new List<GameObject>();
+
+            BuildPanel();
         }
 
-        void Start()
-        {
-            _att.ComponentList = new List<GameObject>();
-        }
+        #endregion
+
+        #region PUBLIC INTERACTION
 
         /// <summary>
         /// Initializes the construction.
@@ -43,30 +53,6 @@ namespace Construction.ShipEditor
             // music
             SoundController.PlayMusic(new int[3]{1, 2, 3});
         }
-    	
-        /// <summary>
-        /// Initiates the building of the Component Creator window
-        /// </summary>
-        public void BuildPanel()
-        {          
-            // Populate the top tab bar with component types
-            // Retreive all the directories
-            TextAsset ShipKey = Resources.Load("Space/Keys/ship_key", 
-                                     typeof(TextAsset)) as TextAsset;
-
-            // Add component type to header bar
-            foreach (string item in ShipKey.text.Split(","[0]))
-            {
-                GameObject newTab = Instantiate(_att.TabPrefab);
-                newTab.transform.SetParent(_att.TabHeader.transform);
-                
-                ComponentTabPrefab cmpTab = newTab.GetComponent<ComponentTabPrefab>();
-                
-                cmpTab.SetTab(item, _listener);
-            }
-
-            UpdateShipList();
-        }
 
         /// <summary>
         /// Populates the component grid
@@ -75,17 +61,17 @@ namespace Construction.ShipEditor
         public void PopulateComponentList()
         {
             // Clear previous components
-            foreach (Transform child in _att.ItemPanel.transform)
+            foreach (Transform child in m_att.ItemPanel.transform)
                 Destroy(child.gameObject);
 
             Vector2 newPos = new Vector2
-                (_att.ItemPanel.transform.localPosition.x, 0f);
+                (m_att.ItemPanel.transform.localPosition.x, 0f);
 
-            _att.ItemScroll.value = 0;
+            m_att.ItemScroll.value = 0;
 
-            _att.ItemPanel.transform.localPosition = newPos;
-            
-            foreach (GameObject GO in _att.ComponentList)
+            m_att.ItemPanel.transform.localPosition = newPos;
+
+            foreach (GameObject GO in m_att.ComponentList)
             {
                 // Only display component if in player unlock list or starter list
                 ComponentListener Con = GO.GetComponent<ComponentListener>();
@@ -102,14 +88,44 @@ namespace Construction.ShipEditor
                     
                     ComponentItemPrefab item = itemObj.GetComponent<ComponentItemPrefab>();
                     item.CreateItem(GO, _listener);
-                }*/
+               }
             }
         }
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        /// <summary>
+        /// Initiates the building of the Component Creator window
+        /// </summary>
+        private void BuildPanel()
+        {          
+            // Populate the top tab bar with component types
+            // Retreive all the directories
+            TextAsset ShipKey = Resources.Load("Space/Keys/ship_key", 
+                                     typeof(TextAsset)) as TextAsset;
+
+            // Add component type to header bar
+            foreach (string item in ShipKey.text.Split(","[0]))
+            {
+                GameObject newTab = Instantiate(m_att.TabPrefab);
+                newTab.transform.SetParent(m_att.TabHeader.transform);
+                
+                ComponentTabPrefab cmpTab = newTab.GetComponent<ComponentTabPrefab>();
+                
+                cmpTab.SetTab(item, m_listener);
+            }
+
+            //UpdateShipList();
+        }
+
+        #endregion
 
         public void UpdateShipList()
         {
             // Clear header panel of current ships
-            foreach (Transform child in _att.ShipItemPanel.transform)
+            foreach (Transform child in m_att.ShipItemPanel.transform)
                 Destroy(child.gameObject);
 
             // populate header with existing ship items.
@@ -124,14 +140,14 @@ namespace Construction.ShipEditor
                     ShipItemPrefab shipItem = item.GetComponent<ShipItemPrefab>();
                     shipItem.SetShipItem(ship, _listener);
                 }
-            }*/
+            }
 
             // Create new item icon
-            GameObject newItem = Instantiate(_att.NewItemPrefab);
-            newItem.transform.SetParent(_att.ShipItemPanel.transform);
+            GameObject newItem = Instantiate(m_att.NewItemPrefab);
+            newItem.transform.SetParent(m_att.ShipItemPanel.transform);
             
             NewItemPrefab newItemItem = newItem.GetComponent<NewItemPrefab>();
-            newItemItem.SetNewItem(_listener);
-        }
+            newItemItem.SetNewItem(m_listener);
+        }*/
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
 
-namespace Space.UI.Station.Editor
+namespace Space.UI.Station.Utility
 {
     /// <summary>
     /// Manages the interaction with the editor

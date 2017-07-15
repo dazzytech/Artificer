@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using Space.Ship.Components.Listener;
 using UI;
+using Data.Shared;
 
 namespace Space.UI.Station
 {
@@ -44,6 +45,39 @@ namespace Space.UI.Station
             }
             
         }
+
+        #endregion
+
+        #region EDITOR 
+
+        
+        public void SelectShip(ShipData ship)
+        {
+            m_att.Editor.LoadExistingShip(ship);
+        }
+
+        public void CreateNewShip()
+        {
+            //m_att.Editor.CreateNewShip();
+        }
+
+        public void SaveShip()
+        {
+            //m_att.Editor.SaveShipData();
+            //SendMessage("UpdateShipList");
+        }
+
+        public void DeleteShip()
+        {
+            //m_att.Editor.ClearShip();
+            //SendMessage("UpdateShipList");
+        }
+
+        public void GoBack()
+        {
+
+        }
+            
 
         #endregion
 

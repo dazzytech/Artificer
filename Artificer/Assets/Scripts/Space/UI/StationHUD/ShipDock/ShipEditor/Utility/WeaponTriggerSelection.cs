@@ -4,12 +4,19 @@ using System.Collections;
 
 using Space.Ship.Components.Listener;
 using Space.Ship.Components.Attributes;
+using Space.UI.Station.Editor.Component;
 
-namespace Construction.ShipEditor
+namespace Space.UI.Station.Utility
 {
+    /// <summary>
+    /// Enables user to define 
+    /// weapon firemode
+    /// </summary>
     public class WeaponTriggerSelection : MonoBehaviour 
     {
-        /*public Transform Info;
+        #region ATTRIUBTES
+
+        public Transform Info;
 
         public Toggle Primary;
         public Toggle Secondary;
@@ -17,11 +24,20 @@ namespace Construction.ShipEditor
 
         public ToggleGroup Group;
 
-        BaseShipComponent BSC;
+        BaseComponent BSC;
 
         int currentT;
 
-        public void DisplayWeaponInfo(WeaponAttributes att, BaseShipComponent bSC)
+        #endregion
+
+        #region PUBLIC INTERACTION
+
+        /// <summary>
+        /// Creates the panel and assigns configuration
+        /// </summary>
+        /// <param name="att"></param>
+        /// <param name="bSC"></param>
+        public void Initialize(WeaponAttributes att, BaseComponent bSC)
         {
             Group.RegisterToggle(Primary);
             Group.RegisterToggle(Secondary);
@@ -37,6 +53,11 @@ namespace Construction.ShipEditor
             DisplayTrigger();
         }
 
+        /// <summary>
+        /// Sets trigger button when 
+        /// player selects a button
+        /// </summary>
+        /// <param name="trigger"></param>
         public void SetButton(int trigger)
         {
             if (currentT == trigger)
@@ -66,7 +87,14 @@ namespace Construction.ShipEditor
             DisplayTrigger();
         }
 
-        public void DisplayTrigger()
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        /// <summary>
+        /// Updates the trigger visually
+        /// </summary>
+        private void DisplayTrigger()
         {
             switch(BSC.WType)
             { 
@@ -89,7 +117,8 @@ namespace Construction.ShipEditor
                     currentT = 2;
                     break;
             }
-        }*/
+        }
 
+        #endregion
     }
 }

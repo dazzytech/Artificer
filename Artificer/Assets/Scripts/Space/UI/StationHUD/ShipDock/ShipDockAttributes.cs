@@ -20,8 +20,32 @@ namespace Space.UI.Station
     {
         #region HUD ELEMENTS
 
+        [Header("State Groups")]
         public GameObject[] ManageGOs;
         public GameObject[] EditGOs;
+
+        #region MANAGE
+
+        //public GameObject ShipItemPrefab;
+        //public GameObject NewItemPrefab;
+        //public GameObject ShipItemPanel;
+
+        #endregion
+
+        #region EDITOR
+
+        [Header("Editor HUD")]
+
+        public GameObject TabPrefab;
+        public GameObject TabHeader;
+
+        public GameObject ItemPrefab;
+        public GameObject ItemPanel;
+        public Scrollbar ItemScroll;
+
+        public List<GameObject> ComponentList;
+
+        #endregion
 
         #endregion
 

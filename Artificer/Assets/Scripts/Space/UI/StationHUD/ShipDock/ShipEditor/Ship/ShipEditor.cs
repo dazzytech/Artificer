@@ -158,6 +158,11 @@ namespace Space.UI.Station.Editor
 
         #region PUBLIC INTERACTION
 
+        /// <summary>
+        /// Delegate function: sets the head of 
+        /// ship
+        /// </summary>
+        /// <param name="newHead"></param>
         public void SetHead(BaseComponent newHead)
         {
             Ship.Head = newHead;
@@ -197,6 +202,30 @@ namespace Space.UI.Station.Editor
             Changed = false;
 
             //_util.UpdateWeight();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="component"></param>
+        public void BuildComponent(ComponentData component)
+        {
+            //if (Ship == null)
+                //CreateNewShip();
+            // Assign component data
+            // Comp ID
+            component.InstanceID = ReturnNextAvailableInstance();
+
+            // Create Base Ship Component and Add to window
+            BaseComponent BC = CreateComponent(component);
+
+            if (Ship.Head == null && BC.ShipComponent.Folder == "Components")
+                Ship.Head = BC;
+
+            DraggedObj = BC;
+            DraggedObj.Dragging = true;
+
+            Changed = true;
         }
 
         #endregion
@@ -328,13 +357,32 @@ namespace Space.UI.Station.Editor
             Changed = true;
         }
 
+        #region CREATION
+
+        private int ReturnNextAvailableInstance()
+        {
+            int ID = 0;
+            // Sort IDs numerically
+            Ship.AddedIDs.Sort();
+            // compare ID to each ID end result showed be the next available ID
+            foreach (int otherID in Ship.AddedIDs)
+            {
+                if (otherID == ID)
+                    ID = otherID + 1;
+            }
+
+            return ID;
+        }
+
+        #endregion
+
         #endregion
 
         #region EVENTS
 
         public void StartDrag(BaseComponent comp)
         {
-            DraggedObj = comp;
+            DraggedObj = SelectedObj = comp;
         }
 
         public void MouseDown(BaseComponent comp)
@@ -376,23 +424,7 @@ namespace Space.UI.Station.Editor
         }
 
         // CREATE A SHIP COMPONENT
-        public void BuildComponent(Data.Shared.Component component)
-        {
-            if (_ship == null)
-                CreateNewShip();
-            // Assign component data
-            // Comp ID
-            component.InstanceID = _util.ReturnNextAvailableInstance();
-
-            // Create Base Ship Component and Add to window
-            BaseShipComponent bSC = PlaceComponentGO(component);
-
-            if (_ship.Head == null && bSC.ShipComponent.Folder == "Components")
-                _ship.Head = bSC;
-            _util.DraggedObj = bSC;
-            _util.IsDragging = true;
-            Changed = true;
-        }
+        
         
         public void SaveShipData()
         {

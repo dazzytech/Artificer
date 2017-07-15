@@ -8,6 +8,7 @@ using Data.Shared;
 using Space.Ship.Components.Listener;
 using Space.UI.Station.Editor.Component;
 using UI.Effects;
+using Space.UI.Station.Prefabs;
 
 namespace Space.UI.Station.Editor
 {
@@ -123,16 +124,13 @@ namespace Space.UI.Station.Editor
                 HintBoxController.Display("Use the directional keys to change direction the component is facing.");
             else if(ShipEditor.HighlightedObj != null)
                 HintBoxController.Display("Use Right-Click to display additional options");
-
-
-            /*
             
-                if(RCWindow != null && !RCDelay)
+            if(RCWindow != null && !RCDelay)
+            {
+                if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
                 {
-                    if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
-                    {
-                        if(!InBounds(RCWindow.GetComponent<RectTransform>(), Input.mousePosition)
-                           || Input.GetMouseButtonDown(1))
+                    if(!RectTransformExtension.InBounds(RCWindow.GetComponent<RectTransform>(), 
+                        Input.mousePosition) || Input.GetMouseButtonDown(1))
                         {
                             Destroy(RCWindow);
                             RCDelay = true;
@@ -148,11 +146,11 @@ namespace Space.UI.Station.Editor
                 else if(Input.GetMouseButtonDown(1))
                 {
                     // Player has clicked the right mouse button
-                    if(RCWindow == null && MouseOver)
+                    if(RCWindow == null && ShipEditor.HighlightedObj != null)
                     {
                         // Create the Right Click Window
                         RCWindow = Instantiate(RCPrefab);
-                        RCWindow.transform.SetParent(GameObject.Find("_root").transform);
+                        RCWindow.transform.SetParent(GameObject.Find("_gui").transform);
 
                         RCWindow.transform.position = Input.mousePosition
                             + new Vector3(-RCWindow.GetComponent<RectTransform>().rect.width*.5f-10,
@@ -160,14 +158,16 @@ namespace Space.UI.Station.Editor
 
                         // Create delegate function
 
-                        //RCWindow.GetComponent<RightClickComponentMenu>().DisplayComp(component, _ship.Head, new DelegateHead(SetHead));
+                        RCWindow.GetComponent<ComponentRCPrefab>().DisplayComp
+                            (ShipEditor.HighlightedObj, m_editor.Ship.Head,
+                            new ShipEditor.DelegateHead(m_editor.SetHead));
 
                         RCDelay = true;
                         Invoke("RCDel", .3f);
                     }
                 }
             
-
+            /*
             // if mouse over combat style panel will display message
             if (InBounds(RFRect, Input.mousePosition))
             {
@@ -233,20 +233,7 @@ namespace Space.UI.Station.Editor
         #endregion
 
 
-        /*public int ReturnNextAvailableInstance()
-        {
-            int ID = 0;
-            // Sort IDs numerically
-            _ship.AddedIDs.Sort();
-            // compare ID to each ID end result showed be the next available ID
-            foreach (int otherID in _ship.AddedIDs)
-            {
-                if(otherID == ID)
-                    ID = otherID+1;
-            }
-
-            return ID;
-        }
+        /*
 
         public string ReturnNextAvailableName()
         {

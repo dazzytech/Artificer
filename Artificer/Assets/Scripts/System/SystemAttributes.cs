@@ -64,6 +64,9 @@ public class SystemAttributes:MonoBehaviour
     public SystemNetworkDiscovery Discovery;
     public CameraMessageHandler CamMsgHandler;
 
+    // Builder
+    public List<GameObject> StarterList;
+
     // Player Information
     public NetworkConnection Conn;
 

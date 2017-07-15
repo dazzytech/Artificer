@@ -232,6 +232,14 @@ public class SystemManager : NATTraversal.NetworkManager
         }
     }
 
+    public static List<GameObject> StarterList
+    {
+        get
+        {
+            return m_singleton.m_base.StarterList;
+        }
+    }
+
     #endregion
 
     #region NETWORKMANAGER OVERRIDE

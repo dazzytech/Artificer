@@ -2,18 +2,39 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-namespace Construction.ShipEditor
+namespace Space.UI.Station.Prefabs
 {
+    /// <summary>
+    /// Allows the user to select 
+    /// different component categories
+    /// </summary>
     public class ComponentTabPrefab : MonoBehaviour
     {
-        public Text Label;
-        public Button Btn;
+        #region ATTRIBUTES
 
-        public void SetTab(string item, EditorListener listener)
+        [SerializeField]
+        private Text m_label;
+        [SerializeField]
+        private Button m_button;
+
+        #endregion
+
+        #region PUBLIC INTERACTION
+
+        /// <summary>
+        /// Initializes the tab and 
+        /// assigns behaviour
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="select"></param>
+        public void SetTab(string item,
+            ShipDockController.Select select)
         {
-           /* Label.text =  item;
-            Btn.onClick.AddListener(
-                delegate{listener.SelectTab(item);});*/
+            m_label.text =  item;
+            m_button.onClick.AddListener
+                (delegate{select(item);});
         }
+
+        #endregion
     }
 }

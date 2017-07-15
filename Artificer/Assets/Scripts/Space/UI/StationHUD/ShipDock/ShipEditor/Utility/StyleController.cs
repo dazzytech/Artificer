@@ -6,17 +6,18 @@ using System.Collections.Generic;
 
 using Space.Ship.Components.Listener;
 using Space.Ship.Components.Attributes;
+using Space.UI.Station.Editor.Component;
 
-namespace Construction.ShipEditor
+namespace Space.UI.Station.Utility
 {
     public class StyleController : MonoBehaviour
-    {/*
+    {
         private List<Toggle> styleChoices;
         public ToggleGroup Group;
         public GameObject TogglePrefab;
-        BaseShipComponent BSC;
+        BaseComponent BSC;
 
-        public void DisplayInfo(ComponentAttributes att, BaseShipComponent bSC)
+        public void DisplayInfo(ComponentAttributes att, BaseComponent bSC)
         {
             styleChoices = new List<Toggle>();
 
@@ -68,6 +69,6 @@ namespace Construction.ShipEditor
 
                 other.isOn = false;
             }
-        }*/
+        }
     }
 }

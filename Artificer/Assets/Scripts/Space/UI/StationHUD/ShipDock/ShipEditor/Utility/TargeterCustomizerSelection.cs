@@ -4,21 +4,22 @@ using System.Collections;
 
 using Space.Ship.Components.Listener;
 using Space.Ship.Components.Attributes;
+using Space.UI.Station.Editor.Component;
 
-namespace Construction.ShipEditor
+namespace Space.UI.Station.Utility
 {
     public class TargeterCustomizerSelection : MonoBehaviour
     {
-        /*public Transform Info;
+        public Transform Info;
 
         public Toggle AutoTargetFire;
         public Toggle SelectTargets;
         public Toggle MouseFollow;
         public int currentT;
 
-        BaseShipComponent BSC;
+        BaseComponent BSC;
 
-        public void DisplayInfo(TargeterAttributes att, BaseShipComponent bSC)
+        public void DisplayInfo(TargeterAttributes att, BaseComponent bSC)
         {
             Info.Find("Angle").GetComponent<Text>().text = (att.MaxAngle + Mathf.Abs(att.MinAngle)).ToString();
             Info.Find("Rotate").GetComponent<Text>().text = att.turnSpeed.ToString();
@@ -79,7 +80,7 @@ namespace Construction.ShipEditor
                     currentT = 2;
                     break;
             }
-        }*/
+        }
     }
 }
 

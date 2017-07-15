@@ -4,12 +4,13 @@ using System.Collections;
 
 using Space.Ship.Components.Listener;
 using Space.Ship.Components.Attributes;
+using Space.UI.Station.Editor.Component;
 
-namespace Construction.ShipEditor
+namespace Space.UI.Station.Utility
 {
     public class LauncherCustomizerSelection : MonoBehaviour
     {
-        /*public Transform Info;
+        public Transform Info;
         
         public Toggle Primary;
         public Toggle Secondary;
@@ -19,11 +20,11 @@ namespace Construction.ShipEditor
         
         public ToggleGroup Group;
         
-        BaseShipComponent BSC;
+        BaseComponent BSC;
         
         int currentT;
 
-        public void DisplayWeaponInfo(LauncherAttributes att, BaseShipComponent bSC)
+        public void DisplayWeaponInfo(LauncherAttributes att, BaseComponent bSC)
         {
             Group.RegisterToggle(Primary);
             Group.RegisterToggle(Secondary);
@@ -99,6 +100,6 @@ namespace Construction.ShipEditor
                     currentT = 2;
                     break;
             }
-        }*/
+        }
     }
 }
