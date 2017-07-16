@@ -52,13 +52,23 @@ namespace Space.UI.Spawn
 
         private void OnEnable()
         {
-            BuildStations();
+            BuildSelection();
+            BuildStations();            
+        }
+
+        private void OnDisable()
+        {
+            while(m_att.ShipList.Count > 0)
+            {
+                Destroy(m_att.ShipList[0].gameObject);
+                m_att.ShipList.RemoveAt(0);
+            }
         }
 
         private void Awake()
         {
             // This code should only be called once
-            BuildSelection();
+            
 
             m_att.Map.InitializeMap(new MapObjectType[] { MapObjectType.SHIP });  
         }
@@ -81,11 +91,11 @@ namespace Space.UI.Spawn
         /// for when the player spawns
         /// </summary>
         /// <param name="selected"></param>
-        public void SelectShip(ShipSelectItem selected)
+        public void SelectShip(ShipUIPrefab selected)
         {
             m_att.SelectedShip = selected;
 
-            foreach (ShipSelectItem ship
+            foreach (ShipUIPrefab ship
                 in m_att.ShipList)
                 if (!m_att.SelectedShip.Equals(ship))
                     ship.Deselect();
@@ -98,7 +108,7 @@ namespace Space.UI.Spawn
             m_att.SelectedSpawn = selected;
 
             foreach(SpawnSelectItem spawn in m_att.SpawnList)
-                if (!m_att.SelectedShip.Equals(spawn))
+                if (!m_att.SelectedSpawn.Equals(spawn))
                     spawn.Deselect();
                 else
                     spawn.Select();
@@ -113,12 +123,14 @@ namespace Space.UI.Spawn
         /// </summary>
         private void BuildSelection()
         {
+            int shipIndex = 0;
             // build a list of ships
             // we are able to select to spawn with
-            foreach(string shipName in 
-                m_att.SpawnableShips)
+            foreach(ShipSpawnData spawn in SystemManager.PlayerShips)
             {
-                ShipData ship = ShipLibrary.GetShip(shipName);
+                // Only spawn ships we own
+                if (!spawn.Owned)
+                    continue;
 
                 GameObject shipObj = 
                     Instantiate(m_att.ShipSelectPrefab);
@@ -126,16 +138,16 @@ namespace Space.UI.Spawn
                 shipObj.transform
                     .SetParent(m_att.ShipSelectList);
 
-                ShipSelectItem item =
-                    shipObj.GetComponent<ShipSelectItem>();
+                ShipUIPrefab item =
+                    shipObj.GetComponent<ShipUIPrefab>();
 
                 item.Initialize(m_event.ShipSelected);
 
-                item.AssignShipData(ship);
+                item.AssignShip(shipIndex++);
 
                 if (m_att.ShipList == null)
                 {
-                    m_att.ShipList = new List<ShipSelectItem>();
+                    m_att.ShipList = new List<ShipUIPrefab>();
                 }
 
                 m_att.ShipList.Add(item);

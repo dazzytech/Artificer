@@ -19,16 +19,13 @@ namespace Space.UI.Spawn
         // seconds to spawning
         public int SpawnDelay;
 
-        // Ships that can be spawned
-        public List<string> SpawnableShips;
-
         #endregion
 
         #region SHIP
 
-        public ShipSelectItem SelectedShip;
+        public ShipUIPrefab SelectedShip;
 
-        public List<ShipSelectItem> ShipList;
+        public List<ShipUIPrefab> ShipList;
 
         #endregion
 
@@ -57,6 +54,7 @@ namespace Space.UI.Spawn
         #region PREFABS
 
         [Header("Prefabs")]
+
         public GameObject ShipSelectPrefab;
 
         public GameObject StationSelectPrefab;

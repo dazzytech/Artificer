@@ -29,7 +29,7 @@ namespace Space.UI.Spawn
         /// <param name="selected"></param>
         public void ShipSelected(SelectableHUDItem selected)
         {
-            m_con.SelectShip((ShipSelectItem)selected);
+            m_con.SelectShip((ShipUIPrefab)selected);
         }
 
         /// <summary>

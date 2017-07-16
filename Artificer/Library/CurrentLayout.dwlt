@@ -20,7 +20,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 950, y: 542}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -43,7 +43,7 @@ MonoBehaviour:
     y: 0
     width: 1366
     height: 685
-  m_MinSize: {x: 950, y: 542}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
 MonoBehaviour:
@@ -106,8 +106,8 @@ MonoBehaviour:
     y: 30
     width: 1366
     height: 635
-  m_MinSize: {x: 683, y: 492}
-  m_MaxSize: {x: 14004, y: 14042}
+  m_MinSize: {x: 683, y: 342}
+  m_MaxSize: {x: 12008, y: 8042}
   vertical: 0
   controlID: 45
 --- !u!114 &6
@@ -130,8 +130,8 @@ MonoBehaviour:
     y: 0
     width: 969
     height: 635
-  m_MinSize: {x: 406, y: 492}
-  m_MaxSize: {x: 10002, y: 14042}
+  m_MinSize: {x: 406, y: 342}
+  m_MaxSize: {x: 8006, y: 8042}
   vertical: 1
   controlID: 46
 --- !u!114 &7
@@ -227,14 +227,14 @@ MonoBehaviour:
     y: 356
     width: 969
     height: 279
-  m_MinSize: {x: 232, y: 271}
-  m_MaxSize: {x: 10002, y: 10021}
-  m_ActualView: {fileID: 17}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
   - {fileID: 17}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -473,9 +473,9 @@ MonoBehaviour:
     height: 335
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 86cb0000
-    m_LastClickedID: 52102
-    m_ExpandedIDs: 9cd7fcff2c8afdff3840feff6643feff8e49feffa6f8ffffe4fbfffff4ffffff000000006a610000a6b5000022ba0000dcbb000086cb00007af60000
+    m_SelectedIDs: 
+    m_LastClickedID: 0
+    m_ExpandedIDs: 486efeffa063ffff84f5ffffe4fbfffff4ffffff0000000018930000d6c50000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -561,19 +561,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scenes
+    - Assets/Scripts/Space/UI/SpawnHUD
   m_ViewMode: 1
   m_StartGridSize: 41
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Scripts/Space/UI/SpawnHUD
   m_LastFoldersGridSize: 41
   m_LastProjectPath: C:\Users\renderman\Documents\Artificer\Artificer
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 275}
-    m_SelectedIDs: 30360000
-    m_LastClickedID: 13872
-    m_ExpandedIDs: 00000000ca280000022900002a290000642a0000922a0000b42b0000b62b0000722c00007e2c0000e62c0000fc2c0000182d0000be2d0000fe2d0000462f0000482f00005e2f000008300000183000005c310000f0310000a6320000d2320000be350000e63500002a360000023700002c3700009a3700006a38000076380000d6390000e63900002056000022560000245600002656000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 703}
+    m_SelectedIDs: 042d0000
+    m_LastClickedID: 11524
+    m_ExpandedIDs: 00000000ca28000002290000642a0000922a0000b42b0000b62b00007e2c0000e62c0000fc2c0000182d00002e2d0000be2d0000fe2d0000462f00005e2f0000083000005c310000d6310000de310000f031000084320000a6320000d23200008a330000b6350000be350000e63500002a360000023700002c3700009a3700006a3800007638000044390000d6390000e63900002056000022560000245600002656000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -601,7 +601,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000ca280000022900002a290000642a0000922a0000b42b0000b62b0000722c00007e2c0000e62c0000fc2c0000182d0000be2d0000fe2d0000462f0000482f00005e2f000008300000183000005c310000f0310000a6320000d23200008a330000be350000e63500002a360000023700002c3700009a3700006a38000076380000d6390000e639000020560000225600002456000026560000
+    m_ExpandedIDs: 00000000ca280000022900002a290000642a0000922a0000b42b0000b62b0000722c00007e2c0000e62c0000fc2c0000182d0000be2d0000fe2d0000462f0000482f00005e2f000008300000183000005c310000f0310000a6320000d2320000be350000e63500002a360000023700002c3700009a3700006a38000076380000d6390000e639000020560000225600002456000026560000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
