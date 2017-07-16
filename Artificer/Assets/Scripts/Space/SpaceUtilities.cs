@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 using Space.UI;
+using Data.Space;
 
 namespace Space
 {
@@ -119,6 +120,33 @@ namespace Space
         public void MapRelease()
         {
             m_mapDelay = false;
+        }
+
+        #endregion
+
+        #region PLAYER MANAGEMENT
+
+        public void AddShipSpawn(ShipSpawnData newShip)
+        {
+            if (SystemManager.PlayerShips == null)
+            {
+                SystemManager.PlayerShips = new ShipSpawnData[1];
+                SystemManager.PlayerShips[0] = newShip;
+            }
+            else
+            {
+                ShipSpawnData[] temp = SystemManager.PlayerShips;
+
+                SystemManager.PlayerShips = new ShipSpawnData[temp.Length + 1];
+
+                int i = 0;
+                foreach (ShipSpawnData t in temp)
+                {
+                    SystemManager.PlayerShips[i++] = t;
+                }
+
+                SystemManager.PlayerShips[i] = newShip;
+            }
         }
 
         #endregion

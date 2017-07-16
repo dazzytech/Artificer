@@ -231,6 +231,18 @@ public class SystemManager : NATTraversal.NetworkManager
         }
     }
 
+    public static ShipSpawnData[] PlayerShips
+    {
+        get
+        {
+            return m_singleton.m_base.Player.ShipInventory;
+        }
+        set
+        {
+            m_singleton.m_base.Player.ShipInventory = value;
+        }
+    }
+
     public static List<GameObject> StarterList
     {
         get

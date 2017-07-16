@@ -25,7 +25,10 @@ namespace Space
     public class SpaceManager : NetworkBehaviour
     {
         // External attributes class
+        [SerializeField]
         private SpaceAttributes _att;
+        [SerializeField]
+        private SpaceUtilities m_util;
 
         #region EVENTS 
 
@@ -133,8 +136,6 @@ namespace Space
 
         void Awake()
         {
-            _att = GetComponent<SpaceAttributes>();
-
             // init onstage
             _att.PlayerOnStage = false;
 
@@ -380,10 +381,10 @@ namespace Space
         public void RefreshShipSpawnList()
         {
             // iterate through our new team list
-            foreach(ShipSpawnData spawn in _att.Team.Ships)
+            foreach (ShipSpawnData spawn in _att.Team.Ships)
             {
                 if (SystemManager.Player.ShipInventory == null)
-                    SystemManager.Player.AddShipSpawn(spawn);
+                    m_util.AddShipSpawn(spawn);
                 else
                 {
                     ShipSpawnData current = SystemManager.Player.ShipInventory.
@@ -393,7 +394,7 @@ namespace Space
                     // then add it
                     if (current.ShipName == null)
                     {
-                        SystemManager.Player.AddShipSpawn(spawn);
+                        m_util.AddShipSpawn(spawn);
                     }
                 }
             }

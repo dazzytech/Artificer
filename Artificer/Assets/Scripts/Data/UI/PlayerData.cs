@@ -43,24 +43,6 @@ namespace Data.UI
         /// </summary>
         public ShipSpawnData[] ShipInventory;
 
-        public void AddShipSpawn(ShipSpawnData newShip)
-        {
-            if (ShipInventory == null)
-                ShipInventory = new ShipSpawnData[0];
-
-            ShipSpawnData[] temp = ShipInventory;
-
-            ShipInventory = new ShipSpawnData[temp.Length + 1];
-
-            int i = 0;
-            foreach(ShipSpawnData t in temp)
-            {
-                ShipInventory[i++] = t;
-            }
-
-            ShipInventory[i] = newShip;
-        }
-
         #endregion
     }
 }

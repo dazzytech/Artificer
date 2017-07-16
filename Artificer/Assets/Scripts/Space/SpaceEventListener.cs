@@ -28,8 +28,11 @@ namespace Space
     {
         #region ATTRIBUTES
 
+        [SerializeField]
         private SpaceAttributes m_att;
+        [SerializeField]
         private SpaceManager m_con;
+        [SerializeField]
         private SpaceUtilities m_util;
 
         #endregion
