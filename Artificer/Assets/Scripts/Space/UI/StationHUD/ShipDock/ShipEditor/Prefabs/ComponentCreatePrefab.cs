@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
-using Data.Shared;
+using Data.Space;
 using Space.Ship.Components.Listener;
 using Space.Ship.Components.Attributes;
 

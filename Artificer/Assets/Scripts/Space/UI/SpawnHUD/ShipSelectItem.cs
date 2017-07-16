@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UI;
 using System;
-using Data.Shared;
+using Data.Space;
 
 namespace Space.UI.Spawn
 {

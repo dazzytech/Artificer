@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Data.Space;
+using Data.UI;
 
 namespace Editor.Components
 {

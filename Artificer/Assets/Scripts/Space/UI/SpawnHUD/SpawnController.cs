@@ -3,7 +3,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Collections;
 using System.Timers;
-using Data.Shared;
+using Data.Space;
 using Data.Space.Library;
 using System.Collections.Generic;
 using Space.Map;

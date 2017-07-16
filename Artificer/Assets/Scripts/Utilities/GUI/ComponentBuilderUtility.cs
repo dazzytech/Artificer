@@ -4,7 +4,7 @@ using System.Collections;
 using Space.Ship;
 using Space.Ship.Components.Listener;
 using System.Collections.Generic;
-using Data.Shared;
+using Data.Space;
 
 namespace UI
 {

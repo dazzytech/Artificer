@@ -3,10 +3,6 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
-using Data.Shared;
-using Data.Space;
-using Data.Space.DataImporter;
-
 namespace Space.Segment
 {
     /// <summary>

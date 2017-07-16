@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using Space.Ship.Components.Listener;
 using Space.Ship.Components.Attributes;
 
-namespace Data.Shared
+namespace Data.Space
 {
     [System.Serializable]
     public struct SocketData

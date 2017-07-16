@@ -4,7 +4,7 @@ using UnityEngine.Networking.NetworkSystem;
 using System;
 using System.Collections;
 using Serializer;
-using Data.Shared;
+using Data.Space;
 using Data.Space.Library;
 using Space.Segment.Generator;
 using Space.UI;
@@ -206,7 +206,7 @@ namespace Space.Ship
         /// <param name="ship">Ship.</param>
         [Server]
         public void BuildConnectedPieces
-            (Data.Shared.ComponentData component, Transform componentTransform)
+            (ComponentData component, Transform componentTransform)
         {
             SocketData[] socketList = component.sockets;
 
@@ -229,7 +229,7 @@ namespace Space.Ship
                 }
 
                 // find the second piece through the socket
-                Data.Shared.ComponentData piece = m_att.Ship.GetComponent(socket.OtherID);
+                ComponentData piece = m_att.Ship.GetComponent(socket.OtherID);
                 if (piece.Path == "")
                 {
                     Debug.Log("Ship Initializer - " +

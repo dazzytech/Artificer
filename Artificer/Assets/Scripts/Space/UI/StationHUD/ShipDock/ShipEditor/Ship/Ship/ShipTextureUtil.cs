@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 // Artificer
-using Data.Shared;
+using Data.Space;
 using Space.Ship.Components.Listener;
 using Space.Ship.Components.Attributes;
 

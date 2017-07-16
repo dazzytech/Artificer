@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 // Artificer
-using Data.Shared;
+using Data.Space;
 using Space.Ship.Components.Listener;
 
 namespace Construction.ShipEditor
@@ -31,7 +31,7 @@ namespace Construction.ShipEditor
         public void CreateItem(GameObject GO)
         {
             ComponentListener Con = GO.GetComponent<ComponentListener>();
-            Data.Shared.Component component = new Data.Shared.Component();
+            Component component = new Component();
 
             component.Folder = Con.ComponentType; 
             component.Name = GO.name;

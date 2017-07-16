@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 // Artificer
-using Data.Shared;
+using Data.Space;
 using Data.Space.Library;
 using Space.Ship;
 using Space.Segment;
@@ -374,6 +374,8 @@ namespace Space
             // extract the team manager and store int space object
             m_att.Team = teamObj.
                 GetComponent<TeamController>();
+
+            m_att.Team.EventShipListChanged += m_con.RefreshShipSpawnList;
 
             m_con.InitializePlayer();
         }

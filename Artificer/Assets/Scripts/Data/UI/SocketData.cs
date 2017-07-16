@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Data.Space
+namespace Data.UI
 {
     public class SocketData : MonoBehaviour
     {

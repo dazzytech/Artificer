@@ -1,9 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-// Artificer
-using Data.Shared;
-using Data.Space.Library;
 
 public class Collectable : MonoBehaviour
 {

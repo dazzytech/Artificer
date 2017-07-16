@@ -47,12 +47,18 @@ namespace Game
         #region SYSTEM MESSAGES
 
         /// <summary>
-        /// Does nothing atm
+        /// Takes the game parameters and
+        /// initializes the game
         /// </summary>
         [Server]
-        public void Initialize()
+        public void Initialize(GameParameters param)
         {
-
+            // Assign the spawnable ships for each team
+            foreach(ShipSpawnData spawn in param.SpawnableShips)
+            {
+                m_att.TeamA.AddSpawnableShip(spawn);
+                m_att.TeamB.AddSpawnableShip(spawn);
+            }
         }
 
         /// <summary>

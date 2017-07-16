@@ -3,7 +3,7 @@ using UnityEngine.Networking;
 using System.Collections;
 // Artificer
 using Networking;
-using Data.Shared;
+using Data.Space;
 using Space.Segment;
 using Space.Ship.Components.Attributes;
 using System;
@@ -77,7 +77,7 @@ namespace Space.Ship.Components.Listener
             set { GetAttributes().Socket = value; }
         }
 
-        private Data.Shared.ComponentData Data
+        private ComponentData Data
         {
             get { return GetAttributes().Data; }
             set { GetAttributes().Data = value; }
@@ -204,7 +204,7 @@ namespace Space.Ship.Components.Listener
         /// <param name="cData"></param>
         [Server]
         public virtual void InitializeData
-            (Data.Shared.ComponentData cData, NetworkInstanceId parent,
+            (ComponentData cData, NetworkInstanceId parent,
             NetworkInstanceId connected, SocketData socket)
         {
             // Assign the data to the att

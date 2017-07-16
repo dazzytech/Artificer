@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 
 using Data.Space;
-using Data.Shared;
 using Space.CameraUtils;
 
 namespace Space.Segment

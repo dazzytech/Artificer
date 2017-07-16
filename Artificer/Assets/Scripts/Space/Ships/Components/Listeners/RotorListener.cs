@@ -2,7 +2,7 @@
 using System.Collections;
 
 using Space;
-using Data.Shared;
+using Data.Space;
 
 using Space.Ship.Components.Attributes;
 

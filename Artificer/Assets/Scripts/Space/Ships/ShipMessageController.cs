@@ -5,7 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 // Artificer Defined
-using Data.Shared;
+using Data.Space;
 using Space.Projectiles;
 using Space.Segment;
 using Space.Segment.Generator;

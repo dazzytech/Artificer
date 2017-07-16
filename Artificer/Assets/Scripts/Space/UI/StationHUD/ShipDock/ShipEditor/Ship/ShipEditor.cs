@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 // Artificer
-using Data.Shared;
+using Data.Space;
 using Data.Space.Library;
 using UI.Effects;
 using Space.UI.Station.Editor.Component;
@@ -506,7 +506,7 @@ namespace Space.UI.Station.Editor
     private void SaveCompSockets(BaseShipComponent bSC, ShipData ship, List<int> AddedIDs)
     {
         // Create ComponentData from bSC
-        Data.Shared.Component tempComp;
+        Component tempComp;
         tempComp = bSC.ShipComponent;
         tempComp.Sockets = new List<Socket>();
         bSC.ChangePending = false;

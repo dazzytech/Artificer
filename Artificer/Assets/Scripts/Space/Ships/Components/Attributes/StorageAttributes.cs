@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-// Artificer
-using Data.Shared;
 
 namespace Space.Ship.Components.Attributes
 {

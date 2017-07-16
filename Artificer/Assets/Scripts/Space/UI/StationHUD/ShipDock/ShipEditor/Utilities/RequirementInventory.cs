@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 // Artificer
-using Data.Shared;
+using Data.Space;
 using Menu; // use material list item till we create our own
 
 namespace Construction.ShipEditor

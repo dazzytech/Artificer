@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 // Artificer
-using Data.Shared;
 using Data.Space;
 using Space.Ship.Components.Listener;
 using Space.Ship.Components.Attributes;
@@ -45,7 +44,7 @@ namespace Space.UI.Station.Editor.Component
         /// Reference to the component data
         /// </summary>
         [HideInInspector]
-        public Data.Shared.ComponentData ShipComponent;
+        public ComponentData ShipComponent;
 
         /// <summary>
         /// Reference to the Resource
@@ -323,10 +322,10 @@ namespace Space.UI.Station.Editor.Component
         /// Initialize the component using the provided data
         /// </summary>
         /// <param name="param"></param>
-        public void InitComponent(Data.Shared.ComponentData param)
+        public void InitComponent(ComponentData param)
         {
             // Set data
-            Data.Shared.ComponentData temp = new Data.Shared.ComponentData();
+            ComponentData temp = new ComponentData();
             temp.Folder = param.Folder;
             temp.Direction = param.Direction;
             temp.Name = param.Name;
@@ -633,7 +632,7 @@ namespace Space.UI.Station.Editor.Component
 
                     // If socketdata exists then use that otherwise 
                     // calc direction
-                    Data.Space.SocketData sock = t.GetComponent<Data.Space.SocketData>();
+                    Data.UI.SocketData sock = t.GetComponent<Data.UI.SocketData>();
                     if(sock != null)
                     {
                         SocketAttributes.Alignment up = SocketAttributes.Alignment.UP;
@@ -772,7 +771,8 @@ namespace Space.UI.Station.Editor.Component
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (ShipEditor.DraggedObj == null)
+            if (ShipEditor.DraggedObj == null &&
+                eventData.button == PointerEventData.InputButton.Left)
             {
                 if (OnDragComponent != null)
                     OnDragComponent(this);

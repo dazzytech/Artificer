@@ -196,7 +196,7 @@ namespace Editor
 
                     // If socketdata exists then use that otherwise 
                     // calc direction
-                    SocketData sock = t.GetComponent<SocketData>();
+                    Data.UI.SocketData sock = t.GetComponent<Data.UI.SocketData>();
                     if(sock != null)
                     {
                         SocketAttributes.Alignment up = SocketAttributes.Alignment.UP;

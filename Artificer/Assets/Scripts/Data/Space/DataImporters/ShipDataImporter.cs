@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 // Artificer
-using Data.Shared;
+using Data.Space;
 using Data.Space.Library;
 
 namespace Data.Space.DataImporter
@@ -116,8 +116,8 @@ namespace Data.Space.DataImporter
     		        in componentList.ChildNodes)
     		{
     			// Create component empty
-                Data.Shared.ComponentData newComponent
-                    = new Data.Shared.ComponentData();
+                ComponentData newComponent
+                    = new ComponentData();
 
     			// Populate values
                 // unique instance ID

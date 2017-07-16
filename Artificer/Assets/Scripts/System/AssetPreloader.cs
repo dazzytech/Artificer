@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 // Artificer
-using Data.Shared;
 using Data.Space;
 using Data.Space.DataImporter;
 using Data.Space.Library;
@@ -22,6 +21,7 @@ public class AssetPreloader : MonoBehaviour
         PreloadItemAssets();
         PreloadFactions();
         AddShipComponentsToNetwork();
+        PopulateShipSpawns();
     }
     
     private void PreloadShips()
@@ -85,6 +85,19 @@ public class AssetPreloader : MonoBehaviour
             // Add them to the network spawn prefab list
             foreach (GameObject component in components)
                 ClientScene.RegisterPrefab(component);
+        }
+    }
+
+    /// <summary>
+    /// Assigns the ship data to ship
+    /// spawn objects using the provided names
+    /// </summary>
+    private void PopulateShipSpawns()
+    {
+        for(int i = 0; i < _att.StarterShips.Length; i++)
+        {
+            _att.StarterShips[i].Ship = 
+                ShipLibrary.GetShip(_att.StarterShips[i].ShipName);
         }
     }
 }

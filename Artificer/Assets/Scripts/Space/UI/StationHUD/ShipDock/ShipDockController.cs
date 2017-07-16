@@ -8,7 +8,7 @@ using Space.Ship.Components.Listener;
 using Space.UI.Station.Editor;
 using Space.UI.Station.Prefabs;
 using System.Linq;
-using Data.Shared;
+using Data.Space;
 
 namespace Space.UI.Station
 {

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using Space.Ship.Components.Listener;
 using UI;
-using Data.Shared;
+using Data.Space;
 
 namespace Space.UI.Station
 {

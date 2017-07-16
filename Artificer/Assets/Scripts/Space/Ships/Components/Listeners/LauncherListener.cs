@@ -7,7 +7,7 @@ using System.Linq;
 using Space.Projectiles;
 using Space.Ship.Components.Attributes;
 using Networking;
-using Data.Shared;
+using Data.Space;
 
 namespace Space.Ship.Components.Listener
 {

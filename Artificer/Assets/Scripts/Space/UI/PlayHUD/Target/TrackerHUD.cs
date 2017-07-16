@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 // Arificer
-using Data.Shared;
+using Data.Space;
 using Space.Ship;
 using UI.Effects;
 using Space.Ship.Components.Listener;

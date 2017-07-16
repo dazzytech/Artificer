@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 // Artificer
-using Data.Shared;
+using Data.Space;
 using Space.UI.Ship;
 using Space.UI.Tracker;
 using Space.Segment;

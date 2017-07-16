@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 // Artificer
-using Data.Shared;
+using Data.Space;
 using Space.UI.Station.Editor.Component;
 
 namespace Space.UI.Station.Editor

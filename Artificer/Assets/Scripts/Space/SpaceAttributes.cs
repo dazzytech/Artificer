@@ -3,7 +3,6 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 // Artificer
-using Data.Shared;
 using Data.Space;
 using Data.Space.Library;
 using Space.Segment;

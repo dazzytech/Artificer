@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 // Artificer
-using Data.Shared;
+using Data.Space;
 
 namespace Data.Space.Library
 {

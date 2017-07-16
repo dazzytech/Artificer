@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 // Artificer
-using Data.Shared;
 using Data.Space;
 using Space;
 using Space.CameraUtils;
@@ -290,6 +289,11 @@ public class SystemManager : NATTraversal.NetworkManager
         {
             // switch to space scene
             GameMSG.SceneChanged("play");
+
+            // For now just import the ship list here
+            m_base.Param.SpawnableShips = m_base.StarterShips;
+
+            GameMSG.InitializeGameParam(m_base.Param);
         }
         else if (sceneName == "ServerScene")
         {
@@ -300,7 +304,6 @@ public class SystemManager : NATTraversal.NetworkManager
 
             // Initialize the Game Manager within
             // the lobby
-            GameMSG.Initialize();
             GameMSG.SceneChanged("lobby");
 
             m_base.Server = GameObject.Find("ServerViewer")

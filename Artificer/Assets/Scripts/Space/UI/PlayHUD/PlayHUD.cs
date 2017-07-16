@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 // Artificer
-using Data.Shared;
+using Data.Space;
 using Space.Ship;
 
 

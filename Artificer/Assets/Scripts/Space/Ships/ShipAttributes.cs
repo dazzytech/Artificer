@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 // Artificer Defined
 using Data.Space;
-using Data.Shared;
 using Space.Ship.Components.Listener;
 using Space.UI.Ship;
 

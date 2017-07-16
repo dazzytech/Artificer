@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 // Artificer
-using Data.Shared;
+using Data.Space;
 using Space.UI;
 using Space.Ship.Components.Attributes;
 using Data.Space.Collectable;

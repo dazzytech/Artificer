@@ -4,7 +4,6 @@ using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 using System.Collections.Generic;
 // Artificer
-using Data.Shared;
 using Data.Space;
 using Space.Ship;
 using Space.SpawnManagers;
@@ -18,14 +17,6 @@ using Networking;
 /// </summary>
 namespace Space.Teams
 {
-    #region SYNCLISTS 
-
-    /// <summary>
-    /// Create synced material lists for networking objects
-    /// </summary>
-    //public class MaterialSyncList : SyncListStruct<ElementItem> { }
-
-    #endregion
 
     public class TeamController : NetworkBehaviour
     {
@@ -39,6 +30,9 @@ namespace Space.Teams
 
         [SyncEvent]
         public event SyncListDelegate EventStationListChanged;
+
+        [SyncEvent]
+        public event SyncListDelegate EventShipListChanged;
 
         #endregion
 
@@ -58,6 +52,11 @@ namespace Space.Teams
         private SyncListUInt m_stations = new SyncListUInt();
 
         public SyncListUInt WarpSyncList = new SyncListUInt();
+
+        /// <summary>
+        /// Ships available to the team that players may add to
+        /// </summary>
+        private SyncListShip m_ships = new SyncListShip();
 
         /*private List<Transform> _attackPoints;
         //private List<Transform> _homePoints;
@@ -107,6 +106,7 @@ namespace Space.Teams
             // Assign callbacks
             m_players.Callback = PlayerListChanged;
             m_stations.Callback = StationListChanged;
+            m_ships.Callback = ShipListChanged;
         }
 
         /// <summary>
@@ -152,6 +152,12 @@ namespace Space.Teams
             m_stations.Remove(netID.Value);
         }
 
+        [Server]
+        public void AddSpawnableShip(ShipSpawnData ship)
+        {
+            m_ships.Add(ship);
+        }
+
         #endregion
 
         #region ACCESSORS
@@ -180,6 +186,11 @@ namespace Space.Teams
         public SyncListUInt Stations
         {
             get { return m_stations; }
+        }
+
+        public SyncListStruct<ShipSpawnData> Ships
+        {
+            get { return m_ships; }
         }
 
         #endregion
@@ -532,6 +543,13 @@ namespace Space.Teams
         {
             if (EventStationListChanged != null)
                 EventStationListChanged();
+        }
+
+        void ShipListChanged(SyncListStruct<ShipSpawnData>.
+            Operation op, int itemIndex)
+        {
+            if (EventShipListChanged != null)
+                EventShipListChanged();
         }
 
         #endregion

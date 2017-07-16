@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using Data.Shared;
+using Data.Space;
 
 public class PopupController : MonoBehaviour 
 {

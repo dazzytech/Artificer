@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 // Artificer
-using Data.Shared;
+using Data.Space;
 namespace Construction.ShipEditor
 {
     public class ShipItemPrefab : MonoBehaviour

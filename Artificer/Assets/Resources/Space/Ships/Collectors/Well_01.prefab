@@ -240,14 +240,15 @@ MonoBehaviour:
   CombatState: 0
   emitter: {fileID: 0}
   Shield: {fileID: 0}
+  ServerReady: 0
+  HasSpawned: 0
   Name: Well
   ID: 0
   iconImage: {fileID: 0}
   TrackIntegrity: 1
   Integrity: 300
   MaxIntegrity: 0
-  LockedGO: {fileID: 0}
-  sockInfo:
+  Socket:
     SocketID: 0
     OtherID: 0
     OtherLinkID: 0
@@ -274,11 +275,20 @@ MonoBehaviour:
     name: red
   - sprite: {fileID: 21300000, guid: acd0ca6238f093f4db20c433b2c70d28, type: 3}
     name: green
-  Ship: {fileID: 0}
+  Data:
+    InstanceID: 0
+    Direction: 
+    Trigger: 
+    CTrigger: 
+    Folder: 
+    Name: 
+    Style: 
+    sockets: []
+    AutoLock: 0
+    behaviour: 0
+    AutoFire: 0
   Radius: 3
   PullForce: 5
-  WellFXPrefab: {fileID: 100226, guid: 71ee5ed60c7cf4b44b6c1b52218391e2, type: 2}
-  GravityEngaged: 0
 --- !u!114 &11439248
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -302,7 +312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Weight: 0.2
-  ComponentType: Wells
+  ComponentType: Collectors
 --- !u!114 &11496760
 MonoBehaviour:
   m_ObjectHideFlags: 1

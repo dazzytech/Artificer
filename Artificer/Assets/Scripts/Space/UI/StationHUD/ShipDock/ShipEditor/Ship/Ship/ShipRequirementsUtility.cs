@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 // Artificer Defined 
-using Data.Shared;
+using Data.Space;
 using Data.Space.Library;
 using Space.Ship.Components.Listener;
 using Space.Ship.Components.Attributes;
@@ -26,7 +26,7 @@ namespace Construction.ShipEditor
         public Dictionary<MaterialData, float> Reimbursed;
 
         // private list of existing components
-        private List<Data.Shared.Component> Existing;
+        private List<Component> Existing;
 
         // Keep track of adding components to existing
         // ship or not.
@@ -35,7 +35,7 @@ namespace Construction.ShipEditor
         public ShipRequirementsUtility()
         {
             Requirements = new Dictionary<MaterialData, float>();
-            Existing = new List<Data.Shared.Component>();
+            Existing = new List<Component>();
             Reimbursed = new Dictionary<MaterialData, float>();
             StoreExisting = false;
         }
@@ -47,7 +47,7 @@ namespace Construction.ShipEditor
         /// ignored.
         /// </summary>
         /// <param name="newComp">New comp.</param>
-        private void AddExistingComponent(Data.Shared.Component newComp)
+        private void AddExistingComponent(Component newComp)
         {
             if (!Existing.Contains(newComp))
                 Existing.Add(newComp);
@@ -58,7 +58,7 @@ namespace Construction.ShipEditor
         /// total list
         /// </summary>
         /// <param name="newComp">New comp.</param>
-        private void AddNewComponent(Data.Shared.Component newComp)
+        private void AddNewComponent(Component newComp)
         {
             // Retreive respective object GO
             GameObject GO = Resources.Load("Space/Ships/" + newComp.Folder + "/" + newComp.Name, typeof(GameObject)) as GameObject;
@@ -90,7 +90,7 @@ namespace Construction.ShipEditor
         /// Adds the component to requirement object.
         /// </summary>
         /// <param name="newComp">New comp.</param>
-        public void AddComponent(Data.Shared.Component newComp)
+        public void AddComponent(Component newComp)
         {
             if (StoreExisting)
                 AddExistingComponent(newComp);
@@ -104,7 +104,7 @@ namespace Construction.ShipEditor
         /// and reimburse player, else remove amount from requirements
         /// </summary>
         /// <param name="newComp">New comp.</param>
-        public void RemoveComponent(Data.Shared.Component newComp)
+        public void RemoveComponent(Component newComp)
         {
             // Retrive corresponding GO
             GameObject GO = Resources.Load("Space/Ships/" + newComp.Folder + "/" + newComp.Name, typeof(GameObject)) as GameObject;

@@ -3,7 +3,6 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 // Artificer
-using Data.Shared;
 using Data.Space;
 using Space.Segment.Generator;
 using Space.Teams;
@@ -71,25 +70,6 @@ namespace Game
         {
             GameObject station = selectedTeam.Spawner.AddStation(position, prefabName);
             selectedTeam.AddStationObject(station.GetComponent<NetworkIdentity>().netId);
-        }
-
-        #endregion
-
-        #region INTERNAL BUILDING
-
-        /// <summary>
-        /// Builds a spawn point and returns the created spawn
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="position"></param>
-        /// <returns></returns>
-        private SpawnPointData BuildSpawn(string type, Vector2 position)
-        {
-            SpawnPointData spawn = new SpawnPointData();
-            spawn.Position = position;
-            spawn.SpawnType = type;
-
-            return spawn;
         }
 
         #endregion

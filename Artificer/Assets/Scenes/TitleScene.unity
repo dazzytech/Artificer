@@ -11435,7 +11435,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 375, y: -57.995613}
+  m_AnchoredPosition: {x: 375, y: -57.995617}
   m_SizeDelta: {x: 730, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &741
@@ -11789,7 +11789,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 530, y: -511.125}
+  m_AnchoredPosition: {x: 530, y: -511.12497}
   m_SizeDelta: {x: 1060, y: 99.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &764
@@ -15859,7 +15859,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 160, y: -407.1283}
+  m_AnchoredPosition: {x: 160, y: -407.12827}
   m_SizeDelta: {x: 320, y: 98.08554}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1012
@@ -16049,9 +16049,9 @@ RectTransform:
   m_Father: {fileID: 791}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 550, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 550, y: -346}
   m_SizeDelta: {x: 1060, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &1022
@@ -18173,10 +18173,72 @@ MonoBehaviour:
   - {fileID: 125802, guid: 100271f7fe8dc8643890205242ec8d4b, type: 2}
   - {fileID: 113308, guid: 9459d8a726fee70449cdb7bfb0b49082, type: 2}
   - {fileID: 131420, guid: de9828880adac804aae23e2c20c11626, type: 2}
+  StarterShips:
+  - Ship:
+      components: []
+      Name: 
+      Description: 
+      Category: 
+      PlayerMade: 0
+      CombatResponsive: 0
+      CombatActive: 0
+      Aligned: 0
+    ShipName: Mammoth XI
+    Owned: 1
+    UnlockCost: 0
+  - Ship:
+      components: []
+      Name: 
+      Description: 
+      Category: 
+      PlayerMade: 0
+      CombatResponsive: 0
+      CombatActive: 0
+      Aligned: 0
+    ShipName: Eden FOB Hi
+    Owned: 1
+    UnlockCost: 0
+  - Ship:
+      components: []
+      Name: 
+      Description: 
+      Category: 
+      PlayerMade: 0
+      CombatResponsive: 0
+      CombatActive: 0
+      Aligned: 0
+    ShipName: Mammoth ViE
+    Owned: 0
+    UnlockCost: 0
+  - Ship:
+      components: []
+      Name: 
+      Description: 
+      Category: 
+      PlayerMade: 0
+      CombatResponsive: 0
+      CombatActive: 0
+      Aligned: 0
+    ShipName: Mammoth XIX
+    Owned: 0
+    UnlockCost: 0
+  - Ship:
+      components: []
+      Name: 
+      Description: 
+      Category: 
+      PlayerMade: 0
+      CombatResponsive: 0
+      CombatActive: 0
+      Aligned: 0
+    ShipName: Eden FOB Hi
+    Owned: 1
+    UnlockCost: 0
   Player:
     PlayerName: 
     PlayerID: 0
     IsHost: 0
+    ShipInventory: []
   minimumPlayers: 1
 --- !u!114 &1122
 MonoBehaviour:

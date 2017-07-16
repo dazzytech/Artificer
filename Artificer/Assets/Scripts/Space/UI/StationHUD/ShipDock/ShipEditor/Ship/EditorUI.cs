@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 // Artificer
-using Data.Shared;
+using Data.Space;
 using Space.Ship.Components.Listener;
 using Space.UI.Station.Editor.Component;
 using UI.Effects;
@@ -236,7 +236,7 @@ namespace Space.UI.Station.Editor
         /// </summary>
         /// <returns>The component.</returns>
         /// <param name="component"></param>
-        public BaseComponent PlaceComponentGO(Data.Shared.ComponentData component)
+        public BaseComponent PlaceComponentGO(ComponentData component)
         {
             // Create Ship Object and apply transform parent
             GameObject newObj = Instantiate(m_componentPrefab);

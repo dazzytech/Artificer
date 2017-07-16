@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Steamworks;
+using Data.Space;
+using System.Collections.Generic;
 
 namespace Data.UI
 {
@@ -30,6 +32,34 @@ namespace Data.UI
         #region PLAYER STATISTICS
 
         // Not yet implemented (most likely incl level)
+
+        #endregion
+
+        #region PLAYER INVENTORY
+        
+        /// <summary>
+        /// Ships that the player has access to
+        /// (prebuilt and custom)
+        /// </summary>
+        public ShipSpawnData[] ShipInventory;
+
+        public void AddShipSpawn(ShipSpawnData newShip)
+        {
+            if (ShipInventory == null)
+                ShipInventory = new ShipSpawnData[0];
+
+            ShipSpawnData[] temp = ShipInventory;
+
+            ShipInventory = new ShipSpawnData[temp.Length + 1];
+
+            int i = 0;
+            foreach(ShipSpawnData t in temp)
+            {
+                ShipInventory[i++] = t;
+            }
+
+            ShipInventory[i] = newShip;
+        }
 
         #endregion
     }

@@ -3,7 +3,6 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 // Artificer
-using Data.Shared;
 using Data.Space;
 using Data.Space.Library;
 using Space;
@@ -20,9 +19,7 @@ using Steamworks;
 public struct GameParameters
 {
     // nothing in here
-
-    // CLIENT INFO
-    public NetworkClient mClient;
+    public ShipSpawnData[] SpawnableShips;
 }
 
 // STORES ALL INFORMATION OF THE GAME
@@ -66,6 +63,10 @@ public class SystemAttributes:MonoBehaviour
 
     // Builder
     public List<GameObject> StarterList;
+
+    public ShipSpawnData[] StarterShips;
+
+    public GameParameters Param;
 
     // Player Information
     public NetworkConnection Conn;

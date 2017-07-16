@@ -77,9 +77,9 @@ namespace Game
         /// Initialize from SystemManager 
         /// </summary>
         [Server]
-        public void Initialize()
+        public void InitializeGameParam(GameParameters param)
         {
-            m_con.Initialize();
+            m_con.Initialize(param);
         }
 
         [Server]

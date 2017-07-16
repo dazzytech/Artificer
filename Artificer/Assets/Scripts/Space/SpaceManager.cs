@@ -3,7 +3,7 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 // Artificer
-using Data.Shared;
+using Data.Space;
 using Data.Space.Library;
 using Data.Space;
 using Space.UI;
@@ -12,6 +12,7 @@ using Space.Teams;
 using Stations;
 using Space.Map;
 using Space.AI;
+using System.Linq;
 
 namespace Space
 {
@@ -242,7 +243,7 @@ namespace Space
 
         #endregion
 
-        #region EXTERNAL FUNCTIONS
+        #region PUBLIC INTERACTION
 
         /// <summary>
         /// Handles exiting the level
@@ -273,6 +274,8 @@ namespace Space
             // Trigger that team has been selected
             if(TeamSelected != null)
                 TeamSelected();
+
+            RefreshShipSpawnList();
 
             // Instead of doing this create a team selected event
             /*foreach(Transform ship in GameObject.Find("_ships").transform)
@@ -368,6 +371,32 @@ namespace Space
             // Next is to update the HUD to display the
             // micro stationHUD
             SystemManager.UIState.SetState(UIState.Play);
+        }
+
+        /// <summary>
+        /// Updates the possible
+        /// ship spawn items in our player data
+        /// </summary>
+        public void RefreshShipSpawnList()
+        {
+            // iterate through our new team list
+            foreach(ShipSpawnData spawn in _att.Team.Ships)
+            {
+                if (SystemManager.Player.ShipInventory == null)
+                    SystemManager.Player.AddShipSpawn(spawn);
+                else
+                {
+                    ShipSpawnData current = SystemManager.Player.ShipInventory.
+                        FirstOrDefault(x => x.ShipName == spawn.ShipName);
+
+                    // If we dont have this current ship
+                    // then add it
+                    if (current.ShipName == null)
+                    {
+                        SystemManager.Player.AddShipSpawn(spawn);
+                    }
+                }
+            }
         }
 
         #endregion

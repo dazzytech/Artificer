@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 // Artificer
-using Data.Shared;
+using Data.Space;
 using Space.Ship.Components.Listener;
 
 namespace Space.Ship.Components.Attributes
@@ -124,7 +124,7 @@ namespace Space.Ship.Components.Attributes
         #region SHIP DATA REFERENCE
 
         [SyncVar]
-        public Data.Shared.ComponentData Data;
+        public ComponentData Data;
 
         public ShipAttributes Ship
         {

@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Runtime.InteropServices;
 using UnityEngine;
-using Data.Shared;
+using Data.Space;
 
 using Space.Projectiles;
 
@@ -13,14 +13,14 @@ namespace Serializer
 { 
     public class ByteSerializer
     {
-        public static void WriteSock(BinaryWriter writer, Data.Shared.SocketData sock)
+        public static void WriteSock(BinaryWriter writer, SocketData sock)
         {
             writer.Write(sock.SocketID);
             writer.Write(sock.OtherID);
             writer.Write(sock.OtherLinkID);
         }
 
-        public static void WriteComp(BinaryWriter writer, Data.Shared.ComponentData comp)
+        public static void WriteComp(BinaryWriter writer, ComponentData comp)
         {
             writer.Write(comp.Name);
             writer.Write(comp.InstanceID);
@@ -45,7 +45,7 @@ namespace Serializer
                 {
                     WriteComp(writer, ship.Head);
                     writer.Write(ship.GetComponents().Length);
-                    foreach (Data.Shared.ComponentData comp in ship.components)
+                    foreach (ComponentData comp in ship.components)
                         WriteComp(writer, comp);
                     writer.Write(ship.Name);
                     writer.Write(ship.Description);
@@ -59,9 +59,9 @@ namespace Serializer
             }
         }
 
-        public static Data.Shared.SocketData ReadSock(BinaryReader reader)
+        public static SocketData ReadSock(BinaryReader reader)
         {
-            Data.Shared.SocketData sock = new SocketData();
+            SocketData sock = new SocketData();
 
             sock.SocketID = reader.ReadInt32();
             sock.OtherID = reader.ReadInt32();
@@ -70,9 +70,9 @@ namespace Serializer
             return sock;
         }
 
-        public static Data.Shared.ComponentData ReadComp(BinaryReader reader)
+        public static ComponentData ReadComp(BinaryReader reader)
         {
-            Data.Shared.ComponentData comp = new Data.Shared.ComponentData();
+            ComponentData comp = new ComponentData();
 
             comp.Name = reader.ReadString();
             comp.InstanceID = reader.ReadInt32();
@@ -96,9 +96,9 @@ namespace Serializer
             return comp;
         }
 
-            public static Data.Shared.ShipData fromBytes(byte[] arr)
+            public static ShipData fromBytes(byte[] arr)
             {
-                Data.Shared.ShipData ship = new Data.Shared.ShipData();
+                ShipData ship = new ShipData();
 
                 using (MemoryStream stream = new MemoryStream(arr))
                 {
