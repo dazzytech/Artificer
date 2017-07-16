@@ -173,6 +173,14 @@ namespace Space.UI.Station.Prefabs
             }
         }
 
+        protected override void DisablePanels()
+        {
+            m_targeterPanel.gameObject.SetActive(false);
+            m_launcherPanel.gameObject.SetActive(false);
+            m_weaponPanel.gameObject.SetActive(false);
+            base.DisablePanels();
+        }
+
         #endregion
     }
 }

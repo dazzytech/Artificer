@@ -27,10 +27,25 @@ namespace Space.UI.Station.Utility
 
         #endregion
 
+        #region MONO BEHAVIOUR
+
+        private void OnDisable()
+        {
+            // delete previously made styles
+            foreach (Transform child in m_panel)
+                Destroy(child.gameObject);
+        }
+
+        #endregion
+
         #region PUBLIC INTERACTION
 
         public override void Display(ComponentAttributes att, BaseComponent bC)
         {
+            // delete previously made styles
+            foreach (Transform child in m_panel)
+                Destroy(child.gameObject);
+
             m_styleChoices = new List<string>();
 
             m_toggles = new Toggle[att.componentStyles.Length];

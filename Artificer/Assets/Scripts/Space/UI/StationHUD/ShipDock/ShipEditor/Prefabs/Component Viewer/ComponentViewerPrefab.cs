@@ -1,6 +1,7 @@
 ﻿using Space.Ship.Components.Attributes;
 using Space.Ship.Components.Listener;
 using Space.UI.Station.Editor.Component;
+using Space.UI.Station.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,6 +46,10 @@ namespace Space.UI.Station.Prefabs
         protected Transform m_wellPanel;
         [SerializeField]
         protected Transform m_warpPanel;
+        [SerializeField]
+        protected Transform m_storagePanel;
+        [SerializeField]
+        protected Transform m_buildPanel;
 
         #endregion
 
@@ -89,6 +94,8 @@ namespace Space.UI.Station.Prefabs
         /// <param name="att"></param>
         protected virtual void AssignType(string type, ComponentAttributes att)
         {
+            DisablePanels();
+
             switch (type)
             {
                 case "Engines":
@@ -119,9 +126,33 @@ namespace Space.UI.Station.Prefabs
                     m_warpPanel.Find("Min").GetComponent<Text>().text = (((WarpAttributes)att).MinDistance * .1f).ToString() + "km";
                     m_warpPanel.Find("Max").GetComponent<Text>().text = (((WarpAttributes)att).MaxDistance * .1f).ToString() + "km";
                     break;
+                case "Storage":
+                    m_storagePanel.gameObject.SetActive(true);
+                    m_storagePanel.Find("Dimension").GetComponent<Text>().text = 
+                        ((StorageAttributes)att).dimensions.ToString() + "ft³";
+                    break;
+                case "Construct":
+                    m_buildPanel.gameObject.SetActive(true);
+                    m_buildPanel.GetComponent<BuildController>().
+                        Display((BuildAttributes)att);
+                    break;
                 default:
                     break;
             }
+        }
+
+        /// <summary>
+        /// Enables multi item panels to reset
+        /// </summary>
+        protected virtual void DisablePanels()
+        {
+            m_enginePanel.gameObject.SetActive(false);
+            m_rotorPanel.gameObject.SetActive(false);
+            m_shieldPanel.gameObject.SetActive(false);
+            m_wellPanel.gameObject.SetActive(false);
+            m_warpPanel.gameObject.SetActive(false);
+            m_storagePanel.gameObject.SetActive(false);
+            m_buildPanel.gameObject.SetActive(false);
         }
 
         #endregion

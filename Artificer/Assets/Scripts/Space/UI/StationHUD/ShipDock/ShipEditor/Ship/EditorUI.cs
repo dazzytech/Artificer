@@ -50,6 +50,12 @@ namespace Space.UI.Station.Editor
         [SerializeField]
         private InputField m_shipName;
 
+        /// <summary>
+        /// Top panel to view selected components
+        /// </summary>
+        [SerializeField]
+        private ComponentInteractivePrefab m_topViewer;
+
         #region ROTOR FOLLOW
 
         /// <summary>
@@ -122,28 +128,54 @@ namespace Space.UI.Station.Editor
 
             if (ShipEditor.DraggedObj != null)
                 HintBoxController.Display("Use the directional keys to change direction the component is facing.");
-            else if(ShipEditor.HighlightedObj != null)
+            else if (ShipEditor.HighlightedObj != null)
                 HintBoxController.Display("Use Right-Click to display additional options");
-            
-            if(RCWindow != null && !RCDelay)
+
+            if (ShipEditor.SelectedObj != null)
+            {
+                if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+                {
+                    // Deselect object if we click outside selected piece or component window
+                    if (!RectTransformExtension.InBounds
+                        (m_topViewer.GetComponent<RectTransform>(),
+                        Input.mousePosition) 
+                        && !RectTransformExtension.InBounds
+                        (ShipEditor.SelectedObj.GetComponent<RectTransform>(),
+                        Input.mousePosition))
+                    {
+                        ShipEditor.SelectedObj = null;
+                        return;
+                    }
+                }
+
+                // Display selected component
+                m_topViewer.gameObject.SetActive(true);
+                m_topViewer.DisplayBC(ShipEditor.SelectedObj, m_editor.Ship.Head,
+                    new ShipEditor.DelegateHead(m_editor.SetHead));
+            }
+            else
+                m_topViewer.gameObject.SetActive(false);
+
+            if (RCWindow != null && !RCDelay)
             {
                 if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
                 {
                     if(!RectTransformExtension.InBounds(RCWindow.GetComponent<RectTransform>(), 
                         Input.mousePosition) || Input.GetMouseButtonDown(1))
-                        {
-                            Destroy(RCWindow);
-                            RCDelay = true;
-                            Invoke("RCDel", .3f);
-                        }
-                        else
-                        {
-                            // player is interacting with the RCWindow so we can exit
-                            return;
-                        }
+                    {
+                        Destroy(RCWindow);
+                        RCDelay = true;
+                        RCWindow = null;
+                        Invoke("RCDel", .3f);
                     }
+                    else
+                    {
+                        // player is interacting with the RCWindow so we can exit
+                        return;
+                    }
+                }
             }
-            else if(Input.GetMouseButtonDown(1))
+            if(Input.GetMouseButtonDown(1))
             {
                 // Player has clicked the right mouse button
                 if(RCWindow == null && ShipEditor.HighlightedObj != null)

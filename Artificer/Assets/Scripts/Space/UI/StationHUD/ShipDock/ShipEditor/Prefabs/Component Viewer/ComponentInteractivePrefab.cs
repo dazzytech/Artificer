@@ -37,19 +37,16 @@ namespace Space.UI.Station.Prefabs
         /// <summary>
         /// Used to determine if we are head
         /// </summary>
-        [SerializeField]
         protected BaseComponent m_head;
 
         /// <summary>
         /// Reference to our component
         /// </summary>
-        [SerializeField]
         protected BaseComponent m_BC;
 
         /// <summary>
         /// Store the delegated function parent gives us.
         /// </summary> 
-        [SerializeField]
         private ShipEditor.DelegateHead m_callHead;
 
         #endregion
@@ -67,6 +64,9 @@ namespace Space.UI.Station.Prefabs
         public void DisplayBC(BaseComponent BC, BaseComponent head,
                                 ShipEditor.DelegateHead newcall)
         {
+            if (this.m_BC == BC)
+                return;
+
             this.m_BC = BC;
             m_head = head;
             m_callHead = newcall;
@@ -139,6 +139,14 @@ namespace Space.UI.Station.Prefabs
                 default:
                     break;
             }
+        }
+
+        protected override void DisablePanels()
+        {
+            m_targeterPanel.gameObject.SetActive(false);
+            m_launcherPanel.gameObject.SetActive(false);
+            m_weaponPanel.gameObject.SetActive(false);
+            base.DisablePanels();
         }
 
         #endregion

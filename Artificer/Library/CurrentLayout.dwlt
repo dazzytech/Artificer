@@ -20,7 +20,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 950, y: 300}
+  m_MinSize: {x: 950, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -43,7 +43,7 @@ MonoBehaviour:
     y: 0
     width: 1366
     height: 685
-  m_MinSize: {x: 950, y: 300}
+  m_MinSize: {x: 950, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
 MonoBehaviour:
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 492}
   m_MaxSize: {x: 14004, y: 14042}
   vertical: 0
-  controlID: 11
+  controlID: 45
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 12
+  controlID: 46
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 221}
   m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
-  controlID: 13
+  controlID: 47
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -398,14 +398,14 @@ MonoBehaviour:
     width: 572
     height: 335
   m_SceneLighting: 0
-  lastFramingTime: 7013.954433174994
+  lastFramingTime: 6361.022244319083
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.000030517578, y: 0.000015258789, z: 0}
+    m_Target: {x: 432.49948, y: 608.18756, z: 0}
     speed: 2
-    m_Value: {x: -0.000030517578, y: 0.000015258789, z: 0}
+    m_Value: {x: 432.49948, y: 608.18756, z: 0}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -432,9 +432,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 154.84073
+    m_Target: 179.96092
     speed: 2
-    m_Value: 154.84073
+    m_Value: 179.96092
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -473,23 +473,23 @@ MonoBehaviour:
     height: 335
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: 1279f5ff8479f5ff707bf5ffb27bf5ff6680f5ff7880f5ffc873f6ffca73f6ffec37f7ff4c39f7ff4e39f7ffa243f7ffa443f7ffa643f7ff0886f7fff282f8ffec97f8ffae83f9ffda83f9ff0484f9ff3c8ff9ff3e8ff9ff9af7ffffc6f7ffffccf8ffffd4f8ffffe2fbffff000000003a3d00005c3d0000883e0000be3e00003a6b0100
+    m_SelectedIDs: 189f0500
+    m_LastClickedID: 368408
+    m_ExpandedIDs: ead1e5ff9ad4e5ff54eee5ff3090e6ffe49be7ff9a7ce9ffe25bedfffc67efff7a6eefff561ef1ff4633f1ffb2c3f1ff50dff1ff1843f3ff5ce3f5ff5887f6ffe288f6ff7a8ff6ff369af6ff9ab4f8ff96c2f8ff30c7f8ff36d4f8ff44d4f8ffe8ecf9ff4cedf9ff36eef9ff38eef9ff7aeef9ff02c0faff3ecbfaff28ccfaff2accfaff6cccfaff0ac2fbff60c3fbff0a07fdff1610fdff8627fdffc428fdff063afdffa6c9feffaac9feff3a8dffffde9affff9ca2ffffa0e7ffff44eaffffb0eeffffe4fbffff00000000663d00003c6f01004a6f010068700100d472010046730100d67501002c77010058770100727801008a120200981202004e1402004616020098170200261c0200e01d02003a1e0200621f0200264402003444020094450200ea450200e247020034490200c24d0200ae4e02007c4f0200a6500200fe500200085f02008e5f0200c2980200d09802008a9a0200869c0200d89d020066a2020020a40200d22a0300e02a0300402c0300982c0300922e0300e82f030076340300fa340300303603005a370300484603008ec803009cc80300a4cd030032d20300ecd3030056670400646704006c6c0400fa700400b472040014bd040022bd04005ebd040082be0400dabe040038c00400d4c004002ac20400cec50400b8c604009ec7040072c8040050c90400f4c90400c4630500d2630500326505008a65050084670500da680500686d0500226f05004c700500189f0500
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Rotor Panel
+      m_OriginalName: Rotor Panel
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 312918
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 0
       m_ClientGUIView: {fileID: 9}
     m_SearchString: 
@@ -561,19 +561,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Prefab/ShipEditor
+    - Assets/Scenes
   m_ViewMode: 1
   m_StartGridSize: 41
   m_LastFolders:
-  - Assets/Prefab/ShipEditor
+  - Assets/Scenes
   m_LastFoldersGridSize: 41
   m_LastProjectPath: C:\Users\renderman\Documents\Artificer\Artificer
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 195}
-    m_SelectedIDs: 28360000
-    m_LastClickedID: 13864
-    m_ExpandedIDs: 00000000ca28000002290000642a0000922a0000b42b0000b62b00006e2c00007a2c0000e22c0000f82c0000142d0000ba2d0000fa2d0000422f00005a2f00000430000058310000d23100009a32000078330000b4330000ac35000018360000f03600001a370000883700005838000064380000c4390000d439000006560000085600000a5600000c5600002603010000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 71}
+    m_SelectedIDs: 22360000
+    m_LastClickedID: 13858
+    m_ExpandedIDs: 00000000cc28000004290000662a0000942a0000b62b0000b82b00007c2c0000e42c0000fa2c0000162d0000bc2d0000fc2d0000442f00005c2f00005a3100009c320000c8320000b03500001c360000f43600001e3700008c3700005c38000068380000d83900001056000012560000145600001656000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -601,7 +601,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000ca28000002290000642a0000922a0000b62b00006e2c00007a2c0000e22c0000f82c0000142d0000ba2d0000fa2d0000422f00005a2f000004300000583100009a32000078330000b433000018360000f03600001a370000883700005838000064380000d439000006560000085600000a5600000c560000
+    m_ExpandedIDs: 00000000cc28000004290000662a0000942a0000b62b0000b82b0000702c00007c2c0000e42c0000fa2c0000162d0000bc2d0000fc2d0000442f00005c2f0000063000005a310000d43100009c320000c83200007c330000b8330000b03500001c360000f43600001e3700008c3700005c38000068380000c8390000d839000010560000125600001456000016560000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -632,18 +632,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: 8020000030b6ffff82d3ffff2068ffff4a5bffff1654ffffec4bffff42f2fffff4d3ffff3cc3ffffb808ffff762efeffe8fbfdff8ce9fbff7a6ffbff8420000082200000fe3df8ff72c9f7ffc422faff3494f9ff461efefffe290000f41e0000c6c6f9ff2215f9ffb41f0000a4b8e5ff3cf5faff742000007e0dfcff7a1e00008a2300005c2300003e24f8ff0a5e0000a475e4ffa41e0000be20000046230000622300004a230000522300005a2300006a23000072230000822300008823000098230000a0230000a8230000b023000010250000109cffff62e6feff002a00008a290000c82900003a29000040beffffde2300003aaaffff3a240000ecd4faff6e280000321efdffe62ffcff402c000050b5f4ffb02b0000721e00000c2d00002c2900009630000076320000646cf2ff10320000d2b5f1ff422f00001837000064380000a6c1fdff7e3b00007a3b0000722600002e3100006871fdff9e4afdff58ebffff78d8ffffb02d0000f81d0000a24d00001c3b0000923b00001030000058240000961f0000c422000006560000f6550000861e0000d4250000a8270000d2240000ee29000010270000b82a000054280000a0240000062c00007a2800000230000088280000c62e00009e250000c62a000092f3feff4432000086320000d4e3ebff0a4301008e790000e83400004234000014350000ee38000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: ComponentInteractivePrefab
-      m_OriginalName: ComponentInteractivePrefab
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 82740
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 10}
     m_CreateAssetUtility:
