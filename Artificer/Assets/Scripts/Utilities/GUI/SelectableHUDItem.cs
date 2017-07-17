@@ -31,7 +31,7 @@ namespace UI
 
         [Header("HUD Elements")]
         [SerializeField]
-        private RawImage m_background;
+        protected RawImage m_background;
 
         #endregion
 
@@ -106,6 +106,13 @@ namespace UI
             m_background.color = m_selectedColour;
         }
 
+        public virtual void Highlight(bool highlighted)
+        {
+            if (highlighted)
+            { if (!m_selected) m_background.color = m_highlightColour; }
+            else
+            { if (!m_selected) m_background.color = m_standardColour;  }
+        }
 
         #endregion
 
@@ -127,18 +134,12 @@ namespace UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (!m_selected)
-            {
-                m_background.color = m_highlightColour;
-            }
+            Highlight(true);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (!m_selected)
-            {
-                m_background.color = m_standardColour;
-            }
+            Highlight(false);
         }
 
         #endregion

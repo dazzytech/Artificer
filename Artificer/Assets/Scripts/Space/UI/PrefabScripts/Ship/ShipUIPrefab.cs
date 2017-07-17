@@ -20,7 +20,7 @@ namespace Space.UI
         /// within playerdata
         /// </summary>
         [SerializeField]
-        private int m_shipReference;
+        protected int m_shipReference;
 
         #region HUD ELEMENTS
 

@@ -68,8 +68,6 @@ namespace Space.UI.Spawn
         private void Awake()
         {
             // This code should only be called once
-            
-
             m_att.Map.InitializeMap(new MapObjectType[] { MapObjectType.SHIP });  
         }
 

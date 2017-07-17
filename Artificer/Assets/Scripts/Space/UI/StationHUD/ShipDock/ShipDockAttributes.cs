@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Space.Ship;
 using Space.UI.Station.Editor;
 using Space.UI.Station.Viewer;
+using Space.UI.Station.Viewer.Prefabs;
 
 namespace Space.UI.Station
 {
@@ -26,9 +27,15 @@ namespace Space.UI.Station
 
         #region MANAGE
 
-        //public GameObject ShipItemPrefab;
         //public GameObject NewItemPrefab;
-        //public GameObject ShipItemPanel;
+
+        [Header("Manager HUD")]
+
+        [HideInInspector]
+        public List<ShipManagePrefab> ShipList;
+
+        public Transform ShipManageList;
+        public GameObject ShipManagePrefab;
 
         #endregion
 

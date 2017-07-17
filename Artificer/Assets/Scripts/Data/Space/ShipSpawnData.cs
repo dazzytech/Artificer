@@ -39,6 +39,12 @@ namespace Data.Space
         /// </summary>
         public bool Owned;
 
+        /// <summary>
+        /// If the ship is player made is can 
+        /// be removed etc
+        /// </summary>
+        public bool PlayerMade;
+
         // cost to build be added later
 
         /// <summary>

@@ -9,6 +9,7 @@ using Space.UI.Station.Editor;
 using Space.UI.Station.Prefabs;
 using System.Linq;
 using Data.Space;
+using Space.UI.Station.Viewer.Prefabs;
 
 namespace Space.UI.Station
 {
@@ -68,6 +69,10 @@ namespace Space.UI.Station
                 GO.SetActive(true);
 
             m_att.Viewer.BuildShip(m_att.Ship);
+
+            // Only run on startup
+            if (m_att.ShipList.Count == 0)
+                BuildShipInventory();
         }
 
         public void InitializeEdit()
@@ -188,6 +193,38 @@ namespace Space.UI.Station
 
             // We have a match
             m_att.Editor.BuildComponent(component);
+        }
+
+        #endregion
+
+        #region MANAGER CONTROLS
+
+        /// <summary>
+        /// Build list of spawnable ships
+        /// </summary>
+        private void BuildShipInventory()
+        {
+            int shipIndex = 0;
+            // build a list of ships
+            // we are able to select to spawn with
+            foreach (ShipSpawnData spawn in SystemManager.PlayerShips)
+            { 
+                GameObject shipObj =
+                    Instantiate(m_att.ShipManagePrefab);
+
+                shipObj.transform
+                    .SetParent(m_att.ShipManageList);
+
+                ShipManagePrefab item =
+                    shipObj.GetComponent<ShipManagePrefab>();
+
+                item.AssignShip(shipIndex++);
+
+                // Assign edit delegate?
+                m_att.ShipList = new List<ShipManagePrefab>();
+
+                m_att.ShipList.Add(item);
+            }
         }
 
         #endregion
