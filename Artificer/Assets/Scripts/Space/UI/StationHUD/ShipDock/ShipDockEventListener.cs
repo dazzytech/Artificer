@@ -4,6 +4,7 @@ using System.Collections;
 using Space.Ship.Components.Listener;
 using UI;
 using Data.Space;
+using Space.UI.Station.Viewer.Prefabs;
 
 namespace Space.UI.Station
 {
@@ -46,15 +47,41 @@ namespace Space.UI.Station
             
         }
 
+        /// <summary>
+        /// Called when a player made
+        /// ship is delete so we remove
+        /// it from our list
+        /// </summary>
+        /// <param name="ship"></param>
+        public void OnShipDeleted(ShipManagePrefab ship)
+        {
+            if (m_att.ShipList.Contains(ship))
+                m_att.ShipList.Remove(ship);
+
+            ship.OnDelete -= OnShipDeleted;
+            ship.OnEdit -= OnShipEdit;
+        }
+
+        /// <summary>
+        /// Switches state to edit mode
+        /// </summary>
+        /// <param name="ship"></param>
+        public void OnShipEdit(ShipManagePrefab ship)
+        {
+            OnStateChanged(1);
+            m_att.Editor.LoadExistingShip
+                (ship.Ship);
+        }
+
+        public void OnEditCurrent()
+        {
+            OnStateChanged(1);
+            m_att.Editor.LoadExistingShip(m_att.Ship.Ship);
+        }
+
         #endregion
 
         #region EDITOR 
-
-        
-        public void SelectShip(ShipData ship)
-        {
-            m_att.Editor.LoadExistingShip(ship);
-        }
 
         public void CreateNewShip()
         {

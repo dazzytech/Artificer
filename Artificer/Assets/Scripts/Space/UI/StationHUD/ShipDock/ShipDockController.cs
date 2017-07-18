@@ -68,6 +68,8 @@ namespace Space.UI.Station
             foreach (GameObject GO in m_att.ManageGOs)
                 GO.SetActive(true);
 
+            m_att.Editor.ClearShip();
+
             m_att.Viewer.BuildShip(m_att.Ship);
 
             // Only run on startup
@@ -75,6 +77,9 @@ namespace Space.UI.Station
                 BuildShipInventory();
         }
 
+        /// <summary>
+        /// Intitializes the ship editor window
+        /// </summary>
         public void InitializeEdit()
         {
             foreach (GameObject GO in m_att.ManageGOs)
@@ -84,10 +89,6 @@ namespace Space.UI.Station
                 GO.SetActive(true);
 
             BuildEditorPanel();
-
-            // Initialize Edit Elements
-            m_att.Editor.LoadExistingShip
-                (m_att.Ship.Ship);
         }
 
         #endregion
@@ -104,20 +105,23 @@ namespace Space.UI.Station
         /// </summary>
         private void BuildEditorPanel()
         {
-            // Populate the top tab bar with component types
-            // Retreive all the directories
-            TextAsset ShipKey = Resources.Load("Space/Keys/ship_key",
-                                     typeof(TextAsset)) as TextAsset;
-
-            // Add component type to header bar
-            foreach (string item in ShipKey.text.Split(","[0]))
+            if (m_att.TabHeader.transform.childCount == 0)
             {
-                GameObject newTab = Instantiate(m_att.TabPrefab);
-                newTab.transform.SetParent(m_att.TabHeader.transform);
+                // Populate the top tab bar with component types
+                // Retreive all the directories
+                TextAsset ShipKey = Resources.Load("Space/Keys/ship_key",
+                                         typeof(TextAsset)) as TextAsset;
 
-                ComponentTabPrefab cmpTab = newTab.GetComponent<ComponentTabPrefab>();
+                // Add component type to header bar
+                foreach (string item in ShipKey.text.Split(","[0]))
+                {
+                    GameObject newTab = Instantiate(m_att.TabPrefab);
+                    newTab.transform.SetParent(m_att.TabHeader.transform);
 
-                cmpTab.SetTab(item, new Select(SelectTab));
+                    ComponentTabPrefab cmpTab = newTab.GetComponent<ComponentTabPrefab>();
+
+                    cmpTab.SetTab(item, new Select(SelectTab));
+                }
             }
         }
 
@@ -207,7 +211,7 @@ namespace Space.UI.Station
             int shipIndex = 0;
             // build a list of ships
             // we are able to select to spawn with
-            foreach (ShipSpawnData spawn in SystemManager.PlayerShips)
+            while (shipIndex < SystemManager.PlayerShips.Length)
             { 
                 GameObject shipObj =
                     Instantiate(m_att.ShipManagePrefab);
@@ -219,6 +223,11 @@ namespace Space.UI.Station
                     shipObj.GetComponent<ShipManagePrefab>();
 
                 item.AssignShip(shipIndex++);
+
+                // Assign events
+                item.OnDelete += m_event.OnShipDeleted;
+
+                item.OnEdit += m_event.OnShipEdit;
 
                 // Assign edit delegate?
                 m_att.ShipList = new List<ShipManagePrefab>();

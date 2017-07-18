@@ -761,7 +761,8 @@ namespace Space.UI.Station.Editor.Component
             m_mouseOver = true;
 
             // Change our colour to a highlight
-            m_componentImage.color = new Color(.75f, .75f, .2f, .4f);
+            if(ShipEditor.DraggedObj == null)
+                m_componentImage.color = new Color(.75f, .75f, .2f, .4f);
         }
 
         public void OnPointerExit(PointerEventData eventData)

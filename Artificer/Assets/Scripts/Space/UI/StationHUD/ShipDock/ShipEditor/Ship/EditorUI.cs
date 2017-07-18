@@ -251,6 +251,12 @@ namespace Space.UI.Station.Editor
             return BC;
         }
 
+        public void ClearUI()
+        {
+            foreach (Transform child in m_shipConstructPanel)
+                GameObject.Destroy(child.gameObject);
+        }
+
         #endregion
 
         #endregion

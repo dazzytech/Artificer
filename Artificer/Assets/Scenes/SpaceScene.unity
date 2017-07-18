@@ -2710,7 +2710,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22481518, guid: d706cdeba6af9de498b0ede640deb471, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -19.999994
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 22481518, guid: d706cdeba6af9de498b0ede640deb471, type: 2}
       propertyPath: m_SizeDelta.x
@@ -6626,7 +6626,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22481518, guid: d706cdeba6af9de498b0ede640deb471, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -26.916664
+      value: -26.916656
       objectReference: {fileID: 0}
     - target: {fileID: 22481518, guid: d706cdeba6af9de498b0ede640deb471, type: 2}
       propertyPath: m_SizeDelta.x
@@ -16346,7 +16346,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22410970, guid: e7d303662c3ef0a44a9da40d44ea461c, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -74.69444
+      value: -74.69446
       objectReference: {fileID: 0}
     - target: {fileID: 22410970, guid: e7d303662c3ef0a44a9da40d44ea461c, type: 2}
       propertyPath: m_SizeDelta.x
@@ -19028,11 +19028,11 @@ Prefab:
       objectReference: {fileID: 79697394}
     - target: {fileID: 11416028, guid: d46540b9ca90f2f41bcf9142e364e53b, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnStateChanged
+      value: OnEditCurrent
       objectReference: {fileID: 0}
     - target: {fileID: 11416028, guid: d46540b9ca90f2f41bcf9142e364e53b, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11439606, guid: d46540b9ca90f2f41bcf9142e364e53b, type: 2}
       propertyPath: m_FontData.m_BestFit
@@ -35595,7 +35595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1874999455
 RectTransform:
   m_ObjectHideFlags: 0

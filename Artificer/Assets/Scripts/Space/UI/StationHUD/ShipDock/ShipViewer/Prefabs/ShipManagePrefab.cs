@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Data.Space;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,26 @@ namespace Space.UI.Station.Viewer.Prefabs
     /// </summary>
     public class ShipManagePrefab : ShipUIPrefab
     {
+        #region EVENTS
+
+        public delegate void ShipManageEvent(ShipManagePrefab ship);
+
+        /// <summary>
+        /// Invoked when ship is deleted or 
+        /// reverted so that container may update 
+        /// their lists
+        /// </summary>
+        /// <param name="ship"></param>
+        public event ShipManageEvent OnDelete;
+
+        /// <summary>
+        /// Called when the player opts to
+        /// edit this ship
+        /// </summary>
+        public event ShipManageEvent OnEdit;
+
+        #endregion
+
         #region ATTRIBUTES
 
         #region HUD ELEMENTS
@@ -84,7 +105,7 @@ namespace Space.UI.Station.Viewer.Prefabs
 
         #region ACCESSORS
 
-        public bool Owned
+        private bool Owned
         {
             get
             {
@@ -116,6 +137,15 @@ namespace Space.UI.Station.Viewer.Prefabs
             }
         }
 
+        public ShipData Ship
+        {
+            get
+            {
+                return SystemManager.PlayerShips
+                      [m_shipReference].Ship;
+            }
+        }
+
         #endregion
         
         #region PUBLIC INTERACTION
@@ -137,17 +167,47 @@ namespace Space.UI.Station.Viewer.Prefabs
         /// </summary>
         public void Delete()
         {
+            if(PlayerMade)
+            {
+                // This ship is player made
+                // so we can just delete it from 
+                // existance
 
+                // Create array with one less space
+                ShipSpawnData[] ships = new ShipSpawnData
+                [SystemManager.PlayerShips.Length - 1];
+
+                // Copy over each ship that isn't ours
+                for (int i = 0, a = 0; i < SystemManager.PlayerShips.Length; i++)
+                    if (i != m_shipReference)
+                        ships[a++] = SystemManager.PlayerShips[i];
+
+                // Replace list with our new one
+                SystemManager.PlayerShips = ships;
+
+                // Alert any containers
+                if (OnDelete != null)
+                    OnDelete(this);
+
+                Destroy(gameObject);
+            }
+            else
+            {
+                // We only need to overwrite our local
+                // version with the team version
+                // ONLY OVERWRITE SHIP DATA
+                SystemManager.PlayerShips[m_shipReference].Ship
+                    = SystemManager.Space.Team.Ships[m_shipReference].Ship;
+            }
         }
 
         /// <summary>
-        /// TODO : Consider calling delegate for 
         /// ship editor to set edit mode with 
         /// ship data or index
         /// </summary>
         public void Edit()
         {
-
+            OnEdit(this);
         }
 
         #region OVERRIDE

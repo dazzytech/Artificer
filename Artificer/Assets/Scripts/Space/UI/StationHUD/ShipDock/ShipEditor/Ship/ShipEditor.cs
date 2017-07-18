@@ -69,8 +69,7 @@ namespace Space.UI.Station.Editor
 
         #region MONO BEHAVIOUR
 
-        // MonoBehavours
-        void Awake()
+        private void Awake()
         {
             //_util.ClearWeight();
             //_req = new ShipRequirementsUtility();
@@ -132,31 +131,23 @@ namespace Space.UI.Station.Editor
 
         #endregion
 
-        // Reset Data function and clear panel here
-        /*public void ResetShipData()
-        {
-            // Each child should be a ship component
-            foreach (Transform child in ShipConstructPanel)
-            {
-                if(child.name != "Head")
-                    Destroy(child.gameObject);
-            }
-
-            _req.Clear(false);
-            Inventory.AddMatsToList(_req.Requirements);
-
-            _ship.Components.Clear();
-            _ship.AddedIDs.Clear();
-            _ship.Links.Clear();
-            _ship.Head = null;
-            _ship.Ship = null;
-            Changed = false;
-
-            _util.ClearWeight();
-        }
- */
-
         #region PUBLIC INTERACTION
+
+        /// <summary>
+        /// Called from external source when
+        /// we want to clear the component list
+        /// </summary>
+        public void ClearShip()
+        {
+            if (Ship == null)
+                return;
+
+            //_tex.Delete(_ship.Ship.Name);
+
+            ResetShip();
+
+            //_util.ClearWeight();
+        }
 
         /// <summary>
         /// Delegate function: sets the head of 
@@ -175,9 +166,9 @@ namespace Space.UI.Station.Editor
         /// <param name="newShip">New ship.</param>
         public void LoadExistingShip(ShipData newShip)
         {
-            //if (_ship != null)
-                //ResetShipData();
-            //else
+            if (Ship != null)
+                ResetShip();
+            else
                 Ship = new ShipContainer();
            
             //_req.StoreExisting = true;
@@ -231,6 +222,8 @@ namespace Space.UI.Station.Editor
         #endregion
 
         #region PRIVATE UTILITIES
+
+        #region COMPONENTS
 
         /// <summary>
         /// Places the component GameObject to the panel.
@@ -297,32 +290,6 @@ namespace Space.UI.Station.Editor
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private void LoadConnections()
-        {
-            // Assign and connect socket
-            foreach (SocketData s in Ship.Links.Keys)
-            {
-                // find first object
-                BaseComponent firstObj = Ship.Links[s];
-                // find second object
-                BaseComponent scndObj = null;
-                
-                foreach(BaseComponent BC in Ship.Components)
-                {
-                    if(BC.ShipComponent.InstanceID == s.OtherID)
-                        scndObj = BC;
-                }
-                
-                if(scndObj != null)
-                {
-                    scndObj.AddConnection(s.OtherLinkID, firstObj, s.SocketID);
-                }
-            }
-        }
-
         private void DeletePiece(BaseComponent BC)
         {
             Ship.AddedIDs.Remove(BC.ShipComponent.InstanceID);
@@ -357,7 +324,81 @@ namespace Space.UI.Station.Editor
             Changed = true;
         }
 
+        #endregion
+
+        #region SHIP
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void LoadConnections()
+        {
+            // Assign and connect socket
+            foreach (SocketData s in Ship.Links.Keys)
+            {
+                // find first object
+                BaseComponent firstObj = Ship.Links[s];
+                // find second object
+                BaseComponent scndObj = null;
+                
+                foreach(BaseComponent BC in Ship.Components)
+                {
+                    if(BC.ShipComponent.InstanceID == s.OtherID)
+                        scndObj = BC;
+                }
+                
+                if(scndObj != null)
+                {
+                    scndObj.AddConnection(s.OtherLinkID, firstObj, s.SocketID);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Delete component list and 
+        /// resets the container
+        /// </summary>
+        private void ResetShip()
+        {
+            // Each child should be a ship component
+            while (Ship.Components.Count > 0)
+            {
+                DeletePiece(Ship.Components[0]);
+            }
+
+            m_UI.ClearUI();
+
+            //_req.Clear(false);
+            //Inventory.AddMatsToList(_req.Requirements);
+
+            Ship = new ShipContainer();
+
+            //_util.ClearWeight();
+        }
+
+        #endregion
+
         #region CREATION
+
+        // CREATE NEW SHIP
+        /*
+        public void CreateNewShip()
+        {
+            if (_ship != null)
+                ResetShipData();
+            else
+                _ship = new ShipContainer();
+
+            _ship.Ship = new ShipData();
+            _util.SetShip(_ship);
+            _util.DraggedObj = null;
+
+            ShipName.text = _util.ReturnNextAvailableName();
+            _ship.Ship.CombatResponsive = true;
+            Changed = false;
+
+            _util.ClearWeight();
+        }*/
 
         private int ReturnNextAvailableInstance()
         {
@@ -403,28 +444,8 @@ namespace Space.UI.Station.Editor
 
         #endregion
 
-        // CREATE NEW SHIP
-        /*
-        public void CreateNewShip()
-        {
-            if (_ship != null)
-                ResetShipData();
-            else
-                _ship = new ShipContainer();
-
-            _ship.Ship = new ShipData();
-            _util.SetShip(_ship);
-            _util.DraggedObj = null;
-
-            ShipName.text = _util.ReturnNextAvailableName();
-            _ship.Ship.CombatResponsive = true;
-            Changed = false;
-
-            _util.ClearWeight();
-        }
-
         // CREATE A SHIP COMPONENT
-        
+        /*
         
         public void SaveShipData()
         {
@@ -532,26 +553,8 @@ namespace Space.UI.Station.Editor
         }
 
         ship.AddComponent(tempComp, bSC.Equals(_ship.Head));
-    }
-
-    public void ClearShip()
-    {
-        if (_ship == null)
-            return;
-
-        _tex.Delete(_ship.Ship.Name);
-
-        if (SystemManager.GetPlayer.ShipList.Contains(_ship.Ship))
-        {
-            SystemManager.GetPlayer.ShipList.Remove(_ship.Ship);
-        }
-        if (SystemManager.GetPlayer.Ship.Equals(_ship.Ship))
-        {
-            SystemManager.GetPlayer.SetShip(0);
-        }
-        ResetShipData();
-
-        _util.ClearWeight();
     }*/
+
+    
     }
 }
