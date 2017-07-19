@@ -367,11 +367,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11441116, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_Text
-      value: Delete
+      value: Cancel
       objectReference: {fileID: 0}
     - target: {fileID: 11422038, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11422038, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -383,7 +383,7 @@ Prefab:
       objectReference: {fileID: 79697394}
     - target: {fileID: 11422038, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnStateChanged
+      value: DeleteShip
       objectReference: {fileID: 0}
     - target: {fileID: 11422038, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -9526,7 +9526,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 375, y: -61.897133}
+  m_AnchoredPosition: {x: 375, y: -61.897137}
   m_SizeDelta: {x: 730, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &545647790
@@ -10379,7 +10379,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 55.10601, y: -6.95}
+  m_AnchoredPosition: {x: 55.106014, y: -6.95}
   m_SizeDelta: {x: 80.7, y: 8.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &586671185
@@ -21692,7 +21692,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 60.1, y: -6.9500017}
+  m_AnchoredPosition: {x: 60.100002, y: -6.9500017}
   m_SizeDelta: {x: 84.95, y: 8.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1230568713
@@ -27712,7 +27712,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 237.49998, y: -16.5}
+  m_AnchoredPosition: {x: 237.5, y: -16.5}
   m_SizeDelta: {x: 475, y: 33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1516346332
@@ -30078,7 +30078,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11422038, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11422038, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -30090,7 +30090,7 @@ Prefab:
       objectReference: {fileID: 79697394}
     - target: {fileID: 11422038, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnStateChanged
+      value: SaveShip
       objectReference: {fileID: 0}
     - target: {fileID: 11422038, guid: 3b672c4dcb29c154f861eea74e46bfbb, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -31966,7 +31966,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 109.99997, y: -467.27774}
+  m_AnchoredPosition: {x: 109.99997, y: -467.27777}
   m_SizeDelta: {x: 219.99994, y: 467.27777}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1710053483
@@ -35746,7 +35746,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -477.965}
+  m_AnchoredPosition: {x: 0, y: -477.96497}
   m_SizeDelta: {x: 700.88885, y: 477.965}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1902120806

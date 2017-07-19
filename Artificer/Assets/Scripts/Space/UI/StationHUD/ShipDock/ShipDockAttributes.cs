@@ -72,6 +72,12 @@ namespace Space.UI.Station
         // reference to player ship data
         public ShipAttributes Ship;
 
+        /// <summary>
+        /// Ship index for ship being edited
+        /// -1 if is current ship
+        /// </summary>
+        public int ShipIndex;
+
         #endregion
     }
 }

@@ -43,6 +43,9 @@ namespace Space.UI
 
         #region ACCESSOR
 
+        public int ID
+        { get { return m_shipReference; } }
+
         public string Name
         {
             get { return SystemManager.PlayerShips

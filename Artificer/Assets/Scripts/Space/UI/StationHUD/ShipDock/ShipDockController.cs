@@ -68,8 +68,6 @@ namespace Space.UI.Station
             foreach (GameObject GO in m_att.ManageGOs)
                 GO.SetActive(true);
 
-            m_att.Editor.ClearShip();
-
             m_att.Viewer.BuildShip(m_att.Ship);
 
             // Only run on startup

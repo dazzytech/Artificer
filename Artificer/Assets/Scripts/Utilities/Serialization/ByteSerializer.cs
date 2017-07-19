@@ -104,7 +104,7 @@ namespace Serializer
                 {
                     using (BinaryReader reader = new BinaryReader(stream))
                     {
-                        ship.Head = ReadComp(reader);
+                        ship._head = ReadComp(reader);
 
                         int length = reader.ReadInt32();
                         for (int i = 0; i < length; i++)

@@ -147,7 +147,7 @@ namespace Space.UI.Station.Editor
             ResetShip();
 
             //_util.ClearWeight();
-        }
+        }        
 
         /// <summary>
         /// Delegate function: sets the head of 
@@ -193,6 +193,90 @@ namespace Space.UI.Station.Editor
             Changed = false;
 
             //_util.UpdateWeight();
+        }
+
+        /// <summary>
+        /// Clears and overwrites 
+        /// the ship data stored within
+        /// container
+        /// </summary>
+        public void SaveShipData()
+        {
+            if (Ship == null)
+                return;
+
+            if (Ship.Head == null)
+                return;
+
+            DraggedObj = null;
+            Changed = false;
+
+            // Clear Ship Data for new shipdata
+            Ship.Ship.components = new ComponentData[0];
+
+            // TEST THAT WE HAVE ENOUGH MATERIAL
+            /*foreach (MaterialData mat in _req.Requirements.Keys)
+            {
+                if(SystemManager.GetPlayer.Cargo == null)
+                    SystemManager.GetPlayer.Cargo = 
+                        new System.Collections.Generic.Dictionary<MaterialData, float>();
+                
+                if(!SystemManager.GetPlayer.Cargo.ContainsKey(mat))
+                    return;
+                
+                if(!(SystemManager.GetPlayer.Cargo[mat] >= _req.Requirements[mat]))
+                    return;
+            }
+            
+            // EXPEND MATERIAL IN CARGO
+            foreach (MaterialData mat in _req.Requirements.Keys)
+            {
+                if(SystemManager.GetPlayer.Cargo == null)
+                    SystemManager.GetPlayer.Cargo = 
+                        new System.Collections.Generic.Dictionary<MaterialData, float>();
+
+                SystemManager.GetPlayer.Cargo[mat] -=  _req.Requirements[mat];
+            }*/
+
+            // Clear requirements as the ship will be saved
+            //_req.Clear(true);
+
+            // Change requirement bool to add existing parts as these parts are now current
+            //_req.StoreExisting = true;
+
+            // create temporary shipdata we will save current components to
+            //ShipData temp = new ShipData();
+
+            AddComponentData(Ship.Head, new List<int>());
+
+            // maybe test that name does not already exist?
+            /*List<ShipData> exist = new List<ShipData>(ShipLibrary.GetAll());
+            if (exist.FindIndex(x => x.Name == ShipName.text) != -1)        
+                // Name already exists, change it
+                temp.Name = _util.ReturnNextAvailableName();
+            else
+                temp.Name = ShipName.text;*/
+
+            //temp.CombatResponsive = Ship.Ship.CombatResponsive;
+
+            /*int shipIndex = SystemManager.GetPlayer.ShipList.FindIndex(x => x==_ship.Ship);
+            // Replace ship if currently stored in player base
+            if (shipIndex != -1)
+            {
+                SystemManager.GetPlayer.ShipList [shipIndex] = _ship.Ship = temp;
+            } else
+            {
+                // we have a new creation
+                SystemManager.GetPlayer.AddShip(temp);
+                _ship.Ship = temp;
+            }*/
+
+            //SystemManager.GetPlayer.SetShip(temp.Name);
+
+            //_tex.SaveIcon(_ship.Components, temp);
+
+            // Change requirement bool
+            //_req.StoreExisting = false;
         }
 
         /// <summary>
@@ -264,7 +348,6 @@ namespace Space.UI.Station.Editor
             foreach (SocketData socket in component.sockets)
             {
                 // find the second piece through the socket
-                //print(string.Format("Component: {0} attemping to load component ID: {1}", component.Name, socket.OtherID));
                 ComponentData piece = Ship.Ship.GetComponent (socket.OtherID);
                 if(piece.Path == "")
                 {
@@ -376,11 +459,46 @@ namespace Space.UI.Station.Editor
             //_util.ClearWeight();
         }
 
+        /// <summary>
+        /// Adds the component to the
+        /// ship data within the container
+        /// </summary>
+        /// <param name="BC"></param>
+        /// <param name="AddedIDs"></param>
+        private void AddComponentData(BaseComponent BC, List<int> AddedIDs)
+        {
+            BC.ChangePending = false;
+
+            Ship.Ship.AddComponent(BC.ShipComponent, BC.Equals(Ship.Head));
+
+            // Add socket behaviour based on added ship component
+            foreach (Socket.SocketBehaviour socket in BC.Sockets)
+            {
+                // add sockets that are not currently existing
+                if (socket.connected)
+                {
+                    if (!AddedIDs.Contains(socket.connectedSocket.ObjectID))
+                    {
+                        Ship.Ship.AddSocket(BC.ShipComponent.InstanceID,
+                            int.Parse(socket.SocketID),
+                            int.Parse(socket.connectedSocket.SocketID),
+                            socket.connectedSocket.ObjectID);
+
+                        AddedIDs.Add(BC.ShipComponent.InstanceID);
+
+                        //_req.AddComponent(bSC.ShipComponent);
+                        AddComponentData(socket.connectedSocket.container, AddedIDs);
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region CREATION
 
         // CREATE NEW SHIP
+
         /*
         public void CreateNewShip()
         {
@@ -442,119 +560,6 @@ namespace Space.UI.Station.Editor
                 HighlightedObj = null;
         }
 
-        #endregion
-
-        // CREATE A SHIP COMPONENT
-        /*
-        
-        public void SaveShipData()
-        {
-            if (_ship == null)
-                return;
-
-            if (_ship.Head == null)
-                return;
-
-            _util.DraggedObj = null;
-            Changed = false;
-
-            // TEST THAT WE HAVE ENOUGH MATERIAL
-            /*
-            foreach (MaterialData mat in _req.Requirements.Keys)
-            {
-                if(SystemManager.GetPlayer.Cargo == null)
-                    SystemManager.GetPlayer.Cargo = 
-                        new System.Collections.Generic.Dictionary<MaterialData, float>();
-                
-                if(!SystemManager.GetPlayer.Cargo.ContainsKey(mat))
-                    return;
-                
-                if(!(SystemManager.GetPlayer.Cargo[mat] >= _req.Requirements[mat]))
-                    return;
-            }
-            
-            // EXPEND MATERIAL IN CARGO
-            foreach (MaterialData mat in _req.Requirements.Keys)
-            {
-                if(SystemManager.GetPlayer.Cargo == null)
-                    SystemManager.GetPlayer.Cargo = 
-                        new System.Collections.Generic.Dictionary<MaterialData, float>();
-
-                SystemManager.GetPlayer.Cargo[mat] -=  _req.Requirements[mat];
-            }
-        
-        // Clear requirements as the ship will be saved
-        _req.Clear(true);
-
-        // Change requirement bool to add existing parts as these parts are now current
-        _req.StoreExisting = true;
-
-        // create temporary shipdata we will save current components to
-        ShipData temp = new ShipData();
-
-        SaveCompSockets(_ship.Head, temp, new List<int>());
-
-        // maybe test that name does not already exist?
-        List<ShipData> exist = new List<ShipData>(ShipLibrary.GetAll());
-        if (exist.FindIndex(x => x.Name == ShipName.text) != -1)        
-            // Name already exists, change it
-            temp.Name = _util.ReturnNextAvailableName();
-        else
-            temp.Name = ShipName.text;
-
-        temp.CombatResponsive = _ship.Ship.CombatResponsive;
-
-        /*int shipIndex = SystemManager.GetPlayer.ShipList.FindIndex(x => x==_ship.Ship);
-        // Replace ship if currently stored in player base
-        if (shipIndex != -1)
-        {
-            SystemManager.GetPlayer.ShipList [shipIndex] = _ship.Ship = temp;
-        } else
-        {
-            // we have a new creation
-            SystemManager.GetPlayer.AddShip(temp);
-            _ship.Ship = temp;
-        }
-
-        SystemManager.GetPlayer.SetShip(temp.Name);
-
-        _tex.SaveIcon(_ship.Components, temp);
-
-        // Change requirement bool
-        _req.StoreExisting = false;
-    }
-
-    private void SaveCompSockets(BaseShipComponent bSC, ShipData ship, List<int> AddedIDs)
-    {
-        // Create ComponentData from bSC
-        Component tempComp;
-        tempComp = bSC.ShipComponent;
-        tempComp.Sockets = new List<Socket>();
-        bSC.ChangePending = false;
-
-        // Add socket behaviour based on added ship component
-        foreach(SocketBehaviour socket in bSC.Sockets)
-        {
-            // add sockets that are not currently existing
-            if(socket.connected)
-            {
-                if(!AddedIDs.Contains(socket.connectedSocket.ObjectID))
-                {
-                    tempComp.AddSocket(int.Parse(socket.SocketID), 
-                                       int.Parse(socket.connectedSocket.SocketID),
-                                       socket.connectedSocket.ObjectID);
-
-                    AddedIDs.Add(bSC.ShipComponent.InstanceID);
-
-                    _req.AddComponent(bSC.ShipComponent);
-                    SaveCompSockets(socket.connectedSocket.container, ship, AddedIDs);
-                }
-            }
-        }
-
-        ship.AddComponent(tempComp, bSC.Equals(_ship.Head));
-    }*/
-
-    
+        #endregion    
     }
 }

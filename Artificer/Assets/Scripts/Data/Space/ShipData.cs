@@ -65,7 +65,7 @@ namespace Data.Space
     public struct ShipData 
     {
         public ComponentData[] components;
-        private ComponentData _head;
+        public ComponentData _head;
         public string Name;
         //private Dictionary<string, float> _requirements;
         public string Description;
@@ -163,7 +163,6 @@ namespace Data.Space
     	public ComponentData Head
     	{
             get { return _head;}
-            set { _head = value; }
     	}
 
     	/// <summary>

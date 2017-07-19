@@ -69,6 +69,7 @@ namespace Space.UI.Station
         public void OnShipEdit(ShipManagePrefab ship)
         {
             OnStateChanged(1);
+            m_att.ShipIndex = ship.ID;
             m_att.Editor.LoadExistingShip
                 (ship.Ship);
         }
@@ -76,6 +77,7 @@ namespace Space.UI.Station
         public void OnEditCurrent()
         {
             OnStateChanged(1);
+            m_att.ShipIndex = -1;
             m_att.Editor.LoadExistingShip(m_att.Ship.Ship);
         }
 
@@ -90,14 +92,33 @@ namespace Space.UI.Station
 
         public void SaveShip()
         {
-            //m_att.Editor.SaveShipData();
-            //SendMessage("UpdateShipList");
+            m_att.Editor.SaveShipData();
+
+            // overwrite existing information
+            if (m_att.ShipIndex != -1)
+                SystemManager.PlayerShips[m_att.ShipIndex].Ship
+                    = m_att.Editor.Ship.Ship;
+            else
+            {
+                // Ship we are currently using has been
+                // changed
+                // set data and reset ship construction
+                m_att.Ship.Ship = m_att.Editor.Ship.Ship;
+                
+                // Set ship to reset
+
+            }
+
+            m_att.Editor.ClearShip();
+
+            OnStateChanged(0);
         }
 
         public void DeleteShip()
         {
-            //m_att.Editor.ClearShip();
-            //SendMessage("UpdateShipList");
+            m_att.Editor.ClearShip();
+
+            OnStateChanged(0);
         }
 
         public void GoBack()
@@ -105,7 +126,6 @@ namespace Space.UI.Station
 
         }
             
-
         #endregion
 
         public void ExitStation()
