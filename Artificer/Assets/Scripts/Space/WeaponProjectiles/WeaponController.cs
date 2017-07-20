@@ -32,21 +32,10 @@ namespace Space.Projectiles
         // ignore collectable layer
         public LayerMask maskIgnore;
 
+        [Server]
         public virtual void CreateProjectile(WeaponData data)
         {
-            CmdAssignData(data);
-        }
-
-        [Command]
-        public virtual void CmdAssignData(WeaponData data)
-        {
             _data = data;
-        }
-
-        [Command]
-        public void CmdBuildFX(WeaponData data)
-        {
-            RpcBuildFX(data);
         }
 
         [ClientRpc]

@@ -464,7 +464,13 @@ namespace Space.Ship.Components.Listener
                     new Color(1.0f, 1.0f, 1.0f, 0f);
             }
 
-            SendMessageUpwards("AddComponent", this);
+            // Set if this is the head
+            if (GetAttributes().ShipData.Head.InstanceID ==
+                GetAttributes().ID)
+            {
+                GetAttributes().Ship.Head = this;
+                gameObject.tag = "Head";
+            }
 
             HasSpawned = true;
         }

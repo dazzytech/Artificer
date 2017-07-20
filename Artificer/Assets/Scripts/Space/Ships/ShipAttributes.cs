@@ -16,8 +16,6 @@ namespace Space.Ship
     {
         #region SHIP ATTRIBUTES
 
-        public List<ComponentListener> Components;
-
         public ComponentListener Head;
 
         // allegance
@@ -54,6 +52,13 @@ namespace Space.Ship
         #endregion
 
         #region COMPONENT GETTERS
+
+        public ComponentListener[] Components
+        {
+            get { return GetComponentsInChildren<ComponentListener>(); }
+        }
+
+
 
         // Getter functions
         public int Engines

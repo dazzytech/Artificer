@@ -78,13 +78,12 @@ namespace Space.Segment
 
             foreach (ComponentListener listener in shipAtts.SelectedComponents(components))
             {
-                shipAtts.Components.Remove(listener);
                 listener.Destroy();
                 listener.transform.parent = this.transform;
                 rb.mass += listener.Weight;
             }
 
-            if (shipAtts.Components.Count == 0)
+            if (shipAtts.Components.Length == 0)
                 Destroy(player);
 
             m_maxDensity = m_pieceDensity = (40f * transform.childCount);

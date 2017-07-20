@@ -88,7 +88,7 @@ namespace Space.Projectiles
             currDistance = 0;
             origTransPosition = transform.position;
 
-            CmdBuildFX(data);
+            RpcBuildFX(data);
         }
 
         #region FX

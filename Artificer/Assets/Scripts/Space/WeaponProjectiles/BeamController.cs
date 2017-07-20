@@ -142,7 +142,7 @@ namespace Space.Projectiles
                 }
             }
 
-            CmdBuildFX(data);
+            RpcBuildFX(data);
         }
 
         #endregion

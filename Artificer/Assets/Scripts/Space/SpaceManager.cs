@@ -5,7 +5,6 @@ using System.Collections.Generic;
 // Artificer
 using Data.Space;
 using Data.Space.Library;
-using Data.Space;
 using Space.UI;
 using Space.Ship;
 using Space.Teams;
@@ -69,7 +68,7 @@ namespace Space
         /// </summary>
         public NetworkConnection PlayerConn(NetworkInstanceId netID)
         {
-            GameObject caller = ClientScene.FindLocalObject(netId);
+            GameObject caller = ClientScene.FindLocalObject(netID);
                 if (caller != null)
                     return caller.GetComponent<NetworkIdentity>()
                         .connectionToClient;

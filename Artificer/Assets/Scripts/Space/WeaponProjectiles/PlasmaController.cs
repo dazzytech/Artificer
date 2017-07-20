@@ -93,7 +93,7 @@ namespace Space.Projectiles
         {
             base.CreateProjectile(data);
 
-            CmdBuildFX(data);
+            RpcBuildFX(data);
         }
 
         #region FX

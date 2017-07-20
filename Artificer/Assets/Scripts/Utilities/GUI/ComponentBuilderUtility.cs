@@ -184,7 +184,7 @@ namespace UI
 
             // Find min and max points of total ship 
             // using each component
-            for (int i = 0; i < m_shipAtt.Components.Count; i++)
+            for (int i = 0; i < m_shipAtt.Components.Length; i++)
             {
                 if (m_shipAtt == null)
                     return;
@@ -229,7 +229,7 @@ namespace UI
 
             // Find min and max points of total ship 
             // using each component
-            for (int i = 0; i < m_shipAtt.Components.Count; i++)
+            for (int i = 0; i < m_shipAtt.Components.Length; i++)
             {
                 if (m_shipAtt == null)
                     return;

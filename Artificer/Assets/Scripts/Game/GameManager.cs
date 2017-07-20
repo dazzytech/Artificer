@@ -245,27 +245,6 @@ namespace Game
                 .AssignShipData(ship, info.mTeam);
         }
 
-        [Server]
-        public void BuildProjectile(int prefabIndex, int playerID, Vector3 position, WeaponData wData)
-        {
-            PlayerConnectionInfo info =
-                m_att.PlayerInfoList.Item(playerID);
-
-            GameObject Prefab = NetworkManager.singleton.spawnPrefabs[prefabIndex];
-
-            GameObject GO = Instantiate(Prefab, position, Quaternion.identity) as GameObject;
-
-            // Projectile can run command to display self
-            NetworkServer.SpawnWithClientAuthority(GO, info.mConnection);
-
-            ProjectileSpawnedMessage spwnMsg = new ProjectileSpawnedMessage();
-            spwnMsg.WData = wData;
-            spwnMsg.Projectile = GO.GetComponent<NetworkIdentity>().netId;
-
-            NetworkServer.SendToClient(info.mConnection.connectionId, 
-                (short)MSGCHANNEL.CREATEPROJECTILE, spwnMsg);
-        }
-
         /// <summary>
         /// Sends station information to 
         /// game builder and assigns station to team

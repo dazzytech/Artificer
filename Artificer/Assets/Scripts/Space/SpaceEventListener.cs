@@ -49,7 +49,6 @@ namespace Space
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.ASSIGNTEAM, OnDefineTeam);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSOBJECTHIT, OnProcessHitMsg);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSSHIPHIT, OnProcessHitMsgShip);
-            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.CREATEPROJECTILE, OnProjectileCreated);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.DISPLAYINTEGRITYCHANGE, OnIntegrityChanged);
         }
 
@@ -415,19 +414,6 @@ namespace Space
                 Debug.Log("ERROR: Space Event Listener - Process Ship Hit Msg: " +
                     "Passed ship object is null.");
             }
-        }
-
-        public void OnProjectileCreated(NetworkMessage msg)
-        {
-            // retreive message
-            ProjectileSpawnedMessage projMsg = msg.ReadMessage<ProjectileSpawnedMessage>();
-
-            // find our projectile
-            GameObject GO = ClientScene.FindLocalObject
-                (projMsg.Projectile);
-
-            // client side projectile building
-            GO.GetComponent<WeaponController>().CreateProjectile(projMsg.WData);
         }
 
         public void OnIntegrityChanged(NetworkMessage msg)

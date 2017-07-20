@@ -189,9 +189,8 @@ namespace Space.Ship
                     as GameObject;
 
             // set transform
-            headGO.transform.parent = transform;
-            headGO.transform.localPosition = Vector3.zero;
-            headGO.tag = "Head";
+            //headGO.transform.parent = transform;
+            //headGO.transform.localPosition = Vector3.zero;
 
             NetworkServer.SpawnWithClientAuthority(headGO, connectionToClient);
 
@@ -311,7 +310,7 @@ namespace Space.Ship
         /// list
         /// </summary>
         [Command]
-        public void CmdResetShip(ShipData ship)
+        private void CmdResetShip(ShipData ship)
         {
             // Delete components 
             foreach(ComponentListener component in m_att.Components)
@@ -320,8 +319,6 @@ namespace Space.Ship
                 NetworkServer.UnSpawn(component.gameObject);
                 GameObject.Destroy(component.gameObject);
             }
-
-            m_att.Components.Clear();
 
             // update ship info
             m_att.Ship = ship;

@@ -20,7 +20,7 @@ namespace Space.SpawnManager
     /// every heartbeat will have a random
     /// raid party spawn
     /// </summary>
-    public class RaiderSpawnMananger : NetworkBehaviour
+    public class RaiderSpawnManager : NetworkBehaviour
     {
         #region TARGET TRACKER
 
@@ -275,7 +275,8 @@ namespace Space.SpawnManager
             // Retrieve the agent info
             AgentData agent = m_AI.AgentLibrary["raider_small"];
 
-            CmdSpawnShip(newAgent, agent.Ship, SystemManager.Space.NetID);
+            CmdSpawnShip(newAgent.GetComponent<NetworkIdentity>().netId.Value,
+                agent.Ship, SystemManager.Space.NetID);
 
             AssaultAgent agentFSM = newAgent.AddComponent<AssaultAgent>();
 
@@ -297,16 +298,19 @@ namespace Space.SpawnManager
         /// authority and sets the spawn process message
         /// </summary>
         [Command]
-        private void CmdSpawnShip(GameObject agent,
+        public void CmdSpawnShip(uint agentID,
             string ship, uint playerNetID)
         {
+            GameObject GO = ClientScene.FindLocalObject
+                (new NetworkInstanceId(agentID));
+
             // Spawn the ship on the network
             NetworkServer.SpawnWithClientAuthority
-                (agent, SystemManager.Space.PlayerConn
+                (GO, SystemManager.Space.PlayerConn
                 (new NetworkInstanceId(playerNetID)));
 
             // Assign the information while on the server
-            agent.GetComponent<ShipGenerator>().
+            GO.GetComponent<ShipGenerator>().
                 AssignShipData(ShipLibrary.GetShip(ship), -1);
         }
 

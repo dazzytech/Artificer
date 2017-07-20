@@ -15,9 +15,9 @@ namespace Space.Ship.Components
     {
         private ComponentAttributes _att;
 
-        #region ONSTART OVERRIDES
+        #region MONO BEHAVIOUR
 
-        public override void OnStartClient()
+        void Awake()
         {
             _att = transform.GetComponent<ComponentAttributes>();
         }

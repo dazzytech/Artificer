@@ -17,8 +17,6 @@ namespace Networking
         TEAMSELECTED,
         SPAWNPLAYER,
         SHIPHIT,
-        CREATEPROJECTILE,
-        BUILDPROJECTILE,
         BUILDSTATION,
         PROCESSSHIPHIT,
         OBJECTHIT,
@@ -70,18 +68,6 @@ namespace Networking
         public ShipData Ship;
     }
 
-    /// <summary>
-    /// Request from player to server to 
-    /// spawn a projectile with local player
-    /// authority
-    /// </summary>
-    public class ProjectileBuildMessage : MessageBase
-    {
-        public Vector3 Position;
-        public int PrefabIndex, shooterID;
-        public WeaponData WData;
-    }
-
     public class StationBuildMessage : MessageBase
     {
         public string PrefabName;
@@ -89,15 +75,6 @@ namespace Networking
         public int teamID;
     }
 
-    /// <summary>
-    /// Message sent when projectile is spawned by server
-    /// with reference for accessing new projectile
-    /// </summary>
-    public class ProjectileSpawnedMessage : MessageBase
-    {
-        public NetworkInstanceId Projectile;
-        public WeaponData WData;
-    }
 
     /// <summary>
     /// Called when a ship has been hit

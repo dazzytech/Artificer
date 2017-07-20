@@ -41,7 +41,7 @@ namespace Space.UI.Ship
             ClearAll();
             // Update the color state to the existing buttons
             // create pieces for each new ship
-            if (_shipData.Components.Count != 0)
+            if (_shipData.Components.Length != 0)
                 UpdateComponentList();
         }
 

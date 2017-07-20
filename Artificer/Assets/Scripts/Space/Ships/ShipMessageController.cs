@@ -272,7 +272,7 @@ namespace Space.Ship
         private void RpcDisableComponents()
         {
             // loop through each component and change visual back
-            foreach (ComponentListener listener in GetComponentsInChildren<ComponentListener>())
+            foreach (ComponentListener listener in m_ship.Components)
             {
                 listener.HideComponent();
             }
@@ -289,8 +289,7 @@ namespace Space.Ship
         private void RpcEnableComponents()
         {
             // loop through each component and change visual back
-            foreach (ComponentListener listener in 
-                GetComponentsInChildren<ComponentListener>())
+            foreach (ComponentListener listener in m_ship.Components)
             {
                 listener.ShowComponent();
             }
@@ -307,27 +306,6 @@ namespace Space.Ship
         #endregion
 
         #region SHIP INITIALIZATION
-
-        /// <summary>
-        /// Adds the component to list
-        /// stored within shipattributes and
-        /// defines the head
-        /// </summary>
-        public void AddComponent(ComponentListener component)
-        {
-                if (component != null)
-                {
-                    // Store component in attributes 
-                    // and sent attributes to component
-                    if (m_ship.Components == null)
-                        m_ship.Components = new List<ComponentListener>();
-
-                    m_ship.Components.Add(component);
-                }
-
-                if (component.transform.tag == "Head")
-                    m_ship.Head = component;
-        }
 
         /// <summary>
         /// Sets the faction/team the ship is aligned to
@@ -348,7 +326,7 @@ namespace Space.Ship
         /// </summary>
         public void ShipDestroyed()
         {
-            int[] dead = new int[m_ship.Components.Count];
+            int[] dead = new int[m_ship.Components.Length];
             int i = 0;
             foreach (ComponentListener listener in m_ship.Components)
             {

@@ -98,7 +98,7 @@ namespace Space.Projectiles
             }
             Target = targetObj.transform;
 
-            CmdBuildFX(data);
+            RpcBuildFX(data);
         }
 
         #endregion

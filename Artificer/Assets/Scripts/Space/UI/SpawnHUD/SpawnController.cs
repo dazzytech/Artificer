@@ -128,7 +128,11 @@ namespace Space.UI.Spawn
             {
                 // Only spawn ships we own
                 if (!spawn.Owned)
+                {
+                    shipIndex++;
                     continue;
+                }
+                
 
                 GameObject shipObj = 
                     Instantiate(m_att.ShipSelectPrefab);

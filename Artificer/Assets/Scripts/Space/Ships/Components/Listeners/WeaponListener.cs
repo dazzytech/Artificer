@@ -32,7 +32,7 @@ namespace Space.Ship.Components.Listener
                     return;
                 }
 
-                Vector3 shotOrigin = firePs[Random.Range(0, firePs.Length)].position;
+                
 
     			Vector3 forward = transform.TransformDirection (Vector3.up);
 
@@ -46,24 +46,36 @@ namespace Space.Ship.Components.Listener
                 data.Distance = _attr.WeaponRange;
                 data.Self = _attr.Ship.NetworkID;
 
-                int prefabIndex = NetworkManager.singleton.spawnPrefabs.IndexOf(_attr.ProjectilePrefab);
+                Vector3 shotOrigin = firePs[Random.Range(0, firePs.Length)].position;
+
+                int prefabID = NetworkManager.singleton.spawnPrefabs.IndexOf(_attr.ProjectilePrefab);
 
                 StartCoroutine("EngageDelay");
 
-                ProjectileBuildMessage msg = new ProjectileBuildMessage();
-                msg.PrefabIndex = prefabIndex;
-                msg.Position = shotOrigin;
-                msg.WData = data;
-                msg.shooterID = SystemManager.Space.ID;
-
-                // Sendmsg to game to spawn projectile
-                SystemManager.singleton.client.Send((short)MSGCHANNEL.BUILDPROJECTILE, msg);
+                CmdBuildProjectile(prefabID, shotOrigin,
+                    data, SystemManager.Space.NetID);
             }
     	}
 
         #endregion
 
         #region PRIVATE UTILITIES
+
+        [Command]
+        private void CmdBuildProjectile(int prefabID, Vector3 shotOrigin,
+            WeaponData wData, uint playerNetID)
+        {
+            GameObject Prefab = NetworkManager.singleton.spawnPrefabs[prefabID];
+
+            GameObject GO = Instantiate(Prefab, shotOrigin, Quaternion.identity) as GameObject;
+
+            // Projectile can run command to display self
+            NetworkServer.SpawnWithClientAuthority(GO, 
+                SystemManager.Space.PlayerConn
+                (new NetworkInstanceId(playerNetID)));
+
+            GO.GetComponent<WeaponController>().CreateProjectile(wData);
+        }
 
         protected override void InitializeComponent()
         {

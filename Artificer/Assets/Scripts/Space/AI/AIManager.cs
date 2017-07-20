@@ -22,7 +22,7 @@ namespace Space.AI
         #region SPAWN MANAGERS
 
         [SerializeField]
-        private RaiderSpawnMananger m_raiderSpawn;
+        private RaiderSpawnManager m_raiderSpawn;
 
         #endregion
 

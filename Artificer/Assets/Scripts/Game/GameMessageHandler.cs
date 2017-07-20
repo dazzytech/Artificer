@@ -48,7 +48,6 @@ namespace Game
             NetworkServer.RegisterHandler((short)MSGCHANNEL.TEAMSELECTED, OnAssignToTeam);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SPAWNPLAYER, OnSpawnPlayerAt);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SHIPHIT, OnShipHit);
-            NetworkServer.RegisterHandler((short)MSGCHANNEL.BUILDPROJECTILE, OnBuildProjectile);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.BUILDSTATION, OnBuildStation);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.OBJECTHIT, OnObjectHit);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.INTEGRITYCHANGE, OnIntegrityChanged);
@@ -169,18 +168,6 @@ namespace Game
         #endregion
 
         #region SPACE MESSAGES
-
-        /// <summary>
-        /// builds a projectile on the server
-        /// and sends spawn info to each client
-        /// </summary>
-        /// <param name="msg"></param>
-        [Server]
-        public void OnBuildProjectile(NetworkMessage msg)
-        {
-            ProjectileBuildMessage projMsg = msg.ReadMessage<ProjectileBuildMessage>();
-            m_con.BuildProjectile(projMsg.PrefabIndex, projMsg.shooterID, projMsg.Position, projMsg.WData);
-        }
 
         /// <summary>
         /// Called when player builds a station

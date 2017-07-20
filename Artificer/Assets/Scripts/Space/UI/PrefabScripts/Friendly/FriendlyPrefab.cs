@@ -130,7 +130,7 @@ namespace Space.UI.Ship
             m_ID = newID;
 
             // If ship has been built then create ship viewer
-            if (newShip.Components.Count > 0)
+            if (newShip.Components.Length > 0)
             {
                 ViewerPanel.BuildShip(newShip, PiecePrefab);
 
