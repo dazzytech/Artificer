@@ -21,7 +21,7 @@ namespace Space.Ship
     /// upon creation following 
     /// criteria
     /// </summary>
-    public class ShipInitializer : NetworkBehaviour
+    public class ShipGenerator : NetworkBehaviour
     {
         #region ATTRIBUTES
 
@@ -105,6 +105,16 @@ namespace Space.Ship
             m_att.hasSpawned = true;
         }
 
+        /// <summary>
+        /// When ship data is changed
+        /// invoke the server to destroy components and then
+        /// rebuild the ship
+        /// </summary>
+        public void ResetShip()
+        {
+            CmdResetShip(m_att.Ship);
+        }
+
         #endregion
 
         #region PRIVATE UTILITIES
@@ -166,7 +176,7 @@ namespace Space.Ship
         /// <param name="ship">ShipData template 
         /// to ship the ship with.</param>
         [Server]
-        public void GenerateShip
+        private void GenerateShip
             ()
         {
             // create list for storing info
@@ -206,7 +216,7 @@ namespace Space.Ship
         /// <param name="componentTransform">Component transform.</param>
         /// <param name="ship">Ship.</param>
         [Server]
-        public void BuildConnectedPieces
+        private void BuildConnectedPieces
             (ComponentData component, Transform componentTransform)
         {
             SocketData[] socketList = component.sockets;
@@ -289,6 +299,35 @@ namespace Space.Ship
                 BuildConnectedPieces
                     (piece, pieceGO.transform);
             }
+        }
+
+        #endregion
+
+        #region SHIP DESTRUCTION
+
+        /// <summary>
+        /// Loops through each component and 
+        /// destroys the go and removes it from 
+        /// list
+        /// </summary>
+        [Command]
+        public void CmdResetShip(ShipData ship)
+        {
+            // Delete components 
+            foreach(ComponentListener component in m_att.Components)
+            {
+                component.Destroy();
+                NetworkServer.UnSpawn(component.gameObject);
+                GameObject.Destroy(component.gameObject);
+            }
+
+            m_att.Components.Clear();
+
+            // update ship info
+            m_att.Ship = ship;
+
+            // invoke Generate Ship to rebuild our new components
+            GenerateShip();
         }
 
         #endregion

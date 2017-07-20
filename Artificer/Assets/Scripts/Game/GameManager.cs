@@ -241,7 +241,7 @@ namespace Game
                 m_att.TeamB.AddPlayerObject(GO.GetComponent<NetworkIdentity>().netId);
             }
 
-            GO.GetComponent<ShipInitializer>()
+            GO.GetComponent<ShipGenerator>()
                 .AssignShipData(ship, info.mTeam);
         }
 

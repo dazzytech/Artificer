@@ -106,7 +106,8 @@ namespace Space.UI.Station
                 m_att.Ship.Ship = m_att.Editor.Ship.Ship;
                 
                 // Set ship to reset
-
+                m_att.Ship.SendMessage("ResetShip", 
+                    SendMessageOptions.RequireReceiver);
             }
 
             m_att.Editor.ClearShip();

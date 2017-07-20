@@ -159,9 +159,9 @@ namespace Space.Ship
             }
         }
 
-        public ShipInitializer Init
+        public ShipGenerator Init
         {
-            get { return GetComponent<ShipInitializer>(); }
+            get { return GetComponent<ShipGenerator>(); }
         }
 
         #endregion
@@ -200,10 +200,6 @@ namespace Space.Ship
 
         #region TARGETTING ATTRIBUTES
 
-        /*public List<Transform> Targets;
-        public List<Transform> SelfTargeted;
-        public List<Transform> HighlightedTargets;
-        */
         public List<ShipSelect> TargetedShips;
 
         public Rect HighlightRect;

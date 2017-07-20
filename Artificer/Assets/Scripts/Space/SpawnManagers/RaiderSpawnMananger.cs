@@ -306,7 +306,7 @@ namespace Space.SpawnManager
                 (new NetworkInstanceId(playerNetID)));
 
             // Assign the information while on the server
-            agent.GetComponent<ShipInitializer>().
+            agent.GetComponent<ShipGenerator>().
                 AssignShipData(ShipLibrary.GetShip(ship), -1);
         }
 

@@ -272,7 +272,7 @@ namespace Space.Ship
         private void RpcDisableComponents()
         {
             // loop through each component and change visual back
-            foreach (ComponentListener listener in m_ship.Components)
+            foreach (ComponentListener listener in GetComponentsInChildren<ComponentListener>())
             {
                 listener.HideComponent();
             }
@@ -289,7 +289,8 @@ namespace Space.Ship
         private void RpcEnableComponents()
         {
             // loop through each component and change visual back
-            foreach (ComponentListener listener in m_ship.Components)
+            foreach (ComponentListener listener in 
+                GetComponentsInChildren<ComponentListener>())
             {
                 listener.ShowComponent();
             }
