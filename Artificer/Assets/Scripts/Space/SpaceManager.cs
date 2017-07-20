@@ -66,18 +66,15 @@ namespace Space
 
         /// <summary>
         /// Access to the client connection
-        /// 
         /// </summary>
-        public NetworkConnection PlayerConn
+        public NetworkConnection PlayerConn(NetworkInstanceId netID)
         {
-            get
-            {
-                if (_att.PlayerShip != null)
-                    return _att.PlayerShip.GetComponent<NetworkIdentity>()
+            GameObject caller = ClientScene.FindLocalObject(netId);
+                if (caller != null)
+                    return caller.GetComponent<NetworkIdentity>()
                         .connectionToClient;
                 else
                     return null;
-            }
         }
 
         public int ID
@@ -277,27 +274,6 @@ namespace Space
                 TeamSelected();
 
             RefreshShipSpawnList();
-
-            // Instead of doing this create a team selected event
-            /*foreach(Transform ship in GameObject.Find("_ships").transform)
-            {
-                if(ship.tag == "Untagged")
-                {
-                    NetworkInstanceId netId = ship.GetComponent<NetworkIdentity>().netId;
-
-                    // Determine tag based on our reference to team
-                    if (SystemManager.Space.Team.PlayerOnTeam(netId))
-                    {
-                        ship.name = "AllyShip";
-                        ship.tag = "Friendly";
-                    }
-                    else
-                    {
-                        ship.name = "EnemyShip";
-                        ship.tag = "Enemy";
-                    }
-                }
-            }*/
         }
 
         public void DockAtStation()

@@ -47,7 +47,6 @@ namespace Game
 
             NetworkServer.RegisterHandler((short)MSGCHANNEL.TEAMSELECTED, OnAssignToTeam);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SPAWNPLAYER, OnSpawnPlayerAt);
-            NetworkServer.RegisterHandler((short)MSGCHANNEL.SPAWNAI, OnBuildAI);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SHIPHIT, OnShipHit);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.BUILDPROJECTILE, OnBuildProjectile);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.BUILDSTATION, OnBuildStation);
@@ -150,7 +149,7 @@ namespace Game
         {
             // Retreive variables and display options
             SpawnSelectionMessage ssm = netMsg.ReadMessage<SpawnSelectionMessage>();
-            m_con.SpawnPlayer(ssm.PlayerID, ssm.SpawnID, ssm.ShipName);
+            m_con.SpawnPlayer(ssm.PlayerID, ssm.SpawnID, ssm.Ship);
         }
 
         /// <summary>
@@ -170,17 +169,6 @@ namespace Game
         #endregion
 
         #region SPACE MESSAGES
-
-        /// <summary>
-        /// message by ai manager to build an ai agent with the 
-        /// agent properties
-        /// </summary>
-        /// <param name="msg"></param>
-        public void OnBuildAI(NetworkMessage msg)
-        {
-            SpawnAIMessage spawnAI = msg.ReadMessage<SpawnAIMessage>();
-            //m_con.SpawnAI(spawnAI.ID, spawnAI.Agent, spawnAI.Point);
-        }
 
         /// <summary>
         /// builds a projectile on the server

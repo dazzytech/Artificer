@@ -5,6 +5,7 @@ using System.Collections;
 
 using Networking;
 using UI;
+using Data.Space.Library;
 
 namespace Space.UI.Spawn
 {
@@ -50,7 +51,7 @@ namespace Space.UI.Spawn
             // For now we don't use spawn or ship info
             SpawnSelectionMessage ssm = new SpawnSelectionMessage();
             ssm.PlayerID = SystemManager.Space.ID;
-            ssm.ShipName = m_con.SelectedName;
+            ssm.Ship = m_con.SelectedShip;
             ssm.SpawnID = m_con.SelectedSpawn;
 
             SystemManager.singleton.client.Send((short)MSGCHANNEL.SPAWNPLAYER, ssm);

@@ -222,7 +222,7 @@ namespace Game
         }
 
         [Server]
-        public void SpawnPlayer(int playerID, int stationID, string shipName)
+        public void SpawnPlayer(int playerID, int stationID, ShipData ship)
         {
             PlayerConnectionInfo info = 
                 m_att.PlayerInfoList.Item(playerID);
@@ -242,29 +242,8 @@ namespace Game
             }
 
             GO.GetComponent<ShipInitializer>()
-                .AssignShipData(shipName, info.mTeam);
+                .AssignShipData(ship, info.mTeam);
         }
-
-        /*
-        [Server]
-        public void SpawnAI(int playerID, AgentData agent, Vector2 spawnPoint)
-        {
-            PlayerConnectionInfo info =
-                _att.PlayerInfoList.Item(playerID);
-
-            GameObject Prefab = SystemManager.singleton.playerPrefab;
-
-            GameObject GO = Instantiate(Prefab, spawnPoint, Quaternion.identity) as GameObject;
-
-            // Projectile can run command to display self
-            NetworkServer.SpawnWithClientAuthority(GO, info.mConnection);
-
-            // assign ship info
-            // e.g. ship name 
-            StringMessage sMsg = new StringMessage(agent.Ship);
-            NetworkServer.SendToClient(info.mConnection.connectionId,
-                (short)MSGCHANNEL.SPAWNME, sMsg);
-        }*/
 
         [Server]
         public void BuildProjectile(int prefabIndex, int playerID, Vector3 position, WeaponData wData)

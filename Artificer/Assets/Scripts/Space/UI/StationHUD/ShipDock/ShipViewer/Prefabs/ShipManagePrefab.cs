@@ -137,15 +137,6 @@ namespace Space.UI.Station.Viewer.Prefabs
             }
         }
 
-        public ShipData Ship
-        {
-            get
-            {
-                return SystemManager.PlayerShips
-                      [m_shipReference].Ship;
-            }
-        }
-
         #endregion
         
         #region PUBLIC INTERACTION

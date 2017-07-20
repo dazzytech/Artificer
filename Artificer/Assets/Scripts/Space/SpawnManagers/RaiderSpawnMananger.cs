@@ -1,4 +1,5 @@
 ﻿using Data.Space;
+using Data.Space.Library;
 using Game;
 using Networking;
 using Space.AI;
@@ -274,7 +275,7 @@ namespace Space.SpawnManager
             // Retrieve the agent info
             AgentData agent = m_AI.AgentLibrary["raider_small"];
 
-            CmdSpawnShip(newAgent, agent.Ship);
+            CmdSpawnShip(newAgent, agent.Ship, SystemManager.Space.NetID);
 
             AssaultAgent agentFSM = newAgent.AddComponent<AssaultAgent>();
 
@@ -297,15 +298,16 @@ namespace Space.SpawnManager
         /// </summary>
         [Command]
         private void CmdSpawnShip(GameObject agent,
-            string ship)
+            string ship, uint playerNetID)
         {
             // Spawn the ship on the network
             NetworkServer.SpawnWithClientAuthority
-                (agent, SystemManager.Space.PlayerConn);
+                (agent, SystemManager.Space.PlayerConn
+                (new NetworkInstanceId(playerNetID)));
 
             // Assign the information while on the server
             agent.GetComponent<ShipInitializer>().
-                AssignShipData(ship, -1);
+                AssignShipData(ShipLibrary.GetShip(ship), -1);
         }
 
         #endregion
@@ -412,8 +414,8 @@ namespace Space.SpawnManager
                     // Skip random for now
 
                     // 5% - 50% chance of spawning
-                    if (UnityEngine.Random.Range(-10, 10) >= level 
-                        && SystemManager.Space.PlayerConn != null
+                    if (UnityEngine.Random.Range(-10, 10) >= level
+                       && SystemManager.Space.NetID != 0 // 0 = empty
                         /*Add additional check for if currently pursued*/)
                     {
                         // we are able to spawn a ship

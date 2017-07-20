@@ -16,7 +16,6 @@ namespace Networking
         NEWID,
         TEAMSELECTED,
         SPAWNPLAYER,
-        SPAWNAI,
         SHIPHIT,
         CREATEPROJECTILE,
         BUILDPROJECTILE,
@@ -68,18 +67,7 @@ namespace Networking
     {
         public int PlayerID;
         public int SpawnID;
-        public string ShipName;
-    }
-
-    /// <summary>
-    /// Information sent to the 
-    /// server to spawn an ai agent
-    /// </summary>
-    public class SpawnAIMessage : MessageBase
-    {
-        public int ID;
-        public AgentData Agent;
-        public Vector2 Point;
+        public ShipData Ship;
     }
 
     /// <summary>

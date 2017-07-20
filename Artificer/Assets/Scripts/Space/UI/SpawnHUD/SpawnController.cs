@@ -33,11 +33,11 @@ namespace Space.UI.Spawn
 
         #region ACCESSORS
 
-        public string SelectedName
+        public ShipData SelectedShip
         {
             get
             {
-                return m_att.SelectedShip.Name;
+                return m_att.SelectedShip.Ship;
             }
         }
 

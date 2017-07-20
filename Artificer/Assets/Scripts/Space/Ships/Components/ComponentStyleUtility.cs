@@ -17,18 +17,9 @@ namespace Space.Ship.Components
 
         #region ONSTART OVERRIDES
 
-        /// <summary>
-        /// Apply the ship style if it 
-        /// was build on server already
-        /// </summary>
         public override void OnStartClient()
         {
             _att = transform.GetComponent<ComponentAttributes>();
-
-            if (_att.HasSpawned)
-            {
-                ApplyStyle();
-            }
         }
 
         #endregion
@@ -53,9 +44,6 @@ namespace Space.Ship.Components
                 if (info.name == style)
                     _att.currentStyle = style;
             }
-
-            // possibly call function to apply texture
-            ApplyStyle();
         }
 
         /// <summary>
@@ -72,15 +60,11 @@ namespace Space.Ship.Components
             return null;
         }
 
-        #endregion
-
-        #region PRIVATE UTILITIES
-
         /// <summary>
         /// Applies the style to the component by swaping out the texture
         /// with the renderer.
         /// </summary>
-        private void ApplyStyle()
+        public void ApplyStyle()
         {
             SpriteRenderer render = GetComponentInChildren<SpriteRenderer>();
 

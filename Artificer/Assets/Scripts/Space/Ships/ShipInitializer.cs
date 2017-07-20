@@ -82,10 +82,10 @@ namespace Space.Ship
         /// based on parameters
         /// </summary>
         [Server]
-        public void AssignShipData(string shipItem, int alignment)
+        public void AssignShipData(ShipData shipItem, int alignment)
         {
             // Assign the shipdata to the attributes
-            m_att.Ship = ShipLibrary.GetShip(shipItem);
+            m_att.Ship = shipItem;
 
             // Assign the team information to the attributes
             m_att.TeamID = alignment;
@@ -97,6 +97,7 @@ namespace Space.Ship
             GenerateShip();
 
             // Add to other uis
+            // will be replaces with listening to on ship create event?
             SystemManager.UI.RpcAddRemotePlayer(netId);
 
             SystemManager.GameMSG.OnShipCreated(netId, SystemManager.Space.ID);

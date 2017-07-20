@@ -217,6 +217,9 @@ namespace Space.Ship.Components.Listener
             ConnectedID = connected;
             Socket = socket;
 
+            // Change visual style
+            Style.SetStyle(Data.Style);
+
             // Allow comp to init
             ServerReady = true;
         }
@@ -433,7 +436,8 @@ namespace Space.Ship.Components.Listener
 
             ID = Data.InstanceID;
 
-            Style.SetStyle(Data.Style);
+            // update visually
+            Style.ApplyStyle();
 
             InitEmitter();
 

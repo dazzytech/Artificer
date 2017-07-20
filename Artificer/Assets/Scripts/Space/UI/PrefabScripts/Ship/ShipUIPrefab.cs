@@ -64,6 +64,15 @@ namespace Space.UI
                     [m_shipReference].Ship.Category; }
         }
 
+        public ShipData Ship
+        {
+            get
+            {
+                return SystemManager.PlayerShips
+                      [m_shipReference].Ship;
+            }
+        }
+
         #endregion
 
         #region PUBLIC INTERACTION
