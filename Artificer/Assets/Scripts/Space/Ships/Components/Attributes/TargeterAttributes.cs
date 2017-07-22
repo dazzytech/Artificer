@@ -19,9 +19,30 @@ namespace Space.Ship.Components.Attributes
 
     public class TargeterAttributes : ComponentAttributes
     {
+        #region ANGLE CALCULATION
+
         //Angle limits
         public float MaxAngle;
         public float MinAngle;
+
+        // Follow ranges
+        [HideInInspector]
+        public float MinFollow = 20;
+
+        public float PrevAngle;
+
+        #endregion
+
+        #region TARGET STATE
+
+        public TargeterBehaviour Behaviour;
+
+        // Bool that pauses fire
+        public bool EngageFire;
+
+        public bool Aligned;
+
+        #endregion
 
         // turn variables for facing position
         public float turnSpeed;
@@ -36,9 +57,6 @@ namespace Space.Ship.Components.Attributes
 
         public ShipAttributes ShipAtts;
 
-        public TargeterBehaviour Behaviour;
-
-        // Bool that pauses fire
-        public bool EngageFire;
+        
     }
 }

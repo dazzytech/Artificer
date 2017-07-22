@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Data.Space;
 using Space.Ship.Components.Listener;
 using Space.UI.Ship;
+using Space.Ship.Components.Attributes;
 
 namespace Space.Ship
 {
@@ -58,9 +59,6 @@ namespace Space.Ship
             get { return GetComponentsInChildren<ComponentListener>(); }
         }
 
-
-
-        // Getter functions
         public int Engines
         {
             get
@@ -164,9 +162,35 @@ namespace Space.Ship
             }
         }
 
-        public ShipGenerator Init
+        public ShipGenerator Generator
         {
             get { return GetComponent<ShipGenerator>(); }
+        }
+
+        public bool Aligned
+        {
+            get
+            {
+                // If the whole ship follows the 
+                // then find the angle of the 
+                if (Ship.CombatResponsive)
+                {
+                    float tAngle = Math.Angle(transform,
+                            Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                    // between min and max angle of 15 then we fire
+                    if (tAngle < 5f && tAngle > -5f)
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                {
+                    foreach (TargeterListener targeter in Targeter)
+                        if (((TargeterAttributes)targeter.GetAttributes()).Aligned)
+                            return true;
+                    return false;
+                }
+            }
         }
 
         #endregion

@@ -297,6 +297,7 @@ MonoBehaviour:
     AutoFire: 0
   MaxAngle: 180
   MinAngle: -180
+  MinFollow: 20
   turnSpeed: 6
   AttackRange: 100
   currentTarget: {fileID: 0}

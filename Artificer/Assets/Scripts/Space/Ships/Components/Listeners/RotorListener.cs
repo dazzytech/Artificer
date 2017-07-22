@@ -63,7 +63,8 @@ namespace Space.Ship.Components.Listener
             // Perform automated turning if in combat mode
             if (_attr.ShipData.CombatActive && _attr.ShipData.CombatResponsive)
             {
-                float difference = CalcAngle();
+                float difference = Math.Angle(transform.parent, 
+                    Camera.main.ScreenToWorldPoint(Input.mousePosition));
                 if (Mathf.Sign(transform.localEulerAngles.z - 180) < 0)
                 {
                     if (difference < -5f)
@@ -106,14 +107,6 @@ namespace Space.Ship.Components.Listener
                 if (Mathf.Abs(_attr.turnSpeed) > _attr.maxTurnSpeed)
                     _attr.turnSpeed = _attr.maxTurnSpeed;
             }
-        }
-
-        private float CalcAngle()
-        {
-            Vector2 dest = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 pos = transform.parent.position;
-            float angle = Mathf.Atan2(dest.y-pos.y, dest.x-pos.x)*180 / Mathf.PI -90;
-            return Mathf.DeltaAngle(transform.parent.eulerAngles.z, angle);
         }
 
         protected override void ActivateFx()

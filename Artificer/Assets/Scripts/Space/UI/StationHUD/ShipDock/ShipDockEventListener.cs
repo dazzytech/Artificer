@@ -104,10 +104,9 @@ namespace Space.UI.Station
                 // changed
                 // set data and reset ship construction
                 m_att.Ship.Ship = m_att.Editor.Ship.Ship;
-                
+
                 // Set ship to reset
-                m_att.Ship.SendMessage("ResetShip", 
-                    SendMessageOptions.RequireReceiver);
+                m_att.Ship.Generator.ResetShip();
             }
 
             m_att.Editor.ClearShip();

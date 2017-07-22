@@ -38,10 +38,6 @@ namespace Space.Segment
 
         private bool _segInit;
 
-        // Stores textures for player colours
-        private Texture2D playerCursorCombat;
-        private Texture2D playerCursorTurning;
-
         #endregion
 
         #region MONO BEHAVIOUR
@@ -60,9 +56,6 @@ namespace Space.Segment
         void OnDisable()
         {
             SpaceManager.OnPlayerUpdate -= OnPlayerUpdate;
-
-            // clear combat cursor
-            Cursor.SetCursor(null, new Vector2(16, 16), CursorMode.Auto);
         }
 
         void Start()
@@ -71,14 +64,6 @@ namespace Space.Segment
             // so is encapsulated
 
             _att.SegObjs.Callback += SyncListGOAdded;
-
-            // initialize cursor
-            playerCursorCombat =
-                Resources.Load("Textures/playerCursorCombat")
-                    as Texture2D;
-            playerCursorTurning =
-                Resources.Load("Textures/playerCursorTurning")
-                    as Texture2D;
 
             _segInit = false;
         }
@@ -175,25 +160,6 @@ namespace Space.Segment
                 else if (playerShip.transform.position.y >= _att.MapSize.y)
                     temp.y += 1;
             }*/
-
-            // retrive ship attributes
-            ShipData ship = playerShip.GetComponent<ShipAttributes>().Ship;
-
-            if (ship.CombatActive && Time.timeScale != 0f)
-            {
-                if(ship.Aligned)
-                    // Set Cursor
-                    Cursor.SetCursor(playerCursorCombat,
-                        new Vector2(8, 8), CursorMode.Auto);
-                else
-                    // Set Cursor
-                    Cursor.SetCursor(playerCursorTurning,
-                                     new Vector2(8, 8), CursorMode.Auto);
-            } else
-            {
-                // clear combat cursor
-                Cursor.SetCursor(null, new Vector2(16, 16), CursorMode.Auto);
-            }
         }
 
         #endregion

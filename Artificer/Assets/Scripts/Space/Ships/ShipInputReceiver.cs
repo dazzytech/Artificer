@@ -351,8 +351,6 @@ namespace Space.Ship
         {
             if (!inputDelay)
             {
-                //_ship.SelfTargeted.Clear();
-                //_ship.Targets.Clear();
                 _ship.TargetedShips.Clear();
                 inputDelay = true;
                 StartCoroutine("EngageDelay");

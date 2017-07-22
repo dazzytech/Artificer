@@ -173,7 +173,7 @@ namespace Space
 
         #endregion
 
-        #region INTERNAL PROCESSING
+        #region PRIVATE UTILITIES
 
         /// <summary>
         /// Listens for player key input and 

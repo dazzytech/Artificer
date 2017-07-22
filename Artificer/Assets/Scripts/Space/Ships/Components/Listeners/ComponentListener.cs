@@ -448,6 +448,8 @@ namespace Space.Ship.Components.Listener
                 SetRB();
 
                 SetTriggers(Data.Trigger, Data.CTrigger);
+
+                InitCL();
             }
 
             SetRotation();

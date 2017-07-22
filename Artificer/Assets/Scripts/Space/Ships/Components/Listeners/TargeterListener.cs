@@ -11,16 +11,16 @@ namespace Space.Ship.Components.Listener
 {
     public class TargeterListener : ComponentListener
     {
-        TargeterAttributes _attr;
+        TargeterAttributes _att;
 
         #region PUBLIC INTERACTION
 
         public override void Activate()
         {
             // go through each connected piece and activate them
-            if (_attr.ComponentList.Count == 0)
+            if (_att.ComponentList.Count == 0)
                 PopulateComponentList();
-            foreach (ComponentListener comp in _attr.ComponentList)
+            foreach (ComponentListener comp in _att.ComponentList)
             {
                 if(comp != null)
                     comp.Activate();
@@ -36,22 +36,22 @@ namespace Space.Ship.Components.Listener
             base.InitializeComponent();
 
             ComponentType = "Targeter";
-            _attr = GetComponent<TargeterAttributes>();
+            _att = GetComponent<TargeterAttributes>();
 
             if (hasAuthority)
             {
+                _att.ComponentList = new List<ComponentListener>();
+                
+                _att.ShipAtts = transform.parent.GetComponent<ShipAttributes>();
 
-                _attr.ComponentList = new List<ComponentListener>();
-                _attr.ShipAtts = transform.parent.GetComponent<ShipAttributes>();
+                _att.Behaviour = (TargeterBehaviour)_att.Data.behaviour;
 
-                _attr.Behaviour = (TargeterBehaviour)_attr.Data.behaviour;
+                _att.EngageFire = _att.Data.AutoFire;
 
-                _attr.EngageFire = _attr.Data.AutoFire;
-
-                _attr.homeForward = transform.parent.transform.up;
+                _att.homeForward = transform.parent.transform.up;
 
                 // find targets if auto lock
-                if (_attr.Behaviour == TargeterBehaviour.AUTOLOCKFIRE)
+                if (_att.Behaviour == TargeterBehaviour.AUTOLOCKFIRE)
                     StartCoroutine("FindArcTargets");
             }
         }
@@ -60,22 +60,22 @@ namespace Space.Ship.Components.Listener
         protected override void RunUpdate()
         {
             // Auto engage targets if not a mouse follow behaviour
-            if (_attr.Behaviour != TargeterBehaviour.MOUSECONTROL)
+            if (_att.Behaviour != TargeterBehaviour.MOUSECONTROL)
             {
                 // Search for target to shoot
                 if (FindClosestTarget())
                 {
                     LerpTowardsTarget();
-                    if (_attr.EngageFire)
+                    if (_att.EngageFire)
                     {
                         // if angles are between a certain arc then 
                         // activate connected objects
                         // Find angle between this and target
-                        float tAngle = Angle(transform, _attr.currentTarget, true);
+                        float tAngle = Math.Angle(transform, _att.currentTarget.position);
                         // between min and max angle of 15 then we fire
                         if (tAngle < 5f && tAngle > -5f)
                             if (Vector3.Distance(transform.position,
-                            _attr.currentTarget.position) <= _attr.AttackRange)
+                            _att.currentTarget.position) <= _att.AttackRange)
                                 Activate();
                     }
                 }
@@ -87,7 +87,7 @@ namespace Space.Ship.Components.Listener
             else
             {
                 // Control the mousefollow behaviour here
-                if (_attr.ShipData.CombatActive)
+                if (_att.ShipData.CombatActive)
                 {
                     LerpTowardsMouse();
                 }
@@ -98,9 +98,9 @@ namespace Space.Ship.Components.Listener
             }
 
             // Keep all components fixed to targeter
-            if (_attr.ComponentList.Count == 0)
+            if (_att.ComponentList.Count == 0)
                 PopulateComponentList();
-            foreach (ComponentListener comp in _attr.ComponentList)
+            foreach (ComponentListener comp in _att.ComponentList)
             {
                 if (comp != null)
                     comp.FixToConnected();
@@ -146,7 +146,7 @@ namespace Space.Ship.Components.Listener
             if (_attr.currentTarget != null)
                 return true;
             else*/
-            return false;
+                return false;
         }
 
         /// <summary>
@@ -156,16 +156,18 @@ namespace Space.Ship.Components.Listener
         {
             Quaternion turretRotation =
                 Quaternion.LookRotation((transform.position
-                                        - _attr.currentTarget.position), transform.TransformDirection
+                                        - _att.currentTarget.position), transform.TransformDirection
                                         (Vector3.forward));
 
             transform.rotation =
                 Quaternion.Slerp(transform.rotation,
                                   new Quaternion(0, 0, turretRotation.z, turretRotation.w),
-                                  Time.deltaTime * _attr.turnSpeed);
+                                  Time.deltaTime * _att.turnSpeed);
         }
 
-        // NOT-TARGETING
+        /// <summary>
+        /// NOT-TARGETING
+        /// </summary>
         private void LerpTowardsFace()
         {
             Quaternion turretRotation =
@@ -176,28 +178,66 @@ namespace Space.Ship.Components.Listener
             transform.rotation =
                 Quaternion.Slerp(transform.rotation,
                 new Quaternion(0, 0, turretRotation.z, turretRotation.w),
-                Time.deltaTime * _attr.turnSpeed);
+                Time.deltaTime * _att.turnSpeed);
         }
 
+        /// <summary>
+        /// find the angle difference between the mouse and 
+        /// the component
+        /// </summary>
         private void LerpTowardsMouse()
         {
-            Debug.Log(FindHomeUp());
+            // get the distance between self and mouse
+            float distance = Vector3.Distance(transform.position,
+                Camera.main.ScreenToWorldPoint(Input.mousePosition));
 
-            // Find angle between
-            float tAngle = Angle(transform, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            // Init our angle
+            float tAngle = 0;
+
+            Vector2 lookVector = Vector2.zero;
+
+            if (distance < _att.MinFollow)
+            {
+                // base our angle on the ship head
+                tAngle = Math.Angle(_att.ShipAtts.Head.transform,
+                    Camera.main.ScreenToWorldPoint(Input.mousePosition), FindHomeAngle());
+
+                lookVector = (_att.ShipAtts.Head.transform.position
+                - Camera.main.ScreenToWorldPoint(Input.mousePosition));
+
+            }
+            else
+            {
+                // follow the mouse directly
+                tAngle = Math.Angle(transform, Camera.main.ScreenToWorldPoint
+                    (Input.mousePosition), FindHomeAngle());
+                lookVector = (transform.position
+                - Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            }
+
             // between min and max angle
-            if (tAngle < _attr.MinAngle || tAngle > _attr.MaxAngle)
+            if (tAngle < _att.MinAngle || tAngle > _att.MaxAngle)
+            {
+                _att.Aligned = false;
                 return;
+            }
 
             Quaternion turretRotation =
-                Quaternion.LookRotation((transform.position
-                - Camera.main.ScreenToWorldPoint(Input.mousePosition)), transform.TransformDirection
+                Quaternion.LookRotation(lookVector, transform.TransformDirection
                 (Vector3.forward));
 
             transform.rotation =
                 Quaternion.Slerp(transform.rotation,
                 new Quaternion(0, 0, turretRotation.z, turretRotation.w),
-                Time.deltaTime * _attr.turnSpeed);
+                Time.deltaTime * _att.turnSpeed);
+
+            float diff = Mathf.Abs(_att.PrevAngle - transform.rotation.z);
+            if (diff < 0.005f)
+                _att.Aligned = true;
+            else
+                _att.Aligned = false;
+
+            _att.PrevAngle = transform.rotation.z;
         }
 
         #endregion
@@ -211,11 +251,11 @@ namespace Space.Ship.Components.Listener
         {
             Vector3 homeUp = transform.parent.up;
 
-            if (_attr.homeForward == Vector3.down)
+            if (_att.homeForward == Vector3.down)
                 homeUp = -transform.parent.up;
-            if (_attr.homeForward == Vector3.left)
+            if (_att.homeForward == Vector3.left)
                 homeUp = -transform.parent.right;
-            if (_attr.homeForward == Vector3.right)
+            if (_att.homeForward == Vector3.right)
                 homeUp = transform.parent.right;
 
             return homeUp;
@@ -225,39 +265,22 @@ namespace Space.Ship.Components.Listener
         {
             float euler = transform.parent.eulerAngles.z;
 
-            if (_attr.homeForward == Vector3.down)
+            if (_att.homeForward == Vector3.down)
                 euler += 180;
-            if (_attr.homeForward == Vector3.left)
+            if (_att.homeForward == Vector3.left)
                 euler += 90;
-            if (_attr.homeForward == Vector3.right)
+            if (_att.homeForward == Vector3.right)
                 euler -= 90;
 
             return euler;
         }
 
-        /// <summary>
-        /// Finds the angle difference between the two objects.
-        /// </summary>
-        /// <returns>The angle difference.</returns>
-        /// <param name="trans">Trans.</param>
-        /// <param name="dest">Destination.</param>
-        float Angle(Transform trans, Transform dest, bool local)
-        {
-            Vector2 pos = trans.position;
-            Vector2 destPos = dest.position;
-            float angle = Mathf.Atan2(destPos.y - pos.y, destPos.x - pos.x) * 180 / Mathf.PI - 90;
-            if (local)
-                return Mathf.DeltaAngle(trans.eulerAngles.z, angle);
-            else
-                return Mathf.DeltaAngle(FindHomeAngle(), angle);
-        }
-
-        float Angle(Transform trans, Vector2 point)
+        /*float Angle(Transform trans, Vector2 point)
         {
             Vector2 pos = trans.position;
             float angle = Mathf.Atan2(point.y - pos.y, point.x - pos.x) * 180 / Mathf.PI - 90;
             return Mathf.DeltaAngle(FindHomeAngle(), angle);
-        }
+        }*/
 
         /// <summary>
         /// Adds any listeners of a certain type
@@ -265,14 +288,14 @@ namespace Space.Ship.Components.Listener
         /// </summary>
         private void PopulateComponentList()
         {
-            foreach (ComponentListener comp in _attr.connectedComponents)
+            foreach (ComponentListener comp in _att.connectedComponents)
             {
                 // tracker type - weapon
                 if (comp is WeaponListener)
                 {
-                    _attr.ComponentList.Add(comp);
+                    _att.ComponentList.Add(comp);
                     // Clear triggers if weapon is not mouse controlled
-                    if (_attr.Behaviour != TargeterBehaviour.MOUSECONTROL)
+                    if (_att.Behaviour != TargeterBehaviour.MOUSECONTROL)
                     {
                         comp.GetAttributes().TriggerKey = KeyCode.None;
                         comp.GetAttributes().CombatKey = KeyCode.None;

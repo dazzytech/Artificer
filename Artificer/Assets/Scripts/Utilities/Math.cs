@@ -25,5 +25,21 @@ public class Math
 
         return new Vector2(x, y);
     }
+
+    /// <summary>
+    /// Finds the angle difference between the two objects.
+    /// </summary>
+    /// <returns>The angle difference.</returns>
+    /// <param name="trans">Trans.</param>
+    /// <param name="dest">Destination.</param>
+    public static float Angle(Transform trans, Vector2 point, float homeAngle = 0)
+    {
+        Vector2 pos = trans.position;
+        float angle = Mathf.Atan2(point.y - pos.y, point.x - pos.x) * 180 / Mathf.PI - 90;
+        if (homeAngle == 0)
+            return Mathf.DeltaAngle(trans.eulerAngles.z, angle);
+        else
+            return Mathf.DeltaAngle(homeAngle, angle);
+    }
 }
 
