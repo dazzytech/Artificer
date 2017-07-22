@@ -133,7 +133,6 @@ namespace Space.Ship
             tag = "PlayerShip";
 
             gameObject.AddComponent<ShipPlayerInputController>();
-            m_att.AlignmentLabel = "Player";
 
             SendMessage("BuildColliders");
         }

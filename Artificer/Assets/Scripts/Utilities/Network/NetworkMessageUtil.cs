@@ -104,8 +104,8 @@ namespace Networking
     public class ShipDestroyMessage : MessageBase
     {
         public NetworkInstanceId SelfID;
-        public string AggressorTag;
-        public string AlignmentLabel;
+        public int AggressorTeam;
+        public int SelfTeam;
         public int ID;
     }
 

@@ -7,6 +7,8 @@ using Data.Space;
 using Space.Segment;
 using Space.Ship.Components.Attributes;
 using System;
+using System.Linq;
+using Space.UI.Ship;
 
 namespace Space.Ship.Components.Listener
 {
@@ -644,6 +646,62 @@ namespace Space.Ship.Components.Listener
             {
                 GetComponentInChildren<SpriteRenderer>().color =
                     new Color(1.0f, 1.0f, 1.0f, alpha += 0.03f);
+                yield return null;
+            }
+        }
+
+        /// <summary>
+        /// Finds targets within the targeters firing arc.
+        /// </summary>
+        protected IEnumerator FindArcTargets
+            (float Range, float MinAngle, float MaxAngle, ShipAttributes ShipAtts)
+        {
+            while (true)
+            {
+                RaycastHit2D[] hits =
+                Physics2D.CircleCastAll(transform.position, Range, Vector2.zero, 0, 1);
+            
+                foreach (RaycastHit2D hit in hits)
+                {
+                    // Ensure we target a head piece
+                    if (hit.collider.transform.tag != "Head")
+                        continue;
+
+                    // only consider if we are in the defined angle
+                    float tAngle = Math.Angle(transform, hit.collider.transform.position);
+                    if (tAngle < MinAngle && tAngle > MaxAngle)
+                        continue;
+
+                    // Attempt to retrieve ship attributes 
+                    // from object
+                    ShipAttributes otherAtt = hit.transform.
+                        GetComponent<ShipAttributes>();
+
+                    if (otherAtt == null)
+                        continue;
+
+                    // are we on the same team
+                    if (ShipAtts.TeamID == otherAtt.TeamID)
+                        continue;
+
+                    // Discover if ship is already owned
+                    ShipSelect select = ShipAtts.TargetedShips.
+                        FirstOrDefault(x => x.Ship == otherAtt);
+
+                    if (select != null)
+                        continue;
+                    else
+                    {
+                        select = new ShipSelect();
+                        select.Ship = otherAtt;
+                        select.TargetedComponents = new 
+                            System.Collections.Generic.List<Transform>();
+                        select.TargetedComponents.Add(hit.transform);
+                        ShipAtts.TargetedShips.Add(select);
+                    }
+
+                    yield return null;
+                }
                 yield return null;
             }
         }

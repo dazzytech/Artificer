@@ -19,11 +19,6 @@ namespace Space.Ship
 
         public ComponentListener Head;
 
-        // allegance
-        // friendly, enemy, player
-        // Assigned by the local player to the ship
-        public string AlignmentLabel;
-
         [SyncVar]
         public bool hasSpawned;
 
@@ -33,7 +28,7 @@ namespace Space.Ship
 
         // Last ship to attack ship
         [SyncVar]
-        public string AggressorTag;
+        public int AggressorID;
 
         [SyncVar]             //why doesnt this work?
         public bool ShipDocked;

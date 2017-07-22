@@ -36,7 +36,7 @@ namespace Space.UI.Station.Utility
             m_panel.Find("Range").GetComponent<Text>().text = 
                 (targeter.AttackRange*.1f).ToString()+"km";
 
-            m_index = m_BC.ShipComponent.behaviour;
+            m_index = bC.ShipComponent.behaviour;
             
             base.Display(att, bC);
         }

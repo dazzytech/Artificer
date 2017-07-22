@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 11456012}
   - component: {fileID: 11453504}
   - component: {fileID: 11409328}
+  - component: {fileID: 114059770719044544}
   m_Layer: 0
   m_Name: Weapon_06
   m_TagString: Body
@@ -193,9 +194,20 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.29, y: 0.62}
+  m_EdgeRadius: 0
 --- !u!114 &11409328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -307,19 +319,20 @@ MonoBehaviour:
   active: 0
   CombatState: 0
   emitter: {fileID: 0}
+  Shield: {fileID: 0}
+  ServerReady: 0
+  HasSpawned: 0
   Name: Weapon
   ID: 0
+  iconImage: {fileID: 21300000, guid: 96e3d99b12e45494ea57bb8950a36f0a, type: 3}
   TrackIntegrity: 1
   Integrity: 300
   MaxIntegrity: 0
-  LockedGO: {fileID: 0}
-  sockInfo:
+  Socket:
     SocketID: 0
     OtherID: 0
     OtherLinkID: 0
-  Shield: {fileID: 0}
   connectedComponents: []
-  currentStyle: default
   Description: 
   RequiredMats:
   - material: Fe
@@ -330,6 +343,7 @@ MonoBehaviour:
     amount: 10
   - material: Pb
     amount: 30
+  currentStyle: default
   componentStyles:
   - sprite: {fileID: 21300000, guid: d53cc42d160b21a49a9f98aabcd3df69, type: 3}
     name: default
@@ -341,8 +355,18 @@ MonoBehaviour:
     name: red
   - sprite: {fileID: 21300000, guid: 305ad07f483ee1c4faeaa4516b3001a1, type: 3}
     name: green
-  iconImage: {fileID: 21300000, guid: 96e3d99b12e45494ea57bb8950a36f0a, type: 3}
-  Ship: {fileID: 0}
+  Data:
+    InstanceID: 0
+    Direction: 
+    Trigger: 
+    CTrigger: 
+    Folder: 
+    Name: 
+    Style: 
+    sockets: []
+    AutoLock: 0
+    behaviour: 0
+    AutoFire: 0
   WeaponDamage: 70
   WeaponRange: 400
   WeaponDelay: 0.7
@@ -378,11 +402,16 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d53cc42d160b21a49a9f98aabcd3df69, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -458,3 +487,24 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 166186}
   m_IsPrefabParent: 1
+--- !u!114 &114059770719044544
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 166186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.2
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1

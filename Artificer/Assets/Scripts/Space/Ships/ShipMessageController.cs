@@ -305,19 +305,6 @@ namespace Space.Ship
 
         #endregion
 
-        #region SHIP INITIALIZATION
-
-        /// <summary>
-        /// Sets the faction/team the ship is aligned to
-        /// </summary>
-        /// <param name="alignment"></param>
-        public void SetShipAlignment(string alignment)
-        {
-            m_ship.AlignmentLabel = alignment;
-        }
-
-        #endregion
-
         #region SHIP DESTRUCTION
 
         /// <summary>
@@ -351,9 +338,10 @@ namespace Space.Ship
         {
             // Set the aggressor
             GameObject aggressor = NetworkServer.FindLocalObject(hit.originID);
+
             if (aggressor != null)
             {
-                m_ship.AggressorTag = aggressor.tag;
+                m_ship.AggressorID = aggressor.GetComponent<ShipAttributes>().TeamID;
             }
 
             // Find the corresponding transform
@@ -413,8 +401,8 @@ namespace Space.Ship
         {
             // Send message to server for updating
             ShipDestroyMessage msg = new ShipDestroyMessage();
-            msg.AggressorTag = m_ship.AggressorTag;
-            msg.AlignmentLabel = m_ship.AlignmentLabel;
+            msg.AggressorTeam = m_ship.AggressorID;
+            msg.SelfTeam = m_ship.TeamID;
             msg.SelfID = netId;
             msg.ID = SystemManager.Space.ID;
 

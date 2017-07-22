@@ -5,10 +5,10 @@ using UnityEngine.Networking;
 public class DestroyDespatch
 {
     // self alignment
-    public string AlignmentLabel;
+    public int SelfTeam;
 
     // Last ship to attack ship
-    public string AggressorTag;
+    public int AggressorID;
 
     // physically destroyed object
     public NetworkInstanceId Self;

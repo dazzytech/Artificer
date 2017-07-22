@@ -41,9 +41,7 @@ namespace Space.Ship.Components.Listener
             if (hasAuthority)
             {
                 _att.ComponentList = new List<ComponentListener>();
-                
-                _att.ShipAtts = transform.parent.GetComponent<ShipAttributes>();
-
+              
                 _att.Behaviour = (TargeterBehaviour)_att.Data.behaviour;
 
                 _att.EngageFire = _att.Data.AutoFire;
@@ -52,7 +50,8 @@ namespace Space.Ship.Components.Listener
 
                 // find targets if auto lock
                 if (_att.Behaviour == TargeterBehaviour.AUTOLOCKFIRE)
-                    StartCoroutine("FindArcTargets");
+                    StartCoroutine(FindArcTargets
+                        (_att.AttackRange, _att.MinAngle, _att.MaxAngle, _att.Ship));
             }
         }
 
@@ -199,10 +198,10 @@ namespace Space.Ship.Components.Listener
             if (distance < _att.MinFollow)
             {
                 // base our angle on the ship head
-                tAngle = Math.Angle(_att.ShipAtts.Head.transform,
+                tAngle = Math.Angle(_att.Ship.Head.transform,
                     Camera.main.ScreenToWorldPoint(Input.mousePosition), FindHomeAngle());
 
-                lookVector = (_att.ShipAtts.Head.transform.position
+                lookVector = (_att.Ship.Head.transform.position
                 - Camera.main.ScreenToWorldPoint(Input.mousePosition));
 
             }
@@ -275,13 +274,6 @@ namespace Space.Ship.Components.Listener
             return euler;
         }
 
-        /*float Angle(Transform trans, Vector2 point)
-        {
-            Vector2 pos = trans.position;
-            float angle = Mathf.Atan2(point.y - pos.y, point.x - pos.x) * 180 / Mathf.PI - 90;
-            return Mathf.DeltaAngle(FindHomeAngle(), angle);
-        }*/
-
         /// <summary>
         /// Adds any listeners of a certain type
         /// to the component list
@@ -305,71 +297,6 @@ namespace Space.Ship.Components.Listener
         }
 
         #endregion
-
-        #endregion
-
-        #region COROUTINE
-
-        /// <summary>
-        /// Finds targets within the targeters firing arc.
-        /// </summary>
-        private IEnumerator FindArcTargets()
-        {
-            // temp
-            yield break;
-
-            /*while (true)
-            {
-                RaycastHit2D[] hits =
-                Physics2D.CircleCastAll(transform.position, _attr.AttackRange, Vector2.zero, 0, 1);
-            
-                foreach (RaycastHit2D hit in hits)
-                {
-                    // Only auto target heads of ships
-                    // while no target grouping
-                    if (_attr.ShipAtts.Targets.Contains(hit.collider.transform)
-                        || hit.collider.transform.tag != "Head")
-                        continue;
-
-                    // detect if enemy
-                    if (_attr.ShipAtts.AlignmentLabel == "player")
-                    {
-                        // use player relations
-                        if (hit.transform.name
-                            != "Enemy")
-                            continue;
-                    } else
-                    {
-                        // ai relation
-                        if (_attr.ShipAtts.AlignmentLabel == "Enemy" && 
-                            hit.transform.name == "Enemy")
-                            continue;
-
-                        if (_attr.ShipAtts.AlignmentLabel == "Friendly" &&
-                            hit.transform.name != "Enemy" || hit.transform.tag == "Station")
-                            continue;
-                    }
-
-                    ComponentListener comp = hit.collider.
-                    transform.GetComponent<ComponentListener>();
-
-                    if (comp != null)
-                    {
-                        // check not self targetting
-                        if (!_attr.ShipAtts.Components.Contains(comp))
-                        {
-                            // Find angle between
-                            float tAngle = Angle(transform, hit.collider.transform, false);
-                            if (tAngle > _attr.MinAngle || tAngle < _attr.MaxAngle)
-                                _attr.ShipAtts.Targets.Add(hit.collider.transform);
-                        }
-                    }
-
-                    yield return null;
-                }
-                yield return null;
-            }*/
-        }
 
         #endregion
     }

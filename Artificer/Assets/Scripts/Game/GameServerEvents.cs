@@ -51,8 +51,8 @@ namespace Game
         public void ShipDestroyed(ShipDestroyMessage msg)
         {
             DestroyDespatch DD = new DestroyDespatch();
-            DD.AggressorTag = msg.AggressorTag;
-            DD.AlignmentLabel = msg.AlignmentLabel;
+            DD.AggressorID = msg.AggressorTeam;
+            DD.SelfTeam = msg.SelfTeam;
             DD.Self = msg.SelfID;
             DD.MiscID = msg.ID;
 

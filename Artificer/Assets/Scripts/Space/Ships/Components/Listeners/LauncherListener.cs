@@ -13,7 +13,7 @@ namespace Space.Ship.Components.Listener
 {
     public class LauncherListener : ComponentListener
     {
-        LauncherAttributes _attr;
+        LauncherAttributes _att;
 
         #region PUBLIC INTERACTION
 
@@ -36,16 +36,17 @@ namespace Space.Ship.Components.Listener
             base.InitializeComponent();
 
             ComponentType = "Launchers";
-            _attr = GetComponent<LauncherAttributes>();
+            _att = GetComponent<LauncherAttributes>();
 
             if (hasAuthority)
             {
-                _attr.AutoTarget = _attr.Data.AutoLock;
+                _att.AutoTarget = _att.Data.AutoLock;
 
-                _attr.readyToFire = true;
+                _att.readyToFire = true;
 
-                if (_attr.AutoTarget)
-                    StartCoroutine("FindArcTargets");
+                if (_att.AutoTarget)
+                    StartCoroutine(FindArcTargets
+                        (_att.AttackRange, _att.MinAngle, _att.MaxAngle, _att.Ship));
             }
         }
 
@@ -60,51 +61,11 @@ namespace Space.Ship.Components.Listener
         /// <returns></returns>
         private IEnumerator EngageDelay()
         {
-            yield return new WaitForSeconds (_attr.WeaponDelay);
-            _attr.readyToFire = true;
+            yield return new WaitForSeconds (_att.WeaponDelay);
+            _att.readyToFire = true;
             yield return null;
         }
         
-        /// <summary>
-        /// Finds targets within the targeters firing arc.
-        /// </summary>
-        private IEnumerator FindArcTargets()
-        {
-            while (true)
-            {
-                RaycastHit2D[] hits =
-                Physics2D.CircleCastAll(transform.position, _attr.AttackRange, Vector2.zero, 0, 1);
-            
-                /*foreach (RaycastHit2D hit in hits)
-                {
-                    // Only auto target heads of ships
-                    // while no target grouping
-                    if (_attr.Ship.Targets.Contains(hit.collider.transform)
-                        || hit.collider.transform.tag != "Head")
-                        continue;
-
-                    if (hit.transform.tag
-                             != "Enemy")
-                        continue;
-
-                    ComponentListener comp = hit.collider.
-                    transform.GetComponent<ComponentListener>();
-
-                    if (comp != null)
-                    {
-                        // check not self targetting
-                        if (!_attr.Ship.Components.Contains(comp))
-                        {
-                            _attr.Ship.Targets.Add(hit.collider.transform);
-                        }
-                    }
-
-                    yield return null;
-                }*/
-                yield return null;
-            }
-        }
-
         private IEnumerator LaunchRockets()
         {
             // temp

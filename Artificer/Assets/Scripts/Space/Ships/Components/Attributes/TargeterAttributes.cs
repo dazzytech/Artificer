@@ -54,9 +54,5 @@ namespace Space.Ship.Components.Attributes
 
         // Components to be activated via targeter
         public List<ComponentListener> ComponentList;
-
-        public ShipAttributes ShipAtts;
-
-        
     }
 }

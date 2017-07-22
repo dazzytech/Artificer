@@ -399,9 +399,11 @@ namespace Space.UI.Station.Editor.Component
                     {
                         case "left":
                             ShipComponent.Trigger = "turnRight";
+                            ShipComponent.CTrigger = "turnRight";
                             break;
                         case "right":
                             ShipComponent.Trigger = "turnLeft";
+                            ShipComponent.CTrigger = "turnRight";
                             break;
                         default:
                             break;
@@ -741,10 +743,10 @@ namespace Space.UI.Station.Editor.Component
                     GetComponent<RectTransform>().Rotate(new Vector3(0,0,180f));
                     break;
                 case "left":
-                    GetComponent<RectTransform>().Rotate(new Vector3(0,0,90f));
+                    GetComponent<RectTransform>().Rotate(new Vector3(0, 0, 90f));
                     break;
                 case "right":
-                    GetComponent<RectTransform>().Rotate(new Vector3(0,0,270f));
+                    GetComponent<RectTransform>().Rotate(new Vector3(0, 0, 270f));
                     break;
             }
         }
