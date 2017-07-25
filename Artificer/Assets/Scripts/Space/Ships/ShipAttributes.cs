@@ -47,7 +47,7 @@ namespace Space.Ship
 
         #endregion
 
-        #region COMPONENT GETTERS
+        #region COMPONENTS
 
         public ComponentListener[] Components
         {
@@ -99,6 +99,10 @@ namespace Space.Ship
             }
         }
 
+        /// <summary>
+        /// Returns all Targeter components 
+        /// within a ship
+        /// </summary>
         public List<TargeterListener> Targeter
         {
             get
@@ -114,52 +118,40 @@ namespace Space.Ship
             }
         }
 
-        public List<LauncherListener> Launchers
+        /// <summary>
+        /// Returns all Storage components 
+        /// within a ship
+        /// </summary>
+        public List<StorageListener> Storage
         {
             get
             {
-                List<LauncherListener> targets = new List<LauncherListener>();
+                List<StorageListener> storage = new List<StorageListener>();
                 foreach (ComponentListener comp in Components)
                 {
-                    if (comp is LauncherListener)
-                        targets.Add(comp as LauncherListener);
+                    if (comp is StorageListener)
+                        storage.Add(comp as StorageListener);
                 }
 
-                return targets;
+                return storage;
             }
         }
 
-        public List<ShieldListener> Shields
-        {
-            get
-            {
-                List<ShieldListener> targets = new List<ShieldListener>();
-                foreach (ComponentListener comp in Components)
-                {
-                    if (comp is ShieldListener)
-                        targets.Add(comp as ShieldListener);
-                }
-
-                return targets;
-            }
-        }
-
-        public WarpListener Warp
+        /// <summary>
+        /// Return the first instance of the collector
+        /// object
+        /// </summary>
+        public CollectorListener Collector
         {
             get
             {
                 foreach (ComponentListener comp in Components)
                 {
-                    if (comp is WarpListener)
-                        return comp as WarpListener;
+                    if (comp is CollectorListener)
+                        return comp as CollectorListener;
                 }
                 return null;
             }
-        }
-
-        public ShipGenerator Generator
-        {
-            get { return GetComponent<ShipGenerator>(); }
         }
 
         public bool Aligned
@@ -190,38 +182,6 @@ namespace Space.Ship
 
         #endregion
 
-        #region COMPONENT UTILITIES
-
-        /// <summary>
-        /// Returns a list of components from a list of IDs
-        /// </summary>
-        /// <param name="list"></param>
-        /// <returns></returns>
-        public ComponentListener[] SelectedComponents(int[] list)
-        {
-            List<ComponentListener> retList = new List<ComponentListener>();
-
-            // Add components with corresponding IDs 
-            // to return list
-            foreach (ComponentListener listener in Components)
-            {
-                if (listener.GetAttributes() != null)
-                {
-                    foreach (int i in list)
-                    {
-                        if (listener.GetAttributes().ID == i)
-                        {
-                            retList.Add(listener);
-                        }
-                    }
-                }
-            }
-
-            return retList.ToArray();
-        }
-
-        #endregion
-
         #region TARGETTING ATTRIBUTES
 
         public List<ShipSelect> TargetedShips;
@@ -233,48 +193,6 @@ namespace Space.Ship
 
         #endregion
 
-        #region ACCESSORS
-
-        /// <summary>
-        /// returns int labeling the state the station is currently in
-        /// 0 - Safe
-        /// 1 - Under Attack
-        /// 2 - Docked
-        /// </summary>
-        public int Status
-        {
-            get
-            {
-                if (ShipDocked)
-                    return 2;
-                if (InCombat)
-                    return 1;
-                else
-                    return 0;
-            }
-        }
-
-        public float Distance
-        {
-            get
-            {
-                // Retrieve player object and check if 
-                // Player object currently exists
-                GameObject playerTransform =
-                    GameObject.FindGameObjectWithTag("PlayerShip");
-
-                if (playerTransform == null)
-                {
-                    return -1;
-                }
-
-                // return distance
-                return Vector3.Distance(this.transform.position,
-                    playerTransform.transform.position);
-            }
-        }
-
-        #endregion
     }
 }
 

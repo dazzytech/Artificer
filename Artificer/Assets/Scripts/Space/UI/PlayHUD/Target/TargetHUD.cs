@@ -16,7 +16,7 @@ namespace Space.UI.Ship
     /// </summary>
     public class ShipSelect
     {
-        public ShipAttributes Ship;
+        public ShipAccessor Ship;
         public List<Transform> TargetedComponents;
     }
 
@@ -38,7 +38,7 @@ namespace Space.UI.Ship
         #region ATTRIBUTES
 
         // Refence to the player attributes
-        private ShipAttributes m_shipRef;
+        private ShipAccessor m_shipRef;
 
         // Do we track selected targets?
         private bool m_trackTargets;
@@ -138,7 +138,7 @@ namespace Space.UI.Ship
         #region PUBLIC INTERACTION
 
         // Use this for initialization
-        public void SetShipData(ShipAttributes data)
+        public void SetShip(ShipAccessor data)
         {
             m_shipRef = data;
             
@@ -213,7 +213,7 @@ namespace Space.UI.Ship
 
                 // Next test to see if ship is
                 // deselected
-                if(m_shipRef.TargetedShips.FirstOrDefault
+                if(m_shipRef.Targets.FirstOrDefault
                     (o => o.Ship.Equals(currentTarget.Selected.Ship)) == null)
                 {
                     // remove and skip
@@ -231,7 +231,7 @@ namespace Space.UI.Ship
         private void SeekShipTargets()
         {
             // Loop through each ship target
-            foreach (ShipSelect ship in m_shipRef.TargetedShips)
+            foreach (ShipSelect ship in m_shipRef.Targets)
             {
                 // if first ship just build
                 if (m_shipTargets == null)

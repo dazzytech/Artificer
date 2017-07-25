@@ -27,7 +27,7 @@ namespace Space.UI.Ship
             HelpText.text = string.Format("MOUSE FOLLOW MODE \n[KEY '{0}']",
                                           Control_Config.GetKey("switchtocombat", "ship").ToString());
 
-            ShipData Ship = player.GetComponent<ShipAttributes>().Ship;
+            ShipData Ship = player.GetComponent<ShipAccessor>().Data;
 
             if (Ship.CombatActive)
             { 

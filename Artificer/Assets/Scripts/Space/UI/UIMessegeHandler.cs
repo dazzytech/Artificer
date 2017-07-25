@@ -173,7 +173,7 @@ namespace Space.UI
         /// viewer portion of the station HUD. 
         /// </summary>
         /// <param name="ship"></param>
-        public void InitializeStationHUD(ShipAttributes ship)
+        public void InitializeStationHUD(ShipAccessor ship)
         {
             m_stationMsg.InitializeShipViewer(ship);
         }

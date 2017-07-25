@@ -12,7 +12,7 @@ namespace Space.UI.Ship
     public class IntegrityHUD : MonoBehaviour
     {
         // Ship attributes for player ship
-        private ShipAttributes _shipData;
+        private ShipAccessor _ship;
 
         // GUI HUD
         private Transform _IntegrityHUD;
@@ -35,13 +35,13 @@ namespace Space.UI.Ship
             _CompList = new List<ComponentListener>();
         }
     	
-        public void SetShipData(ShipAttributes data)
+        public void SetShip(ShipAccessor data)
         {
-            _shipData = data;
+            _ship = data;
             ClearAll();
             // Update the color state to the existing buttons
             // create pieces for each new ship
-            if (_shipData.Components.Length != 0)
+            if (_ship.Components.Length != 0)
                 UpdateComponentList();
         }
 
@@ -49,7 +49,7 @@ namespace Space.UI.Ship
         void Update()
         {
             // Do not update if ship data is null
-            if (_shipData == null)
+            if (_ship == null)
             {
                 // hide HUD
                 if(_IntegrityHUD.gameObject.activeSelf)
@@ -72,7 +72,7 @@ namespace Space.UI.Ship
         /// </summary>
         private void UpdateComponentList()
         {
-            foreach (ComponentListener comp in _shipData.Components)
+            foreach (ComponentListener comp in _ship.Components)
             {
                 if(comp != null)
                 {

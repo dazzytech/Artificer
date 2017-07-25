@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 11460230}
   - component: {fileID: 11464192}
   - component: {fileID: 11455752}
+  - component: {fileID: 114729650600409788}
   - component: {fileID: 5016586}
   - component: {fileID: 11433328}
   - component: {fileID: 11440530}
@@ -131,10 +132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6984d34a0708e9d4b90b3873bfb13643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShipAtt: {fileID: 0}
-  Ship: 
-  hasSpawned: 0
-  m_shipContainer: {fileID: 0}
 --- !u!114 &11455752
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -146,11 +143,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d9b955eed40a44caa688e03e5ad8fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Components: []
   Head: {fileID: 0}
-  AlignmentLabel: 
+  hasSpawned: 0
   Ship:
     components: []
+    _head:
+      InstanceID: 0
+      Direction: 
+      Trigger: 
+      CTrigger: 
+      Folder: 
+      Name: 
+      Style: 
+      sockets: []
+      AutoLock: 0
+      behaviour: 0
+      AutoFire: 0
     Name: 
     Description: 
     Category: 
@@ -158,7 +166,7 @@ MonoBehaviour:
     CombatResponsive: 1
     CombatActive: 0
     Aligned: 0
-  AggressorTag: 
+  AggressorID: 0
   ShipDocked: 0
   InCombat: 0
   TeamID: 0
@@ -305,3 +313,17 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 120812}
   m_IsPrefabParent: 1
+--- !u!114 &114729650600409788
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 120812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f0e0b5a3fdeb9b4baf75304f206b67c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ship: {fileID: 11455752}
+  m_gen: {fileID: 11452598}
+  m_input: {fileID: 0}

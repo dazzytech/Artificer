@@ -12,7 +12,7 @@ namespace Space.UI.Ship
     public class WarpHUD : MonoBehaviour
     {
         // Ship attributes for player ship
-        private ShipAttributes _shipData;
+        private ShipAccessor _shipRef;
 
         // HUD elements
         Slider WarpBooster;
@@ -27,16 +27,16 @@ namespace Space.UI.Ship
             WarpBooster.gameObject.SetActive(false);
         }
 
-        public void SetShipData(ShipAttributes data)
+        public void SetShipData(ShipAccessor data)
         {
-            _shipData = data;
+            _shipRef = data;
         }
     	
         // Update is called once per frame
         void Update ()
         {
             // Do not update if ship data is null
-            if (_shipData == null)
+            if (_shipRef == null)
             {
                 // hide HUD
                 if(_WarpHUD.gameObject.activeSelf)
@@ -48,7 +48,7 @@ namespace Space.UI.Ship
                 if(!_WarpHUD.gameObject.activeSelf)
                     _WarpHUD.gameObject.SetActive(true);
 
-            if (_shipData.Warp == null)
+            if (_shipRef.Warp == null)
             {
                 if (WarpBooster.gameObject.activeSelf)
                     WarpBooster.gameObject.SetActive(false);
@@ -72,7 +72,7 @@ namespace Space.UI.Ship
                 .GetComponent<Text>();
 
             // Detect ready to fire 
-            WarpAttributes att = _shipData.Warp.GetAttributes()
+            WarpAttributes att = _shipRef.Warp.GetAttributes()
                 as WarpAttributes;
 
             if (att.readyToFire)
@@ -102,11 +102,11 @@ namespace Space.UI.Ship
         public void BoosterChange()
         {
             // Saftey check
-            if (_shipData.Warp == null)
+            if (_shipRef.Warp == null)
                 return;
 
             // Calc value
-            WarpAttributes att = _shipData.Warp.GetAttributes() as WarpAttributes;
+            WarpAttributes att = _shipRef.Warp.GetAttributes() as WarpAttributes;
             float step = (att.MaxDistance - att.MinDistance) *.1f;
             float finalValue = step * WarpBooster.value;
             // Set value

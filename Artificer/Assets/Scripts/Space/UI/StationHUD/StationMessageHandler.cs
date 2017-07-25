@@ -28,7 +28,7 @@ namespace Space.UI.Station
 
         #region PUBLIC INTERACTION
 
-        public void InitializeShipViewer(ShipAttributes ship)
+        public void InitializeShipViewer(ShipAccessor ship)
         {
             if (m_warpMap.gameObject.activeSelf)
                 m_warpMap.gameObject.SetActive(false);

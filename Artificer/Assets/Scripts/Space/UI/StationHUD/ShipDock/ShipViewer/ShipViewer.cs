@@ -50,7 +50,7 @@ namespace Space.UI.Station.Viewer
 
         #endregion
 
-        public ShipAttributes Ship;
+        public ShipAccessor Ship;
 
         // If the viewer is currently doing something?
         public bool Busy;
@@ -68,7 +68,7 @@ namespace Space.UI.Station.Viewer
         /// each component within viewer
         /// </summary>
         /// <param name="Ship"></param>
-        public void BuildShip(ShipAttributes ship)
+        public void BuildShip(ShipAccessor ship)
         {
             Ship = ship;
 

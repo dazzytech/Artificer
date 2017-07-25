@@ -48,7 +48,7 @@ namespace Space.UI.Station
         /// Entry Point
         /// </summary>
         /// <param name="param">Parameter.</param>
-        public void InitializeHUD(ShipAttributes ship)
+        public void InitializeHUD(ShipAccessor ship)
         {
             m_att.Ship = ship;
 
@@ -68,7 +68,8 @@ namespace Space.UI.Station
             foreach (GameObject GO in m_att.ManageGOs)
                 GO.SetActive(true);
 
-            m_att.Viewer.BuildShip(m_att.Ship);
+            if(m_att.Ship.Components.Length > 0)
+                m_att.Viewer.BuildShip(m_att.Ship);
 
             // Only run on startup
             if (m_att.ShipList.Count == 0)

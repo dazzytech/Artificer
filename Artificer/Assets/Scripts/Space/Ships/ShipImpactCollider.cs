@@ -190,8 +190,18 @@ namespace Space.Ship
                                 piece.gameObject.
                                 GetComponent<ComponentAttributes>();
 
+                        if (damagedComps.Contains(att.ID))
+                            continue;
+
+                        float RangeReduction = (Vector3.Distance
+                            (piece.transform.position, _hitD.hitPosition) / _hitD.radius);
+
+                        float damage = _hitD.damage *= Random.Range(0.5f, 1.0f);
+
+                        float damageReduction = damage * RangeReduction;
+
                         damagedComps.Add(att.ID);
-                        damagedVals.Add(_hitD.damage *= Random.Range(0.5f, 1.0f));
+                        damagedVals.Add(damage - damageReduction);
                     }
                 }
 
@@ -216,7 +226,7 @@ namespace Space.Ship
         {
             int i = 0;
             foreach (ComponentListener listener in
-                GetComponent<ShipAttributes>().SelectedComponents(damaged))
+                GetComponent<ShipAccessor>().SelectedComponents(damaged))
             {
                 listener.DamageComponent(_hitD, dmg[i++], hasAuthority);
 

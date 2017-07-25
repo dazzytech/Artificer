@@ -73,8 +73,8 @@ namespace Space.AI
         /// Stores reference to all other ships
         /// of all alignments
         /// </summary>
-        protected List<ShipAttributes> m_ships
-            = new List<ShipAttributes>();
+        protected List<ShipAccessor> m_ships
+            = new List<ShipAccessor>();
 
         protected List<StationAttributes> m_stations
             = new List<StationAttributes>();
@@ -168,9 +168,7 @@ namespace Space.AI
         /// </summary>
         protected string m_shipCategory;
 
-        private ShipInputReceiver m_message;
-
-        private ShipAttributes m_att;
+        private ShipAccessor m_ship;
 
         #endregion
 
@@ -184,12 +182,12 @@ namespace Space.AI
 
         public ShipInputReceiver Con
         {
-            get { return m_message; } 
+            get { return m_ship.Input; } 
         }
 
-        public ShipAttributes Att
+        public ShipAccessor Ship
         {
-            get { return m_att; }
+            get { return m_ship; }
         }
 
         public Transform Target
@@ -233,8 +231,7 @@ namespace Space.AI
                 return;
 
             // Assign ship references
-            m_message = GetComponent<ShipInputReceiver>();
-            m_att = GetComponent<ShipAttributes>();
+            m_ship = GetComponent<ShipAccessor>();
 
             // Listen for creation of ship
             SystemManager.Events.EventShipCreated += ShipCreatedEvent;
@@ -443,13 +440,13 @@ namespace Space.AI
         /// </summary>
         private void ReleaseAllKeys()
         {
-            m_message.ReleaseKey(Control_Config.GetKey("moveUp", "ship"));
-            m_message.ReleaseKey(Control_Config.GetKey("moveDown", "ship"));
-            m_message.ReleaseKey(Control_Config.GetKey("turnLeft", "ship"));
-            m_message.ReleaseKey(Control_Config.GetKey("turnRight", "ship"));
-            m_message.ReleaseKey(Control_Config.GetKey("strafeLeft", "ship"));
-            m_message.ReleaseKey(Control_Config.GetKey("strafeRight", "ship"));
-            m_message.ReleaseKey(Control_Config.GetKey("fire", "ship"));
+            Con.ReleaseKey(Control_Config.GetKey("moveUp", "ship"));
+            Con.ReleaseKey(Control_Config.GetKey("moveDown", "ship"));
+            Con.ReleaseKey(Control_Config.GetKey("turnLeft", "ship"));
+            Con.ReleaseKey(Control_Config.GetKey("turnRight", "ship"));
+            Con.ReleaseKey(Control_Config.GetKey("strafeLeft", "ship"));
+            Con.ReleaseKey(Control_Config.GetKey("strafeRight", "ship"));
+            Con.ReleaseKey(Control_Config.GetKey("fire", "ship"));
         }
 
         #endregion
@@ -469,7 +466,7 @@ namespace Space.AI
         protected virtual void FSMUpdate()
         {
             if (CurrentState.Keys != null)
-                m_message.ReceiveKey(CurrentState.Keys);
+                Con.ReceiveKey(CurrentState.Keys);
         }
 
         protected virtual void FSMLateUpdate()
@@ -560,12 +557,14 @@ namespace Space.AI
             if (m_targets.Contains(destroyed))
                 m_targets.Remove(destroyed);
 
-            if (m_ships.Contains(destroyed.GetComponent<ShipAttributes>()))
-                m_ships.Remove(destroyed.GetComponent<ShipAttributes>());
+            if (m_ships.Contains(destroyed.GetComponent<ShipAccessor>()))
+                m_ships.Remove(destroyed.GetComponent<ShipAccessor>());
         }
 
         /// <summary>
-        /// 
+        /// When ship is built we will
+        /// initialize the agent
+        /// only runs once
         /// </summary>
         /// <param name="att"></param>
         private void ShipCreatedEvent(CreateDispatch CD)
@@ -583,19 +582,19 @@ namespace Space.AI
 
         private void SeekShips()
         {
-                // Clear any m_ships that are now null
-                for(int i = 0;i < m_ships.Count; i++)
-                    if (m_ships[i] == null)
-                        m_ships.RemoveAt(i);
+            // Clear any m_ships that are now null
+            for(int i = 0;i < m_ships.Count; i++)
+                if (m_ships[i] == null)
+                    m_ships.RemoveAt(i);
 
-                // Get every ship and store if we dont have them
-                GameObject root = GameObject.Find("_ships");
-                foreach (ShipAttributes child in
-                         root.GetComponentsInChildren<ShipAttributes>())
-                {
-                    if (!m_ships.Contains(child))
-                        m_ships.Add(child);
-                }
+            // Get every ship and store if we dont have them
+            GameObject root = GameObject.Find("_ships");
+            foreach (ShipAccessor child in
+                        root.GetComponentsInChildren<ShipAccessor>())
+            {
+                if (!m_ships.Contains(child))
+                    m_ships.Add(child);
+            }
         }
 
         private IEnumerator FindStations()

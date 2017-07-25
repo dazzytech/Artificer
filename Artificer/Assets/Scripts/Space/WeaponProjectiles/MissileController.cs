@@ -39,8 +39,6 @@ namespace Space.Projectiles
         {
             if(!hasAuthority)
                 return;
-
-            Invoke("ApplyDamageArea", MissileFuse);
         }
 
         void FixedUpdate()
@@ -96,9 +94,12 @@ namespace Space.Projectiles
                 DestroyProjectile();
                 return;
             }
+
             Target = targetObj.transform;
 
             RpcBuildFX(data);
+
+            Invoke("ApplyDamageArea", MissileFuse);
         }
 
         #endregion
@@ -107,8 +108,6 @@ namespace Space.Projectiles
 
         private bool ApplyDamageArea(RaycastHit2D hit)
         {
-            CancelInvoke("ApplyDamageArea");
-
             // Find the ship that fired the projectile
             GameObject aggressor = ClientScene.FindLocalObject(_data.Self);
 

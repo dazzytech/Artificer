@@ -53,7 +53,7 @@ namespace Game
 
         public void ProcessShipCreated(CreateDispatch CD)
         {
-            PlayerConnectionInfo info = m_att.PlayerInfoList.Item(CD.PlayerID);
+            //PlayerConnectionInfo info = m_att.PlayerInfoList.Item(CD.PlayerID);
 
             /*if (info.mTeam == 0)
             {

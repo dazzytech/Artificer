@@ -123,14 +123,14 @@ namespace Space.Ship
                     // Determine if our target ship list already contains 
                     // the ship parent
                     // retreive ship attributes from removed cmp
-                    ShipAttributes shipAtt = target.GetComponentInParent<ShipAttributes>();
+                    ShipAccessor ship = target.GetComponentInParent<ShipAccessor>();
                     // Is there a ship attached to this?
-                    if (shipAtt != null)
+                    if (ship != null)
                     {
                         // This will return our ship selection
                         // if this is already selected.
                         ShipSelect selected = m_ship.TargetedShips
-                            .FirstOrDefault(o => o.Ship.Equals(shipAtt));
+                            .FirstOrDefault(o => o.Ship.Equals(ship));
 
                         if (selected != null)
                         {
@@ -146,11 +146,11 @@ namespace Space.Ship
                             // This is a newly selected component
                             // Create a new shipselect object
                             selected = new ShipSelect();
-                            selected.Ship = shipAtt;
+                            selected.Ship = ship;
                             selected.TargetedComponents = new List<Transform>();
                             // Add the head as a target bu default
                             selected.TargetedComponents.Add
-                                (shipAtt.Head.transform);
+                                (ship.Head);
 
                             // Now add this to selection
                             m_ship.TargetedShips.Add(selected);

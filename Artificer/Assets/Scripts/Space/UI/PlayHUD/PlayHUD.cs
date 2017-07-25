@@ -50,12 +50,12 @@ namespace Space.UI.Ship
         public void BuildShipData()
     	{
             // Retreive data of player ship
-            ShipAttributes shipData = 
+            ShipAccessor shipData = 
                 GameObject.FindGameObjectWithTag
                     ("PlayerShip").GetComponent
-                    <ShipAttributes>();
+                    <ShipAccessor>();
 
-            m_targetHUD.SetShipData(shipData);
+            m_targetHUD.SetShip(shipData);
     	}
 
         /// <summary>

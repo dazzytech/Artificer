@@ -50,6 +50,19 @@ namespace Space.Segment
 
         #endregion
 
+        #region ACCESSORS
+
+        /// <summary>
+        /// Returns the item yield of the segment 
+        /// object
+        /// </summary>
+        public int Index
+        {
+            get { return m_itemIndex; }
+        }
+
+        #endregion
+
         #region MONO BEHAVIOUR
 
         private void Start()
@@ -146,7 +159,7 @@ namespace Space.Segment
                 // convert hit point from center
                 Vector2 localHit = (_hitD.hitPosition - transform.position);
 
-                if (m_itemIndex > -1)
+                if (m_fragments.Length > 0)
                     DisperseFragments(_hitD.hitPosition, localHit.normalized);
 
                 // scale to current size
@@ -277,9 +290,9 @@ namespace Space.Segment
                 
 
                 // Set which item is yielded on pickup
-                Collectable behaviour =
-                    fragment.AddComponent<Collectable>();
-                behaviour.InitializeCollectable(m_itemIndex);
+                Debris behaviour =
+                    fragment.AddComponent<Debris>();
+                    behaviour.Initialize();
                 
                 Rigidbody2D rb = fragment.AddComponent<Rigidbody2D>();
                 rb.AddForce(Random.insideUnitCircle * 20f, ForceMode2D.Force);
@@ -441,52 +454,5 @@ namespace Space.Segment
             }
         }*/
 
-        /*public void ApplyDamage(HitData hData)
-        {
-            _hitD = hData;
-
-            _rockDensity -= _hitD.damage;
-
-            float dmgPerc = _hitD.damage / _maxDensity;
-
-            int numOfRocks = Mathf.CeilToInt(
-                (_maxDensity * dmgPerc) * 0.2f)
-                + Random.Range(0, 4);
-
-            for (int i = 0; i < numOfRocks; i++)
-            {
-                /*GameObject rock = new GameObject();
-                SpriteRenderer rockSprite = rock.AddComponent<SpriteRenderer>();
-                rockSprite.sprite = GetComponent<SpriteRenderer>().sprite;
-                rock.transform.localScale = new Vector3(.5f, .5f, 1f);
-                rock.transform.position = transform.position;
-                rock.layer = 8;
-
-                CollectableRockBehaviour behaviour = 
-                rock.AddComponent<CollectableRockBehaviour>();
-                behaviour.PopulateWeighted(prospect);
-
-                Rigidbody2D rb = rock.AddComponent<Rigidbody2D>();
-                rb.AddForce(Random.insideUnitCircle*20f, ForceMode2D.Force);
-                rb.gravityScale = 0;
-
-                BoxCollider2D col = rock.AddComponent<BoxCollider2D>();
-                Vector3 size = new Vector3(.5f, .5f);
-                col.size = size;
-                col.isTrigger = true;
-            }
-
-            Vector3 scale = this.transform.localScale * 0.9f;
-            this.transform.localScale = scale;
-
-            if (_rockDensity <= 0)
-            {
-                // this will work cause host
-                NetworkServer.UnSpawn(this.gameObject);
-
-                // for now just destroy
-                Destroy(this.gameObject);
-            }
-        }*/
     }
 }

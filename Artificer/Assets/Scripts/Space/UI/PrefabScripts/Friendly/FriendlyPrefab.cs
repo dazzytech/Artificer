@@ -19,7 +19,7 @@ namespace Space.UI.Ship
         #region ATTRIBUTES
 
         // reference to ship
-        private ShipAttributes m_ship;
+        private ShipAccessor m_ship;
 
         // If item was active before enable
         private bool m_activated;
@@ -116,7 +116,7 @@ namespace Space.UI.Ship
         /// Pass the friendly attributes to the Prefab to begintracking
         /// </summary>
         /// <param name="newShip"></param>
-        public void DefineFriendly(ShipAttributes newShip, uint newID)
+        public void DefineFriendly(ShipAccessor newShip, uint newID)
         {
             // keep reference
             m_ship = newShip;
@@ -152,7 +152,7 @@ namespace Space.UI.Ship
 
         private void OnShipCreated(CreateDispatch CD)
         {
-            if (m_ship.NetworkID.Equals(CD.Self))
+            if (m_ship.NetID.Equals(CD.Self))
             {
                 ViewerPanel.BuildShip(m_ship, PiecePrefab);
 
@@ -182,7 +182,7 @@ namespace Space.UI.Ship
                 }
 
                 // update name
-                m_label.text = m_ship.Ship.Name;
+                m_label.text = m_ship.Data.Name;
 
                 // Update station status
                 switch (m_ship.Status)

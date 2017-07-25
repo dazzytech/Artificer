@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 using System.Collections;
 
 using Space.Segment;
+using Space.Ship;
 
 namespace Space.Projectiles
 {
@@ -17,6 +18,12 @@ namespace Space.Projectiles
             FIZZLE,
             FADE,
         }
+
+        /// <summary>
+        /// Useds to add materials to ship 
+        /// when segment object is hit
+        /// </summary>
+        private ShipAccessor m_ship;
 
         #region PARTICLES
 
@@ -90,13 +97,15 @@ namespace Space.Projectiles
         {
             base.CreateProjectile(data);
 
+            m_ship = ClientScene.FindLocalObject(data.Self)
+                .GetComponent<ShipAccessor>();
+
             // Damage whatever is hit
             ApplyDamage(data);
 
             // Create destroy with delay
             Invoke("DestroyProjectile", seconds);
         }
-
 
         // THIS AINT PUBLIC
         /// <summary>
@@ -135,6 +144,12 @@ namespace Space.Projectiles
                     if (IC != null)
                     {
                         IC.Hit(hitD);
+
+                        // Beams are able to collect
+                        // resources if a collector is attached
+                        if (IC is SegmentObject)
+                            if (m_ship != null)
+                                m_ship.MaterialGathered((IC as SegmentObject).Index);
 
                         data.Distance = Vector2.Distance(transform.position, hit.point);
                         break;

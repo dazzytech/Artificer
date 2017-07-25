@@ -233,7 +233,7 @@ namespace Space.AI
 
             // Test for emergency eject
             // If ship is too damaged then depart
-            if (ShipStatus.EvacNeeded(Self.transform))
+            if (m_self.Ship.EvacNeeded)
             {
                 Self.SetTransition(Transition.Eject);
                 return;

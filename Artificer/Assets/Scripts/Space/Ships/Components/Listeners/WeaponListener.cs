@@ -32,8 +32,6 @@ namespace Space.Ship.Components.Listener
                     return;
                 }
 
-                
-
     			Vector3 forward = transform.TransformDirection (Vector3.up);
 
                // GameObject projectile;

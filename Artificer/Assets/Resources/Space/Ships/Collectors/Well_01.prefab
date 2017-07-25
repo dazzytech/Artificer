@@ -287,8 +287,8 @@ MonoBehaviour:
     AutoLock: 0
     behaviour: 0
     AutoFire: 0
-  Radius: 3
-  PullForce: 5
+  YieldModifierMin: 3
+  YieldModifierMax: 6
 --- !u!114 &11439248
 MonoBehaviour:
   m_ObjectHideFlags: 1

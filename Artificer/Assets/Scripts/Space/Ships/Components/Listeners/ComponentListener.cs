@@ -674,26 +674,26 @@ namespace Space.Ship.Components.Listener
 
                     // Attempt to retrieve ship attributes 
                     // from object
-                    ShipAttributes otherAtt = hit.transform.
-                        GetComponent<ShipAttributes>();
+                    ShipAccessor other = hit.transform.
+                        GetComponent<ShipAccessor>();
 
-                    if (otherAtt == null)
+                    if (other == null)
                         continue;
 
                     // are we on the same team
-                    if (ShipAtts.TeamID == otherAtt.TeamID)
+                    if (ShipAtts.TeamID == other.TeamID)
                         continue;
 
                     // Discover if ship is already owned
                     ShipSelect select = ShipAtts.TargetedShips.
-                        FirstOrDefault(x => x.Ship == otherAtt);
+                        FirstOrDefault(x => x.Ship == other);
 
                     if (select != null)
                         continue;
                     else
                     {
                         select = new ShipSelect();
-                        select.Ship = otherAtt;
+                        select.Ship = other;
                         select.TargetedComponents = new 
                             System.Collections.Generic.List<Transform>();
                         select.TargetedComponents.Add(hit.transform);

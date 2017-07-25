@@ -69,21 +69,21 @@ namespace Space.Segment
             if (player == null)
                 return;
 
-            ShipAttributes shipAtts = player.GetComponent<ShipAttributes>();
+            ShipAccessor ship = player.GetComponent<ShipAccessor>();
 
-            if (shipAtts == null)
+            if (ship == null)
                 return;
 
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
 
-            foreach (ComponentListener listener in shipAtts.SelectedComponents(components))
+            foreach (ComponentListener listener in ship.SelectedComponents(components))
             {
                 listener.Destroy();
                 listener.transform.parent = this.transform;
                 rb.mass += listener.Weight;
             }
 
-            if (shipAtts.Components.Length == 0)
+            if (ship.Components.Length == 0)
                 Destroy(player);
 
             m_maxDensity = m_pieceDensity = (40f * transform.childCount);

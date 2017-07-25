@@ -64,8 +64,6 @@ namespace Space.Ship
                     SystemManager.Space.TeamSelected += SetNonPlayer;
 
                 SystemManager.UI.AddUIPiece(transform);
-
-                
             }
             else
                 // Begin listening for the ship created 
@@ -99,8 +97,6 @@ namespace Space.Ship
             // Add to other uis
             // will be replaces with listening to on ship create event?
             SystemManager.UI.RpcAddRemotePlayer(netId);
-
-            SystemManager.GameMSG.OnShipCreated(netId, SystemManager.Space.ID);
 
             m_att.hasSpawned = true;
         }
@@ -202,6 +198,8 @@ namespace Space.Ship
             // build the body around this
             BuildConnectedPieces
                 (m_att.Ship.Head, headGO.transform);
+
+            SystemManager.GameMSG.OnShipCreated(netId, SystemManager.Space.ID);
         }
 
         /// <summary>

@@ -140,12 +140,12 @@ namespace Space.UI.Ship
                 }
                 else
                 {
-                    AddUIPiece(friendlyObj.GetComponent<ShipAttributes>(), ID);
+                    AddUIPiece(friendlyObj.GetComponent<ShipAccessor>(), ID);
                 }
             }
         }
 
-        private void AddUIPiece(ShipAttributes Ship, uint ID)
+        private void AddUIPiece(ShipAccessor Ship, uint ID)
         {
 
             // Create Friendly HUD Prefab

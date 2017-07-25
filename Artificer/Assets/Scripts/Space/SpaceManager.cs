@@ -313,10 +313,10 @@ namespace Space
                     SendMessageOptions.RequireReceiver);
 
                 // retrieve ship atts from player object
-                ShipAttributes shipAtt = PlayerObj.GetComponent<ShipAttributes>();
+                ShipAccessor ship = PlayerObj.GetComponent<ShipAccessor>();
 
                 // Add message for sending ship attributes
-                SystemManager.UI.InitializeStationHUD(shipAtt);
+                SystemManager.UI.InitializeStationHUD(ship);
             }
         }
 

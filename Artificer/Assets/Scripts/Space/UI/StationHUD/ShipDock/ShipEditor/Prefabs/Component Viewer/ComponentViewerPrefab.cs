@@ -116,8 +116,8 @@ namespace Space.UI.Station.Prefabs
                     break;
                 case "Wells":
                     m_wellPanel.gameObject.SetActive(true);
-                    m_wellPanel.Find("Radius").GetComponent<Text>().text = ((CollectorAttributes)att).Radius.ToString() + "m";
-                    m_wellPanel.Find("Force").GetComponent<Text>().text = ((CollectorAttributes)att).PullForce.ToString();
+                    m_wellPanel.Find("Min Yield").GetComponent<Text>().text = ((CollectorAttributes)att).YieldModifierMin.ToString() + "m";
+                    m_wellPanel.Find("Max Yield").GetComponent<Text>().text = ((CollectorAttributes)att).YieldModifierMax.ToString();
                     break;
                 case "Warps":
                     m_warpPanel.gameObject.SetActive(true);

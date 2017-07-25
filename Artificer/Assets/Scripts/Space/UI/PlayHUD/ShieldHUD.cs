@@ -11,7 +11,7 @@ namespace Space.UI.Ship
     public class ShieldHUD : MonoBehaviour
     {
         // Ship attributes for player ship
-        private ShipAttributes _shipData;
+        private ShipAccessor _shipRef;
         
         // GUI HUD
         public Transform _ShieldHUD;
@@ -29,13 +29,13 @@ namespace Space.UI.Ship
             _ListItems = new List<ShieldItemPrefab>();
         }
 
-        public void SetShipData(ShipAttributes data)
+        public void SetShipData(ShipAccessor ship)
         {
-            _shipData = data;
+            _shipRef = ship;
             ClearAll();
             // Update the color state to the existing buttons
             // create pieces for each new ship
-            if (_shipData.Shields.Count != 0)
+            if (_shipRef.Shields.Count != 0)
                 BuildList();
             else if(_ShieldHUD.gameObject.activeSelf)
                     _ShieldHUD.gameObject.SetActive(false);
@@ -45,7 +45,7 @@ namespace Space.UI.Ship
         void Update()
         {
             // Do not update if ship data is null
-            if (_shipData == null)
+            if (_shipRef == null)
             {
                 // hide HUD
                 if(_ShieldHUD.gameObject.activeSelf)
@@ -54,7 +54,7 @@ namespace Space.UI.Ship
                 
                 return; 
             }
-            else if (_shipData.Shields.Count != 0)
+            else if (_shipRef.Shields.Count != 0)
                 // show HUD if hidden
                 if(!_ShieldHUD.gameObject.activeSelf)
                     _ShieldHUD.gameObject.SetActive(true);
@@ -65,7 +65,7 @@ namespace Space.UI.Ship
         /// </summary>
         private void BuildList()
         {
-            foreach (ShieldListener comp in _shipData.Shields)
+            foreach (ShieldListener comp in _shipRef.Shields)
             {
                 if(comp != null)
                 {

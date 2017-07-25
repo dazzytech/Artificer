@@ -2,51 +2,42 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Collectable : MonoBehaviour
+namespace Space.Segment
 {
-    private int m_itemYield;
-
-    float destroyTime = 40f;
-
-    // Use this for initialization
-    void Start()
-    {
-        Invoke("Die", destroyTime);
-    }
-
-    public void InitializeCollectable(int itemID = -1)
-    {
-        m_itemYield = itemID;
-
-        gameObject.layer = LayerMask.NameToLayer("Collectable");
-        GetComponent<SpriteRenderer>().sortingLayerName = "BackgroundObjects";
-    }
-
     /// <summary>
-    /// Sends message to both ship and space 
-    /// alerting to item pickup if 
-    /// colliding with player ship.
+    /// Used for lootable objects
     /// </summary>
-    /// <param name="col"></param>
-    void OnTriggerEnter2D(Collider2D col)
+    public class Collectable : Debris
     {
-        //if (col.transform.parent == null)
-            return;
-        if (col.transform.parent.tag == "PlayerShip")
+        private int m_itemYield;
+
+        // Use this for initialization
+        void Start()
         {
-            // discover a way to pass loot info
-            // class?
-            /*SystemManager.Space.SendMessage
-                ("ItemCollected", m_itemYield,
-                SendMessageOptions.RequireReceiver);*/
-
-            Destroy(this.gameObject);
+            Invoke("Die", 40f);
         }
-    }
 
-    void Die()
-    {
-        Destroy(this.gameObject);
+        /// <summary>
+        /// Sends message to both ship and space 
+        /// alerting to item pickup if 
+        /// colliding with player ship.
+        /// </summary>
+        /// <param name="col"></param>
+        void OnTriggerEnter2D(Collider2D col)
+        {
+            //if (col.transform.parent == null)
+            return;
+            /*if (col.transform.parent.tag == "PlayerShip")
+            {
+                // discover a way to pass loot info
+                // class?
+                SystemManager.Space.SendMessage
+                    ("ItemCollected", m_itemYield,
+                    SendMessageOptions.RequireReceiver);
+
+                Destroy(this.gameObject);
+            }*/
+        }
     }
 }
 

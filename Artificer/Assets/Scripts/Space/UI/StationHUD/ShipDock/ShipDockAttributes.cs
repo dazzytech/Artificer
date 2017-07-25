@@ -70,7 +70,7 @@ namespace Space.UI.Station
 
         [HideInInspector]
         // reference to player ship data
-        public ShipAttributes Ship;
+        public ShipAccessor Ship;
 
         /// <summary>
         /// Ship index for ship being edited

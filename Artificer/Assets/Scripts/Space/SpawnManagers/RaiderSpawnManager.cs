@@ -360,7 +360,7 @@ namespace Space.SpawnManager
                     if (ship.GetComponent<NetworkIdentity>
                         ().isLocalPlayer)
                     {
-                        if (ship.GetComponent<ShipAttributes>().TeamID != -1)
+                        if (ship.GetComponent<ShipAccessor>().TeamID != -1)
                         {
                             // If this is a ship that this client
                             // manages then we want to track it

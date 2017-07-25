@@ -78,7 +78,7 @@ namespace Space.UI.Station
         {
             OnStateChanged(1);
             m_att.ShipIndex = -1;
-            m_att.Editor.LoadExistingShip(m_att.Ship.Ship);
+            m_att.Editor.LoadExistingShip(m_att.Ship.Data);
         }
 
         #endregion
@@ -96,22 +96,25 @@ namespace Space.UI.Station
 
             // overwrite existing information
             if (m_att.ShipIndex != -1)
+            {
                 SystemManager.PlayerShips[m_att.ShipIndex].Ship
                     = m_att.Editor.Ship.Ship;
+
+                m_att.Editor.ClearShip();
+
+                OnStateChanged(0);
+            }
             else
             {
                 // Ship we are currently using has been
                 // changed
                 // set data and reset ship construction
-                m_att.Ship.Ship = m_att.Editor.Ship.Ship;
+                m_att.Ship.ResetShip(m_att.Editor.Ship.Ship);
 
-                // Set ship to reset
-                m_att.Ship.Generator.ResetShip();
+                m_att.Editor.ClearShip();
+
+                m_att.Ship.OnShipCompleted += OnShipUpdated;
             }
-
-            m_att.Editor.ClearShip();
-
-            OnStateChanged(0);
         }
 
         public void DeleteShip()
@@ -125,8 +128,22 @@ namespace Space.UI.Station
         {
 
         }
-            
+
         #endregion
+
+        /// <summary>
+        /// Changes the state once the ship
+        /// has completed building
+        /// </summary>
+        /// <param name="CD"></param>
+        public void OnShipUpdated()
+        {
+            // This is the ship we need
+            m_att.Ship.OnShipCompleted
+                -= OnShipUpdated;
+
+            OnStateChanged(0);
+        }
 
         public void ExitStation()
         {

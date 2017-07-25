@@ -25,6 +25,21 @@ namespace Space.Ship.Components.Listener
         #region PUBLIC INTERACTION
 
         /// <summary>
+        /// Discovers if this item 
+        /// currently stores the material
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public bool ContainsItem(int item)
+        {
+            if (_attr.storage == null)
+                return false;
+
+            else
+                return _attr.storage.ContainsKey(item);
+        }
+
+        /// <summary>
         /// Adds the item to the storage attributes.
         /// </summary>
         /// <returns>The material remainder.</returns>
@@ -136,7 +151,7 @@ namespace Space.Ship.Components.Listener
         private void SetShipWeight()
         {
             rb.mass -= totalWeight;
-            totalWeight = _attr.currentWeight * 0.00001f;
+            totalWeight = _attr.currentWeight * 0.000001f;
             rb.mass += totalWeight;
         }
 

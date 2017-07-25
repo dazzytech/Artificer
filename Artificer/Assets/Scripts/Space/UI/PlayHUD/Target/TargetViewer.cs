@@ -96,14 +96,14 @@ namespace Space.UI.Ship
             }
 
             // Next detect Ship
-            ShipAttributes ship = trackObj.
-                GetComponent<ShipAttributes>();
+            ShipAccessor ship = trackObj.
+                GetComponent<ShipAccessor>();
 
             if(ship != null)
             {
                 m_Icon.enabled = false;
 
-                m_Label.text = ship.Ship.Name;
+                m_Label.text = ship.Data.Name;
 
                 m_viewerPanel.BuildShip(ship, m_piecePrefab);
 

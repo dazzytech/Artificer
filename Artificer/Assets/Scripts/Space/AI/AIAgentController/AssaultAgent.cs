@@ -76,14 +76,14 @@ namespace Space.AI.Agent
         {
             for (int i = 0; i < m_ships.Count; i++)
             {
-                ShipAttributes ship = m_ships[i];
-                if (ship == null)
+                ShipAccessor other = m_ships[i];
+                if (other == null)
                     continue;
 
-                if (Att.TeamID != ship.TeamID)// TODO TEAM && !m_team.Contains(ship.transform))
+                if (Ship.TeamID != other.TeamID)// TODO TEAM && !m_team.Contains(ship.transform))
                 {
-                    if (!m_targets.Contains(ship.transform))
-                        m_targets.Add(ship.transform);
+                    if (!m_targets.Contains(other.transform))
+                        m_targets.Add(other.transform);
                 }
             }
 

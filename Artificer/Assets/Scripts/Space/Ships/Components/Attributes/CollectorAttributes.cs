@@ -5,7 +5,7 @@ namespace Space.Ship.Components.Attributes
 {
     public class CollectorAttributes : ComponentAttributes
     {
-        public float Radius;
-        public float PullForce;
+        public float YieldModifierMin;
+        public float YieldModifierMax;
     }
 }

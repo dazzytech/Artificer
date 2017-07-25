@@ -8,6 +8,7 @@ using Space.Projectiles;
 using Space.Ship.Components.Attributes;
 using Networking;
 using Data.Space;
+using Space.UI.Ship;
 
 namespace Space.Ship.Components.Listener
 {
@@ -19,12 +20,12 @@ namespace Space.Ship.Components.Listener
 
         public override void Activate()
         {
-            /*if (_attr.readyToFire && _attr.Ship.Targets.Count != 0)
+            if (_att.readyToFire)
             {
                 StartCoroutine("EngageDelay");
 
                 StartCoroutine("LaunchRockets"); 
-            }*/
+            }
         }
 
         #endregion
@@ -50,6 +51,22 @@ namespace Space.Ship.Components.Listener
             }
         }
 
+        [Command]
+        private void CmdBuildRocket(int prefabID, Vector3 shotOrigin,
+            WeaponData wData, uint playerNetID)
+        {
+            GameObject Prefab = NetworkManager.singleton.spawnPrefabs[prefabID];
+
+            GameObject GO = Instantiate(Prefab, shotOrigin, Quaternion.identity) as GameObject;
+
+            // Projectile can run command to display self
+            NetworkServer.SpawnWithClientAuthority(GO,
+                SystemManager.Space.PlayerConn
+                (new NetworkInstanceId(playerNetID)));
+
+            GO.GetComponent<MissileController>().CreateProjectile(wData);
+        }
+
         #endregion
 
         #region COROUTINE
@@ -68,9 +85,7 @@ namespace Space.Ship.Components.Listener
         
         private IEnumerator LaunchRockets()
         {
-            // temp
-            yield break;
-            /*Transform[] firePs = transform.Cast<Transform>().Where
+            Transform[] firePs = transform.Cast<Transform>().Where
                 (c=>c.gameObject.tag == "Fire").ToArray();
             
             if(firePs.Length == 0)
@@ -80,7 +95,7 @@ namespace Space.Ship.Components.Listener
                 yield return null;
             }
 
-            for(int i=0;i < _attr.Rockets; i++)
+            for(int i=0;i < _att.Rockets; i++)
             {
                 float rotation=0f;
                 if(i%2==0)
@@ -95,50 +110,42 @@ namespace Space.Ship.Components.Listener
                 Vector3 shotOrigin = firePs[Random.Range(0, firePs.Length)].position;
                     
                 Vector3 forward = transform.TransformDirection (Vector3.up);
-                    
-                GameObject projectile;
 
-                _attr.readyToFire = false;
+                _att.readyToFire = false;
 
                 WeaponData data = new WeaponData();
-                data.Damage = _attr.WeaponDamage;
+                data.Damage = _att.WeaponDamage;
                 data.Direction = forward;
-                data.Distance = _attr.WeaponRange;
-                data.Self = _attr.Ship.instID;
+                data.Distance = _att.WeaponRange;
+                data.Self = _att.Ship.NetworkID;
 
-                int prefabIndex = NetworkManager.singleton.spawnPrefabs.IndexOf(_attr.ProjectilePrefab);
+                int prefabID = NetworkManager.singleton.spawnPrefabs.IndexOf(_att.ProjectilePrefab);
 
                 // if targets are removed mid fire
-                if (_attr.Ship.Targets.Count == 0)
+                if (_att.Ship.TargetedShips.Count == 0)
                 {
-                    StopCoroutine("LaunchRockets");
-                    yield return null;
+                    yield break;
                 }
 
-                //Transform Target = _attr.Ship.Targets[Random.Range(0,
-                 //   _attr.Ship.Targets.Count)];
+                ShipSelect targetShip = _att.Ship.TargetedShips[Random.Range(0,
+                   _att.Ship.TargetedShips.Count)];
 
-                NetworkInstanceId netTarget = Target
+                Transform target = targetShip.TargetedComponents[Random.Range(0,
+                   targetShip.TargetedComponents.Count)];
+
+                NetworkInstanceId netTarget = target
                     .GetComponent<NetworkIdentity>().netId;
 
                 if(netTarget.Value == 0)
-                    netTarget = Target.parent.GetComponent<NetworkIdentity>().netId;
+                    netTarget = target.parent.GetComponent<NetworkIdentity>().netId;
 
                 data.Target = netTarget;
 
-                StartCoroutine("EngageDelay");
+                CmdBuildRocket(prefabID, shotOrigin,
+                    data, SystemManager.Space.NetID);
 
-                ProjectileBuildMessage msg = new ProjectileBuildMessage();
-                msg.PrefabIndex = prefabIndex;
-                msg.Position = shotOrigin;
-                msg.WData = data;
-                msg.shooterID = SystemManager.Space.ID;
-
-                // Sendmsg to game to spawn projectile
-                SystemManager.singleton.client.Send((short)MSGCHANNEL.BUILDPROJECTILE, msg);
-
-                yield return new WaitForSeconds(_attr.RocketDelay);
-            }*/
+                yield return new WaitForSeconds(_att.RocketDelay);
+            }
         }
 
         #endregion

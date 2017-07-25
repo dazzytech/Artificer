@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 using Space.Ship.Components.Attributes;
+using System.Collections.Generic;
 
 namespace Space.Ship.Components.Listener
 {
@@ -10,43 +11,52 @@ namespace Space.Ship.Components.Listener
         #region ATTRIBUTES
 
         CollectorAttributes _attr;
-        GameObject _GravityWell;
+
+        #endregion
+
+        #region PUBLIC INTERACTION
+
+        /// <summary>
+        /// Creates an amount of item gathered
+        /// and attempts to distribute them in storage
+        /// </summary>
+        /// <param name="ItemIndex"></param>
+        public void ItemGathered(int ItemIndex)
+        {
+            // Create the dictionary item 
+            // for storage
+            Dictionary<int, float> yield = new Dictionary<int, float> {
+                { ItemIndex, Random.Range(_attr.YieldModifierMin, _attr.YieldModifierMax) } };
+
+            // first time only add the item to 
+            // storages that already have it
+            // for stacking
+            foreach(StorageListener storage in _attr.Ship.Storage)
+            {
+                if (storage.ContainsItem(ItemIndex))
+                    yield = storage.AddMaterial(yield);
+
+                if (yield.Count == 0)
+                    break;
+            }
+
+            // next if we still have the item
+            // we add it to a new storage
+            if (yield.Count > 0)
+            {
+                foreach (StorageListener storage in _attr.Ship.Storage)
+                {
+                    yield = storage.AddMaterial(yield);
+
+                    if (yield.Count == 0)
+                        break;
+                }
+            }
+        }
 
         #endregion
 
         #region PRIVATE UTILITIES
-
-        protected override void RunUpdate()
-        {
-            // Begin process of searching for collectable objects within in range
-            RaycastHit2D[] hits =
-                    Physics2D.CircleCastAll(transform.position,
-                                            _attr.Radius, Vector2.up, 0, (1 << 8));
-
-            if(hits.Length > 0)
-            {
-                foreach (RaycastHit2D hit in hits)
-                {
-                    if (hit.transform.GetComponent<Collectable>()
-                       != null)
-                    {
-                        Vector3 newPos = hit.transform.position;
-                        newPos -= (hit.transform.position -
-                                   transform.position).normalized * _attr.PullForce * Time.deltaTime;
-
-                        hit.transform.position = newPos;
-
-                        // test if in pickup range and send to storage is successful
-                        if(Vector3.Distance(hit.transform.position, transform.position) > 1f)
-                        {
-                            // close enough to collect
-                            transform.parent.SendMessage("CollectItem", 
-                                hit.transform.GetComponent<Collectable>());
-                        }
-                    }
-                }
-            }
-        }
 
         protected override void InitializeComponent()
         {

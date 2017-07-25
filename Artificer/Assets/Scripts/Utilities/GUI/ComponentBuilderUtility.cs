@@ -32,7 +32,7 @@ namespace UI
         private float m_width, m_height, m_margin;
 
         // refence to ship attributes
-        private ShipAttributes m_shipAtt;
+        private ShipAccessor m_ship;
 
         // Keep track of component list
         private List<ViewerItem> m_viewerItems;
@@ -75,8 +75,8 @@ namespace UI
         {
             GameObject tempShip = new GameObject();
 
-            ShipAttributes tempAtt = 
-                tempShip.AddComponent<ShipAttributes>();
+            ShipAccessor temp = 
+                tempShip.AddComponent<ShipAccessor>();
 
             tempShip.AddComponent<ShipMessageController>();
 
@@ -85,7 +85,7 @@ namespace UI
             //Space.Segment.Generator.ShipGenerator.
                // GenerateShip(ship, tempShip);
 
-            BuildShip(tempAtt, PiecePrefab);
+            BuildShip(temp, PiecePrefab);
 
             Destroy(tempShip);
         }
@@ -95,9 +95,9 @@ namespace UI
         /// </summary>
         /// <param name="Ship"></param>
         public void BuildShip
-            (ShipAttributes Ship, GameObject PiecePrefab)
+            (ShipAccessor Ship, GameObject PiecePrefab)
         {
-            m_shipAtt = Ship;
+            m_ship = Ship;
 
             m_componentPrefab = PiecePrefab;
 
@@ -108,13 +108,13 @@ namespace UI
                 Destroy(m_constructPanel.gameObject);
 
             // Begin routines
-            if(m_shipAtt != null)
+            if(m_ship != null)
                 DiscoverSize();
         }
 
         public void ClearShip()
         {
-            m_shipAtt = null;
+            m_ship = null;
 
             m_componentPrefab = null;
 
@@ -179,17 +179,17 @@ namespace UI
             float minX, minY, maxX, maxY;
             minX = minY = maxX = maxY = 0;
 
-            if (m_shipAtt == null)
+            if (m_ship == null)
                 return;
 
             // Find min and max points of total ship 
             // using each component
-            for (int i = 0; i < m_shipAtt.Components.Length; i++)
+            for (int i = 0; i < m_ship.Components.Length; i++)
             {
-                if (m_shipAtt == null)
+                if (m_ship == null)
                     return;
 
-                ComponentListener item = m_shipAtt.Components[i];
+                ComponentListener item = m_ship.Components[i];
 
                 if (item == null)
                 {
@@ -224,17 +224,17 @@ namespace UI
         /// <returns></returns>
         private void BuildComponents()
         {
-            if(m_shipAtt == null)
+            if(m_ship == null)
                 return;
 
             // Find min and max points of total ship 
             // using each component
-            for (int i = 0; i < m_shipAtt.Components.Length; i++)
+            for (int i = 0; i < m_ship.Components.Length; i++)
             {
-                if (m_shipAtt == null)
+                if (m_ship == null)
                     return;
 
-                ComponentListener component = m_shipAtt.Components[i];
+                ComponentListener component = m_ship.Components[i];
 
                 if (component == null)
                 {
