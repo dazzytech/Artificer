@@ -127,11 +127,19 @@ namespace Space.Projectiles
         /// </summary>
         private void TravelBullet(Vector3 affix)
         {
+            origTransPosition = transform.position;
+
             if (affix == Vector3.zero)
                 // move the transform in the bullet direction
                 transform.Translate((_data.Direction * speed) * Time.deltaTime);
             else
                 transform.position = affix;
+
+            float travel = ((transform.position - origTransPosition).sqrMagnitude);
+            currDistance += travel;
+
+            if (currDistance > _data.Distance)
+                DestroyProjectileDelay();
         }
 
         /// <summary>

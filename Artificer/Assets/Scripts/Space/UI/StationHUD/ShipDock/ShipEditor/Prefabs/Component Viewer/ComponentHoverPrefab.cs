@@ -153,8 +153,6 @@ namespace Space.UI.Station.Prefabs
                 case "Launchers":
                     m_launcherPanel.gameObject.SetActive(true);
                     m_launcherPanel.Find("Damage").GetComponent<Text>().text = ((LauncherAttributes)att).WeaponDamage.ToString();
-                    m_launcherPanel.Find("Range").GetComponent<Text>().text =
-                        (((LauncherAttributes)att).WeaponRange * .1f).ToString() + "km";
                     m_launcherPanel.Find("Delay").GetComponent<Text>().text = ((LauncherAttributes)att).WeaponDelay.ToString("F2");
                     m_launcherPanel.Find("TargetRange").GetComponent<Text>().text =
                         (((LauncherAttributes)att).AttackRange * .1f).ToString() + "km";

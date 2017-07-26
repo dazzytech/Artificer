@@ -13,10 +13,12 @@ namespace Space.Segment
 
         #endregion
 
-        #region MONO BEHAVIOUR
+        #region PRIVATE UTILITIES
 
-        private void Awake()
+        protected override void InitializeSegmentObject()
         {
+            base.InitializeSegmentObject();
+
             transform.localScale =
                         new Vector3(m_scale,
                                     m_scale, 1f);

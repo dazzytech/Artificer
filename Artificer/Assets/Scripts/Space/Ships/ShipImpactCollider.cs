@@ -196,9 +196,15 @@ namespace Space.Ship
                         float RangeReduction = (Vector3.Distance
                             (piece.transform.position, _hitD.hitPosition) / _hitD.radius);
 
-                        float damage = _hitD.damage *= Random.Range(0.5f, 1.0f);
+                        Debug.Log(string.Format("Distance {0}, Reduction {1}", Vector3.Distance
+                            (piece.transform.position, _hitD.hitPosition), RangeReduction));
+
+                        float damage = _hitD.damage * Random.Range(0.5f, 1.0f);
 
                         float damageReduction = damage * RangeReduction;
+
+                        Debug.Log(string.Format("Damage {0}, Reduced {1}, ID {2}", damage, damageReduction, att.ID));
+
 
                         damagedComps.Add(att.ID);
                         damagedVals.Add(damage - damageReduction);

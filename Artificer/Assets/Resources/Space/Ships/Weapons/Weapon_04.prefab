@@ -231,8 +231,8 @@ MonoBehaviour:
     AutoLock: 0
     behaviour: 0
     AutoFire: 0
-  WeaponDamage: 30
-  WeaponRange: 500
+  WeaponDamage: 10
+  WeaponRange: 100
   WeaponDelay: 0.4
   readyToFire: 0
   ProjectilePrefab: {fileID: 120856, guid: ace3482e178741e4bbd5233db59f622f, type: 2}

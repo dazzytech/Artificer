@@ -391,17 +391,16 @@ MonoBehaviour:
     AutoLock: 0
     behaviour: 0
     AutoFire: 0
-  WeaponDamage: 40
-  WeaponRange: 500
+  WeaponDamage: 15
   WeaponDelay: 8
-  AttackRange: 300
+  AttackRange: 30
   MaxAngle: 180
   MinAngle: -180
   Rockets: 8
   RocketDelay: 0.2
   readyToFire: 0
   ProjectilePrefab: {fileID: 179984, guid: 672f214f8c0367641bd50e4740faa692, type: 2}
-  AutoTarget: 1
+  AutoTarget: 0
 --- !u!114 &11439376
 MonoBehaviour:
   m_ObjectHideFlags: 1

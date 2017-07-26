@@ -116,7 +116,7 @@ namespace Space.Ship.Components.Listener
                 WeaponData data = new WeaponData();
                 data.Damage = _att.WeaponDamage;
                 data.Direction = forward;
-                data.Distance = _att.WeaponRange;
+                data.Distance = -1;
                 data.Self = _att.Ship.NetworkID;
 
                 int prefabID = NetworkManager.singleton.spawnPrefabs.IndexOf(_att.ProjectilePrefab);

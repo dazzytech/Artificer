@@ -23,30 +23,25 @@ namespace Space.Projectiles
 
         #endregion
 
-        Transform Target;
+        private Transform m_target;
 
-        protected Rigidbody2D rocketRigidbody;
+        [SerializeField]
+        private Rigidbody2D rocketRigidbody;
 
         #region MONOBEHAVIOUR
 
-        // Use this for initialization
-        void Awake()
-        {
-            rocketRigidbody = GetComponent<Rigidbody2D>();
-        }
-
-        void Start()
-        {
-            if(!hasAuthority)
-                return;
-        }
-
         void FixedUpdate()
         {
-            if (Target == null)
+            if (m_target == null)
                 return;
 
-            Quaternion newRotation = Quaternion.LookRotation(transform.position - Target.position, Vector3.forward);
+            if (Vector3.Distance(transform.position, m_target.position) < 5)
+            {
+                turn = 0f;
+                return;
+            }
+
+            Quaternion newRotation = Quaternion.LookRotation(transform.position - m_target.position, Vector3.forward);
             newRotation.x = 0.0f;
             newRotation.y = 0.0f;
             transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * turn);
@@ -60,17 +55,15 @@ namespace Space.Projectiles
 
         void Update()
         {
+            if (!hasAuthority)
+                return;
+
             RaycastHit2D hit = Physics2D.Raycast(transform.position, -_data.Direction, MissileSpeed * Time.deltaTime, maskIgnore);
 
             if (hit.transform != null)
             {
-                // Both client and host reach here
-                // however only the player that applies damage
-                if (hasAuthority)
-                {
-                    // if successful hit then break out of the loop
-                    ApplyDamageArea(hit);
-                }
+                // if successful hit then break out of the loop
+                ApplyDamageArea(hit);
             }
         }
 
@@ -83,23 +76,14 @@ namespace Space.Projectiles
         /// </summary>
         /// <param name="direction">Direction.</param>
         /// <param name="range">Range.</param>
+        [Server]
         public override void CreateProjectile(WeaponData data)
         {
             base.CreateProjectile(data);
 
-            GameObject targetObj = ClientScene.FindLocalObject(data.Target);
-
-            if (targetObj == null)
-            {
-                DestroyProjectile();
-                return;
-            }
-
-            Target = targetObj.transform;
+            RpcSetTarget(data.Target.Value);
 
             RpcBuildFX(data);
-
-            Invoke("ApplyDamageArea", MissileFuse);
         }
 
         #endregion
@@ -121,14 +105,27 @@ namespace Space.Projectiles
 
             CmdBuildHitFX(hit.point, _data);
 
+            return true;
+        }
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        private void SelfDestruct()
+        {
+            ExplodeRocket(transform.position);
+        }
+
+        private void ExplodeRocket(Vector3 hitPos)
+        {
             HitData hitD = new HitData();
             hitD.damage = _data.Damage;
-            // maybe this should be center of impact
-            hitD.hitPosition = hit.point;
+            hitD.hitPosition = hitPos;
             hitD.radius = Radius;
             hitD.originID = _data.Self;
 
-            RaycastHit2D[] colliderList = 
+            RaycastHit2D[] colliderList =
                 Physics2D.CircleCastAll(transform.position, Radius, Vector2.up, 0, maskIgnore);
 
             foreach (RaycastHit2D hitB in colliderList)
@@ -145,8 +142,28 @@ namespace Space.Projectiles
             }
 
             DestroyProjectile();
+        }
 
-            return true;
+        #endregion
+
+        #region CLIENT
+
+        /// <summary>
+        /// Creates the target on 
+        /// each client
+        /// </summary>
+        /// <param name="targetID"></param>
+        [ClientRpc]
+        public void RpcSetTarget(uint targetID)
+        {
+            GameObject targetObj = 
+                ClientScene.FindLocalObject
+                    (new NetworkInstanceId(targetID));
+
+            m_target = targetObj.transform;
+
+            if(hasAuthority)
+                Invoke("SelfDestruct", MissileFuse);
         }
 
         #endregion

@@ -19,12 +19,6 @@ namespace Space.Projectiles
             FADE,
         }
 
-        /// <summary>
-        /// Useds to add materials to ship 
-        /// when segment object is hit
-        /// </summary>
-        private ShipAccessor m_ship;
-
         #region PARTICLES
 
         private ParticleSystem _system;
@@ -93,12 +87,10 @@ namespace Space.Projectiles
         /// Called from weapon controller 
         /// </summary>
         /// <param name="data"></param>
+        [Server]
         public override void CreateProjectile(WeaponData data)
         {
             base.CreateProjectile(data);
-
-            m_ship = ClientScene.FindLocalObject(data.Self)
-                .GetComponent<ShipAccessor>();
 
             // Damage whatever is hit
             ApplyDamage(data);
@@ -129,7 +121,7 @@ namespace Space.Projectiles
                     }
 
                     // Show hit decals on clients
-                    CmdBuildHitFX(hit.point, data);
+                    RpcBuildHitFX(hit.point, data);
 
                     // create hitdata
                     HitData hitD = new HitData();
@@ -148,8 +140,7 @@ namespace Space.Projectiles
                         // Beams are able to collect
                         // resources if a collector is attached
                         if (IC is SegmentObject)
-                            if (m_ship != null)
-                                m_ship.MaterialGathered((IC as SegmentObject).Index);
+                                RpcMaterialGathered(data, (IC as SegmentObject).Index);
 
                         data.Distance = Vector2.Distance(transform.position, hit.point);
                         break;
@@ -263,6 +254,28 @@ namespace Space.Projectiles
                     _points[i].color = Color.Lerp(_points[i].color, startFadeColor, fadeSpeed);
                 else
                     _points[i].color = Color.Lerp(_points[i].color, fadeColor, fadeSpeed);
+            }
+        }
+
+        /// <summary>
+        /// Invoked so that the material
+        /// is added to the correct client
+        /// with authority
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="index"></param>
+        [ClientRpc]
+        public void RpcMaterialGathered(WeaponData data, int index)
+        {
+            if (!hasAuthority)
+                return;
+            else
+            {
+                ShipAccessor ship = ClientScene.FindLocalObject(data.Self)
+                .GetComponent<ShipAccessor>();
+
+                if(ship != null)
+                    ship.MaterialGathered(index);
             }
         }
 

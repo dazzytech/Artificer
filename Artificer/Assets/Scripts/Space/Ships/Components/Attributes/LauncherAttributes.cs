@@ -7,7 +7,6 @@ namespace Space.Ship.Components.Attributes
     public class LauncherAttributes : ComponentAttributes 
     {
         public float WeaponDamage;
-        public float WeaponRange;
         public float WeaponDelay;
         public float AttackRange;
 

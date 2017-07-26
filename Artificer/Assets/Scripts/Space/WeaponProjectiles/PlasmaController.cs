@@ -315,6 +315,8 @@ namespace Space.Projectiles
         /// </summary>
         private void TravelBullet(Vector3 affix)
         {
+            origTransPosition = transform.position;
+
             if (affix == Vector3.zero)
                 // move the transform in the bullet direction
                 transform.Translate((_data.Direction * speed) * Time.deltaTime);
@@ -322,8 +324,12 @@ namespace Space.Projectiles
                 transform.position = affix;
 
             float travel = ((transform.position - origTransPosition).sqrMagnitude);
-            travel *= bulletStep;
             currDistance += travel;
+
+            if (currDistance > _data.Distance)
+                DestroyProjectileDelay();
+
+            travel *= bulletStep;
 
             if (travel > bulletStep)
                 travel = bulletStep;
@@ -335,8 +341,7 @@ namespace Space.Projectiles
 
             GetComponent<ParticleSystem>().SetParticles(points, points.Length);
 
-            if (currDistance > _data.Distance * _data.Distance)
-                DestroyProjectileDelay();
+            
         }
 
         #endregion

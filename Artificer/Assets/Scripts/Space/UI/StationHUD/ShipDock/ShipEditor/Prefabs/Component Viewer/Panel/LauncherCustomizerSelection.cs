@@ -40,7 +40,6 @@ namespace Space.UI.Station.Utility
             LauncherAttributes launcher = att as LauncherAttributes;
 
             m_panel.Find("Damage").GetComponent<Text>().text = launcher.WeaponDamage.ToString();
-            m_panel.Find("Range").GetComponent<Text>().text = (launcher.WeaponRange*.1f).ToString() + "km";
             m_panel.Find("Delay").GetComponent<Text>().text = launcher.WeaponDelay.ToString("F2");
             m_panel.Find("TargetRange").GetComponent<Text>().text = (launcher.AttackRange*.1f).ToString() + "km";
             m_panel.Find("RCount").GetComponent<Text>().text = launcher.Rockets.ToString();
