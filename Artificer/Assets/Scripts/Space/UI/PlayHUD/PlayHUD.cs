@@ -62,7 +62,7 @@ namespace Space.UI.Ship
         /// Hides the specified panel
         /// </summary>
         /// <param name="panel"></param>
-        public void HidePanel(string panel)
+        /*public void HidePanel(string panel)
         {
             switch(panel)
             {
@@ -70,7 +70,7 @@ namespace Space.UI.Ship
                     m_station.ToggleHUD();
                     break;
             }
-        }
+        }*/
 
         #endregion
     }

@@ -59,7 +59,7 @@ namespace Space
 
         void OnEnable()
         {
-            m_con.OnKeyPress += PlayerSystemInput;
+            SpaceManager.OnKeyPress += PlayerSystemInput;
             m_con.OnKeyRelease += PlayerSystemInputRelease;
             m_con.OnMouseScroll += PlayerMouseScroll;
             m_con.PlayerEnterScene += LoadPlayerDataIntoScene;
@@ -74,7 +74,7 @@ namespace Space
 
         void OnDisable()
         {
-            m_con.OnKeyPress -= PlayerSystemInput;
+            SpaceManager.OnKeyPress -= PlayerSystemInput;
             m_con.OnKeyRelease -= PlayerSystemInputRelease;
             m_con.OnMouseScroll -= PlayerMouseScroll;
             m_con.PlayerEnterScene -= LoadPlayerDataIntoScene;

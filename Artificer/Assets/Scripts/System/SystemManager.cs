@@ -141,18 +141,6 @@ public class SystemManager : NATTraversal.NetworkManager
         }
     }
 
-    public static UIInputController UIInput
-    {
-        get
-        {
-            // Add new spawned ship to 
-            if (m_singleton.m_base.UIInput == null)
-                m_singleton.m_base.UIInput = GameObject.Find("_gui").GetComponent<UIInputController>();
-
-            return m_singleton.m_base.UIInput;
-        }
-    }
-
     /// <summary>
     /// Custom network discovery attached
     /// to this object

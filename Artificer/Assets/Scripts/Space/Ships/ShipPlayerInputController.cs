@@ -10,6 +10,14 @@ namespace Space.Ship
     [RequireComponent(typeof(ShipInputReceiver))]
     public class ShipPlayerInputController : NetworkBehaviour
     {
+        #region EVENTS
+
+        public delegate void PlayerUpdate(bool state);
+
+        public static event PlayerUpdate OnStateChanged;
+
+        #endregion
+
         #region ATTRIBUTES
 
         private ShipInputReceiver m_con;

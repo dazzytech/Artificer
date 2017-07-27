@@ -25,7 +25,7 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\RakNetSwig.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Threading.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Threading.dll into Unity Child Domain
-- Completed reload, in  0.066 seconds
+- Completed reload, in  0.113 seconds
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
 OnLevelWasLoaded was found on Reporter
@@ -46,25 +46,25 @@ The referenced script on this Behaviour (Game Object 'ServerList') is missing!
  
 (Filename:  Line: 1743)
 
-UnloadTime: 1.867840 ms
+UnloadTime: 1.810411 ms
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/libc
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/.\libc
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/libc
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Mono.Security.dll (this message is harmless)
-NATHelper: Connected to Facilitator: 432345706642657800
+NATHelper: Connected to Facilitator: 801640943863335139
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 5.033396 ms
+UnloadTime: 4.367865 ms
 DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
  
 (Filename:  Line: 462)
 
 
 Unloading 163 unused Assets to reduce memory usage. Loaded Objects now: 3678.
-Total: 9.278994 ms (FindLiveObjects: 0.421919 ms CreateObjectMapping: 0.230411 ms MarkObjects: 6.237790 ms  DeleteObjects: 2.387714 ms)
+Total: 4.498471 ms (FindLiveObjects: 0.330218 ms CreateObjectMapping: 0.183866 ms MarkObjects: 3.490911 ms  DeleteObjects: 0.491159 ms)
 
 The referenced script on this Behaviour (Game Object '_spawn') is missing!
  
@@ -75,7 +75,7 @@ The referenced script on this Behaviour (Game Object 'Footer') is missing!
 (Filename:  Line: 1743)
 
 Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 2.289065 ms
+UnloadTime: 2.974280 ms
 NullReferenceException: Object reference not set to an instance of an object
   at Space.Map.MapController.InitializeMap () [0x00000] in <filename unknown>:0 
   at Space.Map.MapController.Awake () [0x00000] in <filename unknown>:0 
@@ -83,21 +83,39 @@ NullReferenceException: Object reference not set to an instance of an object
 (Filename:  Line: -1)
 
 
-Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 7849.
-Total: 7.523464 ms (FindLiveObjects: 0.586565 ms CreateObjectMapping: 0.425624 ms MarkObjects: 6.466581 ms  DeleteObjects: 0.043998 ms)
+Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 7604.
+Total: 7.569084 ms (FindLiveObjects: 0.527747 ms CreateObjectMapping: 0.405246 ms MarkObjects: 6.588155 ms  DeleteObjects: 0.047240 ms)
 
-Large state update of 1583 bytes for netId:1732 from script:Ship(Clone) (Space.Ship.ShipAttributes)
+NATHelper: Hole is punched on port: 64193
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Large state update of 1550 bytes for netId:1732 from script:PlayerShip (Space.Ship.ShipAttributes)
+NATHelper: Connected to Facilitator: 801640943863335139
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-HandleTransform no gameObject
+reactor filed to acomplish request with code {1234}, bytesReceived {0}
+reactor filed to acomplish request with code {1234}, bytesReceived {0}
+reactor filed to acomplish request with code {1234}, bytesReceived {0}
+reactor filed to acomplish request with code {1234}, bytesReceived {0}
+Log: connection {1} has been disconnected by timeout; address {::ffff:127.0.0.1:49822}
+ServerDisconnected due to error: Timeout
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+NATHelper: Hole is punched on port: 49824
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+NATHelper: Connected to Facilitator: 801640943863335139
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 353c -> priority: 1 
-  Thread -> id: 30d4 -> priority: 1 
+  Thread -> id: 3d34 -> priority: 1 
+  Thread -> id: 3cd8 -> priority: 1 
+NullReferenceException: Object reference not set to an instance of an object
+  at Space.UI.Ship.FriendlyPrefab.OnDestroy () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+

@@ -11,7 +11,7 @@ namespace Space.UI.Ship
     /// Displays nuremic data on HUD alerting
     /// player to changes e.g. Component Damage
     /// </summary>
-    public class IndicatorHUD : BasePanel
+    public class IndicatorHUD : HUDPanel
     {
         #region ATTRIBUTES
 

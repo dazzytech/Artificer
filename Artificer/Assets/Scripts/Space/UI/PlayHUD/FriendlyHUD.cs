@@ -16,9 +16,8 @@ namespace Space.UI.Ship
     /// corresponding to the status
     /// of each friendly ship.
     /// </summary>
-    public class FriendlyHUD : BasePanel
+    public class FriendlyHUD : HUDPanel
     {
-
         #region ATTRIBUTES
 
         // Reference to the team we will be retrieving 

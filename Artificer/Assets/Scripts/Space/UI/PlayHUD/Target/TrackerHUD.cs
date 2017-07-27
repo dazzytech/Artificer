@@ -34,9 +34,11 @@ namespace Space.UI.Tracker
     /// Tracks nearby transforms using tags
     /// to identify and displays in circle
     /// </summary>
-    public class TrackerHUD : BasePanel
+    public class TrackerHUD : HUDPanel
     {
         #region ATTRIBUTES
+
+        [Header("Tracker HUD")]
 
         #region MARKER LISTS
 

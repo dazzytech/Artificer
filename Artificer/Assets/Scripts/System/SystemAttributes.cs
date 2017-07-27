@@ -51,8 +51,6 @@ public class SystemAttributes:MonoBehaviour
     public UIStateController UIState;
     [HideInInspector]
     public UIMessageController UIMsg;
-    [HideInInspector]
-    public UIInputController UIInput;
 
     [HideInInspector]
     public SpaceManager Space;

@@ -33,7 +33,7 @@ namespace Space.UI.Ship
     /// Keeps track of targets that
     /// the player shit has selected
     /// </summary>
-    public class TargetHUD : BasePanel
+    public class TargetHUD : HUDPanel
     {
         #region ATTRIBUTES
 

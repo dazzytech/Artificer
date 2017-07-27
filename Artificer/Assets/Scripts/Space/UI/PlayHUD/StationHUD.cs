@@ -13,7 +13,7 @@ namespace Space.UI.Ship
     /// Resposible for adding station information
     /// to the HUD
     /// </summary>
-    public class StationHUD : BasePanel
+    public class StationHUD : HUDPanel
     {
         #region ATTRIBUTES
 
