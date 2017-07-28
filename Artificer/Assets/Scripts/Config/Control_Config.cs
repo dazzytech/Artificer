@@ -2,194 +2,219 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
+/// <summary>
+/// Stores all the data about the assigned key
+/// </summary>
 [System.Serializable]
-public class Control_Data
+public class KeyData
 {
-    public Dictionary<string, KeyCode> ShipControls;
-    public Dictionary<string, KeyCode> CombatControls;
-    public Dictionary<string, KeyCode> SystemControls;
-    public Dictionary<string, KeyCode> EditorControls;
+    /// <summary>
+    /// Short form name used to retrieve key
+    /// </summary>
+    public string ID;
+    /// <summary>
+    /// Label publically displayed in game
+    /// </summary>
+    public string Label;
+    /// <summary>
+    /// category that the key belongs to 
+    /// e.g. ship or system
+    /// </summary>
+    public string Category;
+    /// <summary>
+    /// KeyCode assigned to key
+    /// </summary>
+    public KeyCode Key;
 }
 
 public class Control_Config: MonoBehaviour
 {
-    private static Control_Data m_data;
+    #region ATTRIBUTES
+
+    private static KeyData[] m_data;
+
+    /// <summary>
+    /// Default keys to be added to game
+    /// changable in editor
+    /// </summary>
+    [SerializeField]
+    private KeyData[] m_defaults;
+
+    private static KeyData[] m_defaultSerialized;
+
+    #endregion
+
+    #region MONO BEHAVIOUR
 
     void Awake()
     {
-        // attempt to load data if exists
-        Control_Data tempData = null;
-        
-        if(File.Exists("config/Control_Data"))
-            tempData = Serializer.Serializer.Load<Control_Data>("config/Control_Data");
+        // Move the default keys over to the 
+        // our key list
+        m_defaultSerialized = m_defaults;
 
-        // assign data if not null
-        if (tempData != null)
-            m_data = tempData;
-        else
+        LoadKeySettings();
+    }
+
+    #endregion
+
+    #region PUBLIC INTERACTION
+
+    /// <summary>
+    /// Replaces the provided key 
+    /// with the new key and saves
+    /// </summary>
+    /// <param name="KeyToSet"></param>
+    /// <param name="SetTo"></param>
+    /// <param name="type"></param>
+    public static void SetNewKey(string KeyToSet, KeyCode SetTo, string type)
+	{
+        // find the correct item
+        for (int i = 0; i < m_data.Length; i++)
         {
-            m_data = new Control_Data();
-            m_data.ShipControls = new Dictionary<string, KeyCode> ();
-            m_data.CombatControls = new Dictionary<string, KeyCode> ();
-            m_data.SystemControls = new Dictionary<string, KeyCode> ();
-            m_data.EditorControls = new Dictionary<string, KeyCode> ();
-            SetDefaults();
+            if (type == m_data[i].Category 
+                && KeyToSet == m_data[i].Label)
+            {
+                // assign our key and return
+                m_data[i].Key = SetTo;
+
+                Save();
+                return;
+            }
         }
-    }
-	
-	public static void SetDefaults()
-	{
-		m_data.ShipControls.Clear();
-        m_data.CombatControls.Clear();
-        m_data.SystemControls.Clear();
-        m_data.EditorControls.Clear();
 
-		SetShipDefaults();
-		SetCombatDefaults();
-        SetSystemDefaults();
-        SetEditorDefaults();
-	}
-
-	private static void SetShipDefaults()
-	{
-		// Assign ship controls
-        m_data.ShipControls.Add ("moveUp", KeyCode.W);
-        m_data.ShipControls.Add ("turnLeft", KeyCode.A);
-        m_data.ShipControls.Add ("moveDown", KeyCode.S);
-        m_data.ShipControls.Add ("turnRight", KeyCode.D);
-        m_data.ShipControls.Add ("strafeLeft", KeyCode.Q);
-        m_data.ShipControls.Add ("strafeRight", KeyCode.E);
-        m_data.ShipControls.Add ("changeState", KeyCode.F);
-        m_data.ShipControls.Add ("use", KeyCode.Tab);
-        m_data.ShipControls.Add ("fire", KeyCode.Space);
-        m_data.ShipControls.Add("deploy", KeyCode.U);
-        m_data.ShipControls.Add ("secondary", KeyCode.LeftShift);
-        m_data.ShipControls.Add ("tertiary", KeyCode.Tab);
-        m_data.ShipControls.Add("jump", KeyCode.X);
-        m_data.ShipControls.Add ("eject", KeyCode.LeftControl);
-        m_data.ShipControls.Add ("switchtocombat", KeyCode.F);
-        m_data.ShipControls.Add ("Activate Shield", KeyCode.C);
-        Save();
-	}
-
-	private static void SetCombatDefaults()
-	{
-		//Assign walking controls
-        m_data.CombatControls.Add ("moveUp", KeyCode.W);
-        m_data.CombatControls.Add ("moveDown", KeyCode.S);
-        m_data.CombatControls.Add ("strafeLeft", KeyCode.A);
-        m_data.CombatControls.Add ("strafeRight", KeyCode.D);
-        m_data.CombatControls.Add ("use", KeyCode.E);
-        m_data.CombatControls.Add ("fire", KeyCode.Mouse0);
-        m_data.CombatControls.Add ("secondary", KeyCode.Mouse1);
-        m_data.CombatControls.Add ("tertiary", KeyCode.Space);
-        m_data.CombatControls.Add ("Activate Shield", KeyCode.Space);
-		Save();
-	}
-
-    private static void SetSystemDefaults()
-    {
-        m_data.SystemControls.Add("pause", KeyCode.Escape);
-        m_data.SystemControls.Add("zoomIn", KeyCode.KeypadPlus);
-        m_data.SystemControls.Add("zoomOut", KeyCode.KeypadMinus);
-        m_data.SystemControls.Add("dock", KeyCode.Return);
-        m_data.SystemControls.Add("toggle map", KeyCode.M);
-        m_data.SystemControls.Add("toggle hud", KeyCode.H);
-        Save();
+        Debug.Log("Error: Control Config - SetNewKey: Provided key was not successfully saved");
     }
 
-    private static void SetEditorDefaults()
-    {
-        m_data.EditorControls.Add("dragUp", KeyCode.W);
-        m_data.EditorControls.Add("dragDown", KeyCode.S);
-        m_data.EditorControls.Add("dragLeft", KeyCode.A);
-        m_data.EditorControls.Add("dragRight", KeyCode.D);
-        m_data.EditorControls.Add("zoomIn", KeyCode.KeypadPlus);
-        m_data.EditorControls.Add("zoomOut", KeyCode.KeypadMinus);
-        m_data.EditorControls.Add("reset", KeyCode.Space);
-        Save();
-    }
-
-	public static void SetNewKey(string KeyToSet, KeyCode SetTo, string type)
-	{
-        switch (type)
-        {
-            case "ship":
-                if (m_data.ShipControls.ContainsKey (KeyToSet))
-                    m_data.ShipControls [KeyToSet] = SetTo;
-                break;
-            case "combat":
-                if (m_data.CombatControls.ContainsKey (KeyToSet))
-                    m_data.CombatControls [KeyToSet] = SetTo;
-                break;
-            case "sys":
-                if (m_data.SystemControls.ContainsKey (KeyToSet))
-                    m_data.SystemControls [KeyToSet] = SetTo;
-                break;
-            case "edi":
-                if (m_data.EditorControls.ContainsKey(KeyToSet))
-                    m_data.EditorControls[KeyToSet] = SetTo;
-                break;
-        }
-        Save();
-	}
-
+    /// <summary>
+    /// returns key using ID and type
+    /// </summary>
+    /// <param name="KeyToGet"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
 	public static KeyCode GetKey(string KeyToGet, string type)
 	{
-        switch (type)
+        // find the correct item
+        for (int i = 0; i < m_data.Length; i++)
         {
-            case "ship":
-                if (m_data.ShipControls.ContainsKey (KeyToGet))
-                    return m_data.ShipControls [KeyToGet];
-                break;
-            case "combat":
-                if (m_data.CombatControls.ContainsKey (KeyToGet)) 
-                    return m_data.CombatControls [KeyToGet];
-                break;
-            case "sys":
-                if (m_data.SystemControls.ContainsKey (KeyToGet)) 
-                    return m_data.SystemControls [KeyToGet];
-                break;
-            case "edi":
-                if (m_data.EditorControls.ContainsKey(KeyToGet))
-                    return m_data.EditorControls[KeyToGet];
-                break;
-            default:
-                break;
+            if (type == m_data[i].Category && KeyToGet == m_data[i].ID)
+            {
+                // return the key 
+                return m_data[i].Key;
+            }
         }
 
-		return KeyCode.None;
+        Debug.Log("Error: Control Config - GetKey: Provided key  is not stored in list");
+
+        return KeyCode.None;
 	}
 
     /// <summary>
-    /// Gets the key list.
-    /// of specified type for 
-    /// settings
+    /// Uses linq to get the key list
+    /// of specified type for settings
     /// </summary>
     /// <returns>The key list.</returns>
     /// <param name="type">Type.</param>
-    public static Dictionary<string, KeyCode> GetKeyList(string type)
+    public static KeyData[] GetKeyList(string type)
     {
-        switch (type)
+        KeyData[] KeyListCatergory =
+            m_data.Where(x => x.Category == type).ToArray();
+
+        // warn that key category may not exist
+        if(KeyListCatergory.Length == 0)
         {
-            case "ship":
-                return m_data.ShipControls;
-            case "combat":
-                return m_data.CombatControls;
-            case "sys":
-                return m_data.SystemControls;
-            case "edi":
-                return m_data.EditorControls;
+            Debug.Log("Error: Control Config - GetKeyList: Provided type did not yield keys");
         }
-        return null;
+
+        return KeyListCatergory;
     }
 
-	private static void Save()
+    /// <summary>
+    /// Reloads our key bindings with keys set in editor
+    /// </summary>
+    public static void ReturnToDefaults()
+    {
+        m_data = m_defaultSerialized;
+
+        Save();
+    }
+
+    #endregion
+
+    #region PRIVATE UTILITIES
+
+    /// <summary>
+    /// Copies our assigned keys into memory then
+    /// overwrites with saved keys
+    /// </summary>
+    private void LoadKeySettings()
+    {
+        m_data = m_defaultSerialized;
+
+        // if we have saved the settings configuration
+        // then load the custom key setting
+        if (File.Exists("config/Control_Data.txt"))
+        {
+            using (StreamReader sr = File.OpenText("config/Control_Data.txt"))
+            {
+                string s = "";
+                while ((s = sr.ReadLine()) != null)
+                {
+                    ReadKey(s);
+                }
+            }
+        }
+        else
+            Save();
+    }
+
+    /// <summary>
+    /// Retrieve a key data
+    /// then replaces the key inside 
+    /// with new
+    /// </summary>
+    /// <param name="data"></param>
+    private void ReadKey(string data)
+    {
+        int divide = data.IndexOf('/');
+        int code = data.IndexOf('=');
+        string cat = data.Substring(0, divide);
+        string key = data.Substring(divide + 1, code - divide);
+        string keyCode = data.Substring(code + 1);
+
+        // find the correct item 
+        for (int i = 0; i < m_data.Length; i++)
+        {
+            if (cat == m_data[i].Category && key == m_data[i].ID)
+            {
+                // assign our key and return
+                m_data[i].Key = (KeyCode)System.Enum.Parse
+                    (typeof(KeyCode), keyCode);
+                return;
+            }
+        }
+    }
+
+    /// <summary>
+    /// writes key list in a text file
+    /// format "category/keyid=Alpha1"
+    /// </summary>
+    private static void Save()
 	{
         if(!File.Exists("config"))
             Directory.CreateDirectory("config");
 
-        Serializer.Serializer.Save<Control_Data> ("config/Control_Data", m_data);
-	}
+        // Create a file to write to.
+        using (StreamWriter sw = File.CreateText("config/Control_Data.txt"))
+        {
+            foreach(KeyData key in m_data)
+            {
+                sw.WriteLine(string.Format("{0}/{1}={2}", 
+                    key.Category, key.ID, key.Key.ToString()));
+            }
+        }
+    }
+
+    #endregion
 }

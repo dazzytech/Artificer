@@ -39,23 +39,22 @@ namespace Menu
         /// </summary>
         public void RevertToDefault()
         {
-            Control_Config.SetDefaults();
+            Control_Config.ReturnToDefaults();
 
             _controller.Redraw();
         }
 
         /// <summary>
         /// Sets the new key.
-        /// 
         /// </summary>
-        public void SetNewKey(ListKeyPrefab keyData, string category)
+        public void SetNewKey(ListKeyPrefab keyData, string cat)
         {
             // test we are not currently attempting to change a key
             if (!_keyPending)
             {
                 // store the key and type within pending attributes.
                 _keyToChange = keyData.ControlLabel.text;
-                _keyCategory = category;
+                _keyCategory = cat;
 
                 // change the label within the button to pending message
                 _pendingText = keyData.KeyLabel;

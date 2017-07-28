@@ -72,20 +72,20 @@ namespace Space.UI.Station.Utility
             }
 
             // Detect keypresses
-            if (Input.GetKey(Control_Config.GetKey("dragUp", "edi")))
+            if (Input.GetKey(Control_Config.GetKey("dragUp", "editor")))
                 m_dragDelta = new Vector2(0, -5f);
-            if (Input.GetKey(Control_Config.GetKey("dragDown", "edi")))
+            if (Input.GetKey(Control_Config.GetKey("dragDown", "editor")))
                 m_dragDelta = new Vector2(0, 5f);
-            if (Input.GetKey(Control_Config.GetKey("dragLeft", "edi")))
+            if (Input.GetKey(Control_Config.GetKey("dragLeft", "editor")))
                 m_dragDelta = new Vector2(5f, 0);
-            if (Input.GetKey(Control_Config.GetKey("dragRight", "edi")))
+            if (Input.GetKey(Control_Config.GetKey("dragRight", "editor")))
                 m_dragDelta = new Vector2(-5f, 0);
 
-            if (Input.GetKey(Control_Config.GetKey("zoomIn", "edi")))
+            if (Input.GetKey(Control_Config.GetKey("zoomIn", "editor")))
                 ZoomIn();
-            if (Input.GetKey(Control_Config.GetKey("zoomOut", "edi")))
+            if (Input.GetKey(Control_Config.GetKey("zoomOut", "editor")))
                 ZoomOut();
-            if (Input.GetKey(Control_Config.GetKey("reset", "edi")))
+            if (Input.GetKey(Control_Config.GetKey("reset", "editor")))
                 Reset();
         }
 

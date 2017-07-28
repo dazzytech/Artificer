@@ -129,11 +129,11 @@ namespace Space
                 {
                     m_util.ZoomIn();
                 }
-                if (key == Control_Config.GetKey("toggle hud", "sys"))
+                if (key == Control_Config.GetKey("hud", "sys"))
                 {
                     GameObject.Find("_gui").SendMessage("ToggleHUD");
                 }
-                if (key == Control_Config.GetKey("toggle map", "sys"))
+                if (key == Control_Config.GetKey("map", "sys"))
                 {
                     // show and hide map
                     m_util.Map(true);
@@ -151,7 +151,7 @@ namespace Space
             {
                 m_util.PauseRelease();
             }
-            if (key == Control_Config.GetKey("toggle map", "sys"))
+            if (key == Control_Config.GetKey("map", "sys"))
             {
                 m_util.MapRelease();
             }

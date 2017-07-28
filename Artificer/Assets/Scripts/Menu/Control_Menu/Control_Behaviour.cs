@@ -37,7 +37,7 @@ namespace Menu
         /// </summary>
         /// <returns>The button.</returns>
         /// <param name="res">Res.</param>
-        public void CreateButton(string label, string key, string cat)
+        public void CreateButton(KeyData key, string cat)
         {
             GameObject KeyBtn = Instantiate(KeyItemPrefab) as GameObject;
             KeyBtn.transform.SetParent(KeyList);
@@ -45,7 +45,7 @@ namespace Menu
             KeyBtn.transform.localPosition = new Vector3(0, 0, 0);
 
             ListKeyPrefab Key = KeyBtn.GetComponent<ListKeyPrefab>();
-            Key.AssignKeyData(label, key);
+            Key.AssignKeyData(key);
             Key.Btn.
                onClick.AddListener(
                     delegate{_listener.SetNewKey(Key, cat);});
@@ -78,26 +78,27 @@ namespace Menu
 
                 // build ship controls
                 CreateDivider("Ship");
-                foreach(string key in Control_Config.GetKeyList("ship").Keys)
+
+                foreach(KeyData key in Control_Config.GetKeyList("ship"))
                 {
-                    CreateButton(key, Control_Config.GetKeyList("ship")[key].ToString(), "ship");
+                    CreateButton(key, "ship");
                 }
                 // build foot controls
                 CreateDivider("Combat");
-                foreach(string key in Control_Config.GetKeyList("combat").Keys)
+                foreach(KeyData key in Control_Config.GetKeyList("combat"))
                 {
-                    CreateButton(key, Control_Config.GetKeyList("combat")[key].ToString(), "combat");
+                    CreateButton(key, "combat");
                 }
                 CreateDivider("Ship Editor");
-                foreach (string key in Control_Config.GetKeyList("edi").Keys)
+                foreach (KeyData key in Control_Config.GetKeyList("editor"))
                 {
-                    CreateButton(key, Control_Config.GetKeyList("edi")[key].ToString(), "edi");
+                    CreateButton(key, "editor");
                 }
                 // build ship controls
                 CreateDivider("System");
-                foreach(string key in Control_Config.GetKeyList("sys").Keys)
+                foreach(KeyData key in Control_Config.GetKeyList("sys"))
                 {
-                    CreateButton(key, Control_Config.GetKeyList("sys")[key].ToString(), "sys");
+                    CreateButton(key, "sys");
                 }
             }
         }

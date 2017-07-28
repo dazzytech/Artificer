@@ -10,10 +10,10 @@ namespace Menu
         public Text KeyLabel;
         public Button Btn;
 
-        public void AssignKeyData(string contLabel, string keyLabel)
+        public void AssignKeyData(KeyData key)
         {
-            ControlLabel.text = contLabel;
-            KeyLabel.text = keyLabel;
+            ControlLabel.text = key.Label;
+            KeyLabel.text = KeyLibrary.SetString(key.Key.ToString());
 
             //transform.localScale = new Vector3(1, 1, 0);
             //transform.localPosition = new Vector3(0, 0, 0);
