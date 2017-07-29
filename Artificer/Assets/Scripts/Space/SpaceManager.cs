@@ -32,7 +32,7 @@ namespace Space
         #region EVENTS 
 
         public delegate void KeyPress(KeyCode key);
-        public static event KeyPress OnKeyPress;
+        public event KeyPress OnKeyPress;
         public event KeyPress OnKeyRelease;
 
         public delegate void MouseScroll(float yDelta);
@@ -40,7 +40,7 @@ namespace Space
 
         public delegate void SceneEvent();
         public event SceneEvent PlayerEnterScene;
-        public static event SceneEvent PlayerExitScene;
+        public event SceneEvent PlayerExitScene;
         public event SceneEvent TeamSelected;
 
         public delegate void PlayerUpdate(Transform data);

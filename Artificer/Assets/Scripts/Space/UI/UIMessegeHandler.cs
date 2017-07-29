@@ -44,7 +44,7 @@ namespace Space.UI
         [Header("PLAYHUD Behaviours")]
 
         [SerializeField]
-        private PlayHUD m_play;
+        private ShipHUD m_ship;
 
         [SerializeField]
         private BuildHUD m_build;
@@ -62,15 +62,6 @@ namespace Space.UI
         #endregion  
 
         #region PLAYRECT UI MESSAGES
-
-        /// <summary>
-        /// Prompts the GUI to retreive ship
-        /// attributes and update the HUD
-        /// </summary>
-        public void BuildShipData()
-        {
-            m_play.BuildShipData();
-        }
 
         /// <summary>
         /// Adds a peice for the TrackerHUD to track

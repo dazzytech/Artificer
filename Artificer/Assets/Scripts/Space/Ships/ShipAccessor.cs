@@ -352,7 +352,8 @@ namespace Space.Ship
             {
                 m_ship.Collector.ItemGathered(itemID);
 
-                OnStorageChanged();
+                if(OnStorageChanged != null)
+                    OnStorageChanged();
             }
         }
 

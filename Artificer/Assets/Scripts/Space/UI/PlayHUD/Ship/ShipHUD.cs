@@ -16,11 +16,13 @@ namespace Space.UI.Ship
     /// Currently only role is pass data to other huds when
     /// called by player ship
     /// </summary>
-    public class PlayHUD : MonoBehaviour
+    public class ShipHUD : HUDPanel
     {
         #region ATTRIBUTES
 
         #region HUD ELEMENTS
+
+        [Header("Ship HUD")]
 
         [Header("HUD Elements")]
 
@@ -30,6 +32,16 @@ namespace Space.UI.Ship
         private StorageHUD m_storageHUD;
 
         #endregion
+
+        #endregion
+
+        #region MONOBEHAVIOUR 
+
+        void OnEnable()
+        {
+            // Garentueed called when shipis already created
+            BuildShipData();
+        }
 
         #endregion
 

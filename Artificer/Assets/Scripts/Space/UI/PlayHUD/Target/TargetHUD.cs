@@ -100,14 +100,14 @@ namespace Space.UI.Ship
         // Quick utlity to clear target list upon death
         void OnEnable()
         {
-            SpaceManager.PlayerExitScene += PlayerDeath;
+            SystemManager.Space.PlayerExitScene += PlayerDeath;
 
             m_trackCombatObj = null;
         }
 
         void OnDisable()
         {
-            SpaceManager.PlayerExitScene += PlayerDeath;
+            SystemManager.Space.PlayerExitScene += PlayerDeath;
         }
 
         void Update()

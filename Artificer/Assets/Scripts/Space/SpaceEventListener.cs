@@ -59,11 +59,11 @@ namespace Space
 
         void OnEnable()
         {
-            SpaceManager.OnKeyPress += PlayerSystemInput;
+            m_con.OnKeyPress += PlayerSystemInput;
             m_con.OnKeyRelease += PlayerSystemInputRelease;
             m_con.OnMouseScroll += PlayerMouseScroll;
-            m_con.PlayerEnterScene += LoadPlayerDataIntoScene;
-            SpaceManager.PlayerExitScene += PlayerDeath;
+            m_con.PlayerEnterScene += new SpaceManager.SceneEvent(LoadPlayerDataIntoScene);
+            m_con.PlayerExitScene += PlayerDeath;
 
             // Station events
             StationController.EnterRange += OnEnterStation;
@@ -74,11 +74,11 @@ namespace Space
 
         void OnDisable()
         {
-            SpaceManager.OnKeyPress -= PlayerSystemInput;
+            m_con.OnKeyPress -= PlayerSystemInput;
             m_con.OnKeyRelease -= PlayerSystemInputRelease;
             m_con.OnMouseScroll -= PlayerMouseScroll;
-            m_con.PlayerEnterScene -= LoadPlayerDataIntoScene;
-            SpaceManager.PlayerExitScene -= PlayerDeath;
+            m_con.PlayerEnterScene -= new SpaceManager.SceneEvent(LoadPlayerDataIntoScene);
+            m_con.PlayerExitScene -= PlayerDeath;
 
             // Station events
             StationController.EnterRange -= OnEnterStation;
@@ -209,8 +209,6 @@ namespace Space
 
             // Set to popup gui
             SystemManager.UIState.SetState(UIState.Play);
-
-            SystemManager.UI.BuildShipData();
 
             SystemManager.Background.StartBackground();
         }
