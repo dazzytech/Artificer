@@ -20,8 +20,6 @@ namespace Menu
         // key category e.g ship
         private string _keyCategory = "";
 
-        private Text _pendingText = null;
-
         void Awake()
         {
             _controller = GetComponent<Control_Behaviour>();
@@ -47,18 +45,16 @@ namespace Menu
         /// <summary>
         /// Sets the new key.
         /// </summary>
-        public void SetNewKey(ListKeyPrefab keyData, string cat)
+        public void SetNewKey(ListKeyPrefab keyData)
         {
             // test we are not currently attempting to change a key
             if (!_keyPending)
             {
                 // store the key and type within pending attributes.
-                _keyToChange = keyData.ControlLabel.text;
-                _keyCategory = cat;
+                _keyToChange = keyData.ID;
+                _keyCategory = keyData.Category;
 
-                // change the label within the button to pending message
-                _pendingText = keyData.KeyLabel;
-                _pendingText.text = "input pending";
+                keyData.SetPending();
 
                 // start coroutine that waits till key input.
                 _keyPending = true;
@@ -83,9 +79,9 @@ namespace Menu
                          _keyCategory);
             }
 
-            _pendingText.text = Control_Config.GetKey(_keyToChange,_keyCategory).ToString();
+            _controller.Redraw();
 
-            yield return null;
+            yield break;
         }
     }
 }

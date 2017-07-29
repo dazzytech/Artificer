@@ -74,7 +74,7 @@ public class Control_Config: MonoBehaviour
         for (int i = 0; i < m_data.Length; i++)
         {
             if (type == m_data[i].Category 
-                && KeyToSet == m_data[i].Label)
+                && KeyToSet == m_data[i].ID)
             {
                 // assign our key and return
                 m_data[i].Key = SetTo;
@@ -105,7 +105,8 @@ public class Control_Config: MonoBehaviour
             }
         }
 
-        Debug.Log("Error: Control Config - GetKey: Provided key  is not stored in list");
+        if(KeyToGet != "")
+            Debug.Log("Error: Control Config - GetKey: Provided key  is not stored in list");
 
         return KeyCode.None;
 	}
@@ -135,7 +136,7 @@ public class Control_Config: MonoBehaviour
     /// </summary>
     public static void ReturnToDefaults()
     {
-        m_data = m_defaultSerialized;
+        CopyKeys();
 
         Save();
     }
@@ -150,7 +151,7 @@ public class Control_Config: MonoBehaviour
     /// </summary>
     private void LoadKeySettings()
     {
-        m_data = m_defaultSerialized;
+        CopyKeys();
 
         // if we have saved the settings configuration
         // then load the custom key setting
@@ -180,7 +181,7 @@ public class Control_Config: MonoBehaviour
         int divide = data.IndexOf('/');
         int code = data.IndexOf('=');
         string cat = data.Substring(0, divide);
-        string key = data.Substring(divide + 1, code - divide);
+        string key = data.Substring(divide + 1, code - divide - 1);
         string keyCode = data.Substring(code + 1);
 
         // find the correct item 
@@ -213,6 +214,19 @@ public class Control_Config: MonoBehaviour
                 sw.WriteLine(string.Format("{0}/{1}={2}", 
                     key.Category, key.ID, key.Key.ToString()));
             }
+        }
+    }
+
+    private static void CopyKeys()
+    {
+        m_data = new KeyData[m_defaultSerialized.Length];
+        for (int i = 0; i < m_defaultSerialized.Length; i++)
+        {
+            m_data[i] = new KeyData();
+            m_data[i].Category = m_defaultSerialized[i].Category;
+            m_data[i].ID = m_defaultSerialized[i].ID;
+            m_data[i].Label = m_defaultSerialized[i].Label;
+            m_data[i].Key = m_defaultSerialized[i].Key;
         }
     }
 

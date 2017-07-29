@@ -6,6 +6,8 @@ namespace Menu
 {
     public class Control_Behaviour : MonoBehaviour
     {
+        #region ATTRIBUTES
+
         // Key list item prefab
         public GameObject KeyItemPrefab;
         // list divider prefab
@@ -14,30 +16,31 @@ namespace Menu
         public Transform KeyList;
         
         // event listener
-        private Control_Eventlistener _listener;
-        
-        void Awake()
+        private Control_Eventlistener m_listener;
+
+        #endregion
+
+        #region MONO BEHAVIOUR
+
+        // Use this for initialization
+        void Start ()
         {
             // Assign listener obj
-            _listener = GetComponent<Control_Eventlistener>();
-        }
+            m_listener = GetComponent<Control_Eventlistener>();
 
-    	// Use this for initialization
-    	void Start () {
             Redraw();
     	}
-    	
-    	// Update is called once per frame
-    	void Update () {
-    	
-    	}
+
+        #endregion
+
+        #region PUBLIC INTERACTION
 
         /// <summary>
         /// Creates the button from key prefab.
         /// </summary>
         /// <returns>The button.</returns>
         /// <param name="res">Res.</param>
-        public void CreateButton(KeyData key, string cat)
+        public void CreateButton(KeyData key)
         {
             GameObject KeyBtn = Instantiate(KeyItemPrefab) as GameObject;
             KeyBtn.transform.SetParent(KeyList);
@@ -48,7 +51,7 @@ namespace Menu
             Key.AssignKeyData(key);
             Key.Btn.
                onClick.AddListener(
-                    delegate{_listener.SetNewKey(Key, cat);});
+                    delegate{m_listener.SetNewKey(Key);});
         }
 
         public void CreateDivider(string category)
@@ -81,26 +84,28 @@ namespace Menu
 
                 foreach(KeyData key in Control_Config.GetKeyList("ship"))
                 {
-                    CreateButton(key, "ship");
+                    CreateButton(key);
                 }
                 // build foot controls
                 CreateDivider("Combat");
                 foreach(KeyData key in Control_Config.GetKeyList("combat"))
                 {
-                    CreateButton(key, "combat");
+                    CreateButton(key);
                 }
                 CreateDivider("Ship Editor");
                 foreach (KeyData key in Control_Config.GetKeyList("editor"))
                 {
-                    CreateButton(key, "editor");
+                    CreateButton(key);
                 }
                 // build ship controls
                 CreateDivider("System");
                 foreach(KeyData key in Control_Config.GetKeyList("sys"))
                 {
-                    CreateButton(key, "sys");
+                    CreateButton(key);
                 }
             }
         }
+
+        #endregion
     }
 }

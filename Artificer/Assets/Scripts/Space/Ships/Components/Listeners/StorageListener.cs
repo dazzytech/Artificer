@@ -15,10 +15,39 @@ namespace Space.Ship.Components.Listener
     /// </summary>
     public class StorageListener : ComponentListener
     {
+
         #region ATTRIBUTES
 
         StorageAttributes _attr;
         float totalWeight;
+
+        #endregion
+
+        #region ACCESSORS
+
+        /// <summary>
+        /// Total storage space
+        /// </summary>
+        public float Capacity
+        {
+            get { return _attr.dimensions; }
+        }
+
+        /// <summary>
+        /// Space used by current materials
+        /// </summary>
+        public float Used
+        {
+            get { return _attr.currentCapacity; }
+        }
+
+        public Dictionary<int, float> Materials
+        {
+            get
+            {
+                return _attr.storage;
+            }
+        }
 
         #endregion
 
@@ -52,9 +81,6 @@ namespace Space.Ship.Components.Listener
             Dictionary<int, float> remainder
                 = new Dictionary<int, float>();
 
-            // Create new Dictionary for mission update
-            Dictionary<int, float> track = new Dictionary<int, float>();
-
             foreach (int id in import.Keys)
             {
                 float totalDimension = import[id] + _attr.currentCapacity;
@@ -73,9 +99,6 @@ namespace Space.Ship.Components.Listener
                     _attr.storage[id] += valueToAdd;                   // add amount to current supply
                 else if(valueToAdd > 0)
                     _attr.storage.Add(id, valueToAdd);
-
-                // update tracker resource
-                track.Add(id, import[id] - (dimensionRemainder));
 
                 if( dimensionRemainder != 0)
                 {
@@ -119,7 +142,6 @@ namespace Space.Ship.Components.Listener
                     // retrieve information
                     ItemData item = SystemManager.Items.Item(id);
 
-
                     // remove weight
                     _attr.currentWeight -= amountToRemove * item.Density;
                     _attr.currentCapacity -= amountToRemove;
@@ -128,6 +150,7 @@ namespace Space.Ship.Components.Listener
                         ejectedMat.Add(id, spillOver);
                 }
             }
+
             return ejectedMat;
         }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UI.Effects;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -24,6 +25,13 @@ namespace UI
 
         // whether or not the item is selected
         private bool m_selected;
+
+        /// <summary>
+        /// Decides whether or not the 
+        /// background responds to mouse interaction
+        /// </summary>
+        [SerializeField]
+        private bool m_interactive = true;
 
         #endregion
 
@@ -93,8 +101,11 @@ namespace UI
         /// </summary>
         public virtual void Deselect()
         {
+            if (!m_interactive)
+                return;
+
             m_selected = false;
-            m_background.color = m_standardColour;
+            if (m_background != null) m_background.color = m_standardColour;
         }
 
         /// <summary>
@@ -102,16 +113,41 @@ namespace UI
         /// </summary>
         public virtual void Select()
         {
+            if (!m_interactive)
+                return;
+
             m_selected = true;
-            m_background.color = m_selectedColour;
+            if (m_background != null)
+                m_background.color = m_selectedColour;
         }
 
         public virtual void Highlight(bool highlighted)
         {
+            if (!m_interactive)
+                return;
+
             if (highlighted)
-            { if (!m_selected) m_background.color = m_highlightColour; }
+            { if (!m_selected) if (m_background != null)
+                        m_background.color = m_highlightColour; }
             else
-            { if (!m_selected) m_background.color = m_standardColour;  }
+            { if (!m_selected) if (m_background != null)
+                        m_background.color = m_standardColour;  }
+        }
+
+        #endregion
+
+        #region PRIVATE FUNCTIONALITY
+
+        /// <summary>
+        /// gives the appearance of an image
+        /// flashing into existance (HUD item or panel)
+        /// </summary>
+        /// <param name="item"></param>
+        protected void FlashImage()
+        {
+            StartCoroutine(PanelFadeEffects.FadeImg(m_background,
+                m_highlightColour,
+                PanelFadeEffects.FadeImg(m_background, m_standardColour)));
         }
 
         #endregion

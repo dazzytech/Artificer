@@ -21,6 +21,8 @@ namespace Space.Ship
 
         public event ShipEvent OnShipCompleted;
 
+        public event ShipEvent OnStorageChanged;
+
         #endregion
 
         #region ATTRIBUTES
@@ -132,6 +134,15 @@ namespace Space.Ship
 
                 return targets;
             }
+        }
+
+        /// <summary>
+        /// Returns the number of storage 
+        /// components the ship has
+        /// </summary>
+        public List<StorageListener> Storage
+        {
+            get { return m_ship.Storage; }
         }
 
         /// <summary>
@@ -340,6 +351,8 @@ namespace Space.Ship
             if(m_ship.Collector != null)
             {
                 m_ship.Collector.ItemGathered(itemID);
+
+                OnStorageChanged();
             }
         }
 

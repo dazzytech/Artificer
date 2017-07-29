@@ -24,8 +24,8 @@ namespace Space.UI.Ship
     	// Update is called once per frame
     	void UpdateCombat (Transform player) 
         {
-            HelpText.text = string.Format("MOUSE FOLLOW MODE \n[KEY '{0}']",
-                                          Control_Config.GetKey("switchtocombat", "ship").ToString());
+            //HelpText.text = string.Format("MOUSE FOLLOW MODE \n[KEY '{0}']",
+            //                              Control_Config.GetKey("switchtocombat", "ship").ToString());
 
             ShipData Ship = player.GetComponent<ShipAccessor>().Data;
 

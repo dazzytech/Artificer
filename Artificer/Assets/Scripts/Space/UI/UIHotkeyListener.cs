@@ -95,7 +95,7 @@ namespace Space.UI
                     m_collapseWindows[key].ToggleHUD(m_collapseWindows[key].Hidden);
 
             // set all toggles 
-            if (key == Control_Config.GetKey("toggle hud", "sys"))
+            if (key == Control_Config.GetKey("hud", "sys"))
             {
                 m_hidden = !m_hidden;
                 foreach (HUDPanel window in m_collapseWindows.Values)

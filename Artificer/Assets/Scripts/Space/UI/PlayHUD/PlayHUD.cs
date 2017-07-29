@@ -8,34 +8,26 @@ using Data.Space;
 using Space.Ship;
 
 
-/// <summary>
-/// Central HUD manager
-/// Currently only role is pass data to other huds when
-/// called by player ship
-/// </summary>
+
 namespace Space.UI.Ship
 {
+    /// <summary>
+    /// Central HUD manager
+    /// Currently only role is pass data to other huds when
+    /// called by player ship
+    /// </summary>
     public class PlayHUD : MonoBehaviour
     {
         #region ATTRIBUTES
 
-        // Ship attributes for player ship
-        //private ShipAttributes _shipData;
-
         #region HUD ELEMENTS
 
-        // Other GUIs
-        //public IntegrityHUD _int;
-        //public WarpHUD _warp;
         [Header("HUD Elements")]
 
         [SerializeField]
-        public TargetHUD m_targetHUD;
-        //public TrackerHUD _tracker;
-        //public ShieldHUD _shields;
-
+        private TargetHUD m_targetHUD;
         [SerializeField]
-        public StationHUD m_station;
+        private StorageHUD m_storageHUD;
 
         #endregion
 
@@ -50,27 +42,15 @@ namespace Space.UI.Ship
         public void BuildShipData()
     	{
             // Retreive data of player ship
-            ShipAccessor shipData = 
+            ShipAccessor ship = 
                 GameObject.FindGameObjectWithTag
                     ("PlayerShip").GetComponent
                     <ShipAccessor>();
 
-            m_targetHUD.SetShip(shipData);
-    	}
+            m_targetHUD.SetShip(ship);
 
-        /// <summary>
-        /// Hides the specified panel
-        /// </summary>
-        /// <param name="panel"></param>
-        /*public void HidePanel(string panel)
-        {
-            switch(panel)
-            {
-                case "station":
-                    m_station.ToggleHUD();
-                    break;
-            }
-        }*/
+            m_storageHUD.SetShip(ship);
+    	}
 
         #endregion
     }

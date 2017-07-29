@@ -167,7 +167,7 @@ namespace Space.Ship
 
                 if (!inputDelay)
                 {
-                    if (key == Control_Config.GetKey("switchtocombat", "ship"))
+                    if (key == Control_Config.GetKey("switchstate", "ship"))
                     {
                         _ship.Ship.CombatActive = !_ship.Ship.CombatActive;
 

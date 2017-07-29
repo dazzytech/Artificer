@@ -129,10 +129,6 @@ namespace Space
                 {
                     m_util.ZoomIn();
                 }
-                if (key == Control_Config.GetKey("hud", "sys"))
-                {
-                    GameObject.Find("_gui").SendMessage("ToggleHUD");
-                }
                 if (key == Control_Config.GetKey("map", "sys"))
                 {
                     // show and hide map

@@ -46,7 +46,7 @@ namespace UI.Effects
         /// flashing into existance (HUD item or panel)
         /// </summary>
         /// <param name="item"></param>
-        public static void FlashInItem(Image item)
+        public static void FlashInItem(RawImage item)
         {
             Color originalColor = item.color; 
             item.StartCoroutine(FadeImg(item,
@@ -65,7 +65,7 @@ namespace UI.Effects
         /// <param name="goalColor"></param>
         /// <param name="NextFade"></param>
         /// <returns></returns>
-        public static IEnumerator FadeImg(Image img, 
+        public static IEnumerator FadeImg(RawImage img, 
             Color goalColor, IEnumerator NextFade = null)
         {
             // Store the original color for tweening back
