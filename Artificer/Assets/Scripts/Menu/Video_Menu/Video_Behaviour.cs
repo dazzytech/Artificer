@@ -6,7 +6,7 @@ namespace Menu
 {
     [RequireComponent(typeof(Video_EventListener))]
 
-    public class Video_Behaviour : MonoBehaviour
+    public class Video_Behaviour : HUDPanel
     {
         // Resolution list item prefab
         public GameObject ResolutionItemPrefab;

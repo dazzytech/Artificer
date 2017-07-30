@@ -18,7 +18,7 @@ namespace Space.UI.Station
     /// such as initializing views
     /// </summary>
     [RequireComponent(typeof(ShipDockAttributes))]
-    public class ShipDockController : MonoBehaviour
+    public class ShipDockController : HUDPanel
     {
         #region DELEGATES
 

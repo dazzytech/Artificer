@@ -18,10 +18,6 @@ namespace Space
         private bool m_isPaused = false;
         private bool m_pauseDelay = false;
 
-        // map vars
-        private bool m_viewingMap = false;
-        private bool m_mapDelay;
-
         #endregion
 
         #region INITIALIZATION
@@ -32,9 +28,6 @@ namespace Space
         public void Initialize()
         {
             m_isPaused = false;
-            m_pauseDelay = false;
-
-            m_mapDelay = false;
             m_pauseDelay = false;
         }
 
@@ -88,7 +81,7 @@ namespace Space
             }
         }
 
-        public void Map(bool keyed)
+        /*public void Map(bool keyed)
         {
             if (!m_mapDelay)
             {
@@ -105,7 +98,7 @@ namespace Space
                     m_mapDelay = true;
                 }
             }
-        }
+        }*/
 
         public void Stop()
         {
@@ -117,10 +110,10 @@ namespace Space
             m_pauseDelay = false;
         }
 
-        public void MapRelease()
+        /*public void MapRelease()
         {
             m_mapDelay = false;
-        }
+        }*/
 
         #endregion
 

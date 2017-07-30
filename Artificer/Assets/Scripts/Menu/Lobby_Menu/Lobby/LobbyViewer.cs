@@ -10,7 +10,7 @@ namespace Menu.Lobby
     /// Lobby viewer.
     /// Builds info when lobby is selected
     /// </summary>
-    public class LobbyViewer : MonoBehaviour
+    public class LobbyViewer : HUDPanel
     {
         #region ATTRIBUTES
 

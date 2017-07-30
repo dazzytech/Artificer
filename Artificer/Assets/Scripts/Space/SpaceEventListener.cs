@@ -117,8 +117,7 @@ namespace Space
                 m_util.Pause(true);
             }
 
-            if (SystemManager.UIState.Current == UIState.Play ||
-                SystemManager.UIState.Current == UIState.Map)
+            if (SystemManager.UIState.Current == UIState.Play)
             {
                 if (key == Control_Config.GetKey("zoomOut", "sys"))
                 {
@@ -128,11 +127,6 @@ namespace Space
                 if (key == Control_Config.GetKey("zoomOut", "sys"))
                 {
                     m_util.ZoomIn();
-                }
-                if (key == Control_Config.GetKey("map", "sys"))
-                {
-                    // show and hide map
-                    m_util.Map(true);
                 }
                 if (key == Control_Config.GetKey("dock", "sys"))
                 {
@@ -146,10 +140,6 @@ namespace Space
             if (key == Control_Config.GetKey("pause", "sys"))
             {
                 m_util.PauseRelease();
-            }
-            if (key == Control_Config.GetKey("map", "sys"))
-            {
-                m_util.MapRelease();
             }
         }
 

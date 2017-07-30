@@ -20,7 +20,7 @@ namespace Space.UI.Spawn
     /// </summary>
     [RequireComponent(typeof(SpawnAttributes))]
     [RequireComponent(typeof(SpawnEventListener))]
-    public class SpawnController : MonoBehaviour
+    public class SpawnController : HUDPanel
     {
         #region ATTRIBUTES
 

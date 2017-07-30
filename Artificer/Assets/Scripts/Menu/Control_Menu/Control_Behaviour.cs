@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Menu
 {
-    public class Control_Behaviour : MonoBehaviour
+    public class Control_Behaviour : HUDPanel
     {
         #region ATTRIBUTES
 

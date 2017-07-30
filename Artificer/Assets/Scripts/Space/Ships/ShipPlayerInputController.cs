@@ -61,7 +61,14 @@ namespace Space.Ship
         void Update()
         {
             if (Input.anyKey)
+            {
                 m_con.ReceiveKey(KeyLibrary.FindKeysPressed());
+
+                // Trigger event for external listeners
+                if (KeyLibrary.FindKeysPressed().Contains(Control_Config.GetKey("switchstate", "ship")))
+                    if(OnStateChanged != null)
+                        OnStateChanged(m_att.Ship.CombatActive);
+            }
 
             m_con.ReleaseKey(KeyLibrary.FindKeyReleased());
 

@@ -80,6 +80,12 @@ namespace Space.Map
             }
         }
 
+        public void Start()
+        {
+            if(!m_running)
+                InitializeMap();
+        }
+
         #endregion
 
         #region PUBLIC INTERACTION

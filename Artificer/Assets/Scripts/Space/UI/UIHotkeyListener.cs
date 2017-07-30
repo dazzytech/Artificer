@@ -49,6 +49,7 @@ namespace Space.UI
 
         private void OnDisable()
         {
+            if(SystemManager.Space != null)
             SystemManager.Space.OnKeyPress -= OnKeyPressed;
         }
 
@@ -99,7 +100,7 @@ namespace Space.UI
             {
                 m_hidden = !m_hidden;
                 foreach (HUDPanel window in m_collapseWindows.Values)
-                    window.ToggleHUD(m_hidden);
+                    window.ToggleHUD(!m_hidden);
             }
         }
 

@@ -13,7 +13,7 @@ namespace Menu.Lobby
     /// </summary>
     [RequireComponent(typeof(LobbyAttributes))]
     [RequireComponent(typeof(LobbyCallback))]
-    public class LobbyManager : MonoBehaviour
+    public class LobbyManager: MonoBehaviour
     {
         #region ATTRIBUTES
 

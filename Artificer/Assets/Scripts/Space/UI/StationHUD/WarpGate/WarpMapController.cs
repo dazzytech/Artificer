@@ -13,7 +13,7 @@ namespace Space.UI.Station.Map
     /// </summary>
     [RequireComponent(typeof(WarpMapAttributes))]
     [RequireComponent(typeof(WarpMapEventListener))]
-    public class WarpMapController : MonoBehaviour
+    public class WarpMapController : HUDPanel
     {
         #region ATTRIBUTES
 

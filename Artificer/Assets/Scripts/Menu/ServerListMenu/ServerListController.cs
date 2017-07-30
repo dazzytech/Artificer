@@ -16,7 +16,7 @@ namespace Menu.Server
     /// serverlist object
     /// </summary>
     [RequireComponent(typeof(ServerListAttributes))]
-    public class ServerListController : MonoBehaviour
+    public class ServerListController : HUDPanel
     {
         #region ATTRIBUTES
 

@@ -15,7 +15,7 @@ namespace Space.UI.Teams
     /// displays information regarding the two teams 
     /// and listens for player selection
     /// </summary>
-    public class TeamSelectController : NetworkBehaviour
+    public class TeamSelectController : HUDPanel
     {
         #region ATTRIBUTES
 

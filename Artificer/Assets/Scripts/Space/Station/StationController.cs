@@ -66,11 +66,14 @@ namespace Stations
             if (!Att.Interactive)
                 StartCoroutine("CheckForActivity");
 
+            // Only trigger creation event once team is defined
             if (Att.TeamID != NetworkInstanceId.Invalid)
+            {
                 transform.SetParent(ClientScene.FindLocalObject(Att.TeamID).transform);
 
-            if (StationCreated != null)
-                StationCreated(this);
+                if (StationCreated != null)
+                    StationCreated(this);
+            }
         }
 
         void OnDestroy()
