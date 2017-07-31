@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Linq;
 using Space.Ship;
 using Space.Ship.Components.Listener;
 using System.Collections.Generic;
@@ -120,6 +121,11 @@ namespace UI
 
             if (m_constructPanel != null)
                 Destroy(m_constructPanel.gameObject);
+        }
+
+        public ViewerItem GetItem(int ID)
+        {
+            return m_viewerItems.FirstOrDefault(x => x.ID == ID);
         }
 
         #endregion

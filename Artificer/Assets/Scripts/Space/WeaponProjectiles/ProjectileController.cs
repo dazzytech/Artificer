@@ -135,6 +135,9 @@ namespace Space.Projectiles
             else
                 transform.position = affix;
 
+            if (!hasAuthority)
+                return;
+
             float travel = ((transform.position - origTransPosition).sqrMagnitude);
             currDistance += travel;
 

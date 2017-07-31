@@ -103,7 +103,7 @@ namespace Space.Projectiles
             if (hit.transform == aggressor.transform)
                 return false;
 
-            CmdBuildHitFX(hit.point, _data);
+            ExplodeRocket(hit.point);
 
             return true;
         }
@@ -124,6 +124,8 @@ namespace Space.Projectiles
             hitD.hitPosition = hitPos;
             hitD.radius = Radius;
             hitD.originID = _data.Self;
+
+            CmdBuildHitFX(hitPos, _data);
 
             RaycastHit2D[] colliderList =
                 Physics2D.CircleCastAll(transform.position, Radius, Vector2.up, 0, maskIgnore);

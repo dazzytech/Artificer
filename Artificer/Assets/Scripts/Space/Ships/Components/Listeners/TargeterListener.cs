@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Data.Space;
 using Space;
 using Space.Ship.Components.Attributes;
-
+using Space.UI.Ship;
 
 namespace Space.Ship.Components.Listener
 {
@@ -116,35 +116,38 @@ namespace Space.Ship.Components.Listener
         /// <c>false</c> otherwise.</returns>
         private bool FindClosestTarget()
         {
-            /*_attr.currentTarget = null;
-            if (_attr.ShipAtts.Targets.Count < 1)
+            _att.currentTarget = null;
+            if (_att.Ship.TargetedShips.Count < 1)
                 return false;
 
             float ShortestDistance = float.MaxValue;
 
-            foreach (Transform t in _attr.ShipAtts.Targets)
+            foreach (ShipSelect ship in _att.Ship.TargetedShips)
             {
-                // Find angle between
-                float tAngle = Angle(transform, t, false);
-                // between min and max angle
-                if(tAngle < _attr.MinAngle || tAngle > _attr.MaxAngle)
-                    continue;
-
-                // Find distance between this and target
-                float tDistance = Vector3.Distance
-                    (transform.position, t.position);
-
-                // if distance less than shortest value
-                if(tDistance < ShortestDistance && tDistance < _attr.AttackRange)
+                foreach (Transform t in ship.TargetedComponents)
                 {
-                    ShortestDistance = tDistance;
-                    _attr.currentTarget = t;
+                    // Find angle between
+                    float tAngle = Math.Angle(transform, t.position, FindHomeAngle());
+                    // between min and max angle
+                    if (tAngle < _att.MinAngle || tAngle > _att.MaxAngle)
+                        continue;
+
+                    // Find distance between this and target
+                    float tDistance = Vector3.Distance
+                        (transform.position, t.position);
+
+                    // if distance less than shortest value
+                    if (tDistance < ShortestDistance && tDistance < _att.AttackRange)
+                    {
+                        ShortestDistance = tDistance;
+                        _att.currentTarget = t;
+                    }
                 }
             }
 
-            if (_attr.currentTarget != null)
+            if (_att.currentTarget != null)
                 return true;
-            else*/
+            else
                 return false;
         }
 

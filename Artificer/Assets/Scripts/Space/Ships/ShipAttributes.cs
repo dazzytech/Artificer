@@ -186,13 +186,14 @@ namespace Space.Ship
 
         public List<ShipSelect> TargetedShips;
 
+        public ShipSelect SelfTarget;
+
         public Rect HighlightRect;
         public float TargetDistance;
 
         public Transform Target;
 
         #endregion
-
     }
 }
 

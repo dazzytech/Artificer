@@ -68,6 +68,11 @@ namespace Space.UI.Ship
         /// </summary>
         private List<TargetShipItem> m_shipTargets;
 
+        /// <summary>
+        /// Reference to self targetting
+        /// </summary>
+        private TargetShipItem m_selfTarget;
+
         #region PREFABS
 
         [Header("HUD Prefab")]
@@ -138,6 +143,9 @@ namespace Space.UI.Ship
                 SystemManager.Space.PlayerExitScene += PlayerDeath;
 
             m_combatant = null;
+
+            if(m_selfTarget != null)
+                RemoveSelf();
         }
 
         void Update()
@@ -153,13 +161,27 @@ namespace Space.UI.Ship
             // If the HUD is tracking
             // selected targets, update
             // said targets
-            if (m_trackEnemies)
+            if (m_trackEnemies || m_trackFriendly)
             {
                 // Update targeted ship list
                 if(m_shipTargets != null)
                     UpdateShipTargets();
 
                 SeekShipTargets();
+            }
+
+            if (m_trackSelf)
+            {
+                if (m_selfTarget == null)
+                {
+                    if (m_shipRef.Self != null)
+                        m_selfTarget = BuildShipTarget
+                            (m_shipRef.Self, m_selfColour);
+                }
+                else if (m_shipRef.Self == null)
+                {
+                    RemoveSelf();
+                }               
             }
         }
 
@@ -174,6 +196,10 @@ namespace Space.UI.Ship
             
             // always true atm
             m_trackEnemies = true;
+
+            m_trackFriendly = true;
+
+            m_trackSelf = true;
 
             // Could we specify listeners here for targeted ship
             // list changed?
@@ -267,19 +293,29 @@ namespace Space.UI.Ship
             // Loop through each ship target
             foreach (ShipSelect ship in m_shipRef.Targets)
             {
-                // if first ship just build
                 if (m_shipTargets == null)
-                    BuildShipTarget(ship);
-                else
-                {
-                    // Use LINQ to discover if our list 
-                    // already contains this ship
-                    TargetShipItem item = m_shipTargets.
-                        FirstOrDefault(o => o.Selected == ship);
+                    m_shipTargets = new List<TargetShipItem>();
+                // Use LINQ to discover if our list 
+                // already contains this ship
+                TargetShipItem item = m_shipTargets.
+                    FirstOrDefault(o => o.Selected == ship);
 
-                    // if null then this ship need to be added
-                    if (item == null)
-                        BuildShipTarget(ship);
+                // if null then this ship need to be added
+                if (item == null)
+                {
+                    // define colour based on team
+                    if (ship.Ship.TeamID == SystemManager.Space.TeamID)
+                    {
+                        if (m_trackFriendly)
+                            m_shipTargets.Add(BuildShipTarget
+                                (ship, m_friendlyColour));
+                    }
+                    else
+                    {
+                        if (m_trackEnemies)
+                            m_shipTargets.Add(BuildShipTarget
+                                (ship, m_enemyColour));
+                    }
                 }
             }
         }
@@ -299,12 +335,19 @@ namespace Space.UI.Ship
             m_shipTargets.RemoveAt(index);
         }
 
+        private void RemoveSelf()
+        {
+            m_selfTarget.ClearShip();
+            Destroy(m_selfTarget.gameObject);
+            m_selfTarget = null;
+        }
+
         /// <summary>
         /// Builds HUD element that overlays 
         /// targeted ship within the HUD
         /// </summary>
         /// <param name="ship"></param>
-        private void BuildShipTarget(ShipSelect ship)
+        private TargetShipItem BuildShipTarget(ShipSelect ship, Color colour)
         {
             // Create HUD element
             GameObject shipObj = Instantiate(m_shipPrefab);
@@ -317,14 +360,10 @@ namespace Space.UI.Ship
             TargetShipItem target = 
                 shipObj.GetComponent<TargetShipItem>();
 
-            // Initialize target item and store
-            // in list
-            target.BuildShip(ship, m_enemyColour);
+            // Initialize target item
+            target.BuildShip(ship, colour);
 
-            if (m_shipTargets == null)
-                m_shipTargets = new List<TargetShipItem>();
-
-            m_shipTargets.Add(target);
+            return target;
         }
 
         #endregion

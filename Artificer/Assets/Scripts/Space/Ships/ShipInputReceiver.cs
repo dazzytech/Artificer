@@ -352,6 +352,7 @@ namespace Space.Ship
             if (!inputDelay)
             {
                 _ship.TargetedShips.Clear();
+                _ship.SelfTarget = null;
                 inputDelay = true;
                 StartCoroutine("EngageDelay");
             }

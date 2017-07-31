@@ -25,17 +25,11 @@ namespace Space.Ship
     {
         #region ATTRIBUTES
 
-        ShipAttributes m_ship;
+        [SerializeField]
+        private ShipAttributes m_ship;
 
-        #endregion
-
-        #region MONO BEHAVIOUR
-
-        // Use this for initialization
-        void Awake()
-        {
-            m_ship = GetComponent<ShipAttributes>();   
-        }
+        [SerializeField]
+        private ShipAccessor m_access;
 
         #endregion
 
@@ -113,10 +107,30 @@ namespace Space.Ship
                 // test if self targetting
                 if (m_ship.Components.Contains(comp))
                 {
-                    // For now remove targeting self
+                    if (m_ship.SelfTarget == null)
+                    {
+                        // first time we selected self
+                        // so create self select and target head
+                        m_ship.SelfTarget = new ShipSelect();
+                        m_ship.SelfTarget.Ship = m_access;
+                        m_ship.SelfTarget.TargetedComponents
+                            = new List<Transform>();
 
-                    //if (!m_ship.SelfTargeted.Contains(target))
-                       // m_ship.SelfTargeted.Add(target);
+                        m_ship.SelfTarget.TargetedComponents.Add
+                            (m_ship.Head.transform);
+                    }
+                    else
+                    {
+                        // we are already target so add selected piece
+                        if (!m_ship.SelfTarget.TargetedComponents.Contains(target))
+                            m_ship.SelfTarget.TargetedComponents.Add(target);
+                        else
+                        {
+                            m_ship.SelfTarget.TargetedComponents.Remove(target);
+                            if (m_ship.SelfTarget.TargetedComponents.Count == 0)
+                                m_ship.SelfTarget = null;
+                        }
+                    }
                 }
                 else
                 {
@@ -138,6 +152,13 @@ namespace Space.Ship
                             // Add our selected component (if not already selected)
                             if (!selected.TargetedComponents.Contains(target))
                                 selected.TargetedComponents.Add(target);
+                            else
+                            {
+                                selected.TargetedComponents.Remove(target);
+                                if (selected.TargetedComponents.Count == 0)
+                                    m_ship.TargetedShips.Remove(selected);
+                                selected = null;
+                            }
                         }
                         else
                         {
@@ -213,6 +234,10 @@ namespace Space.Ship
                 return;
 
             input.enabled = false;
+
+            // remove any targets
+            m_ship.TargetedShips.Clear();
+            m_ship.SelfTarget = null;
 
             // Begin the process of hiding components on all components
             CmdDisableComponents();

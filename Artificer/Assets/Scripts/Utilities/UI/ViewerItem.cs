@@ -10,8 +10,6 @@ namespace UI
     public class ViewerItem : MonoBehaviour, 
         IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
     {
-        private enum Type { STATIC, RESPONSIVE }
-
         #region EVENTS
 
         public static event SelectEvent ItemSelected;
@@ -32,17 +30,18 @@ namespace UI
 
         private bool Highlighted;
 
-        // does item recolour?
         [SerializeField]
-        private Type m_type;
+        private bool m_displayHealth;
+
+        [SerializeField]
+        private bool m_interactive;
 
         #region HUD ELEMENTS
 
         [Header("HUD Elements")]
 
         // component image
-        [SerializeField]
-        protected Image Icon;
+        protected Image m_icon;
 
         #endregion
 
@@ -57,7 +56,9 @@ namespace UI
         [SerializeField]
         private Color LowHealth;
 
-        private Color m_standardColor;
+        private Color m_standardColour;
+
+        private Color m_currentColour;
 
         #endregion
 
@@ -67,7 +68,8 @@ namespace UI
 
         void Awake()
         {
-            m_standardColor = Icon.color;
+            m_icon = GetComponent<Image>();
+            m_standardColour = m_icon.color;
         }
 
         void OnDestroy()
@@ -94,29 +96,25 @@ namespace UI
             Sprite Img = Listener.Icon;
 
             // next set ID
-            Icon.sprite = Img;
-            Icon.rectTransform.sizeDelta = Img.rect.size;
-            Icon.rectTransform.localRotation = Obj.transform.localRotation;
+            m_icon.sprite = Img;
+            m_icon.rectTransform.sizeDelta = Img.rect.size;
+            m_icon.rectTransform.localRotation = Obj.transform.localRotation;
 
-            if (m_type == Type.RESPONSIVE)
-            {
-                m_standardColor = HighHealth;
-                // Start coroutine that updates health
-                StartCoroutine("Step");
-            }
+            // Start coroutine that updates health
+            StartCoroutine("Step");
 
             ID = id;
         }
 
         public void SetColour(Color newColour)
         {
-            m_standardColor = newColour;
-            Icon.color = m_standardColor;
+            m_standardColour = newColour;
+            m_icon.color = m_standardColour;
         }
 
         public void Reset(bool Deselect)
         {
-            Icon.color = m_standardColor;
+            m_icon.color = m_standardColour;
 
             if (Deselect)
                 Selected = false;
@@ -152,21 +150,32 @@ namespace UI
                     yield break;
                 }
 
-                if (Listener.NormalizedHealth < 0.3)
-                    m_standardColor = LowHealth;
-                else if
-                    (Listener.NormalizedHealth < 0.6)
-                    m_standardColor = MedHealth;
+                if (m_displayHealth)
+                {
+                    if (Listener.NormalizedHealth < 0.3)
+                        m_currentColour = LowHealth;
+                    else if
+                        (Listener.NormalizedHealth < 0.6)
+                        m_currentColour = MedHealth;
+                    else
+                        m_currentColour = HighHealth;
+
+                }
                 else
-                    m_standardColor = HighHealth;
+                {
+                    m_currentColour = m_standardColour;
+                }
 
-                if (Highlighted)
-                    m_standardColor += new Color(.2f, -0.12f, 1f, 0.5f);
-                else if (Selected)
-                    m_standardColor += new Color(.4f, -.1f, .1f);
+                if (m_interactive)
+                {
+                    if (Highlighted)
+                        m_currentColour += new Color(.2f, -0.12f, 1f, 0.5f);
+                    else if (Selected)
+                        m_currentColour += new Color(.4f, -.1f, .1f);
+                }
 
-                if (Icon.color != m_standardColor)
-                    Icon.color = m_standardColor;
+                if (m_icon.color != m_currentColour)
+                    m_icon.color = m_currentColour;
                 
 
                 yield return null;

@@ -25,7 +25,7 @@ Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artifice
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\RakNetSwig.dll into Unity Child Domain
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Threading.dll (this message is harmless)
 Loading C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Threading.dll into Unity Child Domain
-- Completed reload, in  0.038 seconds
+- Completed reload, in  0.039 seconds
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.dll (this message is harmless)
 OnLevelWasLoaded was found on Reporter
@@ -42,28 +42,151 @@ The referenced script on this Behaviour (Game Object 'Game Settings Prefab') is 
  
 (Filename:  Line: 1743)
 
-The referenced script on this Behaviour (Game Object 'ServerList') is missing!
- 
-(Filename:  Line: 1743)
-
-UnloadTime: 1.897712 ms
+UnloadTime: 1.996824 ms
 Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\System.Xml.dll (this message is harmless)
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/libc
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/.\libc
 Fallback handler could not load library C:/Users/renderman/Documents/Artificer/Artificer/EXE/Artificer_Data/Mono/libc
-NATHelper: Connected to Facilitator: 364792130765019203
+Platform assembly: C:\Users\renderman\Documents\Artificer\Artificer\EXE\Artificer_Data\Managed\Mono.Security.dll (this message is harmless)
+NATHelper: Connected to Facilitator: 58547371543259691
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.047142 ms
-DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
+NATTraversal: Attempting to connect directly: 127.0.0.1
  
-(Filename:  Line: 462)
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
+Network configuration mismatch detected. The number of networked scripts on the client does not match the number of networked scripts on the server. This could be caused by lazy loading of scripts on the client. This warning can be disabled by the checkbox in NetworkManager Script CRC Check.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Unloading 163 unused Assets to reduce memory usage. Loaded Objects now: 3683.
-Total: 4.397275 ms (FindLiveObjects: 0.300808 ms CreateObjectMapping: 0.167656 ms MarkObjects: 3.442976 ms  DeleteObjects: 0.484906 ms)
+CRC Local Dump WeaponListener : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Local Dump ComponentListener : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Local Dump ComponentAttributes : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Local Dump ProjectileController : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Local Dump WeaponController : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Local Dump BeamController : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Local Dump MissileController : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Local Dump ShipGenerator : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Local Dump ShipMessageController : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Local Dump PlasmaController : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Local Dump LauncherListener : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Local Dump DestroyedComponent : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Local Dump PlayerServerItem : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump ComponentAttributes : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump ComponentListener : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump WeaponListener : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump PlasmaController : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump WeaponController : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump PlayerServerItem : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump ProjectileController : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump LauncherListener : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump BeamController : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump DestroyedComponent : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump MissileController : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump ShipMessageController : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump ShipGenerator : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump RaiderSpawnManager : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump GameServerEvents : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump TeamController : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump SpaceEventListener : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump UIMessegeHandler : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+CRC Remote Dump SegmentAttributes : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 The referenced script on this Behaviour (Game Object '_spawn') is missing!
  
@@ -73,97 +196,194 @@ The referenced script on this Behaviour (Game Object 'Footer') is missing!
  
 (Filename:  Line: 1743)
 
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 2.817970 ms
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 10.755250 ms
 NullReferenceException: Object reference not set to an instance of an object
   at Space.Map.MapController.InitializeMap () [0x00000] in <filename unknown>:0 
   at Space.Map.MapController.Awake () [0x00000] in <filename unknown>:0 
  
 (Filename:  Line: -1)
 
+
+Unloading 99 unused Assets to reduce memory usage. Loaded Objects now: 7040.
+Total: 6.740991 ms (FindLiveObjects: 0.473559 ms CreateObjectMapping: 0.264452 ms MarkObjects: 5.454622 ms  DeleteObjects: 0.547430 ms)
+
+SyncList not initialized
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+SyncList not initialized
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+SyncList not initialized
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+SyncList not initialized
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
 Error: Control Config - GetKey: Provided key  is not stored in list
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-
-Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 7567.
-Total: 6.762064 ms (FindLiveObjects: 0.491159 ms CreateObjectMapping: 0.664836 ms MarkObjects: 5.564154 ms  DeleteObjects: 0.040987 ms)
-
-NATHelper: NAT Device not found
+NATTraversal: NAT hole punched but client already directly connected.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Large state update of 2215 bytes for netId:2160 from script:Ship(Clone) (Space.Ship.ShipAttributes)
+NATHelper: Connected to Facilitator: 58547371543259691
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+Trying to send command for object without authority.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+Trying to send command for object without authority.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+Trying to send command for object without authority.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+Trying to send command for object without authority.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+Trying to send command for object without authority.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+Trying to send command for object without authority.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+Trying to send command for object without authority.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+Trying to send command for object without authority.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+Trying to send command for object without authority.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-reactor filed to acomplish request with code {1234}, bytesReceived {0}
-Log: connection {1} has been disconnected by timeout; address {::ffff:127.0.0.1:62263}
-ServerDisconnected due to error: Timeout
+Did not find target for sync message for 1783
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1789
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1790
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1789
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1790
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1789
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1790
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1789
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1790
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1789
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1790
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1789
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1790
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1789
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1790
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1789
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1790
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1789
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1790
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1789
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1790
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Could not find target object with netId:1789 for RPC call ClientRpc:InvokeRpcRpcBuildHitFX
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1790
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1790
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Could not find target object with netId:1790 for RPC call ClientRpc:InvokeRpcRpcBuildHitFX
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1791
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1794
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Did not find target for sync message for 1806
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 1a10 -> priority: 1 
-  Thread -> id: da4 -> priority: 1 
+  Thread -> id: 470c -> priority: 1 
+  Thread -> id: 734 -> priority: 1 

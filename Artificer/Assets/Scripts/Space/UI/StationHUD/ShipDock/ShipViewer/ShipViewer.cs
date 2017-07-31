@@ -90,12 +90,7 @@ namespace Space.UI.Station.Viewer
 
         public void ClearItem(int ID)
         {
-            foreach (ViewerItem item in ViewerPanel.ViewerItems)
-                if (item.ID == ID)
-                {
-                    item.Reset(true);
-                    break;
-                }
+            ViewerPanel.GetItem(ID).Reset(true);
 
             foreach (ComponentListItem item in Items)
                 if (item.ID == ID)
@@ -107,12 +102,7 @@ namespace Space.UI.Station.Viewer
 
         public void SelectItem(int ID)
         {
-            foreach (ViewerItem item in ViewerPanel.ViewerItems)
-                if (item.ID == ID)
-                {
-                    item.Select();
-                    break;
-                }
+            ViewerPanel.GetItem(ID).Select();
 
             foreach (ComponentListItem item in Items)
                 if (item.ID == ID)
@@ -124,12 +114,8 @@ namespace Space.UI.Station.Viewer
 
         public void HoverItem(int ID)
         {
-            foreach (ViewerItem item in ViewerPanel.ViewerItems)
-                if (item.ID == ID)
-                {
-                    item.Highlight();
-                    break;
-                }
+            ViewerPanel.GetItem(ID).Highlight();
+
             foreach (ComponentListItem item in Items)
                 if (item.ID == ID)
                 {
@@ -140,21 +126,13 @@ namespace Space.UI.Station.Viewer
 
         public void LeaveItem(int ID)
         {
-            foreach (ViewerItem item in ViewerPanel.ViewerItems)
-                if (item.ID == ID)
-                {
-                    item.Reset(false);
-
-                    
-                    break;
-                }
+            ViewerPanel.GetItem(ID).Reset(false);
             foreach (ComponentListItem item in Items)
                  if (item.ID == ID)
                  {
                       item.Reset(false);
                       break;
                  }
-
         }
 
         #endregion

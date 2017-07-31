@@ -57,9 +57,6 @@ namespace Space.UI.Ship
         [SerializeField]
         private Color m_prefabColour;
 
-        [SerializeField]
-        private Color m_blendHover;
-
 
         // Tracking components
         private List<TargetComponentItem> m_targetedComponents;
@@ -86,7 +83,6 @@ namespace Space.UI.Ship
                 UpdateTargets();
 
                 SeekTargets();
-
             }
         }
 
@@ -215,7 +211,7 @@ namespace Space.UI.Ship
 
             item.Target = target;
             item.Tracker = Instantiate(m_targetPrefab);
-            item.Tracker.transform.parent = this.transform;
+            item.Tracker.transform.SetParent(this.transform);
 
             m_targetedComponents.Add(item);
         }

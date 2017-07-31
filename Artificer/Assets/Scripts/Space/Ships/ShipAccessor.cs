@@ -182,6 +182,14 @@ namespace Space.Ship
         }
 
         /// <summary>
+        /// Returns selection reference to self
+        /// </summary>
+        public ShipSelect Self
+        {
+            get { return m_ship.SelfTarget; }
+        }
+
+        /// <summary>
         /// Returns list of targets
         /// for external HUD elements
         /// </summary>
