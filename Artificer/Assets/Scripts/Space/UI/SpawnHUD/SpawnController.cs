@@ -50,15 +50,18 @@ namespace Space.UI.Spawn
 
         #region MONO BEHAVIOUR
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             BuildSelection();
             BuildStations();            
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
-            while(m_att.ShipList.Count > 0)
+            base.OnDisable();
+
+            while (m_att.ShipList.Count > 0)
             {
                 Destroy(m_att.ShipList[0].gameObject);
                 m_att.ShipList.RemoveAt(0);

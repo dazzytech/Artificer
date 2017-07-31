@@ -114,20 +114,20 @@ public class HUDPanel : MonoBehaviour,
     /// Header bar used for draggin etc
     /// </summary>
     [SerializeField]
-    private Transform m_header;
+    protected Transform m_header;
 
     /// <summary>
     /// Area that collapses and expands
     /// </summary>
     [SerializeField]
-    private Transform m_body;
+    protected Transform m_body;
 
     /// <summary>
     /// The image that responds to
     /// colour changes based on mouse
     /// </summary>
     [SerializeField]
-    private RawImage m_background;
+    protected RawImage m_background;
 
     #endregion
 
@@ -234,7 +234,7 @@ public class HUDPanel : MonoBehaviour,
 
     #region MONO BEHAVIOUR
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         if(m_background != null)
             m_background.color = m_idleColour;
@@ -246,7 +246,7 @@ public class HUDPanel : MonoBehaviour,
             ToggleHUD(false);
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         ShipPlayerInputController.OnStateChanged -= DetectState;
     }

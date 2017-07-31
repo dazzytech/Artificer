@@ -32,6 +32,10 @@ namespace Space.UI.Ship
 
         public ComponentBuilderUtility Builder;
 
+        /// <summary>
+        /// Reference to the select
+        /// object we are highlighting
+        /// </summary>
         [HideInInspector]
         public ShipSelect Selected;
 
@@ -45,8 +49,17 @@ namespace Space.UI.Ship
 
         [Header("Colours")]
 
+        /// <summary>
+        /// assigned by target HUD 
+        /// colours the components 
+        /// the assigned colour
+        /// </summary>
         [SerializeField]
         private Color m_prefabColour;
+
+        [SerializeField]
+        private Color m_blendHover;
+
 
         // Tracking components
         private List<TargetComponentItem> m_targetedComponents;
@@ -157,6 +170,11 @@ namespace Space.UI.Ship
             }
         }
 
+        /// <summary>
+        /// Goes through ship selected data
+        /// and adds any targetted components that
+        /// are not displayed
+        /// </summary>
         private void SeekTargets()
         {
             foreach(Transform pending in Selected.TargetedComponents)

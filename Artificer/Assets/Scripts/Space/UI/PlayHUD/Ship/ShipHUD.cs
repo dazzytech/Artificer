@@ -37,9 +37,10 @@ namespace Space.UI.Ship
 
         #region MONOBEHAVIOUR 
 
-        void OnEnable()
+        protected override void OnEnable()
         {
-            // Garentueed called when shipis already created
+            base.OnEnable();
+
             BuildShipData();
         }
 
@@ -53,10 +54,14 @@ namespace Space.UI.Ship
         /// </summary>
         public void BuildShipData()
     	{
+            GameObject GO = GameObject.FindGameObjectWithTag
+                    ("PlayerShip");
+
+            if (GO == null)
+                return;
+
             // Retreive data of player ship
-            ShipAccessor ship = 
-                GameObject.FindGameObjectWithTag
-                    ("PlayerShip").GetComponent
+            ShipAccessor ship = GO.GetComponent
                     <ShipAccessor>();
 
             m_targetHUD.SetShip(ship);

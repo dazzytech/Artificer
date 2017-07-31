@@ -10,6 +10,8 @@ using System.Linq;
 
 namespace Space.UI.Ship
 {
+    #region SHIP SELECT
+
     /// <summary>
     /// Container class for selecting
     /// other ships
@@ -20,14 +22,7 @@ namespace Space.UI.Ship
         public List<Transform> TargetedComponents;
     }
 
-    /// <summary>
-    /// Marker hovers over selected item
-    /// </summary>
-    public class Marker
-    {
-        public Transform trackedObj;
-        public GameObject Icon;
-    }
+    #endregion
 
     /// <summary>
     /// Keeps track of targets that
@@ -37,18 +32,40 @@ namespace Space.UI.Ship
     {
         #region ATTRIBUTES
 
-        // Refence to the player attributes
+        [Header("Target HUD")]
+
+        /// <summary>
+        /// Accessor to our current ship
+        /// </summary>
         private ShipAccessor m_shipRef;
 
-        // Do we track selected targets?
-        private bool m_trackTargets;
+        #region VIEWER STYLE
 
-        // tracking a combat target
-        private Transform m_trackCombatObj;
+        /// <summary>
+        /// if we track ourselves being targeted
+        /// </summary>
+        private bool m_trackSelf;
 
-        // Tracking Lists
+        /// <summary>
+        /// Track selected enemies
+        /// </summary>
+        private bool m_trackEnemies;
 
-        // List of ships currently being tracked
+        /// <summary>
+        /// Track selected friendlies
+        /// </summary>
+        private bool m_trackFriendly;
+
+        #endregion
+
+        /// <summary>
+        /// Current target we are engaged in combat with
+        /// </summary>
+        private Transform m_combatant;
+
+        /// <summary>
+        /// prefab list for selected target
+        /// </summary>
         private List<TargetShipItem> m_shipTargets;
 
         #region PREFABS
@@ -64,13 +81,22 @@ namespace Space.UI.Ship
 
         [Header("Prefab Colour")]
 
-        // If selecting self or friendly
-        // display friendly colour
+        ///<summary>
+        /// If selecting friendly
+        /// display friendly colour 
+        /// </summary>
         [SerializeField]
         private Color m_friendlyColour;
 
-        // If selecting an enemy then display
-        // enemy colour
+        /// <summary>
+        /// When selecting self
+        /// </summary>
+        [SerializeField]
+        private Color m_selfColour;
+
+        /// <summary>
+        /// When selecting enemies
+        /// </summary>
         [SerializeField]
         private Color m_enemyColour;
 
@@ -80,14 +106,11 @@ namespace Space.UI.Ship
 
         [Header("HUD Elements")]
 
+        /// <summary>
+        /// Used to display current combatant
+        /// </summary>
         [SerializeField]
         private TargetViewer m_targetViewer;
-
-        [SerializeField]
-        private Transform m_targetIconContainer;
-
-        [SerializeField]
-        private Transform m_worldTargetIconContainer;
 
         #endregion
 
@@ -98,16 +121,23 @@ namespace Space.UI.Ship
         #region MONOBEHAVIOUR 
 
         // Quick utlity to clear target list upon death
-        void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
+
             SystemManager.Space.PlayerExitScene += PlayerDeath;
 
-            m_trackCombatObj = null;
+            m_combatant = null;
         }
 
-        void OnDisable()
+        protected override void OnDisable()
         {
-            SystemManager.Space.PlayerExitScene += PlayerDeath;
+            base.OnDisable();
+
+            if(SystemManager.Space != null)
+                SystemManager.Space.PlayerExitScene += PlayerDeath;
+
+            m_combatant = null;
         }
 
         void Update()
@@ -118,12 +148,12 @@ namespace Space.UI.Ship
 
             // First update the 
             // target player has engaged
-            UpdateCurrentTarget();
+            DisplayCurrentTarget();
 
             // If the HUD is tracking
             // selected targets, update
             // said targets
-            if (m_trackTargets)
+            if (m_trackEnemies)
             {
                 // Update targeted ship list
                 if(m_shipTargets != null)
@@ -142,8 +172,8 @@ namespace Space.UI.Ship
         {
             m_shipRef = data;
             
-            // always tru atm
-            m_trackTargets = true;
+            // always true atm
+            m_trackEnemies = true;
 
             // Could we specify listeners here for targeted ship
             // list changed?
@@ -169,24 +199,28 @@ namespace Space.UI.Ship
 
         #region PRIVATE UTILITIES
 
-        #region TARGET UPDATES
+        #region SINGLE TARGET
 
         /// <summary>
         /// Updates the current target within
         /// the header bar if in combat
         /// </summary>
-        private void UpdateCurrentTarget()
+        private void DisplayCurrentTarget()
         {
             // Update tracker if we are in or
             // left combat
-            if (m_shipRef.Target != null && m_trackCombatObj != m_shipRef.Target)
+            if (m_shipRef.Target != null && m_combatant != m_shipRef.Target)
                 m_targetViewer.BuildTrackingObject(m_shipRef.Target);
-            else if (m_shipRef.Target == null && m_trackCombatObj != null)
+            else if (m_shipRef.Target == null && m_combatant != null)
                 m_targetViewer.ClearObject();
 
             // keep track of combat state
-            m_trackCombatObj = m_shipRef.Target;
+            m_combatant = m_shipRef.Target;
         }
+
+        #endregion
+
+        #region TARGET LISTS
 
         /// <summary>
         /// Iterates through each targeted
@@ -252,7 +286,7 @@ namespace Space.UI.Ship
 
         #endregion
 
-        #region TARGET UTILITIES
+        #region CREATE/DESTROY
 
         /// <summary>
         /// Clears and deletes a targeted ship
@@ -277,7 +311,7 @@ namespace Space.UI.Ship
 
             // Set parent to HUD 
             shipObj.transform.SetParent
-                (m_worldTargetIconContainer, false);
+                (m_body, false);
 
             // retreive ship target util
             TargetShipItem target = 
@@ -297,18 +331,6 @@ namespace Space.UI.Ship
 
         #endregion
 
-        /*private void BuildPiece(Transform t, Color color)
-        {
-            Marker m = new Marker();
-            m.Icon = Instantiate(m_targetPrefab);
-            m.Icon.GetComponent<Image>().color = color;
-            m.Icon .transform.SetParent(this.transform);
-            m.Icon.GetComponent<RectTransform>().localPosition = Vector3.zero;
-            m.Icon.GetComponent<RectTransform>().localScale = new Vector3(20f, 20f, 1f);
-            m.trackedObj = t;
-            _markers.Add(m);
-        }*/
-
         #region EVENT LISTENER
 
         // Targeter HUD buttons value
@@ -321,6 +343,10 @@ namespace Space.UI.Ship
             }
         }
 
+        /// <summary>
+        /// Clear the target selection list
+        /// upon death
+        /// </summary>
         private void PlayerDeath()
         {
             if(m_shipTargets != null)
@@ -329,16 +355,6 @@ namespace Space.UI.Ship
                     // clear each ship
                     RemoveShipTarget(i);
             }
-
-            /*if (_markers != null)
-            {
-                // clear all targets
-                foreach (Marker m in _markers)
-                {
-                    Destroy(m.Icon);
-                }
-                _markers.Clear();
-            }*/
         }
 
         #endregion

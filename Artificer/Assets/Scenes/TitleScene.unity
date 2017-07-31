@@ -18177,7 +18177,7 @@ MonoBehaviour:
   m_NetworkAddress: localhost
   m_DontDestroyOnLoad: 1
   m_RunInBackground: 1
-  m_ScriptCRCCheck: 0
+  m_ScriptCRCCheck: 1
   m_MaxDelay: 0.01
   m_LogLevel: 2
   m_PlayerPrefab: {fileID: 120812, guid: 38c98b8ba5ddec540906980955e1a8dc, type: 2}
@@ -18218,7 +18218,7 @@ MonoBehaviour:
   - {fileID: 152770, guid: ccb87c3d31877064aab24979e6adc3a5, type: 2}
   - {fileID: 120244, guid: 8563e7dac5109c841874465af96fb17c, type: 2}
   - {fileID: 179984, guid: 672f214f8c0367641bd50e4740faa692, type: 2}
-  m_CustomConfig: 0
+  m_CustomConfig: 1
   m_MaxConnections: 4
   m_ConnectionConfig:
     m_PacketSize: 1500
@@ -18278,9 +18278,9 @@ MonoBehaviour:
   connectRelay: 0
   autoConnectToFacilitator: 1
   useUnityMatchmaking: 0
-  externalIPSource: http://1pv4.icanhazip.com/
+  externalIPSource: http://ipv4.icanhazip.com
   externalIPv6Source: http://ipv6.icanhazip.com
-  externalIPTimeout: 2000
+  externalIPTimeout: 10
   clientPort: 0
   delayDirectConnection: 0
   m_base: {fileID: 1121}

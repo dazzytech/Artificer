@@ -58,8 +58,10 @@ namespace Space.UI.Ship
         #region MONO BEHAVIOUR
 
         // Use this for initialization
-        void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
+
             if (Team != null)
             {
                 // event listener here
@@ -70,8 +72,10 @@ namespace Space.UI.Ship
         }
 
         // Update is called once per frame
-        void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
+
             if (Team != null)
             {
                 // event listener here

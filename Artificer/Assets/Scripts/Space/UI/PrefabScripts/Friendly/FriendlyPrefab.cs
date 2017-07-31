@@ -14,7 +14,8 @@ namespace Space.UI.Ship
     /// Keeps a referenceto an assigned friendly ship
     /// including ship state and component integrity
     /// </summary>
-    public class FriendlyPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class FriendlyPrefab : MonoBehaviour, 
+        IPointerEnterHandler, IPointerExitHandler
     { 
         #region ATTRIBUTES
 
@@ -67,8 +68,14 @@ namespace Space.UI.Ship
 
         [Header("Colours")]
 
+        [Header("Background")]
+
+        private Color m_currentColour;
+
         [SerializeField]
-        
+        private Color m_highlightColour;
+
+        [SerializeField]
         private Color m_safeColour;
 
         [SerializeField]
@@ -80,10 +87,19 @@ namespace Space.UI.Ship
         [SerializeField]
         private Color m_dockedColour;
 
-        [SerializeField]
-        private Color m_highlightColour;
+        [Header("Text")]
 
-        private Color m_standardColour;
+        [SerializeField]
+        private Color m_safeText;
+
+        [SerializeField]
+        private Color m_attackText;
+
+        [SerializeField]
+        private Color m_destroyedText;
+
+        [SerializeField]
+        private Color m_dockedText;
 
         #endregion
 
@@ -105,7 +121,7 @@ namespace Space.UI.Ship
         void OnDestroy()
         {
             if(m_ship != null)
-                SystemManager.Events.EventShipCreated -= OnShipCreated;
+                m_ship.OnShipCompleted -= OnShipCreated;
         }
 
         #endregion
@@ -122,27 +138,21 @@ namespace Space.UI.Ship
             m_ship = newShip;
 
             // non highlighted colour
-            m_standardColour = m_selfPanel.color;
+            m_currentColour = m_safeColour;
+            m_selfPanel.color = m_currentColour;
 
             m_activated = true;
 
             // assign ID
             m_ID = newID;
+            
+            // assign listener for when item is created or updated
+            m_ship.OnShipCompleted += OnShipCreated;
 
             // If ship has been built then create ship viewer
             if (newShip.Components.Length > 0)
             {
-                ViewerPanel.BuildShip(newShip, PiecePrefab);
-
-                // Begin tracking process if active
-                if (isActiveAndEnabled)
-                    StartCoroutine("Step");
-            }
-            else
-            {
-                // If ship is still pending creation then 
-                // assign listener for when item is created
-                SystemManager.Events.EventShipCreated += OnShipCreated;
+                OnShipCreated();
             }
         }
 
@@ -150,16 +160,17 @@ namespace Space.UI.Ship
 
         #region EVENT LISTENER
 
-        private void OnShipCreated(CreateDispatch CD)
+        /// <summary>
+        /// Rebuilds or builds ship
+        /// visual 
+        /// </summary>
+        private void OnShipCreated()
         {
-            if (m_ship.NetID.Equals(CD.Self))
-            {
-                ViewerPanel.BuildShip(m_ship, PiecePrefab);
+            ViewerPanel.BuildShip(m_ship, PiecePrefab);
 
-                // Begin tracking process if active
-                if (isActiveAndEnabled)
-                    StartCoroutine("Step");
-            }
+            // Begin tracking process if active
+            if (isActiveAndEnabled)
+                StartCoroutine("Step");
         }
 
         #endregion
@@ -173,7 +184,8 @@ namespace Space.UI.Ship
                 if (m_ship == null)
                 {
                     m_status.text = "Destroyed";
-                    m_status.color = m_destroyedColour;
+                    m_status.color = m_destroyedText;
+                    m_currentColour = m_destroyedColour;
 
                     m_distance.text = "-";
 
@@ -184,25 +196,32 @@ namespace Space.UI.Ship
                 // update name
                 m_label.text = m_ship.Data.Name;
 
+                Color newColour = Color.black;
+
                 // Update station status
                 switch (m_ship.Status)
                 {
                     // change and recolor text based on station state
                     case 0:
                         m_status.text = "Safe";
-                        m_status.color = m_safeColour;
+                        newColour = m_safeColour;
+                        m_status.color = m_safeText;
                         break;
 
                     case 1:
                         m_status.text = "In Combat";
-                        m_status.color = m_attackColour;
+                        newColour = m_attackColour;
+                        m_status.color = m_attackText;
                         break;
 
                     case 2:
                         m_status.text = "Docked";
-                        m_status.color = m_destroyedColour;
+                        newColour = m_dockedColour;
+                        m_status.color = m_destroyedText;
                         break;
                 }
+
+                // display colour
 
                 // Find distance from station to player
 
@@ -219,15 +238,22 @@ namespace Space.UI.Ship
                 // display distance
                 m_distance.text = ((int)distance * 0.01).ToString("F2") + "km";
 
+                if (m_currentColour != newColour)
+                {
+                    m_currentColour = newColour;
+                    m_selfPanel.color = m_currentColour;
+                }
                 //finished this step
 
                 yield return null;
             }
 
-            yield return null;
+            m_selfPanel.color = m_currentColour;
 
             // This HUD is due for removal
             Base.RemoveID(m_ID);
+
+            yield break;
         }
 
         /// <summary>
@@ -253,7 +279,7 @@ namespace Space.UI.Ship
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            m_selfPanel.color = m_standardColour;
+            m_selfPanel.color = m_currentColour;
         }
 
         #endregion

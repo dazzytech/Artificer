@@ -138,8 +138,6 @@ namespace Space.Ship
                             // Add our selected component (if not already selected)
                             if (!selected.TargetedComponents.Contains(target))
                                 selected.TargetedComponents.Add(target);
-
-                            // Else nothing else to do
                         }
                         else
                         {

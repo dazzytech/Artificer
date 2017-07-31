@@ -363,7 +363,7 @@ namespace Space.Ship
 
         private IEnumerator EngageDelay()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.1f);
             inputDelay = false;
             yield return null;
         }

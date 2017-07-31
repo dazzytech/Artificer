@@ -33,8 +33,10 @@ namespace Menu
         }
 
         // Use this for initialization
-        void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
+
     	    // Build the resolution list using all possible resolutions
             if (ResolutionList != null)
             {

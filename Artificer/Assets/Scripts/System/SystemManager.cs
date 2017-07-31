@@ -373,6 +373,8 @@ public class SystemManager : NATTraversal.NetworkManager
     public override void OnClientConnect(NetworkConnection conn)
     {
         m_base.Conn = conn;
+
+        //base.OnClientConnect(conn);
     }
 
     /// <summary>
@@ -636,7 +638,7 @@ public class SystemManager : NATTraversal.NetworkManager
         NetworkServer.SetAllClientsNotReady();
         ClientScene.DestroyAllClientObjects();
         m_singleton.StartHostAll(m_singleton.
-            m_base.ServerInfo.ServerName, 2);
+            m_base.ServerInfo.ServerName, (uint)m_singleton.maxConnections);
     }
 
     // Tries to connect as a client
@@ -649,7 +651,7 @@ public class SystemManager : NATTraversal.NetworkManager
         ClientScene.DestroyAllClientObjects();
 
         m_singleton.StartClientAll
-            (externalIP, internalIP,
+           (externalIP, internalIP,
                 guid);
     }
 
