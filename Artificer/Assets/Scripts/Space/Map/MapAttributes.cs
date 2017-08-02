@@ -6,7 +6,7 @@ namespace Space.Map
 {
     // Int enum for the types of objects in map
     // ensure in same order as search items with teams at end
-    public enum MapObjectType { NULL, SHIP, SATELLITE, ASTEROID, DEBRIS, STATION}
+    public enum MapObjectType { NULL, SHIP, SATELLITE, ASTEROID, DEBRIS, STATION, WAYPOINT}
 
     /// <summary>
     /// Storage class

@@ -5,13 +5,16 @@ using System.Collections;
 
 //Artificer
 using Stations;
+using Space.UI.Proxmity;
+using Space.UI.Ship;
+using UI;
 
-namespace Space.UI.Ship
+namespace Space.UI
 {
     /// <summary>
     /// Local HUD element that tracks state of station
     /// </summary>
-    public class StationPrefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class StationPrefab : SelectableHUDItem
     {
         #region ATTRIBUTES
 
@@ -47,11 +50,6 @@ namespace Space.UI.Ship
         [SerializeField]
         public Image m_icon;
 
-        [SerializeField]
-        [Header("Image")]
-
-        public Image m_selfPanel;
-
         #endregion
 
         #region COLORS
@@ -66,11 +64,6 @@ namespace Space.UI.Ship
 
         [SerializeField]
         private Color m_destroyedColor;
-
-        [SerializeField]
-        private Color m_highlightColor;
-
-        private Color m_standardColor;
 
         #endregion
 
@@ -105,8 +98,6 @@ namespace Space.UI.Ship
             m_label.text = Station.name;
 
             m_icon.overrideSprite = m_station.Icon;
-
-            m_standardColor = m_selfPanel.color;
 
             // assign ID
             m_ID = newID;
@@ -189,20 +180,6 @@ namespace Space.UI.Ship
         {
             Destroy(this.gameObject);
             StopAllCoroutines();
-        }
-
-        #endregion
-
-        #region IPOINTEREVENTS
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            m_selfPanel.color = m_highlightColor;
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            m_selfPanel.color = m_standardColor;
         }
 
         #endregion

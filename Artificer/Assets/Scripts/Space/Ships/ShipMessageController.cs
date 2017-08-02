@@ -14,6 +14,7 @@ using Space.UI;
 
 using Networking;
 using Space.UI.Ship;
+using Space.UI.Ship.Target;
 
 namespace Space.Ship
 {

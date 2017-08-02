@@ -9,6 +9,7 @@ using Space.Ship.Components.Attributes;
 using System;
 using System.Linq;
 using Space.UI.Ship;
+using Space.UI.Ship.Target;
 
 namespace Space.Ship.Components.Listener
 {

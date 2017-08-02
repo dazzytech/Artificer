@@ -54,7 +54,7 @@ namespace Space.UI.Spawn
         {
             base.OnEnable();
             BuildSelection();
-            BuildStations();            
+            BuildStations();        
         }
 
         protected override void OnDisable()

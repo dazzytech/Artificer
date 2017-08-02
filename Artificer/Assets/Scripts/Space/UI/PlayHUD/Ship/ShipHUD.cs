@@ -6,8 +6,7 @@ using System.Collections.Generic;
 // Artificer
 using Data.Space;
 using Space.Ship;
-
-
+using Space.UI.Ship.Target;
 
 namespace Space.UI.Ship
 {

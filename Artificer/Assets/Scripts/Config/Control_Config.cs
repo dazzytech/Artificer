@@ -106,7 +106,8 @@ public class Control_Config: MonoBehaviour
         }
 
         if(KeyToGet != "")
-            Debug.Log("Error: Control Config - GetKey: Provided key  is not stored in list");
+            Debug.Log(string.Format("Error: Control Config - GetKey: Provided key {0} is not stored in list",
+                KeyToGet));
 
         return KeyCode.None;
 	}

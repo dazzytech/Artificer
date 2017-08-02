@@ -7,8 +7,9 @@ using System.Collections.Generic;
 //Artificier
 using Space.Teams;
 using Space.Ship;
+using UI;
 
-namespace Space.UI.Ship
+namespace Space.UI.Proxmity
 {
     /// <summary>
     /// HUD element for left side
@@ -16,7 +17,7 @@ namespace Space.UI.Ship
     /// corresponding to the status
     /// of each friendly ship.
     /// </summary>
-    public class FriendlyHUD : HUDPanel
+    public class FriendlyHUD : SelectableHUDList
     {
         #region ATTRIBUTES
 
@@ -44,6 +45,9 @@ namespace Space.UI.Ship
 
         // List panel to place prefabs
         [Header("HUD Elements")]
+
+        [SerializeField]
+        private ProximityHUD m_proximity;
 
         [SerializeField]
         private Transform m_friendlyList;
@@ -113,7 +117,7 @@ namespace Space.UI.Ship
 
         #endregion
 
-        #region INTERNAL FUNCTIONALITY
+        #region PRIVATE UTILITIES
 
         private void GenerateTeamList()
         {
@@ -159,6 +163,12 @@ namespace Space.UI.Ship
 
             // Set Friendly Prefab and initialise
             FriendlyHUD.DefineFriendly(Ship, ID);
+
+            FriendlyHUD.Initialize(m_proximity.Select, m_proximity.Hover, m_proximity.Leave);
+
+            FriendlyHUD.SharedIndex = (int)ID;
+
+            m_prefabList.Add(FriendlyHUD);
 
             // add to addedlist
             m_addedIDs.Add(ID);

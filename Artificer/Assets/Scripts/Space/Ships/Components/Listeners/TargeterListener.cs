@@ -6,6 +6,7 @@ using Data.Space;
 using Space;
 using Space.Ship.Components.Attributes;
 using Space.UI.Ship;
+using Space.UI.Ship.Target;
 
 namespace Space.Ship.Components.Listener
 {

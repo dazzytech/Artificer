@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Space.Map
@@ -10,8 +12,16 @@ namespace Space.Map
     /// Attached to the UI Transfrom 
     /// that displays the map
     /// </summary>
-    public class MapViewer : MonoBehaviour
+    public class MapViewer : MonoBehaviour, IPointerClickHandler
     {
+        #region EVENTS
+
+        public delegate void MapInteract(PointerEventData eventData, Vector2 spaceLocation);
+
+        public event MapInteract OnClick;
+
+        #endregion
+
         #region ATTRIBUTES
 
         [Header("HUD Elements")]
@@ -25,7 +35,16 @@ namespace Space.Map
 
         private Vector2 m_scale;
 
+        /// <summary>
+        /// Used for finding the scaled
+        /// mouse position
+        /// </summary>
+        private Vector2 m_inverseScale;
+
         private bool m_running = false;
+
+        [SerializeField]
+        private bool m_interactive = false;
 
         #endregion
 
@@ -74,10 +93,7 @@ namespace Space.Map
 
         private void OnEnable()
         {
-            if (m_running)
-            {
-                MapController.OnMapUpdate += OnIconChanged;
-            }
+            MapController.OnMapUpdate += OnIconChanged;
         }
 
         public void Start()
@@ -94,14 +110,14 @@ namespace Space.Map
         public void InitializeMap(MapObjectType[] filter = null)
         {
             // determine our scale
-            m_scale.x = m_baseMap.rect.width / 5000f;
-            m_scale.y = m_baseMap.rect.height / 5000f;
+            m_scale.x = Mathf.Round((m_baseMap.rect.width / 5000f) * 100f) / 100f;
+            m_scale.y = Mathf.Round((m_baseMap.rect.height / 5000f) * 100f) / 100f;
+
+            m_inverseScale.x = Mathf.Round((5000f/m_baseMap.rect.width) * 100f) / 100f;
+            m_inverseScale.y = Mathf.Round((5000f / m_baseMap.rect.height) * 100f) / 100f;
 
             // apply filter
             m_filter = filter;
-
-            // Add listeners
-            MapController.OnMapUpdate += OnIconChanged;
 
             // Start initial map build
             BuildIcons();
@@ -121,6 +137,8 @@ namespace Space.Map
             // to replace with our prefab
             if (mObj.Icon != null)
                 GameObject.Destroy(mObj.Icon.gameObject);
+
+            mObj.Icon = prefab.transform;
 
             // put our prefab on map
             prefab.transform.SetParent(m_baseMap);
@@ -305,30 +323,59 @@ namespace Space.Map
                 if (!m_filter.Contains(mObj.Type))
                     return;
 
-                if (mObj.Icon != null)
+            if (mObj.Icon != null)
+            {
+                if (mObj.Ref == null)
                 {
-                    if (mObj.Ref == null)
-                    {
-                        // Destroy icon, map controller will delete item
-                        GameObject.Destroy(mObj.Icon.gameObject);
-                        mObj.Icon = null;
-                    }
-                    else
-                    {
-                        // Scale and then reposition on map
-                        Vector2 newLoc = mObj.Location;
-                        newLoc.Scale(m_scale);
-                        mObj.Icon.localPosition = newLoc;
-                    }
+                    // Destroy icon, map controller will delete item
+                    GameObject.Destroy(mObj.Icon.gameObject);
+                    mObj.Icon = null;
                 }
                 else
-                    if (mObj.Type == MapObjectType.SHIP ||
-                    mObj.Type == MapObjectType.SATELLITE ||
-                    mObj.Type == MapObjectType.STATION)
-                        // send object to be built
+                {
+                    // Scale and then reposition on map
+                    Vector2 newLoc = mObj.Location;
+                    newLoc.Scale(m_scale);
+                    mObj.Icon.localPosition = newLoc;
+                }
+            }
+            else
+            {
+                switch(mObj.Type)
+                {
+                    case MapObjectType.SHIP:
+                    case MapObjectType.SATELLITE:
+                    case MapObjectType.STATION:
                         BuildIcon(mObj);
-                    else
+                        break;
+                    case MapObjectType.ASTEROID:
+                    case MapObjectType.DEBRIS:
                         BuildSegmentIcon(mObj);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// If this is interactive then trigger event
+        /// container will be listening to
+        /// </summary>
+        /// <param name="eventData"></param>
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (m_interactive)
+            {
+                if (OnClick != null)
+                {
+                    Vector2 scaledPoint = Input.mousePosition;
+                    Vector3 test = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                    scaledPoint.Scale(m_inverseScale);
+
+
+                    OnClick(eventData, scaledPoint);
+                }
+            }
         }
 
         #endregion

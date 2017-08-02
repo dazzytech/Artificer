@@ -41,10 +41,14 @@ namespace Space.Map
 
         #endregion
 
+        #region MONO BEHAVIOUR
+
         private void Awake()
         {
             InitializeMap();
         }
+
+        #endregion
 
         #region PUBLIC INTERACTION
 
@@ -55,6 +59,8 @@ namespace Space.Map
             SystemManager.Events.EventShipCreated += CreateShip;
             StationController.StationCreated += CreateStation;
             SegmentObjectBehaviour.Created += CreateSegmentObject;
+            UI.Proxmity.TrackerHUD.OnWayPointCreated += DeployWaypoint;
+
 
             StartCoroutine("UpdateList");
         }
@@ -83,8 +89,8 @@ namespace Space.Map
             {
                 // object not already added
                 mapObj = new MapObject();
-                mapObj.Location = child.position;
                 mapObj.Ref = child;
+                mapObj.Location = mapObj.Ref.position;
 
                 m_att.MapItems.Add(mapObj);
             }
@@ -145,6 +151,24 @@ namespace Space.Map
                 OnMapUpdate(mapObj);
         }
 
+        /// <summary>
+        /// invoked when a waypoint is 
+        /// placed in space to add to map
+        /// </summary>
+        /// <param name="position"></param>
+        private void DeployWaypoint(Transform waypoint)
+        {
+            // for now just create the object 
+            // (dont need to store additional data this build)
+            MapObject mapObj = BuildObject
+                (waypoint);
+
+            mapObj.Type = MapObjectType.WAYPOINT;
+
+            if (OnMapUpdate != null)
+               OnMapUpdate(mapObj);
+        }
+
         #endregion
 
         #region COROUTINES
@@ -158,7 +182,7 @@ namespace Space.Map
         {
             while (true)
             {
-                for(int i = 0; i < m_att.MapItems.Count; i++)
+                for (int i = 0; i < m_att.MapItems.Count; i++)
                 {
                     MapObject mObj = m_att.MapItems[i];
 

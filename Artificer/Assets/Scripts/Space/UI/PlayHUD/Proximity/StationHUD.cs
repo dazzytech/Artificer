@@ -6,14 +6,15 @@ using System.Collections.Generic;
 using Stations;
 using Space.Teams;
 using UnityEngine.Networking;
+using UI;
 
-namespace Space.UI.Ship
+namespace Space.UI.Proxmity
 {
     /// <summary>
     /// Resposible for adding station information
     /// to the HUD
     /// </summary>
-    public class StationHUD : HUDPanel
+    public class StationHUD : SelectableHUDList
     {
         #region ATTRIBUTES
 
@@ -23,6 +24,9 @@ namespace Space.UI.Ship
         #region HUD ELEMENTS
 
         [Header("HUD Elements")]
+
+        [SerializeField]
+        private ProximityHUD m_proximity;
 
         [SerializeField]
         private Transform m_stationList;
@@ -107,7 +111,7 @@ namespace Space.UI.Ship
 
         #endregion
 
-        #region INTERNAL FUNCTIONALITY
+        #region PRIVATE UTILITIES
 
         private void GenerateStationList()
         {
@@ -153,6 +157,10 @@ namespace Space.UI.Ship
 
             StationPrefab tracker = newStation.GetComponent<StationPrefab>();
             tracker.DefineStation(controller, ID);
+            tracker.Initialize(m_proximity.Select, m_proximity.Hover, m_proximity.Leave);
+            tracker.SharedIndex = (int)ID;
+
+            m_prefabList.Add(tracker);
 
             m_addedIDs.Add(ID);
         }

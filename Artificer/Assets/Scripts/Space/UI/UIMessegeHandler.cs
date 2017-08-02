@@ -4,7 +4,6 @@ using System.Collections;
 // Artificer
 using Data.Space;
 using Space.UI.Ship;
-using Space.UI.Tracker;
 using Space.Segment;
 using Space.Ship;
 using Space.Teams;
@@ -15,6 +14,7 @@ using Space.UI.Station.Map;
 using Space.UI.Station;
 using Space.UI.Spawn;
 using Space.UI.Teams;
+using Space.UI.Proxmity;
 
 namespace Space.UI
 {
@@ -47,13 +47,13 @@ namespace Space.UI
         private ShipHUD m_ship;
 
         [SerializeField]
+        private ProximityHUD m_proximity;
+
+        [SerializeField]
         private BuildHUD m_build;
 
         [SerializeField]
         private IndicatorHUD m_indicator;
-
-        [SerializeField]
-        private TrackerHUD m_tracker;
 
         #endregion
 
@@ -62,16 +62,6 @@ namespace Space.UI
         #endregion  
 
         #region PLAYRECT UI MESSAGES
-
-        /// <summary>
-        /// Adds a peice for the TrackerHUD to track
-        /// a transform dependant on its tag
-        /// </summary>
-        /// <param name="piece"></param>
-        public void AddUIPiece(Transform piece)
-        {
-            m_tracker.AddUIPiece(piece);
-        }
 
         /// <summary>
         /// Creates a popup text displaying
@@ -108,9 +98,7 @@ namespace Space.UI
             // if this is our ship we dont want to add it to UI
             if (otherPlayer.GetComponent<NetworkIdentity>().isLocalPlayer)
                 return;
-
-            // Add to UI
-            AddUIPiece(otherPlayer.transform);
+           
         }
 
         #endregion

@@ -5,8 +5,9 @@ using Space.Ship;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
+using Space.UI.Ship.Target;
 
-namespace Space.UI.Ship
+namespace Space.UI
 {
     /// <summary>
     /// Container for tracking targeted components

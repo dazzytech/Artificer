@@ -8,7 +8,7 @@ using Space.Ship.Components.Listener;
 using Space.Ship.Components.Attributes;
 using System.Linq;
 
-namespace Space.UI.Ship
+namespace Space.UI.Ship.Target
 {
     #region SHIP SELECT
 

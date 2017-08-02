@@ -7,15 +7,15 @@ using Space.Ship;
 using UnityEngine.EventSystems;
 using UI;
 using Game;
+using Space.UI.Proxmity;
 
-namespace Space.UI.Ship
+namespace Space.UI
 {
     /// <summary>
     /// Keeps a referenceto an assigned friendly ship
     /// including ship state and component integrity
     /// </summary>
-    public class FriendlyPrefab : MonoBehaviour, 
-        IPointerEnterHandler, IPointerExitHandler
+    public class FriendlyPrefab : SelectableHUDItem
     { 
         #region ATTRIBUTES
 
@@ -69,11 +69,6 @@ namespace Space.UI.Ship
         [Header("Colours")]
 
         [Header("Background")]
-
-        private Color m_currentColour;
-
-        [SerializeField]
-        private Color m_highlightColour;
 
         [SerializeField]
         private Color m_safeColour;
@@ -138,8 +133,9 @@ namespace Space.UI.Ship
             m_ship = newShip;
 
             // non highlighted colour
-            m_currentColour = m_safeColour;
-            m_selfPanel.color = m_currentColour;
+            SetColour(m_safeColour);
+
+            m_interactive = true;
 
             m_activated = true;
 
@@ -185,7 +181,9 @@ namespace Space.UI.Ship
                 {
                     m_status.text = "Destroyed";
                     m_status.color = m_destroyedText;
-                    m_currentColour = m_destroyedColour;
+                    SetColour(m_destroyedColour);
+
+                    m_interactive = false;
 
                     m_distance.text = "-";
 
@@ -238,17 +236,13 @@ namespace Space.UI.Ship
                 // display distance
                 m_distance.text = ((int)distance * 0.01).ToString("F2") + "km";
 
-                if (m_currentColour != newColour)
+                if (m_standardColour != newColour)
                 {
-                    m_currentColour = newColour;
-                    m_selfPanel.color = m_currentColour;
+                    SetColour(newColour);
                 }
-                //finished this step
 
                 yield return null;
             }
-
-            m_selfPanel.color = m_currentColour;
 
             // This HUD is due for removal
             Base.RemoveID(m_ID);
@@ -266,20 +260,6 @@ namespace Space.UI.Ship
         {
             Destroy(this.gameObject);
             StopAllCoroutines();
-        }
-
-        #endregion
-
-        #region IPOINTEREVENTS
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            m_selfPanel.color = m_highlightColour;
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            m_selfPanel.color = m_currentColour;
         }
 
         #endregion

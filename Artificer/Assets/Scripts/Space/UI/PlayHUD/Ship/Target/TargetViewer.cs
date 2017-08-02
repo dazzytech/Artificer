@@ -8,7 +8,7 @@ using Space.Segment;
 using Space.Ship;
 using Stations;
 
-namespace Space.UI.Ship
+namespace Space.UI.Ship.Target
 {
     /// <summary>
     /// When ship has a target

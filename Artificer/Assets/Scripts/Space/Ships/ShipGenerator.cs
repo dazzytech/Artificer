@@ -62,8 +62,6 @@ namespace Space.Ship
                     SetPlayer();
                 else
                     SystemManager.Space.TeamSelected += SetNonPlayer;
-
-                SystemManager.UI.AddUIPiece(transform);
             }
             else
                 // Begin listening for the ship created 

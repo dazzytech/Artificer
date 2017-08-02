@@ -16,12 +16,20 @@ namespace UI
     public class SelectableHUDItem : MonoBehaviour,
         IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
-        #region ATTRIBUTES
-
-        #region BEHAVIOUR
+        #region EVENTS
 
         // delegate to be called when item is clicked
         private SelectTrigger m_trigger;
+
+        private SelectTrigger m_hover;
+
+        private SelectTrigger m_leave;
+
+        #endregion
+
+        #region ATTRIBUTES
+
+        #region BEHAVIOUR
 
         // whether or not the item is selected
         private bool m_selected;
@@ -31,7 +39,14 @@ namespace UI
         /// background responds to mouse interaction
         /// </summary>
         [SerializeField]
-        private bool m_interactive = true;
+        protected bool m_interactive = true;
+
+        /// <summary>
+        /// If list interacts with others
+        /// this will be the key that binds
+        /// the item in the other list
+        /// </summary>
+        public int SharedIndex;
 
         #endregion
 
@@ -47,13 +62,13 @@ namespace UI
 
         [Header("Colours")]
         [SerializeField]
-        private Color m_standardColour = Color.white;
+        protected Color m_standardColour = Color.white;
 
         [SerializeField]
-        private Color m_highlightColour = Color.white;
+        protected Color m_highlightColour = Color.white;
 
         [SerializeField]
-        private Color m_selectedColour = Color.white;
+        protected Color m_selectedColour = Color.white;
 
         #endregion
 
@@ -61,7 +76,8 @@ namespace UI
 
         #region PUBLIC INTERACTION
 
-        public virtual void Initialize(SelectTrigger trigger)
+        public virtual void Initialize(SelectTrigger trigger, 
+            SelectTrigger hover = null, SelectTrigger leave = null)
         {
             // check that background is assigned
             if(m_background == null)
@@ -93,6 +109,18 @@ namespace UI
 
             // Attach delegate to our trigger
             m_trigger = trigger;
+
+            m_hover = hover;
+
+            m_leave = leave;
+        }
+
+        public void SetColour(Color newColour)
+        {
+            m_standardColour = newColour;
+            m_highlightColour = m_standardColour + new Color(.2f, -0.12f, 1f, 0.5f);
+            m_selectedColour = m_standardColour + new Color(.4f, -.1f, .1f);
+            m_background.color = m_standardColour;
         }
 
         /// <summary>
@@ -127,11 +155,17 @@ namespace UI
                 return;
 
             if (highlighted)
-            { if (!m_selected) if (m_background != null)
-                        m_background.color = m_highlightColour; }
+            {
+                if (!m_selected) if (m_background != null)
+                    {
+                        m_background.color = m_highlightColour;
+                    }
+            }
             else
-            { if (!m_selected) if (m_background != null)
-                        m_background.color = m_standardColour;  }
+            {
+                if (!m_selected) if (m_background != null)
+                        m_background.color = m_standardColour;               
+            }
         }
 
         #endregion
@@ -171,11 +205,15 @@ namespace UI
         public void OnPointerEnter(PointerEventData eventData)
         {
             Highlight(true);
+            if (m_hover != null)
+                m_hover(this);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             Highlight(false);
+            if (m_leave != null)
+                m_leave(this);
         }
 
         #endregion
