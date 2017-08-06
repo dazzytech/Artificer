@@ -5,6 +5,7 @@ using Space.Projectiles;
 using Space.Segment;
 using Data.UI;
 using Data.Space;
+using Data.Space.Collectable;
 
 namespace Networking
 {
@@ -30,6 +31,8 @@ namespace Networking
         LOBBYPLAYERLEFT,
         CHATMESSAGESERVER,
         CHATMESSAGECLIENT,
+        TRANSACTIONCLIENT,
+        TRANSACTIONSERVER,
     };
 
     #endregion
@@ -119,11 +122,31 @@ namespace Networking
     }
 
     /// <summary>
-    /// Sent to each client to add stations to HUD
+    /// Called when a transaction occurs
+    /// ingame to update a client of server
     /// </summary>
-    public class NetMsgMessage : MessageBase
+    public class TransactionMessage : MessageBase
     {
-        public NetworkInstanceId SelfID;
+        /// <summary>
+        /// Amount of currency involved in 
+        /// transaction 
+        /// + = deposit
+        /// - = spendature
+        /// </summary>
+        public int CurrencyAmount;
+
+        /// <summary>
+        /// List of items involved in the transaction
+        /// /// + = deposit
+        /// - = spendature
+        /// </summary>
+        public ItemCollectionData[] Assets;
+
+        /// <summary>
+        /// Who is receiving the transaction
+        /// if -1 assume to be the player
+        /// </summary>
+        public int Recipiant;
     }
 
     /// <summary>

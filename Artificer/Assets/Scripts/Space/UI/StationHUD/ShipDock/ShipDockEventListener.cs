@@ -100,20 +100,29 @@ namespace Space.UI.Station
                 SystemManager.PlayerShips[m_att.ShipIndex].Ship
                     = m_att.Editor.Ship.Ship;
 
+                SystemManager.Space.StartCoroutine
+                    ("UpdatePlayerSpawn", m_att.ShipIndex);
+
                 m_att.Editor.ClearShip();
 
                 OnStateChanged(0);
             }
             else
             {
-                // Ship we are currently using has been
-                // changed
-                // set data and reset ship construction
-                m_att.Ship.ResetShip(m_att.Editor.Ship.Ship);
+                WalletData temp = SystemManager.Wallet;
+                if (temp.Purchase(m_att.Editor.Ship.Requirements.Cost))
+                {
+                    SystemManager.Wallet = temp;
 
-                m_att.Editor.ClearShip();
+                    // Ship we are currently using has been
+                    // changed
+                    // set data and reset ship construction
+                    m_att.Ship.ResetShip(m_att.Editor.Ship.Ship);
 
-                m_att.Ship.OnShipCompleted += OnShipUpdated;
+                    m_att.Editor.ClearShip();
+
+                    m_att.Ship.OnShipCompleted += OnShipUpdated;
+                }
             }
         }
 
@@ -122,11 +131,6 @@ namespace Space.UI.Station
             m_att.Editor.ClearShip();
 
             OnStateChanged(0);
-        }
-
-        public void GoBack()
-        {
-
         }
 
         #endregion

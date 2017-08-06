@@ -41,6 +41,14 @@ namespace Space.UI.Spawn
             }
         }
 
+        public int SelectedShipID
+        {
+            get
+            {
+                return m_att.SelectedShip.ID;
+            }
+        }
+
         public int SelectedSpawn
         {
             get { return m_att.SelectedSpawn.SpawnID; }
@@ -53,8 +61,17 @@ namespace Space.UI.Spawn
         protected override void OnEnable()
         {
             base.OnEnable();
+
+            if (m_att.SpawnButtonCurrency.interactable)
+                m_att.SpawnButtonCurrency.interactable = false;
+
+            if (SystemManager.PlayerShips == null)
+                return; 
+
             BuildSelection();
-            BuildStations();        
+            BuildStations();
+
+            StartCoroutine("DetectSpawnReady"); 
         }
 
         protected override void OnDisable()
@@ -79,15 +96,6 @@ namespace Space.UI.Spawn
         #region PUBLIC INTERACTION
 
         /// <summary>
-        /// Called by event listener to start the spawn delay countdown
-        /// </summary>
-        public void EnableSpawn(int delay)
-        {
-            m_att.SpawnDelay = delay;
-            InvokeRepeating("DelaySpawn", 1f, 1f);
-        }
-
-        /// <summary>
         /// Sets the selected ship to that item
         /// for when the player spawns
         /// </summary>
@@ -102,6 +110,12 @@ namespace Space.UI.Spawn
                     ship.Deselect();
                 else
                     ship.Select();
+
+            // Invoke the function to display 
+            // the cost to build the ship
+            DisplayCost();
+
+            // Update the spawn setting based on any change
         }
 
         public void SelectSpawn(SpawnSelectItem selected)
@@ -205,40 +219,64 @@ namespace Space.UI.Spawn
             SelectSpawn(m_att.SpawnList[0]);
         }
 
-        #region INVOKED
+        /// <summary>
+        /// when a ship is selected. display the cost to build 
+        /// the ship to the viewer panel
+        /// </summary>
+        private void DisplayCost()
+        {
+            m_att.CurrentShipCost.text = string.Format
+                ("Deploy Ship\nCost: ¤ {0}",  m_att.SelectedShip.Cost);
+        }
 
         /// <summary>
-        /// Enable spawner after delay period
-        /// and update timer
+        /// Displays how much cash 
+        /// player has
+        /// </summary>
+        private void DisplayWallet()
+        {
+            m_att.PlayerCurrency.text = string.Format
+                ("Player Wallet: ¤ {0}", SystemManager.Player.Wallet.Currency);
+        }
+
+        #endregion 
+
+        #region COROUTINE
+
+        /// <summary>
+        /// Runs in the background
+        /// updates the player currency and spawn state
         /// </summary>
         /// <returns></returns>
-        private void DelaySpawn()
+        private IEnumerator DetectSpawnReady()
         {
-            if (m_att.SpawnDelay > 0)
+            while(true)
             {
-                m_att.SpawnDelayText.text = string.Format
-                    ("Ready to spawn in: {0:D2} sec.",
-                    m_att.SpawnDelay);
+                DisplayWallet();
 
-                if (m_att.SpawnButton.interactable)
-                    m_att.SpawnButton.interactable = false;
+                if (m_att.SelectedShip != null)
+                {
+                    if (SystemManager.Player.Wallet.Currency
+                        >= m_att.SelectedShip.Cost &&
+                        m_att.SelectedShip.Progress >= 1f)
+                    {
+                        if (!m_att.SpawnButtonCurrency.interactable)
+                            m_att.SpawnButtonCurrency.interactable = true;
+                    }
+                    else
+                        if (m_att.SpawnButtonCurrency.interactable)
+                            m_att.SpawnButtonCurrency.interactable = false;
+                }
+                else
+                {
+                    if (m_att.SpawnButtonCurrency.interactable)
+                        m_att.SpawnButtonCurrency.interactable = false;
+                }
 
-                m_att.SpawnDelay--;
-            }
-            else
-            {
-                // Delay finished, enable spawn
-                m_att.SpawnDelayText.text = "Ready to spawn.";
-
-                if (!m_att.SpawnButton.interactable)
-                    m_att.SpawnButton.interactable = true;
-
-                CancelInvoke("DelaySpawn");
+                yield return null;
             }
         }
 
         #endregion
-
-        #endregion 
     }
 }

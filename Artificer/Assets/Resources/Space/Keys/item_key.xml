@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <items>
 	<elements>
-		<element name = "Au" dens = "547" desc = "Gold" /> <!-- ID: 0 -->
-		<element name = "Ag" dens = "297.1" desc = "Silver"/> <!-- ID: 1 -->
-		<element name = "Cu" dens = "253.5" desc = "Copper"/> <!-- ID: 2 -->
-		<element name = "Fe" dens = "222.7" desc = "Iron" /> <!-- ID: 3 -->
-		<element name = "Al" dens = "76" desc = "Aluminium" /> <!-- ID: 4 -->
-		<element name = "Sn" dens = "206.6" desc = "Tin" /> <!-- ID: 5 -->
-		<element name = "Co" dens = "250.8" desc = "Cobalt" /> <!-- ID: 6 -->
-		<element name = "Ni" dens = "251.8" desc = "Nickel" /> <!-- ID: 7 -->
-		<element name = "Zn" dens = "201.9" desc = "Zinc" /> <!-- ID: 8 -->
-		<element name = "Pb" dens = "321.1" desc = "Lead" /> <!-- ID: 9 -->
-		<element name = "Pt" dens = "607.4" desc = "Platinum" /> <!-- ID: 10 -->
-		<element name = "Be" dens = "168.4" desc = "Beryllium" /> <!-- ID: 11 -->
-		<element name = "Cd" dens = "540" desc = "Cadmium" /> <!-- ID: 12 -->
-		<element name = "Cr" dens = "428" desc = "Chromium" /> <!-- ID: 13 -->
-		<element name = "Ir" dens = "1396" desc = "Iridium" /> <!-- ID: 14 -->
-		<element name = "Mg" dens = "108.5" desc = "Magnesium" /> <!-- ID: 15 -->
-		<element name = "Hg" dens = "463.10" desc = "Mercury" /> <!-- ID: 16 -->
-		<element name = "Mo" dens = "637.6" desc = "Molybdenum" /> <!-- ID: 17 -->
-		<element name = "Os" dens = "1402" desc = "Osmium" /> <!-- ID: 18 -->
-		<element name = "Pd" dens = "712" desc = "Palladium" /> <!-- ID: 19 -->
-		<element name = "Rh" dens = "755" desc = "Rhodium" /> <!-- ID: 20 -->
-		<element name = "Ti" dens = "283.39" desc = "Titanium" /> <!-- ID: 21 -->
-		<element name = "W" dens = "1204.41" desc = "Tungsten" /> <!-- ID: 22 -->
-		<element name = "V" dens = "374" desc = "Vanadium" /> <!-- ID: 23 -->
-		<element name = "S" dens = "125" desc = "Sulfer" /> <!-- ID: 24 -->
-		<element name = "Na" dens = "137.3" desc = "Sodium" /> <!-- ID: 25 -->
-		<element name = "C" dens = "134" desc = "Carbon" /> <!-- ID: 26 -->
-		<element name = "H" dens = "5.2" desc = "Hydrogen" /> <!-- ID: 27 -->
-		<element name = "N" dens = "0.1" desc = "Nitrogen" /> <!-- ID: 28 -->
-		<element name = "Cl" dens = "0.1" desc = "Chlorine" /> <!-- ID: 29 -->
-		<element name = "Si" dens = "158.1" desc = "Silicon" /> <!-- ID: 30 -->
-		<element name = "Sb" dens = "173" desc = "Antimony" /> <!-- ID: 31 -->
-		<element name = "Bi" dens = "611" desc = "Bismuth" /> <!-- ID: 32 -->
-		<element name = "Pu" dens = "1239.8" desc = "Plutonium" /> <!-- ID: 33 -->
+		<element name = "Au" dens = "547" desc = "Gold" value = "2435" /> <!-- ID: 0 -->
+		<element name = "Ag" dens = "297.1" desc = "Silver" value = "125" /> <!-- ID: 1 -->
+		<element name = "Cu" dens = "253.5" desc = "Copper" value = "34"/> <!-- ID: 2 -->
+		<element name = "Fe" dens = "222.7" desc = "Iron" value = "53" /> <!-- ID: 3 -->
+		<element name = "Al" dens = "76" desc = "Aluminium" value = "30" /> <!-- ID: 4 -->
+		<element name = "Sn" dens = "206.6" desc = "Tin" value = "12" /> <!-- ID: 5 -->
+		<element name = "Co" dens = "250.8" desc = "Cobalt" value = "46" /> <!-- ID: 6 -->
+		<element name = "Ni" dens = "251.8" desc = "Nickel" value = "65" /> <!-- ID: 7 -->
+		<element name = "Zn" dens = "201.9" desc = "Zinc" value = "129" /> <!-- ID: 8 -->
+		<element name = "Pb" dens = "321.1" desc = "Lead" value = "204" /> <!-- ID: 9 -->
+		<element name = "Pt" dens = "607.4" desc = "Platinum" value = "4096" /> <!-- ID: 10 -->
+		<element name = "Be" dens = "168.4" desc = "Beryllium" value = "283" /> <!-- ID: 11 -->
+		<element name = "Cd" dens = "540" desc = "Cadmium" value = "106" /> <!-- ID: 12 -->
+		<element name = "Cr" dens = "428" desc = "Chromium" value = "276" /> <!-- ID: 13 -->
+		<element name = "Ir" dens = "1396" desc = "Iridium" value = "27" /> <!-- ID: 14 -->
+		<element name = "Mg" dens = "108.5" desc = "Magnesium" value = "243" /> <!-- ID: 15 -->
+		<element name = "Hg" dens = "463.10" desc = "Mercury"  value = "405" /> <!-- ID: 16 -->
+		<element name = "Mo" dens = "637.6" desc = "Molybdenum" value = "387" /> <!-- ID: 17 -->
+		<element name = "Os" dens = "1402" desc = "Osmium" value = "324" /> <!-- ID: 18 -->
+		<element name = "Pd" dens = "712" desc = "Palladium" value = "34" /> <!-- ID: 19 -->
+		<element name = "Rh" dens = "755" desc = "Rhodium" value = "217" /> <!-- ID: 20 -->
+		<element name = "Ti" dens = "283.39" desc = "Titanium" value = "107" /> <!-- ID: 21 -->
+		<element name = "W" dens = "1204.41" desc = "Tungsten" value = "197" /> <!-- ID: 22 -->
+		<element name = "V" dens = "374" desc = "Vanadium" value = "407"/> <!-- ID: 23 -->
+		<element name = "S" dens = "125" desc = "Sulfer" value = "54"/> <!-- ID: 24 -->
+		<element name = "Na" dens = "137.3" desc = "Sodium" value = "15"/> <!-- ID: 25 -->
+		<element name = "C" dens = "134" desc = "Carbon" value = "16"/> <!-- ID: 26 -->
+		<element name = "H" dens = "5.2" desc = "Hydrogen" value = "39"/> <!-- ID: 27 -->
+		<element name = "N" dens = "0.1" desc = "Nitrogen" value = "23" /> <!-- ID: 28 -->
+		<element name = "Cl" dens = "0.1" desc = "Chlorine" value = "54" /> <!-- ID: 29 -->
+		<element name = "Si" dens = "158.1" desc = "Silicon" value = "105"/> <!-- ID: 30 -->
+		<element name = "Sb" dens = "173" desc = "Antimony" value = "185"/> <!-- ID: 31 -->
+		<element name = "Bi" dens = "611" desc = "Bismuth" value = "197" /> <!-- ID: 32 -->
+		<element name = "Pu" dens = "1239.8" desc = "Plutonium" value = "735"/> <!-- ID: 33 -->
 		
 	</elements>
 	<materials>
 		<material name = "Rock Mineral" dens = "700" 
-		desc = "The fragments collected from an asteroid">  <!-- ID: 34 -->
+		desc = "The fragments collected from an asteroid" value = "2045">  <!-- ID: 34 -->
 			<yield key = "Si" />
 			<yield key = "Fe" />
 			<yield key = "Mg" />
@@ -50,7 +50,7 @@
 			<yield key = "Cu" />
 		</material>
 		<material name = "High Val Rock Mineral" dens = "700" 
-		desc = "The fragments collected from an asteroid">  <!-- ID: 35 -->
+		desc = "The fragments collected from an asteroid" value = "10276">  <!-- ID: 35 -->
 			<yield key = "Pb" />
 			<yield key = "Os" />
 			<yield key = "Rh" />
@@ -61,7 +61,7 @@
 			<yield key = "Ag" />
 		</material>
 		<material name = "Plutonium Rock Mineral" dens = "700" 
-		desc = "The fragments collected from an asteroid">  <!-- ID: 36 -->
+		desc = "The fragments collected from an asteroid" value = "7567">  <!-- ID: 36 -->
 			<yield key = "Pu" />
 			<yield key = "Pb" />
 			<yield key = "Os" />
@@ -72,7 +72,7 @@
 			<yield key = "Bi" />
 		</material>	
 		<material name = "Ship Fragments" dens = "800" 
-		desc = "The fragments collected from an asteroid">  <!-- ID: 37 -->
+		desc = "The fragments collected from an asteroid" value ="9056">  <!-- ID: 37 -->
 			<yield key = "Fe" />
 			<yield key = "Au" />
 			<yield key = "Ag" />

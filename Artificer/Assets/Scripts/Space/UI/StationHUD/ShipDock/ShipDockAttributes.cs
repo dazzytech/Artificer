@@ -54,6 +54,13 @@ namespace Space.UI.Station
 
         #endregion
 
+        #region SHARED
+
+        [SerializeField]
+        public Text Wallet;
+
+        #endregion
+
         #endregion
 
         #region DOCK ATTRIUBTES

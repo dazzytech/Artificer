@@ -81,25 +81,6 @@ namespace Space
             }
         }
 
-        /*public void Map(bool keyed)
-        {
-            if (!m_mapDelay)
-            {
-                m_viewingMap = !m_viewingMap;
-
-                if (m_viewingMap)
-                    SystemManager.UIState.SetState(UIState.Map);
-                else
-                    SystemManager.UIState.RevertState();
-
-                if (keyed)
-                {
-                    // stop the ability to pause until key is released
-                    m_mapDelay = true;
-                }
-            }
-        }*/
-
         public void Stop()
         {
             SystemManager.UIState.SetState(UIState.Popup);
@@ -110,16 +91,11 @@ namespace Space
             m_pauseDelay = false;
         }
 
-        /*public void MapRelease()
-        {
-            m_mapDelay = false;
-        }*/
-
         #endregion
 
         #region PLAYER MANAGEMENT
 
-        public void AddShipSpawn(ShipSpawnData newShip)
+        public bool AddShipSpawn(ShipSpawnData newShip)
         {
             if (SystemManager.PlayerShips == null)
             {
@@ -140,6 +116,21 @@ namespace Space
 
                 SystemManager.PlayerShips[i] = newShip;
             }
+
+            return newShip.Owned;
+        }
+
+        /// <summary>
+        /// Adds the amount of currency to 
+        /// the player's assets
+        /// </summary>
+        /// <param name="amount"></param>
+        public void AddFundingToPlayerData(int amount)
+        {
+            WalletData temp = SystemManager.Wallet;
+
+            if (temp.Deposit(amount))
+                SystemManager.Wallet = temp;
         }
 
         #endregion

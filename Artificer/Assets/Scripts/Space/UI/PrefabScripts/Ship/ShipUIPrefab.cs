@@ -22,6 +22,9 @@ namespace Space.UI
         [SerializeField]
         protected int m_shipReference;
 
+        [SerializeField]
+        protected bool m_spawnReady;
+
         #region HUD ELEMENTS
 
         [Header("HUD Elements")]
@@ -36,6 +39,21 @@ namespace Space.UI
 
         [SerializeField]
         private RawImage m_img;
+
+        /// <summary>
+        /// While listening to ship
+        /// ready, display the loading
+        /// time for the ship
+        /// </summary>
+        [SerializeField]
+        private HUDBar m_loading;
+
+        /// <summary>
+        /// When ship is ready to spawn,
+        /// use to display ready
+        /// </summary>
+        [SerializeField]
+        private Transform m_readyLabel;
 
         #endregion
 
@@ -73,6 +91,34 @@ namespace Space.UI
             }
         }
 
+        public int Cost
+        {
+            get
+            {
+                return SystemManager.PlayerShips
+                      [m_shipReference].Ship.Cost;
+            }
+        }
+
+        public float Progress
+        {
+            get
+            {
+                return SystemManager.PlayerShips
+                      [m_shipReference].SpawnTimer / Ship.SpawnTime;
+            }
+        }
+
+        #endregion
+
+        #region MONO BEHAVIOUR
+
+        private void OnDisable()
+        {
+            if(SystemManager.Space != null)
+                SystemManager.Space.OnShipSpawnUpdate -= DisplaySpawnProgress;
+        }
+
         #endregion
 
         #region PUBLIC INTERACTION
@@ -90,7 +136,16 @@ namespace Space.UI
             // Display info
             DisplayIdentifier();
 
-            DisplayIcon();            
+            DisplayIcon();
+
+            if (m_readyLabel != null && m_loading != null)
+            {
+                // Engage listener and display initial value
+                SystemManager.Space.OnShipSpawnUpdate
+                += DisplaySpawnProgress;
+
+                DisplaySpawnProgress(ID);
+            }
         }
 
         #endregion
@@ -134,6 +189,41 @@ namespace Space.UI
 
             if (m_type != null)
                 m_type.text = Category;
+
+            if(m_readyLabel != null)
+                m_readyLabel.gameObject.SetActive(false);
+        }
+
+        /// <summary>
+        /// Progress clamped between 1 and 0
+        /// Displays spawn progress on HUD bar
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="progress"></param>
+        private void DisplaySpawnProgress(int id)
+        {
+            if (id != ID)
+                return;
+
+            // Check to see if 
+            if(Progress >= 1f)
+            {
+                // we have successfully spawned
+                m_loading.gameObject.SetActive(false);
+                m_readyLabel.gameObject.SetActive(true);
+
+                SystemManager.Space.OnShipSpawnUpdate -= DisplaySpawnProgress;
+            }
+            else
+            {
+                if (m_loading.gameObject.activeSelf != true)
+                    m_loading.gameObject.SetActive(true);
+
+                if (m_readyLabel.gameObject.activeSelf != false)
+                    m_readyLabel.gameObject.SetActive(false);
+
+                m_loading.Value = Progress;
+            }
         }
 
         #endregion

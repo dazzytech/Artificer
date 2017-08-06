@@ -7,6 +7,8 @@ using System.Runtime.InteropServices;
 
 using Space.Ship.Components.Listener;
 using Space.Ship.Components.Attributes;
+using Data.Space.Collectable;
+using Data.Space.Library;
 
 namespace Data.Space
 {
@@ -21,22 +23,47 @@ namespace Data.Space
     [System.Serializable]
     public struct ComponentData
     {
-        // Unique ID of piece
+        /// <summary>
+        /// Unique ID of piece
+        /// </summary>
         public int InstanceID;
-        // direction obj is facing
+        /// <summary>
+        /// direction obj is facing
+        /// </summary>
         public string Direction;
-        // key that triggers obj
+        /// <summary>
+        /// key that triggers obj
+        /// </summary>
         public string Trigger;
-        // folder that the piece is stored in (component type)
+        /// <summary>
+        /// folder that the piece is stored in (component type)
+        /// </summary>
         public string CTrigger;
-        // folder that the piece is stored in (component type)
+        /// <summary>
+        /// folder that the piece is stored in
+        /// </summary>
         public string Folder;
-        // name of the prefab for the component
+        /// <summary>
+        /// name of the prefab for the component
+        /// </summary>
         public string Name;
-        // visual colour of component
+        /// <summary>
+        /// visual colour of component
+        /// </summary> 
         public string Style;
-        // list of socket links to other pieces
+        /// <summary>
+        /// currency cost of the item
+        /// </summary>
+        public int Cost;
+        /// <summary>
+        /// list of socket links to other pieces
+        /// </summary> 
         public SocketData[] sockets;
+        /// <summary>
+        /// materials required to 
+        /// build item
+        /// </summary>
+        public ItemCollectionData[] requirements;
 
         // Targeter and listener specific data
         public bool AutoLock;
@@ -48,7 +75,7 @@ namespace Data.Space
             get { return Folder + "/" + Name; }
         }
 
-        public void Init()
+        /*public void Init()
         {
             Direction = "null";
             Trigger = "null";
@@ -58,7 +85,8 @@ namespace Data.Space
             Style = "null";
 
             sockets = new SocketData[0];
-        }
+            requirements = new ItemCollectionData[0];
+        }*/
     }
 
     [System.Serializable]
@@ -67,21 +95,21 @@ namespace Data.Space
         public ComponentData[] components;
         public ComponentData _head;
         public string Name;
-        //private Dictionary<string, float> _requirements;
         public string Description;
         public string Category;
         public bool PlayerMade;
         public bool CombatResponsive;
 
-        //-                                     // Ship being controlled will act differently in combat
+        /// <summary>
+        /// Ship being controlled will act differently in combat
+        /// </summary> 
         public bool CombatActive;
-        // -                                    // Ship is aligned with mouse
+        /// <summary>
+        /// Ship is aligned with mouse
+        /// </summary>
         public bool Aligned;
 
-        //[NonSerialized]
-        //public Texture2D IconTex;
-
-        public void Init()
+        /*public void Init()
         {
             if (components == null)
                 components = new ComponentData[0];
@@ -91,7 +119,7 @@ namespace Data.Space
             Category = "null";
 
             _head.Init();
-        }
+        }*/
 
     	/// <summary>
     	/// Adds the component.
@@ -105,13 +133,6 @@ namespace Data.Space
     	{
             if(components == null)
                 components = new ComponentData[0];
-            GameObject GO = Resources.Load("Space/Ships/" + newComponent.Folder + "/" + newComponent.Name, typeof(GameObject)) as GameObject;
-            ComponentAttributes att = GO.GetComponent<ComponentAttributes>();
-            if(att.RequiredMats != null)
-            {
-                foreach(ConstructInfo mat in att.RequiredMats)
-                    AddRequirement(mat.material, mat.amount);
-            }
 
             if(newComponent.sockets == null)
                 newComponent.sockets = new SocketData[0];
@@ -130,34 +151,14 @@ namespace Data.Space
             {
                 components[index] = temp[index++];
             }
-    		components[index] = newComponent;
-    	}
-
-        public void AddRequirement(string mat, float amt)
-        {
-            /*if (mat != null && amt > 0)
-            {
-                if(_requirements == null)
-                    _requirements = new Dictionary<string, float>();
-
-                if(_requirements.ContainsKey(mat))
-                {
-                    _requirements[mat] += amt;
-                }
-                else
-                {
-                    _requirements.Add(mat, amt);
-                }
-            }*/
+            
+            components[index] = newComponent;
         }
 
-        public Dictionary<string, float> GetRequirements()
+        public void Clear()
         {
-            /*if(_requirements == null)
-                _requirements = new Dictionary<string, float>();
-
-            return _requirements;*/
-            return null;
+            components = new ComponentData[0];
+            _head = new ComponentData();
         }
 
     	public ComponentData Head
@@ -235,11 +236,92 @@ namespace Data.Space
         /// Gets all the components stored.
         /// </summary>
         /// <returns>The components.</returns>
-    	public ComponentData[] GetComponents
-    		()
+    	public ComponentData[] GetComponents   		
     	{
-    		return components;
+    		get { return components; }
     	}
+
+        /// <summary>
+        /// Returns total cost of all the items
+        /// </summary>
+        public int Cost
+        {
+            get
+            {
+                int cost = 0;
+
+                foreach(ComponentData data in components)
+                {
+                    cost += data.Cost;
+                }
+
+                cost += Head.Cost;
+
+                return cost;
+            }
+        }
+
+        /// <summary>
+        /// Iterates through each component
+        /// and creates a spawn time based on their
+        /// value 
+        /// </summary>
+        public float SpawnTime
+        {
+            get
+            {
+                float time = 0;
+
+                foreach (ComponentData data in GetComponents)
+                {
+                    time += data.Cost * 0.001f;
+                }
+
+                time += Head.Cost * 0.001f;
+
+                return time;
+            }
+        }
+
+        /// <summary>
+        /// returns complete list 
+        /// of item requirements
+        /// </summary>
+        public ItemCollectionData[] Requirements
+        {
+            get
+            {
+                ItemCollectionData[] totalRequirements
+                    = new ItemCollectionData[Head.requirements.Length];
+
+                // copy current requirments into list
+                int index = 0;
+                while (index > totalRequirements.Length)
+                    totalRequirements[index] = Head.requirements[index++];
+
+                foreach (ComponentData data in components)
+                {
+                    ItemCollectionData[] temp =
+                        new ItemCollectionData
+                        [totalRequirements.Length + data.requirements.Length];
+
+                    // copy current requirments into list
+                    index = 0;
+                    while (index > totalRequirements.Length)
+                        temp[index] = totalRequirements[index++];
+
+                    // copy the new list to our list
+                    int a = 0;
+                    while (a < data.requirements.Length)
+                        temp[index++] = totalRequirements[a++];
+
+                    totalRequirements = temp;
+                }
+
+                return totalRequirements;
+            }
+
+        }
     }
 }
 

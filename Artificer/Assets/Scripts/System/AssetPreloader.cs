@@ -17,8 +17,8 @@ public class AssetPreloader : MonoBehaviour
 
     public void PreloadAssets()
     {
-        PreloadShips();
         PreloadItemAssets();
+        PreloadShips();
         PreloadFactions();
         AddShipComponentsToNetwork();
         PopulateShipSpawns();

@@ -59,6 +59,9 @@ namespace Game
                 m_att.TeamA.AddSpawnableShip(spawn);
                 m_att.TeamB.AddSpawnableShip(spawn);
             }
+
+            m_att.TeamA.DefineTeamAssets(param.Wallet);
+            m_att.TeamB.DefineTeamAssets(param.Wallet);
         }
 
         /// <summary>
@@ -204,21 +207,38 @@ namespace Game
             // Assign that player to the team
             pInfo.mTeam = TeamID;
 
+            // Amount of starter cash
+            int starterFund = 0;
+
             // Pass that player team to an instance ID
             if (TeamID == 0)
+            {
                 teamNetID = m_att.TeamA.netId;
+                starterFund = m_att.TeamA.FundPlayer(1000000);
+            }
             else
+            {
                 teamNetID = m_att.TeamB.netId;
+                starterFund = m_att.TeamB.FundPlayer(1000000);
+            }
 
             // Create netID message
-            NetMsgMessage netMsg = new NetMsgMessage();
+            IntegerMessage netMsg = new IntegerMessage((int)teamNetID.Value);
 
-            // assign team netID to message
-            netMsg.SelfID = teamNetID;
+            // Create Transaction fund
+            TransactionMessage transaction
+                = new TransactionMessage();
+
+            transaction.Recipiant = -1;
+            transaction.CurrencyAmount = starterFund;
 
             // Send message for clients space obj
             NetworkServer.SendToClient(pInfo.mConnection.connectionId,
                 (short)MSGCHANNEL.ASSIGNTEAM, netMsg);
+
+            // Send message for clients space obj
+            NetworkServer.SendToClient(pInfo.mConnection.connectionId,
+                (short)MSGCHANNEL.TRANSACTIONCLIENT, transaction);
         }
 
         [Server]

@@ -10,6 +10,7 @@ namespace Space.UI.Ship
 {
     public class ShieldHUD : MonoBehaviour
     {
+        /*
         // Ship attributes for player ship
         private ShipAccessor _shipRef;
         
@@ -97,6 +98,6 @@ namespace Space.UI.Ship
                 Destroy(i.gameObject);
             }
             _ListItems.Clear();
-        }
+        }*/
     }
 }

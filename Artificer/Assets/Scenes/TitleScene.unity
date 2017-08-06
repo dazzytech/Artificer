@@ -11643,7 +11643,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 375, y: -57.995617}
+  m_AnchoredPosition: {x: 375, y: -57.995613}
   m_SizeDelta: {x: 730, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &741
@@ -11997,7 +11997,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 530, y: -511.12497}
+  m_AnchoredPosition: {x: 530, y: -511.125}
   m_SizeDelta: {x: 1060, y: 99.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &764
@@ -16067,7 +16067,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 160, y: -407.12827}
+  m_AnchoredPosition: {x: 160, y: -407.1283}
   m_SizeDelta: {x: 320, y: 98.08554}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1012
@@ -16257,9 +16257,9 @@ RectTransform:
   m_Father: {fileID: 791}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 550, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 550, y: -346}
   m_SizeDelta: {x: 1060, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &1022
@@ -18382,7 +18382,9 @@ MonoBehaviour:
         Folder: 
         Name: 
         Style: 
+        Cost: 0
         sockets: []
+        requirements: []
         AutoLock: 0
         behaviour: 0
         AutoFire: 0
@@ -18397,6 +18399,7 @@ MonoBehaviour:
     Owned: 1
     PlayerMade: 0
     UnlockCost: 0
+    SpawnTimer: 0
   - Ship:
       components: []
       _head:
@@ -18407,7 +18410,9 @@ MonoBehaviour:
         Folder: 
         Name: 
         Style: 
+        Cost: 0
         sockets: []
+        requirements: []
         AutoLock: 0
         behaviour: 0
         AutoFire: 0
@@ -18422,6 +18427,7 @@ MonoBehaviour:
     Owned: 1
     PlayerMade: 0
     UnlockCost: 0
+    SpawnTimer: 0
   - Ship:
       components: []
       _head:
@@ -18432,7 +18438,9 @@ MonoBehaviour:
         Folder: 
         Name: 
         Style: 
+        Cost: 0
         sockets: []
+        requirements: []
         AutoLock: 0
         behaviour: 0
         AutoFire: 0
@@ -18444,9 +18452,10 @@ MonoBehaviour:
       CombatActive: 0
       Aligned: 0
     ShipName: Mammoth ViE
-    Owned: 1
+    Owned: 0
     PlayerMade: 0
-    UnlockCost: 0
+    UnlockCost: 30000
+    SpawnTimer: 0
   - Ship:
       components: []
       _head:
@@ -18457,7 +18466,9 @@ MonoBehaviour:
         Folder: 
         Name: 
         Style: 
+        Cost: 0
         sockets: []
+        requirements: []
         AutoLock: 0
         behaviour: 0
         AutoFire: 0
@@ -18469,9 +18480,10 @@ MonoBehaviour:
       CombatActive: 0
       Aligned: 0
     ShipName: Mammoth XIX
-    Owned: 1
+    Owned: 0
     PlayerMade: 0
-    UnlockCost: 0
+    UnlockCost: 35000
+    SpawnTimer: 0
   - Ship:
       components: []
       _head:
@@ -18482,7 +18494,9 @@ MonoBehaviour:
         Folder: 
         Name: 
         Style: 
+        Cost: 0
         sockets: []
+        requirements: []
         AutoLock: 0
         behaviour: 0
         AutoFire: 0
@@ -18494,14 +18508,123 @@ MonoBehaviour:
       CombatActive: 0
       Aligned: 0
     ShipName: Eden FOB Hi
-    Owned: 1
+    Owned: 0
     PlayerMade: 0
-    UnlockCost: 0
+    UnlockCost: 20000
+    SpawnTimer: 0
+  StarterAssets:
+    m_currency: 40000000
+    m_inventory:
+    - Item: 0
+      Amount: 10000
+      Exist: 1
+    - Item: 1
+      Amount: 10000
+      Exist: 1
+    - Item: 2
+      Amount: 10000
+      Exist: 1
+    - Item: 3
+      Amount: 10000
+      Exist: 1
+    - Item: 4
+      Amount: 10000
+      Exist: 1
+    - Item: 5
+      Amount: 10000
+      Exist: 1
+    - Item: 6
+      Amount: 10000
+      Exist: 1
+    - Item: 7
+      Amount: 10000
+      Exist: 1
+    - Item: 8
+      Amount: 10000
+      Exist: 1
+    - Item: 9
+      Amount: 10000
+      Exist: 1
+    - Item: 10
+      Amount: 10000
+      Exist: 1
+    - Item: 11
+      Amount: 10000
+      Exist: 1
+    - Item: 12
+      Amount: 10000
+      Exist: 1
+    - Item: 13
+      Amount: 10000
+      Exist: 1
+    - Item: 14
+      Amount: 10000
+      Exist: 1
+    - Item: 15
+      Amount: 10000
+      Exist: 1
+    - Item: 16
+      Amount: 10000
+      Exist: 1
+    - Item: 17
+      Amount: 10000
+      Exist: 1
+    - Item: 18
+      Amount: 10000
+      Exist: 1
+    - Item: 19
+      Amount: 10000
+      Exist: 1
+    - Item: 20
+      Amount: 10000
+      Exist: 1
+    - Item: 21
+      Amount: 10000
+      Exist: 1
+    - Item: 22
+      Amount: 10000
+      Exist: 1
+    - Item: 23
+      Amount: 10000
+      Exist: 1
+    - Item: 24
+      Amount: 10000
+      Exist: 1
+    - Item: 25
+      Amount: 10000
+      Exist: 1
+    - Item: 26
+      Amount: 10000
+      Exist: 1
+    - Item: 27
+      Amount: 10000
+      Exist: 1
+    - Item: 28
+      Amount: 10000
+      Exist: 1
+    - Item: 29
+      Amount: 10000
+      Exist: 1
+    - Item: 30
+      Amount: 10000
+      Exist: 1
+    - Item: 31
+      Amount: 10000
+      Exist: 1
+    - Item: 32
+      Amount: 10000
+      Exist: 1
+    - Item: 33
+      Amount: 10000
+      Exist: 1
   Player:
     PlayerName: 
     PlayerID: 0
     IsHost: 0
     ShipInventory: []
+    Wallet:
+      m_currency: 0
+      m_inventory: []
   minimumPlayers: 1
 --- !u!114 &1122
 MonoBehaviour:
@@ -18667,6 +18790,14 @@ MonoBehaviour:
     Label: Toggle Ship HUD
     Category: sys
     Key: 106
+  - ID: turnLeft
+    Label: Turn Left
+    Category: combat
+    Key: 97
+  - ID: turnRight
+    Label: Turn Right
+    Category: combat
+    Key: 100
 --- !u!114 &1123
 MonoBehaviour:
   m_ObjectHideFlags: 0

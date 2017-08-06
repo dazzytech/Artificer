@@ -45,6 +45,13 @@ namespace Space.Teams
         [SyncVar]
         private int m_ID;
 
+        /// <summary>
+        /// Shared assets available 
+        /// to the team
+        /// </summary>
+        [SyncVar]
+        private WalletData m_teamAssets;
+
         // Store a list of player connections for that team
         private SyncListUInt m_players = new SyncListUInt();
 
@@ -64,8 +71,7 @@ namespace Space.Teams
         // unlocked components
         //private SyncListString _unlockedComponents;
 
-        // team-owned materials
-        //private MaterialListSync _collectedMaterials;*/
+        */
 
         [SerializeField]
         private TeamSpawnManager _teamSpawn;
@@ -158,6 +164,32 @@ namespace Space.Teams
             m_ships.Add(ship);
         }
 
+        #region RESOURCE MANAGEMENT
+
+        /// <summary>
+        /// defines teams assets from
+        /// starter assets
+        /// </summary>
+        /// <param name="assets"></param>
+        [Server]
+        public void DefineTeamAssets(WalletData assets)
+        {
+            m_teamAssets = assets;
+        }
+
+        [Server]
+        public int FundPlayer(int value)
+        {
+            if (m_teamAssets.Currency < value)
+                value = m_teamAssets.Currency;
+
+            m_teamAssets.Purchase(value);
+
+            return value;
+        }
+
+        #endregion
+
         #endregion
 
         #region ACCESSORS
@@ -238,9 +270,6 @@ namespace Space.Teams
         #endregion
 
         /*
-
-        #region TEAM RESOURCE INTERACTION
-
         /// <summary>
         /// Called to the server when components are unlocked for the faction.
         /// when added here these components can be added to ships by players
@@ -378,46 +407,6 @@ namespace Space.Teams
                 _collectedMaterials.RemoveAt(matPos);
             else
                 _collectedMaterials[matPos] = homeMat;
-        }
-
-        /// <summary>
-        /// When a station is built, add it to our list
-        /// </summary>
-        /// <param name="inNetID"></param>
-        [Command]
-        public void CmdAddStation(NetworkInstanceId inNetID)
-        {
-            // init if null
-            if (_stations == null)
-                _stations = new NetIDListSync();
-
-            // Don't create duplicates
-            if (!_stations.Contains(inNetID))
-                _stations.Add(inNetID);
-        }
-
-        /// <summary>
-        /// Retreives the stations local to the player
-        /// </summary>
-        /// <returns></returns>
-        public List<Transform> RetrieveStations()
-        {
-            // new list
-            List<Transform> retList = new List<Transform>();
-
-            // find the local object
-            foreach(NetworkInstanceId nID in _stations)
-            {
-                GameObject station = ClientScene.FindLocalObject(nID);
-                if (station != null)
-                    retList.Add(station.transform);
-            }
-
-            return retList;
-        }
-
-        // todo: create singular station retreival
-
-        #endregion*/
+        }*/
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Data.Space;
+using Data.Space.Collectable;
 using Space.Ship.Components.Listener;
 using Space.UI.Ship;
 using Space.UI.Ship.Target;
@@ -14,7 +15,7 @@ namespace Space.Ship
     /// used to access read only attributes 
     /// by components not part of the ship
     /// </summary>
-    public class ShipAccessor : MonoBehaviour
+    public class ShipAccessor : NetworkBehaviour
     {
         #region EVENTS
 
@@ -348,7 +349,9 @@ namespace Space.Ship
             m_ship.Ship = newShip;
 
             m_gen.ResetShip();
-        } 
+        }
+
+        #region RESOURCE MANAGEMENT
 
         /// <summary>
         /// If we have a collector listener then 
@@ -365,6 +368,22 @@ namespace Space.Ship
                     OnStorageChanged();
             }
         }
+
+        #region CURRENCY
+
+        /// <summary>
+        /// Apply asset transaction to the 
+        /// ship storage
+        /// </summary>
+        /// <param name="assets"></param>
+        public void ApplyTransaction(ItemCollectionData[] assets)
+        {
+            
+        }
+
+        #endregion
+
+        #endregion
 
         #endregion
     }

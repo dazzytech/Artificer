@@ -34,9 +34,6 @@ namespace Space.UI
         private TeamSelectController m_team;
 
         [SerializeField]
-        private SpawnController m_spawn;
-
-        [SerializeField]
         private StationMessageHandler m_stationMsg;
 
         #region PLAYHUD BEHAVIOUR
@@ -116,19 +113,6 @@ namespace Space.UI
         public void SetTeamOptions(int teamA, int teamB)
         {
             m_team.SetTeams(new int[2] { teamA, teamB });
-        }
-
-        #endregion
-
-        #region SPAWN PICKER MESSAGES
-
-        /// <summary>
-        /// Set the HUD spawn button to enable after a certain period
-        /// </summary>
-        /// <param name="delay"></param>
-        public void SetSpawnDelay(int delay)
-        {
-            m_spawn.EnableSpawn(delay);
         }
 
         #endregion

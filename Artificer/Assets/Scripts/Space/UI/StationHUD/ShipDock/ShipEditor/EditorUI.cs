@@ -1,0 +1,359 @@
+using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+// Artificer
+using Data.Space;
+using Space.Ship.Components.Listener;
+using Space.UI.Station.Editor.Component;
+using UI.Effects;
+using Space.UI.Station.Prefabs;
+
+namespace Space.UI.Station.Editor
+{
+    /// <summary>
+    /// Script that interacts with the UI
+    /// e.g. placing pieces, updating
+    /// text.
+    /// </summary>
+    public class EditorUI
+        : MonoBehaviour
+    {
+        #region ATTRIBUTES
+
+        private ShipEditor m_editor;
+
+        #region HUD ELEMENTS
+
+        [Header("HUD Elements")]
+
+        #region SHIP INFORMATION
+
+        /// <summary>
+        /// Displays the weight of the ship
+        /// in tons
+        /// </summary>
+        [SerializeField]
+        private Text m_weightText;
+
+        /// <summary>
+        /// Displays the price to build the 
+        /// current ship
+        /// </summary>
+        [SerializeField]
+        private Text m_costText;
+
+        /// <summary>
+        /// Highlights if the ship has been
+        /// edited in any way
+        /// </summary>
+        [SerializeField]
+        private Transform m_changedText;
+
+        /// <summary>
+        /// Text field for editing the ship name
+        /// </summary>
+        [SerializeField]
+        private InputField m_shipName;
+
+        /// <summary>
+        /// Top panel to view selected components
+        /// </summary>
+        [SerializeField]
+        private ComponentInteractivePrefab m_topViewer;
+
+        #region ROTOR FOLLOW
+
+        /// <summary>
+        /// Toggle box that determines 
+        /// if the rotors follow the mouse
+        /// when the ship is in combat mode
+        /// </summary>
+        [SerializeField]
+        private Toggle m_rotorFollowsMouse;
+        [SerializeField]
+        private RectTransform m_RFRect;
+
+        #endregion
+
+        #endregion
+
+        #region CONSTRUCTION
+
+        /// <summary>
+        /// The panel that the ship is built on
+        /// </summary>
+        [SerializeField]
+        private Transform m_shipConstructPanel;
+
+        /// <summary>
+        /// The transform that limits the movement
+        /// of the ship construct panel
+        /// </summary>
+        [SerializeField]
+        private Transform m_shipBoundsPanel;
+
+        /// <summary>
+        /// Prefab interactable object for base component
+        /// object
+        /// </summary>
+        [SerializeField]
+        private GameObject m_componentPrefab;
+
+        #endregion
+
+        #region RIGHT CLICK
+
+        // Right click items
+        public GameObject RCPrefab;
+        GameObject RCWindow;
+        bool RCDelay;
+
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region PUBLIC INTERACTION
+
+        // Reset Data function and clear panel here
+        public void Initialize(ShipEditor editor, string newShipName)
+        {
+            m_editor = editor;
+
+            m_shipName.text = newShipName;
+
+            //RotorFollowsMouse.isOn = _ship.Ship.CombatResponsive;
+        }
+
+        public void UpdateUI()
+        {
+            HintBoxController.Clear("Use Right-Click to display additional options");
+            HintBoxController.Clear("Use the directional keys to change direction the component is facing.");
+
+            if (ShipEditor.DraggedObj != null)
+                HintBoxController.Display("Use the directional keys to change direction the component is facing.");
+            else if (ShipEditor.HighlightedObj != null)
+                HintBoxController.Display("Use Right-Click to display additional options");
+
+            if (ShipEditor.SelectedObj != null)
+            {
+                if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+                {
+                    // Deselect object if we click outside selected piece or component window
+                    if (!RectTransformExtension.InBounds
+                        (m_topViewer.GetComponent<RectTransform>(),
+                        Input.mousePosition) 
+                        && !RectTransformExtension.InBounds
+                        (ShipEditor.SelectedObj.GetComponent<RectTransform>(),
+                        Input.mousePosition))
+                    {
+                        ShipEditor.SelectedObj = null;
+                        return;
+                    }
+                }
+
+                // Display selected component
+                m_topViewer.gameObject.SetActive(true);
+                m_topViewer.DisplayBC(ShipEditor.SelectedObj, m_editor.Ship.Head,
+                    new ShipEditor.DelegateHead(m_editor.SetHead));
+            }
+            else
+                m_topViewer.gameObject.SetActive(false);
+
+            if (RCWindow != null && !RCDelay)
+            {
+                if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+                {
+                    if(!RectTransformExtension.InBounds(RCWindow.GetComponent<RectTransform>(), 
+                        Input.mousePosition) || Input.GetMouseButtonDown(1))
+                    {
+                        Destroy(RCWindow);
+                        RCDelay = true;
+                        RCWindow = null;
+                        Invoke("RCDel", .3f);
+                    }
+                    else
+                    {
+                        // player is interacting with the RCWindow so we can exit
+                        return;
+                    }
+                }
+            }
+            if(Input.GetMouseButtonDown(1))
+            {
+                // Player has clicked the right mouse button
+                if(RCWindow == null && ShipEditor.HighlightedObj != null)
+                {
+                    // Create the Right Click Window
+                    RCWindow = Instantiate(RCPrefab);
+                    RCWindow.transform.SetParent(GameObject.Find("_gui").transform);
+
+                    RCWindow.transform.position = Input.mousePosition
+                        + new Vector3(-RCWindow.GetComponent<RectTransform>().rect.width*.5f-10,
+                                        RCWindow.GetComponent<RectTransform>().rect.height*.5f+10, 1);
+
+                    // Create delegate function
+                    RCWindow.GetComponent<ComponentRCPrefab>().DisplayBC
+                        (ShipEditor.HighlightedObj, m_editor.Ship.Head,
+                        new ShipEditor.DelegateHead(m_editor.SetHead));
+
+                    RCDelay = true;
+                    Invoke("RCDel", .3f);
+                }
+            }
+
+            UpdateRequirements();
+            
+            /*
+            // if mouse over combat style panel will display message
+            if (InBounds(RFRect, Input.mousePosition))
+            {
+                HintBoxController.Display("When on, the ship will turn to face the mouse in combat mode." +
+                                          "When off, the ship will be independent of the mouse, use in " +
+                                          "conjuction with mouse follow targeters as" +
+                                          "weapons still fire with combat controls.");
+            } else
+            {
+                HintBoxController.Clear("When on, the ship will turn to face the mouse in combat mode." +
+                                        "When off, the ship will be independent of the mouse, use in " +
+                                        "conjuction with mouse follow targeters as " +
+                                        "weapons still fire with combat controls.");
+            }*/
+        }
+
+        #region EDITOR UTILITY
+
+        /// <summary>
+        /// Returns if a given component (change to position?)
+        /// it within bounds of the ui editor
+        /// </summary>
+        /// <param name="BC"></param>
+        /// <returns></returns>
+        public bool IsWithinBounds(BaseComponent BC)
+        {
+            return RectTransformExtension.InBounds
+                            (m_shipBoundsPanel.GetComponent<RectTransform>(),
+                            BC.transform.position);
+        }
+
+        /// <summary>
+        /// Places the component GameObject to the panel.
+        /// </summary>
+        /// <returns>The component.</returns>
+        /// <param name="component"></param>
+        public BaseComponent PlaceComponentGO(ComponentData component)
+        {
+            // Create Ship Object and apply transform parent
+            GameObject newObj = Instantiate(m_componentPrefab);
+            newObj.transform.SetParent(m_shipConstructPanel);
+
+            // Create BaseShipComponent
+            BaseComponent BC = newObj.GetComponent<BaseComponent>();
+            BC.InitComponent(component);
+
+            //UpdateWeight();
+
+            return BC;
+        }
+
+        public void ClearUI()
+        {
+            foreach (Transform child in m_shipConstructPanel)
+                GameObject.Destroy(child.gameObject);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        private void RCDel()
+        {
+            RCDelay = false;
+        }
+
+        /// <summary>
+        /// Display requirements
+        /// </summary>
+        private void UpdateRequirements()
+        {
+            m_costText.text = 
+                string.Format("Or Currency Cost: {0}",
+                m_editor.Ship.Requirements.Cost.ToString());
+        }
+
+        #endregion
+
+
+        /*
+
+        public string ReturnNextAvailableName()
+        {
+            string ShipName;
+
+            List<int> UnAvailable = new List<int>(); 
+            // Create a list of numbers of each untitled ship
+            foreach (ShipData ship in SystemManager.Player.ShipList)
+            {
+                if(ship.Name.Contains("Untitled_"))
+                {
+                    UnAvailable.Add(int.Parse(Regex.Match(ship.Name, @"\d+").Value));
+                }
+            }
+
+            int ID = 0;         // Added next to untitled
+            UnAvailable.Sort();
+            // compare ID to each ID end result showed be the next available ID
+            foreach (int otherID in UnAvailable)
+            {
+                if(otherID == ID)
+                    ID = otherID+1;
+            }
+
+            ShipName = string.Format("Untitled_{0}", ID);
+
+            return ShipName;
+        }
+
+        public void UpdateWeight()
+        {
+            float wgt = 0;
+            foreach (BaseComponent bSC in _ship.Components)
+            {
+                wgt += bSC.GO.GetComponent<ComponentListener>().Weight;
+            }
+
+            if((wgt * 1000)>= 1000)
+                WeightText.text = "Ship Weight: " + wgt.ToString("F1")+"Ton(m)";
+            else
+                WeightText.text = "Ship Weight: " + (wgt * 1000).ToString("F0")+"KG";
+        }
+
+        public void ClearWeight()
+        {
+            WeightText.text = "";
+        }
+
+        public void SetRotorFollow()
+        {
+            _ship.Ship.CombatResponsive = RotorFollowsMouse.isOn;
+        } 
+
+        public void UpdateSavedMsg(bool saved)
+        {
+            if(saved)
+            {
+                if(!ChangeTrans.gameObject.activeSelf)
+                    ChangeTrans.gameObject.SetActive(true);
+            }
+            else
+            {
+                ChangeTrans.gameObject.SetActive(false);
+            }
+        }*/
+    }
+}

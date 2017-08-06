@@ -74,6 +74,8 @@ namespace Space.UI.Station
             // Only run on startup
             if (m_att.ShipList.Count == 0)
                 BuildShipInventory();
+
+            UpdateWallet();
         }
 
         /// <summary>
@@ -88,6 +90,8 @@ namespace Space.UI.Station
                 GO.SetActive(true);
 
             BuildEditorPanel();
+
+            UpdateWallet();
         }
 
         #endregion
@@ -188,14 +192,39 @@ namespace Space.UI.Station
         {
             ComponentListener Con = GO.GetComponent<ComponentListener>();
             ComponentData component = new ComponentData();
+            ComponentAttributes att = Con.GetAttributes();
 
+            component = att.Data;
             component.Folder = Con.ComponentType;
             component.Name = GO.name;
             component.Direction = "up";
             component.Style = "default";
 
+
+            if (att.RequiredMats != null)
+            {
+                // initialize list to same size as reqiurements
+                component.requirements =
+                    new Data.Space.Collectable.ItemCollectionData
+                    [att.RequiredMats.Length];
+
+                for (int i = 0; i < att.RequiredMats.Length; i++)
+                {
+                    component.requirements[i].Amount
+                        = att.RequiredMats[i].amount;
+                    component.requirements[i].Item
+                        = SystemManager.Items.GetID
+                        (att.RequiredMats[i].material);
+
+                    if (component.requirements[i].Item != -1)
+                        component.Cost += SystemManager.Items
+                            [component.requirements[i].Item].Value;
+                }
+            }
+
+
             // We have a match
-            m_att.Editor.BuildComponent(component);
+            m_att.Editor.NewComponent(component);
         }
 
         #endregion
@@ -236,6 +265,16 @@ namespace Space.UI.Station
         }
 
         #endregion
+
+        #endregion
+
+        #region COROUTINE
+
+        private void UpdateWallet()
+        {
+                m_att.Wallet.text = string.Format
+                    ("Player Wallet: ¤ {0}", SystemManager.Player.Wallet.Currency);
+        }
 
         #endregion
     }

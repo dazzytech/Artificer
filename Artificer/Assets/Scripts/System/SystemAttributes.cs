@@ -18,8 +18,16 @@ using Steamworks;
 /// </summary>
 public struct GameParameters
 {
-    // nothing in here
+    /// <summary>
+    /// list of ships that can
+    /// be spawned by teams immidiatly
+    /// </summary>
     public ShipSpawnData[] SpawnableShips;
+
+    /// <summary>
+    /// Start inventory for player teams
+    /// </summary>
+    public WalletData Wallet;
 }
 
 // STORES ALL INFORMATION OF THE GAME
@@ -63,6 +71,8 @@ public class SystemAttributes:MonoBehaviour
     public List<GameObject> StarterList;
 
     public ShipSpawnData[] StarterShips;
+
+    public WalletData StarterAssets;
 
     public GameParameters Param;
 

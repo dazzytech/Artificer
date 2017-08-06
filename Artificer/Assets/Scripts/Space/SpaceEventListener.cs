@@ -14,6 +14,7 @@ using Space.UI;
 using Networking;
 using Space.Teams;
 using Space.Projectiles;
+using Data.Space.Collectable;
 
 namespace Space
 {
@@ -45,11 +46,12 @@ namespace Space
             m_con = GetComponent<SpaceManager>();
             m_util = GetComponent<SpaceUtilities>();
 
-            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.TEAMPICKER, OnTeamPickerMessage);         
+            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.TEAMPICKER, OnTeamPickerMessage);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.ASSIGNTEAM, OnDefineTeam);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSOBJECTHIT, OnProcessHitMsg);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSSHIPHIT, OnProcessHitMsgShip);
             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.DISPLAYINTEGRITYCHANGE, OnIntegrityChanged);
+            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.TRANSACTIONCLIENT, OnTransaction);
         }
 
         void Start()
@@ -175,9 +177,6 @@ namespace Space
             // Prompt player to pick a spawn
             SystemManager.UIState.SetState(UIState.SpawnPicker);
 
-            // For now each spawn is 10 seconds
-            SystemManager.UI.SetSpawnDelay(10);
-
             SystemManager.Background.StopBackground();
         }
 
@@ -214,7 +213,7 @@ namespace Space
 
             m_att.station = controller;
 
-            if(m_att.station.Type == STATIONTYPE.WARP)
+            if (m_att.station.Type == STATIONTYPE.WARP)
                 SystemManager.UIMsg.DisplayPrompt("Press Enter to enter Warp Map");
             else
                 SystemManager.UIMsg.DisplayPrompt("Press Enter to dock at station");
@@ -318,8 +317,6 @@ namespace Space
 
         #region SERVER EVENTS
 
-        // RPCS CALLED BY THE SERVER TO PERFORM ACTIONS
-
         /// <summary>
         /// Called from server object when the game is
         /// over
@@ -347,11 +344,16 @@ namespace Space
             SystemManager.UI.SetTeamOptions(tpm.teamOne, tpm.teamTwo);
         }
 
+        /// <summary>
+        /// Called when player picks a team
+        /// to initialize the game
+        /// </summary>
+        /// <param name="netMsg"></param>
         public void OnDefineTeam(NetworkMessage netMsg)
         {
             // Retrieve net id from sent message
-            NetworkInstanceId teamID = netMsg.ReadMessage
-                <NetMsgMessage>().SelfID;
+            NetworkInstanceId teamID = new NetworkInstanceId(
+                (uint)netMsg.ReadMessage<IntegerMessage>().value);
 
             // Get our local team object with the same netID
             GameObject teamObj = ClientScene.
@@ -409,6 +411,31 @@ namespace Space
             // Display message
             SystemManager.UI.DisplayIntegrityChange
                     (chgMsg.Location, chgMsg.Amount);
+        }
+
+        /// <summary>
+        /// Listens to a transaction
+        /// from the server and applies it
+        /// </summary>
+        /// <param name="netMsg"></param>
+        public void OnTransaction(NetworkMessage netMsg)
+        {
+            TransactionMessage transaction
+                = netMsg.ReadMessage<TransactionMessage>();
+
+            // Retreive values
+            int currency = transaction.CurrencyAmount;
+
+            ItemCollectionData[] assets = 
+                transaction.Assets;
+
+            // Discover if player is recipiant
+            if (transaction.Recipiant == -1)
+            {
+                if (currency > 0)
+                    m_util.AddFundingToPlayerData
+                        (currency);
+            }
         }
 
         #endregion

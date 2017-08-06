@@ -5,6 +5,8 @@ using System.Xml;
 // Artificer
 using Data.Space;
 using Data.Space.Library;
+using Space.Ship.Components.Attributes;
+using Data.Space.Collectable;
 
 namespace Data.Space.DataImporter
 {
@@ -156,8 +158,31 @@ namespace Data.Space.DataImporter
                 newComponent.behaviour = 1;
                 newComponent.AutoFire = false;
 
-    			// Add to ship
-    			switch(componentInfo.Name)
+                GameObject GO = Resources.Load("Space/Ships/" + newComponent.Folder + "/" + newComponent.Name, typeof(GameObject)) as GameObject;
+                ComponentAttributes att = GO.GetComponent<ComponentAttributes>();
+
+                if (att.RequiredMats != null)
+                {
+                    // initialize list to same size as reqiurements
+                    newComponent.requirements =
+                        new ItemCollectionData[att.RequiredMats.Length];
+
+                    for (int i = 0; i < att.RequiredMats.Length; i++)
+                    {
+                        newComponent.requirements[i].Amount
+                            = att.RequiredMats[i].amount;
+                        newComponent.requirements[i].Item
+                            = SystemManager.Items.GetID
+                            (att.RequiredMats[i].material);
+
+                        if (newComponent.requirements[i].Item != -1)
+                            newComponent.Cost += SystemManager.Items
+                                [newComponent.requirements[i].Item].Value;
+                    }
+                }
+
+                // Add to ship
+                switch (componentInfo.Name)
     			{
     			case "head":
     				shipData.AddComponent(newComponent, true);

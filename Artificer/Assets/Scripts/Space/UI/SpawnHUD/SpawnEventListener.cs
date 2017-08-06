@@ -6,6 +6,7 @@ using System.Collections;
 using Networking;
 using UI;
 using Data.Space.Library;
+using Data.Space;
 
 namespace Space.UI.Spawn
 {
@@ -48,13 +49,23 @@ namespace Space.UI.Spawn
         /// </summary>
         public void SpawnPressed()
         {
-            // For now we don't use spawn or ship info
-            SpawnSelectionMessage ssm = new SpawnSelectionMessage();
-            ssm.PlayerID = SystemManager.Space.ID;
-            ssm.Ship = m_con.SelectedShip;
-            ssm.SpawnID = m_con.SelectedSpawn;
+            WalletData temp = SystemManager.Wallet;
 
-            SystemManager.singleton.client.Send((short)MSGCHANNEL.SPAWNPLAYER, ssm);
+            if (temp.Purchase(m_con.SelectedShip.Cost))
+            {
+                SystemManager.Wallet = temp;
+
+                // For now we don't use spawn or ship info
+                SpawnSelectionMessage ssm = new SpawnSelectionMessage();
+                ssm.PlayerID = SystemManager.Space.ID;
+                ssm.Ship = m_con.SelectedShip;
+                ssm.SpawnID = m_con.SelectedSpawn;
+
+                SystemManager.singleton.client.Send((short)MSGCHANNEL.SPAWNPLAYER, ssm);
+
+                SystemManager.Space.StartCoroutine
+                    ("UpdatePlayerSpawn", m_con.SelectedShipID);
+            }
         }
 
         #endregion

@@ -128,7 +128,7 @@ namespace Space.UI.Station.Viewer.Prefabs
             }
         }
 
-        public int Cost
+        public int UnlockCost
         {
             get
             {
@@ -147,8 +147,17 @@ namespace Space.UI.Station.Viewer.Prefabs
         /// </summary>
         public void Purchase()
         {
-            Owned = true;
-            DisplayOwned();
+            WalletData temp = SystemManager.Wallet;
+            if (temp.Purchase(UnlockCost))
+            {
+                SystemManager.Wallet = temp;
+
+                Owned = true;
+                DisplayOwned();
+
+                SystemManager.Space.StartCoroutine
+                    ("UpdatePlayerSpawn", ID);
+            }
         }
 
         /// <summary>
@@ -189,6 +198,9 @@ namespace Space.UI.Station.Viewer.Prefabs
                 // ONLY OVERWRITE SHIP DATA
                 SystemManager.PlayerShips[m_shipReference].Ship
                     = SystemManager.Space.Team.Ships[m_shipReference].Ship;
+
+                SystemManager.Space.StartCoroutine
+                    ("UpdatePlayerSpawn", m_shipReference);
             }
         }
 
@@ -284,8 +296,20 @@ namespace Space.UI.Station.Viewer.Prefabs
             m_delete.gameObject.SetActive(false);
             m_edit.gameObject.SetActive(false);
 
-            // Display the price to unlock
-            m_costText.text = string.Format("Unlock for: ¤{0}", Cost);
+            if (SystemManager.Wallet.Currency >= UnlockCost)
+            {
+                // Display the price to unlock
+                m_costText.text = string.Format("Unlock for: ¤{0}", UnlockCost);
+
+                m_purchase.interactable = true;
+            }
+            else
+            {
+                // Display the price to unlock
+                m_costText.text = string.Format("Can't Afford: ¤{0}", UnlockCost);
+
+                m_purchase.interactable = false;
+            }
         }
 
         #endregion

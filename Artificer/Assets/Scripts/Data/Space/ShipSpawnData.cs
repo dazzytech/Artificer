@@ -45,11 +45,15 @@ namespace Data.Space
         /// </summary>
         public bool PlayerMade;
 
-        // cost to build be added later
-
         /// <summary>
         /// Amount of credits needed to access the ship
         /// </summary>
         public int UnlockCost;
+
+        /// <summary>
+        /// The elapsed time since waiting
+        /// for ship to be ready
+        /// </summary>
+        public float SpawnTimer;
     }
 }

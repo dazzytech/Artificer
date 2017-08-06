@@ -231,6 +231,18 @@ public class SystemManager : NATTraversal.NetworkManager
         }
     }
 
+    public static WalletData Wallet
+    {
+        get
+        {
+            return m_singleton.m_base.Player.Wallet;
+        }
+        set
+        {
+            m_singleton.m_base.Player.Wallet = value;
+        }
+    }
+
     public static List<GameObject> StarterList
     {
         get
@@ -292,6 +304,8 @@ public class SystemManager : NATTraversal.NetworkManager
 
             // For now just import the ship list here
             m_base.Param.SpawnableShips = m_base.StarterShips;
+
+            m_base.Param.Wallet = m_base.StarterAssets;
 
             GameMSG.InitializeGameParam(m_base.Param);
         }
@@ -388,10 +402,6 @@ public class SystemManager : NATTraversal.NetworkManager
         base.OnClientSceneChanged(conn);
 
         m_singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
-
-        // initialize differently between space and lobby
-        if(m_base.Space != null)
-            m_base.Space.InitializeSpaceParameters();
     }
 
     public override void OnClientDisconnect(NetworkConnection conn)

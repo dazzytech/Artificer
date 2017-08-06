@@ -46,6 +46,9 @@ namespace Space
         public delegate void PlayerUpdate(Transform data);
         public static event PlayerUpdate OnPlayerUpdate;
 
+        public delegate void ShipSpawnUpdate(int shipID);
+        public event ShipSpawnUpdate OnShipSpawnUpdate;
+
         #endregion
 
         #region ACCESSORS
@@ -126,6 +129,14 @@ namespace Space
             }
         }
 
+        /// <summary>
+        /// Quick access to ship spawn list
+        /// </summary>
+        private ShipSpawnData[] Spawns
+        {
+            get { return SystemManager.Player.ShipInventory; }
+        }
+
         #endregion
 
         #region MONO BEHAVIOUR
@@ -169,73 +180,6 @@ namespace Space
                     _att.Contract.RunUpdate();
                 }
             }*/
-        }
-
-        #endregion
-
-        #region PRIVATE UTILITIES
-
-        /// <summary>
-        /// Listens for player key input and 
-        /// dispatch event for processing system keys
-        /// </summary>
-        private void ProcessSystemKeys()
-        {
-            // detect system input
-            if (Input.anyKey)
-                OnKeyPress(KeyLibrary.FindKeyPressed());
-
-            // detect scroll
-            if (Input.mouseScrollDelta.y != 0)
-                OnMouseScroll(Input.mouseScrollDelta.y);
-
-            // Detect key up
-            OnKeyRelease(KeyLibrary.FindKeyReleased());
-        }
-
-        /// <summary>
-        /// Searches for player object and 
-        /// dispatches events for player death, spawn, and updates.
-        /// </summary>
-        private void ProcessPlayerState()
-        {
-            // Run checks for player entry
-            GameObject PlayerObj = GameObject.FindGameObjectWithTag
-                ("PlayerShip");
-
-            if (PlayerObj == null)
-            {
-                if (_att.PlayerOnStage)
-                {
-                    PlayerExitScene();
-                    _att.PlayerOnStage = false;
-                }
-            }
-            else
-            {
-                if (!_att.PlayerOnStage)
-                {
-                    PlayerEnterScene();
-                    _att.PlayerOnStage = true;
-                }
-                else
-                {
-                    OnPlayerUpdate(PlayerObj.transform);
-                }
-            }
-        }
-
-        // TODO: INTERNAL OR EXTERNAL
-        /// <summary>
-        /// Builds game related instances and adds us to the server game environment
-        /// </summary>
-        public void InitializeSpaceParameters()//GameParameters param)
-        {
-            /// Dont run these yet
-            // Initialize space attributes
-            //_att.Contract.Initialize(param);
-            //_att.EnemySpawn = new EnemySpawnManager(param);
-            //_att.FriendlySpawn = new FriendlySpawnManager(param);
         }
 
         #endregion
@@ -355,14 +299,15 @@ namespace Space
         /// </summary>
         public void RefreshShipSpawnList()
         {
+            int index = 0;
             // iterate through our new team list
             foreach (ShipSpawnData spawn in _att.Team.Ships)
             {
-                if (SystemManager.Player.ShipInventory == null)
+                if (Spawns == null)
                     m_util.AddShipSpawn(spawn);
                 else
                 {
-                    ShipSpawnData current = SystemManager.Player.ShipInventory.
+                    ShipSpawnData current = Spawns.
                         FirstOrDefault(x => x.ShipName == spawn.ShipName);
 
                     // If we dont have this current ship
@@ -371,10 +316,93 @@ namespace Space
                     {
                         m_util.AddShipSpawn(spawn);
                     }
+
+                    StartCoroutine("UpdatePlayerSpawn", index++);
+                }              
+            }
+        }
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        /// <summary>
+        /// Listens for player key input and 
+        /// dispatch event for processing system keys
+        /// </summary>
+        private void ProcessSystemKeys()
+        {
+            // detect system input
+            if (Input.anyKey)
+                OnKeyPress(KeyLibrary.FindKeyPressed());
+
+            // detect scroll
+            if (Input.mouseScrollDelta.y != 0)
+                OnMouseScroll(Input.mouseScrollDelta.y);
+
+            // Detect key up
+            OnKeyRelease(KeyLibrary.FindKeyReleased());
+        }
+
+        /// <summary>
+        /// Searches for player object and 
+        /// dispatches events for player death, spawn, and updates.
+        /// </summary>
+        private void ProcessPlayerState()
+        {
+            // Run checks for player entry
+            GameObject PlayerObj = GameObject.FindGameObjectWithTag
+                ("PlayerShip");
+
+            if (PlayerObj == null)
+            {
+                if (_att.PlayerOnStage)
+                {
+                    PlayerExitScene();
+                    _att.PlayerOnStage = false;
+                }
+            }
+            else
+            {
+                if (!_att.PlayerOnStage)
+                {
+                    PlayerEnterScene();
+                    _att.PlayerOnStage = true;
+                }
+                else
+                {
+                    if(OnPlayerUpdate != null)
+                        OnPlayerUpdate(PlayerObj.transform);
                 }
             }
         }
 
         #endregion
+
+        #region COROUTINES
+
+        private IEnumerator UpdatePlayerSpawn(int ship)
+        {
+            float seconds = 0.33f;
+
+            float total = Spawns[ship].Ship.SpawnTime;
+
+            Spawns[ship].SpawnTimer = 0;
+
+            while (Spawns[ship].SpawnTimer < total)
+            {
+                yield return new WaitForSeconds(seconds);
+
+                Spawns[ship].SpawnTimer += 0.33f;
+
+                if(OnShipSpawnUpdate != null)
+                    OnShipSpawnUpdate(ship);
+            }
+
+            yield break;
+        }
+
+        #endregion
+
     }
 }

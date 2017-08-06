@@ -43,6 +43,12 @@ namespace Data.UI
         /// </summary>
         public ShipSpawnData[] ShipInventory;
 
+        /// <summary>
+        /// Cash and item assets the player 
+        /// owns
+        /// </summary>
+        public WalletData Wallet;
+
         #endregion
     }
 }

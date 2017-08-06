@@ -14,25 +14,20 @@ namespace Space.UI.Spawn
     /// </summary>
     public class SpawnAttributes : MonoBehaviour
     {
-        #region SPAWN CONFIG
-
-        // seconds to spawning
-        public int SpawnDelay;
-
-        #endregion
-
         #region SHIP
 
+        [HideInInspector]
         public ShipUIPrefab SelectedShip;
-
+        [HideInInspector]
         public List<ShipUIPrefab> ShipList;
 
         #endregion
 
         #region SPAWN
 
+        [HideInInspector]
         public SpawnSelectItem SelectedSpawn;
-
+        [HideInInspector]
         public List<SpawnSelectItem> SpawnList;
 
         #endregion
@@ -43,11 +38,20 @@ namespace Space.UI.Spawn
 
         public Transform ShipSelectList;
 
-        public Button SpawnButton;
-
-        public Text SpawnDelayText;
-
         public MapViewer Map;
+
+        #region USER PANEL
+
+        /// <summary>
+        /// Expends currency to spawn the ship
+        /// </summary>
+        public Button SpawnButtonCurrency;
+
+        public Text CurrentShipCost;
+
+        public Text PlayerCurrency;
+
+        #endregion
 
         #endregion
 

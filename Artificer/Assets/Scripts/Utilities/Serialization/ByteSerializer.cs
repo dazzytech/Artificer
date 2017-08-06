@@ -44,7 +44,7 @@ namespace Serializer
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 {
                     WriteComp(writer, ship.Head);
-                    writer.Write(ship.GetComponents().Length);
+                    writer.Write(ship.GetComponents.Length);
                     foreach (ComponentData comp in ship.components)
                         WriteComp(writer, comp);
                     writer.Write(ship.Name);

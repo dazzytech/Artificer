@@ -62,6 +62,7 @@ namespace Data.Space.DataImporter
                 item.Name = xmlElement.Attributes["name"].Value;
                 item.Description = xmlElement.Attributes["desc"].Value;
                 item.Density = float.Parse(xmlElement.Attributes["dens"].Value);
+                item.Value = int.Parse(xmlElement.Attributes["value"].Value);
 
                 if (type == "materials")
                 {
