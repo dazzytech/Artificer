@@ -43,24 +43,19 @@ namespace Space.UI
 
         #region HUD ELEMENTS
 
+        [Header("HUD Elements")]
+
         // For now displays the ship name
         [SerializeField]
-        [Header("Label")]
         private Text m_label;
 
         // displays if ship is safe, attacked or docked
         [SerializeField]
-        [Header("Status")]
         private Text m_status;
 
         // displays distance from player
         [SerializeField]
-        [Header("Distance")]
         private Text m_distance;
-
-        [SerializeField]
-        [Header("Self Panel")]
-        public Image m_selfPanel;
 
         #endregion
 

@@ -134,6 +134,26 @@ namespace Space
                 {
                     m_con.DockAtStation();
                 }
+                if (key == Control_Config.GetKey("camUp", "sys"))
+                {
+                    m_util.RotateCam(0, true);
+                    m_con.ResetOrientation(new Vector2(0,1));
+                }
+                if (key == Control_Config.GetKey("camDown", "sys"))
+                {
+                    m_util.RotateCam(180f, true);
+                    m_con.ResetOrientation(new Vector2(0, -1));
+                }
+                if (key == Control_Config.GetKey("camLeft", "sys"))
+                {
+                    m_util.RotateCam(270f, true);
+                    m_con.ResetOrientation(new Vector2(-1, 0));
+                }
+                if (key == Control_Config.GetKey("camRight", "sys"))
+                {
+                    m_util.RotateCam(90f, true);
+                    m_con.ResetOrientation(new Vector2(1, 0));
+                }
             }
         }
 
@@ -142,6 +162,13 @@ namespace Space
             if (key == Control_Config.GetKey("pause", "sys"))
             {
                 m_util.PauseRelease();
+            }
+            if(key == Control_Config.GetKey("camUp", "sys")
+                || key == Control_Config.GetKey("camDown", "sys")
+                || key == Control_Config.GetKey("camLeft", "sys")
+                || key == Control_Config.GetKey("camRight", "sys"))
+            {
+                m_util.RotateRelease();
             }
         }
 
@@ -362,6 +389,12 @@ namespace Space
             // extract the team manager and store int space object
             m_att.Team = teamObj.
                 GetComponent<TeamController>();
+
+            if (m_att.Team.ID == 1)
+            {
+                m_util.RotateCam(180, false);
+                m_con.ResetOrientation(new Vector2(0, -1f));
+            }
 
             m_att.Team.EventShipListChanged += m_con.RefreshShipSpawnList;
 

@@ -29,6 +29,8 @@ namespace Space.UI.Ship
         private TargetHUD m_targetHUD;
         [SerializeField]
         private StorageHUD m_storageHUD;
+        [SerializeField]
+        private IntegrityHUD m_integrityHUD;
 
         #endregion
 
@@ -66,6 +68,8 @@ namespace Space.UI.Ship
             m_targetHUD.SetShip(ship);
 
             m_storageHUD.SetShip(ship);
+
+            m_integrityHUD.SetShip(ship);
     	}
 
         #endregion

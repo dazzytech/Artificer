@@ -27,7 +27,7 @@ namespace Space.UI.Proxmity
         public GameObject arrow;
         public GameObject box;
         public GameObject text;
-        public Vector3 scale;
+        public Vector3 direction;
         public float trackDist;
     }
 
@@ -55,6 +55,8 @@ namespace Space.UI.Proxmity
 
         private IndexedList<Marker> m_markers;
 
+        private Marker[] m_compass = new Marker[4];
+
         #endregion
 
         #region HUD ELEMENTS
@@ -63,6 +65,9 @@ namespace Space.UI.Proxmity
 
         [SerializeField]
         private GameObject m_arrowPrefab;
+
+        [SerializeField]
+        private GameObject m_compassPrefab;
 
         [SerializeField]
         private GameObject m_boxPrefab;
@@ -105,6 +110,9 @@ namespace Space.UI.Proxmity
         [SerializeField]
         private Color m_enemyStation;
 
+        [SerializeField]
+        private Color m_compassColour;
+
         #endregion
 
         #region MISC ATTRIBUTES
@@ -129,6 +137,21 @@ namespace Space.UI.Proxmity
 
         private List<WaypointPrefab> m_waypointList;
 
+        private Vector2 m_dir;
+
+        #region COMPASS
+
+        private Vector2[] m_compassDirs =
+            new Vector2[4] {new Vector2(0,1) ,
+                new Vector2(1, 0), new Vector2(0, -1), new Vector2(-1, 0) };
+
+        private string[] m_compassNames
+            = new string[4] { "Up", "Right", "Down", "Left" }; 
+
+        private float m_compassRadius = 200f;
+
+        #endregion
+
         #endregion
 
         #endregion
@@ -142,7 +165,11 @@ namespace Space.UI.Proxmity
                 MapController.OnMapUpdate -= OnIconChanged;
 
                 m_mapViewer.OnClick -= OnMapClick;
+
+                
             }
+
+            SystemManager.Space.OnOrientationChange -= OnOrientationChange;
         }
 
         protected override void OnEnable()
@@ -152,7 +179,11 @@ namespace Space.UI.Proxmity
                 MapController.OnMapUpdate += OnIconChanged;
 
                 m_mapViewer.OnClick += OnMapClick;
+
+                
             }
+
+            SystemManager.Space.OnOrientationChange += OnOrientationChange;
         }
 
         public void Start()
@@ -162,6 +193,9 @@ namespace Space.UI.Proxmity
 
             m_cameraObject = GameObject.FindGameObjectWithTag
                     ("MainCamera");
+
+            // Build the compass
+            BuildCompassMarkers();
         }
 
         private void OnDestroy()
@@ -175,6 +209,11 @@ namespace Space.UI.Proxmity
             // this stops here
             if (m_cameraObject == null || m_markers == null)
                 return;
+
+            foreach(Marker m in m_compass)
+            {
+                RepositionCompass(m);
+            }
 
             foreach (Marker m in m_markers)
             {
@@ -582,6 +621,15 @@ namespace Space.UI.Proxmity
             Vector2 dir =
                 (m.trackedObj.Location - camPos)
                     .normalized * m_radius;
+
+            if (m_dir.x != 0)
+            {
+                dir = new Vector2(dir.y, -dir.x);
+                dir *= m_dir.x;
+            }
+            else if (m_dir.y != 0)
+                dir *= m_dir.y;
+
             m.arrow.transform.up = dir.normalized;
             m.arrow.transform.localPosition = dir;
 
@@ -593,6 +641,78 @@ namespace Space.UI.Proxmity
             m.text.transform.localPosition = dir + dir.normalized * Overlap(i, m, camPos);
             m.text.GetComponent<Text>().text = ((int)objDistance * 0.01).ToString("F2") + "km";
         }
+
+        #region COMPASS
+
+        private void RepositionCompass(Marker m)
+        {
+            Vector2 dir = m.direction * m_compassRadius;
+
+            if (m_dir.x != 0)
+            {
+                dir = new Vector2(dir.y, -dir.x);
+                dir *= m_dir.x;
+            }
+            else if (m_dir.y != 0)
+                dir *= m_dir.y;
+
+            m.arrow.transform.up = dir.normalized;
+            m.arrow.transform.localPosition = dir;
+
+            m.text.transform.localPosition = dir + (dir.normalized * 20);
+        }
+
+        private void BuildCompassMarkers()
+        {
+            for (int i = 0; i < m_compassDirs.Length; i++)
+            {
+                m_compass[i] = new Marker();
+
+                m_compass[i].direction = m_compassDirs[i];
+
+                m_compass[i].arrow = (GameObject)Instantiate(m_compassPrefab, 
+                    m_compassDirs[i], Quaternion.identity);
+
+                m_compass[i].arrow.transform.SetParent(m_HUD.transform, false);
+
+                // Generic text object within marker to display
+                // the distance to the object 
+                m_compass[i].text = new GameObject();
+
+                // Add text component
+                Text mtext = m_compass[i].text.AddComponent<Text>();
+
+                // Place the text as a child of this HUD
+                m_compass[i].text.transform.SetParent(m_body, false);
+
+                // Initialize text format 
+                mtext.font = m_font;
+                mtext.alignment = TextAnchor.MiddleCenter;
+                mtext.fontSize = 8;
+
+                mtext.text = m_compassNames[i];
+
+                // Grey if a different tag              
+                mtext.color = m_standardColor;
+
+                m_compass[i].arrow.GetComponent<SelectableHUDItem>().SetColour(m_compassColour);
+
+                m_compass[i].arrow.GetComponent<SelectableHUDItem>().FlashImage();
+            }
+
+            Invoke("FadeCompass", 5.0f);
+        }
+
+        private void FadeCompass()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                m_compass[i].arrow.GetComponent<SelectableHUDItem>().FadeImage();
+                m_compass[i].text.gameObject.SetActive(false);
+            }
+        }
+
+        #endregion
 
         #endregion
 
@@ -656,6 +776,26 @@ namespace Space.UI.Proxmity
             waypoint.Waypoint = null;
 
             m_waypointList.Remove(waypoint);
+        }
+
+        /// <summary>
+        /// Called when the player changes the 
+        /// camera view, rebuild and rotate the viewer
+        /// </summary>
+        /// <param name="newOrient"></param>
+        private void OnOrientationChange(Vector2 newOrient)
+        {
+            m_mapViewer.RotateMap(newOrient);
+
+            m_dir = newOrient;
+
+            for(int i = 0; i < 4; i++)
+            {
+                m_compass[i].arrow.GetComponent<SelectableHUDItem>().FlashImage();
+                m_compass[i].text.gameObject.SetActive(true);
+            }
+
+            Invoke("FadeCompass", 5.0f);
         }
 
         #endregion

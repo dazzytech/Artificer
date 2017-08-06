@@ -18,6 +18,8 @@ namespace Space
         private bool m_isPaused = false;
         private bool m_pauseDelay = false;
 
+        private bool m_rotateDelay = false;
+
         #endregion
 
         #region INITIALIZATION
@@ -89,6 +91,26 @@ namespace Space
         public void PauseRelease()
         {
             m_pauseDelay = false;
+        }
+
+        public void RotateCam(float rotation, bool keyed)
+        {
+            if (!m_rotateDelay)
+            {
+                GameObject PCGO = GameObject.Find("PlayerCamera");
+                if (PCGO == null)
+                    return;
+
+                PCGO.transform.rotation = Quaternion.Euler(0, 0, rotation);
+                
+                if (keyed)
+                    m_rotateDelay = true;
+            }
+        }
+
+        public void RotateRelease()
+        {
+            m_rotateDelay = false;
         }
 
         #endregion

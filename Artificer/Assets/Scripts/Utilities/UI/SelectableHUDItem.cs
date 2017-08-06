@@ -168,21 +168,27 @@ namespace UI
             }
         }
 
-        #endregion
-
-        #region PRIVATE FUNCTIONALITY
-
         /// <summary>
         /// gives the appearance of an image
         /// flashing into existance (HUD item or panel)
         /// </summary>
         /// <param name="item"></param>
-        protected void FlashImage()
+        public void FlashImage()
         {
             StartCoroutine(PanelFadeEffects.FadeImg(m_background,
                 m_highlightColour,
                 PanelFadeEffects.FadeImg(m_background, m_standardColour)));
         }
+
+        public void FadeImage()
+        {
+            StartCoroutine(PanelFadeEffects.FadeImg(m_background,
+                new Color(0,0,0,0)));
+        }
+
+        #endregion
+
+        #region PRIVATE FUNCTIONALITY
 
         #endregion
 

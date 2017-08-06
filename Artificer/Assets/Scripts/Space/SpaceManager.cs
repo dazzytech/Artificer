@@ -42,12 +42,17 @@ namespace Space
         public event SceneEvent PlayerEnterScene;
         public event SceneEvent PlayerExitScene;
         public event SceneEvent TeamSelected;
+        public event SceneEvent CameraRotated;
 
         public delegate void PlayerUpdate(Transform data);
         public static event PlayerUpdate OnPlayerUpdate;
 
         public delegate void ShipSpawnUpdate(int shipID);
         public event ShipSpawnUpdate OnShipSpawnUpdate;
+
+        public delegate void CameraUpdate(Vector2 change);
+        public event CameraUpdate OnOrientationChange;
+
 
         #endregion
 
@@ -320,6 +325,18 @@ namespace Space
                     StartCoroutine("UpdatePlayerSpawn", index++);
                 }              
             }
+        }
+
+        /// <summary>
+        /// Triggers the orientate event
+        /// for map and tracker to update 
+        /// positioning (0, 1) = up, (0, -1) = down
+        /// </summary>
+        /// <param name="newDir"></param>
+        public void ResetOrientation(Vector2 newDir)
+        {
+            if (OnOrientationChange != null)
+                OnOrientationChange(newDir);
         }
 
         #endregion

@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 224000010527013982}
   - component: {fileID: 222000013253032268}
   - component: {fileID: 114000012557480650}
-  - component: {fileID: 114000010761389886}
   - component: {fileID: 114000010176666924}
+  - component: {fileID: 114131451635692788}
   m_Layer: 5
   m_Name: FriendlyHUDPrefab
   m_TagString: Untagged
@@ -137,14 +137,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3391df5e410330640a9abdc996cc9dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_interactive: 1
+  SharedIndex: 0
+  m_background: {fileID: 114131451635692788}
+  m_standardColour: {r: 1, g: 1, b: 1, a: 1}
+  m_highlightColour: {r: 0.93333334, g: 0.8862745, b: 0.5137255, a: 0.24705882}
+  m_selectedColour: {r: 1, g: 1, b: 1, a: 1}
   ViewerPanel: {fileID: 114000011048838602}
   PiecePrefab: {fileID: 1000013815724100, guid: 7a1b6766981296e4588fea7333c6edc8,
     type: 2}
   m_label: {fileID: 114000012674099750}
   m_status: {fileID: 114000012110987638}
   m_distance: {fileID: 114000013507953716}
-  m_selfPanel: {fileID: 114000010761389886}
-  m_highlightColour: {r: 0.93333334, g: 0.8862745, b: 0.5137255, a: 0.24705882}
   m_safeColour: {r: 0.5137255, g: 0.93333334, b: 0.83137256, a: 0.24705882}
   m_attackColour: {r: 0.5019608, g: 0.10980392, b: 0.023529412, a: 0.24705882}
   m_destroyedColour: {r: 0.40392157, g: 0.40392157, b: 0.40392157, a: 0.24705882}
@@ -153,33 +157,6 @@ MonoBehaviour:
   m_attackText: {r: 1, g: 0.2794118, b: 0.2794118, a: 1}
   m_destroyedText: {r: 0.7205882, g: 0.7205882, b: 0.7205882, a: 1}
   m_dockedText: {r: 1, g: 0.9026369, b: 0.64705884, a: 1}
---- !u!114 &114000010761389886
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010073972948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.050983988, g: 0.30147058, b: 0.19681521, a: 0}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 808300e3b35aa1040a92a39fb953bd51, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
 --- !u!114 &114000011048838602
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -309,6 +286,32 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 200m
+--- !u!114 &114131451635692788
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010073972948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 2800000, guid: 808300e3b35aa1040a92a39fb953bd51, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!222 &222000011111478470
 CanvasRenderer:
   m_ObjectHideFlags: 1

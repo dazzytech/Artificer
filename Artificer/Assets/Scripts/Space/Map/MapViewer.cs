@@ -29,6 +29,11 @@ namespace Space.Map
         [SerializeField]
         private RectTransform m_baseMap;
 
+        /// <summary>
+        /// the direction vector
+        /// </summary>
+        private Vector2 m_dir;
+
         #region MAP CUSTOMIZATION
 
         private MapObjectType[] m_filter;
@@ -143,16 +148,23 @@ namespace Space.Map
             // put our prefab on map
             prefab.transform.SetParent(m_baseMap);
 
-            // Scale and then position on map
-            Vector2 newLoc = mObj.Location;
-            newLoc.Scale(m_scale);
-            prefab.transform.localPosition = newLoc;
+            // position on map
+            prefab.transform.localPosition =
+                ScaleAndPosition(mObj.Location); 
+        }
+
+        public void RotateMap(Vector2 dir)
+        {
+            m_dir = dir;
+            BuildIcons();
         }
 
         #endregion
 
         #region PRIVATE UTILITIES
-        
+
+        #region ICONS
+
         /// <summary>
         /// Creates an icon for each item
         /// </summary>
@@ -227,10 +239,7 @@ namespace Space.Map
                         break;
                 }
 
-                // Scale and then position on map
-                Vector2 newLoc = mObj.Location;
-                newLoc.Scale(m_scale);
-                GO.transform.localPosition = newLoc;
+                GO.transform.localPosition = ScaleAndPosition(mObj.Location);
 
                 mObj.Icon = GO.transform;
             }
@@ -255,14 +264,21 @@ namespace Space.Map
 
                 // Resize object based on texture
                 Vector2 newSize = mObj.Size;
+
                 newSize.Scale(m_scale);
+
+                if (m_dir.x != 0)
+                    newSize = new Vector2(newSize.y, newSize.x);
+
                 Base.GetComponent<RectTransform>().sizeDelta =
                     newSize;
 
-                // Scale and then position on map
-                Vector2 newLoc = mObj.Location;
-                newLoc.Scale(m_scale);
-                Base.transform.localPosition = newLoc + newSize*.5f;
+                if (m_dir.x != 0)
+                    newSize *= m_dir.x;
+                else if (m_dir.y != 0)
+                    newSize *= m_dir.y;
+
+                Base.transform.localPosition = ScaleAndPosition(mObj.Location) + (newSize*.5f);
 
                 mObj.Icon = Base.transform;
 
@@ -281,7 +297,9 @@ namespace Space.Map
                         {
                             iconImg.texture = m_astIcon;
 
-                            float scale = Mathf.Max(Mathf.Min(newSize.x, newSize.y), 30);
+                            float scale = Mathf.Max(
+                                Mathf.Min(newSize.x, newSize.y), 30);
+
                             Icon.GetComponent<RectTransform>().sizeDelta =
                                 new Vector2(scale, scale);
 
@@ -333,10 +351,7 @@ namespace Space.Map
                 }
                 else
                 {
-                    // Scale and then reposition on map
-                    Vector2 newLoc = mObj.Location;
-                    newLoc.Scale(m_scale);
-                    mObj.Icon.localPosition = newLoc;
+                    mObj.Icon.localPosition = ScaleAndPosition(mObj.Location);
                 }
             }
             else
@@ -354,6 +369,30 @@ namespace Space.Map
                         break;
                 }
             }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Positions and scales the map position
+        /// based on the map scale, and direction
+        /// </summary>
+        /// <param name="orig"></param>
+        /// <returns></returns>
+        private Vector2 ScaleAndPosition(Vector2 orig)
+        {
+            Vector2 returnVal = orig -new Vector2(2500, 2500);
+            returnVal.Scale(m_scale);
+
+            if (m_dir.x != 0)
+            {
+                returnVal = new Vector2(returnVal.y, -returnVal.x);
+                returnVal *= m_dir.x;
+            }
+            else if (m_dir.y != 0)
+                returnVal *= m_dir.y;
+
+            return returnVal;
         }
 
         /// <summary>
