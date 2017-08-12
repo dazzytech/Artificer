@@ -251,6 +251,11 @@ public class SystemManager : NATTraversal.NetworkManager
         }
     }
 
+    public static Rect Size
+    {
+        get { return m_singleton.m_base.SegmentSize; }
+    }
+
     #endregion
 
     #region NETWORKMANAGER OVERRIDE
@@ -306,6 +311,10 @@ public class SystemManager : NATTraversal.NetworkManager
             m_base.Param.SpawnableShips = m_base.StarterShips;
 
             m_base.Param.Wallet = m_base.StarterAssets;
+
+            m_base.Param.TeamASpawn = m_base.TeamASpawn;
+
+            m_base.Param.TeamBSpawn = m_base.TeamBSpawn;
 
             GameMSG.InitializeGameParam(m_base.Param);
         }

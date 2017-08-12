@@ -148,7 +148,7 @@ namespace Space.UI.Station.Viewer.Prefabs
         public void Purchase()
         {
             WalletData temp = SystemManager.Wallet;
-            if (temp.Purchase(UnlockCost))
+            if (temp.Withdraw(UnlockCost))
             {
                 SystemManager.Wallet = temp;
 

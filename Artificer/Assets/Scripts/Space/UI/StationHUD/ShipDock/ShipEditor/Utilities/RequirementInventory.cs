@@ -4,136 +4,102 @@ using System.Collections.Generic;
 // Artificer
 using Data.Space;
 using Menu; // use material list item till we create our own
+using Data.Space.Collectable;
+using System.Linq;
 
-namespace Construction.ShipEditor
+namespace Space.UI.Station.Utility
 {
-    public class RequirementInventory : MonoBehaviour
-    {/*
-        // Panel to manipulate
-        public Transform _Scroller;
-        
-        // prefabs
-        public GameObject MatButtonPrefab;
-        
-        // GUI Lists
-        private Dictionary<MaterialData, float> _Materials;
-        private List<MaterialListItem> _MatListItems;
-        
-        void Awake () 
+    public class RequirementInventory : HUDPanel
+    {
+        #region ATTRIBUTES
+
+        [Header("Requirement")]
+
+        [SerializeField]
+        private GameObject m_viewerPrefab;
+
+        /// <summary>
+        /// Refernce to our current stored
+        /// material 
+        /// </summary>
+        private Dictionary<ItemCollectionData, MaterialViewerPrefab> m_reqList;
+
+        #endregion
+
+        #region MONOBEHAVIOUR
+
+        void Awake()
         {
             // Set Lists
-            _Materials = new Dictionary<MaterialData, float>();
-            _MatListItems = new List<MaterialListItem>();
+            m_reqList = new Dictionary<ItemCollectionData, MaterialViewerPrefab>();
         }
 
-        void Start()
-        {
-            InitializeList();
-        }
+        #endregion
+
+        #region PUBLIC INTERATION
 
         /// <summary>
         /// Creates an empty list with only the players components.
         /// </summary>
         /// <param name="import">Import.</param>
-        private void InitializeList()
+        public void UpdateList(ItemCollectionData[] required)
         {
-            /*
             // Add player cargo into current
-            Dictionary<MaterialData, float> current = SystemManager.GetPlayer.Cargo;
+            ItemCollectionData[] current = SystemManager.Player.Wallet.Assets;
 
-            if (current == null)
+            if (required == null)
                 return;
 
-            foreach (MaterialData mat in current.Keys)
+            for (int i = 0; i < required.Length; i++)
             {
                 // Update storage variables
-                if(!_Materials.ContainsKey(mat))
-                    _Materials.Add(mat, 0);
-                
-                // Update GUI ListBox
-                foreach (MaterialListItem item in _MatListItems)
-                {
-                    if(item.MatIs(mat))
-                    {
-                        item.SetAmount(0f);
-                    }
-                } CreateListboxItem(mat).SetPlayerAmount(current [mat]);;
-            }
-        }
-        
-        /// <summary>
-        /// Adds materials from ship storage
-        /// to the gui listbox.
-        /// </summary>
-        /// <param name="import">Import.</param>
-        public void AddMatsToList(Dictionary<MaterialData, float> requirements)
-        {
-            
-            // Add player cargo into current
-            Dictionary<MaterialData, float> current = SystemManager.GetPlayer.Cargo;
+                if (!m_reqList.ContainsKey(required[i]))
+                    m_reqList.Add(required[i], CreateAssetViewer(required[i]));
 
-            // Clear each requirement for rebuilding
-            foreach(Transform child in _Scroller.transform)
-                    Destroy(child.gameObject);
+                ItemCollectionData owned = new ItemCollectionData();
 
-            _Materials.Clear();
-            _MatListItems.Clear();
+                if(current != null)
+                    owned = current.FirstOrDefault
+                        (x => x.Item == required[i].Item);
 
-            foreach (MaterialData mat in requirements.Keys)
-            {
-                // Update storage variables
-                _Materials.Add(mat, requirements[mat]);
-
-                // All lists have been cleared so we will need to just create items as we go along
-                CreateListboxItem(mat);
+                // Display our requirement
+                m_reqList[required[i]].DisplayValue(SystemManager.Items[required[i].Item].Name,
+                    new float[2] { required[i].Amount, owned.Amount}, new string[3] 
+                    { SystemManager.Items[required[i].Item].Description,
+                        required[i].Amount.ToString(), owned.Amount.ToString() });
             }
 
-            if (current == null)
-                return;
-
-            foreach (MaterialData mat in current.Keys)
+            // Remove any requirements that are no longer 
+            // included
+            for(int i = 0; i < m_reqList.Count; i++)
             {
-                if(!_Materials.ContainsKey(mat))
-                    _Materials.Add(mat, 0);
-
-                // Update GUI ListBox
-                bool itemExists = false;    // if item already exists in list
-                // Iterate though each list item to see which already exists
-                foreach (MaterialListItem item in _MatListItems)
+                if(!required.ToList().Contains(m_reqList.Keys.ToArray()[i]))
                 {
-                    if(item.MatIs(mat))
-                    {
-                        item.SetPlayerAmount(current [mat]);
-                        itemExists = true;
-                        if(current [mat] >= _Materials [mat])
-                           item.button.image.color = new Color(0f,1f,0f,.2f);
-                    }
+                    Destroy(m_reqList.Values.ToArray()[i].gameObject);
+                    m_reqList.Remove(m_reqList.Keys.ToArray()[i]);
                 }
-                if(!itemExists) 
-                    CreateListboxItem(mat).SetPlayerAmount(current [mat]);
             }
         }
-        
-        private MaterialListItem CreateListboxItem(MaterialData mat)
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        /// <summary>
+        /// Build the material viewer and
+        /// return to list
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private MaterialViewerPrefab CreateAssetViewer(ItemCollectionData item)
         {
             // Game object
-            GameObject newItem = Instantiate(MatButtonPrefab) as GameObject;
-            newItem.transform.SetParent (_Scroller.transform, false);
-            
-            // List item
-            MaterialListItem matItem = newItem.GetComponent<MaterialListItem>();
-            matItem.SetMaterial(mat);
-            matItem.SetAmount(_Materials [mat]);
-            
-            // Button functionality
-            if(_Materials[mat] == 0)
-                matItem.button.image.color = new Color(0f,0f,0f,0f);
-            else
-                matItem.button.image.color = new Color(1f,0f,0f,.2f);
-            
-            // Add to LB list
-            _MatListItems.Add(matItem);
-            return matItem;
-        }*/
+            GameObject newItem = Instantiate(m_viewerPrefab) as GameObject;
+            newItem.transform.SetParent(m_body.transform, false);
+
+            return newItem.GetComponent<MaterialViewerPrefab>();
+        }
+
+        #endregion
     }
 }

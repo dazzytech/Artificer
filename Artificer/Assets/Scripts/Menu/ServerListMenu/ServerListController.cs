@@ -27,7 +27,7 @@ namespace Menu.Server
 
         #region MONO BEHAVIOUR
 
-        void OnEnable()
+        protected override void OnEnable()
         {
             // until we have online servers
             // just start local discovery here
@@ -36,7 +36,7 @@ namespace Menu.Server
             DisplayPlayerSelf();
         }
 
-        void OnDisable()
+        protected override void OnDisable()
         {
             SystemManager.StopListening();
         }

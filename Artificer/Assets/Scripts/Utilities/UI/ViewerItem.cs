@@ -66,6 +66,17 @@ namespace UI
 
         #region MONOBEHAVIOUR
 
+        private void OnEnable()
+        {
+            if(Listener != null)
+                StartCoroutine("Step");
+        }
+
+        private void OnDisable()
+        {
+            StopAllCoroutines();
+        }
+
         void Awake()
         {
             m_icon = GetComponent<Image>();
@@ -101,7 +112,8 @@ namespace UI
             m_icon.rectTransform.localRotation = Obj.transform.localRotation;
 
             // Start coroutine that updates health
-            StartCoroutine("Step");
+            if(isActiveAndEnabled)
+                StartCoroutine("Step");
 
             ID = id;
         }

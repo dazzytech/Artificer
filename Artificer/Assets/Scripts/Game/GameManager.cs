@@ -14,6 +14,7 @@ using Space.Ship.Components.Listener;
 using Space.Projectiles;
 using Networking;
 using Data.UI;
+using Space.Segment;
 
 namespace Game
 {
@@ -62,6 +63,12 @@ namespace Game
 
             m_att.TeamA.DefineTeamAssets(param.Wallet);
             m_att.TeamB.DefineTeamAssets(param.Wallet);
+
+            // Initialize server spacesegment
+            m_att.Segment.InitializeSegment(param);
+
+            // Generated stations for the teams
+            m_att.Builder.GenerateTeams(m_att.TeamA, m_att.TeamB, param);
         }
 
         /// <summary>
@@ -103,11 +110,10 @@ namespace Game
             m_att.TeamA = GameObject.Find("Team_A").GetComponent<TeamController>();
             m_att.TeamB = GameObject.Find("Team_B").GetComponent<TeamController>();
 
+            m_att.Segment = GameObject.Find("segment").GetComponent<SegmentManager>();
+
             m_att.TeamA.Initialize(teamAcon, 0);
             m_att.TeamB.Initialize(teamBcon, 1);
-
-            // Generated stations for the teams
-            m_att.Builder.GenerateStations(m_att.TeamA, m_att.TeamB);
 
             m_event.InitSpaceScene();
         }
@@ -214,12 +220,12 @@ namespace Game
             if (TeamID == 0)
             {
                 teamNetID = m_att.TeamA.netId;
-                starterFund = m_att.TeamA.FundPlayer(1000000);
+                starterFund = m_att.TeamA.Expend(1000000);
             }
             else
             {
                 teamNetID = m_att.TeamB.netId;
-                starterFund = m_att.TeamB.FundPlayer(1000000);
+                starterFund = m_att.TeamB.Expend(1000000);
             }
 
             // Create netID message
@@ -230,6 +236,8 @@ namespace Game
                 = new TransactionMessage();
 
             transaction.Recipiant = -1;
+            transaction.CurrencyDir = 1;
+            transaction.AssetDir = 0;
             transaction.CurrencyAmount = starterFund;
 
             // Send message for clients space obj
@@ -319,6 +327,35 @@ namespace Game
                     NetworkServer.SendToClient(info.mConnection.connectionId,
                     (short)MSGCHANNEL.DISPLAYINTEGRITYCHANGE, intMsg);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Applies costs and additions
+        /// to specified team
+        /// </summary>
+        /// <param name="tMsg"></param>
+        [Server]
+        public void OnTransaction(TransactionMessage tMsg)
+        {
+            switch(tMsg.Recipiant)
+            {
+                case 0:
+                    if (tMsg.AssetDir == -1)
+                        m_att.TeamA.Expend(tMsg.Assets);
+                    if(tMsg.CurrencyDir == -1)
+                        m_att.TeamA.Expend(tMsg.CurrencyAmount);
+                    else if(tMsg.CurrencyDir == 1)
+                        m_att.TeamA.Deposit(tMsg.CurrencyAmount);
+                    break;
+                case 1:
+                    if (tMsg.AssetDir == -1)
+                        m_att.TeamB.Expend(tMsg.Assets);
+                    if (tMsg.CurrencyDir == -1)
+                        m_att.TeamB.Expend(tMsg.CurrencyAmount);
+                    else if (tMsg.CurrencyDir == 1)
+                        m_att.TeamB.Deposit(tMsg.CurrencyAmount);
+                    break;
             }
         }
 

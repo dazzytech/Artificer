@@ -19,35 +19,22 @@ namespace Space.Segment
     /// </summary>
     public class SegmentObjectManager: NetworkBehaviour
     {
-
         #region ATTRIBUTES
 
-        // Generator Objects
-        //public ShipGenerator _shipGen;
-        public SegmentObjectGenerator _segmentObjectGen;
-        //public SpawnPointGenerator _spawnGen;
-        //public NodeGenerator _nodeGen;
+        #region PREFABS
 
-        private SegmentAttributes _att;
+        public GameObject SatellitePrefab;
+        public GameObject CloudPrefab;
+        public GameObject AsteroidPrefab;
+        public GameObject GravePrefab;
 
         #endregion
 
-        #region MONOGAME
+        [SerializeField]
+        private SegmentObjectGenerator m_objectGenerator;
 
-        void OnEnable()
-        {
-            //SegmentObjectBehaviour.Destroyed += RemoveObject;
-        }
-
-        void OnDisable()
-        {
-            //SegmentObjectBehaviour.Destroyed -= RemoveObject;
-        }
-
-        void Awake()
-        {
-            _att = GetComponent<SegmentAttributes>();
-        }
+        [SerializeField]
+        private SegmentAttributes m_att;
 
         #endregion
 
@@ -62,7 +49,7 @@ namespace Space.Segment
             BuildCamera();
 
             // Send our collection of scrolling items to the client camera
-            foreach (SyncPI pItem in _att.BGItem)
+            foreach (SyncPI pItem in m_att.BGItem)
                 Camera.main.SendMessage("AddScrollObject", pItem);
         }
 
@@ -152,30 +139,33 @@ namespace Space.Segment
 
         private IEnumerator BuildSegment()
         {
-            for(int i = 0; i < _att.SegObjs.Count; i++)
+            for(int i = 0; i < m_att.SegObjs.Count; i++)
             {
-                SegmentObjectData segObj = _att.SegObjs[i];
+                SegmentObjectData segObj = m_att.SegObjs[i];
                 switch (segObj._type)
                 {
                     case "_asteroids":
                         {
                             // Build the game object in generator
-                            GameObject segObjGO = _segmentObjectGen.GenerateField
-                                    (segObj);
+                            GameObject segObjGO = Instantiate(AsteroidPrefab);
 
-                            // assign network inst id
-                            segObj.netID = segObjGO.GetComponent<NetworkIdentity>().netId;
+                            segObjGO.transform.position = segObj._position;
+
+                            NetworkServer.Spawn(segObjGO);
 
                             // Assign segmentobject to segment object
                             segObjGO.GetComponent<SegmentObjectBehaviour>().Create
                                 (segObj);
+
+                            // assign network inst id
+                            segObj.netID = segObjGO.GetComponent<NetworkIdentity>().netId;
 
                             break;
                         }
                     case "_satellites":
                         {
                             // Build the game object in generator
-                            GameObject segObjGO = _segmentObjectGen.GenerateSatellite
+                            GameObject segObjGO = m_objectGenerator.GenerateSatellite
                                     (segObj);
 
                             // assign network inst id
@@ -190,36 +180,42 @@ namespace Space.Segment
                     case "_clouds":
                         {
                             // Build the game object in generator
-                            GameObject segObjGO = _segmentObjectGen.GenerateCloud
-                                    (segObj);
+                            GameObject segObjGO = Instantiate(CloudPrefab);
 
-                            // assign network inst id
-                            segObj.netID = segObjGO.GetComponent<NetworkIdentity>().netId;
+                            segObjGO.transform.position = segObj._position;
+
+                            NetworkServer.Spawn(segObjGO);
 
                             // Assign segmentobject to segment object
                             segObjGO.GetComponent<SegmentObjectBehaviour>().Create
                                 (segObj);
+
+                            // assign network inst id
+                            segObj.netID = segObjGO.GetComponent<NetworkIdentity>().netId;
 
                             break;
                         }
                     case "_debris":
                         {
                             // Build the game object in generator
-                            GameObject segObjGO = _segmentObjectGen.GenerateGrave
-                                    (segObj);
+                            GameObject segObjGO = Instantiate(GravePrefab);
 
-                            // assign network inst id
-                            segObj.netID = segObjGO.GetComponent<NetworkIdentity>().netId;
+                            segObjGO.transform.position = segObj._position;
+
+                            NetworkServer.Spawn(segObjGO);
 
                             // Assign segmentobject to segment object
                             segObjGO.GetComponent<SegmentObjectBehaviour>().Create
                                 (segObj);
 
+                            // assign network inst id
+                            segObj.netID = segObjGO.GetComponent<NetworkIdentity>().netId;
+
                             break;
                         }
                 }
 
-                _att.SegObjs[i] = segObj;
+                m_att.SegObjs[i] = segObj;
 
                 yield return null;
             }
@@ -241,14 +237,17 @@ namespace Space.Segment
             {
                 GameObject player = GameObject.FindGameObjectWithTag 
                     ("PlayerShip");
-                
-                if(player == null)
-                    break;
+
+                if (player == null)
+                {
+                    yield return null;
+                    continue;
+                }
                 
                 Vector3 playerPos = player.transform.position;
 
                 foreach (SegmentObjectData segObj
-                         in _att.SegObjs)
+                         in m_att.SegObjs)
                 {
                     GameObject segObjGO = ClientScene.FindLocalObject(segObj.netID);
 
@@ -263,8 +262,8 @@ namespace Space.Segment
                             segObjGO.SetActive(true);
                         else
                         // if server we cant disable object so make it function minimally
-                            if(!segObjGO.GetComponent<SegmentObjectBehaviour>().Active)
-                                segObjGO.SendMessage("ReEnable");
+                        if (!segObjGO.GetComponent<SegmentObjectBehaviour>().Active)
+                            segObjGO.GetComponent<SegmentObjectBehaviour>().ReEnable();
                 }
                 
                 yield return null;

@@ -33,20 +33,16 @@ namespace Space.Segment
 
         #region ATTRIBUTES
 
-        private SegmentObjectManager _gen;
-        private SegmentAttributes _att;
+        [SerializeField]
+        private SegmentObjectManager m_gen;
+        [SerializeField]
+        private SegmentAttributes m_att;
 
-        private bool _segInit;
+        private bool m_segInit;
 
         #endregion
 
         #region MONO BEHAVIOUR
-
-        void Awake()
-        {
-            _gen = GetComponent<SegmentObjectManager>();
-            _att = GetComponent<SegmentAttributes>();           
-        }
 
         void OnEnable()
         {
@@ -62,31 +58,11 @@ namespace Space.Segment
         {
             // Segment is seperate from game functions 
             // so is encapsulated
+            m_gen.GenerateBase();
 
-            _att.SegObjs.Callback += SyncListGOAdded;
+            m_att.SegObjs.Callback += SyncListGOAdded;
 
-            _segInit = false;
-        }
-
-        #endregion
-
-        #region NETWORK BEHAVIOUR
-
-        /// <summary>
-        /// Builds the space segment before the player 
-        /// object is created
-        /// </summary>
-        public override void OnStartClient()
-        {
-            _gen.GenerateBase();
-        }
-
-        /// <summary>
-        /// Run here because segment is independant of game parameters
-        /// </summary>
-        public override void OnStartServer()
-        {
-            InitializeSegment();
+            m_segInit = false;
         }
 
         #endregion
@@ -99,34 +75,33 @@ namespace Space.Segment
         /// </summary>
         private void EnterSegment()
         {
-            _gen.StartSegmentCycle();
-            _segInit = true;
+            m_gen.StartSegmentCycle();
+            m_segInit = true;
         }
 
         /// <summary>
-        /// Builds the space enviroment is server
-        /// and initializes playercam and space generation
-        /// for clients
+        /// Builds the space segment on the server
+        /// and  syncs the segment info across the network
         /// </summary>
         [Server]
-        private void InitializeSegment()
+        public void InitializeSegment(GameParameters param)
         {
             // Initialize space segment if not created - server's job
             //SystemManager.GUI.DisplayMessege(new MsgParam("bold", "Generating space..."));
-            SegmentObjectData[] sObjs = SegmentDataBuilder.BuildNewSegment();
+            SegmentObjectData[] sObjs = SegmentDataBuilder.BuildNewSegment(param);
 
             foreach (SegmentObjectData sObj in sObjs)
-                _att.SegObjs.Add(sObj);
+                m_att.SegObjs.Add(sObj);
             //MessageHUD.DisplayMessege(new MsgParam("bold", "Finished!"));
 
-            _gen.GenerateServerObjects();
+            m_gen.GenerateServerObjects();
 
             // Initialize parellax objects
             SyncPI[] pItems = SegmentDataBuilder.BuildNewBackground();
 
 
             foreach (SyncPI pItem in pItems)
-                _att.BGItem.Add(pItem);
+                m_att.BGItem.Add(pItem);
         }
 
         #endregion
@@ -141,7 +116,7 @@ namespace Space.Segment
         private void OnPlayerUpdate(Transform playerShip)
         {
             // initialize segment 
-            if (!_segInit)
+            if (!m_segInit)
                 EnterSegment();
 
             // Check that player is within bounds of current segment

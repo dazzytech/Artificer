@@ -1,4 +1,5 @@
-﻿using Game;
+﻿using Data.Space;
+using Game;
 using Space.Segment;
 using Space.Ship;
 using Stations;
@@ -144,7 +145,7 @@ namespace Space.Map
 
             MapObject mapObj = BuildObject(trans);
             mapObj.Type = mType;
-
+            mapObj.Points = segObj._border;
             mapObj.Size = segObj._size;
 
             if (OnMapUpdate != null)

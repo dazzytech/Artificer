@@ -28,6 +28,10 @@ public struct GameParameters
     /// Start inventory for player teams
     /// </summary>
     public WalletData Wallet;
+
+    public Vector2 TeamASpawn;
+
+    public Vector2 TeamBSpawn;
 }
 
 // STORES ALL INFORMATION OF THE GAME
@@ -67,15 +71,6 @@ public class SystemAttributes:MonoBehaviour
     public SystemNetworkDiscovery Discovery;
     public CameraMessageHandler CamMsgHandler;
 
-    // Builder
-    public List<GameObject> StarterList;
-
-    public ShipSpawnData[] StarterShips;
-
-    public WalletData StarterAssets;
-
-    public GameParameters Param;
-
     // Player Information
     public NetworkConnection Conn;
 
@@ -86,5 +81,40 @@ public class SystemAttributes:MonoBehaviour
     // Reference to which Steam Lobby we are connected to
     public CSteamID Lobby;
     public int minimumPlayers;
+
+    [Header ("Game Parameters")]
+
+    /// <summary>
+    /// data object passed to the match
+    /// in the server to define the match
+    /// variables
+    /// </summary>
+    public GameParameters Param;
+
+    /// <summary>
+    /// Size of the space segment we
+    /// are playing in
+    /// </summary>
+    public Rect SegmentSize = new Rect(0, 0, 5000, 5000);
+
+    /// <summary>
+    /// Starting components that can be built 
+    /// from the start
+    /// </summary>
+    public List<GameObject> StarterList;
+
+    /// <summary>
+    /// Ships that are in the teams inventory immediately
+    /// </summary>
+    public ShipSpawnData[] StarterShips;
+
+    /// <summary>
+    /// How much assets the team starts with
+    /// </summary>
+    public WalletData StarterAssets;
+
+    public Vector2 TeamASpawn = new Vector2(1500, 1500);
+
+    public Vector2 TeamBSpawn = new Vector2(3500, 3500);
 }
 

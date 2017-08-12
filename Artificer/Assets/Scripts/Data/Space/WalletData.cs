@@ -16,6 +16,7 @@ namespace Data.Space
     {
         #region ATTRIBUTES
 
+        [SerializeField]
         public int m_currency;
 
         public ItemCollectionData[] m_inventory;
@@ -64,7 +65,7 @@ namespace Data.Space
         /// </summary>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public bool Purchase(int amount)
+        public bool Withdraw(int amount)
         {
             if (amount <= m_currency)
             {
@@ -124,31 +125,42 @@ namespace Data.Space
         /// <param name="item"></param>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public bool Withdraw(int item, float amount)
+        public bool Withdraw(ItemCollectionData[] withdraw)
         {
-            if (amount > 0
-               && item != -1)
-            {
-                // Discover if we already have this
-                for (int i = 0; i < m_inventory.Length; i++)
-                {
-                    if (m_inventory[i].Item == item)
-                    {
-                        if (m_inventory[i].Amount < amount)
-                            return false;
+            if (m_inventory == null)
+                return false;
 
-                        m_inventory[i].Amount -= amount;
-                        if (m_inventory[i].Amount == 0)
-                            RemoveAsset(i);
-                        // transaction successful
-                        return true;
+            ItemCollectionData[] temp = new ItemCollectionData[m_inventory.Length];
+
+            for (int i = 0; i < m_inventory.Length; i++)
+                temp[i] = m_inventory[i];
+
+            foreach (ItemCollectionData dec in withdraw)
+            {
+                int item = dec.Item;
+                float amount = dec.Amount;
+                if (amount > 0 && item != -1)
+                {
+                    int index = temp.ToList().
+                        FindIndex(x => x.Item == item);
+
+                    if (index == -1)
+                        return false;
+
+                    if (temp[index].Amount < amount)
+                        return false;
+
+                    temp[index].Amount -= amount;
+                    if (temp[index].Amount == 0)
+                    {
+                        temp = RemoveAsset(index, temp);
                     }
                 }
-
-                return false;
             }
 
-            return false;
+            m_inventory = temp;
+
+            return true;
         }
 
         #endregion
@@ -188,15 +200,17 @@ namespace Data.Space
         /// deletes an asset from our list
         /// </summary>
         /// <param name="index"></param>
-        private void RemoveAsset(int index)
+        private ItemCollectionData[] RemoveAsset(int index, ItemCollectionData[] orig)
         {
-            ItemCollectionData[] temp = new ItemCollectionData[m_inventory.Length - 1];
+            ItemCollectionData[] temp = new ItemCollectionData[orig.Length - 1];
 
-            for (int i = 0; i < temp.Length; i++)
-                if(i != index)
-                    temp[i] = m_inventory[i];
+            for (int i = 0, a = 0; i < orig.Length; i++)
+                if (i != index)
+                    temp[a++] = orig[i];
 
-            m_inventory = temp;
+            orig = temp;
+
+            return temp;
         }
 
         #endregion

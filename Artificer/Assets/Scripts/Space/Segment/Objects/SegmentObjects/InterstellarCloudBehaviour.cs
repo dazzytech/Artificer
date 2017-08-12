@@ -5,21 +5,14 @@ using Data.Space;
 
 namespace Space.Segment
 {
-    public class InterstellarCloudBehaviour : NetworkBehaviour
+    public class InterstellarCloudBehaviour : SegmentObject
     {
-        #region ATTRIUTES
-
-        [SyncVar]
-        private NetworkInstanceId _parentID;
-
-        #endregion
-
         #region MONO BEHAVIOUR
 
         void Start()
         {
             // Check if we have been intialized by server
-            if (!_parentID.IsEmpty())
+            if (!m_parentID.IsEmpty())
                 InitializeCloud();
         }
 
@@ -55,9 +48,9 @@ namespace Space.Segment
         /// <param name="scale"></param>
         /// <param name="parentID"></param>
         [Server]
-        public void InitializeParameters(NetworkInstanceId parentID)
+        public override void InitializeParameters(NetworkInstanceId parentID)
         {
-            _parentID = parentID;
+            m_parentID = parentID;
 
             InitializeCloud();
         }
@@ -72,19 +65,20 @@ namespace Space.Segment
         /// </summary>
         private void InitializeCloud()
         {
-            GameObject parent = ClientScene.FindLocalObject(_parentID);
-            if (parent != null)
-            {
-                transform.parent = parent.transform;
+            m_parent = ClientScene.FindLocalObject(m_parentID);
 
-                transform.parent.GetComponent<SegmentObjectBehaviour>().ObjEnable
+            if (m_parent != null)
+            {
+                transform.parent = m_parent.transform;
+
+                Parent.ObjEnable
                     += EnableObj;
 
-                transform.parent.GetComponent<SegmentObjectBehaviour>().ObjDisable
+                Parent.ObjDisable
                     += DisableObj;
             }
             else
-                Debug.Log(_parentID + " NOT FOUND");
+                Debug.Log(m_parentID + " NOT FOUND");
            
             GetComponent<ParticleSystem>().Play();
         }

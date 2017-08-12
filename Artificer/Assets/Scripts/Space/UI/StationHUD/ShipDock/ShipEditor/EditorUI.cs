@@ -9,6 +9,7 @@ using Space.Ship.Components.Listener;
 using Space.UI.Station.Editor.Component;
 using UI.Effects;
 using Space.UI.Station.Prefabs;
+using Space.UI.Station.Utility;
 
 namespace Space.UI.Station.Editor
 {
@@ -100,6 +101,9 @@ namespace Space.UI.Station.Editor
         /// </summary>
         [SerializeField]
         private GameObject m_componentPrefab;
+
+        [SerializeField]
+        private RequirementInventory m_reqViewer;
 
         #endregion
 
@@ -284,10 +288,11 @@ namespace Space.UI.Station.Editor
             m_costText.text = 
                 string.Format("Or Currency Cost: {0}",
                 m_editor.Ship.Requirements.Cost.ToString());
+
+            m_reqViewer.UpdateList(m_editor.Ship.Requirements.Assets);
         }
 
         #endregion
-
 
         /*
 

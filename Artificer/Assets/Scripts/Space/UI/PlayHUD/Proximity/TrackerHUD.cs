@@ -169,7 +169,8 @@ namespace Space.UI.Proxmity
                 
             }
 
-            SystemManager.Space.OnOrientationChange -= OnOrientationChange;
+            if(SystemManager.Space != null)
+                SystemManager.Space.OnOrientationChange -= OnOrientationChange;
         }
 
         protected override void OnEnable()

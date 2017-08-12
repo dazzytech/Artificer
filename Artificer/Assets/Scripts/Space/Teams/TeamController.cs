@@ -8,6 +8,7 @@ using Data.Space;
 using Space.Ship;
 using Space.SpawnManagers;
 using Networking;
+using Data.Space.Collectable;
 
 /// <summary>
 /// An enitity solely responsible for managing all of
@@ -178,14 +179,26 @@ namespace Space.Teams
         }
 
         [Server]
-        public int FundPlayer(int value)
+        public int Expend(int value)
         {
             if (m_teamAssets.Currency < value)
                 value = m_teamAssets.Currency;
 
-            m_teamAssets.Purchase(value);
+            m_teamAssets.Withdraw(value);
 
             return value;
+        }
+
+        [Server]
+        public void Deposit(int value)
+        {
+            m_teamAssets.Deposit(value);
+        }
+
+        [Server]
+        public void Expend(ItemCollectionData[] assets)
+        {
+            m_teamAssets.Withdraw(assets);
         }
 
         #endregion

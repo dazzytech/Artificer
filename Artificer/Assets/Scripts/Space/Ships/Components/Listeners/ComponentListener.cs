@@ -316,9 +316,19 @@ namespace Space.Ship.Components.Listener
         public virtual void Destroy()
         {
             // will be important when able to loot, and stop locking
-            SetRB();
+            RpcDestroy();        
+        }
+
+        #region RPC
+
+        [SerializeField]
+        public void RpcDestroy()
+        {
+            rb.mass -= Weight;
             this.enabled = false;
         }
+
+        #endregion
 
         #endregion
 
@@ -543,7 +553,7 @@ namespace Space.Ship.Components.Listener
             }
 
             // Apply direction to obj and sockets
-            transform.eulerAngles = dirEuler;
+            transform.localRotation = Quaternion.Euler(dirEuler);
         }
 
         /// <summary>

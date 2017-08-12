@@ -52,6 +52,7 @@ namespace Game
             NetworkServer.RegisterHandler((short)MSGCHANNEL.OBJECTHIT, OnObjectHit);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.INTEGRITYCHANGE, OnIntegrityChanged);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.CHATMESSAGESERVER, OnChatMessage);
+            NetworkServer.RegisterHandler((short)MSGCHANNEL.TRANSACTIONSERVER, OnTransaction);
 
             #endregion
 
@@ -213,6 +214,12 @@ namespace Game
         public void OnIntegrityChanged(NetworkMessage msg)
         {
             m_con.OnIntegrityChanged(msg.ReadMessage<IntegrityChangedMsg>());
+        }
+
+        [Server]
+        public void OnTransaction(NetworkMessage msg)
+        {
+            m_con.OnTransaction(msg.ReadMessage<TransactionMessage>());
         }
 
         #endregion

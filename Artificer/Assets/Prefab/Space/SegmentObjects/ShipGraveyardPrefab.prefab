@@ -1,15 +1,26 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &135224
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1984401247159340}
+  m_IsPrefabParent: 1
+--- !u!1 &1984401247159340
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 423224}
-  - component: {fileID: 11499524}
-  - component: {fileID: 11453574}
+  - component: {fileID: 4925168167758406}
+  - component: {fileID: 114396709864624378}
+  - component: {fileID: 114613564657009972}
   m_Layer: 0
   m_Name: ShipGraveyardPrefab
   m_TagString: Untagged
@@ -17,12 +28,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &423224
+--- !u!4 &4925168167758406
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 135224}
+  m_GameObject: {fileID: 1984401247159340}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2500, y: 2500, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -30,28 +41,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &11453574
+--- !u!114 &114396709864624378
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 135224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 047659dbba60c5040a69ba6f064ff21b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _physicalObject: 0
-  Active: 0
-  WreckagePrefabs:
-  - {fileID: 1125057715253342, guid: 10e4df30099526740827e2f27b560e72, type: 2}
-  - {fileID: 1421441126997262, guid: 10655ca0af56bb34692db0a97a088f7c, type: 2}
---- !u!114 &11499524
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 135224}
+  m_GameObject: {fileID: 1984401247159340}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
@@ -78,14 +73,21 @@ MonoBehaviour:
     i15: 61
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!1001 &100100000
-Prefab:
+--- !u!114 &114613564657009972
+MonoBehaviour:
   m_ObjectHideFlags: 1
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications: []
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 135224}
-  m_IsPrefabParent: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1984401247159340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 047659dbba60c5040a69ba6f064ff21b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PhysicalObject: 0
+  Active: 0
+  m_xSize: 0
+  m_ySize: 0
+  WreckagePrefabs:
+  - {fileID: 1125057715253342, guid: 10e4df30099526740827e2f27b560e72, type: 2}
+  - {fileID: 1421441126997262, guid: 10655ca0af56bb34692db0a97a088f7c, type: 2}

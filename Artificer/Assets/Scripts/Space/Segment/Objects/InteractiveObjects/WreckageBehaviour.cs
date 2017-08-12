@@ -18,17 +18,15 @@ namespace Space.Segment
         /// creation process.
         /// </summary>
         /// <param name="componentList"></param>
-        public void InitializeParameters(NetworkInstanceId parentID)
+        public override void InitializeParameters(NetworkInstanceId parentID)
         {
-            m_parentID = parentID;
-
             m_maxDensity = m_pieceDensity = 
                 UnityEngine.Random.Range(5000f, 10000f);
 
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
             rb.mass = 4;
 
-            InitializeSegmentObject();
+            base.InitializeParameters(parentID);
         }
 
         #endregion

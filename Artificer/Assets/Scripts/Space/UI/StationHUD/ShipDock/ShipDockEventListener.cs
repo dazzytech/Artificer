@@ -110,19 +110,33 @@ namespace Space.UI.Station
             else
             {
                 WalletData temp = SystemManager.Wallet;
-                if (temp.Purchase(m_att.Editor.Ship.Requirements.Cost))
+
+                if (m_att.Editor.Changed)
                 {
-                    SystemManager.Wallet = temp;
-
-                    // Ship we are currently using has been
-                    // changed
-                    // set data and reset ship construction
-                    m_att.Ship.ResetShip(m_att.Editor.Ship.Ship);
-
                     m_att.Editor.ClearShip();
+                    OnStateChanged(0);
 
-                    m_att.Ship.OnShipCompleted += OnShipUpdated;
+                    return;
                 }
+
+                if (!temp.Withdraw(m_att.Editor.Ship.Requirements.Cost))
+                {
+                    if (!temp.Withdraw(m_att.Editor.Ship.Requirements.Assets))
+                    {
+                        return;
+                    }
+                }
+
+                SystemManager.Wallet = temp;
+
+                // Ship we are currently using has been
+                // changed
+                // set data and reset ship construction
+                m_att.Ship.ResetShip(m_att.Editor.Ship.Ship);
+
+                m_att.Editor.ClearShip();
+
+                m_att.Ship.OnShipCompleted += OnShipUpdated;
             }
         }
 

@@ -16257,9 +16257,9 @@ RectTransform:
   m_Father: {fileID: 791}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 550, y: -346}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 550, y: 0}
   m_SizeDelta: {x: 1060, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &1022
@@ -18201,11 +18201,11 @@ MonoBehaviour:
   - {fileID: 112430, guid: dfe41666fdf05414ea45a49e37dd47d1, type: 2}
   - {fileID: 178506, guid: 87f3cc353526fb047936b76a6bf725f2, type: 2}
   - {fileID: 175094, guid: c1fe0a9a4dde9214a9566f0bf63d3f3e, type: 2}
-  - {fileID: 197064, guid: 989a9aa3b67a4954c80bd74b13f2a2d4, type: 2}
+  - {fileID: 1367644654089716, guid: f8c63f4f405912c47964f7c47810b0a9, type: 2}
   - {fileID: 122420, guid: 070991070974b204e843d6b8141a482c, type: 2}
   - {fileID: 166322, guid: 88bb3bea27133194abe1ad9f893c6cfa, type: 2}
   - {fileID: 185646, guid: 94a27fc06e4e1bb48ad10c9d410bfcea, type: 2}
-  - {fileID: 135224, guid: b04ee84ac096c4c43a8715bf3187b43d, type: 2}
+  - {fileID: 1984401247159340, guid: b04ee84ac096c4c43a8715bf3187b43d, type: 2}
   - {fileID: 1125057715253342, guid: 10e4df30099526740827e2f27b560e72, type: 2}
   - {fileID: 1000013982247906, guid: 7a2be7575710e7b4c93780e3b5226764, type: 2}
   - {fileID: 1399915413231392, guid: dc56fc5bdbc5d2242ada8190a54cf1ff, type: 2}
@@ -18306,6 +18306,21 @@ MonoBehaviour:
   Server: {fileID: 0}
   Discovery: {fileID: 1230}
   CamMsgHandler: {fileID: 0}
+  Player:
+    PlayerName: 
+    PlayerID: 0
+    IsHost: 0
+    ShipInventory: []
+    Wallet:
+      m_currency: 0
+      m_inventory: []
+  minimumPlayers: 1
+  SegmentSize:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 5000
+    height: 5000
   StarterList:
   - {fileID: 127202, guid: 1e3ae846b0fa9bf44ab440c4a12f19bc, type: 2}
   - {fileID: 141678, guid: 5c39506517bd0724a997d85e1efdd0bc, type: 2}
@@ -18617,15 +18632,8 @@ MonoBehaviour:
     - Item: 33
       Amount: 10000
       Exist: 1
-  Player:
-    PlayerName: 
-    PlayerID: 0
-    IsHost: 0
-    ShipInventory: []
-    Wallet:
-      m_currency: 0
-      m_inventory: []
-  minimumPlayers: 1
+  TeamASpawn: {x: 1500, y: 1500}
+  TeamBSpawn: {x: 3500, y: 3500}
 --- !u!114 &1122
 MonoBehaviour:
   m_ObjectHideFlags: 0

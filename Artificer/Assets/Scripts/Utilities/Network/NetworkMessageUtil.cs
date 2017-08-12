@@ -78,7 +78,6 @@ namespace Networking
         public int teamID;
     }
 
-
     /// <summary>
     /// Called when a ship has been hit
     /// to update the server
@@ -127,24 +126,25 @@ namespace Networking
     /// </summary>
     public class TransactionMessage : MessageBase
     {
+        public int CurrencyDir;
+
+        public int AssetDir;
+
         /// <summary>
         /// Amount of currency involved in 
         /// transaction 
-        /// + = deposit
-        /// - = spendature
         /// </summary>
         public int CurrencyAmount;
 
         /// <summary>
         /// List of items involved in the transaction
-        /// /// + = deposit
-        /// - = spendature
         /// </summary>
         public ItemCollectionData[] Assets;
 
         /// <summary>
         /// Who is receiving the transaction
         /// if -1 assume to be the player
+        /// otherwise this is a teamid
         /// </summary>
         public int Recipiant;
     }
@@ -177,7 +177,6 @@ namespace Networking
     }
 
     #endregion
-
 
     public class NetworkMessageUtil
     { }

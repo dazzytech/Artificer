@@ -19,6 +19,7 @@ namespace Space.Map
         public Transform Icon;
         public Vector2 Location;
         public Vector2 Size;
+        public Vector2[] Points;
         public MapObjectType Type;
         public Transform Ref;
         public int TeamID;

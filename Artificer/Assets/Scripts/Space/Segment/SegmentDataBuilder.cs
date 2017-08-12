@@ -15,6 +15,33 @@ namespace Space.Segment
     /// </summary>
     public class SegmentDataBuilder 
     {
+        #region ATTRIBUTES
+
+        private static GameParameters m_param;
+
+        #region ASTEROIDS
+
+        private static List<Rect> m_astBoundaries;
+
+        private static string[,] m_asteroidTypes
+            = new string[3, 2]
+                {{"Space/Destructable/Asteroid",
+                  "asteroid field"},
+                 {"Space/Destructable/AsteroidPlut",
+                  "plut asteroid field"},
+                 {"Space/Destructable/AsteroidHighVal",
+                  "high val asteroid field"}};
+
+        private static float m_astMaxSize = 700f;
+
+        private static float m_astMinSize = 300f;
+
+        private static int m_AstCount;
+
+        #endregion
+
+        #endregion
+
         #region PUBLIC INTERACTION
 
         /// <summary>
@@ -29,49 +56,23 @@ namespace Space.Segment
         /// 
         /// </summary>
         /// <returns>The new segment.</returns>
-        public static SegmentObjectData[] BuildNewSegment()
+        public static SegmentObjectData[] BuildNewSegment(GameParameters param)
         {
+            // Initialize parameters 
+            m_param = param;
+
             List<SegmentObjectData> SyncList = new List<SegmentObjectData>();
-            
+
             // GENERATE ASTEROIDS
+            m_astBoundaries = new List<Rect>();
 
-            // standard asteroid fields
-            int fields = Random.Range(10, 20);
-            for (int i = 0; i <= fields; i++)
+            for (int i = 0; i < 3; i++)
             {
-                int value = Random.Range(0, 3);
-                SyncList.Add(BuildAsteroidField
-                    (new Vector2
-                    (Random.Range(100f, 4900f),
-                     Random.Range(100f, 4900f)),
-                     "Space/Destructable/Asteroid",
-                     "asteroid field"));
-            }
-
-            // high value fields
-            fields = Random.Range(2, 5);
-            for (int i = 0; i <= fields; i++)
-            {
-                int value = Random.Range(0, 3);
-                SyncList.Add(BuildAsteroidField
-                    (new Vector2
-                    (Random.Range(100f, 4900f),
-                     Random.Range(100f, 4900f)),
-                     "Space/Destructable/AsteroidHighVal",
-                     "high val asteroid field"));
-            }
-
-            // plutonium fields
-            fields = Random.Range(3, 5);
-            for (int i = 0; i <= fields; i++)
-            {
-                int value = Random.Range(0, 3);
-                SyncList.Add(BuildAsteroidField
-                    (new Vector2
-                    (Random.Range(100f, 4900f),
-                     Random.Range(100f, 4900f)),
-                     "Space/Destructable/AsteroidPlut",
-                     "plut asteroid field"));
+                m_AstCount = Random.Range(4 - i, 10 - i);
+                for (int count = 0; count <= m_AstCount; count++)
+                {
+                    SyncList.Add(BuildAsteroidField(i));
+                }
             }
 
             // Generate a small amount of satellites (temp)
@@ -80,7 +81,7 @@ namespace Space.Segment
             {
                 SyncList.Add(BuildSatellite(new Vector2
                     (Random.Range(100f, 4900f),
-                     Random.Range(100f, 4900f))));
+                        Random.Range(100f, 4900f))));
             }
 
             
@@ -89,7 +90,7 @@ namespace Space.Segment
             {
                 SyncList.Add(BuildInterstellarCloud(new Vector2
                     (Random.Range(100f, 4900f),
-                     Random.Range(100f, 4900f))));
+                        Random.Range(100f, 4900f))));
             }
 
             int graves = Random.Range(2, 4);
@@ -97,7 +98,7 @@ namespace Space.Segment
             {
                 SyncList.Add(BuildGraveyard(new Vector2
                     (Random.Range(500f, 4500f),
-                     Random.Range(500f, 4500f))));
+                        Random.Range(500f, 4500f))));
             }
 
             return SyncList.ToArray();
@@ -124,7 +125,7 @@ namespace Space.Segment
 
                     newPos = new Vector2
                     (Random.Range(100f, 4900f),
-                     Random.Range(100f, 4900f));
+                        Random.Range(100f, 4900f));
 
                     foreach (Vector2 prev in prevPPos)
                     {
@@ -140,6 +141,8 @@ namespace Space.Segment
         }
 
         #endregion
+
+        #region PRIVATE UTILITIES
 
         #region DATA BUILDERS
 
@@ -218,25 +221,69 @@ namespace Space.Segment
             return satellite;
         }
 
-        private static SegmentObjectData BuildAsteroidField(Vector2 position, 
-            string value, string name)
+        /// <summary>
+        /// Builds an asteroid field, 
+        /// type is based on int
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private static SegmentObjectData BuildAsteroidField(int type)
         {
             // build base object
             SegmentObjectData aField = new SegmentObjectData();
 
+            float size = 0;
+
+            // Create boundary for the asteroid
+            Rect bounds = BuildBounds(ref size, type);
+
+            if (m_astBoundaries == null)
+                m_astBoundaries = new List<Rect>();
+            else
+            {
+                int attempts = 10;
+                while(attempts >= 0)
+                {
+                    bool inRange = false;
+
+                    foreach (Rect r in m_astBoundaries)
+                    {
+                        if (Math.InRange(bounds, r, 100f))
+                        {
+                            inRange = true;
+                            break;
+                        }
+                    }
+
+                    if (inRange)
+                    {
+                        bounds = BuildBounds(ref size, type);
+
+                        attempts--;
+                    }
+                    else
+                        break;
+                }
+            }
+
+            m_astBoundaries.Add(bounds);
+
             // Set descriptive info
             aField._type = "_asteroids";
-            aField._prefabPath = value;
-            aField._name = name;
+            aField._prefabPath = m_asteroidTypes[type,0];
+            aField._name = m_asteroidTypes[type, 1];
             aField._tag = "Asteroid";
-            aField._visibleDistance = 1010;
+            aField._visibleDistance = size + 100f;
 
             // Set numeric data
-            aField._position = position;
-            aField._size =
-                new Vector2(Random.Range(300, 1000),
-                Random.Range(300, 1000));
-            aField._count = Random.Range(50, 100);
+            aField._position = bounds.min;
+            aField._size = bounds.size;
+
+            aField._border = BuildRegion(bounds, size);
+
+            aField._count = 
+                Mathf.CeilToInt(size * Random.Range(.5f, 1f));
 
             return aField;
         }
@@ -252,6 +299,7 @@ namespace Space.Segment
             cloud._visibleDistance = 600;
 
             cloud._position = position;
+            cloud._size = new Vector2(500, 500);
             cloud._count = Random.Range(6, 10);
 
             return cloud;   
@@ -275,6 +323,101 @@ namespace Space.Segment
 
             return grave;
         }
+
+        #endregion
+
+        #region ASTEROID
+
+        /// <summary>
+        /// plots points witin the asteriod 
+        /// rect at 8 points from center extending
+        /// to half-size
+        /// </summary>
+        /// <param name="bounds"></param>
+        /// <returns></returns>
+        private static Vector2[] BuildRegion(Rect bounds, float size)
+        {
+            List<Vector2> region = new List<Vector2>();
+
+            // create an array of angles we 
+            // place points at
+            float[] angles = new float[8]
+            {
+                0, 45, 90, 135, 180, 225, 270, 315
+            };
+
+            // Create points from the center
+            // with magnitute of random range
+            for (int i = 0; i < 8; i++)
+            {
+                // create the first point at the top
+                Vector2 point = bounds.center + new Vector2(
+                    (float)Mathf.Cos(angles[i] * Mathf.Deg2Rad), 
+                    (float)Mathf.Sin(angles[i] * Mathf.Deg2Rad)) *
+                    (size * Random.Range(0.2f, 0.5f));
+
+                // Add to our storage
+                region.Add(point);
+            }
+
+            return region.ToArray();
+        }
+
+        private static Rect BuildBounds(ref float size, int type)
+        {
+            // Change the size depending on type 
+            size = Random.Range(m_astMinSize, m_astMaxSize) / (type + 1);
+
+            Vector2 position = Vector2.zero;
+
+            switch (type)
+            {
+                case 0:
+                    // this is a default asteroid
+                    // Spawn them closer to station
+                    // first 5 at team A and rest near team B
+                    Vector2 focus;
+                    if (m_astBoundaries.Count <= m_AstCount/2)
+                        focus = m_param.TeamASpawn;
+                    else
+                        focus = m_param.TeamBSpawn;
+
+                    // Spawn field within range of station
+                    position = 
+                        Math.RandomWithinRange(focus, size*.5f + 100f, size*.5f + 600f);
+
+                    // Clamp within the ma bounds
+                    position.x = Mathf.Clamp(position.x, size*.5f, SystemManager.Size.width - size);
+                    position.y = Mathf.Clamp(position.y, size*.5f, SystemManager.Size.height - size);
+                    break;
+
+                default:
+                    bool inRange = true;
+
+                    while (inRange)
+                    {
+                        inRange = false;
+
+                        // For now spawn within 2000 of map center and distance 
+                        // either station
+                        position =
+                            Math.RandomWithinRange(SystemManager.Size.center, 0, size * .5f + 1500f);
+
+                        if (Vector3.Distance(position, m_param.TeamASpawn) < 1000f)
+                            inRange = true;
+
+                        if (Vector3.Distance(position, m_param.TeamBSpawn) < 1000f)
+                            inRange = true;
+                    }
+                 break;
+            }
+
+            // position now defines the center point therefore
+            // adjust accordingly
+            return new Rect(position - new Vector2(size*.5f, size*.5f), new Vector2(size, size));
+        }
+
+        #endregion
 
         #endregion
     }

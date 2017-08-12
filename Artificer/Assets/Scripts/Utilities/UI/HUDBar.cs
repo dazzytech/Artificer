@@ -9,7 +9,7 @@ namespace UI
     /// Contains a value and displays a bar
     /// at that value
     /// </summary>
-    public class HUDBar : MonoBehaviour
+    public class HUDBar : SelectableHUDItem
     {
         #region ATTRIBUTES
 
@@ -17,15 +17,12 @@ namespace UI
         /// CLAMPED - Bar instantly displays value
         /// FLUID - Bar lerps to value
         /// </summary>
-        public enum BarStyle { CLAMPED, FLUID };
+        public enum BarStyle { CLAMPED, FLUID, FLASH };
 
         private float m_value;
 
         [SerializeField]
         private BarStyle m_style;
-
-        [SerializeField]
-        private Color m_colour = Color.white;
 
         #region HUD ELEMENTS
 
@@ -41,7 +38,7 @@ namespace UI
         private void OnEnable()
         {
             m_bar.GetComponent<RawImage>().color
-                = m_colour;
+                = m_standardColour;
 
             Value = 0;
         }
@@ -73,25 +70,16 @@ namespace UI
                         StopAllCoroutines();
                         StartCoroutine("LerpBar", value);
                         break;
+                    case BarStyle.FLASH:
+                        StopAllCoroutines();
+                        StartCoroutine("LerpBar", value);
+                        FlashImage();
+                        break;
                 }
-
             }
             get
             {
                 return m_value;
-            }
-        }
-
-        /// <summary>
-        /// Update the colour of the bar
-        /// </summary>
-        public Color Colour
-        {
-            set
-            {
-                m_colour = value;
-                m_bar.GetComponent<RawImage>().color
-                    = m_colour;
             }
         }
 

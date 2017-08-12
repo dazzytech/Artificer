@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Space.Teams;
+using Space.Segment;
 
 namespace Game
 {
@@ -37,6 +38,8 @@ namespace Game
         public TeamController TeamA;
 
         public TeamController TeamB;
+
+        public SegmentManager Segment;
 
         #endregion
     }

@@ -36,7 +36,7 @@ namespace Space.UI.Station.Editor
         /// <summary>
         /// Whether or not the ship has been changed
         /// </summary>
-        private bool Changed;
+        public bool Changed;
 
         [HideInInspector]
         public static BaseComponent DraggedObj;

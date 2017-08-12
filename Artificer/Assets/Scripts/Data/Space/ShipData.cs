@@ -74,19 +74,6 @@ namespace Data.Space
         {
             get { return Folder + "/" + Name; }
         }
-
-        /*public void Init()
-        {
-            Direction = "null";
-            Trigger = "null";
-            CTrigger = "null";
-            Folder = "null";
-            Name = "null";
-            Style = "null";
-
-            sockets = new SocketData[0];
-            requirements = new ItemCollectionData[0];
-        }*/
     }
 
     [System.Serializable]
@@ -108,18 +95,6 @@ namespace Data.Space
         /// Ship is aligned with mouse
         /// </summary>
         public bool Aligned;
-
-        /*public void Init()
-        {
-            if (components == null)
-                components = new ComponentData[0];
-
-            Name = "null";
-            Description = "null";
-            Category = "null";
-
-            _head.Init();
-        }*/
 
     	/// <summary>
     	/// Adds the component.
@@ -296,31 +271,64 @@ namespace Data.Space
 
                 // copy current requirments into list
                 int index = 0;
-                while (index > totalRequirements.Length)
+                while (index < totalRequirements.Length)
                     totalRequirements[index] = Head.requirements[index++];
 
                 foreach (ComponentData data in components)
                 {
-                    ItemCollectionData[] temp =
-                        new ItemCollectionData
-                        [totalRequirements.Length + data.requirements.Length];
-
-                    // copy current requirments into list
-                    index = 0;
-                    while (index > totalRequirements.Length)
-                        temp[index] = totalRequirements[index++];
-
                     // copy the new list to our list
                     int a = 0;
                     while (a < data.requirements.Length)
-                        temp[index++] = totalRequirements[a++];
+                    {
+                        if (data.requirements[a].Item != -1)
+                        {
+                            index = 0;
+                            while (index <= totalRequirements.Length)
+                            {
+                                // if we reach the end of the list then we have a new element
+                                if (index == totalRequirements.Length)
+                                {
+                                    totalRequirements = IncrementRequirements(totalRequirements);
+                                    totalRequirements[index] = data.requirements[a];
+                                    break;
+                                }
 
-                    totalRequirements = temp;
+                                // Find the item and add the requirements to it
+                                else if (totalRequirements[index].Item == data.requirements[a].Item)
+                                {
+                                    totalRequirements[index].Amount += data.requirements[a].Amount;
+                                    break;
+                                }
+
+                                index++;
+                            }
+                        }
+
+                        a++;
+                    }
                 }
 
                 return totalRequirements;
             }
 
+        }
+
+        /// <summary>
+        /// Increments the asset list
+        /// by one and returns the index
+        /// of the next item
+        /// </summary>
+        /// <returns></returns>
+        private ItemCollectionData[] IncrementRequirements(ItemCollectionData[] total)
+        {
+            int newIndex = total.Length;
+
+            ItemCollectionData[] temp = new ItemCollectionData[newIndex + 1];
+
+            for (int i = 0; i < newIndex; i++)
+                temp[i] = total[i];
+
+            return temp;
         }
     }
 }

@@ -304,8 +304,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fbe9289bad46c84abc6dd18884b47b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_interactive: 0
+  SharedIndex: 0
+  m_background: {fileID: 114039804632865396}
+  m_standardColour: {r: 0.64716697, g: 0.9149131, b: 0.9264706, a: 0.472}
+  m_highlightColour: {r: 1, g: 1, b: 1, a: 1}
+  m_selectedColour: {r: 1, g: 1, b: 1, a: 1}
   m_style: 1
-  m_colour: {r: 0.40208694, g: 0.7647723, b: 0.8161765, a: 0.791}
   m_bar: {fileID: 224761759121707462}
 --- !u!114 &114395949957742198
 MonoBehaviour:

@@ -63,6 +63,11 @@ namespace Space.UI.Station.Editor
             get { return m_requirements.Currency; }
         }
 
+        public ItemCollectionData[] Assets
+        {
+            get { return m_requirements.Assets; }
+        }
+
         #endregion
 
         public EditorRequirements()
@@ -95,67 +100,13 @@ namespace Space.UI.Station.Editor
         public void RemoveComponent(ComponentData newComp)
         {
             if (m_existingComponents.Contains(newComp.InstanceID))
-            {
-                /*
-                // this was an original piece
-                // Reimburse player data
-                if (att.RequiredMats != null)
-                {
-                    // Create dictionary list
-                    Dictionary<MaterialData, float> ReturnAmt = new Dictionary<MaterialData, float>();
-                    foreach (ConstructInfo info in att.RequiredMats)
-                    {
-                        MaterialData mat = ElementLibrary.ReturnElement(info.material);
-
-                        if(mat == null)
-                            continue;
-
-                        if (ReturnAmt.ContainsKey(mat))
-                        {
-                            ReturnAmt [mat] += info.amount;
-                        } else
-                        {
-                            ReturnAmt.Add(mat, info.amount);
-                        }
-                        // Add amount to reimburse tracker
-                        if (Reimbursed.ContainsKey(mat))
-                        {
-                            Reimbursed [mat] += info.amount;
-                        } else
-                        {
-                            Reimbursed.Add(mat, info.amount);
-                        }
-                    }
-                    // Reimburse player
-                    //SystemManager.GetPlayer.AddMaterial(ReturnAmt);
-                }*/
+            {  
                 // Remove component from list
                 m_existingComponents.Remove(newComp.InstanceID);
             } else
             {
-                m_requirements.Purchase(newComp.Cost);
-
-                /*
-                // This is not an original piece and can decrement requirements
-                if (att.RequiredMats != null)
-                {
-                    // Remove amount from store
-                    foreach(ConstructInfo info in att.RequiredMats)
-                    {
-                        MaterialData mat = ElementLibrary.ReturnElement(info.material);
-
-                        if(mat == null)
-                            continue;
-
-                        if(Requirements.ContainsKey(mat))
-                        {
-                            Requirements[mat] -= info.amount;
-                            // Remove entry if empty
-                            if(Requirements[mat] <= 0)
-                                Requirements.Remove(mat);
-                        }
-                    }
-                }*/
+                m_requirements.Withdraw(newComp.Cost);
+                m_requirements.Withdraw(newComp.requirements);
             }
         }
 
@@ -168,18 +119,6 @@ namespace Space.UI.Station.Editor
             if (!saved)
             {
                 m_requirements.Clear();
-                // Changes were not saved so take material away from player
-                // Remove amount from store
-                /*foreach(MaterialData mat in Reimbursed.Keys)
-                {
-                    if(SystemManager.GetPlayer.Cargo.ContainsKey(mat))
-                    {
-                        SystemManager.GetPlayer.Cargo[mat] -= Reimbursed[mat];
-                        // Remove entry if empty
-                        if(SystemManager.GetPlayer.Cargo[mat] <= 0)
-                            SystemManager.GetPlayer.Cargo.Remove(mat);
-                    }
-                }*/
             }
 
             m_existingComponents.Clear();

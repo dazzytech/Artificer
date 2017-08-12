@@ -2,6 +2,7 @@
 using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
+using Data.Space;
 
 namespace Space.Segment
 {
@@ -14,6 +15,14 @@ namespace Space.Segment
     {
         public GameObject[] WreckagePrefabs;
 
+        private void Awake()
+        {
+            WreckagePrefabs
+            = new GameObject[2]
+            { Resources.Load("Space/Destructable/Wreckage_01", typeof(GameObject)) as GameObject,
+              Resources.Load("Space/Destructable/Wreckage_02", typeof(GameObject)) as GameObject };
+        }
+
         #region WRECKAGE GENERATOR
 
         /// <summary>
@@ -22,16 +31,35 @@ namespace Space.Segment
         /// </summary>
         /// <param name="wData"></param>
         /// <param name="position"></param>
-        private void BuildWreck(Vector2 position)
+        [Server]
+        protected override void BuildObject()
         {
-            GameObject newWreckage = Instantiate(WreckagePrefabs[Random.Range(0, WreckagePrefabs.Length)]);
-            newWreckage.transform.parent = this.transform;
-            newWreckage.transform.localPosition = position;
-            newWreckage.transform.Rotate(0,0, Random.Range(0, 360));
+            // Init and set parent of object
+            GameObject subObj = Instantiate
+                (WreckagePrefabs[Random.Range(0, WreckagePrefabs.Length)]);
+            subObj.transform.parent = transform;
 
-            NetworkServer.Spawn(newWreckage);
-            newWreckage.GetComponent<WreckageBehaviour>().
-                InitializeParameters(this.netId);
+            // Give a random location and size;
+            Vector2 location = new Vector2
+                (Random.Range(0f, m_segObject._size.x),
+                 Random.Range(0f, m_segObject._size.y));
+
+            // If we have a bounds then keep within them
+            if (m_segObject._border != null)
+                while (!Math.IsPointInPolygon
+                   (m_segObject._position + location, m_segObject._border))
+                    location = new Vector2
+                        (Random.Range(0f, m_segObject._size.x),
+                         Random.Range(0f, m_segObject._size.y));
+
+            // position with our parameter
+            subObj.transform.localPosition = location;
+            subObj.transform.Rotate(0,0, Random.Range(0, 360));
+
+            // Spawn on network and init object
+            NetworkServer.Spawn(subObj);
+            subObj.GetComponent<SegmentObject>().
+                InitializeParameters(netId);
         }
 
         #endregion

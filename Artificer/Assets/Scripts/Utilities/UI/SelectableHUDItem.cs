@@ -182,8 +182,11 @@ namespace UI
 
         public void FadeImage()
         {
-            StartCoroutine(PanelFadeEffects.FadeImg(m_background,
-                new Color(0,0,0,0)));
+            if (isActiveAndEnabled)
+                StartCoroutine(PanelFadeEffects.FadeImg(m_background,
+                    new Color(0, 0, 0, 0)));
+            else
+                m_background.color = new Color(0, 0, 0, 0);
         }
 
         #endregion

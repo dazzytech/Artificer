@@ -7,6 +7,7 @@ using Networking;
 using UI;
 using Data.Space.Library;
 using Data.Space;
+using Data.Space.Collectable;
 
 namespace Space.UI.Spawn
 {
@@ -51,9 +52,18 @@ namespace Space.UI.Spawn
         {
             WalletData temp = SystemManager.Wallet;
 
-            if (temp.Purchase(m_con.SelectedShip.Cost))
+            if (temp.Withdraw(m_con.SelectedShip.Cost))
             {
                 SystemManager.Wallet = temp;
+
+                TransactionMessage tMsg = new TransactionMessage();
+                tMsg.Recipiant = SystemManager.Space.Team.ID;
+                tMsg.CurrencyDir = 1;
+                tMsg.CurrencyAmount = m_con.SelectedShip.Cost;
+                tMsg.AssetDir = -1;
+                tMsg.Assets = m_con.SelectedShip.Requirements;
+
+                SystemManager.singleton.client.Send((short)MSGCHANNEL.TRANSACTIONSERVER, tMsg);
 
                 // For now we don't use spawn or ship info
                 SpawnSelectionMessage ssm = new SpawnSelectionMessage();

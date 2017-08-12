@@ -27,10 +27,12 @@ namespace Space.Segment
         private bool m_running;
 
         [SerializeField]
-        private float m_withinDistance;
+        private float m_withinDistance = 100f;
 
         [SyncVar]
         protected NetworkInstanceId m_parentID;
+
+        protected GameObject m_parent;
 
         #endregion
 
@@ -61,6 +63,26 @@ namespace Space.Segment
             get { return m_itemIndex; }
         }
 
+        /// <summary>
+        /// Returns in the object is 
+        /// determining distance
+        /// </summary>
+        public bool Running
+        {
+            get { return m_running; }
+        }
+
+        public SegmentObjectBehaviour Parent
+        {
+            get
+            {
+                if(m_parent != null)
+                    return m_parent.GetComponent<SegmentObjectBehaviour>();
+
+                return null;
+            }
+        }
+
         #endregion
 
         #region MONO BEHAVIOUR
@@ -83,23 +105,15 @@ namespace Space.Segment
         void OnDestroy()
         {
             // Release the event listener
-            if (transform.parent != null)
-            {
-                if (transform.parent.GetComponent<SegmentObjectBehaviour>() != null)
-                {
-                    transform.parent.GetComponent<SegmentObjectBehaviour>().ObjEnable
-                        -= ParentEnabled;
-
-                    transform.parent.GetComponent<SegmentObjectBehaviour>().ObjDisable
-                        -= ParentDisabled;
-                }
-            }
-            else
+            if (transform.parent == null)
                 StopCoroutine("PopCheck");
         }
 
         void OnCollisionEnter2D(Collision2D other)
         {
+            if (!Parent.PhysicalObject)
+                return;
+
             /// Apply damage to any object it
             /// hits and bumps it away
             if (other.transform.gameObject.tag != "Station")
@@ -126,6 +140,18 @@ namespace Space.Segment
         #endregion
 
         #region PUBLIC INTERACTION
+
+        /// <summary>
+        /// Called by parent to init data
+        /// </summary>
+        /// <param name="parentID"></param>
+        [Server]
+        public virtual void InitializeParameters(NetworkInstanceId parentID)
+        {
+            m_parentID = parentID;
+
+            InitializeSegmentObject();
+        }
 
         public void ApplyDamage(HitData hData)
         {
@@ -225,6 +251,15 @@ namespace Space.Segment
             }
         }
 
+        /// <summary>
+        /// start running coroutine when parent within range
+        /// </summary>
+        public void ParentEnabled(Vector2 playerPos)
+        {
+            if (Vector3.Distance(transform.position, playerPos) <= m_withinDistance)
+                StartCoroutine("PopCheck");
+        }
+
         #endregion
 
         #region PRIVATE UTILITIES
@@ -235,16 +270,14 @@ namespace Space.Segment
         /// </summary>
         protected virtual void InitializeSegmentObject()
         {
-            GameObject parent = ClientScene.FindLocalObject(m_parentID);
-            if (parent != null)
+            DisableObj();
+
+            m_parent = ClientScene.FindLocalObject(m_parentID);
+            if (m_parent != null)
             {
-                transform.parent = parent.transform;
+                transform.parent = m_parent.transform;
 
-                transform.parent.GetComponent<SegmentObjectBehaviour>().ObjEnable
-                    += ParentEnabled;
-
-                transform.parent.GetComponent<SegmentObjectBehaviour>().ObjDisable
-                    += ParentDisabled;
+                Parent.AddObject(this);
             }
             else
                 Debug.Log(m_parentID + " NOT FOUND");
@@ -346,27 +379,6 @@ namespace Space.Segment
             m_running = false;
         }
 
-
-        #region EVENT LISTENER
-
-        /// <summary>
-        /// start running coroutine when parent within range
-        /// </summary>
-        private void ParentEnabled()
-        {
-            EnableObj();
-        }
-
-        /// <summary>
-        /// stop running coroutine when parent out of range
-        /// </summary>
-        private void ParentDisabled()
-        {
-            DisableObj();
-        }
-
-        #endregion
-
         #endregion
 
         #region COROUTINES
@@ -414,45 +426,5 @@ namespace Space.Segment
         }
 
         #endregion 
-
-        /*
-        protected Animator anim;
-        public string[] prospect;         Sync list string
-        
-        public void Hit(HitData hit)
-        {
-            pieceDensity -= hit.damage;
-
-            if (pieceDensity <= 0)
-            {
-                // for now just destroy
-                Destroy(this.gameObject);
-
-                int numOfRocks = Mathf.CeilToInt(maxDensity*0.02f);
-
-                for(int i = 0; i < numOfRocks; i++)
-                {
-                    GameObject rock = new GameObject();
-                    SpriteRenderer rockSprite = rock.AddComponent<SpriteRenderer>();
-                    rockSprite.sprite = (Sprite)Resources.Load("Textures/wreck", typeof(Sprite));
-                    rock.transform.localScale = new Vector3(.5f, .5f, 1f);
-                    rock.transform.position = transform.position;
-                    rock.layer = 8;
-
-                    CollectableRockBehaviour behaviour = 
-                        rock.AddComponent<CollectableRockBehaviour>();
-                    behaviour.PopulateWeighted(prospect);
-
-                    Rigidbody2D rb = rock.AddComponent<Rigidbody2D>();
-                    rb.AddForce(Random.insideUnitCircle*20f, ForceMode2D.Force);
-                    rb.gravityScale = 0;
-                    BoxCollider2D col = rock.AddComponent<BoxCollider2D>();
-                    Vector3 size = new Vector3(.5f, .5f);
-                    col.size = size;
-                    col.isTrigger = true;
-                }        
-            }
-        }*/
-
     }
 }

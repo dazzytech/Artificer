@@ -27,9 +27,9 @@ namespace Space.UI.Ship
         /// Stores a reference to a 
         /// storage item using their ID
         /// </summary>
-        private Dictionary<int, StorageListPrefab> m_storageItems;
+        private Dictionary<int, MaterialViewerPrefab> m_storageItems;
 
-        private StorageListPrefab m_capacity;
+        private MaterialViewerPrefab m_capacity;
 
         #region HUD ELEMENTS
 
@@ -59,7 +59,7 @@ namespace Space.UI.Ship
             foreach (Transform child in m_storageList)
                 Destroy(child.gameObject);
 
-            m_storageItems = new Dictionary<int, StorageListPrefab>();
+            m_storageItems = new Dictionary<int, MaterialViewerPrefab>();
 
             m_shipRef.OnShipCompleted += OnShipCompleted;
 
@@ -119,13 +119,13 @@ namespace Space.UI.Ship
                 newStorageItem.transform.SetParent(m_storageList);
                 // Store our capacity
                 m_capacity = newStorageItem.GetComponent
-                    <StorageListPrefab>();
+                    <MaterialViewerPrefab>();
                 m_capacity.Initialize(null);
             }
 
             total = used / capacity;
 
-            m_capacity.DisplayValue(total, "Total", total);
+            m_capacity.DisplayValue("Total", new float[1] { total });
 
             foreach(int item in current.Keys)
             {
@@ -136,15 +136,15 @@ namespace Space.UI.Ship
                     GameObject newStorageItem = Instantiate(m_storagePrefab);
                     newStorageItem.transform.SetParent(m_storageList);
                     // Store our item using index
-                    StorageListPrefab storage = newStorageItem.
-                        GetComponent<StorageListPrefab>();
+                    MaterialViewerPrefab storage = newStorageItem.
+                        GetComponent<MaterialViewerPrefab>();
                     m_storageItems.Add(item, storage);
                     storage.Initialize(null);
                 }
 
                 // Add added amount to display
-                m_storageItems[item].DisplayValue(current[item] / capacity, 
-                    SystemManager.Items[item].Name, total);
+                m_storageItems[item].DisplayValue(SystemManager.Items[item].Name, 
+                    new float[2] { current[item] / capacity, total});
             }
         }
 
