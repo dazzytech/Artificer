@@ -188,7 +188,7 @@ namespace Space.UI.Spawn
                     (new NetworkInstanceId(netId));
 
                 int SpawnID = stationObj.GetComponent
-                    <StationController>().SpawnID;
+                    <StationAccessor>().SpawnID;
 
                 if (SpawnID != -1)
                 {

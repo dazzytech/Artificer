@@ -76,8 +76,8 @@ namespace Space.AI
         protected List<ShipAccessor> m_ships
             = new List<ShipAccessor>();
 
-        protected List<StationAttributes> m_stations
-            = new List<StationAttributes>();
+        protected List<StationAccessor> m_stations
+            = new List<StationAccessor>();
 
         /// <summary>
         /// Stores a reference to what we have targetted
@@ -613,8 +613,8 @@ namespace Space.AI
 
                 // Get every ship and store if we dont have them
                 GameObject root = GameObject.Find("Team_A");
-                foreach (StationAttributes child in
-                         root.GetComponentsInChildren<StationAttributes>())
+                foreach (StationAccessor child in
+                         root.GetComponentsInChildren<StationAccessor>())
                 {
                     if (!m_stations.Contains(child))
                         m_stations.Add(child);
@@ -623,8 +623,8 @@ namespace Space.AI
                 }
 
                 root = GameObject.Find("Team_B");
-                foreach (StationAttributes child in
-                         root.GetComponentsInChildren<StationAttributes>())
+                foreach (StationAccessor child in
+                         root.GetComponentsInChildren<StationAccessor>())
                 {
                     if (!m_stations.Contains(child))
                         m_stations.Add(child);

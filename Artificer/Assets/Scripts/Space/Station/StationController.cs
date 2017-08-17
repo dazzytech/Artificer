@@ -5,8 +5,10 @@ using System.Collections;
 // Artificer
 using Data.Space;
 using Space.Teams;
+using Space.Ship;
 using Networking;
 using Space.Segment;
+using Space.UI;
 
 namespace Stations
 {
@@ -19,14 +21,14 @@ namespace Stations
     {
         #region EVENTS
 
-        public delegate void StationEvent(StationController controller);
+        public delegate void StationEvent(StationAccessor station);
 
-        public static event StationEvent EnterRange;
-        public static event StationEvent ExitRange;
-        public static event StationEvent EnterBuildRange;
-        public static event StationEvent ExitBuildRange;
+        public static event StationEvent OnEnterRange;
+        public static event StationEvent OnExitRange;
+        public static event StationEvent OnEnterBuildRange;
+        public static event StationEvent OnExitBuildRange;
 
-        public static event StationEvent StationCreated;
+        public static event StationEvent OnStationCreated;
 
         #endregion
 
@@ -39,40 +41,47 @@ namespace Stations
 
         #region MONO BEHAVIOUR 
 
-        void Awake()
+        public virtual void Awake()
         {
-            Att.CurrentIntegrity = Att.Integrity;
+            m_att.CurrentIntegrity = m_att.Integrity;
+
+            m_att.ProximityMessage = "Press Enter to dock at station";
         }
 
         void Start()
         {
-            if (Att.Type == STATIONTYPE.HOME || Att.Type == STATIONTYPE.WARP)
+            switch (m_att.Type)
             {
+                case STATIONTYPE.HOME:
+                case STATIONTYPE.WARP:
+                case STATIONTYPE.DEPOT:
                 m_docking = CheckRange
-                    (EnterRange, ExitRange, Att.MinDistance);
+                    (OnEnterRange, OnExitRange,
+                    m_att.MinDistance);
 
                 StartCoroutine(m_docking);
+                    break;
             }
 
-            if (Att.Type == STATIONTYPE.HOME || Att.Type == STATIONTYPE.FOB)
+            if (m_att.Type == STATIONTYPE.HOME || m_att.Type == STATIONTYPE.FOB)
             {
                 m_building = CheckRange
-                    (EnterBuildRange, ExitBuildRange,
-                    Att.BuildDistance);
+                    (OnEnterBuildRange, OnExitBuildRange,
+                    m_att.BuildDistance);
 
                 StartCoroutine(m_building);
             }
 
-            if (!Att.Interactive)
+            if (!m_att.Interactive)
                 StartCoroutine("CheckForActivity");
 
             // Only trigger creation event once team is defined
-            if (Att.TeamID != NetworkInstanceId.Invalid)
+            if (m_att.TeamID != NetworkInstanceId.Invalid)
             {
-                transform.SetParent(ClientScene.FindLocalObject(Att.TeamID).transform);
+                transform.SetParent(ClientScene.FindLocalObject(m_att.TeamID).transform);
 
-                if (StationCreated != null)
-                    StationCreated(this);
+                if (OnStationCreated != null)
+                    OnStationCreated(m_att.Accessor);
             }
         }
 
@@ -89,6 +98,8 @@ namespace Stations
 
         #region PUBLIC INTERACTION
 
+        #region EXTERNAL FUNCTION
+
         /// <summary>
         /// called from team spawner to 
         /// pass important information to the station object
@@ -101,17 +112,17 @@ namespace Stations
         {
             // Only home stations are created immediately
             if (!delayBuild)
-                Att.Interactive = true;
+                m_att.Interactive = true;
             else
             {
                 // Here we would begin construction process
-                Att.Interactive = false;
+                m_att.Interactive = false;
 
                 StartCoroutine("GenerateStation");
             }
 
             // reference to our team
-            Att.TeamID = newTeam;          
+            m_att.TeamID = newTeam;
         }
 
         /// <summary>
@@ -121,20 +132,20 @@ namespace Stations
         /// </summary>
         /// <param name="hitD"></param>
         [Server]
-        public void ProcessDamage(HitData hitD)
+        public void ProcessDamage
+            (HitData hitD)
         {
             // For now ignore friendly fire
-            if (Att.Team.PlayerOnTeam(hitD.originID))
+            if (m_att.Accessor.Team.PlayerOnTeam(hitD.originID))
                 return;
 
             // First apply damage to station integrity
-            Att.CurrentIntegrity -= hitD.damage;
-
+            m_att.CurrentIntegrity -= hitD.damage;
 
             // After successfully taking damage, set to under attack mode
             StopCoroutine("AttackTimer");
 
-            Att.UnderAttack = true;
+            m_att.UnderAttack = true;
 
             StartCoroutine("AttackTimer");
 
@@ -146,11 +157,11 @@ namespace Stations
             SystemManager.singleton.client.Send((short)MSGCHANNEL.INTEGRITYCHANGE, intmsg);
 
             // if station destroyed then being destroy process
-            if (Att.CurrentIntegrity <= 0)
+            if (m_att.CurrentIntegrity <= 0)
             {
                 StationDestroyMessage msg = new StationDestroyMessage();
                 msg.SelfID = netId;
-                msg.ID = Att.SpawnID;
+                msg.ID = m_att.SpawnID;
 
                 SystemManager.singleton.client.Send((short)MSGCHANNEL.STATIONDESTROYED, msg);
 
@@ -158,6 +169,94 @@ namespace Stations
                 Destroy(this.gameObject);
             }
         }
+
+        #endregion
+
+        #region PLAYER INTERACTION
+
+        public virtual void Interact(ShipAccessor ship) {}
+
+        public virtual void Idle(ShipAccessor ship) {}
+
+        /// <summary>
+        /// Hides the ship
+        /// and then displays the station information
+        /// </summary>
+        /// <param name="ship"></param>
+        public virtual void Dock(ShipAccessor ship)
+        {
+            if (ship != null)
+            {
+                ship.DisableShip();
+
+                // Next is to update the HUD to display the
+                // micro stationHUD
+                SystemManager.UIState.SetState(UIState.Station);
+
+                // Add message for sending ship attributes
+                SystemManager.UI.InitializeStationHUD(ship);
+            }
+        }
+
+        /// <summary>
+        /// Reverts the ui state
+        /// and makes the player ship visible
+        /// </summary>
+        /// <param name="ship"></param>
+        public virtual void UnDock(ShipAccessor ship)
+        {
+            if (ship != null)
+            { 
+                // Fade in ship
+                ship.EnableShip();
+
+                // Next is to update the HUD to display the
+                // micro stationHUD
+                SystemManager.UIState.SetState(UIState.Play);
+            }
+        }
+
+        /// <summary>
+        /// Display a prompt to dock
+        /// </summary>
+        public virtual void EnterRange()
+        {
+            SystemManager.UIMsg.DisplayPrompt(string.Format
+                ("Press {0} to dock at this station.", Control_Config.GetKey("dock", "sys")));
+        }
+
+        /// <summary>
+        /// Clear messages
+        /// </summary>
+        public virtual void ExitRange()
+        {
+            SystemManager.UIMsg.ClearPrompt();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region PRIVATE ACCESSORS
+
+        protected StationAttributes m_att
+        {
+            get
+            {
+                if (transform == null)
+                    return null;
+                else if (transform.GetComponent<StationAttributes>() != null)
+                    return transform.GetComponent<StationAttributes>();
+                else
+                    return null;
+            }
+        }
+
+        #endregion 
+
+        #region PRIVATE UTILITIES
+
+        
 
         #endregion
 
@@ -171,11 +270,11 @@ namespace Stations
         /// <returns></returns>
         private IEnumerator AttackTimer()
         {
-            if (Att.UnderAttack)
+            if (m_att.UnderAttack)
             {
                 yield return new WaitForSeconds(20f);
 
-                Att.UnderAttack = false;
+                m_att.UnderAttack = false;
             }
             yield return null;
         }
@@ -187,9 +286,9 @@ namespace Stations
         /// <returns></returns>
         private IEnumerator CheckForActivity()
         {
-            GetComponent<SpriteRenderer>().color = Att.BuildColour;
+            GetComponent<SpriteRenderer>().color = m_att.BuildColour;
 
-            while(!Att.Interactive)
+            while(!m_att.Interactive)
             {
                 yield return null;
             }
@@ -206,9 +305,9 @@ namespace Stations
         /// <returns></returns>
         private IEnumerator GenerateStation()
         {
-            yield return new WaitForSeconds(Att.BuildCounter);
-            
-            Att.Interactive = true;
+            yield return new WaitForSeconds(m_att.BuildCounter);
+
+            m_att.Interactive = true;
 
             yield break;
         }
@@ -231,7 +330,7 @@ namespace Stations
             {
                 // Always want to skip if we 
                 // arent currently active
-                if (!Att.Interactive)
+                if (!m_att.Interactive)
                 {
                     yield return null;
                     continue;
@@ -255,7 +354,7 @@ namespace Stations
 
                 // only proceed if local player 
                 // is on the correct team
-                if (!Att.Team.PlayerOnTeam(localInstID))
+                if (!m_att.Accessor.Team.PlayerOnTeam(localInstID))
                 {
                     yield break;
                 }
@@ -270,7 +369,7 @@ namespace Stations
                     if (!triggered)
                     {
                         // Call the event
-                        InRange(this);
+                        InRange(m_att.Accessor);
 
                         triggered = true;
                     }
@@ -280,7 +379,7 @@ namespace Stations
                     if (triggered)
                     {
                         // Call the event
-                        OutRange(this);
+                        OutRange(m_att.Accessor);
 
                         triggered = false;
                     }
@@ -291,108 +390,5 @@ namespace Stations
         }
 
         #endregion
-
-        #region ACCESSORS
-
-        /// <summary>
-        /// Return unique ID
-        /// </summary>
-        public int SpawnID
-        {
-            get { return Att.SpawnID; }
-            set { Att.SpawnID = value; }
-        }
-
-        /// <summary>
-        /// returns int labeling the state the station is currently in
-        /// 0 - Safe
-        /// 1 - Under Attack
-        /// 2 - Destroyed
-        /// 3 - Building
-        /// </summary>
-        public int Status
-        {
-            get
-            {
-                if (Att.UnderAttack)
-                    return 1;
-                else
-                    return 0;
-            }
-        }
-
-        /// <summary>
-        /// Return texture within sprite renderer of this object as sprite
-        /// </summary>
-        public Sprite Icon
-        {
-            get
-            {
-                if(Att.Icon != null)
-                    return Att.Icon;
-                else
-                    return GetComponent<SpriteRenderer>().sprite;
-            }
-        }
-
-        /// <summary>
-        /// Return health in a value between 1.0 - 0.0
-        /// </summary>
-        public float NormalizedHealth
-        {
-            get
-            {
-                if (Att.Integrity == 0)
-                    return 1;
-                else
-                return Att.CurrentIntegrity / Att.Integrity;
-            }
-        }
-
-        /// <summary>
-        /// Distance between the player and this station
-        /// </summary>
-        public float Distance
-        {
-            get
-            {
-                // Retrieve player object and check if 
-                // Player object currently exists
-                GameObject playerTransform =
-                    GameObject.FindGameObjectWithTag("PlayerShip");
-
-                if (playerTransform == null)
-                {
-                    return -1;
-                }
-
-                // return distance
-                return Vector3.Distance(this.transform.position, 
-                    playerTransform.transform.position);
-            }
-        }
-
-        /// <summary>
-        /// External tools react differently to types
-        /// </summary>
-        public STATIONTYPE Type
-        {
-            get { return Att.Type; }
-        }
-
-        public StationAttributes Att
-        {
-            get
-            {
-                if (transform == null)
-                    return null;
-                else if (transform.GetComponent<StationAttributes>() != null)
-                    return transform.GetComponent<StationAttributes>();
-                else
-                    return null;
-            }
-        }
-
-        #endregion 
     }
 }

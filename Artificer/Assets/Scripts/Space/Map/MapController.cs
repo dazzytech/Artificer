@@ -58,7 +58,7 @@ namespace Space.Map
         {
             // Assign listeners
             SystemManager.Events.EventShipCreated += CreateShip;
-            StationController.StationCreated += CreateStation;
+            StationController.OnStationCreated += CreateStation;
             SegmentObjectBehaviour.Created += CreateSegmentObject;
             UI.Proxmity.TrackerHUD.OnWayPointCreated += DeployWaypoint;
 
@@ -117,11 +117,11 @@ namespace Space.Map
                 OnMapUpdate(mapObj);
         }
 
-        private void CreateStation(StationController station)
+        private void CreateStation(StationAccessor station)
         {
             MapObject mapObj = BuildObject(station.transform);
             mapObj.Type = MapObjectType.STATION;
-            mapObj.TeamID = station.Att.Team.ID;
+            mapObj.TeamID = station.Team.ID;
 
             if (OnMapUpdate != null)
                 OnMapUpdate(mapObj);

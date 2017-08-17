@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using Space.Ship;
 using Data.Space.Library;
 using Space.Ship.Components.Listener;
+using System.Linq;
 
 namespace Space.UI.Ship
 {
@@ -101,7 +102,7 @@ namespace Space.UI.Ship
                 capacity += storage.Capacity;
                 used += storage.Used;
 
-                foreach(int key in storage.Materials.Keys)
+                foreach (int key in storage.Materials.Keys)
                 {
                     if (!current.ContainsKey(key))
                         current.Add(key, 0);
@@ -125,12 +126,18 @@ namespace Space.UI.Ship
 
             total = used / capacity;
 
-            m_capacity.DisplayValue("Total", new float[1] { total });
+            if (total > 0)
+                m_capacity.DisplayValue("Total", new float[1] { total });
+            else
+            {
+                GameObject.Destroy(m_capacity.gameObject);
+                m_capacity = null;
+            }
 
-            foreach(int item in current.Keys)
+            foreach (int item in current.Keys)
             {
                 // See if we have previously built this
-                if(!m_storageItems.ContainsKey(item))
+                if (!m_storageItems.ContainsKey(item))
                 {
                     // if not add a new prefab to the HUD
                     GameObject newStorageItem = Instantiate(m_storagePrefab);
@@ -143,8 +150,20 @@ namespace Space.UI.Ship
                 }
 
                 // Add added amount to display
-                m_storageItems[item].DisplayValue(SystemManager.Items[item].Name, 
-                    new float[2] { current[item] / capacity, total});
+                m_storageItems[item].DisplayValue(SystemManager.Items[item].Name,
+                    new float[2] { current[item] / capacity, total });
+            }
+
+
+            // Remove any requirements that are no longer 
+            // included
+            for (int i = 0; i < m_storageItems.Count; i++)
+            {
+                if (!current.ContainsKey(m_storageItems.Keys.ToArray()[i]))
+                {
+                    Destroy(m_storageItems.Values.ToArray()[i].gameObject);
+                    m_storageItems.Remove(m_storageItems.Keys.ToArray()[i]);
+                }
             }
         }
 

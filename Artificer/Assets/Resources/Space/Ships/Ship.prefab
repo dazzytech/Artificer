@@ -155,7 +155,9 @@ MonoBehaviour:
       Folder: 
       Name: 
       Style: 
+      Cost: 0
       sockets: []
+      requirements: []
       AutoLock: 0
       behaviour: 0
       AutoFire: 0
@@ -328,4 +330,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ship: {fileID: 11455752}
   m_gen: {fileID: 11452598}
-  m_input: {fileID: 0}
+  m_msg: {fileID: 11464192}
+  m_input: {fileID: 11400014}

@@ -48,7 +48,7 @@ namespace Space
         public bool buildRange;
 
         // refence to the station we are currently at
-        public StationController station;
+        public StationAccessor station;
 
         public bool docked;
 

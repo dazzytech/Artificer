@@ -7907,7 +7907,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8161765, g: 0.726157, b: 0.726157, a: 1}
+  m_Color: {r: 0.8161765, g: 0.7876186, b: 0.726157, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -7918,8 +7918,8 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: be6d60d238aa80d489cb47394563eb1e, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
-    m_BestFit: 1
-    m_MinSize: 10
+    m_BestFit: 0
+    m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -24482,7 +24482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a51bca4484a7cfd42abf6b3032e66b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _att: {fileID: 1368435029}
+  m_att: {fileID: 1368435029}
   m_util: {fileID: 1368435027}
 --- !u!114 &1368435026
 MonoBehaviour:
@@ -30619,7 +30619,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SatellitePrefab: {fileID: 175094, guid: c1fe0a9a4dde9214a9566f0bf63d3f3e, type: 2}
-  CloudPrefab: {fileID: 166322, guid: 88bb3bea27133194abe1ad9f893c6cfa, type: 2}
 --- !u!1 &1694752605
 GameObject:
   m_ObjectHideFlags: 0

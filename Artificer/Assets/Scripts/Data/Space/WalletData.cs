@@ -88,34 +88,51 @@ namespace Data.Space
         /// <param name="item"></param>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public bool Deposit(int item, float amount)
+        public bool Deposit(ItemCollectionData[] deposit)
         {
-            if(amount > 0 
-                && item != -1)
-            {
-                if (m_inventory == null)
-                    m_inventory = new ItemCollectionData[0]; 
+            if (m_inventory == null)
+                m_inventory = new ItemCollectionData[0];
 
-                // Discover if we already have this
-                for(int i = 0; i < m_inventory.Length; i++)
+            ItemCollectionData[] temp = 
+                new ItemCollectionData[m_inventory.Length];
+
+            for (int i = 0; i < m_inventory.Length; i++)
+                temp[i] = m_inventory[i];
+
+            foreach (ItemCollectionData inc in deposit)
+            {
+                int item = inc.Item;
+                float amount = inc.Amount;
+
+                if (amount > 0
+                && item != -1)
                 {
-                    if(m_inventory[i].Item == item)
+                    bool contained = false;
+
+                    // Discover if we already have this
+                    for (int i = 0; i < temp.Length; i++)
                     {
-                        m_inventory[i].Amount += amount;
-                        return true;
+                        if (temp[i].Item == item)
+                        {
+                            temp[i].Amount += amount;
+                            contained = true;
+                            break;
+                        }
+                    }
+
+                    if (!contained)
+                    {
+                        // create new item
+                        int index = IncrementAssets(ref temp);
+                        temp[index].Amount = amount;
+                        temp[index].Item = item;
+                        temp[index].Exist = true;
                     }
                 }
-
-                // create new item
-                int index = IncrementAssets();
-                m_inventory[index].Amount = amount;
-                m_inventory[index].Item = item;
-                m_inventory[index].Exist = true;
-
-                return true;
             }
 
-            return false;
+            m_inventory = temp;
+            return true;
         }
 
         /// <summary>
@@ -153,7 +170,7 @@ namespace Data.Space
                     temp[index].Amount -= amount;
                     if (temp[index].Amount == 0)
                     {
-                        temp = RemoveAsset(index, temp);
+                        RemoveAsset(index, ref temp);
                     }
                 }
             }
@@ -182,16 +199,16 @@ namespace Data.Space
         /// of the next item
         /// </summary>
         /// <returns></returns>
-        private int IncrementAssets()
+        private int IncrementAssets(ref ItemCollectionData[] orig)
         {
-            int newIndex = m_inventory.Length;
+            int newIndex = orig.Length;
 
             ItemCollectionData[] temp = new ItemCollectionData[newIndex + 1];
 
             for (int i = 0; i < newIndex; i++)
-                temp[i] = m_inventory[i];
+                temp[i] = orig[i];
 
-            m_inventory = temp;
+            orig = temp;
 
             return newIndex;
         }
@@ -200,7 +217,7 @@ namespace Data.Space
         /// deletes an asset from our list
         /// </summary>
         /// <param name="index"></param>
-        private ItemCollectionData[] RemoveAsset(int index, ItemCollectionData[] orig)
+        private void RemoveAsset(int index, ref ItemCollectionData[] orig)
         {
             ItemCollectionData[] temp = new ItemCollectionData[orig.Length - 1];
 
@@ -209,8 +226,6 @@ namespace Data.Space
                     temp[a++] = orig[i];
 
             orig = temp;
-
-            return temp;
         }
 
         #endregion

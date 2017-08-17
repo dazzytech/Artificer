@@ -68,10 +68,10 @@ namespace Space
             m_con.PlayerExitScene += PlayerDeath;
 
             // Station events
-            StationController.EnterRange += OnEnterStation;
-            StationController.ExitRange += OnExitStation;
-            StationController.EnterBuildRange += OnEnterBuildRange;
-            StationController.ExitBuildRange += OnExitBuildRange;
+            StationController.OnEnterRange += OnEnterStation;
+            StationController.OnExitRange += OnExitStation;
+            StationController.OnEnterBuildRange += OnEnterBuildRange;
+            StationController.OnExitBuildRange += OnExitBuildRange;
         }
 
         void OnDisable()
@@ -83,10 +83,10 @@ namespace Space
             m_con.PlayerExitScene -= PlayerDeath;
 
             // Station events
-            StationController.EnterRange -= OnEnterStation;
-            StationController.ExitRange -= OnExitStation;
-            StationController.EnterBuildRange -= OnEnterBuildRange;
-            StationController.ExitBuildRange -= OnExitBuildRange;
+            StationController.OnEnterRange -= OnEnterStation;
+            StationController.OnExitRange -= OnExitStation;
+            StationController.OnEnterBuildRange -= OnEnterBuildRange;
+            StationController.OnExitBuildRange -= OnExitBuildRange;
         }
 
         #endregion
@@ -134,6 +134,10 @@ namespace Space
                 {
                     m_con.DockAtStation();
                 }
+                if(key == Control_Config.GetKey("interact", "sys"))
+                {
+                    m_con.InteractWithStation(true);
+                }
                 if (key == Control_Config.GetKey("camUp", "sys"))
                 {
                     m_util.RotateCam(0, true);
@@ -163,7 +167,11 @@ namespace Space
             {
                 m_util.PauseRelease();
             }
-            if(key == Control_Config.GetKey("camUp", "sys")
+            if (key == Control_Config.GetKey("interact", "sys"))
+            {
+                m_con.InteractWithStation(false);
+            }
+            if (key == Control_Config.GetKey("camUp", "sys")
                 || key == Control_Config.GetKey("camDown", "sys")
                 || key == Control_Config.GetKey("camLeft", "sys")
                 || key == Control_Config.GetKey("camRight", "sys"))
@@ -201,6 +209,15 @@ namespace Space
 
             m_att.netID = 0;
 
+            if(m_att.station != null)
+            {
+                m_att.station.Range(false);
+
+                m_att.station.Interact(false);
+
+                m_att.station.Dock(false);
+            }
+
             // Prompt player to pick a spawn
             SystemManager.UIState.SetState(UIState.SpawnPicker);
 
@@ -234,35 +251,32 @@ namespace Space
         /// then keep reference tho the station
         /// </summary>
         /// <param name="controller"></param>
-        private void OnEnterStation(StationController controller)
+        private void OnEnterStation(StationAccessor station)
         {
             m_att.overStation = true;
 
-            m_att.station = controller;
+            m_att.station = station;
 
-            if (m_att.station.Type == STATIONTYPE.WARP)
-                SystemManager.UIMsg.DisplayPrompt("Press Enter to enter Warp Map");
-            else
-                SystemManager.UIMsg.DisplayPrompt("Press Enter to dock at station");
+            m_att.station.Range(true);
         }
 
         /// <summary>
         /// When player leaves station vicinity then clear reference
         /// </summary>
         /// <param name="controller"></param>
-        private void OnExitStation(StationController controller)
+        private void OnExitStation(StationAccessor station)
         {
             m_att.overStation = false;
 
-            m_att.station = null;
-
-            SystemManager.UIMsg.ClearPrompt();
+            m_att.station.Range(false);
 
             if (m_att.docked)
                 SystemManager.Space.LeaveStation();
+
+            m_att.station = null;
         }
 
-        private void OnEnterBuildRange(StationController controller)
+        private void OnEnterBuildRange(StationAccessor station)
         {
             m_att.buildRange = true;
         }
@@ -271,7 +285,7 @@ namespace Space
         /// When player leaves station vicinity then clear reference
         /// </summary>
         /// <param name="controller"></param>
-        private void OnExitBuildRange(StationController controller)
+        private void OnExitBuildRange(StationAccessor station)
         {
             m_att.buildRange = false;
         }

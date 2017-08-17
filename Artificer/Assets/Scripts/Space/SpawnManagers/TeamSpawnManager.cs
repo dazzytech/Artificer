@@ -62,12 +62,16 @@ namespace Space.SpawnManagers
 
             // init with team object
             stationCon.Initialize(netId);
-            
+
+            // Retrieve behaviour for making changes
+            StationAccessor stationAtt =
+                newStation.GetComponent<StationAccessor>();
+
             // if station is a type that we spawn then add to spawn list
-            if(stationCon.Type != STATIONTYPE.HOME)
+            if (stationAtt.Type != STATIONTYPE.HOME)
             {
                 // Set the station to non- spawning and return
-                stationCon.SpawnID = -1;
+                stationAtt.SpawnID = -1;
                 return newStation;
             }
 
@@ -128,7 +132,7 @@ namespace Space.SpawnManagers
             _spawns.Add(sPInfo);
 
             // Log our spawn info
-            stationCon.SpawnID = sPInfo.ID;
+            stationAtt.SpawnID = sPInfo.ID;
 
             return newStation;
         }

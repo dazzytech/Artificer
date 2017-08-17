@@ -141,7 +141,7 @@ namespace Space.UI.Proxmity
                 }
                 else
                 {
-                    AddUIPiece(friendlyObj.GetComponent<StationController>(), ID);
+                    AddUIPiece(friendlyObj.GetComponent<StationAccessor>(), ID);
                 }
             }
         }
@@ -150,7 +150,7 @@ namespace Space.UI.Proxmity
         /// Adds station to the HUD display
         /// </summary>
         /// <param name="piece"></param>
-        private void AddUIPiece(StationController controller, uint ID)
+        private void AddUIPiece(StationAccessor controller, uint ID)
         {
             GameObject newStation = Instantiate(m_stationPrefab);
             newStation.transform.SetParent(m_stationList, false);

@@ -111,8 +111,9 @@ namespace Space.Segment
 
         void OnCollisionEnter2D(Collision2D other)
         {
-            if (!Parent.PhysicalObject)
-                return;
+            if(Parent != null)
+                if (!Parent.PhysicalObject)
+                    return;
 
             /// Apply damage to any object it
             /// hits and bumps it away

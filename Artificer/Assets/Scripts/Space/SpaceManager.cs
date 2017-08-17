@@ -25,7 +25,7 @@ namespace Space
     {
         // External attributes class
         [SerializeField]
-        private SpaceAttributes _att;
+        private SpaceAttributes m_att;
         [SerializeField]
         private SpaceUtilities m_util;
 
@@ -60,14 +60,14 @@ namespace Space
 
         public List<MapObject> Map
         {
-            get { return _att.Map.Map; }
+            get { return m_att.Map.Map; }
         }
 
         private AIManager AI
         {
             get
             {
-                return _att.AI;
+                return m_att.AI;
             }
         }
 
@@ -100,10 +100,10 @@ namespace Space
         {
             get
             {
-                if (_att == null)
+                if (m_att == null)
                     return 0u;
 
-                return _att.netID;
+                return m_att.netID;
             }
         }
 
@@ -111,16 +111,16 @@ namespace Space
         {
             get
             {
-                if (_att == null)
+                if (m_att == null)
                     return null;
 
-                return _att.Team;
+                return m_att.Team;
             }
         }
 
         public int TeamID
         {
-            get { return _att.Team.ID; }
+            get { return m_att.Team.ID; }
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Space
         {
             get
             {
-                return _att.buildRange;
+                return m_att.buildRange;
             }
         }
 
@@ -149,11 +149,11 @@ namespace Space
         void Awake()
         {
             // init onstage
-            _att.PlayerOnStage = false;
+            m_att.PlayerOnStage = false;
 
-            _att.docked = false;
+            m_att.docked = false;
 
-            _att.overStation = false;
+            m_att.overStation = false;
         }
 
         void Update()
@@ -161,30 +161,6 @@ namespace Space
             ProcessSystemKeys();
 
             ProcessPlayerState();
-
-            /*  // Update Spawns
-              if (_att.EnemySpawn != null)
-              {
-                  _att.EnemySpawn.CycleEnemySpawn();
-              }
-              if (_att.FriendlySpawn != null)
-              {
-                  _att.FriendlySpawn.CycleFriendlySpawn();
-              }*/
-
-            // Update Contract info
-            /*if (_att.Contract != null)
-            {
-                // Test for end of level
-                if(_att.Contract.ContractStatus != ContractState.Pending)
-                {
-                    Stop();
-                }
-                else
-                {
-                    _att.Contract.RunUpdate();
-                }
-            }*/
         }
 
         #endregion
@@ -206,7 +182,7 @@ namespace Space
         /// <returns></returns>
         public MapObject GetMapObject(Transform item)
         {
-            return  _att.Map.GetMapObject(item);
+            return  m_att.Map.GetMapObject(item);
         }
 
         /// <summary>
@@ -215,7 +191,7 @@ namespace Space
         /// </summary>
         public void InitializePlayer()
         {
-            _att.PlayerOnStage = true;
+            m_att.PlayerOnStage = true;
 
             // Trigger that team has been selected
             if(TeamSelected != null)
@@ -224,12 +200,12 @@ namespace Space
             RefreshShipSpawnList();
         }
 
-        public void DockAtStation()
-        {
-            // SHARED FUNCTION
+        #region STATION
 
+        public void DockAtStation()
+        { 
             // Only perform if we have a station
-            if (!_att.overStation)
+            if (!m_att.overStation)
                 return;
 
             // for now first task is to retrieve 
@@ -240,33 +216,14 @@ namespace Space
             if (PlayerObj == null)
                 return;                 // need to be alive
 
-            _att.overStation = false;
+            // retrieve ship atts from player object
+            ShipAccessor ship = PlayerObj.GetComponent<ShipAccessor>();
 
-            _att.docked = true;
+            m_att.overStation = false;
 
-            // Next is to update the HUD to display the
-            // micro stationHUD
-            SystemManager.UIState.SetState(UIState.Station);
+            m_att.docked = true;
 
-            // WARP FUNCTION
-            if (_att.station.Type == Stations.STATIONTYPE.WARP)
-            {
-                // call warp map HUD
-                SystemManager.UI.InitializeWarpMap(
-                    ((WarpController)_att.station).Nearby, _att.station.transform);
-            }
-            else
-            {
-                // For now every other type does this
-                PlayerObj.SendMessage("DisableShip",
-                    SendMessageOptions.RequireReceiver);
-
-                // retrieve ship atts from player object
-                ShipAccessor ship = PlayerObj.GetComponent<ShipAccessor>();
-
-                // Add message for sending ship attributes
-                SystemManager.UI.InitializeStationHUD(ship);
-            }
+            m_att.station.Dock(true, ship);
         }
 
         /// <summary>
@@ -275,7 +232,7 @@ namespace Space
         /// </summary>
         public void LeaveStation()
         {
-            if (!_att.docked)
+            if (!m_att.docked)
                 return;
 
             // for now first task is to retrieve 
@@ -286,17 +243,40 @@ namespace Space
             if (PlayerObj == null)
                 return;                 // need to be alive
 
-            _att.overStation = true;
+            // retrieve ship atts from player object
+            ShipAccessor ship = PlayerObj.GetComponent<ShipAccessor>();
 
-            _att.docked = false;
+            m_att.overStation = true;
 
-            PlayerObj.SendMessage("EnableShip",
-                SendMessageOptions.RequireReceiver);
+            m_att.docked = false;
 
-            // Next is to update the HUD to display the
-            // micro stationHUD
-            SystemManager.UIState.SetState(UIState.Play);
+            m_att.station.Dock(false, ship);
         }
+
+        /// <summary>
+        /// Called when player presses the key
+        /// to interact with the station without docking
+        /// </summary>
+        public void InteractWithStation(bool keyDown)
+        {
+            if (m_att.station != null)
+            {
+                // for now first task is to retrieve 
+                // player ship and notify it to disable
+                GameObject PlayerObj = GameObject.FindGameObjectWithTag
+                    ("PlayerShip");
+
+                if (PlayerObj == null)
+                    return;                 // need to be alive
+
+                // retrieve ship atts from player object
+                ShipAccessor ship = PlayerObj.GetComponent<ShipAccessor>();
+
+                m_att.station.Interact(keyDown, ship);
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// Updates the possible
@@ -306,7 +286,7 @@ namespace Space
         {
             int index = 0;
             // iterate through our new team list
-            foreach (ShipSpawnData spawn in _att.Team.Ships)
+            foreach (ShipSpawnData spawn in m_att.Team.Ships)
             {
                 if (Spawns == null)
                     m_util.AddShipSpawn(spawn);
@@ -373,18 +353,18 @@ namespace Space
 
             if (PlayerObj == null)
             {
-                if (_att.PlayerOnStage)
+                if (m_att.PlayerOnStage)
                 {
                     PlayerExitScene();
-                    _att.PlayerOnStage = false;
+                    m_att.PlayerOnStage = false;
                 }
             }
             else
             {
-                if (!_att.PlayerOnStage)
+                if (!m_att.PlayerOnStage)
                 {
                     PlayerEnterScene();
-                    _att.PlayerOnStage = true;
+                    m_att.PlayerOnStage = true;
                 }
                 else
                 {

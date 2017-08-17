@@ -23,11 +23,12 @@ GameObject:
   - component: {fileID: 61000012851201306}
   - component: {fileID: 114000014222369176}
   - component: {fileID: 114000011757007092}
-  - component: {fileID: 114000013127392902}
   - component: {fileID: 114000010738060858}
   - component: {fileID: 61000012066848282}
   - component: {fileID: 61724610432912208}
+  - component: {fileID: 114000013127392902}
   - component: {fileID: 114000013604808810}
+  - component: {fileID: 114128045112325856}
   m_Layer: 0
   m_Name: Placeholder_Station
   m_TagString: Station
@@ -59,9 +60,20 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
+  m_UsedByComposite: 0
   m_Offset: {x: -0.08, y: 0.73}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 26.400002, y: 23.080002}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 2.49, y: 11.03}
+  m_EdgeRadius: 0
 --- !u!61 &61000012851201306
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -73,9 +85,20 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
+  m_UsedByComposite: 0
   m_Offset: {x: -0.17, y: 0.85}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 26.400002, y: 23.080002}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 11.25, y: 2.39}
+  m_EdgeRadius: 0
 --- !u!61 &61724610432912208
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -87,9 +110,20 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 26.400002, y: 23.080002}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 2.29, y: 9.81}
+  m_EdgeRadius: 0
 --- !u!114 &114000010738060858
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -105,6 +139,7 @@ MonoBehaviour:
     hitPosition: {x: 0, y: 0, z: 0}
     damage: 0
     radius: 0
+    damageTex: 
     hitComponent: 0
 --- !u!114 &114000011757007092
 MonoBehaviour:
@@ -153,12 +188,14 @@ MonoBehaviour:
   Integrity: 100000
   UnderAttack: 0
   Interactive: 0
-  ID: 0
+  SpawnID: 0
   Type: 0
+  ProximityMessage: 
   BuildCounter: 0
   BuildColour: {r: 0, g: 0, b: 0, a: 0}
   BuildDistance: 100
   MinDistance: 10
+  Accessor: {fileID: 114128045112325856}
   Icon: {fileID: 21300000, guid: dc5625d12dd293e4db7e061f9747c90b, type: 3}
 --- !u!114 &114000013604808810
 MonoBehaviour:
@@ -177,6 +214,7 @@ MonoBehaviour:
   m_RotationSyncCompression: 0
   m_SyncSpin: 0
   m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
@@ -191,6 +229,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91348db1a508f41a877d6494d19b41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114128045112325856
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013982247906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2aa9ace989cb5048886c95c153da05e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_att: {fileID: 114000013127392902}
+  m_con: {fileID: 114000014222369176}
 --- !u!212 &212000010000100414
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -221,8 +272,13 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -743043609
+  m_SortingLayer: -2
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 7c70b7fc2c314bb45a9d662843bb9ff9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0

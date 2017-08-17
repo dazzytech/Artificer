@@ -1,10 +1,12 @@
 ﻿using Data.Space;
 using Data.Space.Collectable;
+using Space.Ship.Components.Attributes;
 using Space.Ship.Components.Listener;
 using Space.UI.Ship;
 using Space.UI.Ship.Target;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -34,6 +36,9 @@ namespace Space.Ship
 
         [SerializeField]
         private ShipGenerator m_gen;
+
+        [SerializeField]
+        private ShipMessageController m_msg;
 
         [SerializeField]
         private ShipInputReceiver m_input;
@@ -202,6 +207,43 @@ namespace Space.Ship
 
         #endregion
 
+        #region MATERIALS
+
+        public ItemCollectionData[] Materials
+        {
+            get
+            {
+                List<ItemCollectionData> returnValue = new List<ItemCollectionData>();
+
+                foreach (StorageListener storage in m_ship.Storage)
+                {
+                    StorageAttributes att =
+                        (StorageAttributes)storage.GetAttributes();
+
+                    foreach (int key in att.storage.Keys)
+                    {
+                        ItemCollectionData item = 
+                            returnValue.FirstOrDefault(x => x.Item == key);
+
+                        if (item.Exist)
+                            item.Amount += att.storage[key];
+                        else
+                        {
+                            item.Item = key;
+                            item.Amount = att.storage[key];
+                            item.Exist = true;
+
+                            returnValue.Add(item);
+                        }
+                    }
+                }
+
+                return returnValue.ToArray();
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// Returns transform of head for 
         /// targetting purposes
@@ -333,6 +375,8 @@ namespace Space.Ship
             return retList.ToArray();
         }
 
+        #region SHIP CMDS
+
         /// <summary>
         /// Rebuilds the ship to new
         /// specifications
@@ -351,6 +395,70 @@ namespace Space.Ship
             m_gen.ResetShip();
         }
 
+        /// <summary>
+        /// Ship has docked at a station therefore should 
+        /// be interactive as well change appearance to indicate
+        /// </summary>
+        public void DisableShip()
+        {
+            // First disable any form of input through
+            // player interaction
+            ShipPlayerInputController input = GetComponent<ShipPlayerInputController>();
+
+            if (input == null)
+                return;
+
+            input.enabled = false;
+
+            // remove any targets
+            m_ship.TargetedShips.Clear();
+            m_ship.SelfTarget = null;
+
+            // Begin the process of hiding components on all components
+            m_msg.CmdDisableComponents();
+
+            GetComponent<Rigidbody2D>().constraints =
+                RigidbodyConstraints2D.FreezeAll;
+
+
+            // disable any automatic functioning components
+            foreach (TargeterListener listener in m_ship.Targeter)
+            {
+                listener.enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// When ship has undocked we add player functionality once
+        /// again
+        /// </summary>
+        public void EnableShip()
+        {
+            // First enable
+            // player interaction
+            ShipPlayerInputController input = GetComponent<ShipPlayerInputController>();
+
+            if (input == null)
+                return;
+
+            input.enabled = true;
+
+            // Begin the process of showing all components
+            m_msg.CmdEnableComponents();
+
+            GetComponent<Rigidbody2D>().constraints =
+                RigidbodyConstraints2D.None;
+
+
+            // disable any automatic functioning components
+            foreach (TargeterListener listener in m_ship.Targeter)
+            {
+                listener.enabled = true;
+            }
+        }
+
+        #endregion
+
         #region RESOURCE MANAGEMENT
 
         /// <summary>
@@ -366,6 +474,37 @@ namespace Space.Ship
 
                 if(OnStorageChanged != null)
                     OnStorageChanged();
+            }
+        }
+
+        /// <summary>
+        /// Clears the storage of the ship
+        /// and returns the assets list
+        /// </summary>
+        /// <returns></returns>
+        public ItemCollectionData[] RemoveAllMaterials()
+        {
+            if(m_ship.Storage.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                // Create a wallet 
+                ItemCollectionData[] retVal = Materials;
+
+                foreach(StorageListener storage in m_ship.Storage)
+                {
+                    StorageAttributes att = 
+                        (StorageAttributes)storage.GetAttributes();
+                    
+                    storage.EjectMaterial(new Dictionary<int, float>(att.storage));
+                }
+
+                if (OnStorageChanged != null)
+                    OnStorageChanged();
+
+                return retVal;
             }
         }
 

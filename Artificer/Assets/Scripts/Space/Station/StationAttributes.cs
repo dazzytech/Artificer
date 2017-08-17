@@ -2,11 +2,12 @@
 using UnityEngine.Networking;
 using System.Collections;
 using Space.Teams;
+using Space.Ship;
 
 namespace Stations
 {
     // only one type current
-    public enum STATIONTYPE {HOME, FOB, WARP};
+    public enum STATIONTYPE {HOME, FOB, WARP, DEPOT};
 
     /// <summary>
     /// Container for attributes for stations 
@@ -40,6 +41,12 @@ namespace Stations
         
         public STATIONTYPE Type;
 
+        /// <summary>
+        /// Message that displays to the 
+        /// player when in range
+        /// </summary>
+        public string ProximityMessage;
+
         #endregion
 
         #region CONSTRUCTION
@@ -60,20 +67,19 @@ namespace Stations
         [SyncVar]
         public NetworkInstanceId TeamID;
 
+        /// <summary>
+        /// Passed in event to extenal controller
+        /// </summary>
+        public StationAccessor Accessor;
+
+        /// <summary>
+        /// Ship that has interact with the station
+        /// </summary>
+        public ShipAccessor Ship;
+
         #endregion
 
         public int MinDistance;
-
-        /// <summary>
-        /// Quick access to station team object
-        /// </summary>
-        public TeamController Team
-        {
-            get
-            {
-                return ClientScene.FindLocalObject(TeamID).GetComponent<TeamController>();
-            }
-        }
 
         public Sprite Icon;
     }

@@ -84,7 +84,7 @@ namespace Space.AI.Agent
             List<Transform> returnValue = new List<Transform>();
 
             // find each station of the correct type and team
-            foreach(StationAttributes station in m_stations)
+            foreach(StationAccessor station in m_stations)
             {
                 if (station.Team.ID == SystemManager.Space.TeamID &&
                     station.Type == STATIONTYPE.HOME)

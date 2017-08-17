@@ -19,7 +19,7 @@ namespace Space.UI
         #region ATTRIBUTES
 
         // Reference to tracked station
-        private StationController m_station;
+        private StationAccessor m_station;
 
 
         [SerializeField]
@@ -91,7 +91,7 @@ namespace Space.UI
         /// tracking
         /// </summary>
         /// <param name="Station"></param>
-        public void DefineStation(StationController Station, uint newID)
+        public void DefineStation(StationAccessor Station, uint newID)
         {
             m_station = Station;
 

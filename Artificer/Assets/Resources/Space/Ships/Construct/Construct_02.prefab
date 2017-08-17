@@ -581,13 +581,16 @@ MonoBehaviour:
     Folder: 
     Name: 
     Style: 
+    Cost: 0
     sockets: []
+    requirements: []
     AutoLock: 0
     behaviour: 0
     AutoFire: 0
   SpawnableStations:
   - Warp Gate
   - FOB Station
+  - Depot Station
   StationDelay: 30
   ReadyToDeploy: 0
 --- !u!114 &114990359648966492

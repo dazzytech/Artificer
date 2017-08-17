@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Space.Ship;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -13,16 +14,18 @@ namespace Stations
     {
         #region MONOBEHAVIOUR
 
-        void Awake()
+        public override void Awake()
         {
-            Att.CurrentIntegrity = Att.Integrity;
+            base.Awake();
 
-            Att.Type = STATIONTYPE.FOB;
+            m_att.ProximityMessage = "";
+
+            m_att.Type = STATIONTYPE.FOB;
         }
 
         #endregion
 
-        #region OVERRIDE PARENT
+        #region PUBLIC INTERACTION
 
         /// <summary>
         /// overrides the initialize
@@ -35,6 +38,40 @@ namespace Stations
             // For now call the base class till actions are different
             base.Initialize(newTeam, true);
         }
+
+        #region PLAYER
+
+        public override void Dock(ShipAccessor ship)
+        {
+            // Do nothing
+        }
+
+        public override void UnDock(ShipAccessor ship)
+        {
+            // do nothing
+        }
+
+        public override void Interact(ShipAccessor ship)
+        {
+            // do nothing
+        }
+
+        public override void Idle(ShipAccessor ship)
+        {
+            // do nothing
+        }
+
+        public override void EnterRange()
+        {
+            // do nothing 
+        }
+
+        public override void ExitRange()
+        {
+            // do nothing
+        }
+
+        #endregion
 
         #endregion
     }

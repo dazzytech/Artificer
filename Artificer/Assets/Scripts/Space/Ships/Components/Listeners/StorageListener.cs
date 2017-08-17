@@ -92,6 +92,9 @@ namespace Space.Ship.Components.Listener
                 // retrieve information
                 ItemData item = SystemManager.Items.Item(id);
 
+                if (item == null)
+                    continue;
+
                 _attr.currentWeight += valueToAdd * item.Density;
                 _attr.currentCapacity += valueToAdd;
 

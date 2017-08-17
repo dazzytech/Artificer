@@ -152,11 +152,7 @@ namespace Space.UI.Station.Editor
             // Process materials
             if(newComp.requirements != null)
             {
-                foreach(ItemCollectionData item in newComp.requirements)
-                {
-                    if(item.Item != -1)
-                        m_requirements.Deposit(item.Item, item.Amount);
-                }
+                m_requirements.Deposit(newComp.requirements);
             }
         }
 

@@ -66,12 +66,9 @@ namespace Space.Teams
         /// </summary>
         private SyncListShip m_ships = new SyncListShip();
 
-        /*private List<Transform> _attackPoints;
-        //private List<Transform> _homePoints;
-
+        /*
         // unlocked components
         //private SyncListString _unlockedComponents;
-
         */
 
         [SerializeField]
@@ -255,8 +252,6 @@ namespace Space.Teams
         {
 
         }
-
-        // Here will be an event listening for station destroyed
 
         #endregion
 

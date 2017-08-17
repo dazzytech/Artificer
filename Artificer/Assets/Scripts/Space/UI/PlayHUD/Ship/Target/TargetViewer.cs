@@ -75,8 +75,8 @@ namespace Space.UI.Ship.Target
             m_viewerPanel.gameObject.SetActive(true);
 
             // Start with testing for station 
-            StationController station = trackObj.
-                GetComponent<StationController>();
+            StationAccessor station = trackObj.
+                GetComponent<StationAccessor>();
 
             if (station != null)
             {
@@ -131,7 +131,7 @@ namespace Space.UI.Ship.Target
 
         #region COROUTINES
 
-        private IEnumerator Step(StationController station)
+        private IEnumerator Step(StationAccessor station)
         {
             while(m_integrityTracker.gameObject.activeSelf)
             {
