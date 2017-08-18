@@ -112,6 +112,7 @@ namespace Space.Map
                 (new NetworkInstanceId(CD.Self)).transform);
 
             mapObj.Type = MapObjectType.SHIP;
+            mapObj.TeamID = CD.TeamID;
 
             if (OnMapUpdate != null)
                 OnMapUpdate(mapObj);

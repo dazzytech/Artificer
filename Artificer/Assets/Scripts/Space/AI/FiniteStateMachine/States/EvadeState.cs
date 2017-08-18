@@ -33,7 +33,7 @@ namespace Space.AI.Agent
 
             if (Self.Target != null)
             {
-                float angleDiff = DestUtil.FindAngleDifference(Self.transform, Self.Target.position);
+                float angleDiff = Math.Angle(Self.transform, Self.Target.position);
 
                 if (Mathf.Abs(angleDiff) <= 90)
                 {

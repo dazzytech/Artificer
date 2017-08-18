@@ -26,37 +26,6 @@ public class DestUtil
     }
 
     /// <summary>
-    /// Finds the angle difference between the two objects.
-    /// </summary>
-    /// <returns>The angle difference.</returns>
-    /// <param name="trans">Trans.</param>
-    /// <param name="dest">Destination.</param>
-    public static float FindAngleDifference(Transform trans, Vector3 dest)
-    {
-        Vector2 pos = trans.position;
-        float angle = Mathf.Atan2(dest.y-pos.y, dest.x-pos.x)*180 / Mathf.PI -90;
-        return Mathf.DeltaAngle(trans.eulerAngles.z, angle);
-    }
-
-    /// <summary>
-    /// Check whether the next random position is the same as current position
-    /// </summary>
-    /// <param name="pos">position to check</param>
-    public static bool IsInCurrentRange
-        (Transform trans, Vector3 pos,
-         float minDistance, float maxDistance)
-    {
-        float xPos = Mathf.Abs(pos.x - trans.position.x);
-        float yPos = Mathf.Abs(pos.y - trans.position.y);
-        
-        if (xPos >= minDistance && yPos >= minDistance &&
-            xPos <= maxDistance && yPos <= maxDistance)
-            return true;
-        
-        return false;
-    }
-
-    /// <summary>
     /// Used by AI systems to avoid colloisions 
     /// with objects
     /// </summary>

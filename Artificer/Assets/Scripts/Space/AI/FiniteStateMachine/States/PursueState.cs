@@ -64,14 +64,14 @@ namespace Space.AI.State
 
             Keys.Add(Control_Config.GetKey("moveUp", "ship"));
 
-            float angleDiff = DestUtil.FindAngleDifference(Self.transform, Self.Target.position);
+            float angleDiff = Math.Angle(Self.transform, Self.Target.position);
 
-            if (angleDiff >= 10f)
+            if (angleDiff >= m_angleAccuracy)
             {
                 Con.ReleaseKey(Control_Config.GetKey("turnRight", "ship"));
                 Keys.Add(Control_Config.GetKey("turnLeft", "ship"));
             }
-            else if (angleDiff <= -10f)
+            else if (angleDiff <= -m_angleAccuracy)
             {
                 Con.ReleaseKey(Control_Config.GetKey("turnLeft", "ship"));
                 Keys.Add(Control_Config.GetKey("turnRight", "ship"));

@@ -6,12 +6,12 @@ public class CombUtil
     public static bool BehindEnemy(Transform trans, Transform enemy)
     {
         // Enemy is in front?
-        float toEnemyAngle = DestUtil.FindAngleDifference(trans, enemy.position);
+        float toEnemyAngle = Math.Angle(trans, enemy.position);
 
         if (toEnemyAngle < 20 && toEnemyAngle > -20)
         {
             // Enemy is in front of us
-            float enemyFacing = DestUtil.FindAngleDifference(enemy, trans.position);
+            float enemyFacing = Math.Angle(enemy, trans.position);
             if(enemyFacing < 160 && enemyFacing > -160)
             {
                 // We are tailing enemy

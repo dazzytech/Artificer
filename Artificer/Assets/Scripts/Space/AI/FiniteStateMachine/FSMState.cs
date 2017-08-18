@@ -54,7 +54,7 @@ namespace Space.AI
         // how close the angle should be (have default value)
         // todo editable
         [SerializeField]
-        protected float m_angleAccuracy = 1f;
+        protected float m_angleAccuracy = 15f;
 
         #endregion
 

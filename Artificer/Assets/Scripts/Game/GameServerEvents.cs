@@ -34,11 +34,12 @@ namespace Game
         /// </summary>
         /// <param name="msg"></param>
         [Server]
-        public void ShipCreated(NetworkInstanceId Self, int ID)
+        public void ShipCreated(NetworkInstanceId Self, int ID, int Align)
         {
             CreateDispatch CD = new CreateDispatch();
             CD.PlayerID = ID;
             CD.Self = Self.Value;
+            CD.TeamID = Align;
             EventShipCreated(CD);
         }
 

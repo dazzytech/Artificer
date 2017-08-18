@@ -22,7 +22,32 @@ namespace Space.SpawnManager
     /// </summary>
     public class RaiderSpawnManager : NetworkBehaviour
     {
-        #region TARGET TRACKER
+        #region INLINE CLASS
+
+        /// <summary>
+        /// Stores information about#
+        /// possible raider spawns
+        /// </summary>
+        [System.Serializable]
+        public class RaiderSpawn
+        {
+            /// <summary>
+            /// The agent that we will spawn
+            /// </summary>
+            public string AgentName;
+
+            /// <summary>
+            /// Minimum threat that the raider type
+            /// will spawn
+            /// </summary>
+            public int MinThreat;
+
+            /// <summary>
+            /// chance that the raider will be 
+            /// chosen to spawn
+            /// </summary>
+            public float SpawnChance;
+        }
 
         /// <summary>
         /// Logs information about ship
@@ -236,6 +261,12 @@ namespace Space.SpawnManager
         /// </summary>
         private List<RaiderTarget> m_raidTargets;
 
+        /// <summary>
+        /// possible agents that can spawn
+        /// </summary>
+        [SerializeField]
+        private RaiderSpawn[] m_spawn;
+
         #endregion
 
         #region MONO BEHAVIOUR
@@ -251,7 +282,53 @@ namespace Space.SpawnManager
 
         #endregion
 
-        #region PRIVATE UTILITIES
+        #region PUBLIC INTERACTION
+
+        #region SPAWNING
+
+        /// <summary>
+        /// Spawns the object with this player's
+        /// authority and sets the spawn process message
+        /// </summary>
+        [Server]
+        public void SpawnShip(string agent,
+            uint playerNetID, uint targetID)
+        {
+            GameObject GO = Instantiate
+                (SystemManager.singleton.playerPrefab);
+
+            // Access the target given to us
+            GameObject target = ClientScene.FindLocalObject
+                (new NetworkInstanceId(targetID));
+
+            if (target == null)
+                return;
+
+            // postion within range of target
+            GO.transform.position = Math.RandomWithinRange
+                (target.transform.position, 100, 200);
+
+            NetworkConnection playerConn = SystemManager.Space.PlayerConn
+                (new NetworkInstanceId(playerNetID));
+
+            // Spawn the ship on the network
+            NetworkServer.SpawnWithClientAuthority
+                (GO, playerConn);
+
+            // Retrieve the agent info
+            AgentData agentData = m_AI.AgentLibrary[agent];
+
+            // Build the agent info in the correct client
+            RpcBuildAgent(playerNetID,
+                GO.GetComponent<NetworkIdentity>().netId.Value,
+                targetID, agent);
+
+            // Assign the information while on the server
+            GO.GetComponent<ShipGenerator>().
+                AssignShipData(ShipLibrary.GetShip
+                (agentData.Ship[UnityEngine.Random.Range
+                (0, agentData.Ship.Count())]), -1, playerConn);
+        }
 
         /// <summary>
         /// Builds the ship item and then 
@@ -260,58 +337,68 @@ namespace Space.SpawnManager
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        private NetworkInstanceId BuildAgent(Transform target)
+        [ClientRpc]
+        public void RpcBuildAgent
+            (uint selfID, uint agentID, uint targetID, string agent)
         {
-            // Build an instance of the agent
-            GameObject newAgent =
-                Instantiate(SystemManager.singleton.playerPrefab);
+            if (SystemManager.Space.NetID == selfID)
+            {
+                // Access the target given to us
+                GameObject target = ClientScene.FindLocalObject
+                    (new NetworkInstanceId(targetID));
 
-            // Find the location the agent will spawn at
-            Vector2 spawnPoint = Math.RandomWithinRange
-                (target.position, 100, 200);
+                if (target == null)
+                    return;
 
-            newAgent.transform.position = spawnPoint;
+                GameObject GO = ClientScene.FindLocalObject
+                    (new NetworkInstanceId(agentID));
 
-            // Retrieve the agent info
-            AgentData agent = m_AI.AgentLibrary["raider_small"];
+                if (GO == null)
+                    return;
 
-            CmdSpawnShip(newAgent.GetComponent<NetworkIdentity>().netId.Value,
-                agent.Ship, SystemManager.Space.NetID);
+                // Retrieve the agent info
+                AgentData agentData = m_AI.AgentLibrary[agent];
 
-            AssaultAgent agentFSM = newAgent.AddComponent<AssaultAgent>();
+                // Init agent object
+                AssaultAgent agentFSM = GO.AddComponent<AssaultAgent>();
 
-            // Apply variables
-            agentFSM.EstablishRanges
-                (Convert.ToInt32(agent.EngageDistance),
-                 Convert.ToInt32(agent.PursuitDistance),
-                 Convert.ToInt32(agent.AttackDistance),
-                 Convert.ToInt32(agent.PullOffDistance));
+                // Apply variables
+                agentFSM.EstablishRanges
+                    (Convert.ToInt32(agentData.EngageDistance),
+                     Convert.ToInt32(agentData.PursuitDistance),
+                     Convert.ToInt32(agentData.AttackDistance),
+                     Convert.ToInt32(agentData.PullOffDistance));
 
-            agentFSM.DefineTarget(target);
+                agentFSM.DefineTarget(target.transform);
 
-            // Return the network ID of our new raider
-            return newAgent.GetComponent<NetworkIdentity>().netId;
+                AddToTargetList(target.transform, new NetworkInstanceId(agentID));
+            }
         }
 
-        /// <summary>
-        /// Spawns the object with this player's
-        /// authority and sets the spawn process message
-        /// </summary>
-        [Command]
-        public void CmdSpawnShip(uint agentID,
-            string ship, uint playerNetID)
+        #endregion
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        private void AddToTargetList(Transform target, 
+            NetworkInstanceId agent)
         {
-            GameObject GO = ClientScene.FindLocalObject
-                (new NetworkInstanceId(agentID));
+            // Find the raider target stored on our 
+            // current target
+            RaiderTarget state = m_raidTargets.
+                FirstOrDefault(x => x.Self == target);
 
-            // Spawn the ship on the network
-            NetworkServer.SpawnWithClientAuthority
-                (GO, SystemManager.Space.PlayerConn
-                (new NetworkInstanceId(playerNetID)));
+            if(state == null)
+            {
+                // we shouldn't reach here
+                Debug.Log("Error: Raider Spawn Manager - Add Targets List:"
+                    + "Unable to find the right Raider Target.");
+                return;
+            }
 
-            // Assign the information while on the server
-            GO.GetComponent<ShipGenerator>().
-                AssignShipData(ShipLibrary.GetShip(ship), -1);
+            // Add reference to our new agent
+            state.AddPersuit(agent);
         }
 
         #endregion
@@ -430,9 +517,17 @@ namespace Space.SpawnManager
                         // add a ship we have no reached cap
                         if (target.PersuitCount < shipCount)
                         {
-                            // We have the space
-                            // Spawn the ship
-                            target.AddPersuit(BuildAgent(target.Self));
+                            // Here we will build the message 
+                            // to create a raider 
+                            string agent = "raider_small";
+
+                            SpawnRaiderMessage raidMsg = new SpawnRaiderMessage();
+                            raidMsg.PlayerID = SystemManager.Space.NetID;
+                            raidMsg.TargetID = target.SelfNetID.Value;
+                            raidMsg.Agent = agent;
+
+                            SystemManager.singleton.client.Send
+                                ((short)MSGCHANNEL.SPAWNRAIDER, raidMsg);
                         }
                     }
 

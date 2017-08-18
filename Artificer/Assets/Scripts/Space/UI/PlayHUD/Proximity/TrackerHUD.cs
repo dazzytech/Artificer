@@ -165,8 +165,6 @@ namespace Space.UI.Proxmity
                 MapController.OnMapUpdate -= OnIconChanged;
 
                 m_mapViewer.OnClick -= OnMapClick;
-
-                
             }
 
             if(SystemManager.Space != null)
@@ -180,8 +178,6 @@ namespace Space.UI.Proxmity
                 MapController.OnMapUpdate += OnIconChanged;
 
                 m_mapViewer.OnClick += OnMapClick;
-
-                
             }
 
             SystemManager.Space.OnOrientationChange += OnOrientationChange;

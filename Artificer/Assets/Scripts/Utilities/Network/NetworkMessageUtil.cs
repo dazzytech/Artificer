@@ -17,6 +17,7 @@ namespace Networking
         NEWID,
         TEAMSELECTED,
         SPAWNPLAYER,
+        SPAWNRAIDER,
         SHIPHIT,
         BUILDSTATION,
         PROCESSSHIPHIT,
@@ -69,6 +70,19 @@ namespace Networking
         public int PlayerID;
         public int SpawnID;
         public ShipData Ship;
+    }
+
+    /// <summary>
+    /// Passes the requirements to spawn 
+    /// </summary>
+    public class SpawnRaiderMessage:MessageBase
+    {
+        public uint PlayerID;
+        public uint TargetID;
+        /// <summary>
+        /// The label of the agent in the list
+        /// </summary>
+        public string Agent;
     }
 
     public class StationBuildMessage : MessageBase

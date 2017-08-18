@@ -14,5 +14,10 @@ public class CreateDispatch
     /// The ID key of the player spawning the object
     /// </summary>
     public int PlayerID;
+
+    /// <summary>
+    /// the alignment label
+    /// </summary>
+    public int TeamID;
 }
 

@@ -60,12 +60,8 @@ namespace Data.Space.DataImporter
             foreach (XmlNode xmlElement
                     in elementContainer.ChildNodes)
             {
-                string[] agentData = BuildAgent(xmlElement);
-                returnVal.Add(agentData[0], new AgentData()
-                    { Name = agentData[0], Type = agentData[1],
-                    Template = agentData[2], Ship = agentData[3],
-                    EngageDistance = agentData[4], PursuitDistance = agentData[5],
-                    AttackDistance = agentData[6], PullOffDistance = agentData[7]});
+                AgentData agent = BuildAgent(xmlElement);
+                returnVal.Add(agent.Name, agent);
             }
 
             return returnVal;
@@ -123,23 +119,31 @@ namespace Data.Space.DataImporter
         }
 
         /// <summary>
-        /// returns the string attributes as 
-        /// an array for assignment
+        /// Creates an agent using the node and 
+        /// returns the agent data
         /// </summary>
         /// <param name="agentNode"></param>
         /// <returns></returns>
-        private static string[] BuildAgent(XmlNode agentNode)
+        private static AgentData BuildAgent(XmlNode agentNode)
         {
-            string[] returnVals = new string[8];
-            returnVals[0] = agentNode.Attributes["name"].Value;
-            returnVals[1] = agentNode.Attributes["type"].Value;
-            returnVals[2] = agentNode.Attributes["template"].Value;
-            returnVals[3] = agentNode.Attributes["ship"].Value;
-            returnVals[4] = agentNode.Attributes["engage"].Value;
-            returnVals[5] = agentNode.Attributes["pursue"].Value;
-            returnVals[6] = agentNode.Attributes["attack"].Value;
-            returnVals[7] = agentNode.Attributes["pulloff"].Value;
-            return returnVals;
+            // Create and init agent
+            AgentData newAgent = new AgentData()
+            {
+                Name = agentNode.Attributes["name"].Value,
+                Type = agentNode.Attributes["type"].Value,
+                Ship = new string[agentNode.ChildNodes.Count],
+                Template = agentNode.Attributes["template"].Value,
+                EngageDistance = agentNode.Attributes["engage"].Value,
+                PursuitDistance = agentNode.Attributes["pursue"].Value,
+                AttackDistance = agentNode.Attributes["attack"].Value,
+                PullOffDistance = agentNode.Attributes["pulloff"].Value
+            };
+
+            // read ship names
+            for (int i = 0; i < agentNode.ChildNodes.Count; i++)
+                newAgent.Ship[i] = agentNode.ChildNodes[i].InnerText;
+
+            return newAgent;
         }
 
         #endregion

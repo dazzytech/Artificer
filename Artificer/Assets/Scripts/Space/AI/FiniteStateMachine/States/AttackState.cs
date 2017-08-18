@@ -86,7 +86,7 @@ namespace Space.AI.State
             if (Self.Target == null)
                 return;
 
-            float angleDiff = DestUtil.FindAngleDifference(Self.transform, Self.Target.position);
+            float angleDiff = Math.Angle(Self.transform, Self.Target.position);
 
             // Changed so that the doesnt move towards target 
             // change when applying types

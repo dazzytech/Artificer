@@ -225,7 +225,7 @@ namespace Space.AI
         #region MONO BEHAVIOUR
 
         // Use this for initialization
-        void Start()
+        void Awake()
         {
             if (!hasAuthority)
                 return;
@@ -234,7 +234,7 @@ namespace Space.AI
             m_ship = GetComponent<ShipAccessor>();
 
             // Listen for creation of ship
-            SystemManager.Events.EventShipCreated += ShipCreatedEvent;
+            m_ship.OnShipCompleted += ShipCreatedEvent;
         } 
 
         // Update is called once per frame
@@ -567,13 +567,10 @@ namespace Space.AI
         /// only runs once
         /// </summary>
         /// <param name="att"></param>
-        private void ShipCreatedEvent(CreateDispatch CD)
+        private void ShipCreatedEvent()
         {
-            if(netId.Value == CD.Self)
-            {
-                SystemManager.Events.EventShipCreated -= ShipCreatedEvent;
+                m_ship.OnShipCompleted -= ShipCreatedEvent;
                 Initialize();
-            }
         }
 
         #endregion

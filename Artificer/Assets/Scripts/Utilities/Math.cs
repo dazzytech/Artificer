@@ -27,6 +27,25 @@ public class Math
     }
 
     /// <summary>
+    /// Check whether the next random position is the 
+    /// same as current position
+    /// </summary>
+    /// <param name="pos">position to check</param>
+    public static bool WithinRange
+        (Vector3 pos, Vector3 other,
+         float minDistance, float maxDistance)
+    {
+        float xPos = Mathf.Abs(other.x - pos.x);
+        float yPos = Mathf.Abs(other.y - pos.y);
+
+        if (xPos >= minDistance && yPos >= minDistance &&
+            xPos <= maxDistance && yPos <= maxDistance)
+            return true;
+
+        return false;
+    }
+
+    /// <summary>
     /// Returns if a point is within range 
     /// of all four points of a rectangle
     /// </summary>

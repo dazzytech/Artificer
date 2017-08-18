@@ -20,7 +20,7 @@ namespace Data.Space
         public string Template;
 
         // Ship that the agent uses
-        public string Ship;
+        public string[] Ship;
 
         #region FSM VARIABLES
 

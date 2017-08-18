@@ -10762,6 +10762,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AI: {fileID: 593987429}
+  m_spawn:
+  - AgentName: raider_small
+    MinThreat: 0
+    SpawnChance: 0.8
+  - AgentName: raider_medium
+    MinThreat: 8
+    SpawnChance: 0.2
 --- !u!1 &594422500
 GameObject:
   m_ObjectHideFlags: 0
@@ -38644,6 +38651,7 @@ MonoBehaviour:
   TeamA: {fileID: 0}
   TeamB: {fileID: 0}
   Segment: {fileID: 1688872188}
+  Raider: {fileID: 0}
 --- !u!114 &2064934872
 MonoBehaviour:
   m_ObjectHideFlags: 0

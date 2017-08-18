@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 using Space.Teams;
 using Space.Segment;
+using Space.SpawnManager;
 
 namespace Game
 {
@@ -40,6 +41,8 @@ namespace Game
         public TeamController TeamB;
 
         public SegmentManager Segment;
+
+        public RaiderSpawnManager Raider;
 
         #endregion
     }

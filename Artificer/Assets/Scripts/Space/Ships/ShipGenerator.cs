@@ -31,6 +31,8 @@ namespace Space.Ship
 
         private List<int> m_addedIDs;
 
+        private NetworkConnection m_shipConn;
+
         #endregion
 
         #region CONTAINER
@@ -78,7 +80,7 @@ namespace Space.Ship
         /// based on parameters
         /// </summary>
         [Server]
-        public void AssignShipData(ShipData shipItem, int alignment)
+        public void AssignShipData(ShipData shipItem, int alignment, NetworkConnection conn = null)
         {
             // Assign the shipdata to the attributes
             m_att.Ship = shipItem;
@@ -88,6 +90,9 @@ namespace Space.Ship
 
             // Assign the network instance for this ship
             m_att.NetworkID = netId;
+
+            // Assign the authority connection for this ship
+            m_shipConn = conn == null ? connectionToClient : conn;
 
             // Spawn the ship on server
             GenerateShip();
@@ -181,11 +186,7 @@ namespace Space.Ship
                             ("Space/Ships/" + m_att.Ship.Head.Path))
                     as GameObject;
 
-            // set transform
-            //headGO.transform.parent = transform;
-            //headGO.transform.localPosition = Vector3.zero;
-
-            NetworkServer.SpawnWithClientAuthority(headGO, connectionToClient);
+            NetworkServer.SpawnWithClientAuthority(headGO, m_shipConn);
 
             ComponentListener head = headGO.GetComponent<ComponentListener>();
 
@@ -197,7 +198,7 @@ namespace Space.Ship
             BuildConnectedPieces
                 (m_att.Ship.Head, headGO.transform);
 
-            SystemManager.GameMSG.OnShipCreated(netId, SystemManager.Space.ID);
+            SystemManager.GameMSG.OnShipCreated(netId, SystemManager.Space.ID, m_att.TeamID);
         }
 
         /// <summary>
@@ -270,7 +271,7 @@ namespace Space.Ship
                             as GameObject;
 
                 NetworkServer.SpawnWithClientAuthority
-                    (pieceGO, connectionToClient);
+                    (pieceGO, m_shipConn);
 
                 // Retrieve the component listener
                 ComponentListener pieceCon =

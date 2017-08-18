@@ -63,8 +63,7 @@ namespace Space.Ship
         /// <param name="hit"></param>
         public override void Hit(HitData hit)
         {
-            if (colliders == null)
-                BuildColliders();
+            BuildColliders();
 
             _hitD = hit;
 
@@ -78,8 +77,7 @@ namespace Space.Ship
         /// <param name="hit"></param>
         public override void HitArea(HitData hit)
         {
-            if (colliders == null)
-                BuildColliders();
+            BuildColliders();
 
             // check if he have just been hit
             if (_hitD.Equals(hit))

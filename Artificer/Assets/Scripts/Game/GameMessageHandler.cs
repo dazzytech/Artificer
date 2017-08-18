@@ -47,6 +47,7 @@ namespace Game
 
             NetworkServer.RegisterHandler((short)MSGCHANNEL.TEAMSELECTED, OnAssignToTeam);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SPAWNPLAYER, OnSpawnPlayerAt);
+            NetworkServer.RegisterHandler((short)MSGCHANNEL.SPAWNRAIDER, OnSpawnRaider);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SHIPHIT, OnShipHit);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.BUILDSTATION, OnBuildStation);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.OBJECTHIT, OnObjectHit);
@@ -134,40 +135,6 @@ namespace Game
 
         #endregion
 
-        #region SPACE PLAYER MESSAGES
-
-        /// <summary>
-        /// Called when the player 
-        /// chooses a spawn point to spawn their ship
-        /// </summary>
-        /// <param name="playerID"></param>
-        /// <param name="SpawnID"></param>
-        /// <param name="shipID"></param>
-        [Server]
-        public void OnSpawnPlayerAt
-            (NetworkMessage netMsg)
-        {
-            // Retreive variables and display options
-            SpawnSelectionMessage ssm = netMsg.ReadMessage<SpawnSelectionMessage>();
-            m_con.SpawnPlayer(ssm.PlayerID, ssm.SpawnID, ssm.Ship);
-        }
-
-        /// <summary>
-        /// Called when player picked a side
-        /// </summary>
-        /// <param name="teamID"></param>
-        /// <param name="playerID"></param>
-        [Server]
-        public void OnAssignToTeam(NetworkMessage netMsg)
-        {
-            // Retreive variables and display options
-            TeamSelectionMessage tsm = 
-                netMsg.ReadMessage<TeamSelectionMessage>();
-            m_con.AssignToTeam(tsm.Selected, tsm.ID);
-        }
-
-        #endregion
-
         #region SPACE MESSAGES
 
         /// <summary>
@@ -222,14 +189,59 @@ namespace Game
             m_con.OnTransaction(msg.ReadMessage<TransactionMessage>());
         }
 
+        /// <summary>
+        /// Spawns a raider object near target
+        /// </summary>
+        /// <param name="netMsg"></param>
+        [Server]
+        public void OnSpawnRaider(NetworkMessage netMsg)
+        {
+            SpawnRaiderMessage srm = netMsg.ReadMessage<SpawnRaiderMessage>();
+            m_con.SpawnRaider(srm.PlayerID, srm.TargetID, srm.Agent);
+        }
+
+        #region PLAYER MESSAGES
+
+        /// <summary>
+        /// Called when the player 
+        /// chooses a spawn point to spawn their ship
+        /// </summary>
+        /// <param name="playerID"></param>
+        /// <param name="SpawnID"></param>
+        /// <param name="shipID"></param>
+        [Server]
+        public void OnSpawnPlayerAt
+            (NetworkMessage netMsg)
+        {
+            // Retreive variables and display options
+            SpawnSelectionMessage ssm = netMsg.ReadMessage<SpawnSelectionMessage>();
+            m_con.SpawnPlayer(ssm.PlayerID, ssm.SpawnID, ssm.Ship);
+        }
+
+        /// <summary>
+        /// Called when player picked a side
+        /// </summary>
+        /// <param name="teamID"></param>
+        /// <param name="playerID"></param>
+        [Server]
+        public void OnAssignToTeam(NetworkMessage netMsg)
+        {
+            // Retreive variables and display options
+            TeamSelectionMessage tsm =
+                netMsg.ReadMessage<TeamSelectionMessage>();
+            m_con.AssignToTeam(tsm.Selected, tsm.ID);
+        }
+
+        #endregion
+
         #endregion
 
         #region SERVER EVENTS
 
         [Server]
-        public void OnShipCreated(NetworkInstanceId Self, int ID)
+        public void OnShipCreated(NetworkInstanceId Self, int ID, int align)
         {
-            SystemManager.Events.ShipCreated(Self, ID);
+            SystemManager.Events.ShipCreated(Self, ID, align);
         }
 
         [Server]

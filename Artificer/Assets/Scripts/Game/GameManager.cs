@@ -15,6 +15,7 @@ using Space.Projectiles;
 using Networking;
 using Data.UI;
 using Space.Segment;
+using Space.SpawnManager;
 
 namespace Game
 {
@@ -111,6 +112,8 @@ namespace Game
             m_att.TeamB = GameObject.Find("Team_B").GetComponent<TeamController>();
 
             m_att.Segment = GameObject.Find("segment").GetComponent<SegmentManager>();
+
+            m_att.Raider = GameObject.Find("ai").GetComponent<RaiderSpawnManager>();
 
             m_att.TeamA.Initialize(teamAcon, 0);
             m_att.TeamB.Initialize(teamBcon, 1);
@@ -271,6 +274,19 @@ namespace Game
 
             GO.GetComponent<ShipGenerator>()
                 .AssignShipData(ship, info.mTeam);
+        }
+
+        /// <summary>
+        /// Simply forwards the raider spawn to the 
+        /// manager
+        /// </summary>
+        /// <param name="playerID"></param>
+        /// <param name="targetID"></param>
+        /// <param name="agent"></param>
+        [Server]
+        public void SpawnRaider(uint playerID, uint targetID, string agent)
+        {
+            m_att.Raider.SpawnShip(agent, playerID, targetID);
         }
 
         /// <summary>
