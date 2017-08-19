@@ -112,15 +112,24 @@ namespace Space.SpawnManager
             {
                 // decrement depending on distance to
                 // statons
-                if (!WithinRangeStation(400))
+                if (!WithinRangeStation(500))
                 {
-                    startThreat -= 4;
+                    startThreat -= 2;
 
                     if (!WithinRangeStation(1000))
                     {
-                        startThreat -= 4;
-                        if (!WithinRangeStation(2000))
+                        startThreat -= 2;
+
+                        if (!WithinRangeStation(1500))
+                        {
                             startThreat -= 2;
+                            if (!WithinRangeStation(2000))
+                            {
+                                startThreat -= 2;
+                                if (!WithinRangeStation(2500))
+                                    startThreat -= 2;
+                            }
+                        }
                     }
                 }
 
@@ -381,6 +390,12 @@ namespace Space.SpawnManager
 
         #region PRIVATE UTILITIES
 
+        /// <summary>
+        /// Discover if we are tracking a transform
+        /// and begin track if not
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="agent"></param>
         private void AddToTargetList(Transform target, 
             NetworkInstanceId agent)
         {
@@ -399,6 +414,46 @@ namespace Space.SpawnManager
 
             // Add reference to our new agent
             state.AddPersuit(agent);
+        }
+
+        /// <summary>
+        /// Returns a random raider agent
+        /// based on the threat level of the target
+        /// higher threat means more dangerous agent
+        /// </summary>
+        /// <param name="threatLevel"></param>
+        /// <returns></returns>
+        private string RandomRaider(int threatLevel)
+        {
+            // retreive list of raiderinfo based on threat
+            // ordered by threat
+            RaiderSpawn[] spawns = (RaiderSpawn[])m_spawn.Where
+                (x => x.MinThreat <= threatLevel).
+                OrderBy(x => x.MinThreat).ToArray().Clone();
+
+            // range contains the max value for the random.range
+            float range = 0;
+
+            // loop through each spawn, add the current range to 
+            // the chance, and the chance to the current range seperately
+            for(int i = 0; i < spawns.Count(); i++)
+            {
+                range += spawns[i].SpawnChance;
+                spawns[i].SpawnChance = range;
+            }
+
+            float result = UnityEngine.Random.Range(0, range);
+
+            // pick the first number that is bigger than the random number
+            for (int i = 0; i < spawns.Count(); i++)
+            {
+                if (spawns[i].SpawnChance >= result)
+                    return spawns[i].AgentName;
+            }
+
+            // we shouldn't be here
+            Debug.Log("Error: Raider Spawn Manager - Random Raider: result failed to pick agent.");
+            return "";
         }
 
         #endregion
@@ -502,7 +557,7 @@ namespace Space.SpawnManager
 
                     int level = target.ThreatLevel;
 
-                    // Skip random for now
+                    Debug.Log(level);
 
                     // 5% - 50% chance of spawning
                     if (UnityEngine.Random.Range(-10, 10) >= level
@@ -519,12 +574,11 @@ namespace Space.SpawnManager
                         {
                             // Here we will build the message 
                             // to create a raider 
-                            string agent = "raider_small";
-
                             SpawnRaiderMessage raidMsg = new SpawnRaiderMessage();
                             raidMsg.PlayerID = SystemManager.Space.NetID;
                             raidMsg.TargetID = target.SelfNetID.Value;
-                            raidMsg.Agent = agent;
+                            // add agent based on threat level
+                            raidMsg.Agent = RandomRaider(10 - level);
 
                             SystemManager.singleton.client.Send
                                 ((short)MSGCHANNEL.SPAWNRAIDER, raidMsg);
