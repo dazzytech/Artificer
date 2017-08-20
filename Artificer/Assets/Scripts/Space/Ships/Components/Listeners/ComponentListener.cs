@@ -80,7 +80,7 @@ namespace Space.Ship.Components.Listener
             set { GetAttributes().Socket = value; }
         }
 
-        private ComponentData Data
+        public ComponentData Data
         {
             get { return GetAttributes().Data; }
             set { GetAttributes().Data = value; }

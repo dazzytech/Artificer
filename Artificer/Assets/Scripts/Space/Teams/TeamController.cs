@@ -6,7 +6,7 @@ using System.Collections.Generic;
 // Artificer
 using Data.Space;
 using Space.Ship;
-using Space.SpawnManagers;
+using Space.Spawn;
 using Networking;
 using Data.Space.Collectable;
 
@@ -313,108 +313,6 @@ namespace Space.Teams
             return false;
         }
 
-        /// <summary>
-        /// Called from player objects to transfer
-        /// materials to the team pool
-        /// </summary>
-        /// <param name="inMats"></param>
-        [Command]
-        public void CmdAddMaterialToPool(List<MaterialData> inMats)
-        {
-            // null if not assigned
-            if (_collectedMaterials == null)
-                _collectedMaterials = new MaterialListSync();
-
-            foreach (MaterialData mat in inMats)
-            {
-                // See if station already has material
-                int matPos = _collectedMaterials.IndexOf(mat);
-                if (matPos == -1) // -1 means we don't already have it
-                    _collectedMaterials.Add(mat);
-                else
-                {
-                    // if we already own it, to add the amount to the existing amount.
-                    MaterialData homeMat = _collectedMaterials[matPos];
-                    homeMat.Amount += mat.Amount;
-                    _collectedMaterials[matPos] = homeMat;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Returns true if the amount of a material in 
-        /// team storage is more or equal to the requirement 
-        /// material given
-        /// </summary>
-        /// <param name="inMat"></param>
-        /// <returns></returns>
-        public bool CheckTeamStorage(MaterialData inMat)
-        {
-            // null if not assigned
-            if (_collectedMaterials == null)
-                return false;
-
-            // See if station already has material
-            int matPos = _collectedMaterials.IndexOf(inMat);
-            if (matPos == -1) // -1 means we don't already have it
-                return false;
-            else
-            {
-                // if we already own it, to add the amount to the existing amount.
-                if (_collectedMaterials[matPos].Amount >= inMat.Amount)
-                    return true;
-                else
-                    return false;
-            }
-        }
-
-        /// <summary>
-        /// Decreases the shared storage
-        /// </summary>
-        /// <param name="inMats"></param>
-        /// <returns></returns>
-        public bool ExpendTeamStorage(List<MaterialData> inMats)
-        {
-            // null if not assigned
-            if (_collectedMaterials == null)
-                return false;
-
-            // Do our own check to make sure we have all the materials
-            foreach (MaterialData inMat in inMats)
-            {
-                if (!CheckTeamStorage(inMat))
-                    return false;           // inadequate storage
-            }
-
-            // now we can expend the material
-            foreach (MaterialData inMat in inMats)
-            {
-                // Reduce storage on server
-                CmdReduceInventory(inMat);
-            }
-
-            // Return successful expendature
-            return true;
-        }
-
-        /// <summary>
-        /// Made when making purchase and decreases stock
-        /// </summary>
-        /// <param name="inMat"></param>
-        [Command]
-        private void CmdReduceInventory(MaterialData inMat)
-        {
-            // See if station has the material
-            int matPos = _collectedMaterials.IndexOf(inMat);
-            // decrease the amount from the existing amount.
-            MaterialData homeMat = _collectedMaterials[matPos];
-            homeMat.Amount -= inMat.Amount;
-
-            // Delete material if we don't have any of that material left
-            if (homeMat.Amount <= 0)
-                _collectedMaterials.RemoveAt(matPos);
-            else
-                _collectedMaterials[matPos] = homeMat;
-        }*/
+        */
     }
 }

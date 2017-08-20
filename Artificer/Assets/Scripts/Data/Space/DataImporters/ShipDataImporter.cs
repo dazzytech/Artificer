@@ -155,7 +155,7 @@ namespace Data.Space.DataImporter
                 }
 
                 newComponent.AutoLock = false;
-                newComponent.behaviour = 1;
+                newComponent.Behaviour = 1;
                 newComponent.AutoFire = false;
 
                 GameObject GO = Resources.Load("Space/Ships/" + newComponent.Folder + "/" + newComponent.Name, typeof(GameObject)) as GameObject;

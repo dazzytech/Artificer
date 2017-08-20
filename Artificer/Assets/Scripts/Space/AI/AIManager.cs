@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Data.Space.DataImporter;
 using Data.Space;
-using Space.SpawnManager;
+using Space.Spawn;
 
 namespace Space.AI
 {

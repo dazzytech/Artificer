@@ -36,7 +36,7 @@ namespace Space.UI.Station.Utility
             m_panel.Find("Range").GetComponent<Text>().text = 
                 (targeter.AttackRange*.1f).ToString()+"km";
 
-            m_index = bC.ShipComponent.behaviour;
+            m_index = bC.ShipComponent.Behaviour;
             
             base.Display(att, bC);
         }
@@ -47,7 +47,7 @@ namespace Space.UI.Station.Utility
 
         protected override void ApplyToggle(int index)
         {
-            m_BC.ShipComponent.behaviour = index;
+            m_BC.ShipComponent.Behaviour = index;
         }
 
         #endregion

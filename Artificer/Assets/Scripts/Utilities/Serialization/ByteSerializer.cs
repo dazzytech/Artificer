@@ -30,7 +30,7 @@ namespace Serializer
             writer.Write(comp.Folder);
             writer.Write(comp.Style);
             writer.Write(comp.AutoLock);
-            writer.Write(comp.behaviour);
+            writer.Write(comp.Behaviour);
             writer.Write(comp.AutoFire);
             writer.Write(comp.sockets.Length);
             foreach (SocketData sock in comp.sockets)
@@ -82,7 +82,7 @@ namespace Serializer
             comp.Folder = reader.ReadString();
             comp.Style = reader.ReadString();
             comp.AutoLock = reader.ReadBoolean();
-            comp.behaviour = reader.ReadInt32();
+            comp.Behaviour = reader.ReadInt32();
             comp.AutoFire = reader.ReadBoolean();
 
             int length = reader.ReadInt32();

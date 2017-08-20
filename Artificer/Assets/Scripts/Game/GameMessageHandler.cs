@@ -47,7 +47,6 @@ namespace Game
 
             NetworkServer.RegisterHandler((short)MSGCHANNEL.TEAMSELECTED, OnAssignToTeam);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SPAWNPLAYER, OnSpawnPlayerAt);
-            NetworkServer.RegisterHandler((short)MSGCHANNEL.SPAWNRAIDER, OnSpawnRaider);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SHIPHIT, OnShipHit);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.BUILDSTATION, OnBuildStation);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.OBJECTHIT, OnObjectHit);
@@ -187,17 +186,6 @@ namespace Game
         public void OnTransaction(NetworkMessage msg)
         {
             m_con.OnTransaction(msg.ReadMessage<TransactionMessage>());
-        }
-
-        /// <summary>
-        /// Spawns a raider object near target
-        /// </summary>
-        /// <param name="netMsg"></param>
-        [Server]
-        public void OnSpawnRaider(NetworkMessage netMsg)
-        {
-            SpawnRaiderMessage srm = netMsg.ReadMessage<SpawnRaiderMessage>();
-            m_con.SpawnRaider(srm.PlayerID, srm.TargetID, srm.Agent);
         }
 
         #region PLAYER MESSAGES

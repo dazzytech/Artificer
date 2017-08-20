@@ -28,6 +28,20 @@ namespace Space.Ship.Components.Listener
             }
         }
 
+        public void SetTargeting(bool fire, int behaviour)
+        {
+            _att.EngageFire = fire;
+            if (behaviour != -1)
+                _att.Behaviour = (TargeterBehaviour)behaviour;
+
+            // find targets if auto lock
+            if (_att.Behaviour == TargeterBehaviour.AUTOLOCKFIRE)
+                StartCoroutine(FindArcTargets
+                    (_att.AttackRange, _att.MinAngle, _att.MaxAngle, _att.Ship));
+            else
+                StopAllCoroutines();
+        }
+
         #endregion
 
         #region PRIVATE UTILITIES
@@ -43,7 +57,7 @@ namespace Space.Ship.Components.Listener
             {
                 _att.ComponentList = new List<ComponentListener>();
               
-                _att.Behaviour = (TargeterBehaviour)_att.Data.behaviour;
+                _att.Behaviour = (TargeterBehaviour)_att.Data.Behaviour;
 
                 _att.EngageFire = _att.Data.AutoFire;
 

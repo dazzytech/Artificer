@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="Windows-1252"?>
-<ship xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" player="true" rotorFollow="true">
+<ship xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" player="true" rotorFollow="false">
   <pieces>
     <body instanceID="0" folder="Engines" name="Engine_03" direction="up" trigger="moveUp" combat="moveUp" style="default">
       <name />
@@ -116,23 +116,23 @@
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
-        <x>494</x>
-        <y>176</y>
+        <x>285.8</x>
+        <y>321.5</y>
         <position>
-          <x>494</x>
-          <y>176</y>
+          <x>285.8</x>
+          <y>321.5</y>
         </position>
         <center>
-          <x>505</x>
-          <y>187.5</y>
+          <x>296.8</x>
+          <y>333</y>
         </center>
         <min>
-          <x>494</x>
-          <y>176</y>
+          <x>285.8</x>
+          <y>321.5</y>
         </min>
         <max>
-          <x>516</x>
-          <y>199</y>
+          <x>307.8</x>
+          <y>344.5</y>
         </max>
         <width>22</width>
         <height>23</height>
@@ -140,10 +140,10 @@
           <x>22</x>
           <y>23</y>
         </size>
-        <xMin>494</xMin>
-        <yMin>176</yMin>
-        <xMax>516</xMax>
-        <yMax>199</yMax>
+        <xMin>285.8</xMin>
+        <yMin>321.5</yMin>
+        <xMax>307.8</xMax>
+        <yMax>344.5</yMax>
       </Bounds>
       <rotation>90</rotation>
       <IsHead>false</IsHead>
@@ -297,7 +297,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <head instanceID="8" folder="Components" name="Ship_Wing_Left_02" direction="up" trigger="" combat="" style="default">
+    <body instanceID="8" folder="Components" name="Ship_Wing_Left_02" direction="up" trigger="" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -333,7 +333,7 @@
       <rotation>0</rotation>
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
-    </head>
+    </body>
     <body instanceID="9" folder="Weapons" name="Weapon_Left_02" direction="up" trigger="" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
@@ -561,22 +561,22 @@
       <hideFlags>None</hideFlags>
       <Bounds>
         <x>275.5</x>
-        <y>140.499985</y>
+        <y>140.5</y>
         <position>
           <x>275.5</x>
-          <y>140.499985</y>
+          <y>140.5</y>
         </position>
         <center>
           <x>318.5</x>
-          <y>186.499985</y>
+          <y>186.5</y>
         </center>
         <min>
           <x>275.5</x>
-          <y>140.499985</y>
+          <y>140.5</y>
         </min>
         <max>
           <x>361.5</x>
-          <y>232.499985</y>
+          <y>232.5</y>
         </max>
         <width>86</width>
         <height>92</height>
@@ -585,9 +585,9 @@
           <y>92</y>
         </size>
         <xMin>275.5</xMin>
-        <yMin>140.499985</yMin>
+        <yMin>140.5</yMin>
         <xMax>361.5</xMax>
-        <yMax>232.499985</yMax>
+        <yMax>232.5</yMax>
       </Bounds>
       <rotation>270</rotation>
       <IsHead>false</IsHead>
@@ -1004,43 +1004,6 @@
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
-        <x>350</x>
-        <y>416.5</y>
-        <position>
-          <x>350</x>
-          <y>416.5</y>
-        </position>
-        <center>
-          <x>364</x>
-          <y>423</y>
-        </center>
-        <min>
-          <x>350</x>
-          <y>416.5</y>
-        </min>
-        <max>
-          <x>378</x>
-          <y>429.5</y>
-        </max>
-        <width>28</width>
-        <height>13</height>
-        <size>
-          <x>28</x>
-          <y>13</y>
-        </size>
-        <xMin>350</xMin>
-        <yMin>416.5</yMin>
-        <xMax>378</xMax>
-        <yMax>429.5</yMax>
-      </Bounds>
-      <rotation>90</rotation>
-      <IsHead>false</IsHead>
-      <StyleSelect>0</StyleSelect>
-    </body>
-    <body instanceID="28" folder="Engines" name="Engine_01" direction="right" trigger="strafeRight" combat="strafeRight" style="default">
-      <name />
-      <hideFlags>None</hideFlags>
-      <Bounds>
         <x>374</x>
         <y>409.5</y>
         <position>
@@ -1074,7 +1037,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="29" folder="Rotors" name="Rotor_01" direction="left" trigger="turnRight" combat="" style="default">
+    <body instanceID="28" folder="Rotors" name="Rotor_01" direction="left" trigger="turnRight" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -1111,7 +1074,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="30" folder="Rotors" name="Rotor_01" direction="left" trigger="turnRight" combat="" style="default">
+    <body instanceID="29" folder="Rotors" name="Rotor_01" direction="left" trigger="turnRight" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -1148,7 +1111,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="31" folder="Rotors" name="Rotor_01" direction="left" trigger="turnRight" combat="" style="default">
+    <body instanceID="30" folder="Rotors" name="Rotor_01" direction="left" trigger="turnRight" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -1185,7 +1148,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="32" folder="Rotors" name="Rotor_01" direction="left" trigger="turnRight" combat="" style="default">
+    <body instanceID="31" folder="Rotors" name="Rotor_01" direction="left" trigger="turnRight" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -1222,81 +1185,44 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
+    <body instanceID="32" folder="Engines" name="Engine_01" direction="left" trigger="strafeLeft" combat="strafeLeft" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>486</x>
+        <y>416.5</y>
+        <position>
+          <x>486</x>
+          <y>416.5</y>
+        </position>
+        <center>
+          <x>500</x>
+          <y>423</y>
+        </center>
+        <min>
+          <x>486</x>
+          <y>416.5</y>
+        </min>
+        <max>
+          <x>514</x>
+          <y>429.5</y>
+        </max>
+        <width>28</width>
+        <height>13</height>
+        <size>
+          <x>28</x>
+          <y>13</y>
+        </size>
+        <xMin>486</xMin>
+        <yMin>416.5</yMin>
+        <xMax>514</xMax>
+        <yMax>429.5</yMax>
+      </Bounds>
+      <rotation>270</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
     <body instanceID="33" folder="Engines" name="Engine_01" direction="left" trigger="strafeLeft" combat="strafeLeft" style="default">
-      <name />
-      <hideFlags>None</hideFlags>
-      <Bounds>
-        <x>486</x>
-        <y>416.5</y>
-        <position>
-          <x>486</x>
-          <y>416.5</y>
-        </position>
-        <center>
-          <x>500</x>
-          <y>423</y>
-        </center>
-        <min>
-          <x>486</x>
-          <y>416.5</y>
-        </min>
-        <max>
-          <x>514</x>
-          <y>429.5</y>
-        </max>
-        <width>28</width>
-        <height>13</height>
-        <size>
-          <x>28</x>
-          <y>13</y>
-        </size>
-        <xMin>486</xMin>
-        <yMin>416.5</yMin>
-        <xMax>514</xMax>
-        <yMax>429.5</yMax>
-      </Bounds>
-      <rotation>270</rotation>
-      <IsHead>false</IsHead>
-      <StyleSelect>0</StyleSelect>
-    </body>
-    <body instanceID="34" folder="Engines" name="Engine_01" direction="left" trigger="strafeLeft" combat="strafeLeft" style="default">
-      <name />
-      <hideFlags>None</hideFlags>
-      <Bounds>
-        <x>486</x>
-        <y>416.5</y>
-        <position>
-          <x>486</x>
-          <y>416.5</y>
-        </position>
-        <center>
-          <x>500</x>
-          <y>423</y>
-        </center>
-        <min>
-          <x>486</x>
-          <y>416.5</y>
-        </min>
-        <max>
-          <x>514</x>
-          <y>429.5</y>
-        </max>
-        <width>28</width>
-        <height>13</height>
-        <size>
-          <x>28</x>
-          <y>13</y>
-        </size>
-        <xMin>486</xMin>
-        <yMin>416.5</yMin>
-        <xMax>514</xMax>
-        <yMax>429.5</yMax>
-      </Bounds>
-      <rotation>270</rotation>
-      <IsHead>false</IsHead>
-      <StyleSelect>0</StyleSelect>
-    </body>
-    <body instanceID="35" folder="Engines" name="Engine_01" direction="left" trigger="strafeLeft" combat="strafeLeft" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -1333,7 +1259,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="36" folder="Engines" name="Engine_01" direction="left" trigger="strafeLeft" combat="strafeLeft" style="default">
+    <body instanceID="34" folder="Engines" name="Engine_01" direction="left" trigger="strafeLeft" combat="strafeLeft" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -1370,7 +1296,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="37" folder="Rotors" name="Rotor_01" direction="left" trigger="turnRight" combat="" style="default">
+    <body instanceID="35" folder="Rotors" name="Rotor_01" direction="left" trigger="turnRight" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -1407,7 +1333,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="38" folder="Engines" name="Engine_03" direction="up" trigger="moveUp" combat="moveUp" style="default">
+    <body instanceID="36" folder="Engines" name="Engine_03" direction="up" trigger="moveUp" combat="moveUp" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -1444,7 +1370,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="39" folder="Engines" name="Engine_03" direction="up" trigger="moveUp" combat="moveUp" style="default">
+    <body instanceID="37" folder="Engines" name="Engine_03" direction="up" trigger="moveUp" combat="moveUp" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -1481,7 +1407,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="40" folder="Engines" name="Engine_03" direction="down" trigger="moveDown" combat="moveDown" style="default">
+    <body instanceID="38" folder="Engines" name="Engine_03" direction="down" trigger="moveDown" combat="moveDown" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -1518,7 +1444,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="41" folder="Engines" name="Engine_03" direction="down" trigger="moveDown" combat="moveDown" style="default">
+    <body instanceID="39" folder="Engines" name="Engine_03" direction="down" trigger="moveDown" combat="moveDown" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -1555,7 +1481,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="42" folder="Targeter" name="Targeter_01" direction="up" trigger="" combat="" style="default">
+    <body instanceID="40" folder="Targeter" name="Targeter_01" direction="up" trigger="" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -1592,7 +1518,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="43" folder="Targeter" name="Targeter_01" direction="up" trigger="" combat="" style="default">
+    <body instanceID="41" folder="Targeter" name="Targeter_01" direction="up" trigger="" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -1629,7 +1555,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="44" folder="Targeter" name="Targeter_01" direction="up" trigger="" combat="" style="default">
+    <body instanceID="42" folder="Targeter" name="Targeter_01" direction="up" trigger="" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -1666,7 +1592,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="45" folder="Targeter" name="Targeter_01" direction="up" trigger="" combat="" style="default">
+    <body instanceID="43" folder="Targeter" name="Targeter_01" direction="up" trigger="" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -1703,7 +1629,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="46" folder="Weapons" name="Weapon_Left_02" direction="up" trigger="" combat="" style="default">
+    <body instanceID="44" folder="Weapons" name="Weapon_Left_02" direction="up" trigger="" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -1740,7 +1666,7 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <body instanceID="47" folder="Weapons" name="Weapon_Right_02" direction="up" trigger="" combat="" style="default">
+    <body instanceID="45" folder="Weapons" name="Weapon_Right_02" direction="up" trigger="" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
@@ -1780,40 +1706,50 @@
   </pieces>
   <links>
     <link linkID="0" IDfrom="10" IDto="11" linkToID="0" />
-    <link linkID="0" IDfrom="11" IDto="16" linkToID="0" />
     <link linkID="1" IDfrom="11" IDto="15" linkToID="3" />
     <link linkID="0" IDfrom="15" IDto="8" linkToID="0" />
-    <link linkID="1" IDfrom="8" IDto="36" linkToID="0" />
-    <link linkID="3" IDfrom="8" IDto="41" linkToID="0" />
-    <link linkID="1" IDfrom="15" IDto="45" linkToID="1" />
-    <link linkID="0" IDfrom="45" IDto="46" linkToID="0" />
-    <link linkID="2" IDfrom="11" IDto="29" linkToID="0" />
-    <link linkID="3" IDfrom="11" IDto="30" linkToID="0" />
-    <link linkID="4" IDfrom="11" IDto="3" linkToID="0" />
+    <link linkID="1" IDfrom="8" IDto="34" linkToID="0" />
+    <link linkID="2" IDfrom="8" IDto="2" linkToID="0" />
+    <link linkID="3" IDfrom="8" IDto="39" linkToID="0" />
+    <link linkID="1" IDfrom="15" IDto="43" linkToID="1" />
+    <link linkID="0" IDfrom="43" IDto="44" linkToID="0" />
+    <link linkID="2" IDfrom="11" IDto="28" linkToID="0" />
+    <link linkID="3" IDfrom="11" IDto="29" linkToID="0" />
+    <link linkID="4" IDfrom="11" IDto="21" linkToID="3" />
+    <link linkID="0" IDfrom="21" IDto="17" linkToID="0" />
+    <link linkID="1" IDfrom="17" IDto="6" linkToID="0" />
+    <link linkID="4" IDfrom="17" IDto="4" linkToID="0" />
+    <link linkID="5" IDfrom="17" IDto="36" linkToID="0" />
+    <link linkID="5" IDfrom="21" IDto="40" linkToID="1" />
+    <link linkID="0" IDfrom="40" IDto="45" linkToID="0" />
     <link linkID="5" IDfrom="11" IDto="25" linkToID="0" />
     <link linkID="6" IDfrom="11" IDto="22" linkToID="0" />
-    <link linkID="7" IDfrom="11" IDto="44" linkToID="1" />
-    <link linkID="0" IDfrom="44" IDto="1" linkToID="0" />
-    <link linkID="8" IDfrom="11" IDto="43" linkToID="1" />
-    <link linkID="0" IDfrom="43" IDto="9" linkToID="0" />
+    <link linkID="7" IDfrom="11" IDto="42" linkToID="1" />
+    <link linkID="0" IDfrom="42" IDto="1" linkToID="0" />
+    <link linkID="8" IDfrom="11" IDto="41" linkToID="1" />
+    <link linkID="0" IDfrom="41" IDto="9" linkToID="0" />
     <link linkID="10" IDfrom="11" IDto="14" linkToID="10" />
     <link linkID="0" IDfrom="14" IDto="20" linkToID="3" />
     <link linkID="0" IDfrom="20" IDto="16" linkToID="0" />
-    <link linkID="3" IDfrom="16" IDto="40" linkToID="0" />
-    <link linkID="1" IDfrom="14" IDto="31" linkToID="0" />
-    <link linkID="2" IDfrom="14" IDto="32" linkToID="0" />
+    <link linkID="1" IDfrom="16" IDto="3" linkToID="0" />
+    <link linkID="2" IDfrom="16" IDto="0" linkToID="0" />
+    <link linkID="3" IDfrom="16" IDto="38" linkToID="0" />
+    <link linkID="1" IDfrom="14" IDto="30" linkToID="0" />
+    <link linkID="2" IDfrom="14" IDto="31" linkToID="0" />
     <link linkID="3" IDfrom="14" IDto="19" linkToID="3" />
     <link linkID="0" IDfrom="19" IDto="18" linkToID="0" />
-    <link linkID="1" IDfrom="18" IDto="37" linkToID="0" />
+    <link linkID="1" IDfrom="18" IDto="35" linkToID="0" />
     <link linkID="4" IDfrom="18" IDto="5" linkToID="0" />
+    <link linkID="5" IDfrom="18" IDto="37" linkToID="0" />
     <link linkID="4" IDfrom="14" IDto="23" linkToID="0" />
     <link linkID="5" IDfrom="14" IDto="24" linkToID="0" />
     <link linkID="7" IDfrom="14" IDto="7" linkToID="0" />
     <link linkID="1" IDfrom="7" IDto="12" linkToID="1" />
+    <link linkID="0" IDfrom="12" IDto="32" linkToID="0" />
     <link linkID="2" IDfrom="7" IDto="13" linkToID="0" />
-    <link linkID="1" IDfrom="13" IDto="27" linkToID="0" />
-    <link linkID="8" IDfrom="14" IDto="35" linkToID="0" />
-    <link linkID="9" IDfrom="14" IDto="28" linkToID="0" />
+    <link linkID="1" IDfrom="13" IDto="26" linkToID="0" />
+    <link linkID="8" IDfrom="14" IDto="33" linkToID="0" />
+    <link linkID="9" IDfrom="14" IDto="27" linkToID="0" />
   </links>
   <info>
     <name>Mammoth</name>

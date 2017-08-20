@@ -61,6 +61,14 @@ namespace Space.Ship
         #region COMPONENTS
 
         /// <summary>
+        /// Returns if the ship is already completed
+        /// </summary>
+        public bool Complete
+        {
+            get { return Components.Length > 0; }
+        }
+
+        /// <summary>
         /// Retrieves the list
         /// of components attached to this GO
         /// </summary>
@@ -373,6 +381,13 @@ namespace Space.Ship
             }
 
             return retList.ToArray();
+        }
+
+        public void SetTargetAttributes
+            (bool fire, int behaviour = -1)
+        {
+            foreach (TargeterListener targeter in Targeter)
+                targeter.SetTargeting(fire, behaviour);
         }
 
         #region SHIP CMDS

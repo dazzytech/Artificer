@@ -6,7 +6,7 @@ using Space.Segment;
 using Stations;
 using Game;
 
-namespace Space.SpawnManagers
+namespace Space.Spawn
 {
     #region SPAWN POINT
 
@@ -36,7 +36,7 @@ namespace Space.SpawnManagers
     /// and stored within spawnmanager memory linked to that ship
     /// ONLY EXISTS ON SERVER
     /// </summary>
-    public class TeamSpawnManager: NetworkBehaviour
+    public class TeamSpawnManager: SpawnManager
     {
         #region ATTRIBUTES
 

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <agents>
-  <agent name = "raider_small" type = "small_scout" template = "assault"
+  <agent name = "raider_small" type = "dogfighter" template = "assault"
 	engage = "0" pursue = "300" attack = "30" pulloff = "3">
     <ship>Mammoth Micro</ship>
     <ship>Mammoth Micro II</ship>
     <ship>Mammoth Micro III</ship>
   </agent>
 
-  <agent name = "raider_medium" type = "medium_attack" template = "assault"
-	engage = "0" pursue = "300" attack = "30" pulloff = "3">
+  <agent name = "raider_medium" type = "autotarget" template = "assault"
+	engage = "0" pursue = "300" attack = "30" pulloff = "5">
     <ship>Mammoth</ship>
   </agent>
 </agents>

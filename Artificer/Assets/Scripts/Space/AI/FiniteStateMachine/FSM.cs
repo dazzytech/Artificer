@@ -1,13 +1,20 @@
 using UnityEngine;
 using UnityEngine.Networking;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Space.Ship;
 using Stations;
 using Game;
+using Data.Space;
 
 namespace Space.AI
 {
+    /// <summary>
+    /// Controls how the ai interacts with 
+    /// the ship
+    /// </summary>
+    public enum ControlStyle { NONE, DOGFIGHTER, AUTOTARGET };
 
     #region STATES AND TRANSITIONS
 
@@ -166,7 +173,7 @@ namespace Space.AI
         /// Defines the behaviour of the ship defined by its class
         /// TODO: GET THIS FROM SHIP DATA
         /// </summary>
-        protected string m_shipCategory;
+        protected ControlStyle m_controlCategory;
 
         private ShipAccessor m_ship;
 
@@ -220,6 +227,11 @@ namespace Space.AI
             get { return m_pursuitDistance; }
         }
 
+        public ControlStyle Control
+        {
+            get { return m_controlCategory; }
+        }
+
         #endregion
 
         #region MONO BEHAVIOUR
@@ -233,8 +245,11 @@ namespace Space.AI
             // Assign ship references
             m_ship = GetComponent<ShipAccessor>();
 
-            // Listen for creation of ship
-            m_ship.OnShipCompleted += ShipCreatedEvent;
+            if (m_ship.Complete)
+                Initialize();
+            else
+                // Listen for creation of ship
+                m_ship.OnShipCompleted += ShipCreatedEvent;
         } 
 
         // Update is called once per frame
@@ -246,22 +261,15 @@ namespace Space.AI
 
         #region PUBLIC INTERACTION
 
-        /// <summary>
-        /// called to init the ranges 
-        /// for shared agent behaviour
-        /// </summary>
-        /// <param name="engage"></param>
-        /// <param name="pursue"></param>
-        /// <param name="attack"></param>
-        /// <param name="pulloff"></param>
-        public void EstablishRanges
-            (float engage, float pursue, 
-             float attack, float pulloff)
+        public void EstablishAgent(AgentData agent)
         {
-            m_engageDistance = engage;
-            m_pursuitDistance = pursue;
-            m_attackRange = attack;
-            m_pullOffDistance = pulloff;
+            m_controlCategory = GetStyle(agent.Type);
+            
+            EstablishRanges
+                (Convert.ToInt32(agent.EngageDistance),
+                 Convert.ToInt32(agent.PursuitDistance),
+                 Convert.ToInt32(agent.AttackDistance),
+                 Convert.ToInt32(agent.PullOffDistance));
         }
 
         /// <summary>
@@ -395,6 +403,24 @@ namespace Space.AI
         #region PRIVATE UTILTIES
 
         /// <summary>
+        /// called to init the ranges 
+        /// for shared agent behaviour
+        /// </summary>
+        /// <param name="engage"></param>
+        /// <param name="pursue"></param>
+        /// <param name="attack"></param>
+        /// <param name="pulloff"></param>
+        public void EstablishRanges
+            (float engage, float pursue,
+             float attack, float pulloff)
+        {
+            m_engageDistance = engage;
+            m_pursuitDistance = pursue;
+            m_attackRange = attack;
+            m_pullOffDistance = pulloff;
+        }
+
+        /// <summary>
         /// Makes the new state
         /// the current state
         /// </summary>
@@ -449,6 +475,19 @@ namespace Space.AI
             Con.ReleaseKey(Control_Config.GetKey("fire", "ship"));
         }
 
+        private ControlStyle GetStyle(string control)
+        {
+            switch (control)
+            {
+                case "dogfighter":
+                    return ControlStyle.DOGFIGHTER;
+                case "autotarget":
+                    return ControlStyle.AUTOTARGET;
+                default:
+                    return ControlStyle.NONE;
+            }
+        }
+
         #endregion
 
         #region VIRTUAL FUNCTIONS
@@ -461,6 +500,16 @@ namespace Space.AI
                     += ShipDestroyedEvent;
 
             InvokeRepeating("SeekShips", 0, 1f);
+
+            switch (m_controlCategory)
+            {
+                case ControlStyle.DOGFIGHTER:
+                    m_ship.SetTargetAttributes(false);
+                    break;
+                case ControlStyle.AUTOTARGET:
+                    m_ship.SetTargetAttributes(true, 0);
+                    break;
+            }
         }
 
         protected virtual void FSMUpdate()

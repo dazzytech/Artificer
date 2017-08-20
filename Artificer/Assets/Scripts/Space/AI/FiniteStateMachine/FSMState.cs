@@ -204,8 +204,6 @@ namespace Space.AI
             m_timeoutID = timeoutTrans;
         }
 
-        #endregion
-
         #region VIRTUAL FUNCTIONALITY
 
         /// <summary>
@@ -280,5 +278,42 @@ namespace Space.AI
         }
 
         #endregion
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        /// <summary>
+        /// Faces the ship at the target and
+        /// fires when facing
+        /// </summary>
+        /// <returns>If the agent is within angle</returns>
+        protected bool AimAtTarget(float angleAccuracy)
+        {
+            float angleDiff = Math.Angle(Self.transform, Self.Target.position);
+
+            // Changed so that the doesnt move towards target 
+            // change when applying types
+
+            if (angleDiff >= angleAccuracy)
+            {
+                Con.ReleaseKey(Control_Config.GetKey("turnRight", "ship"));
+                Keys.Add(Control_Config.GetKey("turnLeft", "ship"));
+            }
+            else if (angleDiff <= -angleAccuracy)
+            {
+                Con.ReleaseKey(Control_Config.GetKey("turnLeft", "ship"));
+                Keys.Add(Control_Config.GetKey("turnRight", "ship"));
+            }
+            else
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        #endregion
+
     }
 }

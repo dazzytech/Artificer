@@ -1519,7 +1519,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 510, y: -359.16663}
+  m_AnchoredPosition: {x: 510, y: -359.16672}
   m_SizeDelta: {x: 1020, y: 641.6666}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &73733229
@@ -1982,7 +1982,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 509.99997, y: -369.99997}
+  m_AnchoredPosition: {x: 509.99997, y: -369.99994}
   m_SizeDelta: {x: 1019.99994, y: 619.99994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &109068352
@@ -9686,7 +9686,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 375, y: -61.897133}
+  m_AnchoredPosition: {x: 375, y: -61.897137}
   m_SizeDelta: {x: 730, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &545647790
@@ -10481,7 +10481,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 55.10601, y: -6.95}
+  m_AnchoredPosition: {x: 55.106014, y: -6.95}
   m_SizeDelta: {x: 80.7, y: 8.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &586671185
@@ -10765,10 +10765,10 @@ MonoBehaviour:
   m_spawn:
   - AgentName: raider_small
     MinThreat: 0
-    SpawnChance: 0.8
+    SpawnChance: 0.7
   - AgentName: raider_medium
-    MinThreat: 8
-    SpawnChance: 0.2
+    MinThreat: 4
+    SpawnChance: 0.3
 --- !u!1 &594422500
 GameObject:
   m_ObjectHideFlags: 0
@@ -21433,7 +21433,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 60.1, y: -6.9500017}
+  m_AnchoredPosition: {x: 60.100002, y: -6.9500017}
   m_SizeDelta: {x: 84.95, y: 8.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1230568713
@@ -22341,7 +22341,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 509.99997, y: -396.6667}
+  m_AnchoredPosition: {x: 509.99997, y: -396.66672}
   m_SizeDelta: {x: 1019.99994, y: 566.6666}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1271598171

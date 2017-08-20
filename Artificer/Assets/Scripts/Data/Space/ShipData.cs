@@ -67,7 +67,7 @@ namespace Data.Space
 
         // Targeter and listener specific data
         public bool AutoLock;
-        public int behaviour;
+        public int Behaviour;
         public bool AutoFire;
 
         public string Path
