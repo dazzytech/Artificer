@@ -15,6 +15,7 @@ using Space.Projectiles;
 using Networking;
 using Data.UI;
 using Space.Segment;
+using Space.AI;
 
 namespace Game
 {
@@ -69,6 +70,8 @@ namespace Game
 
             // Generated stations for the teams
             m_att.Builder.GenerateTeams(m_att.TeamA, m_att.TeamB, param);
+
+            m_att.AI.Initialize(param);
         }
 
         /// <summary>
@@ -111,6 +114,8 @@ namespace Game
             m_att.TeamB = GameObject.Find("Team_B").GetComponent<TeamController>();
 
             m_att.Segment = GameObject.Find("segment").GetComponent<SegmentManager>();
+
+            m_att.AI = GameObject.Find("ai").GetComponent<AIManager>();
             
             m_att.TeamA.Initialize(teamAcon, 0);
             m_att.TeamB.Initialize(teamBcon, 1);

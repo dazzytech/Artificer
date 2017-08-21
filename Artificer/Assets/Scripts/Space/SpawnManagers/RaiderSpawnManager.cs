@@ -24,81 +24,12 @@ namespace Space.Spawn
         #region INLINE CLASS
 
         /// <summary>
-        /// Stores information about#
-        /// possible raider spawns
-        /// </summary>
-        [System.Serializable]
-        public class RaiderSpawn
-        {
-            /// <summary>
-            /// The agent that we will spawn
-            /// </summary>
-            public string AgentName;
-
-            /// <summary>
-            /// Minimum threat that the raider type
-            /// will spawn
-            /// </summary>
-            public int MinThreat;
-
-            /// <summary>
-            /// chance that the raider will be 
-            /// chosen to spawn
-            /// </summary>
-            public float SpawnChance;
-        }
-
-        /// <summary>
         /// Logs information about ship
         /// that is being tracked
         /// </summary>
-        public class RaiderTarget
+        public class RaiderTargetTracker: AgentGroupTracker
         {
-            #region ATTRIBUTES
-
-            /// <summary>
-            /// The suitable target 
-            /// for raider ships to spawn on
-            /// </summary>
-            private Transform m_target;
-
-            /// <summary>
-            /// Reference to all the raiders
-            /// attacking this target
-            /// </summary>
-            private List<NetworkInstanceId> m_raiders;
-
-            #endregion
-
-            /// <summary>
-            /// Initializes the object with 
-            /// reference to the ship
-            /// </summary>
-            /// <param name="target"></param>
-            public RaiderTarget(Transform target)
-            {
-                m_target = target;
-                m_raiders = new List<NetworkInstanceId>();
-
-                SystemManager.Events.EventShipDestroyed
-                    += ShipDestroyedEvent;
-            }
-
-            #region PUBLIC INTERACTION
-
-            /// <summary>
-            /// Adds a reference to a ship
-            /// pursuing this one
-            /// </summary>
-            /// <param name="ship"></param>
-            public void AddPersuit(NetworkInstanceId ship)
-            {
-                if (ship != null)
-                    m_raiders.Add
-                        (ship);
-            }
-
-            #endregion
+            public RaiderTargetTracker(Transform tracked): base(tracked) { }
 
             #region PRIVATE UTILITIES
 
@@ -151,7 +82,7 @@ namespace Space.Spawn
                 RaycastHit2D[] withinRange;
 
                 withinRange = Physics2D.CircleCastAll
-                    (Self.position, distance, Vector2.zero);
+                    (Focus.position, distance, Vector2.zero);
 
                 foreach (RaycastHit2D hit in withinRange)
                 {
@@ -175,7 +106,7 @@ namespace Space.Spawn
                 RaycastHit2D[] withinRange;
 
                 withinRange = Physics2D.CircleCastAll
-                    (Self.position, 50, Vector2.zero);
+                    (Focus.position, 50, Vector2.zero);
 
                 foreach (RaycastHit2D hit in withinRange)
                 {
@@ -185,28 +116,6 @@ namespace Space.Spawn
                 }
 
                 return ships;
-            }
-
-            #endregion
-
-            #region EVENTS
-
-            /// <summary>
-            /// Deletes reference to the persuit
-            /// ship if it is destroyed
-            /// </summary>
-            /// <param name="DD"></param>
-            private void ShipDestroyedEvent(DestroyDespatch DD)
-            {
-                for (int i = 0; i < m_raiders.Count; i++)
-                {
-                    if (m_raiders[i] == DD.Self)
-                    {
-                        m_raiders.RemoveAt(i);
-                        i--;
-                    }
-                }
-
             }
 
             #endregion
@@ -224,35 +133,6 @@ namespace Space.Spawn
                 }
             }
 
-            /// <summary>
-            /// Returns the amount of raiders targeting
-            /// </summary>
-            public int PersuitCount
-            {
-                get
-                {
-                    return m_raiders.Count;
-                }
-            }
-
-            /// <summary>
-            /// Stores an accessible reference 
-            /// to self
-            /// </summary>
-            public Transform Self
-            {
-                get { return m_target; }
-            }
-
-            /// <summary>
-            /// network instance if of the tracked
-            /// object
-            /// </summary>
-            public NetworkInstanceId SelfNetID
-            {
-                get { return Self.GetComponent<NetworkIdentity>().netId; }
-            }
-
             #endregion
         }
 
@@ -264,13 +144,7 @@ namespace Space.Spawn
         /// Targets for raiding parties, tracks target
         /// and threat level and raiding ships
         /// </summary>
-        private List<RaiderTarget> m_raidTargets;
-
-        /// <summary>
-        /// possible agents that can spawn
-        /// </summary>
-        [SerializeField]
-        private RaiderSpawn[] m_spawn;
+        private List<RaiderTargetTracker> m_raidTargets;
 
         #endregion
 
@@ -278,7 +152,7 @@ namespace Space.Spawn
 
         private void Start()
         {
-            m_raidTargets = new List<RaiderTarget>();
+            m_raidTargets = new List<RaiderTargetTracker>();
 
             StartCoroutine("SeekTargets");
 
@@ -312,8 +186,8 @@ namespace Space.Spawn
         {
             // Find the raider target stored on our 
             // current target
-            RaiderTarget state = m_raidTargets.
-                FirstOrDefault(x => x.Self == target);
+            RaiderTargetTracker state = m_raidTargets.
+                FirstOrDefault(x => x.Focus == target);
 
             if(state == null)
             {
@@ -324,47 +198,7 @@ namespace Space.Spawn
             }
 
             // Add reference to our new agent
-            state.AddPersuit(agent);
-        }
-
-        /// <summary>
-        /// Returns a random raider agent
-        /// based on the threat level of the target
-        /// higher threat means more dangerous agent
-        /// </summary>
-        /// <param name="threatLevel"></param>
-        /// <returns></returns>
-        private string RandomRaider(int threatLevel)
-        {
-            // retreive list of raiderinfo based on threat
-            // ordered by threat
-            RaiderSpawn[] spawns = (RaiderSpawn[])m_spawn.Where
-                (x => x.MinThreat <= threatLevel).
-                OrderBy(x => x.MinThreat).ToArray().Clone();
-
-            // range contains the max value for the random.range
-            float range = 0;
-
-            // loop through each spawn, add the current range to 
-            // the chance, and the chance to the current range seperately
-            for(int i = 0; i < spawns.Count(); i++)
-            {
-                range += spawns[i].SpawnChance;
-                spawns[i].SpawnChance = range;
-            }
-
-            float result = UnityEngine.Random.Range(0, range);
-
-            // pick the first number that is bigger than the random number
-            for (int i = 0; i < spawns.Count(); i++)
-            {
-                if (spawns[i].SpawnChance >= result)
-                    return spawns[i].AgentName;
-            }
-
-            // we shouldn't be here
-            Debug.Log("Error: Raider Spawn Manager - Random Raider: result failed to pick agent.");
-            return "";
+            state.AddAgent(agent);
         }
 
         #endregion
@@ -417,14 +251,14 @@ namespace Space.Spawn
                         {
                             // If this is a ship that this client
                             // manages then we want to track it
-                            RaiderTarget state = m_raidTargets.
-                                FirstOrDefault(x => x.Self == ship);
+                            RaiderTargetTracker state = m_raidTargets.
+                                FirstOrDefault(x => x.Focus == ship);
 
                             // Check if we are already tracking this ship
                             if (state == null)
                             {
                                 // We can create a tracker for this ship
-                                m_raidTargets.Add(new RaiderTarget(ship));
+                                m_raidTargets.Add(new RaiderTargetTracker(ship));
                             }
                         }
                     }
@@ -451,13 +285,12 @@ namespace Space.Spawn
                     (UnityEngine.Random.Range(10, 30));
 
                 // Loop through each ship tracking item
-
                 int i = 0;
                 while (i < m_raidTargets.Count)
                 {
-                    RaiderTarget target = m_raidTargets[i];
+                    RaiderTargetTracker target = m_raidTargets[i];
 
-                    if (m_raidTargets[i].Self == null)
+                    if (m_raidTargets[i].Focus == null)
                     {
                         // Ship is destroyed stop tracking
                         m_raidTargets.RemoveAt(i);
@@ -476,18 +309,18 @@ namespace Space.Spawn
                         int shipCount = level < 4 ? 3 : level < 8 ? 2 : 1;
 
                         // add a ship we have no reached cap
-                        if (target.PersuitCount < shipCount)
+                        if (target.AgentCount < shipCount)
                         {
                             // postion within range of target
                             Vector3 location = Math.RandomWithinRange
-                                (target.Self.position, 100, 200);
+                                (target.Focus.position, 100, 200);
 
                             // Here we will build the message 
                             // to create a raider
                             // add agent based on threat level
-                            CmdSpawnShip(RandomRaider(10 - level), 
+                            CmdSpawnShip(RandomAgent(10 - level), 
                                 SystemManager.Space.NetID, location, 
-                                target.SelfNetID.Value);
+                                target.FocusNetID.Value);
                         }
                     }
 

@@ -5,6 +5,7 @@ using Data.Space;
 using Space.Segment;
 using Stations;
 using Game;
+using System.Collections;
 
 namespace Space.Spawn
 {
@@ -40,8 +41,32 @@ namespace Space.Spawn
     {
         #region ATTRIBUTES
 
-        // temp list of spawn points (stations)
-        private IndexedList<SpawnPointInformation> _spawns;
+        private IndexedList<SpawnPointInformation> m_spawns;
+
+        /// <summary>
+        /// Groups that spawn around the station
+        /// </summary>
+        private IndexedList<AgentGroupTracker> m_groups;
+
+        public int FortifyLevel = 0;
+
+        #endregion
+
+        #region MONOBEHAVIOUR
+
+        private void Awake()
+        {
+            m_spawns = new IndexedList<SpawnPointInformation>();
+
+            if (!PlayerTeam)
+            {
+                // init group tracking list
+                m_groups = new IndexedList<AgentGroupTracker>();
+
+                // Start coroutine for group tracking
+                StartCoroutine("TeamHeartbeat");
+            }
+        }
 
         #endregion
 
@@ -76,8 +101,8 @@ namespace Space.Spawn
             }
 
             // add to spawn if correct type
-            if (_spawns == null)
-                _spawns = new IndexedList<SpawnPointInformation>();
+            if (m_spawns == null)
+                m_spawns = new IndexedList<SpawnPointInformation>();
 
             // Spawn point information initialisation
             SpawnPointInformation sPInfo = new SpawnPointInformation();
@@ -129,10 +154,19 @@ namespace Space.Spawn
                 sPInfo.Spawns.Add(pos);
             }
 
-            _spawns.Add(sPInfo);
+            m_spawns.Add(sPInfo);
 
             // Log our spawn info
             stationAtt.SpawnID = sPInfo.ID;
+
+            if(!PlayerTeam)
+            {
+                if(m_groups == null)
+                    m_groups = new IndexedList<AgentGroupTracker>();
+
+                // ai team so we want to track ai agents
+                m_groups.Add(new AgentGroupTracker(newStation.transform));
+            }
 
             return newStation;
         }
@@ -148,7 +182,7 @@ namespace Space.Spawn
         [Server]
         public GameObject SpawnPlayer(PlayerConnectionInfo info, int spawnID)
         {
-            SpawnPointInformation toSpawn = _spawns.Item(spawnID);
+            SpawnPointInformation toSpawn = m_spawns.Item(spawnID);
 
             // used to track if the immediate vicinity for spawning is clear
             bool areaClear = false;
@@ -188,6 +222,63 @@ namespace Space.Spawn
                  (info.mConnection, playerObject, info.mController);
 
             return playerObject;
+        }
+
+        #endregion
+
+        #region COROUTINES
+
+        private IEnumerator TeamHeartbeat()
+        {
+            while (true)
+            {
+                // set the timer before repeating 
+                yield return new WaitForSeconds
+                    (UnityEngine.Random.Range(10, 30));
+
+                // Loop through each ship tracking item
+                int i = 0;
+                while (i < m_groups.Count)
+                {
+                    AgentGroupTracker target = m_groups[i];
+
+                    if (m_groups[i].Focus == null)
+                    {
+                        // Ship is destroyed stop tracking
+                        m_groups.RemoveAt(i);
+                        continue;
+                    }
+                    else
+                        i++;
+
+                    // fortify level is set by team controller
+
+                    // 5% - 50% chance of spawning
+                    if (UnityEngine.Random.Range(-10, 10) >= FortifyLevel
+                       && SystemManager.Space.NetID != 0)
+                    {
+                        // determine spawn size on threat level 
+                        int shipCount = FortifyLevel < 4 ? 3 : FortifyLevel < 8 ? 2 : 1;
+
+                        // add a ship we have no reached cap
+                        if (target.AgentCount < shipCount)
+                        {
+                            // postion within range of target
+                            Vector3 location = Math.RandomWithinRange
+                                (target.Focus.position, 100, 200);
+
+                            // Here we will build the message 
+                            // to create a raider
+                            // add agent based on threat level
+                            CmdSpawnShip(RandomAgent(FortifyLevel),
+                                SystemManager.Space.NetID, location,
+                                target.FocusNetID.Value);
+                        }
+                    }
+
+                    yield return null;
+                }
+            }
         }
 
         #endregion

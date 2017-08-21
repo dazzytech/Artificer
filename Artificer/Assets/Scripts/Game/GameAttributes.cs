@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Space.Teams;
 using Space.Segment;
 using Space.Spawn;
+using Space.AI;
 
 namespace Game
 {
@@ -41,6 +42,8 @@ namespace Game
         public TeamController TeamB;
 
         public SegmentManager Segment;
+
+        public AIManager AI;
         
         #endregion
     }

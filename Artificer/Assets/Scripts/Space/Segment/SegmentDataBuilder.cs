@@ -196,11 +196,11 @@ namespace Space.Segment
             return galaxy;
         }
 
-            /// <summary>
-            /// Builds a satellite object and returns it
-            /// </summary>
-            /// <param name="station"></param>
-            /// <returns></returns>
+        /// <summary>
+        /// Builds a satellite object and returns it
+        /// </summary>
+        /// <param name="station"></param>
+        /// <returns></returns>
         private static SegmentObjectData BuildSatellite(Vector2 planet)
         {
             // build base object

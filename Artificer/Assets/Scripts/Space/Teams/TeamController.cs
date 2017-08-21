@@ -18,7 +18,7 @@ using Data.Space.Collectable;
 /// </summary>
 namespace Space.Teams
 {
-
+    [RequireComponent(typeof(TeamSpawnManager))]
     public class TeamController : NetworkBehaviour
     {
         #region EVENTS
@@ -72,25 +72,7 @@ namespace Space.Teams
         */
 
         [SerializeField]
-        private TeamSpawnManager _teamSpawn;
-
-        #endregion
-
-        #region MONO BEHAVIOUR
-
-        /*void OnEnable()
-        {
-            // Assign Events
-            ShipMessageController.OnShipDestroyed += ProcessShipDestroyed;
-            StationController.OnShipDestroyed += ProcessStationDestroyed;
-        }
-
-        void OnDisable()
-        {
-            // De-assign events
-            ShipMessageController.OnShipDestroyed -= ProcessShipDestroyed;
-            StationController.OnShipDestroyed -= ProcessStationDestroyed;
-        }*/
+        private TeamSpawnManager m_teamSpawn;
 
         #endregion
 
@@ -101,7 +83,7 @@ namespace Space.Teams
         /// local memory
         /// </summary>
         [Server]
-        public void Initialize(FactionData faction, int id)
+        public void Initialize(FactionData faction, int id, int fortify = 0)
         {
             m_faction = faction;
 
@@ -111,6 +93,21 @@ namespace Space.Teams
             m_players.Callback = PlayerListChanged;
             m_stations.Callback = StationListChanged;
             m_ships.Callback = ShipListChanged;
+
+            Spawner.FortifyLevel = fortify;
+        }
+
+        [Server]
+        public void Initialize(int id, int fortify = 0)
+        {
+            m_ID = id;
+
+            // Assign callbacks
+            m_players.Callback = PlayerListChanged;
+            m_stations.Callback = StationListChanged;
+            m_ships.Callback = ShipListChanged;
+
+            Spawner.FortifyLevel = fortify;
         }
 
         /// <summary>
@@ -217,7 +214,7 @@ namespace Space.Teams
         /// </summary>
         public TeamSpawnManager Spawner
         {
-            get { return _teamSpawn; }
+            get { return m_teamSpawn; }
         }
 
         public SyncListUInt Players

@@ -534,7 +534,7 @@ namespace Space.UI.Proxmity
                         mtext.color = usedColour;
 
                         m.box.transform.localScale = new Vector3(2, 2, 1);
-                        m.trackDist = -1f;
+                        m.trackDist = 500f;
                         break;
                     }
                 default:
