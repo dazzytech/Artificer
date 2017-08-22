@@ -74,6 +74,19 @@ namespace UI
 
         #endregion
 
+        #region ACCESSORS
+
+        /// <summary>
+        /// Returns if the UI item
+        /// is visible to the player
+        /// </summary>
+        public bool Visible
+        {
+            get { return m_background.color.a > 0.01; }
+        }
+
+        #endregion
+
         #region PUBLIC INTERACTION
 
         public virtual void Initialize(SelectTrigger trigger, 

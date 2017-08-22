@@ -56,7 +56,12 @@ namespace Space.Spawn
 
         private void Awake()
         {
-            m_spawns = new IndexedList<SpawnPointInformation>();
+            m_spawns = new IndexedList<SpawnPointInformation>();            
+        }
+
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
 
             if (!PlayerTeam)
             {
@@ -244,7 +249,7 @@ namespace Space.Spawn
 
                     if (m_groups[i].Focus == null)
                     {
-                        // Ship is destroyed stop tracking
+                        // destroyed stop tracking
                         m_groups.RemoveAt(i);
                         continue;
                     }
@@ -253,27 +258,22 @@ namespace Space.Spawn
 
                     // fortify level is set by team controller
 
-                    // 5% - 50% chance of spawning
-                    if (UnityEngine.Random.Range(-10, 10) >= FortifyLevel
-                       && SystemManager.Space.NetID != 0)
+                    // determine spawn size on threat level 
+                    int shipCount = FortifyLevel + 1;
+
+                    // add a ship we have no reached cap
+                    if (target.AgentCount < shipCount)
                     {
-                        // determine spawn size on threat level 
-                        int shipCount = FortifyLevel < 4 ? 3 : FortifyLevel < 8 ? 2 : 1;
+                        // postion within range of target
+                        Vector3 location = Math.RandomWithinRange
+                            (target.Focus.position, 100, 200);
 
-                        // add a ship we have no reached cap
-                        if (target.AgentCount < shipCount)
-                        {
-                            // postion within range of target
-                            Vector3 location = Math.RandomWithinRange
-                                (target.Focus.position, 100, 200);
-
-                            // Here we will build the message 
-                            // to create a raider
-                            // add agent based on threat level
-                            CmdSpawnShip(RandomAgent(FortifyLevel),
-                                SystemManager.Space.NetID, location,
-                                target.FocusNetID.Value);
-                        }
+                        // Here we will build the message 
+                        // to create a raider
+                        // add agent based on threat level
+                        CmdSpawnShip(RandomAgent(FortifyLevel),
+                            SystemManager.Space.NetID, location,
+                            target.FocusNetID.Value);
                     }
 
                     yield return null;

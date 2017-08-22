@@ -200,22 +200,23 @@ namespace Space.UI.Proxmity
             ClearIcons();
         }
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             // If we don't have a camera or anything to track
             // this stops here
             if (m_cameraObject == null || m_markers == null)
                 return;
 
-            foreach(Marker m in m_compass)
-            {
-                RepositionCompass(m);
-            }
+            if (m_compass[0].arrow.GetComponent<SelectableHUDItem>().Visible)
+                foreach (Marker m in m_compass)
+                {
+                    RepositionCompass(m);
+                }
 
             foreach (Marker m in m_markers)
             {
                 if (m.arrow == null || m.box == null
-                   || m.text == null)
+                    || m.text == null)
                     BuildMarker(m, m_cameraObject.transform.position);
                 else
                     RepositionMarker(m, m_cameraObject.transform.position, m.ID);
@@ -557,7 +558,7 @@ namespace Space.UI.Proxmity
         /// </summary>
         /// <returns>The piece distance to the object.</returns>
         /// <param name="m">M.</param>
-        private float SetMarkerVisiblity(Marker m, Vector3 camPos)
+        private float SetMarkerVisiblity(Marker m, Vector3 camPos, ref bool within)
         {
             // distance between our ship and tracked object
             float objDistance = Vector3.Distance(m.trackedObj.Location, camPos);
@@ -573,9 +574,9 @@ namespace Space.UI.Proxmity
                     m.arrow.SetActive(false);
                     m.box.SetActive(true);
                     m.text.SetActive(false);
-
-                    //PanelFadeEffects.FlashInItem(m.box.GetComponent<Image>());
+                    m.box.GetComponent<SelectableHUDItem>().FlashImage();
                 }
+                within = true;
             }
             else
             {
@@ -586,17 +587,23 @@ namespace Space.UI.Proxmity
                     if (!m.arrow.activeSelf)
                     {
                         m.arrow.SetActive(true);
-                        m.text.SetActive(true);
-
-                        //PanelFadeEffects.FlashInItem(m.arrow.GetComponent<Image>());
+                        m.text.SetActive(true);     
+                        
+                        m.arrow.GetComponent<SelectableHUDItem>().FlashImage();
                     }
+                    within = true;
                 }
                 else
                 {
-                    m.arrow.SetActive(false);
-                    m.text.SetActive(false);
+                    if (m.arrow.activeSelf)
+                    {
+                        m.arrow.SetActive(false);
+                        m.text.SetActive(false);
+                    }
+                    within = false;
                 }
-                m.box.SetActive(false);
+                if (m.box.activeSelf)
+                    m.box.SetActive(false);
             }
 
             return objDistance;
@@ -613,7 +620,12 @@ namespace Space.UI.Proxmity
             if (m.trackedObj.Ref == null)
                 return;
 
-            float objDistance = SetMarkerVisiblity(m, camPos);
+            bool withinDistance = false;
+
+            float objDistance = SetMarkerVisiblity(m, camPos, ref withinDistance);
+
+            if (!withinDistance)
+                return;
 
             Vector2 dir =
                 (m.trackedObj.Location - camPos)
@@ -796,6 +808,12 @@ namespace Space.UI.Proxmity
         }
 
         #endregion
+
+        #endregion
+
+        #region COROUTINE
+
+        
 
         #endregion
     }

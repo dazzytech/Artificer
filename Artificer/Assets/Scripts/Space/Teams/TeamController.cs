@@ -66,6 +66,17 @@ namespace Space.Teams
         /// </summary>
         private SyncListShip m_ships = new SyncListShip();
 
+        /// <summary>
+        /// Defines the teams that this particular
+        /// team is enemies with
+        /// </summary>
+        private SyncListInt m_enemyTeams = new SyncListInt();
+
+        /// <summary>
+        /// Indviduals that the team is hostile to
+        /// </summary>
+        private SyncListUInt m_KOSShips = new SyncListUInt();
+
         /*
         // unlocked components
         //private SyncListString _unlockedComponents;
@@ -95,6 +106,9 @@ namespace Space.Teams
             m_ships.Callback = ShipListChanged;
 
             Spawner.FortifyLevel = fortify;
+
+            // Build a list of relations
+            m_enemyTeams.Add(-1);
         }
 
         [Server]
@@ -157,6 +171,18 @@ namespace Space.Teams
         public void AddSpawnableShip(ShipSpawnData ship)
         {
             m_ships.Add(ship);
+        }
+
+        /// <summary>
+        /// All agents in this team will be
+        /// hostile to members of that team
+        /// </summary>
+        /// <param name="team"></param>
+        [Server]
+        public void AddEnemyTeam(int team)
+        {
+            if(!m_enemyTeams.Contains(team))
+                m_enemyTeams.Add(team);
         }
 
         #region RESOURCE MANAGEMENT

@@ -70,6 +70,8 @@ namespace Game
 
             // Generated stations for the teams
             m_att.Builder.GenerateTeams(m_att.TeamA, m_att.TeamB, param);
+            m_att.TeamA.AddEnemyTeam(1);
+            m_att.TeamB.AddEnemyTeam(0);
 
             m_att.AI.Initialize(param);
         }

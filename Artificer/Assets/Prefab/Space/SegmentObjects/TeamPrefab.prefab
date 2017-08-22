@@ -54,7 +54,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AI: {fileID: 0}
-  m_spawn: []
+  m_spawn:
+  - AgentName: ship_team_01
+    SpawnRequirements: 0
+    SpawnChance: 0.3
+  - AgentName: ship_team_02
+    SpawnRequirements: 2
+    SpawnChance: 0.2
   FortifyLevel: 0
 --- !u!114 &114345610591509048
 MonoBehaviour:
