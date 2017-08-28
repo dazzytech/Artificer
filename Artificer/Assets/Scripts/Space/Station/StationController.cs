@@ -17,7 +17,7 @@ namespace Stations
     /// the public interface with external elements
     /// </summary>
     [RequireComponent(typeof(StationAttributes))]
-    public class StationController : NetworkBehaviour
+    public class StationController : SegmentObjectBehaviour
     {
         #region EVENTS
 
@@ -48,7 +48,7 @@ namespace Stations
             m_att.ProximityMessage = "Press Enter to dock at station";
         }
 
-        void Start()
+        protected override void Start()
         {
             switch (m_att.Type)
             {
@@ -76,13 +76,17 @@ namespace Stations
                 StartCoroutine("CheckForActivity");
 
             // Only trigger creation event once team is defined
-            if (m_att.TeamID != NetworkInstanceId.Invalid)
+            if (!m_att.TeamID.IsEmpty())
             {
                 transform.SetParent(ClientScene.FindLocalObject(m_att.TeamID).transform);
 
                 if (OnStationCreated != null)
                     OnStationCreated(m_att.Accessor);
             }
+
+            // perform segment object behaviour
+            DisableObj();
+
         }
 
         void OnDestroy()

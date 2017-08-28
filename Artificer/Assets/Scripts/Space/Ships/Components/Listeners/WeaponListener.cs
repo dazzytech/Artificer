@@ -51,7 +51,7 @@ namespace Space.Ship.Components.Listener
                 StartCoroutine("EngageDelay");
 
                 CmdBuildProjectile(prefabID, shotOrigin,
-                    data, SystemManager.Space.NetID);
+                    data, SystemManager.Space.ID);
             }
     	}
 
@@ -61,16 +61,15 @@ namespace Space.Ship.Components.Listener
 
         [Command]
         private void CmdBuildProjectile(int prefabID, Vector3 shotOrigin,
-            WeaponData wData, uint playerNetID)
+            WeaponData wData, int playerID)
         {
             GameObject Prefab = NetworkManager.singleton.spawnPrefabs[prefabID];
 
             GameObject GO = Instantiate(Prefab, shotOrigin, Quaternion.identity) as GameObject;
 
             // Projectile can run command to display self
-            NetworkServer.SpawnWithClientAuthority(GO, 
-                SystemManager.Space.PlayerConn
-                (new NetworkInstanceId(playerNetID)));
+            NetworkServer.SpawnWithClientAuthority(GO,
+                SystemManager.GameMSG.GetPlayerConn(playerID));
 
             GO.GetComponent<WeaponController>().CreateProjectile(wData);
         }

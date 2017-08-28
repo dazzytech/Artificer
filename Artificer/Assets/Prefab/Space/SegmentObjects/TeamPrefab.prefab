@@ -53,14 +53,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac6423c04c5ccdb4f901b1da83d0e79e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AI: {fileID: 0}
   m_spawn:
-  - AgentName: ship_team_01
+  - AgentName: guard_small
     SpawnRequirements: 0
-    SpawnChance: 0.3
-  - AgentName: ship_team_02
-    SpawnRequirements: 2
-    SpawnChance: 0.2
+    SpawnChance: 1
+  m_range: 500
   FortifyLevel: 0
 --- !u!114 &114345610591509048
 MonoBehaviour:
@@ -93,7 +90,7 @@ MonoBehaviour:
     i14: 158
     i15: 234
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &114397881035664884
 MonoBehaviour:
   m_ObjectHideFlags: 1

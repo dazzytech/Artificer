@@ -70,6 +70,16 @@ namespace Space.Segment
             StartCoroutine("BuildSegment");
         }
 
+        /// <summary>
+        /// add a segment object from external to memory
+        /// </summary>
+        /// <param name="SO"></param>
+        [Server]
+        public void ImportSegmentObject(SegmentObjectData SO)
+        {
+            m_att.SegObjs.Add(SO);
+        }
+
         #endregion
 
         #region UTILITIES
@@ -213,6 +223,8 @@ namespace Space.Segment
 
                             break;
                         }
+                    default:
+                        break;
                 }
 
                 m_att.SegObjs[i] = segObj;
@@ -254,9 +266,10 @@ namespace Space.Segment
                     if (segObjGO == null || segObj._visibleDistance <= 0)
                         continue;
 
+                    float distance = Vector3.Distance(playerPos, segObjGO.transform.position);
+
                     // If object is within range we will reenable it
-                    if (Vector3.Distance(playerPos, segObjGO.transform.position)
-                           < segObj._visibleDistance)
+                    if (distance < segObj._visibleDistance)
                         // Make sure the object is actually disabled
                         if (!isServer && !segObjGO.activeSelf)
                             segObjGO.SetActive(true);

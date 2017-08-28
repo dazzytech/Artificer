@@ -17,6 +17,8 @@ namespace Networking
         NEWID,
         TEAMSELECTED,
         SPAWNPLAYER,
+        SPAWNNPC,
+        PROCESSNPC,
         SHIPHIT,
         BUILDSTATION,
         PROCESSSHIPHIT,
@@ -76,6 +78,37 @@ namespace Networking
         public string PrefabName;
         public Vector3 Position;
         public int teamID;
+    }
+
+    /// <summary>
+    /// Passes the requirements to spawn 
+    /// an npc ship 
+    /// </summary>
+    public class SpawnNPCMessage : MessageBase
+    {
+        /// <summary>
+        /// ID of the player object with NPC 
+        /// authority 
+        /// </summary>
+        public int SelfID;
+
+        public uint AgentID;
+        /// <summary>
+        /// the network ID of the target
+        /// </summary>
+        public uint TargetID;
+        /// <summary>
+        /// the network ID of the spawn object
+        /// </summary>
+        public uint SpawnID;
+        /// <summary>
+        /// The label of the agent in the list
+        /// </summary>
+        public string AgentType;
+        /// <summary>
+        /// The location where the agent will spawn
+        /// </summary>
+        public Vector2 Location;
     }
 
     /// <summary>

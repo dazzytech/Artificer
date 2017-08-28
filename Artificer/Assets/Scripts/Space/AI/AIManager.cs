@@ -54,7 +54,7 @@ namespace Space.AI
             // Begin the process of importing agent data
             m_att.AgentLibrary = AgentDataImporter.BuildAgents();
 
-            m_att.Teams = new List<TeamController>();
+            m_att.Teams = new List<TeamController>();            
         }
 
         #endregion
@@ -82,12 +82,12 @@ namespace Space.AI
                 // Spawn them closer to station
                 // first half at team A and rest near team B
                 Vector2 focus;
-                if (i < teamCount/2)
+                if (i < teamCount / 2)
                     focus = m_att.Param.TeamASpawn;
                 else
                     focus = m_att.Param.TeamBSpawn;
 
-                m_att.Teams.Add(BuildTeam(fortify, focus, i % teamCount/2));
+                m_att.Teams.Add(BuildTeam(fortify, focus, i % teamCount / 2));
             }
         }
 
@@ -104,14 +104,14 @@ namespace Space.AI
         {
             // build and position the game objects
             GameObject teamGO = Instantiate(m_att.TeamPrefab);
-            teamGO.transform.SetParent(m_att.TeamHUD); 
+            
             NetworkServer.Spawn(teamGO);
 
             // Initialize team
             TeamController team =
                 teamGO.GetComponent<TeamController>();
             team.Initialize(index + 2, fortify);
-            team.Spawner.AI = this;
+            //team.Spawner.AI = netId;
 
             // create randomized position
             Vector2 position = Vector2.zero;

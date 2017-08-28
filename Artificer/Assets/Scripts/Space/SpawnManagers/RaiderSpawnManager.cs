@@ -24,6 +24,124 @@ namespace Space.Spawn
         #region INLINE CLASS
 
         /// <summary>
+        /// Logs information about a tracked object
+        /// and any agents associated with that object
+        /// </summary>
+        public class AgentGroupTracker : IndexedObject
+        {
+            #region ATTRIBUTES
+
+            /// <summary>
+            /// A central focus point for
+            /// the ai agents
+            /// </summary>
+            private Transform m_focus;
+
+            /// <summary>
+            /// Reference to all agents within this 
+            /// group
+            /// </summary>
+            private List<NetworkInstanceId> m_agents;
+
+            #endregion
+
+            #region CONSTRUCTORS
+
+            public AgentGroupTracker()
+            {
+                m_agents = new List<NetworkInstanceId>();
+
+                SystemManager.Events.EventShipDestroyed
+                    += ShipDestroyedEvent;
+            }
+
+            /// <summary>
+            /// Initializes the object with 
+            /// reference to a focal object
+            /// </summary>
+            /// <param name="focus"></param>
+            public AgentGroupTracker(Transform focus)
+            {
+                m_focus = focus;
+                m_agents = new List<NetworkInstanceId>();
+
+                SystemManager.Events.EventShipDestroyed
+                    += ShipDestroyedEvent;
+            }
+
+            #endregion
+
+            #region PUBLIC INTERACTION
+
+            /// <summary>
+            /// Adds a reference to an agent in group
+            /// </summary>
+            /// <param name="ship"></param>
+            public void AddAgent(NetworkInstanceId agent)
+            {
+                if (agent != null)
+                    m_agents.Add(agent);
+            }
+
+            #endregion
+
+            #region EVENTS
+
+            /// <summary>
+            /// Deletes reference to the agent
+            /// ship if it is destroyed
+            /// </summary>
+            /// <param name="DD"></param>
+            private void ShipDestroyedEvent(DestroyDespatch DD)
+            {
+                for (int i = 0; i < m_agents.Count; i++)
+                {
+                    if (m_agents[i] == DD.Self)
+                    {
+                        m_agents.RemoveAt(i);
+                        i--;
+                    }
+                }
+
+            }
+
+            #endregion
+
+            #region ACCESSORS
+
+            /// <summary>
+            /// Returns the amount of raiders targeting
+            /// </summary>
+            public int AgentCount
+            {
+                get
+                {
+                    return m_agents.Count;
+                }
+            }
+
+            /// <summary>
+            /// Stores an accessible reference 
+            /// to the group focus
+            /// </summary>
+            public Transform Focus
+            {
+                get { return m_focus; }
+            }
+
+            /// <summary>
+            /// network instance if of the focus
+            /// object
+            /// </summary>
+            public NetworkInstanceId FocusNetID
+            {
+                get { return Focus.GetComponent<NetworkIdentity>().netId; }
+            }
+
+            #endregion
+        }
+
+        /// <summary>
         /// Logs information about ship
         /// that is being tracked
         /// </summary>
@@ -42,22 +160,20 @@ namespace Space.Spawn
             {
                 // decrement depending on distance to
                 // statons
-                if (!WithinRangeStation(500))
+                if (!WithinRangeStation(200))
                 {
                     startThreat -= 2;
 
-                    if (!WithinRangeStation(1000))
+                    if (!WithinRangeStation(300))
                     {
                         startThreat -= 2;
 
-                        if (!WithinRangeStation(1500))
+                        if (!WithinRangeStation(400))
                         {
                             startThreat -= 2;
-                            if (!WithinRangeStation(2000))
+                            if (!WithinRangeStation(500))
                             {
-                                startThreat -= 2;
-                                if (!WithinRangeStation(2500))
-                                    startThreat -= 2;
+                                startThreat -= 4;
                             }
                         }
                     }
@@ -163,9 +279,9 @@ namespace Space.Spawn
 
         #region PRIVATE UTILITIES
 
-        protected override void BuildAgent(uint selfID, uint agentID, uint targetID, string agent)
+        protected override void InitializeAgent(uint agentID, uint targetID, string agent)
         {
-            base.BuildAgent(selfID, agentID, targetID, agent);
+            base.InitializeAgent(agentID, targetID, agent);
 
             // Access the target given to us
             GameObject target = ClientScene.FindLocalObject
@@ -243,9 +359,8 @@ namespace Space.Spawn
                 // its appropriate for us to monitor
                 foreach (Transform ship in shipContainer.transform)
                 {
-                    // change in future so can target other ai ships
                     if (ship.GetComponent<NetworkIdentity>
-                        ().isLocalPlayer)
+                        ().localPlayerAuthority)
                     {
                         if (ship.GetComponent<ShipAccessor>().TeamID != -1)
                         {
@@ -311,16 +426,19 @@ namespace Space.Spawn
                         // add a ship we have no reached cap
                         if (target.AgentCount < shipCount)
                         {
-                            // postion within range of target
-                            Vector3 location = Math.RandomWithinRange
+                            SpawnNPCMessage npcMsg = new SpawnNPCMessage();
+                            npcMsg.AgentType = RandomAgent(level);
+                            npcMsg.Location = Math.RandomWithinRange
                                 (target.Focus.position, 100, 200);
+                            npcMsg.SelfID = SystemManager.Space.ID;
+                            npcMsg.SpawnID = netId.Value;
+                            npcMsg.TargetID = target.FocusNetID.Value;
 
-                            // Here we will build the message 
-                            // to create a raider
-                            // add agent based on threat level
-                            CmdSpawnShip(RandomAgent(10 - level), 
-                                SystemManager.Space.NetID, location, 
-                                target.FocusNetID.Value);
+                            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSNPC, BuildAgentListener);
+
+                            SystemManager.singleton.client.Send
+                                ((short)MSGCHANNEL.SPAWNNPC, npcMsg);
+
                         }
                     }
 

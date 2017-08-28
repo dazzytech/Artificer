@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4864612568500112}
   - component: {fileID: 212140847457379676}
-  - component: {fileID: 61176256042748030}
   - component: {fileID: 114022326947464182}
+  - component: {fileID: 61176256042748030}
   - component: {fileID: 114781907403496126}
   - component: {fileID: 114775344413479158}
   - component: {fileID: 114284338668044774}
@@ -83,6 +83,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91348db1a508f41a877d6494d19b41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PhysicalObject: 1
+  Active: 0
 --- !u!114 &114270016380839536
 MonoBehaviour:
   m_ObjectHideFlags: 1

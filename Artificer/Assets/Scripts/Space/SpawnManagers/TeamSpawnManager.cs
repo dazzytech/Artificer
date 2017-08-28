@@ -6,6 +6,9 @@ using Space.Segment;
 using Stations;
 using Game;
 using System.Collections;
+using Space.AI;
+using System.Linq;
+using Networking;
 
 namespace Space.Spawn
 {
@@ -44,33 +47,39 @@ namespace Space.Spawn
         private IndexedList<SpawnPointInformation> m_spawns;
 
         /// <summary>
-        /// Groups that spawn around the station
+        /// How close the player can be 
+        /// before spawning ai
         /// </summary>
-        private IndexedList<AgentGroupTracker> m_groups;
+        [SerializeField]
+        private float m_range;
 
+        [SyncVar]
         public int FortifyLevel = 0;
+
+        /// <summary>
+        /// Synced list across network
+        /// storing agent groups
+        /// </summary>
+        public SyncListAgentGroup Groups = new SyncListAgentGroup();
 
         #endregion
 
         #region MONOBEHAVIOUR
 
-        private void Awake()
+        private void OnEnable()
         {
-            m_spawns = new IndexedList<SpawnPointInformation>();            
+            StartCoroutine("PlayerDistance");
         }
 
-        public override void OnStartServer()
+        private void OnDisable()
         {
-            base.OnStartServer();
+            StopAllCoroutines();
+        }
 
-            if (!PlayerTeam)
-            {
-                // init group tracking list
-                m_groups = new IndexedList<AgentGroupTracker>();
-
-                // Start coroutine for group tracking
-                StartCoroutine("TeamHeartbeat");
-            }
+        private void Awake()
+        {
+            m_spawns = new IndexedList
+                <SpawnPointInformation>();
         }
 
         #endregion
@@ -96,6 +105,19 @@ namespace Space.Spawn
             // Retrieve behaviour for making changes
             StationAccessor stationAtt =
                 newStation.GetComponent<StationAccessor>();
+
+            // add segment object to segment data
+            SegmentObjectData segObj = new SegmentObjectData();
+
+            // assign segment data
+            segObj.netID = stationCon.netId;
+            segObj._visibleDistance = 300f;
+
+            // init object SO
+            stationCon.Create(segObj);
+
+            // send to segment
+            SystemManager.Space.SegObj.ImportSegmentObject(segObj);
 
             // if station is a type that we spawn then add to spawn list
             if (stationAtt.Type != STATIONTYPE.HOME)
@@ -164,21 +186,11 @@ namespace Space.Spawn
             // Log our spawn info
             stationAtt.SpawnID = sPInfo.ID;
 
-            if(!PlayerTeam)
-            {
-                if(m_groups == null)
-                    m_groups = new IndexedList<AgentGroupTracker>();
-
-                // ai team so we want to track ai agents
-                m_groups.Add(new AgentGroupTracker(newStation.transform));
-            }
+            Groups.Add(new AgentGroup()
+            { m_focus = stationCon.netId.Value, m_agents = new uint[0] });
 
             return newStation;
         }
-
-        #endregion
-
-        #region PLAYER SPAWNING
 
         /// <summary>
         /// Spawns player at random spawnpoint for first time
@@ -229,10 +241,82 @@ namespace Space.Spawn
             return playerObject;
         }
 
+        [Server]
+        protected override void AssignAgent(uint agentID, uint targetID)
+        {
+            int index = Groups.IndexOf
+                (Groups.FirstOrDefault(x => x.m_focus == targetID));
+
+            if (index != -1)
+            {
+                AgentGroup AG = Groups[index];
+                AG.AddAgent(agentID);
+                Groups[index] = AG;
+            }
+        }
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        protected override void InitializeAgent(uint agentID, uint targetID, string agent)
+        {
+            base.InitializeAgent(agentID, targetID, agent);
+
+            //CmdAssignShip(agentID, targetID);
+        }
+
         #endregion
 
         #region COROUTINES
 
+        /// <summary>
+        /// Detect the distance between the players ship 
+        /// and this team object
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator PlayerDistance()
+        {
+            //Heart beat atts
+            IEnumerator heartbeat = TeamHeartbeat();
+            bool inRange = false;
+
+            while (true)
+            { 
+                // retrieve player bject is spawned
+                GameObject playerShip = GameObject.FindGameObjectWithTag("PlayerShip");      
+
+                if(playerShip == null)
+                {
+                    yield return null;
+                    continue;
+                }
+
+                if(Vector3.Distance(playerShip.transform.position, 
+                    transform.position) < m_range)
+                {
+                    // Detect when we are able to add authority
+                    if(!inRange)
+                    {
+                        StartCoroutine(heartbeat);
+                        inRange = true;
+                    }
+                }
+                else
+                {
+                    // stop any coroutines that are running
+                    StopCoroutine("heartbeat");
+                    inRange = false;
+                }
+                yield return null;
+            }
+        }
+
+        /// <summary>
+        /// If we have authority then run
+        /// the heartbeat that creates agents
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator TeamHeartbeat()
         {
             while (true)
@@ -243,37 +327,43 @@ namespace Space.Spawn
 
                 // Loop through each ship tracking item
                 int i = 0;
-                while (i < m_groups.Count)
+                while (i < Groups.Count)
                 {
-                    AgentGroupTracker target = m_groups[i];
+                    AgentGroup target = Groups[i];
 
-                    if (m_groups[i].Focus == null)
+                    GameObject Focus = target.Focus;
+
+                    if (Focus == null)
                     {
                         // destroyed stop tracking
-                        m_groups.RemoveAt(i);
+                        Groups.RemoveAt(i);
                         continue;
                     }
                     else
                         i++;
 
-                    // fortify level is set by team controller
-
-                    // determine spawn size on threat level 
-                    int shipCount = FortifyLevel + 1;
-
-                    // add a ship we have no reached cap
-                    if (target.AgentCount < shipCount)
+                    // Only handle spawn if ship is currently active
+                    if (Focus.GetComponent<StationAccessor>().Active)
                     {
-                        // postion within range of target
-                        Vector3 location = Math.RandomWithinRange
-                            (target.Focus.position, 100, 200);
+                        // determine spawn size on threat level 
+                        int shipCount = FortifyLevel + 1;
 
-                        // Here we will build the message 
-                        // to create a raider
-                        // add agent based on threat level
-                        CmdSpawnShip(RandomAgent(FortifyLevel),
-                            SystemManager.Space.NetID, location,
-                            target.FocusNetID.Value);
+                        // add a ship we have no reached cap
+                        if (target.AgentCount < shipCount)
+                        {
+                            SpawnNPCMessage npcMsg = new SpawnNPCMessage();
+                            npcMsg.AgentType = RandomAgent(FortifyLevel);
+                            npcMsg.Location = Math.RandomWithinRange
+                                (Focus.transform.position, 10, 25);
+                            npcMsg.SelfID = SystemManager.Space.ID;
+                            npcMsg.SpawnID = netId.Value;
+                            npcMsg.TargetID = target.m_focus;
+
+                            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSNPC, BuildAgentListener);
+
+                            SystemManager.singleton.client.Send
+                                ((short)MSGCHANNEL.SPAWNNPC, npcMsg);
+                        }
                     }
 
                     yield return null;

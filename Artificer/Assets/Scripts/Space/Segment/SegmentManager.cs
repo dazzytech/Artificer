@@ -42,6 +42,15 @@ namespace Space.Segment
 
         #endregion
 
+        #region ACCESSOR
+        
+        public SegmentObjectManager Generator
+        {
+            get { return m_gen; }
+        }
+         
+        #endregion
+
         #region MONO BEHAVIOUR
 
         void OnEnable()
@@ -67,7 +76,7 @@ namespace Space.Segment
 
         #endregion
 
-        #region SEGMENT INITIALIZATION
+        #region PUBLIC INTERACTION
 
         /// <summary>
         /// Starts the process of making 
@@ -92,7 +101,6 @@ namespace Space.Segment
 
             foreach (SegmentObjectData sObj in sObjs)
                 m_att.SegObjs.Add(sObj);
-            //MessageHUD.DisplayMessege(new MsgParam("bold", "Finished!"));
 
             m_gen.GenerateServerObjects();
 
@@ -106,7 +114,7 @@ namespace Space.Segment
 
         #endregion
 
-        #region EVENT LISTENER
+        #region EVENT
 
         /// <summary>
         /// Raises the player update event.
@@ -118,23 +126,6 @@ namespace Space.Segment
             // initialize segment 
             if (!m_segInit)
                 EnterSegment();
-
-            // Check that player is within bounds of current segment
-            /*if (!_att.MapBounds.Contains(playerShip.transform.position))
-            {
-                Vector2 temp = playerShip.transform.position;
-                // Boundary detection
-                if (playerShip.transform.position.x < 0) 
-                    temp.x -= 1;
-                else if (playerShip.transform.position.x >= _att.MapSize.x)
-                    temp.x += 1;
-                
-                
-                if (playerShip.transform.position.y < 0) 
-                    temp.y -= 1;
-                else if (playerShip.transform.position.y >= _att.MapSize.y)
-                    temp.y += 1;
-            }*/
         }
 
         #endregion

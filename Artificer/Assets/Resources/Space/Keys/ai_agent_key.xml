@@ -11,4 +11,10 @@
 	engage = "0" pursue = "300" attack = "30" pulloff = "5">
     <ship>Mammoth</ship>
   </agent>
+
+  <agent name = "guard_small" type = "dogfighter" template = "guard"
+	engage = "0" pursue = "300" attack = "30" pulloff = "3">
+    <ship>Team I</ship>
+    <ship>Team II</ship>
+  </agent>
 </agents>

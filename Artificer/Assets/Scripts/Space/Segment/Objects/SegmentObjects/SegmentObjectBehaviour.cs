@@ -85,9 +85,6 @@ namespace Space.Segment
                 if (m_segObject._texturePath != "")
                     Render();
 
-            // disable as we wont have spawned
-            DisableObj();
-
             // Alert that create have created this object
             if (Created != null)
                 Created(m_segObject, transform);

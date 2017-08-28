@@ -63,6 +63,8 @@ namespace Space
 
         public AIManager AI;
 
+        public SegmentManager Segment;
+
         #endregion
     }
 }

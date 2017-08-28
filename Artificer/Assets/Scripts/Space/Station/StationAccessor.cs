@@ -106,6 +106,15 @@ namespace Stations
         }
 
         /// <summary>
+        /// Returns is the station object
+        /// is actually active
+        /// </summary>
+        public bool Active
+        {
+            get { return m_con.Active; }
+        }
+
+        /// <summary>
         /// External tools react differently to types
         /// </summary>
         public STATIONTYPE Type

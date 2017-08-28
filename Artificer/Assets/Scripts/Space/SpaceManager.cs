@@ -71,17 +71,12 @@ namespace Space
             }
         }
 
-        /// <summary>
-        /// Access to the client connection
-        /// </summary>
-        public NetworkConnection PlayerConn(NetworkInstanceId netID)
+        public Segment.SegmentObjectManager SegObj
         {
-            GameObject caller = ClientScene.FindLocalObject(netID);
-                if (caller != null)
-                    return caller.GetComponent<NetworkIdentity>()
-                        .connectionToClient;
-                else
-                    return null;
+            get
+            {
+                return m_att.Segment.Generator;
+            }
         }
 
         public int ID

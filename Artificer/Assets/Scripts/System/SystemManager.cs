@@ -50,11 +50,6 @@ public class SystemManager : NATTraversal.NetworkManager
     {
         get { return m_singleton.m_base.ItemLibrary; }
     }
-
-    public static AITemplateLibrary AITemplates
-    {
-        get { return m_singleton.m_base.AILibrary; }
-    }
        
     public static string Version
     {

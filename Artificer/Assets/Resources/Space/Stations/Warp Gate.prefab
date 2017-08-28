@@ -20,10 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4373485231375044}
   - component: {fileID: 212328951626665442}
+  - component: {fileID: 114822093979713864}
   - component: {fileID: 61565195769674218}
   - component: {fileID: 114643949403009386}
   - component: {fileID: 114446704263786114}
-  - component: {fileID: 114822093979713864}
   - component: {fileID: 114198117710342078}
   - component: {fileID: 114679263838495396}
   - component: {fileID: 114316126808513384}
@@ -110,8 +110,9 @@ MonoBehaviour:
   BuildCounter: 20
   BuildColour: {r: 0.0042171315, g: 0.28676468, b: 0.0042171315, a: 0.84}
   BuildDistance: 0
-  MinDistance: 10
   Accessor: {fileID: 114679263838495396}
+  Ship: {fileID: 0}
+  MinDistance: 10
   Icon: {fileID: 21300000, guid: 4754203794ffacf439e8a1c3e06da90c, type: 3}
   WarpRadius: 1500
 --- !u!114 &114446704263786114
@@ -191,6 +192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe4f593eb6ad59d498d490dcbaa7bc61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PhysicalObject: 1
+  Active: 0
 --- !u!212 &212328951626665442
 SpriteRenderer:
   m_ObjectHideFlags: 1

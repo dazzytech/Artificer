@@ -54,7 +54,7 @@ namespace Space.Ship.Components.Listener
 
         [Command]
         private void CmdBuildRocket(int prefabID, Vector3 shotOrigin,
-            WeaponData wData, uint playerNetID)
+            WeaponData wData, int playerID)
         {
             GameObject Prefab = NetworkManager.singleton.spawnPrefabs[prefabID];
 
@@ -62,8 +62,7 @@ namespace Space.Ship.Components.Listener
 
             // Projectile can run command to display self
             NetworkServer.SpawnWithClientAuthority(GO,
-                SystemManager.Space.PlayerConn
-                (new NetworkInstanceId(playerNetID)));
+                SystemManager.GameMSG.GetPlayerConn(playerID));
 
             GO.GetComponent<MissileController>().CreateProjectile(wData);
         }
@@ -143,7 +142,7 @@ namespace Space.Ship.Components.Listener
                 data.Target = netTarget;
 
                 CmdBuildRocket(prefabID, shotOrigin,
-                    data, SystemManager.Space.NetID);
+                    data, SystemManager.Space.ID);
 
                 yield return new WaitForSeconds(_att.RocketDelay);
             }

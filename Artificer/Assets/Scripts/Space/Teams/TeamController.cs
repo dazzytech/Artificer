@@ -87,6 +87,15 @@ namespace Space.Teams
 
         #endregion
 
+        #region MONO BEHAVIOUR
+
+        private void Start()
+        {
+            transform.SetParent(GameObject.Find("_teams").transform);
+        }
+
+        #endregion
+
         #region PUBLIC INTERACTION
 
         /// <summary>

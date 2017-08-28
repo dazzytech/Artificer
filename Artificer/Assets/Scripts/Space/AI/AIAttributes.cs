@@ -31,14 +31,6 @@ namespace Space.AI
 
         #endregion
 
-        #region HUD ELEMENTS
-
-        [Header("HUD Elements")]
-        
-        public Transform TeamHUD;
-
-        #endregion
-
         #region PREFABS
 
         [Header("Prefab")]

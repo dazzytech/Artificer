@@ -47,7 +47,6 @@ public class SystemAttributes:MonoBehaviour
     public ShipLibrary PrebuiltShips;
     public ItemLibrary ItemLibrary;
     public FactionLibrary FactionLibrary;
-    public AITemplateLibrary AILibrary;
 
     // Server Objects
     [HideInInspector]

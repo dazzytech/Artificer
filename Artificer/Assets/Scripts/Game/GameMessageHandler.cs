@@ -46,6 +46,7 @@ namespace Game
             #region SPACE MESSAGES
 
             NetworkServer.RegisterHandler((short)MSGCHANNEL.TEAMSELECTED, OnAssignToTeam);
+            NetworkServer.RegisterHandler((short)MSGCHANNEL.SPAWNNPC, OnSpawnNpc);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SPAWNPLAYER, OnSpawnPlayerAt);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.SHIPHIT, OnShipHit);
             NetworkServer.RegisterHandler((short)MSGCHANNEL.BUILDSTATION, OnBuildStation);
@@ -188,6 +189,18 @@ namespace Game
             m_con.OnTransaction(msg.ReadMessage<TransactionMessage>());
         }
 
+        /// <summary>
+        /// Spawns a raider object near target
+        /// </summary>
+        /// <param name="netMsg"></param>
+        [Server]
+        public void OnSpawnNpc(NetworkMessage netMsg)
+        {
+            SpawnNPCMessage snm = netMsg.ReadMessage<SpawnNPCMessage>();
+            m_con.SpawnNpc(snm.SelfID, snm.TargetID, 
+                snm.SpawnID, snm.AgentType, snm.Location);
+        }
+
         #region PLAYER MESSAGES
 
         /// <summary>
@@ -242,6 +255,21 @@ namespace Game
         public void OnStationDestroyed(NetworkMessage msg)
         {
             SystemManager.Events.StationDestroyed(msg.ReadMessage<StationDestroyMessage>());
+        }
+
+        #endregion
+
+        #region ACCESS SERVER
+
+        /// <summary>
+        /// Used to retrieve the connection
+        /// for the player on the server
+        /// </summary>
+        /// <param name="playerID"></param>
+        /// <returns></returns>
+        public NetworkConnection GetPlayerConn(int playerID)
+        {
+            return m_con.GetPlayerConn(playerID);
         }
 
         #endregion

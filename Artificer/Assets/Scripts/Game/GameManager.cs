@@ -16,6 +16,7 @@ using Networking;
 using Data.UI;
 using Space.Segment;
 using Space.AI;
+using Space.Spawn;
 
 namespace Game
 {
@@ -281,6 +282,25 @@ namespace Game
         }
 
         /// <summary>
+        /// Simply forwards the NPC spawn to the 
+        /// correct spawning object
+        /// manager
+        /// </summary>
+        [Server]
+        public void SpawnNpc
+            (int playerID, uint targetID, uint spawnID, 
+            string agent, Vector2 location)
+        {
+            GameObject spawn = ClientScene.FindLocalObject(new NetworkInstanceId(spawnID));
+
+            if (spawn == null)
+                return;
+
+            spawn.GetComponent<SpawnManager>().
+                SpawnShip(playerID, targetID, spawnID, location, agent);           
+        }
+
+        /// <summary>
         /// Sends station information to 
         /// game builder and assigns station to team
         /// </summary>
@@ -364,6 +384,27 @@ namespace Game
                         m_att.TeamB.Deposit(tMsg.CurrencyAmount);
                     break;
             }
+        }
+
+        #endregion
+
+        #region ACCESS SERVER
+
+        /// <summary>
+        /// Used to retrieve the connection
+        /// for the player on the server
+        /// </summary>
+        /// <param name="playerID"></param>
+        /// <returns></returns>
+        public NetworkConnection GetPlayerConn(int playerID)
+        {
+            if (m_att.PlayerInfoList == null)
+                return null;
+
+            PlayerConnectionInfo pInfo =
+                m_att.PlayerInfoList.Item(playerID);
+
+            return pInfo.mConnection;
         }
 
         #endregion

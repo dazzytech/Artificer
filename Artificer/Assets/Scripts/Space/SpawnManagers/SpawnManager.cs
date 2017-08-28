@@ -1,5 +1,6 @@
 ﻿using Data.Space;
 using Data.Space.Library;
+using Networking;
 using Space.AI;
 using Space.AI.Agent;
 using Space.Ship;
@@ -11,6 +12,112 @@ using UnityEngine.Networking;
 
 namespace Space.Spawn
 {
+    public struct AgentGroup
+    {
+        #region ATTRIBUTES
+
+        public uint m_focus;
+        public uint[] m_agents;
+
+        #endregion
+
+        #region ACCESSORS
+
+        /// <summary>
+        /// Returns the amount of raiders targeting
+        /// </summary>
+        public int AgentCount
+        {
+            get
+            {
+                return m_agents.Length;
+            }
+        }
+
+        /// <summary>
+        /// Stores an accessible reference 
+        /// to the group focus
+        /// </summary>
+        public GameObject Focus
+        {
+            get
+            {
+                return ClientScene.FindLocalObject
+                      (new NetworkInstanceId(m_focus));
+            }
+        }
+
+        /// <summary>
+        /// network instance if of the focus
+        /// object
+        /// </summary>
+        public NetworkInstanceId FocusNetID
+        {
+            get { return new NetworkInstanceId(m_focus); }
+        }
+
+        #endregion
+
+        public AgentGroup(uint focus)
+        {
+            m_focus = focus;
+            m_agents = new uint[0];
+
+            SystemManager.Events.EventShipDestroyed
+                    += ShipDestroyedEvent;
+        }
+
+        #region PUBLIC INTERACTION
+
+        /// <summary>
+        /// Adds a reference to an agent in group
+        /// </summary>
+        /// <param name="ship"></param>
+        public void AddAgent(uint agent)
+        {
+            List<uint> temp = new List<uint>(m_agents);
+            temp.Add(agent);
+            m_agents = (uint[])temp.ToArray().Clone();
+        }
+
+        /// <summary>
+        /// Removes a reference from the agent
+        /// </summary>
+        /// <param name="agent"></param>
+        public void RemoveAgent(int agent)
+        {
+            List<uint> temp = new List<uint>(m_agents);
+            temp.RemoveAt(agent);
+            m_agents = (uint[])temp.ToArray().Clone();
+        }
+
+        #endregion
+
+        #region EVENTS
+
+        /// <summary>
+        /// Deletes reference to the agent
+        /// ship if it is destroyed
+        /// </summary>
+        /// <param name="DD"></param>
+        private void ShipDestroyedEvent(DestroyDespatch DD)
+        {
+            for (int i = 0; i < AgentCount; i++)
+            {
+                if (m_agents[i] == DD.Self.Value)
+                {
+                    RemoveAgent(i);
+                    i--;
+                }
+            }
+        }
+
+        #endregion
+    }
+
+    public class SyncListAgentGroup : SyncListStruct<AgentGroup>
+    { }
+
     /// <summary>
     /// Base spawn object used to spawn AI object
     /// </summary>
@@ -44,133 +151,9 @@ namespace Space.Spawn
             public float SpawnChance;
         }
 
-        /// <summary>
-        /// Logs information about a tracked object
-        /// and any agents associated with that object
-        /// </summary>
-        public class AgentGroupTracker: IndexedObject
-        {
-            #region ATTRIBUTES
-
-            /// <summary>
-            /// A central focus point for
-            /// the ai agents
-            /// </summary>
-            private Transform m_focus;
-
-            /// <summary>
-            /// Reference to all agents within this 
-            /// group
-            /// </summary>
-            private List<NetworkInstanceId> m_agents;
-
-            #endregion
-
-            #region CONSTRUCTORS
-
-            public AgentGroupTracker()
-            {
-                m_agents = new List<NetworkInstanceId>();
-
-                SystemManager.Events.EventShipDestroyed
-                    += ShipDestroyedEvent;
-            }
-
-            /// <summary>
-            /// Initializes the object with 
-            /// reference to a focal object
-            /// </summary>
-            /// <param name="focus"></param>
-            public AgentGroupTracker(Transform focus)
-            {
-                m_focus = focus;
-                m_agents = new List<NetworkInstanceId>();
-
-                SystemManager.Events.EventShipDestroyed
-                    += ShipDestroyedEvent;
-            }
-
-            #endregion
-
-            #region PUBLIC INTERACTION
-
-            /// <summary>
-            /// Adds a reference to an agent in group
-            /// </summary>
-            /// <param name="ship"></param>
-            public void AddAgent(NetworkInstanceId agent)
-            {
-                if (agent != null)
-                    m_agents.Add(agent);
-            }
-
-            #endregion
-
-            #region EVENTS
-
-            /// <summary>
-            /// Deletes reference to the agent
-            /// ship if it is destroyed
-            /// </summary>
-            /// <param name="DD"></param>
-            private void ShipDestroyedEvent(DestroyDespatch DD)
-            {
-                for (int i = 0; i < m_agents.Count; i++)
-                {
-                    if (m_agents[i] == DD.Self)
-                    {
-                        m_agents.RemoveAt(i);
-                        i--;
-                    }
-                }
-
-            }
-
-            #endregion
-
-            #region ACCESSORS
-            
-            /// <summary>
-            /// Returns the amount of raiders targeting
-            /// </summary>
-            public int AgentCount
-            {
-                get
-                {
-                    return m_agents.Count;
-                }
-            }
-
-            /// <summary>
-            /// Stores an accessible reference 
-            /// to the group focus
-            /// </summary>
-            public Transform Focus
-            {
-                get { return m_focus; }
-            }
-
-            /// <summary>
-            /// network instance if of the focus
-            /// object
-            /// </summary>
-            public NetworkInstanceId FocusNetID
-            {
-                get { return Focus.GetComponent<NetworkIdentity>().netId; }
-            }
-
-            #endregion
-        }
-
         #endregion
 
         #region ATTRIBUTES
-
-        /// <summary>
-        /// Used to access ai list
-        /// </summary>
-        [SerializeField]
-        private AIManager m_AI;
 
         /// <summary>
         /// possible agents that can spawn
@@ -181,24 +164,7 @@ namespace Space.Spawn
 
         #endregion
 
-        #region ACCESSOR
-
-        /// <summary>
-        /// If this is a player team then
-        /// we dont spawn AI
-        /// </summary>
-        protected bool PlayerTeam
-        {
-            get { return m_AI == null; }
-        }
-
-        /// <summary>
-        /// Allows ai manager to set self
-        /// </summary>
-        public AIManager AI
-        {
-            set { m_AI = value; }
-        }
+        #region MONOBEHAVIOUR
 
         #endregion
 
@@ -208,24 +174,25 @@ namespace Space.Spawn
         /// Spawns the object with this player's
         /// authority and sets the spawn process message
         /// </summary>
-        [Command]
-        public void CmdSpawnShip(string agent,
-            uint playerNetID, Vector3 location, uint targetID)
+        [Server]
+        public void SpawnShip(int playerID, uint targetID, uint spawnID,
+            Vector3 location, string agent)
         {
             GameObject GO = Instantiate
                 (SystemManager.singleton.playerPrefab);
 
             GO.transform.position = location;
-
-            NetworkConnection playerConn = SystemManager.Space.PlayerConn
-                (new NetworkInstanceId(playerNetID));
+             
+            NetworkConnection playerConn = 
+                SystemManager.GameMSG.GetPlayerConn(playerID);
 
             // Spawn the ship on the network
             NetworkServer.SpawnWithClientAuthority
                 (GO, playerConn);
 
             // Retrieve the agent info
-            AgentData agentData = m_AI.AgentLibrary[agent];
+            AgentData agentData = GameObject.Find("ai").
+                GetComponent<AIManager>().AgentLibrary[agent];
 
             // Assign the information while on the server
             GO.GetComponent<ShipGenerator>().
@@ -233,27 +200,17 @@ namespace Space.Spawn
                 (agentData.Ship[UnityEngine.Random.Range
                 (0, agentData.Ship.Count())]), -1, playerConn);
 
-            // Build the agent info in the correct client
-            RpcBuildAgent(playerNetID,
-                GO.GetComponent<NetworkIdentity>().netId.Value,
-                targetID, agent);
-        }
+            AssignAgent(GO.GetComponent<NetworkIdentity>().netId.Value, targetID);
 
-        /// <summary>
-        /// Builds the ship item and then 
-        /// calls the command to network spawn the object
-        /// and to send the spawn me message
-        /// </summary>
-        /// <param name="target"></param>
-        /// <returns></returns>
-        [ClientRpc]
-        public void RpcBuildAgent
-            (uint selfID, uint agentID, uint targetID, string agent)
-        {
-            if (SystemManager.Space.NetID == selfID)
-            {
-                BuildAgent(selfID, agentID, targetID, agent);
-            }
+            SpawnNPCMessage snm = new SpawnNPCMessage();
+            snm.SpawnID = spawnID;
+            snm.TargetID = targetID;
+            snm.AgentID = GO.GetComponent<NetworkIdentity>().netId.Value;
+            snm.AgentType = agent;
+
+            // Send message
+            NetworkServer.SendToClient(playerConn.connectionId,
+                (short)MSGCHANNEL.PROCESSNPC, snm);
         }
 
         #endregion
@@ -300,8 +257,20 @@ namespace Space.Spawn
             return "";
         }
 
-        protected virtual void BuildAgent
-            (uint selfID, uint agentID, uint targetID, string agent)
+        /// <summary>
+        /// Used to override children for
+        /// assigning agents to lists
+        /// </summary>
+        /// <param name="agent"></param>
+        /// <param name="target"></param>
+        [Server]
+        protected virtual void AssignAgent(uint agent, uint target)
+        {
+
+        }
+
+        protected virtual void InitializeAgent
+            (uint agentID, uint targetID, string agent)
         {
             // Access the target given to us
             GameObject target = ClientScene.FindLocalObject
@@ -317,7 +286,8 @@ namespace Space.Spawn
                 return;
 
             // Retrieve the agent info
-            AgentData agentData = m_AI.AgentLibrary[agent];
+            AgentData agentData = GameObject.Find("ai").
+                GetComponent<AIManager>().AgentLibrary[agent];
 
             // Use template to determine agent class
             FSM agentFSM = null;
@@ -340,6 +310,30 @@ namespace Space.Spawn
             }
 
             agentFSM.EstablishAgent(agentData);
+        }
+
+        #endregion
+
+        #region EVENT
+
+        /// <summary>
+        /// Builds the ship item and then 
+        /// calls the command to network spawn the object
+        /// and to send the spawn me message
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        protected void BuildAgentListener
+            (NetworkMessage netMsg)
+        {
+            SpawnNPCMessage snm = netMsg.ReadMessage<SpawnNPCMessage>();
+
+            if (snm.SpawnID == netId.Value)
+            {
+                InitializeAgent(snm.AgentID, snm.TargetID, snm.AgentType);
+
+                NetworkManager.singleton.client.UnregisterHandler((short)MSGCHANNEL.PROCESSNPC);
+            }
         }
 
         #endregion
