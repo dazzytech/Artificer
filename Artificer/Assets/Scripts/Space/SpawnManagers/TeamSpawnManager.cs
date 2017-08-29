@@ -57,7 +57,7 @@ namespace Space.Spawn
         /// Synced list across network
         /// storing agent groups
         /// </summary>
-        public SyncListAgentGroup Groups = new SyncListAgentGroup();
+        private SyncListAgentGroup m_groups = new SyncListAgentGroup();
 
         [SyncVar]
         public int FortifyLevel = 0;
@@ -186,7 +186,7 @@ namespace Space.Spawn
             // Log our spawn info
             stationAtt.SpawnID = sPInfo.ID;
 
-            Groups.Add(new AgentGroup(stationCon.netId.Value));
+            m_groups.Add(new AgentGroup(stationCon.netId.Value));
 
             return newStation;
         }
@@ -249,7 +249,7 @@ namespace Space.Spawn
         [Server]
         public bool ProcessDestroyed(DestroyDespatch DD)
         {
-            foreach (AgentGroup group in Groups)
+            foreach (AgentGroup group in m_groups)
                 if (group.ShipDestroyed(DD))
                     return true;
 
@@ -263,14 +263,14 @@ namespace Space.Spawn
         [Server]
         protected override void AssignAgent(uint agentID, uint targetID)
         {
-            int index = Groups.IndexOf
-                (Groups.FirstOrDefault(x => x.m_focus == targetID));
+            int index = m_groups.IndexOf
+                (m_groups.FirstOrDefault(x => x.m_focus == targetID));
 
             if (index != -1)
             {
-                AgentGroup AG = Groups[index];
+                AgentGroup AG = m_groups[index];
                 AG.AddAgent(agentID);
-                Groups[index] = AG;
+                m_groups[index] = AG;
             }
         }
 
@@ -335,16 +335,16 @@ namespace Space.Spawn
 
                 // Loop through each ship tracking item
                 int i = 0;
-                while (i < Groups.Count)
+                while (i < m_groups.Count)
                 {
-                    AgentGroup target = Groups[i];
+                    AgentGroup target = m_groups[i];
 
                     GameObject Focus = target.Focus;
 
                     if (Focus == null)
                     {
                         // destroyed stop tracking
-                        Groups.RemoveAt(i);
+                        m_groups.RemoveAt(i);
                         continue;
                     }
                     else

@@ -37,27 +37,6 @@ namespace Space.Ship
         #region INCOMING MESSAGES
 
         /// <summary>
-        /// Adds material information to the 
-        /// ship internal resources
-        /// </summary>
-        /// <param name="data"></param>
-        public void CollectItem(Collectable data)
-        {
-
-            // Can't add material yet
-            //_ship.Ship.AddMaterial(data);
-
-            /*foreach (MaterialData mat in data.Keys)
-            {
-                // Set to popup gui
-                SystemManager.UIMsg.DisplayMessege
-                    ("small", "You have collected: " +
-                        (data[mat]).ToString("F2")
-                       + " - " + mat.Element);
-            }*/
-        }
-
-        /// <summary>
         /// Creates a list of components that is 
         /// still linked to the ship head
         /// omitting the destroyed piece.
@@ -187,25 +166,6 @@ namespace Space.Ship
         }
 
         /// <summary>
-        /// Sets our ship in a combative 
-        /// agaisnt the passed transform
-        /// </summary>
-        /// <param name="Combatant"></param>
-        public void SetCombatant(Transform Combatant)
-        {
-            if (!hasAuthority)
-                return; 
-
-            m_ship.Target = Combatant;
-
-            CmdSetCombat(true);
-
-            CancelInvoke("AttackTimer");
-
-            Invoke("AttackTimer", 20f);
-        }
-
-        /// <summary>
         /// When ship is hit by an enemy
         /// ship is in under attack mode
         /// for 20 sec after last shot
@@ -258,7 +218,7 @@ namespace Space.Ship
         }
 
         [Command]
-        private void CmdSetCombat(bool ic)
+        public void CmdSetCombat(bool ic)
         {
             m_ship.InCombat = ic;
         }
@@ -306,8 +266,11 @@ namespace Space.Ship
                 ShipAccessor aggShip = aggressor.
                     GetComponent<ShipAccessor>();
 
-                if(aggShip != null)
-                    m_ship.AggressorID = aggShip.TeamID;
+                if (aggShip != null)
+                {
+                    m_ship.AggressorTeamID = aggShip.TeamID;
+                    m_ship.AggressorID = aggShip.NetID;
+                }
             }
 
             // Find the corresponding transform
@@ -366,10 +329,11 @@ namespace Space.Ship
         {
             // Send message to server for updating
             ShipDestroyMessage msg = new ShipDestroyMessage();
-            msg.AggressorTeam = m_ship.AggressorID;
+            msg.AggressorTeam = m_ship.AggressorTeamID;
+            msg.AggressorID = m_ship.AggressorID;
             msg.SelfTeam = m_ship.TeamID;
-            msg.SelfID = netId;
-            msg.ID = SystemManager.Space.ID;
+            msg.SelfID = m_ship.NetworkID;
+            msg.PlayerID = SystemManager.Space.ID;
 
             SystemManager.singleton.client.Send((short)MSGCHANNEL.SHIPDESTROYED, msg);
         }

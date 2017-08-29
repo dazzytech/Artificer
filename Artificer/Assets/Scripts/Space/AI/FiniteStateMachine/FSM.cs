@@ -596,7 +596,7 @@ namespace Space.AI
         private void ShipDestroyedEvent(DestroyDespatch DD)
         {
             Transform destroyed =
-                ClientScene.FindLocalObject(DD.Self).transform;
+                ClientScene.FindLocalObject(DD.SelfID).transform;
 
             if (destroyed == m_target)
                 m_target = null;

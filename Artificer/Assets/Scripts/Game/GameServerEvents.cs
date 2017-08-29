@@ -52,10 +52,11 @@ namespace Game
         public void ShipDestroyed(ShipDestroyMessage msg)
         {
             DestroyDespatch DD = new DestroyDespatch();
-            DD.AggressorID = msg.AggressorTeam;
-            DD.SelfTeam = msg.SelfTeam;
-            DD.Self = msg.SelfID;
-            DD.MiscID = msg.ID;
+            DD.AggressorTeamID = msg.AggressorTeam;
+            DD.AggressorID = msg.AggressorID;
+            DD.SelfTeamID = msg.SelfTeam;
+            DD.SelfID = msg.SelfID;
+            DD.MiscID = msg.PlayerID;
 
             EventShipDestroyed(DD);
         }
@@ -69,7 +70,7 @@ namespace Game
         public void StationDestroyed(StationDestroyMessage msg)
         {
             DestroyDespatch DD = new DestroyDespatch();
-            DD.Self = msg.SelfID;
+            DD.SelfID = msg.SelfID;
             DD.MiscID = msg.ID;
 
             EventStationDestroyed(DD);

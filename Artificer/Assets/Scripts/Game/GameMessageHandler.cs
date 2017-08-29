@@ -272,6 +272,17 @@ namespace Game
             return m_con.GetPlayerConn(playerID);
         }
 
+        /// <summary>
+        /// Returns how many players
+        /// belong to a certain team
+        /// </summary>
+        /// <param name="teamID"></param>
+        /// <returns></returns>
+        public int PlayerTeamCount(int teamID)
+        {
+            return m_con.PlayerTeamCount(teamID);
+        }
+
         #endregion
 
         #endregion

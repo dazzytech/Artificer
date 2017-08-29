@@ -65,7 +65,7 @@ namespace Space.Ship
         {
             BuildColliders();
 
-            _hitD = hit;
+            m_hitD = hit;
 
             StartCoroutine("CycleThroughCollidersSingle", (Vector2)hit.hitPosition);
         }
@@ -80,10 +80,10 @@ namespace Space.Ship
             BuildColliders();
 
             // check if he have just been hit
-            if (_hitD.Equals(hit))
+            if (m_hitD.Equals(hit))
                 return;
 
-            _hitD = hit;
+            m_hitD = hit;
 
             StartCoroutine("CycleThroughCollidersGroup");
         }
@@ -94,7 +94,7 @@ namespace Space.Ship
         /// </summary>
         public void ProcessDamage(int[] damaged, HitData hData, float[] vals)
         {
-            _hitD = hData;
+            m_hitD = hData;
 
             StartCoroutine(CycleComponentDamage(damaged, vals));
 
@@ -106,9 +106,10 @@ namespace Space.Ship
                 }
 
                 // check for null
-                GameObject combatant = ClientScene.FindLocalObject(hData.originID);
+                GameObject combatant = ClientScene.FindLocalObject(m_hitD.originID);
                 if (combatant != null)
                 {
+                    combatant.SendMessage("SetCombatant", transform);
                     SendMessage("SetCombatant", combatant.transform);
                 }
             }
@@ -141,7 +142,7 @@ namespace Space.Ship
                             GetComponent<ComponentAttributes>();
 
                         damagedComps.Add(att.ID);
-                        damagedVals.Add(_hitD.damage *= Random.Range(0.5f, 1.0f));
+                        damagedVals.Add(m_hitD.damage *= Random.Range(0.5f, 1.0f));
                     }
                 }
 
@@ -154,7 +155,7 @@ namespace Space.Ship
                 ShipColliderHitMessage msg = new ShipColliderHitMessage();
                 msg.HitComponents = damagedComps.ToArray();
                 msg.ShipID = this.netId;
-                msg.HitD = _hitD;
+                msg.HitD = m_hitD;
                 msg.HitValues = damagedVals.ToArray();
                 SystemManager.singleton.client.Send((short)MSGCHANNEL.SHIPHIT, msg);
             }
@@ -168,8 +169,8 @@ namespace Space.Ship
             List<int> damagedComps = new List<int>();
             List<float> damagedVals = new List<float>();
 
-            Collider2D[] col = Physics2D.OverlapCircleAll(_hitD.hitPosition,
-                                                             _hitD.radius);
+            Collider2D[] col = Physics2D.OverlapCircleAll(m_hitD.hitPosition,
+                                                             m_hitD.radius);
             // We did not receive damage
             if (col.Length == 0)
                 yield break;
@@ -191,12 +192,12 @@ namespace Space.Ship
                             continue;
 
                         float RangeReduction = (Vector3.Distance
-                            (piece.transform.position, _hitD.hitPosition) / _hitD.radius);
+                            (piece.transform.position, m_hitD.hitPosition) / m_hitD.radius);
 
                         Debug.Log(string.Format("Distance {0}, Reduction {1}", Vector3.Distance
-                            (piece.transform.position, _hitD.hitPosition), RangeReduction));
+                            (piece.transform.position, m_hitD.hitPosition), RangeReduction));
 
-                        float damage = _hitD.damage * Random.Range(0.5f, 1.0f);
+                        float damage = m_hitD.damage * Random.Range(0.5f, 1.0f);
 
                         float damageReduction = damage * RangeReduction;
 
@@ -217,7 +218,7 @@ namespace Space.Ship
                 ShipColliderHitMessage msg = new ShipColliderHitMessage();
                 msg.HitComponents = damagedComps.ToArray();
                 msg.ShipID = this.netId;
-                msg.HitD = _hitD;
+                msg.HitD = m_hitD;
                 msg.HitValues = damagedVals.ToArray();
                 SystemManager.singleton.client.Send((short)MSGCHANNEL.SHIPHIT, msg);
             }
@@ -231,7 +232,7 @@ namespace Space.Ship
             foreach (ComponentListener listener in
                 GetComponent<ShipAccessor>().SelectedComponents(damaged))
             {
-                listener.DamageComponent(_hitD, dmg[i++], hasAuthority);
+                listener.DamageComponent(m_hitD, dmg[i++], hasAuthority);
 
                 yield return null;
             }

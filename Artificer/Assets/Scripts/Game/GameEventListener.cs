@@ -72,11 +72,11 @@ namespace Game
 
             if (info.mTeam == 0)
             {
-                m_att.TeamA.RemovePlayerObject(DD.Self);
+                m_att.TeamA.RemovePlayerObject(DD.SelfID);
             }
             else
             {
-                m_att.TeamB.RemovePlayerObject(DD.Self);
+                m_att.TeamB.RemovePlayerObject(DD.SelfID);
             }
 
             // Send destroy messege to our list of

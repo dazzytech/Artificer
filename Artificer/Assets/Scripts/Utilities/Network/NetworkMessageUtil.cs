@@ -138,10 +138,11 @@ namespace Networking
     /// </summary>
     public class ShipDestroyMessage : MessageBase
     {
+        public int SelfTeam;
         public NetworkInstanceId SelfID;
         public int AggressorTeam;
-        public int SelfTeam;
-        public int ID;
+        public NetworkInstanceId AggressorID;
+        public int PlayerID;
     }
 
     /// <summary>

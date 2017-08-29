@@ -88,15 +88,13 @@ namespace Space.Spawn
         {
             for (int i = 0; i < AgentCount; i++)
             {
-                if (m_agents[i] == DD.Self.Value)
+                if (m_agents[i] == DD.SelfID.Value)
                 {
                     RemoveAgent(i);
                     i--;
-
                     return true;
                 }
             }
-
             return false;
         }
 
@@ -146,6 +144,8 @@ namespace Space.Spawn
         [SerializeField]
         private AgentSpawn[] m_spawn;
 
+        public int TeamID = -1;
+
         #endregion
 
         #region MONOBEHAVIOUR
@@ -182,7 +182,7 @@ namespace Space.Spawn
             GO.GetComponent<ShipGenerator>().
                 AssignShipData(ShipLibrary.GetShip
                 (agentData.Ship[UnityEngine.Random.Range
-                (0, agentData.Ship.Count())]), -1, playerConn);
+                (0, agentData.Ship.Count())]), TeamID, playerConn);
 
             AssignAgent(GO.GetComponent<NetworkIdentity>().netId.Value, targetID);
 

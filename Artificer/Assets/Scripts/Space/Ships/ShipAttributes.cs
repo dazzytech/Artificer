@@ -29,7 +29,10 @@ namespace Space.Ship
 
         // Last ship to attack ship
         [SyncVar]
-        public int AggressorID;
+        public NetworkInstanceId AggressorID;
+
+        [SyncVar]
+        public int AggressorTeamID;
 
         [SyncVar]             //why doesnt this work?
         public bool ShipDocked;

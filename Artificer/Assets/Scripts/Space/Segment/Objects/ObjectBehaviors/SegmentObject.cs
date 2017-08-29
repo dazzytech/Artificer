@@ -160,14 +160,14 @@ namespace Space.Segment
             {
                 m_pieceDensity -= hData.damage;
 
-                Vector2 dir = transform.position - _hitD.hitPosition;
+                Vector2 dir = transform.position - m_hitD.hitPosition;
                 dir = transform.InverseTransformDirection(dir);
                 float magnitude = hData.damage;
                 GetComponent<Rigidbody2D>().AddForce(dir * magnitude, ForceMode2D.Force);
             }
 
-            if (m_objSprite != null && _hitD.damageTex != null
-                && _hitD.damageTex != "")
+            if (m_objSprite != null && m_hitD.damageTex != null
+                && m_hitD.damageTex != "")
             {
                 // Ref to our texture rect for size
                 Rect size = m_objSprite.sprite.rect;
@@ -177,17 +177,17 @@ namespace Space.Segment
                 float scaleY = transform.lossyScale.y;
 
                 // Create our mask
-                Texture2D mask = Instantiate(Resources.Load("Textures/Damage/" + _hitD.damageTex,
+                Texture2D mask = Instantiate(Resources.Load("Textures/Damage/" + m_hitD.damageTex,
                     typeof(Texture2D)) as Texture2D);
 
                 TextureScale.Bilinear(mask,(int)(mask.width / scaleX), 
                      (int)(mask.height / scaleY));
 
                 // convert hit point from center
-                Vector2 localHit = (_hitD.hitPosition - transform.position);
+                Vector2 localHit = (m_hitD.hitPosition - transform.position);
 
                 if (m_fragments.Length > 0)
-                    DisperseFragments(_hitD.hitPosition, localHit.normalized);
+                    DisperseFragments(m_hitD.hitPosition, localHit.normalized);
 
                 // scale to current size
                 localHit.x /= scaleX;
@@ -309,7 +309,7 @@ namespace Space.Segment
         /// <param name="dir"></param>
         protected virtual void DisperseFragments(Vector2 point, Vector2 dir)
         {
-            int numOfRocks = Mathf.CeilToInt(_hitD.damage * 0.02f);
+            int numOfRocks = Mathf.CeilToInt(m_hitD.damage * 0.02f);
 
             for (int i = 0; i < numOfRocks; i++)
             {

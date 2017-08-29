@@ -66,6 +66,8 @@ namespace Space.Teams
         /// </summary>
         private SyncListShip m_ships = new SyncListShip();
 
+        #region TEAMS
+
         /// <summary>
         /// Defines the teams that this particular
         /// team is enemies with
@@ -75,7 +77,22 @@ namespace Space.Teams
         /// <summary>
         /// Indviduals that the team is hostile to
         /// </summary>
+        [SerializeField]
         private SyncListUInt m_KOSShips = new SyncListUInt();
+
+        /// <summary>
+        /// Keep track of how many times a 
+        /// a player team has killed a team member
+        /// </summary>
+        private int m_killedByA = 0;
+
+        /// <summary>
+        /// Keep track of how many times a 
+        /// a player team has killed a team member
+        /// </summary>
+        private int m_killedByB = 0;
+
+        #endregion
 
         /*
         // unlocked components
@@ -160,7 +177,7 @@ namespace Space.Teams
         [Server]
         public void Initialize(int id, int fortify = 0)
         {
-            m_ID = id;
+            Spawner.TeamID = m_ID = id;
 
             // Assign callbacks
             m_players.Callback = PlayerListChanged;
@@ -259,6 +276,44 @@ namespace Space.Teams
             // Pass the process to the spawner 
             // for the agent groups to process
             Spawner.ProcessDestroyed(DD);
+            
+            if (DD.SelfTeamID == m_ID)
+            {
+                // The agent destroyed is on our team
+
+                // kos list makes all guards hostile 
+                // to ship
+                if (!m_KOSShips.Contains(DD.AggressorID.Value))
+                {
+                    m_KOSShips.Add(DD.AggressorID.Value);
+
+                    // determine if this is by a player team
+                    // add to enemy list if so and enough kills have 
+                    // happened
+                    if(DD.AggressorTeamID == 0)
+                    {
+                        // Team A
+                        m_killedByA++;
+                        if(m_killedByA >= Mathf.CeilToInt(SystemManager.GameMSG.PlayerTeamCount(0) * .33f))
+                        {
+                            // if a third of the team has killed this team
+                            // then add team to enemy list
+                            AddEnemyTeam(0);
+                        }
+                    }
+                    else if(DD.AggressorTeamID == 1)
+                    {
+                        // Team B
+                        m_killedByB++;
+                        if (m_killedByB > SystemManager.GameMSG.PlayerTeamCount(1) / 3)
+                        {
+                            // if a third of the team has killed this team
+                            // then add team to enemy list
+                            AddEnemyTeam(1);
+                        }
+                    }
+                }
+            }
         }
 
         #endregion

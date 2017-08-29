@@ -407,6 +407,13 @@ namespace Game
             return pInfo.mConnection;
         }
 
+        public int PlayerTeamCount(int teamID)
+        {
+            if (teamID == 0)
+                return m_att.TeamA.Players.Count;
+            return m_att.TeamB.Players.Count;
+        }
+
         #endregion
 
         #endregion

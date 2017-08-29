@@ -390,6 +390,25 @@ namespace Space.Ship
                 targeter.SetTargeting(fire, behaviour);
         }
 
+        /// <summary>
+        /// Sets our ship in a combative 
+        /// agaisnt the passed transform
+        /// </summary>
+        /// <param name="combatant"></param>
+        public void SetCombatant(Transform combatant)
+        {
+            if (!hasAuthority)
+                return;
+
+            m_ship.Target = combatant;
+
+            m_msg.CmdSetCombat(true);
+
+            m_msg.CancelInvoke("AttackTimer");
+
+            m_msg.Invoke("AttackTimer", 20f);
+        }
+
         #region SHIP CMDS
 
         /// <summary>

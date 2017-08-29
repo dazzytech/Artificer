@@ -37,7 +37,7 @@ namespace Space.Segment
         #region ATTRIBUTES
 
         [SyncVar]
-        public HitData _hitD;
+        public HitData m_hitD;
 
         #endregion
 
@@ -50,12 +50,12 @@ namespace Space.Segment
         public virtual void Hit(HitData hit)
         {
             // Set hitdata to our local storage
-            _hitD = hit;
+            m_hitD = hit;
 
-            _hitD.damage *= Random.Range(0.5f, 1.0f);
+            m_hitD.damage *= Random.Range(0.5f, 1.0f);
 
             // Reduce damage based on distance
-            _hitD.damage -= Vector3.Distance(transform.position, _hitD.hitPosition) * 0.1f;
+            m_hitD.damage -= Vector3.Distance(transform.position, m_hitD.hitPosition) * 0.1f;
 
             SOColliderHitMessage msg = new SOColliderHitMessage();
             msg.SObjectID = this.netId;
@@ -72,7 +72,7 @@ namespace Space.Segment
         public virtual void HitArea(HitData hit)
         {
             // avoid multiple hits
-            if (_hitD.Equals(hit))
+            if (m_hitD.Equals(hit))
                 return;
 
             // Forward to single hit
