@@ -72,6 +72,10 @@ namespace Space
             StationController.OnExitRange += OnExitStation;
             StationController.OnEnterBuildRange += OnEnterBuildRange;
             StationController.OnExitBuildRange += OnExitBuildRange;
+
+            if (SystemManager.Events != null)
+                SystemManager.Events.EventShipDestroyed
+                  += OnShipDestroyed;
         }
 
         void OnDisable()
@@ -87,6 +91,10 @@ namespace Space
             StationController.OnExitRange -= OnExitStation;
             StationController.OnEnterBuildRange -= OnEnterBuildRange;
             StationController.OnExitBuildRange -= OnExitBuildRange;
+
+            if(SystemManager.Events != null)
+                SystemManager.Events.EventShipDestroyed
+                  -= OnShipDestroyed;
         }
 
         #endregion
@@ -295,6 +303,22 @@ namespace Space
         #region SPACE EVENTS
 
         /// <summary>
+        /// Receives a message that a ship
+        /// has been destroyed and processes the event
+        /// </summary>
+        /// <param name="input">Input.</param>
+        public void OnShipDestroyed(DestroyDespatch destroyed)
+        {
+            /*if (destroyed.AggressorTag == "PlayerShip")
+            {
+                if (destroyed.AlignmentLabel == "Enemy")
+                    SystemManager.GUI.DisplayMessege(new MsgParam("sm-green", "You have destroyed an enemy."));
+                if (destroyed.AlignmentLabel == "Friendly")
+                    SystemManager.GUI.DisplayMessege(new MsgParam("sm-red", "You have destroyed an friendly."));
+            }*/
+        }
+
+        /// <summary>
         /// Alerts the space segment to 
         /// component collection
         /// </summary>
@@ -308,24 +332,6 @@ namespace Space
         // Consider using sync events
 
         /*
-        /// <summary>
-        /// Receives a message that a ship
-        /// has been destroyed and processes the event
-        /// </summary>
-        /// <param name="input">Input.</param>
-        public void ShipDestroyed(DestroyDespatch destroyed)
-        {
-            //_att.Contract.ProcessShipDestroyed
-                //(destroyed);
-
-            if(destroyed.AggressorTag == "PlayerShip")
-            {
-                if(destroyed.AlignmentLabel == "Enemy")
-                    SystemManager.GUI.DisplayMessege(new MsgParam("sm-green", "You have destroyed an enemy."));
-                if(destroyed.AlignmentLabel == "Friendly")
-                    SystemManager.GUI.DisplayMessege(new MsgParam("sm-red", "You have destroyed an friendly."));
-            }
-        }
 
         public void StationDestroyed(DestroyDespatch destroyed)
         {

@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 using System.Collections;
 
 using Space.Ship;
+using Space.Teams;
 
 namespace Game
 {
@@ -77,6 +78,13 @@ namespace Game
             {
                 m_att.TeamB.RemovePlayerObject(DD.Self);
             }
+
+            // Send destroy messege to our list of
+            // teams
+            foreach (TeamController team in SystemManager.Space.AI.Teams)
+                team.ProcessDestroyed(DD);
+
+            // send to more in future
         }
 
         public void ProcessStationDestroyed(DestroyDespatch destroyed)

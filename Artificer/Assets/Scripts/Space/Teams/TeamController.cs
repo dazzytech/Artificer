@@ -87,6 +87,41 @@ namespace Space.Teams
 
         #endregion
 
+        #region ACCESSORS
+
+        /// <summary>
+        /// Returns faction ID without access to faction
+        /// </summary>
+        public int ID
+        {
+            get { return m_ID; }
+        }
+
+        /// <summary>
+        /// Returns spawner for use by game object
+        /// </summary>
+        public TeamSpawnManager Spawner
+        {
+            get { return m_teamSpawn; }
+        }
+
+        public SyncListUInt Players
+        {
+            get { return m_players; }
+        }
+
+        public SyncListUInt Stations
+        {
+            get { return m_stations; }
+        }
+
+        public SyncListStruct<ShipSpawnData> Ships
+        {
+            get { return m_ships; }
+        }
+
+        #endregion
+
         #region MONO BEHAVIOUR
 
         private void Start()
@@ -97,6 +132,8 @@ namespace Space.Teams
         #endregion
 
         #region PUBLIC INTERACTION
+
+        #region INITIALIZE
 
         /// <summary>
         /// for now just add the faction data to 
@@ -133,6 +170,10 @@ namespace Space.Teams
             Spawner.FortifyLevel = fortify;
         }
 
+        #endregion
+
+        #region PLAYER OBJECTS
+
         /// <summary>
         /// Adds player physical object to list when player spawns
         /// </summary>
@@ -164,6 +205,10 @@ namespace Space.Teams
             return m_players.Contains(netID.Value);
         }
 
+        #endregion
+
+        #region STATION
+
         [Server]
         public void AddStationObject(NetworkInstanceId netID)
         {
@@ -176,11 +221,9 @@ namespace Space.Teams
             m_stations.Remove(netID.Value);
         }
 
-        [Server]
-        public void AddSpawnableShip(ShipSpawnData ship)
-        {
-            m_ships.Add(ship);
-        }
+        #endregion
+
+        #region TEAM
 
         /// <summary>
         /// All agents in this team will be
@@ -193,6 +236,32 @@ namespace Space.Teams
             if(!m_enemyTeams.Contains(team))
                 m_enemyTeams.Add(team);
         }
+
+        #region SHIP
+
+        /// <summary>
+        /// Adds a ship that plays can spawn with
+        /// </summary>
+        /// <param name="ship"></param>
+        [Server]
+        public void AddSpawnableShip(ShipSpawnData ship)
+        {
+            m_ships.Add(ship);
+        }
+
+        /// <summary>
+        /// Invoked when a 
+        /// </summary>
+        /// <param name="DD"></param>
+        [Server]
+        public void ProcessDestroyed(DestroyDespatch DD)
+        {
+            // Pass the process to the spawner 
+            // for the agent groups to process
+            Spawner.ProcessDestroyed(DD);
+        }
+
+        #endregion
 
         #region RESOURCE MANAGEMENT
 
@@ -233,39 +302,6 @@ namespace Space.Teams
         #endregion
 
         #endregion
-
-        #region ACCESSORS
-
-        /// <summary>
-        /// Returns faction ID without access to faction
-        /// </summary>
-        public int ID
-        {
-            get { return m_ID; }
-        }
-
-        /// <summary>
-        /// Returns spawner for use by game object
-        /// </summary>
-        public TeamSpawnManager Spawner
-        {
-            get { return m_teamSpawn; }
-        }
-
-        public SyncListUInt Players
-        {
-            get { return m_players; }
-        }
-
-        public SyncListUInt Stations
-        {
-            get { return m_stations; }
-        }
-
-        public SyncListStruct<ShipSpawnData> Ships
-        {
-            get { return m_ships; }
-        }
 
         #endregion
 

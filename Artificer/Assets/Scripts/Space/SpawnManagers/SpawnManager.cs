@@ -12,27 +12,18 @@ using UnityEngine.Networking;
 
 namespace Space.Spawn
 {
+    [System.Serializable]
     public struct AgentGroup
     {
         #region ATTRIBUTES
 
         public uint m_focus;
         public uint[] m_agents;
+        public int AgentCount;
 
         #endregion
 
         #region ACCESSORS
-
-        /// <summary>
-        /// Returns the amount of raiders targeting
-        /// </summary>
-        public int AgentCount
-        {
-            get
-            {
-                return m_agents.Length;
-            }
-        }
 
         /// <summary>
         /// Stores an accessible reference 
@@ -47,24 +38,13 @@ namespace Space.Spawn
             }
         }
 
-        /// <summary>
-        /// network instance if of the focus
-        /// object
-        /// </summary>
-        public NetworkInstanceId FocusNetID
-        {
-            get { return new NetworkInstanceId(m_focus); }
-        }
-
         #endregion
 
         public AgentGroup(uint focus)
         {
             m_focus = focus;
             m_agents = new uint[0];
-
-            SystemManager.Events.EventShipDestroyed
-                    += ShipDestroyedEvent;
+            AgentCount = 0;
         }
 
         #region PUBLIC INTERACTION
@@ -78,6 +58,8 @@ namespace Space.Spawn
             List<uint> temp = new List<uint>(m_agents);
             temp.Add(agent);
             m_agents = (uint[])temp.ToArray().Clone();
+
+            AgentCount++;
         }
 
         /// <summary>
@@ -89,6 +71,8 @@ namespace Space.Spawn
             List<uint> temp = new List<uint>(m_agents);
             temp.RemoveAt(agent);
             m_agents = (uint[])temp.ToArray().Clone();
+
+            AgentCount--;
         }
 
         #endregion
@@ -100,7 +84,7 @@ namespace Space.Spawn
         /// ship if it is destroyed
         /// </summary>
         /// <param name="DD"></param>
-        private void ShipDestroyedEvent(DestroyDespatch DD)
+        public bool ShipDestroyed(DestroyDespatch DD)
         {
             for (int i = 0; i < AgentCount; i++)
             {
@@ -108,8 +92,12 @@ namespace Space.Spawn
                 {
                     RemoveAgent(i);
                     i--;
+
+                    return true;
                 }
             }
+
+            return false;
         }
 
         #endregion
@@ -119,40 +107,36 @@ namespace Space.Spawn
     { }
 
     /// <summary>
+    /// Stores information about
+    /// possible agent spawns that can
+    /// be spawned from this spawner
+    /// </summary>
+    [System.Serializable]
+    public class AgentSpawn
+    {
+        /// <summary>
+        /// The agent that we will spawn
+        /// </summary>
+        public string AgentName;
+
+        /// <summary>
+        /// numeric value that determines if
+        /// we have access to this agent or not
+        /// </summary>
+        public int SpawnRequirements;
+
+        /// <summary>
+        /// chance that the agent will be 
+        /// chosen to spawn
+        /// </summary>
+        public float SpawnChance;
+    }
+
+    /// <summary>
     /// Base spawn object used to spawn AI object
     /// </summary>
     public class SpawnManager : NetworkBehaviour
     {
-        #region INLINE CLASS
-
-        /// <summary>
-        /// Stores information about
-        /// possible agent spawns that can
-        /// be spawned from this spawner
-        /// </summary>
-        [System.Serializable]
-        public class AgentSpawn
-        {
-            /// <summary>
-            /// The agent that we will spawn
-            /// </summary>
-            public string AgentName;
-
-            /// <summary>
-            /// numeric value that determines if
-            /// we have access to this agent or not
-            /// </summary>
-            public int SpawnRequirements;
-
-            /// <summary>
-            /// chance that the agent will be 
-            /// chosen to spawn
-            /// </summary>
-            public float SpawnChance;
-        }
-
-        #endregion
-
         #region ATTRIBUTES
 
         /// <summary>
@@ -264,9 +248,8 @@ namespace Space.Spawn
         /// <param name="agent"></param>
         /// <param name="target"></param>
         [Server]
-        protected virtual void AssignAgent(uint agent, uint target)
+        protected virtual void AssignAgent(uint agentID, uint targetID)
         {
-
         }
 
         protected virtual void InitializeAgent

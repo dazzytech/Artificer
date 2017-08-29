@@ -63,7 +63,7 @@ namespace Space
             get { return m_att.Map.Map; }
         }
 
-        private AIManager AI
+        public AIManager AI
         {
             get
             {

@@ -24,130 +24,33 @@ namespace Space.Spawn
         #region INLINE CLASS
 
         /// <summary>
-        /// Logs information about a tracked object
-        /// and any agents associated with that object
+        /// Logs information about ship
+        /// that is being tracked
         /// </summary>
-        public class AgentGroupTracker : IndexedObject
+        [System.Serializable]
+        public class RaiderTargetTracker
         {
-            #region ATTRIBUTES
-
-            /// <summary>
-            /// A central focus point for
-            /// the ai agents
-            /// </summary>
-            private Transform m_focus;
-
-            /// <summary>
-            /// Reference to all agents within this 
-            /// group
-            /// </summary>
-            private List<NetworkInstanceId> m_agents;
-
-            #endregion
-
-            #region CONSTRUCTORS
-
-            public AgentGroupTracker()
-            {
-                m_agents = new List<NetworkInstanceId>();
-
-                SystemManager.Events.EventShipDestroyed
-                    += ShipDestroyedEvent;
-            }
-
-            /// <summary>
-            /// Initializes the object with 
-            /// reference to a focal object
-            /// </summary>
-            /// <param name="focus"></param>
-            public AgentGroupTracker(Transform focus)
-            {
-                m_focus = focus;
-                m_agents = new List<NetworkInstanceId>();
-
-                SystemManager.Events.EventShipDestroyed
-                    += ShipDestroyedEvent;
-            }
-
-            #endregion
-
-            #region PUBLIC INTERACTION
-
-            /// <summary>
-            /// Adds a reference to an agent in group
-            /// </summary>
-            /// <param name="ship"></param>
-            public void AddAgent(NetworkInstanceId agent)
-            {
-                if (agent != null)
-                    m_agents.Add(agent);
-            }
-
-            #endregion
-
-            #region EVENTS
-
-            /// <summary>
-            /// Deletes reference to the agent
-            /// ship if it is destroyed
-            /// </summary>
-            /// <param name="DD"></param>
-            private void ShipDestroyedEvent(DestroyDespatch DD)
-            {
-                for (int i = 0; i < m_agents.Count; i++)
-                {
-                    if (m_agents[i] == DD.Self)
-                    {
-                        m_agents.RemoveAt(i);
-                        i--;
-                    }
-                }
-
-            }
-
-            #endregion
+            public AgentGroup Group;
 
             #region ACCESSORS
 
             /// <summary>
-            /// Returns the amount of raiders targeting
+            /// calls func to detect threat level
             /// </summary>
-            public int AgentCount
+            public int ThreatLevel
             {
                 get
                 {
-                    return m_agents.Count;
+                    return DetectThreat();
                 }
             }
 
-            /// <summary>
-            /// Stores an accessible reference 
-            /// to the group focus
-            /// </summary>
-            public Transform Focus
-            {
-                get { return m_focus; }
-            }
-
-            /// <summary>
-            /// network instance if of the focus
-            /// object
-            /// </summary>
-            public NetworkInstanceId FocusNetID
-            {
-                get { return Focus.GetComponent<NetworkIdentity>().netId; }
-            }
-
             #endregion
-        }
 
-        /// <summary>
-        /// Logs information about ship
-        /// that is being tracked
-        /// </summary>
-        public class RaiderTargetTracker: AgentGroupTracker
-        {
-            public RaiderTargetTracker(Transform tracked): base(tracked) { }
+            public RaiderTargetTracker(uint tracked)
+            {
+                Group = new AgentGroup(tracked);          
+            }
 
             #region PRIVATE UTILITIES
 
@@ -198,7 +101,7 @@ namespace Space.Spawn
                 RaycastHit2D[] withinRange;
 
                 withinRange = Physics2D.CircleCastAll
-                    (Focus.position, distance, Vector2.zero);
+                    (Group.Focus.transform.position, distance, Vector2.zero);
 
                 foreach (RaycastHit2D hit in withinRange)
                 {
@@ -222,7 +125,7 @@ namespace Space.Spawn
                 RaycastHit2D[] withinRange;
 
                 withinRange = Physics2D.CircleCastAll
-                    (Focus.position, 50, Vector2.zero);
+                    (Group.Focus.transform.position, 50, Vector2.zero);
 
                 foreach (RaycastHit2D hit in withinRange)
                 {
@@ -234,22 +137,7 @@ namespace Space.Spawn
                 return ships;
             }
 
-            #endregion
-
-            #region ACCESSORS
-
-            /// <summary>
-            /// calls func to detect threat level
-            /// </summary>
-            public int ThreatLevel
-            {
-                get
-                {
-                    return DetectThreat();
-                }
-            }
-
-            #endregion
+            #endregion          
         }
 
         #endregion
@@ -273,6 +161,9 @@ namespace Space.Spawn
             StartCoroutine("SeekTargets");
 
             StartCoroutine("HeartbeatRaiderSpawn");
+
+            SystemManager.Events.EventShipDestroyed
+                    += OnShipDestroyed;
         }
 
         #endregion
@@ -288,7 +179,7 @@ namespace Space.Spawn
                 (new NetworkInstanceId(targetID));
 
             if(target != null)
-                AddToTargetList(target.transform, new NetworkInstanceId(agentID));
+                AddToTargetList(target, new NetworkInstanceId(agentID));
         }
 
         /// <summary>
@@ -297,13 +188,13 @@ namespace Space.Spawn
         /// </summary>
         /// <param name="target"></param>
         /// <param name="agent"></param>
-        private void AddToTargetList(Transform target, 
+        private void AddToTargetList(GameObject target, 
             NetworkInstanceId agent)
         {
             // Find the raider target stored on our 
             // current target
             RaiderTargetTracker state = m_raidTargets.
-                FirstOrDefault(x => x.Focus == target);
+                FirstOrDefault(x => x.Group.Focus == target);
 
             if(state == null)
             {
@@ -314,7 +205,23 @@ namespace Space.Spawn
             }
 
             // Add reference to our new agent
-            state.AddAgent(agent);
+            state.Group.AddAgent(agent.Value);
+        }
+
+        #endregion
+
+        #region EVENTS
+
+        /// <summary>
+        /// Deletes reference to the agent
+        /// ship if it is destroyed
+        /// </summary>
+        /// <param name="DD"></param>
+        private void OnShipDestroyed(DestroyDespatch DD)
+        {
+            foreach (RaiderTargetTracker raidGroup in m_raidTargets)
+                if (raidGroup.Group.ShipDestroyed(DD))
+                    break;
         }
 
         #endregion
@@ -367,13 +274,14 @@ namespace Space.Spawn
                             // If this is a ship that this client
                             // manages then we want to track it
                             RaiderTargetTracker state = m_raidTargets.
-                                FirstOrDefault(x => x.Focus == ship);
+                                FirstOrDefault(x => x.Group.Focus == ship.gameObject);
 
                             // Check if we are already tracking this ship
                             if (state == null)
                             {
                                 // We can create a tracker for this ship
-                                m_raidTargets.Add(new RaiderTargetTracker(ship));
+                                m_raidTargets.Add(new RaiderTargetTracker
+                                    (ship.GetComponent<NetworkIdentity>().netId.Value));
                             }
                         }
                     }
@@ -405,7 +313,7 @@ namespace Space.Spawn
                 {
                     RaiderTargetTracker target = m_raidTargets[i];
 
-                    if (m_raidTargets[i].Focus == null)
+                    if (m_raidTargets[i].Group.Focus == null)
                     {
                         // Ship is destroyed stop tracking
                         m_raidTargets.RemoveAt(i);
@@ -424,15 +332,15 @@ namespace Space.Spawn
                         int shipCount = level < 4 ? 3 : level < 8 ? 2 : 1;
 
                         // add a ship we have no reached cap
-                        if (target.AgentCount < shipCount)
+                        if (target.Group.AgentCount < shipCount)
                         {
                             SpawnNPCMessage npcMsg = new SpawnNPCMessage();
                             npcMsg.AgentType = RandomAgent(level);
                             npcMsg.Location = Math.RandomWithinRange
-                                (target.Focus.position, 100, 200);
+                                (target.Group.Focus.transform.position, 100, 200);
                             npcMsg.SelfID = SystemManager.Space.ID;
                             npcMsg.SpawnID = netId.Value;
-                            npcMsg.TargetID = target.FocusNetID.Value;
+                            npcMsg.TargetID = target.Group.m_focus;
 
                             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSNPC, BuildAgentListener);
 

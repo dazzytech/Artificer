@@ -303,11 +303,14 @@ namespace Space.Ship
 
             if (aggressor != null)
             {
-                m_ship.AggressorID = aggressor.GetComponent<ShipAttributes>().TeamID;
+                ShipAccessor aggShip = aggressor.
+                    GetComponent<ShipAccessor>();
+
+                if(aggShip != null)
+                    m_ship.AggressorID = aggShip.TeamID;
             }
 
             // Find the corresponding transform
-
             ComponentListener listener = null;
 
             foreach (ComponentListener temp in m_ship.Components)

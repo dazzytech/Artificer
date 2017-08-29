@@ -105,13 +105,12 @@ namespace Space.Ship
                     Camera.main.gameObject.SendMessage("ShakeCam");
                 }
 
-                SendMessage("SetCombatant", 
-                    ClientScene.FindLocalObject(_hitD.originID).transform);
-
-                GameObject attacker =
-                ClientScene.FindLocalObject(hData.originID);
-                    attacker.SendMessage("SetCombatant", this.transform,
-                        SendMessageOptions.DontRequireReceiver);
+                // check for null
+                GameObject combatant = ClientScene.FindLocalObject(hData.originID);
+                if (combatant != null)
+                {
+                    SendMessage("SetCombatant", combatant.transform);
+                }
             }
         }
         

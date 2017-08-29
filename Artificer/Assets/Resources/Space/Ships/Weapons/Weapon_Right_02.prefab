@@ -238,12 +238,14 @@ MonoBehaviour:
     Folder: 
     Name: 
     Style: 
+    Cost: 0
     sockets: []
+    requirements: []
     AutoLock: 0
-    behaviour: 0
+    Behaviour: 0
     AutoFire: 0
   WeaponDamage: 80
-  WeaponRange: 50
+  WeaponRange: 200
   WeaponDelay: 0.3
   readyToFire: 0
   ProjectilePrefab: {fileID: 173508, guid: 087a3ec77e0650741b2a39fdc4d92bb0, type: 2}

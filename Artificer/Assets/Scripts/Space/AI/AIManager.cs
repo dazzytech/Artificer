@@ -41,6 +41,15 @@ namespace Space.AI
             }
         }
 
+        /// <summary>
+        /// Returns a team of the team controllers
+        /// spawned by the AI Manager
+        /// </summary>
+        public List<TeamController> Teams
+        {
+            get { return m_att.Teams; }
+        }
+
         #endregion
 
         #region MONO BEHAVIOUR

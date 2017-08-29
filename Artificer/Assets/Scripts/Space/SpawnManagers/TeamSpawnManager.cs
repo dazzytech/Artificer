@@ -53,14 +53,14 @@ namespace Space.Spawn
         [SerializeField]
         private float m_range;
 
-        [SyncVar]
-        public int FortifyLevel = 0;
-
         /// <summary>
         /// Synced list across network
         /// storing agent groups
         /// </summary>
         public SyncListAgentGroup Groups = new SyncListAgentGroup();
+
+        [SyncVar]
+        public int FortifyLevel = 0;
 
         #endregion
 
@@ -186,8 +186,7 @@ namespace Space.Spawn
             // Log our spawn info
             stationAtt.SpawnID = sPInfo.ID;
 
-            Groups.Add(new AgentGroup()
-            { m_focus = stationCon.netId.Value, m_agents = new uint[0] });
+            Groups.Add(new AgentGroup(stationCon.netId.Value));
 
             return newStation;
         }
@@ -241,6 +240,26 @@ namespace Space.Spawn
             return playerObject;
         }
 
+        /// <summary>
+        /// Interates through each group and returns
+        /// true if we find the destroyed ship
+        /// </summary>
+        /// <param name="DD"></param>
+        /// <returns></returns>
+        [Server]
+        public bool ProcessDestroyed(DestroyDespatch DD)
+        {
+            foreach (AgentGroup group in Groups)
+                if (group.ShipDestroyed(DD))
+                    return true;
+
+            return false;
+        }
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
         [Server]
         protected override void AssignAgent(uint agentID, uint targetID)
         {
@@ -253,17 +272,6 @@ namespace Space.Spawn
                 AG.AddAgent(agentID);
                 Groups[index] = AG;
             }
-        }
-
-        #endregion
-
-        #region PRIVATE UTILITIES
-
-        protected override void InitializeAgent(uint agentID, uint targetID, string agent)
-        {
-            base.InitializeAgent(agentID, targetID, agent);
-
-            //CmdAssignShip(agentID, targetID);
         }
 
         #endregion
