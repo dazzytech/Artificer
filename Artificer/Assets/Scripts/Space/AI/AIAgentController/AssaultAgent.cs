@@ -29,14 +29,13 @@ namespace Space.AI.Agent
 
             // Add all possible states the agent will
             // perform
+            AddFSMState(new IdleState(FSMStateID.Pursuing));
             AddFSMState(new AttackState());
             AddFSMState(new EvadeState());
             AddFSMState(new PursueState());
             AddFSMState(new StrafeState());
-            AddFSMState(new IdleState());
+            
             AddFSMState(new EjectState());
-
-            SetTransition(Transition.ChaseEnemy);
         }
 
         protected override void FSMUpdate()
@@ -49,20 +48,17 @@ namespace Space.AI.Agent
 
         protected override void FSMLateUpdate()
         {
-            if (CurrentState == null)
-                return;
-
             base.FSMLateUpdate();
 
             // Ensure we have a target
             if (m_target == null)
                 // * .75 cause we dont want to pick a target we are about to break off
-                base.GetClosestTarget(m_pursuitDistance * .75f);
+                base.GetClosestTarget(m_pursuitDistance * .75f, transform.position);
             else if (Vector3.Distance(transform.position, m_target.position) > m_pursuitDistance)
             {
                 // Break off if we're too far
                 m_target = null;
-                base.GetClosestTarget(m_pursuitDistance * .75f);
+                base.GetClosestTarget(m_pursuitDistance * .75f, transform.position);
             }
         }
 
@@ -110,19 +106,6 @@ namespace Space.AI.Agent
                 }
             }
         }
-
-        #endregion
-
-        #region PUBLIC INTERACTION
-
-        public void DefineTarget(Transform target)
-        {
-            Target = target;
-        }
-
-        #endregion
-
-        #region COROUTINE
 
         #endregion
     }

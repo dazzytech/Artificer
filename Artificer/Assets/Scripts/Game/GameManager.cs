@@ -289,7 +289,7 @@ namespace Game
         [Server]
         public void SpawnNpc
             (int playerID, uint targetID, uint spawnID, 
-            string agent, Vector2 location)
+            string agent, Vector2 location, uint homeID)
         {
             GameObject spawn = ClientScene.FindLocalObject(new NetworkInstanceId(spawnID));
 
@@ -297,7 +297,7 @@ namespace Game
                 return;
 
             spawn.GetComponent<SpawnManager>().
-                SpawnShip(playerID, targetID, spawnID, location, agent);           
+                SpawnShip(playerID, targetID, spawnID, location, agent, homeID);           
         }
 
         /// <summary>

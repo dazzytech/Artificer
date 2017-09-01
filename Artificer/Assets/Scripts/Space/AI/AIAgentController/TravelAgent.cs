@@ -16,8 +16,6 @@ namespace Space.AI.Agent
     /// /// </summary>
     public class TravelAgent : FSM
     {
-
-
         #region FSM 
 
         /// <summary>
@@ -39,9 +37,6 @@ namespace Space.AI.Agent
 
         protected override void FSMLateUpdate()
         {
-            if (CurrentState == null)
-                return;
-
             base.FSMLateUpdate();
         }
 

@@ -13,7 +13,7 @@
   </agent>
 
   <agent name = "guard_small" type = "dogfighter" template = "guard"
-	engage = "0" pursue = "300" attack = "30" pulloff = "3">
+	engage = "300" pursue = "100" attack = "30" pulloff = "3">
     <ship>Team I</ship>
     <ship>Team II</ship>
   </agent>

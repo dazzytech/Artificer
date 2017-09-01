@@ -170,9 +170,9 @@ namespace Space.Spawn
 
         #region PRIVATE UTILITIES
 
-        protected override void InitializeAgent(uint agentID, uint targetID, string agent)
+        protected override FSM InitializeAgent(uint agentID, uint targetID, string agent, uint homeID)
         {
-            base.InitializeAgent(agentID, targetID, agent);
+            FSM agentFSM = base.InitializeAgent(agentID, targetID, agent, homeID);
 
             // Access the target given to us
             GameObject target = ClientScene.FindLocalObject
@@ -180,6 +180,8 @@ namespace Space.Spawn
 
             if(target != null)
                 AddToTargetList(target, new NetworkInstanceId(agentID));
+
+            return agentFSM;
         }
 
         /// <summary>

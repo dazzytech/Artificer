@@ -21,14 +21,13 @@ namespace Space.AI
     public enum Transition
     {
         None = 0,
+        Default,
         Wait,
         Resume,
-        Follow,
-        Shift,
-        ChaseEnemy,
-        ReachEnemy,
+        Travel,
         Evade,
-        LostEnemy,
+        Engage,
+        Pursuit,
         Guard,
         Strafe,
         Eject,
@@ -38,10 +37,9 @@ namespace Space.AI
     {
         None = 0,
         Static,
-        Searching,
         Strafing,
         Following,
-        Patrolling,
+        Travelling,
         Pursuing,
         Attacking,
         Scatter,
@@ -125,6 +123,12 @@ namespace Space.AI
         /// </summary>
         protected float m_attackRange;
 
+        /// <summary>
+        /// If we are this distance away from 
+        /// home some states will traverse home
+        /// </summary>
+        protected float m_homeDistance = 100f;
+
         #endregion
 
         #region TEAM ATTRIBUTES
@@ -132,12 +136,18 @@ namespace Space.AI
         /// <summary>
         /// The other ships that this ship is in a squad with
         /// </summary>
-        protected List<Transform> m_team;
+        //protected List<Transform> m_team;
+
+        /// <summary>
+        /// Typically the station that the 
+        /// assign is spawned by to protect
+        /// </summary>
+        private Transform m_home;
 
         /// <summary>
         /// What team this AI belongs to
         /// </summary>
-        protected int m_teamID;
+        protected Teams.TeamController m_team;
 
         #endregion
 
@@ -147,7 +157,7 @@ namespace Space.AI
         /// The function previous always called 
         /// when the resume transition is invoked
         /// </summary>
-        private FSMStateID m_previousStateID;
+        private Stack<FSMStateID> m_previousStates;
 
         /// <summary>
         /// If the previous state only ran for an alloted 
@@ -197,6 +207,16 @@ namespace Space.AI
             get { return m_ship; }
         }
 
+        public Teams.TeamController Team
+        {
+            get { return m_team; }
+        }
+
+        public Transform Home
+        {
+            get { return m_home; }
+        }
+
         public Transform Target
         {
             get
@@ -225,6 +245,11 @@ namespace Space.AI
         public float PersuitRange
         {
             get { return m_pursuitDistance; }
+        }
+
+        public float HomeDistance
+        {
+            get { return m_homeDistance; }
         }
 
         public ControlStyle Control
@@ -261,6 +286,8 @@ namespace Space.AI
 
         #region PUBLIC INTERACTION
 
+        #region INITIALIZE
+
         public void EstablishAgent(AgentData agent)
         {
             m_controlCategory = GetStyle(agent.Type);
@@ -269,8 +296,40 @@ namespace Space.AI
                 (Convert.ToInt32(agent.EngageDistance),
                  Convert.ToInt32(agent.PursuitDistance),
                  Convert.ToInt32(agent.AttackDistance),
-                 Convert.ToInt32(agent.PullOffDistance));
+                 Convert.ToInt32(agent.PullOffDistance));       
         }
+
+        /// <summary>
+        /// Assigns our team controller to agent
+        /// for team tracking
+        /// </summary>
+        /// <param name="team"></param>
+        public void AssignTeam(Teams.TeamController team)
+        {
+            m_team = team;
+        }
+
+        /// <summary>
+        /// Assigns the station that spawned the agent
+        /// or escort
+        /// </summary>
+        /// <param name="home"></param>
+        public void AssignHome(Transform home)
+        {
+            m_home = home;
+        }
+
+        /// <summary>
+        /// different agent types use the target differently
+        /// e.g. attack, travel to
+        /// </summary>
+        /// <param name="target"></param>
+        public void AssignTarget(Transform target)
+        {
+            Target = target;
+        }
+
+        #endregion
 
         /// <summary>
         /// Add new state into the list
@@ -292,6 +351,8 @@ namespace Space.AI
                 m_fsmStates.Add(fsmState);
                 m_currentState = fsmState;
                 m_currentStateID = fsmState.ID;
+
+                RecordState();
                 return;
             }
 
@@ -351,9 +412,9 @@ namespace Space.AI
             if (trans == Transition.Resume)
             {
                 // create temp id to store new so not overwritten
-                FSMStateID newState = m_previousStateID;
+                FSMStateID newState = m_previousStates.Pop();
 
-                RecordState();
+                //RecordState();
 
                 m_currentStateID = newState;
 
@@ -444,7 +505,8 @@ namespace Space.AI
         {
             // Keep track of our last state incase we 
             // want to return to it
-            m_previousStateID = m_currentStateID;
+            if(m_previousStates.Count < 5)
+            m_previousStates.Push(m_currentStateID);
 
             // Clear timer info
             m_previousTimer = 0f;
@@ -501,6 +563,8 @@ namespace Space.AI
 
             InvokeRepeating("SeekShips", 0, 1f);
 
+            m_previousStates = new Stack<FSMStateID>();
+
             switch (m_controlCategory)
             {
                 case ControlStyle.DOGFIGHTER:
@@ -519,9 +583,12 @@ namespace Space.AI
         }
 
         protected virtual void FSMLateUpdate()
-        { 
-            CurrentState.Reason();
-            CurrentState.Act();
+        {
+            if (CurrentState != null)
+            {
+                CurrentState.Reason();
+                CurrentState.Act();
+            }
         }
 
         #endregion
@@ -541,7 +608,7 @@ namespace Space.AI
         /// </summary>
         /// <param name="maxDistance"></param>
         /// <returns></returns>
-        protected virtual void GetClosestTarget(float maxDistance)
+        protected virtual void GetClosestTarget(float maxDistance, Vector3 origin)
         {
             if (m_targets == null)
                 return;
@@ -553,7 +620,7 @@ namespace Space.AI
 
             // If target exists include it
             if (m_target != null)
-                minDistance = Vector3.Distance(transform.position,
+                minDistance = Vector3.Distance(origin,
                     m_target.position);
 
             foreach (Transform target in m_targets)
@@ -563,7 +630,7 @@ namespace Space.AI
                     continue;
 
                 // Discover the distance between this and target
-                float distance = Vector3.Distance(transform.position, target.position);
+                float distance = Vector3.Distance(origin, target.position);
 
                 // skip if this exceeds maximum distance 
                 if (distance > maxDistance)

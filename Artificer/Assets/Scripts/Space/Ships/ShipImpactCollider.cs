@@ -109,8 +109,8 @@ namespace Space.Ship
                 GameObject combatant = ClientScene.FindLocalObject(m_hitD.originID);
                 if (combatant != null)
                 {
-                    combatant.SendMessage("SetCombatant", transform);
-                    SendMessage("SetCombatant", combatant.transform);
+                    combatant.SendMessage("SetCombatant", transform, SendMessageOptions.DontRequireReceiver);
+                    SendMessage("SetCombatant", combatant.transform, SendMessageOptions.DontRequireReceiver);
                 }
             }
         }

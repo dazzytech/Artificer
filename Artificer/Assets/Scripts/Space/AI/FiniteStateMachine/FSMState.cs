@@ -54,7 +54,7 @@ namespace Space.AI
         // how close the angle should be (have default value)
         // todo editable
         [SerializeField]
-        protected float m_angleAccuracy = 15f;
+        protected float m_angleAccuracy = 20f;
 
         #endregion
 
@@ -196,12 +196,11 @@ namespace Space.AI
         /// </summary>
         /// <param name="timer"></param>
         /// <param name="timeoutTrans"></param>
-        public void SetDuration(float timer, Transition timeoutTrans)
+        public void SetDuration(float timer, Transition timeout)
         {
             m_curTime = 0;
             m_waitTime = timer;
-
-            m_timeoutID = timeoutTrans;
+            m_timeoutID = timeout;
         }
 
         #region VIRTUAL FUNCTIONALITY
@@ -261,8 +260,6 @@ namespace Space.AI
                 {
                     Self.SetTransition(m_timeoutID);
                     m_curTime = 0.0f;
-
-                    m_timeoutID = Transition.None;
                 }
             }
         }
@@ -284,13 +281,15 @@ namespace Space.AI
         #region PRIVATE UTILITIES
 
         /// <summary>
-        /// Faces the ship at the target and
-        /// fires when facing
+        /// Moves to point
+        /// returns true if angle is within
+        /// accuracy
         /// </summary>
         /// <returns>If the agent is within angle</returns>
-        protected bool AimAtTarget(float angleAccuracy)
+        protected bool AimAtPoint(float angleAccuracy, Vector3 point = default(Vector3))
         {
-            float angleDiff = Math.Angle(Self.transform, Self.Target.position);
+            float angleDiff = Math.Angle(Self.transform, point == Vector3.zero? 
+                Self.Target.position: point);
 
             // Changed so that the doesnt move towards target 
             // change when applying types
@@ -307,6 +306,8 @@ namespace Space.AI
             }
             else
             {
+                Con.ReleaseKey(Control_Config.GetKey("turnLeft", "ship"));
+                Con.ReleaseKey(Control_Config.GetKey("turnRight", "ship"));
                 return true;
             }
 

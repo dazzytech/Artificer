@@ -12,6 +12,21 @@ namespace Space.AI.State
     /// </summary>
     public class AttackState : FSMState
     {
+        #region ATTRIBUTES
+
+        /// <summary>
+        /// duration the agent will attack before
+        /// cooldown
+        /// </summary>
+        private float m_attackTimer = 3f;
+
+        /// <summary>
+        /// used to track alloted time
+        /// </summary>
+        private float m_curTime = 0f;
+
+        #endregion
+
         public AttackState()
         {
             m_stateID = FSMStateID.Attacking;
@@ -29,11 +44,8 @@ namespace Space.AI.State
         {
             base.Initialize(selfRef);
 
-            // Assgin all the transitions this state can perform
-            AddTransition(Transition.Wait, FSMStateID.Static);
-            AddTransition(Transition.LostEnemy, FSMStateID.Static);
             AddTransition(Transition.Strafe, FSMStateID.Strafing);
-            AddTransition(Transition.ChaseEnemy, FSMStateID.Pursuing);
+            AddTransition(Transition.Wait, FSMStateID.Static);
         }
 
         /// <summary>
@@ -45,7 +57,7 @@ namespace Space.AI.State
             // Check that we have enemies to fight
             if (Self.Target == null)
             {
-                Self.SetTransition(Transition.LostEnemy);
+                Self.SetTransition(Transition.Resume);
                 return;
             }
            
@@ -62,7 +74,15 @@ namespace Space.AI.State
 
             // Check if we are out of attack range
             if (dist > Self.AttackRange)
-                Self.SetTransition(Transition.ChaseEnemy);
+                Self.SetTransition(Transition.Resume);
+
+            // increment time and cooldown after attacking
+            m_curTime += Time.deltaTime;
+            if (m_curTime >= m_attackTimer)
+            {
+                Self.SetTransition(Transition.Wait, 1.0f, Transition.Resume);
+                m_curTime = 0.0f;
+            }
 
             base.Reason();
         }
@@ -88,18 +108,14 @@ namespace Space.AI.State
             {
                 case ControlStyle.DOGFIGHTER:
                 case ControlStyle.NONE:
-                    if (AimAtTarget(m_angleAccuracy))
+                    if (AimAtPoint(m_angleAccuracy))
                         Keys.Add(Control_Config.GetKey("fire", "ship"));
                     break;
                 case ControlStyle.AUTOTARGET:
-                    AimAtTarget(90f);
+                    AimAtPoint(90f);
                     break;
             }
         }
-
-        #endregion
-
-        #region PRIVATE UTILITIES
 
         #endregion
     }

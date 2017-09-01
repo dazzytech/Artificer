@@ -198,7 +198,7 @@ namespace Game
         {
             SpawnNPCMessage snm = netMsg.ReadMessage<SpawnNPCMessage>();
             m_con.SpawnNpc(snm.SelfID, snm.TargetID, 
-                snm.SpawnID, snm.AgentType, snm.Location);
+                snm.SpawnID, snm.AgentType, snm.Location, snm.HomeID);
         }
 
         #region PLAYER MESSAGES

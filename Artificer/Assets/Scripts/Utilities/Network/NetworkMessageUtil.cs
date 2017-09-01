@@ -91,7 +91,9 @@ namespace Networking
         /// authority 
         /// </summary>
         public int SelfID;
-
+        /// <summary>
+        /// Network ID of the agent ship
+        /// </summary>
         public uint AgentID;
         /// <summary>
         /// the network ID of the target
@@ -109,6 +111,11 @@ namespace Networking
         /// The location where the agent will spawn
         /// </summary>
         public Vector2 Location;
+        /// <summary>
+        /// Network identity of the agents 
+        /// home
+        /// </summary>
+        public uint HomeID;
     }
 
     /// <summary>

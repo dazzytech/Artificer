@@ -160,7 +160,7 @@ namespace Space.Spawn
         /// </summary>
         [Server]
         public void SpawnShip(int playerID, uint targetID, uint spawnID,
-            Vector3 location, string agent)
+            Vector3 location, string agent, uint homeID)
         {
             GameObject GO = Instantiate
                 (SystemManager.singleton.playerPrefab);
@@ -184,11 +184,12 @@ namespace Space.Spawn
                 (agentData.Ship[UnityEngine.Random.Range
                 (0, agentData.Ship.Count())]), TeamID, playerConn);
 
-            AssignAgent(GO.GetComponent<NetworkIdentity>().netId.Value, targetID);
+            AssignAgent(GO.GetComponent<NetworkIdentity>().netId.Value, homeID);
 
             SpawnNPCMessage snm = new SpawnNPCMessage();
             snm.SpawnID = spawnID;
             snm.TargetID = targetID;
+            snm.HomeID = homeID;
             snm.AgentID = GO.GetComponent<NetworkIdentity>().netId.Value;
             snm.AgentType = agent;
 
@@ -248,25 +249,18 @@ namespace Space.Spawn
         /// <param name="agent"></param>
         /// <param name="target"></param>
         [Server]
-        protected virtual void AssignAgent(uint agentID, uint targetID)
+        protected virtual void AssignAgent(uint agentID, uint homeID)
         {
         }
 
-        protected virtual void InitializeAgent
-            (uint agentID, uint targetID, string agent)
+        protected virtual FSM InitializeAgent
+            (uint agentID, uint targetID, string agent, uint homeID)
         {
-            // Access the target given to us
-            GameObject target = ClientScene.FindLocalObject
-                (new NetworkInstanceId(targetID));
-
-            if (target == null)
-                return;
-
             GameObject GO = ClientScene.FindLocalObject
                 (new NetworkInstanceId(agentID));
 
             if (GO == null)
-                return;
+                return null;
 
             // Retrieve the agent info
             AgentData agentData = GameObject.Find("ai").
@@ -279,7 +273,6 @@ namespace Space.Spawn
             {
                 case "assault":
                     agentFSM = GO.AddComponent<AssaultAgent>();
-                    ((AssaultAgent)agentFSM).DefineTarget(target.transform);
                     break;
                 case "guard":
                     agentFSM = GO.AddComponent<GuardAgent>();
@@ -293,6 +286,22 @@ namespace Space.Spawn
             }
 
             agentFSM.EstablishAgent(agentData);
+
+            // Access the target given to us
+            GameObject target = ClientScene.FindLocalObject
+                (new NetworkInstanceId(targetID));
+
+            if (target != null)
+                agentFSM.AssignTarget(target.transform);
+
+            // Access the home object for the agent given to us
+            GameObject home = ClientScene.FindLocalObject
+                (new NetworkInstanceId(homeID));
+
+            if (home != null)
+                agentFSM.AssignHome(home.transform);
+
+            return agentFSM;
         }
 
         #endregion
@@ -313,7 +322,7 @@ namespace Space.Spawn
 
             if (snm.SpawnID == netId.Value)
             {
-                InitializeAgent(snm.AgentID, snm.TargetID, snm.AgentType);
+                InitializeAgent(snm.AgentID, snm.TargetID, snm.AgentType, snm.HomeID);
 
                 NetworkManager.singleton.client.UnregisterHandler((short)MSGCHANNEL.PROCESSNPC);
             }

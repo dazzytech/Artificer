@@ -45,9 +45,6 @@ namespace Space.AI.Agent
 
         protected override void FSMLateUpdate()
         {
-            if (CurrentState == null)
-                return;
-
             base.FSMLateUpdate();
 
             // Detect if we have a target
@@ -126,7 +123,7 @@ namespace Space.AI.Agent
                 // return the material we have to the nearest station
                 m_targets = RetriveDepositStations();
 
-                base.GetClosestTarget(m_pursuitDistance);
+                base.GetClosestTarget(m_pursuitDistance, Home.position);
 
                 // May need to change the transition here perhaps?
             }
@@ -138,7 +135,7 @@ namespace Space.AI.Agent
                     m_targets.Add(child);
 
                 // Use FSM to get our closest target
-                base.GetClosestTarget(m_pursuitDistance);
+                base.GetClosestTarget(m_pursuitDistance, transform.position);
 
                 // We may need to set transition here (might not though)
             }
@@ -147,7 +144,7 @@ namespace Space.AI.Agent
                 // We need to find a resource container
                 m_targets.AddRange(m_containers);
 
-                base.GetClosestTarget(m_pursuitDistance);
+                base.GetClosestTarget(m_pursuitDistance, Home.position);
             }
         }
 

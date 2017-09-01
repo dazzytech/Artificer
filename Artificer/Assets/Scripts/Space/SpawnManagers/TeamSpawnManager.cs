@@ -40,6 +40,7 @@ namespace Space.Spawn
     /// and stored within spawnmanager memory linked to that ship
     /// ONLY EXISTS ON SERVER
     /// </summary>
+    [RequireComponent(typeof(Teams.TeamController))]
     public class TeamSpawnManager: SpawnManager
     {
         #region ATTRIBUTES
@@ -249,9 +250,15 @@ namespace Space.Spawn
         [Server]
         public bool ProcessDestroyed(DestroyDespatch DD)
         {
-            foreach (AgentGroup group in m_groups)
+            for(int i = 0; i < m_groups.Count; i++)
+            {
+                AgentGroup group = m_groups[i];
                 if (group.ShipDestroyed(DD))
+                {
+                    m_groups[i] = group;
                     return true;
+                }
+            }
 
             return false;
         }
@@ -260,11 +267,33 @@ namespace Space.Spawn
 
         #region PRIVATE UTILITIES
 
+        /// <summary>
+        /// Attaches the team controller to the 
+        /// created agent behaviour
+        /// </summary>
+        /// <param name="agentID"></param>
+        /// <param name="targetID"></param>
+        /// <param name="agent"></param>
+        /// <returns></returns>
         [Server]
-        protected override void AssignAgent(uint agentID, uint targetID)
+        protected override FSM InitializeAgent(uint agentID, uint targetID, string agent, uint homeID)
+        {
+            FSM agentFSM = base.InitializeAgent(agentID, targetID, agent, homeID);
+
+            if(agentFSM != null)
+            {
+                agentFSM.AssignTeam(GetComponent<Teams.TeamController>());
+                agentFSM.AssignHome(transform);
+            }
+
+            return agentFSM;
+        }
+
+        [Server]
+        protected override void AssignAgent(uint agentID, uint homeID)
         {
             int index = m_groups.IndexOf
-                (m_groups.FirstOrDefault(x => x.m_focus == targetID));
+                (m_groups.FirstOrDefault(x => x.m_focus == homeID));
 
             if (index != -1)
             {
@@ -365,7 +394,7 @@ namespace Space.Spawn
                                 (Focus.transform.position, 10, 25);
                             npcMsg.SelfID = SystemManager.Space.ID;
                             npcMsg.SpawnID = netId.Value;
-                            npcMsg.TargetID = target.m_focus;
+                            npcMsg.HomeID = target.m_focus;
 
                             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSNPC, BuildAgentListener);
 

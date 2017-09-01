@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 // Artificer
 using Data.Space;
 using Space.Ship;
@@ -135,6 +136,16 @@ namespace Space.Teams
         public SyncListStruct<ShipSpawnData> Ships
         {
             get { return m_ships; }
+        }
+
+        public List<uint> KOS
+        {
+            get { return m_KOSShips.ToList(); }
+        }
+
+        public List<int> EnemyTeam
+        {
+            get { return m_enemyTeams.ToList(); }
         }
 
         #endregion
