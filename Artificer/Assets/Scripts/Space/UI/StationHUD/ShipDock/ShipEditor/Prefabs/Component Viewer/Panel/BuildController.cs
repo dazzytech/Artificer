@@ -4,6 +4,7 @@ using Space.Ship.Components.Attributes;
 using Space.UI.Station.Editor.Component;
 using UnityEngine;
 using UnityEngine.UI;
+using Data.UI;
 
 namespace Space.UI.Station.Utility
 {
@@ -48,13 +49,12 @@ namespace Space.UI.Station.Utility
             BuildAttributes build = att as BuildAttributes;
             
             // Create a prefab instance for each template
-            foreach(string template in build.SpawnableStations)
+            foreach(DeployData template in build.SpawnableStations)
             {
                 GameObject inst = Instantiate(m_buildPrefab);
                 inst.transform.SetParent(m_panel);
 
-                inst.transform.Find("Name").
-                    GetComponent<Text>().text = template;
+                inst.GetComponent<BuildStationPrefab>().Display(template);
             }
         }
 

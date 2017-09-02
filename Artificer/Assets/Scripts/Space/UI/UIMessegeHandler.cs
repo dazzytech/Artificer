@@ -15,6 +15,7 @@ using Space.UI.Station;
 using Space.UI.Spawn;
 using Space.UI.Teams;
 using Space.UI.Proxmity;
+using Data.UI;
 
 namespace Space.UI
 {
@@ -79,7 +80,7 @@ namespace Space.UI
         /// <param name="deployFunction"></param>
         /// <param name="options"></param>
         public void DisplayBuildWheel(Deploy deployFunction, 
-            List<string> options)
+            List<DeployData> options)
         {
             m_build.InitializeHUD(deployFunction, options);
         }

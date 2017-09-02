@@ -1,4 +1,5 @@
-﻿using Space.Ship.Components.Listener;
+﻿using Data.UI;
+using Space.Ship.Components.Listener;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace Space.UI.Ship
 
         private Deploy m_deploy;
 
-        private List<string> m_stationList;
+        private List<DeployData> m_stationList;
 
         #region HUD ELEMENTS
 
@@ -48,7 +49,7 @@ namespace Space.UI.Ship
 
         #region PUBLIC INTERACTION
 
-        public void InitializeHUD(Deploy func, List<string> stations)
+        public void InitializeHUD(Deploy func, List<DeployData> stations)
         {
             // assign functions and params
             m_deploy = func;
@@ -106,13 +107,16 @@ namespace Space.UI.Ship
         private void BuildInterface()
         {
             int i = 0;
-            foreach(string station in m_stationList)
+            foreach(DeployData station in m_stationList)
             {
                 // Init our new object
                 GameObject newStation = Instantiate
                     (m_stationItemPrefab);
-                newStation.GetComponentInChildren<Text>().
-                    text = station;
+
+                newStation.GetComponentInChildren<BuildStationPrefab>().
+                    Display(station);
+
+                // TODO UPDATE
 
                 int index = i;
                 // Add listener behaviour

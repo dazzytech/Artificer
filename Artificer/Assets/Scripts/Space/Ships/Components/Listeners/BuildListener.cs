@@ -5,6 +5,8 @@ using UnityEngine.Networking;
 using Space.Ship.Components.Attributes;
 using Networking;
 using Space.Segment;
+using Data.UI;
+using Data.Space;
 
 namespace Space.Ship.Components.Listener
 {
@@ -49,13 +51,20 @@ namespace Space.Ship.Components.Listener
         public void DeployStation(int stationID)
         {
             // retreive name and check can deploy
-            string stationName = 
+            DeployData station = 
                 m_att.SpawnableStations[stationID];
 
-            if (!SystemManager.Space.CanBuild && !stationName.Contains("FOB"))
+            if (!SystemManager.Space.CanBuild && !station.Name.Contains("FOB"))
             {
                 SystemManager.UIMsg.DisplayPrompt("Not in build out of range of FOB or Home Base");
                 SystemManager.UI.Invoke("ClearPrompt", 3f);
+                return;
+            }
+
+            WalletData temp = SystemManager.Wallet;
+
+            if (!temp.Withdraw(station.Cost))
+            {
                 return;
             }
 
@@ -71,7 +80,7 @@ namespace Space.Ship.Components.Listener
             StationBuildMessage sbm = new StationBuildMessage();
             sbm.Position = deployPoint;
             sbm.teamID = SystemManager.Space.Team.ID;
-            sbm.PrefabName = stationName; 
+            sbm.PrefabName = station.Name; 
 
                 // send to server
             SystemManager.singleton.client.Send((short)MSGCHANNEL.BUILDSTATION, sbm);

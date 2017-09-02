@@ -531,12 +531,30 @@ MonoBehaviour:
     Folder: 
     Name: 
     Style: 
+    Cost: 0
     sockets: []
+    requirements: []
     AutoLock: 0
-    behaviour: 0
+    Behaviour: 0
     AutoFire: 0
   SpawnableStations:
-  - FOB Station
+  - Name: FOB
+    Type: FOB
+    Description: Enables other stations to be built within vacinity.
+    Cost: 120000
+    IconPath: FOB
+  - Name: Depot Station
+    Type: Depot
+    Description: Allows team ships to deposit their gathered materials when within
+      range.
+    Cost: 100000
+    IconPath: Depot
+  - Name: Warp Gate
+    Type: Warp
+    Description: Team ships are able to travel between warps gates within range of
+      each other.
+    Cost: 80000
+    IconPath: Warp Gate
   StationDelay: 20
   ReadyToDeploy: 0
 --- !u!114 &114600394052791650

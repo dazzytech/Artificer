@@ -28,7 +28,7 @@ GameObject:
   - component: {fileID: 114804361037658116}
   - component: {fileID: 114596031091089786}
   m_Layer: 0
-  m_Name: FOB Station
+  m_Name: FOB
   m_TagString: Station
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35bdb61063f565846a37c801f692605f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hitD:
+  m_hitD:
     hitPosition: {x: 0, y: 0, z: 0}
     damage: 0
     radius: 0

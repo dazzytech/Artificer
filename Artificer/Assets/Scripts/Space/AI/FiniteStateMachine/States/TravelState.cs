@@ -11,11 +11,11 @@ namespace Space.AI.State
         /// <summary>
         /// How close agent gets in order to reach waypoint
         /// </summary>
-        private float m_reachDistance = 10f;
+        private float m_reachDistance = 5f;
         /// <summary>
         /// Distance the agent way point reaches maximum
         /// </summary>
-        private float m_travelDistance = 50f;
+        private float m_travelDistance = 25f;
         /// <summary>
         /// the waypoint position the agent travels to
         /// </summary>

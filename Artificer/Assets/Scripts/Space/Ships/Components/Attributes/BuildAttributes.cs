@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Data.UI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace Space.Ship.Components.Attributes
@@ -10,7 +11,7 @@ namespace Space.Ship.Components.Attributes
 
         [Header("Builder Attributes")]
         
-        public List<string> SpawnableStations;
+        public List<DeployData> SpawnableStations;
 
         public float StationDelay;
 
