@@ -1,5 +1,11 @@
-// Uncomment this out to disable copying
-//#define DISABLEREDISTCOPY
+// This file is provided under The MIT License as part of Steamworks.NET.
+// Copyright (c) 2013-2017 Riley Labrecque
+// Please see the included LICENSE.txt for additional information.
+
+// Add 'DISABLEREDISTCOPY' to your custom platform defines to disable automatic copying!
+#if UNITY_5_3_OR_NEWER
+	#define DISABLEREDISTCOPY
+#endif
 
 using UnityEngine;
 using UnityEditor;
@@ -16,7 +22,7 @@ public class RedistCopy {
 			return;
 		}
 
-		string strProjectName = System.IO.Path.GetFileNameWithoutExtension(pathToBuiltProject);
+		string strProjectName = Path.GetFileNameWithoutExtension(pathToBuiltProject);
 
 		if (target == BuildTarget.StandaloneWindows64) {
 			CopyFile("steam_api64.dll", "steam_api64.dll", "Assets/Plugins/x86_64", pathToBuiltProject);
@@ -24,15 +30,15 @@ public class RedistCopy {
 		else if (target == BuildTarget.StandaloneWindows) {
 			CopyFile("steam_api.dll", "steam_api.dll", "Assets/Plugins/x86", pathToBuiltProject);
 		}
-				
-        string controllerCfg = System.IO.Path.Combine(Application.dataPath, "controller.vdf");
+
+		string controllerCfg = Path.Combine(Application.dataPath, "controller.vdf");
 		if (File.Exists(controllerCfg)) {
 			string dir = "_Data";
 			if (target == BuildTarget.StandaloneOSXIntel || target == BuildTarget.StandaloneOSXIntel64 || target == BuildTarget.StandaloneOSXUniversal) {
 				dir = ".app/Contents";
 			}
 
-            string strFileDest = System.IO.Path.Combine(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(pathToBuiltProject), strProjectName + dir), "controller.vdf");
+			string strFileDest = Path.Combine(Path.Combine(Path.GetDirectoryName(pathToBuiltProject), strProjectName + dir), "controller.vdf");
 
 			File.Copy(controllerCfg, strFileDest);
 			File.SetAttributes(strFileDest, File.GetAttributes(strFileDest) & ~FileAttributes.ReadOnly);
@@ -46,8 +52,8 @@ public class RedistCopy {
 
 	static void CopyFile(string filename, string outputfilename, string pathToFile, string pathToBuiltProject) {
 		string strCWD = Directory.GetCurrentDirectory();
-        string strSource = System.IO.Path.Combine(System.IO.Path.Combine(strCWD, pathToFile), filename);
-        string strFileDest = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(pathToBuiltProject), outputfilename);
+		string strSource = Path.Combine(Path.Combine(strCWD, pathToFile), filename);
+		string strFileDest = Path.Combine(Path.GetDirectoryName(pathToBuiltProject), outputfilename);
 
 		if (!File.Exists(strSource)) {
 			Debug.LogWarning(string.Format("[Steamworks.NET] Could not copy {0} into the project root. {0} could not be found in '{1}'. Place {0} from the redist into the project root manually.", filename, pathToFile));

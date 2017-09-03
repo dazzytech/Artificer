@@ -542,6 +542,49 @@ namespace Space.Ship
             }
         }
 
+        /// <summary>
+        /// Returns copies of materials
+        /// that match the parameter index
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
+        public ItemCollectionData[] GetMaterials(int[] keys)
+        {
+            return Materials.Where(x => keys.Contains(x.Item)).ToArray();
+        }
+
+        /// <summary>
+        /// Clears the storage of the ship of a certain index
+        /// and returns the assets list
+        /// </summary>
+        /// <returns></returns>
+        public ItemCollectionData[] RemoveMaterials(int[] keys)
+        {
+            if (m_ship.Storage.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                // Create a wallet 
+                ItemCollectionData[] retVal = Materials.Where(x => keys.Contains(x.Item)).ToArray();
+
+                foreach (StorageListener storage in m_ship.Storage)
+                {
+                    StorageAttributes att =
+                        (StorageAttributes)storage.GetAttributes();
+
+                    storage.EjectMaterial(new Dictionary<int, float>(att.storage.Where
+                        (x => keys.Contains(x.Key)).ToDictionary(x => x.Key, x => x.Value)));
+                }
+
+                if (OnStorageChanged != null)
+                    OnStorageChanged();
+
+                return retVal;
+            }
+        }
+
         #region CURRENCY
 
         /// <summary>

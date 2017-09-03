@@ -4,12 +4,13 @@ using Space.Ship;
 using UnityEngine;
 using UnityEngine.Networking;
 using Data.Space;
+using System.Linq;
+using Data.Space.Collectable;
 
 namespace Stations
 {
     public class DepotController : StationController
     {
-
         #region MONOBEHAVIOUR
 
         public override void Awake()
@@ -84,7 +85,21 @@ namespace Stations
 
                 m_att.IsDepositing = true;
 
-                StartCoroutine("DelayDeposit");
+                // Set a float based on the assets
+                // contained within the ship
+                float timer = 0;
+
+                foreach(ItemCollectionData item in m_att.Ship.GetMaterials
+                    (m_att.DepositDelayLists.Keys.ToArray()))
+                {
+                    // time is determine by our delay list
+                    // if delay is 0.01 then 10 will be a second to deposits
+                    float delay = m_att.DepositDelayLists[item.Item] * item.Amount;
+
+                    timer += delay;
+                }
+
+                StartCoroutine("DelayDeposit", timer);
             }
         }
 
@@ -115,16 +130,30 @@ namespace Stations
         #region PRIVATE UTILITIES
 
         /// <summary>
-        /// Trigger the ship to deposit it's contents
-        /// and reenable the deposit command
+        /// Finished the refining delay,
+        /// add the refined elements to player 
+        /// storage
         /// </summary>
         private void Deposit()
         {
             if(m_att.Ship != null)
             {
+                // Get list of items from the ship
+                foreach(ItemCollectionData item in m_att.Ship.RemoveMaterials
+                    (m_att.DepositDelayLists.Keys.ToArray()))
+                {
+                    // retreive a number of item keys using the 
+                    // material compisiiton
+                    for(int i = 0; i < 3; i++)
+                    {
+                        int newItem = ((MaterialItem)SystemManager.Items[item.Item]).GetRandom();
+
+                    }
+                }
+
                 WalletData temp = SystemManager.Wallet;
 
-                temp.Deposit(m_att.Ship.RemoveAllMaterials());
+                temp.Deposit();
 
                 SystemManager.Wallet = temp;
             }
@@ -143,9 +172,9 @@ namespace Stations
         /// and then start material deposit
         /// </summary>
         /// <returns></returns>
-        private IEnumerator DelayDeposit()
+        private IEnumerator DelayDeposit(float delay)
         {
-            yield return new WaitForSeconds(m_att.DepositDelay);
+            yield return new WaitForSeconds(delay);
 
             Deposit();
 

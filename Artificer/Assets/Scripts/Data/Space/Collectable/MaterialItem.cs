@@ -12,5 +12,16 @@ namespace Data.Space.Collectable
     {
         // change to inc yeild chance and yeild amount
         public string[] Composition;         // elements that item is made of
+
+        /// <summary>
+        /// Returns an index of an element
+        /// non value weighted
+        /// </summary>
+        /// <returns></returns>
+        public int GetRandom()
+        {
+            int index = Random.Range(0, Composition.Length);
+            return SystemManager.Items.GetID(Composition[index]);
+        }
     }
 }
