@@ -33,6 +33,15 @@ namespace Stations
             base.Initialize(newTeam, true);
 
             m_att.IsDepositing = false;
+
+            // Here we initialise the delay list
+            m_att.DepositDelayLists = new Dictionary<int, float>(4)
+            {
+                { 34, .1f }, // Plain asteroid .1 second
+                { 35, .4f }, // high val asteroid
+                { 36, .2F }, // plut
+                { 37, .5f }  // fragments
+            };
         }
 
         #region PLAYER
@@ -144,16 +153,21 @@ namespace Stations
                 {
                     // retreive a number of item keys using the 
                     // material compisiiton
-                    for(int i = 0; i < 3; i++)
+                    for (int i = 0; i < 3; i++)
                     {
                         int newItem = ((MaterialItem)SystemManager.Items[item.Item]).GetRandom();
 
+                        float amount = item.Amount * Random.Range(0.1f, 3f);
+
+                        // add the generated amount to our pending wallet
+                        m_att.PendingDeposit.Deposit(new ItemCollectionData[]
+                        { new ItemCollectionData(){ Item = newItem , Amount = amount, Exist = true } });
                     }
                 }
 
                 WalletData temp = SystemManager.Wallet;
 
-                temp.Deposit();
+                temp.Deposit(m_att.PendingDeposit.Assets);
 
                 SystemManager.Wallet = temp;
             }
