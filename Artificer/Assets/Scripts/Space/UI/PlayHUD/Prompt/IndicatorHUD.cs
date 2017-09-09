@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 using UI.Effects;
 
-namespace Space.UI.Ship
+namespace Space.UI.Prompt
 {
     /// <summary>
     /// Displays nuremic data on HUD alerting

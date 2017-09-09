@@ -16,6 +16,7 @@ using Space.UI.Spawn;
 using Space.UI.Teams;
 using Space.UI.Proxmity;
 using Data.UI;
+using Space.UI.Prompt;
 
 namespace Space.UI
 {

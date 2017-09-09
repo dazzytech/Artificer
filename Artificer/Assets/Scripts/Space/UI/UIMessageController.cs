@@ -1,4 +1,6 @@
-﻿using Networking;
+﻿using Data.UI;
+using Networking;
+using Space.UI.Prompt;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,8 +14,11 @@ namespace Space.UI
         [SerializeField]
         private MessageHUD m_messageHUD;
 
-        [Header("Message Docks")]
+        [SerializeField]
+        private MessagePromptHUD m_promptHUD;
 
+        [Header("Message Docks")]
+       
         [SerializeField]
         private Transform m_playDock;
 
@@ -48,23 +53,24 @@ namespace Space.UI
         /// Sends message to the UI text towards the 
         /// bottom of the screen
         /// </summary>
-        /// <param name="message"></param>
-        public void DisplayPrompt(string message)
+        public void DisplayPrompt(PromptData message)
         {
-            if (m_messageHUD.gameObject.activeSelf)
+            // Create a prompt text class?
+            if (m_promptHUD.gameObject.activeSelf)
             {
-                m_messageHUD.DisplayPrompt(message);
+                m_promptHUD.DisplayPrompt(message);
             }
         }
 
         /// <summary>
         /// Clears the text at the bottom of the screen
         /// </summary>
-        public void ClearPrompt()
+        public void ClearPrompt(int index)
         {
-            if (m_messageHUD.gameObject.activeSelf)
+            if (m_promptHUD.gameObject.activeSelf)
             {
-                m_messageHUD.HidePrompt();
+                // change to manual removal
+                m_promptHUD.HidePrompt(index);
             }
         }
 

@@ -18,8 +18,6 @@ namespace Space.UI
         private static int messegeCount = 0;
         private static int messegeMax = 20;
         
-        public Text PromptText;
-
         public Font font;
 
         #region MONO BEHAVIOUR
@@ -109,41 +107,6 @@ namespace Space.UI
 
         #endregion
 
-        #region PROMPT MESSAGES
-
-        /// <summary>
-        /// Displays the message to the specified prompt
-        /// text with fading in and out
-        /// </summary>
-        /// <param name="message"></param>
-        public void DisplayPrompt(string message)
-        {
-            //Ensure play hud prompt is enabled
-            if (PromptText.gameObject.activeSelf)
-            {
-                // Assign message and use fade effects
-                PromptText.text = message;
-                PanelFadeEffects.FadeInText(PromptText);
-            }
-        }
-
-        public void HidePrompt()
-        {
-            //Ensure play hud prompt is enabled
-            if (PromptText.gameObject.activeSelf)
-            {
-                PanelFadeEffects.FadeOutText(PromptText);
-                Invoke("ClearPrompt", 1f);
-            }
-        }
-
-        public void ClearPrompt()
-        {
-            PromptText.text = "";
-        }
-
-        #endregion
-
         #region ACCESSORS
 
         private MessageHUD This
@@ -158,17 +121,5 @@ namespace Space.UI
         }
 
         #endregion
-
-        /*private IEnumerator Count() make create wipe/clear functionality
-        {
-            yield return new WaitForSeconds(1f);
-            messegeCount--;
-        }
-
-        private void MsgWipe()
-        {
-            Text text = instance.transform.Find("Messege").GetComponent<Text>();
-            text.text = "";
-        }*/
     }
 }
