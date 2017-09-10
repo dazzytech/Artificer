@@ -9,6 +9,7 @@ using Space.Ship;
 using Networking;
 using Space.Segment;
 using Space.UI;
+using Data.UI;
 
 namespace Stations
 {
@@ -45,7 +46,8 @@ namespace Stations
         {
             m_att.CurrentIntegrity = m_att.Integrity;
 
-            m_att.ProximityMessage = "Press Enter to dock at station";
+            m_att.ProximityMessage = string.Format("Press {0} to dock at this station.",
+                        Control_Config.GetKey("dock", "sys"));
         }
 
         protected override void Start()
@@ -225,8 +227,16 @@ namespace Stations
         /// </summary>
         public virtual void EnterRange()
         {
-            SystemManager.UIMsg.DisplayPrompt(string.Format
-                ("Press {0} to dock at this station.", Control_Config.GetKey("dock", "sys")));
+            if (m_att.DockPrompt == null)
+            { 
+                m_att.DockPrompt = new PromptData();
+                m_att.DockPrompt.LabelText = new string[1]
+                    {m_att.ProximityMessage};
+
+                SystemManager.UIPrompt.DisplayPrompt(m_att.DockPrompt);
+            }
+            else
+                SystemManager.UIPrompt.DisplayPrompt(m_att.DockPrompt.ID);
         }
 
         /// <summary>
@@ -234,7 +244,11 @@ namespace Stations
         /// </summary>
         public virtual void ExitRange()
         {
-            SystemManager.UIMsg.ClearPrompt();
+            if (m_att.DockPrompt != null)
+            {
+                SystemManager.UIPrompt.DeletePrompt(m_att.DockPrompt.ID);
+                m_att.DockPrompt = null;
+            }
         }
 
         #endregion

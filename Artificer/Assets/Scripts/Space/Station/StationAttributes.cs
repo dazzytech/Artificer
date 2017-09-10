@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 using System.Collections;
 using Space.Teams;
 using Space.Ship;
+using Data.UI;
 
 namespace Stations
 {
@@ -76,6 +77,18 @@ namespace Stations
         /// Ship that has interact with the station
         /// </summary>
         public ShipAccessor Ship;
+
+        /// <summary>
+        /// Stores refence to prompt
+        /// for when player is invited to dock
+        /// </summary>
+        public PromptData DockPrompt;
+
+        /// <summary>
+        /// Called when player is able to
+        /// interact with station
+        /// </summary>
+        public PromptData InteractPrompt;
 
         #endregion
 

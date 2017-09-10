@@ -87,6 +87,9 @@ namespace Stations
 
             // Add ourselves to static reference list
             m_att.Accessor.Team.WarpSyncList.Add(netId.Value);
+
+            m_att.ProximityMessage = string.Format
+                ("Press {0} to view warp map.", Control_Config.GetKey("dock", "sys"));
         }
 
         #region PLAYER 
@@ -107,15 +110,6 @@ namespace Stations
 
                 SystemManager.UI.InitializeWarpMap(Nearby, transform);
             }
-        }
-
-        /// <summary>
-        /// Display a custom message
-        /// </summary>
-        public override void EnterRange()
-        {
-            SystemManager.UIMsg.DisplayPrompt(string.Format
-                ("Press {0} to view warp map.", Control_Config.GetKey("dock", "sys")));
         }
 
         #endregion

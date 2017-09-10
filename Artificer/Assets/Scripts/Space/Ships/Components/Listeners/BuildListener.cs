@@ -56,8 +56,7 @@ namespace Space.Ship.Components.Listener
 
             if (!SystemManager.Space.CanBuild && !station.Name.Contains("FOB"))
             {
-                SystemManager.UIMsg.DisplayPrompt("Not in build out of range of FOB or Home Base");
-                SystemManager.UI.Invoke("ClearPrompt", 3f);
+                SystemManager.UIPrompt.DisplayPrompt("Not in build out of range of FOB or Home Base", 3f);
                 return;
             }
 

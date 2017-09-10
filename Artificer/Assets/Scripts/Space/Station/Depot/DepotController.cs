@@ -6,11 +6,44 @@ using UnityEngine.Networking;
 using Data.Space;
 using System.Linq;
 using Data.Space.Collectable;
+using Data.UI;
 
 namespace Stations
 {
     public class DepotController : StationController
     {
+        #region ACCESSORS
+
+        /// <summary>
+        /// Returns the attributes 
+        /// </summary>
+        protected new DepotAttributes m_att
+        {
+            get
+            {
+                if (transform == null)
+                    return null;
+                else if (transform.GetComponent<DepotAttributes>() != null)
+                    return transform.GetComponent<DepotAttributes>();
+                else
+                    return null;
+            }
+        }
+
+        /// <summary>
+        /// Quick accessor to materials that can be deposited
+        /// </summary>
+        private ItemCollectionData[] Depositable
+        {
+            get
+            {
+                return m_att.Ship.GetMaterials(m_att.DepositDelayLists.
+                Keys.ToArray());
+            }
+        }
+
+        #endregion
+
         #region MONOBEHAVIOUR
 
         public override void Awake()
@@ -61,8 +94,25 @@ namespace Stations
         /// </summary>
         public override void EnterRange()
         {
-            SystemManager.UIMsg.DisplayPrompt(string.Format
-                ("Press {0} to deposit ship storage.", Control_Config.GetKey("interact", "sys")));
+
+
+            if (m_att.InteractPrompt == null)
+            {
+                m_att.InteractPrompt = new PromptData();
+                // Check that the player has storage that can be deposited
+                if (Depositable.Length == 0)
+                    m_att.InteractPrompt.LabelText = new string[1]
+                        {string.Format
+                        ("Press {0} to deposit ship storage.",
+                        Control_Config.GetKey("interact", "sys"))};
+                else
+                    m_att.InteractPrompt.LabelText = new string[1]
+                        {"You have no materials that may be deposited here."};
+
+                SystemManager.UIPrompt.DisplayPrompt(m_att.InteractPrompt);
+            }
+            else
+                SystemManager.UIPrompt.DisplayPrompt(m_att.InteractPrompt.ID);          
         }
 
         /// <summary>
@@ -86,11 +136,15 @@ namespace Stations
         /// <param name="ship"></param>
         public override void Interact(ShipAccessor ship)
         {
-            if (!m_att.IsDepositing)
+            if (!m_att.IsDepositing && Depositable.Length > 0)
             {
                 m_att.Ship = ship;
 
-                SystemManager.UIMsg.DisplayPrompt("Depositing materials, Please wait");
+                // Change text and update
+                m_att.InteractPrompt.LabelText = new string[1]
+                    { "Depositing materials, Please wait" };
+
+                SystemManager.UIPrompt.UpdatePrompt(m_att.InteractPrompt.ID);
 
                 m_att.IsDepositing = true;
 
@@ -98,8 +152,7 @@ namespace Stations
                 // contained within the ship
                 float timer = 0;
 
-                foreach(ItemCollectionData item in m_att.Ship.GetMaterials
-                    (m_att.DepositDelayLists.Keys.ToArray()))
+                foreach(ItemCollectionData item in Depositable)
                 {
                     // time is determine by our delay list
                     // if delay is 0.01 then 10 will be a second to deposits
@@ -113,26 +166,6 @@ namespace Stations
         }
 
         #endregion
-
-        #endregion
-
-        #region PRIVATE ACCESSORS
-
-        /// <summary>
-        /// Returns the attributes in warp type
-        /// </summary>
-        protected new DepotAttributes m_att
-        {
-            get
-            {
-                if (transform == null)
-                    return null;
-                else if (transform.GetComponent<DepotAttributes>() != null)
-                    return transform.GetComponent<DepotAttributes>();
-                else
-                    return null;
-            }
-        }
 
         #endregion
 
@@ -172,7 +205,7 @@ namespace Stations
                 SystemManager.Wallet = temp;
             }
 
-            SystemManager.UIMsg.ClearPrompt();
+            SystemManager.UIPrompt.DeletePrompt(m_att.InteractPrompt.ID);
 
             m_att.IsDepositing = false;
         }

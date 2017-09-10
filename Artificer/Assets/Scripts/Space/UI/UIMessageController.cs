@@ -14,9 +14,6 @@ namespace Space.UI
         [SerializeField]
         private MessageHUD m_messageHUD;
 
-        [SerializeField]
-        private MessagePromptHUD m_promptHUD;
-
         [Header("Message Docks")]
        
         [SerializeField]
@@ -47,31 +44,6 @@ namespace Space.UI
             msg.messege = text;
 
             SystemManager.singleton.client.Send((short)MSGCHANNEL.CHATMESSAGESERVER, msg);
-        }
-
-        /// <summary>
-        /// Sends message to the UI text towards the 
-        /// bottom of the screen
-        /// </summary>
-        public void DisplayPrompt(PromptData message)
-        {
-            // Create a prompt text class?
-            if (m_promptHUD.gameObject.activeSelf)
-            {
-                m_promptHUD.DisplayPrompt(message);
-            }
-        }
-
-        /// <summary>
-        /// Clears the text at the bottom of the screen
-        /// </summary>
-        public void ClearPrompt(int index)
-        {
-            if (m_promptHUD.gameObject.activeSelf)
-            {
-                // change to manual removal
-                m_promptHUD.HidePrompt(index);
-            }
         }
 
         public void SetState(UIState state)

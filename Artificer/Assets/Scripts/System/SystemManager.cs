@@ -21,6 +21,7 @@ using UnityEngine.Networking.Match;
 using NATTraversal;
 using UnityEngine.Networking.Types;
 using Data.Space.Library;
+using Space.UI.Prompt;
 
 [RequireComponent(typeof(SystemAttributes))]
 
@@ -133,6 +134,19 @@ public class SystemManager : NATTraversal.NetworkManager
                 m_singleton.m_base.UIMsg = GameObject.Find("_gui").GetComponent<UIMessageController>();
 
             return m_singleton.m_base.UIMsg;
+        }
+    }
+
+    public static MessagePromptHUD UIPrompt
+    {
+        get
+        {
+            if(SceneManager.GetActiveScene().name == "SpaceScene")
+            {
+                // only look if we are on active
+                return GameObject.Find("MessagePromptHUD").GetComponent<MessagePromptHUD>();
+            }
+            return null;
         }
     }
 
