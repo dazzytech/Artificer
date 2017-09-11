@@ -141,13 +141,18 @@ namespace Space.UI.Prompt
                             if (i > temp.Count)
                                 temp.Add(CreateText(text));
                             else
-                                temp[i].text = text;
+                            {
+                                if (temp[i] == null)
+                                    temp[i] = CreateText(text);
+                                else
+                                    temp[i].text = text;
+                            }
                         }
 
                         prompt.UILabels = temp.ToArray();
                     }
 
-                    if (prompt.UIBars != null)
+                    if (prompt.SliderValues != null)
                     {
                        
                         if (prompt.UIBars == null)
@@ -165,7 +170,12 @@ namespace Space.UI.Prompt
                             if (i > temp.Count)
                                 temp.Add(CreateBar(value));
                             else
-                                temp[i].Value = value;
+                            {
+                                if (temp[i] == null)
+                                    temp[i] = CreateBar(value);
+                                else
+                                    temp[i].Value = value;
+                            }
                         }
 
                         prompt.UIBars = temp.ToArray();

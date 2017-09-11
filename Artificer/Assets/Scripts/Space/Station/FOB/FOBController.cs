@@ -61,12 +61,12 @@ namespace Stations
             // do nothing
         }
 
-        public override void EnterRange()
+        public override void EnterRange(ShipAccessor ship)
         {
             // do nothing 
         }
 
-        public override void ExitRange()
+        public override void ExitRange(ShipAccessor ship)
         {
             // do nothing
         }

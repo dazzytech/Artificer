@@ -225,7 +225,7 @@ namespace Stations
         /// <summary>
         /// Display a prompt to dock
         /// </summary>
-        public virtual void EnterRange()
+        public virtual void EnterRange(ShipAccessor ship)
         {
             if (m_att.DockPrompt == null)
             { 
@@ -242,7 +242,7 @@ namespace Stations
         /// <summary>
         /// Clear messages
         /// </summary>
-        public virtual void ExitRange()
+        public virtual void ExitRange(ShipAccessor ship)
         {
             if (m_att.DockPrompt != null)
             {

@@ -182,12 +182,12 @@ namespace Stations
         /// Called by space manager when its
         /// range event is triggered
         /// </summary>
-        public void Range(bool entered)
+        public void Range(bool entered, ShipAccessor ship = null)
         {
             if (entered)
-                m_con.EnterRange();
+                m_con.EnterRange(ship);
             else
-                m_con.ExitRange();
+                m_con.ExitRange(ship);
         }
 
         #endregion

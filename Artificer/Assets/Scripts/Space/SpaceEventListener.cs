@@ -265,7 +265,10 @@ namespace Space
 
             m_att.station = station;
 
-            m_att.station.Range(true);
+            // retrieve ship atts from player object
+            ShipAccessor ship = m_att.PlayerShip.GetComponent<ShipAccessor>();
+
+            m_att.station.Range(true, ship);
         }
 
         /// <summary>

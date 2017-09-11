@@ -92,15 +92,15 @@ namespace Stations
         /// <summary>
         /// Display custom message
         /// </summary>
-        public override void EnterRange()
+        public override void EnterRange(ShipAccessor ship)
         {
-
+            m_att.Ship = ship;
 
             if (m_att.InteractPrompt == null)
             {
                 m_att.InteractPrompt = new PromptData();
                 // Check that the player has storage that can be deposited
-                if (Depositable.Length == 0)
+                if (Depositable.Length > 0)
                     m_att.InteractPrompt.LabelText = new string[1]
                         {string.Format
                         ("Press {0} to deposit ship storage.",
@@ -118,9 +118,15 @@ namespace Stations
         /// <summary>
         /// If we are depositing then cancel
         /// </summary>
-        public override void ExitRange()
+        public override void ExitRange(ShipAccessor ship)
         {
-            base.ExitRange();
+            m_att.Ship = null;
+
+            if (m_att.InteractPrompt != null)
+            {
+                SystemManager.UIPrompt.DeletePrompt(m_att.InteractPrompt.ID);
+                m_att.InteractPrompt = null;
+            }
 
             if (m_att.IsDepositing)
             {
@@ -138,13 +144,9 @@ namespace Stations
         {
             if (!m_att.IsDepositing && Depositable.Length > 0)
             {
-                m_att.Ship = ship;
-
                 // Change text and update
                 m_att.InteractPrompt.LabelText = new string[1]
                     { "Depositing materials, Please wait" };
-
-                SystemManager.UIPrompt.UpdatePrompt(m_att.InteractPrompt.ID);
 
                 m_att.IsDepositing = true;
 
@@ -208,6 +210,8 @@ namespace Stations
             SystemManager.UIPrompt.DeletePrompt(m_att.InteractPrompt.ID);
 
             m_att.IsDepositing = false;
+
+            EnterRange(m_att.Ship);
         }
 
         #endregion
@@ -221,7 +225,21 @@ namespace Stations
         /// <returns></returns>
         private IEnumerator DelayDeposit(float delay)
         {
-            yield return new WaitForSeconds(delay);
+            float timer = 0;
+
+            m_att.InteractPrompt.SliderValues = new float[1];
+
+            while (timer < delay)
+            {
+                yield return null;
+
+                timer += Time.deltaTime;
+
+                m_att.InteractPrompt.SliderValues[0] = timer / delay;
+
+                SystemManager.UIPrompt.UpdatePrompt(m_att.InteractPrompt.ID);
+            }
+
 
             Deposit();
 
