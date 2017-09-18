@@ -42,15 +42,41 @@ namespace Space
         #region STATION TRACKING
 
         // if the player is within vicinity of station
-        public bool overStation;
+        public bool OverStation
+        {
+            get { return InRangeList.Count > 0; }
+        }
 
         // if player is within construction Range
         public bool buildRange;
 
-        // refence to the station we are currently at
-        public StationAccessor station;
+        /// <summary>
+        /// Current list of stations that are within
+        /// docking range
+        /// </summary>
+        public List<StationAccessor> InRangeList;
 
-        public bool docked;
+        /// <summary>
+        /// The current station that we are 
+        /// electing to dock at
+        /// </summary>
+        public StationAccessor DockingStation;
+
+        /// <summary>
+        /// The station we will interact with when prompted
+        /// </summary>
+        public StationAccessor InteractStation;
+
+        /// <summary>
+        /// Whether or not the player has docked at
+        /// this station
+        /// </summary>
+        public bool Docked;
+
+        /// <summary>
+        /// Every single station in segment
+        /// </summary>
+        public List<StationAccessor> GlobalStations;
 
         // Reference to player team
         public TeamController Team;

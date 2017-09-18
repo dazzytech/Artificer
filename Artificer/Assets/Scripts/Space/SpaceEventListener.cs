@@ -15,6 +15,7 @@ using Networking;
 using Space.Teams;
 using Space.Projectiles;
 using Data.Space.Collectable;
+using System.Linq;
 
 namespace Space
 {
@@ -72,10 +73,16 @@ namespace Space
             StationController.OnExitRange += OnExitStation;
             StationController.OnEnterBuildRange += OnEnterBuildRange;
             StationController.OnExitBuildRange += OnExitBuildRange;
+            StationController.OnStationCreated += OnStationCreated;
 
             if (SystemManager.Events != null)
+            {
                 SystemManager.Events.EventShipDestroyed
                   += OnShipDestroyed;
+
+                SystemManager.Events.EventStationDestroyed
+                    += OnStationDestroyed;
+            }
         }
 
         void OnDisable()
@@ -91,10 +98,16 @@ namespace Space
             StationController.OnExitRange -= OnExitStation;
             StationController.OnEnterBuildRange -= OnEnterBuildRange;
             StationController.OnExitBuildRange -= OnExitBuildRange;
+            StationController.OnStationCreated -= OnStationCreated;
 
-            if(SystemManager.Events != null)
+            if (SystemManager.Events != null)
+            {
                 SystemManager.Events.EventShipDestroyed
                   -= OnShipDestroyed;
+
+                SystemManager.Events.EventStationDestroyed
+                    -= OnStationDestroyed;
+            }
         }
 
         #endregion
@@ -119,7 +132,7 @@ namespace Space
         private void PlayerSystemInput(KeyCode key)
         {
             // only interact if not docked
-            if (m_att.docked || key == KeyCode.None)
+            if (m_att.Docked || key == KeyCode.None)
                 return;
 
             if (key == Control_Config.GetKey("pause", "sys"))
@@ -194,7 +207,7 @@ namespace Space
         /// <param name="yDelta"></param>
         private void PlayerMouseScroll(float yDelta)
         {
-            if (m_att.docked)
+            if (m_att.Docked)
                 return;
 
             if (Input.mouseScrollDelta.y < 0f)
@@ -217,13 +230,25 @@ namespace Space
 
             m_att.netID = 0;
 
-            if(m_att.station != null)
+            m_att.InRangeList.Clear();
+
+            if(m_att.DockingStation != null)
             {
-                m_att.station.Range(false);
+                m_att.DockingStation.Range(false);
 
-                m_att.station.Interact(false);
+                m_att.DockingStation.Interact(false);
 
-                m_att.station.Dock(false);
+                m_att.DockingStation.Dock(false);
+            }
+
+
+            if (m_att.InteractStation != null)
+            {
+                m_att.InteractStation.Range(false);
+
+                m_att.InteractStation.Interact(false);
+
+                m_att.InteractStation.Dock(false);
             }
 
             // Prompt player to pick a spawn
@@ -261,14 +286,43 @@ namespace Space
         /// <param name="controller"></param>
         private void OnEnterStation(StationAccessor station)
         {
-            m_att.overStation = true;
+            // if we arent already in range
+            // add to our list
+            if (!m_att.InRangeList.Contains(station))
+            {
+                m_att.InRangeList.Add(station);
 
-            m_att.station = station;
+                // retrieve ship atts from player object
+                ShipAccessor ship = m_att.PlayerShip.
+                    GetComponent<ShipAccessor>();
 
-            // retrieve ship atts from player object
-            ShipAccessor ship = m_att.PlayerShip.GetComponent<ShipAccessor>();
+                station.Range(true, ship);
 
-            m_att.station.Range(true, ship);
+                Debug.Log(m_att.InRangeList.Count);
+
+                // define the station reference 
+                if (station.DockPrompt != null)
+                {
+                    if (m_att.DockingStation != null)
+                        SystemManager.UIPrompt.HidePrompt
+                            (m_att.DockingStation.DockPrompt.ID);
+
+                    Debug.Log("Dock Added");
+
+                    m_att.DockingStation = station;
+                }
+
+                if (station.InteractPrompt != null)
+                {
+                    if (m_att.InteractStation != null)
+                        SystemManager.UIPrompt.HidePrompt
+                            (m_att.InteractStation.InteractPrompt.ID);
+
+                    Debug.Log("Interact Added");
+
+                    m_att.InteractStation = station;
+                }
+            }
         }
 
         /// <summary>
@@ -277,14 +331,68 @@ namespace Space
         /// <param name="controller"></param>
         private void OnExitStation(StationAccessor station)
         {
-            m_att.overStation = false;
+            if (m_att.InRangeList.Contains(station))
+                m_att.InRangeList.Remove(station);
 
-            m_att.station.Range(false);
+            Debug.Log(m_att.InRangeList.Count);
 
-            if (m_att.docked)
+            station.Range(false);
+
+            if (m_att.Docked)
                 SystemManager.Space.LeaveStation();
 
-            m_att.station = null;
+            // if the prompts are null, consider 
+            if (station.DockPrompt == null
+                && m_att.DockingStation != null)
+            {
+                if (m_att.DockingStation.Equals(station))
+                {
+                    m_att.DockingStation = null;
+
+                    Debug.Log("Dock Removed");
+
+                    foreach (StationAccessor other in m_att.InRangeList)
+                    {
+                        if (other.DockPrompt != null)
+                        {
+                            m_att.DockingStation = other;
+
+                            Debug.Log("Replaced Dock");
+
+                            SystemManager.UIPrompt.DisplayPrompt
+                                (m_att.DockingStation.DockPrompt.ID);
+
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (station.InteractPrompt == null &&
+                m_att.InteractStation != null)
+            {
+                if (m_att.InteractStation.Equals(station))
+                {
+                    m_att.InteractStation = null;
+
+                    Debug.Log("Interact Removed");
+
+                    foreach (StationAccessor other in m_att.InRangeList)
+                    {
+                        if (other.InteractPrompt != null)
+                        {
+                            m_att.InteractStation = other;
+
+                            Debug.Log("Replaced Interact");
+
+                            SystemManager.UIPrompt.DisplayPrompt
+                                (m_att.InteractStation.InteractPrompt.ID);
+
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         private void OnEnterBuildRange(StationAccessor station)
@@ -332,14 +440,46 @@ namespace Space
             //  (newMat);
         }
 
-        // Consider using sync events
-
-        /*
-
-        public void StationDestroyed(DestroyDespatch destroyed)
+        /// <summary>
+        /// If a station is destroyed we remove it from 
+        /// our global list
+        /// </summary>
+        /// <param name="DD"></param>
+        public void OnStationDestroyed(DestroyDespatch DD)
         {
+            if (!isServer)
+                return;
 
-        }*/
+            // Find the station in our list and remove it
+            for(int i = 0; i < m_att.GlobalStations.Count; i++)
+            {
+                if(m_att.GlobalStations[i].netId == DD.SelfID)
+                {
+                    m_att.GlobalStations.RemoveAt(i);
+                    break;
+                }
+            }
+
+            // whatever done here
+        }
+
+        /// <summary>
+        /// Adds the station to our segment station 
+        /// reference
+        /// </summary>
+        /// <param name="station"></param>
+        [Server]
+        public void OnStationCreated(StationAccessor station)
+        {
+            if (station == null)
+            {
+                return;
+            }
+            if (!m_att.GlobalStations.Contains(station))
+            {
+                m_att.GlobalStations.Add(station);
+            }
+        }
 
         public void StationReached(Transform ship)
         {

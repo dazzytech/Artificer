@@ -1,4 +1,5 @@
-﻿using Networking;
+﻿using Data.UI;
+using Networking;
 using Space.Segment;
 using Space.Ship;
 using Space.Teams;
@@ -131,6 +132,24 @@ namespace Stations
             {
                 return ClientScene.FindLocalObject(m_att.TeamID).GetComponent<TeamController>();
             }
+        }
+
+        /// <summary>
+        /// Returns a read only message
+        /// that prompts the player to dock
+        /// </summary>
+        public PromptData DockPrompt
+        {
+            get { return m_att.DockPrompt; }
+        }
+
+        /// <summary>
+        /// Returns a read only message
+        /// That prompts an the player to interact 
+        /// </summary>
+        public PromptData InteractPrompt
+        {
+            get { return m_att.InteractPrompt; }
         }
 
         #endregion

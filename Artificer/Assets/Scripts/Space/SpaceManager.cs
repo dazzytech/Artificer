@@ -130,6 +130,14 @@ namespace Space
         }
 
         /// <summary>
+        /// Returns all the stations in this segment
+        /// </summary>
+        public StationAccessor[] GlobalStations
+        {
+            get { return m_att.GlobalStations.ToArray(); }
+        }
+
+        /// <summary>
         /// Quick access to ship spawn list
         /// </summary>
         private ShipSpawnData[] Spawns
@@ -146,9 +154,11 @@ namespace Space
             // init onstage
             m_att.PlayerOnStage = false;
 
-            m_att.docked = false;
+            m_att.Docked = false;
 
-            m_att.overStation = false;
+            m_att.InRangeList = new List<StationAccessor>();
+
+            m_att.GlobalStations = new List<StationAccessor>();
         }
 
         void Update()
@@ -200,7 +210,7 @@ namespace Space
         public void DockAtStation()
         { 
             // Only perform if we have a station
-            if (!m_att.overStation)
+            if (!m_att.OverStation)
                 return;
 
             // for now first task is to retrieve 
@@ -214,11 +224,9 @@ namespace Space
             // retrieve ship atts from player object
             ShipAccessor ship = PlayerObj.GetComponent<ShipAccessor>();
 
-            m_att.overStation = false;
+            m_att.Docked = true;
 
-            m_att.docked = true;
-
-            m_att.station.Dock(true, ship);
+            m_att.DockingStation.Dock(true, ship);
         }
 
         /// <summary>
@@ -227,7 +235,7 @@ namespace Space
         /// </summary>
         public void LeaveStation()
         {
-            if (!m_att.docked)
+            if (!m_att.Docked)
                 return;
 
             // for now first task is to retrieve 
@@ -241,11 +249,9 @@ namespace Space
             // retrieve ship atts from player object
             ShipAccessor ship = PlayerObj.GetComponent<ShipAccessor>();
 
-            m_att.overStation = true;
+            m_att.Docked = false;
 
-            m_att.docked = false;
-
-            m_att.station.Dock(false, ship);
+            m_att.DockingStation.Dock(false, ship);
         }
 
         /// <summary>
@@ -254,7 +260,7 @@ namespace Space
         /// </summary>
         public void InteractWithStation(bool keyDown)
         {
-            if (m_att.station != null)
+            if (m_att.DockingStation != null)
             {
                 // for now first task is to retrieve 
                 // player ship and notify it to disable
@@ -267,7 +273,7 @@ namespace Space
                 // retrieve ship atts from player object
                 ShipAccessor ship = PlayerObj.GetComponent<ShipAccessor>();
 
-                m_att.station.Interact(keyDown, ship);
+                m_att.InteractStation.Interact(keyDown, ship);
             }
         }
 
