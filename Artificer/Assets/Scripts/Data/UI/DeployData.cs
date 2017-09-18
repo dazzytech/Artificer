@@ -35,5 +35,10 @@ namespace Data.UI
         /// icon to display in the build menu.
         /// </summary>
         public string IconPath;
+        /// <summary>
+        /// manually synced info that determines how
+        /// close the deploy can be deployed
+        /// </summary>
+        public float Radius;
     }
 }

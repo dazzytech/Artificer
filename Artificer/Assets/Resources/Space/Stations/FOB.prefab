@@ -123,6 +123,7 @@ MonoBehaviour:
   BuildCounter: 30
   BuildColour: {r: 0.024543643, g: 0.32352942, b: 0, a: 0.878}
   BuildDistance: 40
+  ClearRadius: 5
   Accessor: {fileID: 114596031091089786}
   Ship: {fileID: 0}
   MinDistance: 3
@@ -233,3 +234,5 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0

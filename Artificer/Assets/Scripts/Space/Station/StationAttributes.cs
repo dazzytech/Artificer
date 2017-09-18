@@ -61,6 +61,11 @@ namespace Stations
         // other ships can build in
         public int BuildDistance;
 
+        /// <summary>
+        /// Space that the station requrires to be clear
+        /// </summary>
+        public float ClearRadius;
+
         #endregion
 
         #region REFERENCES

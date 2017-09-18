@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35bdb61063f565846a37c801f692605f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hitD:
+  m_hitD:
     hitPosition: {x: 0, y: 0, z: 0}
     damage: 0
     radius: 0
@@ -110,6 +110,7 @@ MonoBehaviour:
   BuildCounter: 20
   BuildColour: {r: 0.0042171315, g: 0.28676468, b: 0.0042171315, a: 0.84}
   BuildDistance: 0
+  ClearRadius: 3
   Accessor: {fileID: 114679263838495396}
   Ship: {fileID: 0}
   MinDistance: 10
@@ -234,3 +235,5 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0

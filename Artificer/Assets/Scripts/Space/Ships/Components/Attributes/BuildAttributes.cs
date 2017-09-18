@@ -17,6 +17,10 @@ namespace Space.Ship.Components.Attributes
 
         public bool ReadyToDeploy;
 
+        public float MinRange;
+
+        public float MaxRange;
+
         #endregion
     }
 }

@@ -7,6 +7,7 @@ using Networking;
 using Space.Segment;
 using Data.UI;
 using Data.Space;
+using Stations;
 
 namespace Space.Ship.Components.Listener
 {
@@ -60,20 +61,27 @@ namespace Space.Ship.Components.Listener
                 return;
             }
 
+
+            // Attempt to find placement position
+            // quit and prompt if unsuccessful
+            // retrive a spawn point away from ship using scalar
+            Vector2 deployPoint = GetPoint(station.Radius);
+
+            if(deployPoint == Vector2.zero)
+            {
+                SystemManager.UIPrompt.DisplayPrompt
+                    ("There is no room to place station", 3f);
+                return;
+            }
+
             WalletData temp = SystemManager.Wallet;
 
             if (!temp.Withdraw(station.Cost))
             {
+                SystemManager.UIPrompt.DisplayPrompt
+                    ("Insufficient funds to deploy station", 3f);
                 return;
             }
-
-            // retrive a spawn point away from ship using scalar
-            float distance = Random.Range(3f, 5f) * 
-                Mathf.Sign(Random.Range(-1f,1f));
-
-            Vector3 deployPoint = transform.position;
-            deployPoint.x += distance;
-            deployPoint.y += distance;
 
             // Create message for game controller
             StationBuildMessage sbm = new StationBuildMessage();
@@ -102,6 +110,44 @@ namespace Space.Ship.Components.Listener
 
             if(hasAuthority)
                 m_att.ReadyToDeploy = true;
+        }
+
+        private Vector2 GetPoint(float radius)
+        {
+            Vector2 returnPoint = Vector2.zero;
+
+            int attempts = 10;
+            while(attempts-- > 0)
+            {
+                returnPoint = Math.RandomWithinRange
+                    (transform.position, m_att.MinRange, m_att.MaxRange);
+
+                if (!ConflictingRange(returnPoint, radius))
+                    break;
+                else
+                    returnPoint = Vector2.zero;
+            }
+
+            return returnPoint;
+        }
+
+        /// <summary>
+        /// Returns if there are any stations
+        /// that are within conflicting range
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
+        private bool ConflictingRange(Vector2 position, float radius)
+        {
+            foreach(StationAccessor station in SystemManager.Space.GlobalStations)
+            {
+                if (Math.WithinRange(position, station.transform.position,
+                    0, station.Radius + radius))
+                    return true;
+            }
+
+            return false;
         }
 
         #endregion

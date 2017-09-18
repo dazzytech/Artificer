@@ -543,20 +543,25 @@ MonoBehaviour:
     Description: Enables other stations to be built within vacinity.
     Cost: 120000
     IconPath: FOB
+    Radius: 5
   - Name: Depot Station
     Type: Depot
     Description: Allows team ships to deposit their gathered materials when within
       range.
     Cost: 100000
     IconPath: Depot
+    Radius: 10
   - Name: Warp Gate
     Type: Warp
     Description: Team ships are able to travel between warps gates within range of
       each other.
     Cost: 80000
     IconPath: Warp Gate
+    Radius: 3
   StationDelay: 20
   ReadyToDeploy: 0
+  MinRange: 3
+  MaxRange: 5
 --- !u!114 &114600394052791650
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -660,3 +665,5 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0

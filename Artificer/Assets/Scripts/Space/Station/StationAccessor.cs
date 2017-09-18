@@ -107,6 +107,17 @@ namespace Stations
         }
 
         /// <summary>
+        /// Distance the station needs to be empty
+        /// </summary>
+        public float Radius
+        {
+            get
+            {
+                return m_att.ClearRadius;
+            }
+        }
+
+        /// <summary>
         /// Returns is the station object
         /// is actually active
         /// </summary>
