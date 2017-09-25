@@ -27,8 +27,6 @@ namespace Space.UI.Station
 
         #region MANAGE
 
-        //public GameObject NewItemPrefab;
-
         [Header("Manager HUD")]
 
         [HideInInspector]

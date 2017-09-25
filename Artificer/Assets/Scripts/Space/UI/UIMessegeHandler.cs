@@ -138,9 +138,14 @@ namespace Space.UI
         /// viewer portion of the station HUD. 
         /// </summary>
         /// <param name="ship"></param>
-        public void InitializeStationHUD(ShipAccessor ship)
+        public void InitializeStation(ShipAccessor ship)
         {
             m_stationMsg.InitializeShipViewer(ship);
+        }
+
+        public void InitializeTradeHub()
+        {
+            m_stationMsg.InitializeTradingHub();
         }
 
         #endregion

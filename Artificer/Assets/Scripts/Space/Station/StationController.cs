@@ -57,6 +57,7 @@ namespace Stations
                 case STATIONTYPE.HOME:
                 case STATIONTYPE.WARP:
                 case STATIONTYPE.DEPOT:
+                case STATIONTYPE.TRADER:
                 m_docking = CheckRange
                     (OnEnterRange, OnExitRange,
                     m_att.MinDistance);
@@ -88,7 +89,6 @@ namespace Stations
 
             // perform segment object behaviour
             DisableObj();
-
         }
 
         void OnDestroy()
@@ -200,7 +200,7 @@ namespace Stations
                 SystemManager.UIState.SetState(UIState.Station);
 
                 // Add message for sending ship attributes
-                SystemManager.UI.InitializeStationHUD(ship);
+                SystemManager.UI.InitializeStation(ship);
             }
         }
 

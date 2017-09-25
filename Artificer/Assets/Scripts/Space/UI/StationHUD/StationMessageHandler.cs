@@ -1,4 +1,6 @@
-﻿using Space.Ship;
+﻿using Data.UI;
+using Space.Ship;
+using Space.Teams;
 using Space.UI.Station.Map;
 using Space.UI.Station.Viewer;
 using System.Collections;
@@ -24,6 +26,9 @@ namespace Space.UI.Station
         [SerializeField]
         private WarpMapController m_warpMap;
 
+        [SerializeField]
+        private TraderHubController m_tradeHub;
+
         #endregion
 
         #region PUBLIC INTERACTION
@@ -36,6 +41,9 @@ namespace Space.UI.Station
             if (!m_shipDock.gameObject.activeSelf)
                 m_shipDock.gameObject.SetActive(true);
 
+            if (m_tradeHub.gameObject.activeSelf)
+                m_tradeHub.gameObject.SetActive(false);
+
             m_shipDock.InitializeHUD(ship);
         }
 
@@ -47,7 +55,24 @@ namespace Space.UI.Station
             if (m_shipDock.gameObject.activeSelf)
                 m_shipDock.gameObject.SetActive(false);
 
+            if (m_tradeHub.gameObject.activeSelf)
+                m_tradeHub.gameObject.SetActive(false);
+
             m_warpMap.BuildMap(warpList, home);
+        }
+
+        public void InitializeTradingHub()
+        {
+            if (m_warpMap.gameObject.activeSelf)
+                m_warpMap.gameObject.SetActive(false);
+
+            if (m_shipDock.gameObject.activeSelf)
+                m_shipDock.gameObject.SetActive(false);
+
+            if (!m_tradeHub.gameObject.activeSelf)
+                m_tradeHub.gameObject.SetActive(true);
+
+            m_tradeHub.InitializeHUD();
         }
 
         #endregion

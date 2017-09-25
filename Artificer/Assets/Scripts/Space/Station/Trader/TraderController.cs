@@ -76,7 +76,9 @@ namespace Stations
 
                 // Next is to update the HUD to display the
                 // micro stationHUD
-                SystemManager.UIState.SetState(UIState.Station);               
+                SystemManager.UIState.SetState(UIState.Station);
+
+                SystemManager.UI.InitializeTradeHub();
             }
         }
 
