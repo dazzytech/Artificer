@@ -83,14 +83,22 @@ public class SystemManager : NATTraversal.NetworkManager
     {
         get
         {
-            // Assign the playerspawn to the scene object if doesnt exist
-            if (m_singleton.m_base != null)
-                if (GameObject.Find("_event") == null)
-                    return null;
-                else
-                    return (m_singleton.m_base.Events =
-                            GameObject.Find("_event")
-                            .GetComponent<GameServerEvents>());
+            if (SceneManager.GetActiveScene().name != "SpaceScene")
+                return null;
+
+            if (m_singleton != null)
+            {
+                if (m_singleton.m_base.Events == null)
+                {
+                    GameObject GO = GameObject.Find("_event");
+                    if (GO != null)
+                        m_singleton.m_base.Events =
+                        GO.GetComponent<GameServerEvents>();
+                    else
+                        return null;
+                }
+                return m_singleton.m_base.Events;
+            }
             else
                 return null;
         }
@@ -173,17 +181,22 @@ public class SystemManager : NATTraversal.NetworkManager
     {
         get
         {
-            if (m_singleton == null)
-                return null;
-            else if (m_singleton.m_base.Space == null)
-                if (GameObject.Find("space") == null)
+            if (SceneManager.GetActiveScene().name == "SpaceScene")
+            {
+                if (m_singleton == null)
                     return null;
+                else if (m_singleton.m_base.Space == null)
+                    if (GameObject.Find("space") == null)
+                        return null;
+                    else
+                        return (m_singleton.m_base.Space =
+                                GameObject.Find("space")
+                                .GetComponent<SpaceManager>());
                 else
-                    return (m_singleton.m_base.Space = 
-                            GameObject.Find("space")
-                            .GetComponent<SpaceManager>());
+                    return m_singleton.m_base.Space;
+            }
             else
-                return m_singleton.m_base.Space;
+                return null;
         }
     }
 
@@ -224,6 +237,9 @@ public class SystemManager : NATTraversal.NetworkManager
     {
         get
         {
+            if (m_singleton == null)
+                return new PlayerData();
+
             return m_singleton.m_base.Player;
         }
     }

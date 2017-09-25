@@ -260,7 +260,7 @@ namespace Space
         /// </summary>
         public void InteractWithStation(bool keyDown)
         {
-            if (m_att.DockingStation != null)
+            if (m_att.InteractStation != null)
             {
                 // for now first task is to retrieve 
                 // player ship and notify it to disable

@@ -120,11 +120,12 @@ namespace Space.AI
             TeamController team =
                 teamGO.GetComponent<TeamController>();
             team.Initialize(index + 2, fortify);
-            //team.Spawner.AI = netId;
 
             // create randomized position
             Vector2 position = Vector2.zero;
             bool inRange = true;
+
+            int limit = 10;
 
             // maintain certain distance
             while (inRange)
@@ -138,7 +139,10 @@ namespace Space.AI
                 position.x = Mathf.Clamp(position.x, 0, SystemManager.Size.width);
                 position.y = Mathf.Clamp(position.y, 0, SystemManager.Size.height);
 
-                foreach(TeamController other in m_att.Teams)
+                if (limit-- <= 0)
+                    break;
+
+                foreach (TeamController other in m_att.Teams)
                 {
                     if (Vector3.Distance(position, other.transform.position) < 400f)
                     {
@@ -175,6 +179,7 @@ namespace Space.AI
             bool inRange = true;
 
             Vector2 stationPos = Vector2.zero;
+            int limit = 10;
 
             // maintain certain distance
             while (inRange)
@@ -182,6 +187,9 @@ namespace Space.AI
                 inRange = false;
 
                 stationPos = Math.RandomWithinRange(pos, 10f, 50f);
+
+                if (limit-- <= 0)
+                    break;
 
                 foreach (uint other in team.Stations)
                 {

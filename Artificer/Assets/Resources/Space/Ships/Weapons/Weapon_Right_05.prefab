@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea0106864dbc864eb3a61dfee721c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Weight: 0.4
+  Weight: 0.2
   ComponentType: Weapons
 --- !u!114 &11450154
 MonoBehaviour:
@@ -355,9 +355,11 @@ MonoBehaviour:
     Folder: 
     Name: 
     Style: 
+    Cost: 0
     sockets: []
+    requirements: []
     AutoLock: 0
-    behaviour: 0
+    Behaviour: 0
     AutoFire: 0
   WeaponDamage: 200
   WeaponRange: 500
@@ -404,6 +406,8 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

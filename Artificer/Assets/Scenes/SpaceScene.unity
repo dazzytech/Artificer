@@ -8076,6 +8076,7 @@ GameObject:
   - component: {fileID: 469563974}
   - component: {fileID: 469563973}
   - component: {fileID: 469563976}
+  - component: {fileID: 469563977}
   m_Layer: 5
   m_Name: MessagePromptHUD
   m_TagString: Untagged
@@ -8131,11 +8132,11 @@ RectTransform:
   m_Father: {fileID: 1662861212}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -25}
-  m_SizeDelta: {x: 0, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 172}
+  m_SizeDelta: {x: 506, y: 0}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &469563976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8158,6 +8159,19 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
+--- !u!114 &469563977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 469563972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &473750025
 GameObject:
   m_ObjectHideFlags: 0
@@ -10938,6 +10952,7 @@ MonoBehaviour:
   m_stationPrefabs:
   - Placeholder_Station_02
   - Placeholder_Station_03
+  - Trader_Station
 --- !u!114 &593987430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24733,10 +24748,12 @@ MonoBehaviour:
   PlayerShip: {fileID: 0}
   playerID: 0
   netID: 0
-  overStation: 0
   buildRange: 0
-  station: {fileID: 0}
-  docked: 0
+  InRangeList: []
+  DockingStation: {fileID: 0}
+  InteractStation: {fileID: 0}
+  Docked: 0
+  GlobalStations: []
   Team: {fileID: 0}
   Map: {fileID: 2012517428}
   AI: {fileID: 593987429}
@@ -30107,7 +30124,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
+  m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1020, y: 800}
@@ -30216,7 +30233,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_messageHUD: {fileID: 873041642}
-  m_promptHUD: {fileID: 469563973}
   m_playDock: {fileID: 1137989019}
   m_pauseDock: {fileID: 1451758692}
   m_spawnDock: {fileID: 520500436}

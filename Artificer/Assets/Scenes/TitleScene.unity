@@ -18374,7 +18374,7 @@ MonoBehaviour:
   m_CustomConfig: 1
   m_MaxConnections: 4
   m_ConnectionConfig:
-    m_PacketSize: 1500
+    m_PacketSize: 1440
     m_FragmentSize: 500
     m_ResendTimeout: 1200
     m_DisconnectTimeout: 2000
@@ -18390,7 +18390,7 @@ MonoBehaviour:
     m_SendDelay: 10
     m_MaxCombinedReliableMessageSize: 100
     m_MaxCombinedReliableMessageCount: 10
-    m_MaxSentMessageQueueSize: 128
+    m_MaxSentMessageQueueSize: 512
     m_AcksType: 1
     m_UsePlatformSpecificProtocols: 0
     m_InitialBandwidth: 0

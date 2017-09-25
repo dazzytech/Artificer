@@ -8,7 +8,7 @@ using Data.UI;
 namespace Stations
 {
     // only one type current
-    public enum STATIONTYPE {HOME, FOB, WARP, DEPOT};
+    public enum STATIONTYPE {HOME, FOB, WARP, DEPOT, TRADER};
 
     /// <summary>
     /// Container for attributes for stations 
@@ -27,6 +27,7 @@ namespace Stations
         public float CurrentIntegrity;
         public float Integrity;
 
+        [HideInInspector]
         [SyncVar]
         public bool UnderAttack;
 
@@ -39,13 +40,15 @@ namespace Stations
 
         [SyncVar]
         public int SpawnID;
-        
+
+        [HideInInspector]
         public STATIONTYPE Type;
 
         /// <summary>
         /// Message that displays to the 
         /// player when in range
         /// </summary>
+        [HideInInspector]
         public string ProximityMessage;
 
         #endregion
@@ -87,17 +90,22 @@ namespace Stations
         /// Stores refence to prompt
         /// for when player is invited to dock
         /// </summary>
+        [HideInInspector]
         public PromptData DockPrompt;
 
         /// <summary>
         /// Called when player is able to
         /// interact with station
         /// </summary>
+        [HideInInspector]
         public PromptData InteractPrompt;
 
         #endregion
 
         public int MinDistance;
+
+        [HideInInspector]
+        public bool InRange;
 
         public Sprite Icon;
     }

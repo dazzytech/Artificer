@@ -17,6 +17,22 @@ namespace Stations
         #region ACCESSORS
 
         /// <summary>
+        /// Returns the attributes in warp type
+        /// </summary>
+        protected new WarpAttributes m_att
+        {
+            get
+            {
+                if (transform == null)
+                    return null;
+                else if (transform.GetComponent<WarpAttributes>() != null)
+                    return transform.GetComponent<WarpAttributes>();
+                else
+                    return null;
+            }
+        }
+
+        /// <summary>
         /// Returns a list of 
         /// other warp gates nearby
         /// </summary>
@@ -58,8 +74,6 @@ namespace Stations
         public override void Awake()
         {
             base.Awake();
-
-            m_att.ProximityMessage = "Press Enter to enter Warp Map";
 
             m_att.Type = STATIONTYPE.WARP;
         }
@@ -137,26 +151,6 @@ namespace Stations
             distance = m_att.Accessor.Distance;
 
             playerGO.transform.position = deployPoint;
-        }
-
-        #endregion
-
-        #region PRIVATE ACCESSORS
-
-        /// <summary>
-        /// Returns the attributes in warp type
-        /// </summary>
-        protected new WarpAttributes m_att
-        {
-            get
-            {
-                if (transform == null)
-                    return null;
-                else if (transform.GetComponent<WarpAttributes>() != null)
-                    return transform.GetComponent<WarpAttributes>();
-                else
-                    return null;
-            }
         }
 
         #endregion

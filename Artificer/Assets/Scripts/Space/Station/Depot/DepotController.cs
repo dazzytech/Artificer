@@ -50,8 +50,6 @@ namespace Stations
         {
             base.Awake();
 
-            m_att.ProximityMessage = "Hold Enter to deposit storage";
-
             m_att.Type = STATIONTYPE.DEPOT;
         }
 
@@ -96,23 +94,12 @@ namespace Stations
         {
             m_att.Ship = ship;
 
-            if (m_att.InteractPrompt == null)
-            {
-                m_att.InteractPrompt = new PromptData();
-                // Check that the player has storage that can be deposited
-                if (Depositable.Length > 0)
-                    m_att.InteractPrompt.LabelText = new string[1]
-                        {string.Format
-                        ("Press {0} to deposit ship storage.",
-                        Control_Config.GetKey("interact", "sys"))};
-                else
-                    m_att.InteractPrompt.LabelText = new string[1]
-                        {"You have no materials that may be deposited here."};
+            // Start listening for storage change
+            m_att.Ship.OnStorageChanged += StorageChanged;
 
-                SystemManager.UIPrompt.DisplayPrompt(m_att.InteractPrompt);
-            }
-            else
-                SystemManager.UIPrompt.DisplayPrompt(m_att.InteractPrompt.ID);          
+            m_att.InRange = true;
+
+            Prompt();
         }
 
         /// <summary>
@@ -132,7 +119,11 @@ namespace Stations
             {
                 m_att.IsDepositing = false;
                 StopAllCoroutines();
+
+                m_att.Ship.OnStorageChanged -= StorageChanged;
             }
+
+            m_att.InRange = false;
         }
 
         /// <summary>
@@ -207,11 +198,73 @@ namespace Stations
                 SystemManager.Wallet = temp;
             }
 
-            SystemManager.UIPrompt.DeletePrompt(m_att.InteractPrompt.ID);
+            m_att.Ship.OnStorageChanged -= StorageChanged;
 
-            m_att.IsDepositing = false;
+            StartCoroutine("DelayEnd",
+                "Deposit successful.");
+        }
 
-            EnterRange(m_att.Ship);
+        /// <summary>
+        /// Displays different prompts based
+        /// on the inventory of the ship
+        /// </summary>
+        private void Prompt(bool reset = false)
+        {
+            if (m_att.InteractPrompt == null)
+            {
+                m_att.InteractPrompt = new PromptData();
+                // Check that the player has storage that can be deposited
+                if (Depositable.Length > 0)
+                    m_att.InteractPrompt.LabelText = new string[1]
+                        {string.Format
+                        ("Press {0} to deposit ship storage.",
+                        Control_Config.GetKey("interact", "sys"))};
+                else
+                    m_att.InteractPrompt.LabelText = new string[1]
+                        {"You have no materials that may be deposited here."};
+
+                SystemManager.UIPrompt.DisplayPrompt(m_att.InteractPrompt);
+            }
+            else
+            {
+                // Check that the player has storage that can be deposited
+                if (Depositable.Length > 0)
+                    m_att.InteractPrompt.LabelText = new string[1]
+                        {string.Format
+                        ("Press {0} to deposit ship storage.",
+                        Control_Config.GetKey("interact", "sys"))};
+                else
+                    m_att.InteractPrompt.LabelText = new string[1]
+                        {"You have no materials that may be deposited here."};
+
+                if(reset)
+                    SystemManager.UIPrompt.UpdatePrompt(m_att.InteractPrompt.ID);
+                else
+                    SystemManager.UIPrompt.DisplayPrompt(m_att.InteractPrompt.ID);
+            }
+                
+        }
+
+        #endregion
+
+        #region EVENTS
+
+        /// <summary>
+        /// When the player updates their storage
+        /// while depositing then stop the deposit and update the 
+        /// prompt
+        /// </summary>
+        public void StorageChanged()
+        {
+            if (m_att.IsDepositing)
+            {
+                StopCoroutine("DelayDeposit");
+
+                StartCoroutine("DelayEnd",
+                    "Deposit cancelled stored due to change in storage.");
+            }
+            else
+                Prompt(true);
         }
 
         #endregion
@@ -240,10 +293,32 @@ namespace Stations
                 SystemManager.UIPrompt.UpdatePrompt(m_att.InteractPrompt.ID);
             }
 
-
             Deposit();
 
             yield break;
+        }
+
+        /// <summary>
+        /// Displays ending message for two seconds then  
+        /// resets prompt
+        /// </summary>
+        /// <param name="delay"></param>
+        /// <returns></returns>
+        private IEnumerator DelayEnd(string endMessage)
+        {
+            m_att.InteractPrompt.SliderValues = null;
+
+            m_att.InteractPrompt.LabelText[0] = endMessage;
+
+            SystemManager.UIPrompt.UpdatePrompt(m_att.InteractPrompt.ID);
+
+            yield return new WaitForSeconds(2f);
+
+            m_att.IsDepositing = false;
+
+            m_att.Ship.OnStorageChanged += StorageChanged;
+
+            Prompt(true);
         }
 
         #endregion

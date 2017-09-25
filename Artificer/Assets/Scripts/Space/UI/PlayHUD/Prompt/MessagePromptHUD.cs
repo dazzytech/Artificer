@@ -125,6 +125,8 @@ namespace Space.UI.Prompt
                 PromptData prompt = m_promptLib.Item(index);
                 if (prompt != null)
                 {
+                    // TODO does not clear individual elements when no longer needed
+
                     if (prompt.LabelText != null)
                     {
                         if (prompt.UILabels == null)
@@ -151,6 +153,8 @@ namespace Space.UI.Prompt
 
                         prompt.UILabels = temp.ToArray();
                     }
+                    else
+                        ClearTexts(prompt);
 
                     if (prompt.SliderValues != null)
                     {
@@ -180,6 +184,8 @@ namespace Space.UI.Prompt
 
                         prompt.UIBars = temp.ToArray();
                     }
+                    else
+                        ClearBars(prompt);
                 }
             }
         }
@@ -254,6 +260,17 @@ namespace Space.UI.Prompt
         /// <param name="prompt"></param>
         private void ClearPrompt(PromptData prompt)
         {
+            ClearTexts(prompt);
+
+            ClearBars(prompt);
+        }
+
+        /// <summary>
+        /// Clears all text items and deletes
+        /// </summary>
+        /// <param name="prompt"></param>
+        private void ClearTexts(PromptData prompt)
+        {
             if (prompt.UILabels != null)
             {
                 // found prompt to disable
@@ -265,13 +282,20 @@ namespace Space.UI.Prompt
 
                 prompt.UILabels = null;
             }
+        }
 
+        /// <summary>
+        /// Clears all the bar object of the HUD
+        /// and deletes them
+        /// </summary>
+        /// <param name="prompt"></param>
+        private void ClearBars(PromptData prompt)
+        {
             if (prompt.UIBars != null)
             {
                 // found prompt to disable
                 foreach (HUDBar ui in prompt.UIBars)
                 {
-                    //PanelFadeEffects.FadeOutText(ui);
                     GameObject.Destroy(ui.gameObject, 1);
                 }
 

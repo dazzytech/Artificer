@@ -410,9 +410,11 @@ MonoBehaviour:
     Folder: 
     Name: 
     Style: 
+    Cost: 0
     sockets: []
+    requirements: []
     AutoLock: 0
-    behaviour: 0
+    Behaviour: 0
     AutoFire: 0
 --- !u!114 &11451858
 MonoBehaviour:
@@ -451,7 +453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2a5acc2f2f2cba47a0eab838337826b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Weight: 1.1
+  Weight: 0.4
   ComponentType: Components
 --- !u!114 &11499710
 MonoBehaviour:
@@ -506,6 +508,8 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

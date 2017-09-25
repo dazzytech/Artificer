@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 /// with the intended use of
 /// being indexed within a list
 /// </summary>
+[System.Serializable]
 public class IndexedObject
 {
     public int ID;

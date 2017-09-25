@@ -48,6 +48,7 @@ namespace Space.Segment
         [SerializeField]
         public bool PhysicalObject;
 
+        [HideInInspector]
         public bool Active;
 
         /// <summary>

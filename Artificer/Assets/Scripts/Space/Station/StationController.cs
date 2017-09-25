@@ -237,6 +237,8 @@ namespace Stations
             }
             else
                 SystemManager.UIPrompt.DisplayPrompt(m_att.DockPrompt.ID);
+
+            m_att.InRange = true;
         }
 
         /// <summary>
@@ -249,6 +251,8 @@ namespace Stations
                 SystemManager.UIPrompt.DeletePrompt(m_att.DockPrompt.ID);
                 m_att.DockPrompt = null;
             }
+
+            m_att.InRange = false;
         }
 
         #endregion
@@ -339,10 +343,6 @@ namespace Stations
         protected IEnumerator CheckRange
             (StationEvent InRange, StationEvent OutRange, float Distance)
         {
-            // Create bools so only single
-            // events are triggered
-            bool triggered = false;
-
             // Endless loop
             while (true)
             {
@@ -384,22 +384,18 @@ namespace Stations
                 // determine range
                 if (distance <= Distance)
                 {
-                    if (!triggered)
+                    if (!m_att.InRange)
                     {
                         // Call the event
                         InRange(m_att.Accessor);
-
-                        triggered = true;
                     }
                 }
                 else
                 {
-                    if (triggered)
+                    if (m_att.InRange)
                     {
                         // Call the event
                         OutRange(m_att.Accessor);
-
-                        triggered = false;
                     }
                 }
 

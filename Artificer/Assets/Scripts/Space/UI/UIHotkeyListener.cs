@@ -40,7 +40,8 @@ namespace Space.UI
 
         private void OnEnable()
         {
-            SystemManager.Space.OnKeyPress += OnKeyPressed;
+            if(SystemManager.Space != null)
+                SystemManager.Space.OnKeyPress += OnKeyPressed;
 
             m_hidden = false;
 

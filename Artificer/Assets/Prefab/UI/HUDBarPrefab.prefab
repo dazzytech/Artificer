@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224287818750484096}
   - component: {fileID: 114823905894937496}
+  - component: {fileID: 114806064323538390}
   m_Layer: 5
   m_Name: HUDBarPrefab
   m_TagString: Untagged
@@ -126,6 +127,25 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &114806064323538390
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1122954319655576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: 10
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &114823905894937496
 MonoBehaviour:
   m_ObjectHideFlags: 1

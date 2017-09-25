@@ -148,10 +148,6 @@ namespace Space.Spawn
 
         #endregion
 
-        #region MONOBEHAVIOUR
-
-        #endregion
-
         #region PUBLIC INTERACTION
 
         /// <summary>

@@ -15,10 +15,6 @@ namespace Space.AI.Agent
     /// </summary>
     public class AssaultAgent : FSM
     {
-        #region MONO BEHAVIOUR
-
-        #endregion
-
         #region OVERRIDE FUNCTIONS
 
         #region FSM

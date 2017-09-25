@@ -103,7 +103,7 @@ namespace Space
             if (SystemManager.Events != null)
             {
                 SystemManager.Events.EventShipDestroyed
-                  -= OnShipDestroyed;
+                -= OnShipDestroyed;
 
                 SystemManager.Events.EventStationDestroyed
                     -= OnStationDestroyed;
@@ -239,6 +239,8 @@ namespace Space
                 m_att.DockingStation.Interact(false);
 
                 m_att.DockingStation.Dock(false);
+
+                m_att.DockingStation = null;
             }
 
 
@@ -249,6 +251,8 @@ namespace Space
                 m_att.InteractStation.Interact(false);
 
                 m_att.InteractStation.Dock(false);
+
+                m_att.InteractStation = null;
             }
 
             // Prompt player to pick a spawn

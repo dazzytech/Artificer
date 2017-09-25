@@ -181,15 +181,15 @@ namespace Space.UI.Proxmity
             }
 
             SystemManager.Space.OnOrientationChange += OnOrientationChange;
+
+            m_cameraObject = GameObject.FindGameObjectWithTag
+                    ("MainCamera");
         }
 
         public void Start()
         {
             if (!m_running)
                 InitializeTracker();
-
-            m_cameraObject = GameObject.FindGameObjectWithTag
-                    ("MainCamera");
 
             // Build the compass
             BuildCompassMarkers();
