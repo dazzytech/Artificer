@@ -53,10 +53,10 @@ namespace Stations
         /// <param name="newID"></param>
         /// <param name="newTeam"></param>
         [Server]
-        public override void Initialize(NetworkInstanceId newTeam, bool ignore)
+        public override void Initialize(NetworkInstanceId newTeam, bool build)
         {
             // For now call the base class till actions are different
-            base.Initialize(newTeam, true);
+            base.Initialize(newTeam, build);
 
             m_att.ProximityMessage = string.Format
                 ("Press {0} to enter trader hub.", Control_Config.GetKey("dock", "sys"));
@@ -78,7 +78,7 @@ namespace Stations
                 // micro stationHUD
                 SystemManager.UIState.SetState(UIState.Station);
 
-                SystemManager.UI.InitializeTradeHub();
+                SystemManager.UI.InitializeTradeHub(m_att.Accessor.Team);
             }
         }
 

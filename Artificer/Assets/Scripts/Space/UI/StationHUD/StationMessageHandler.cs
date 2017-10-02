@@ -61,7 +61,7 @@ namespace Space.UI.Station
             m_warpMap.BuildMap(warpList, home);
         }
 
-        public void InitializeTradingHub()
+        public void InitializeTradingHub(TeamController team)
         {
             if (m_warpMap.gameObject.activeSelf)
                 m_warpMap.gameObject.SetActive(false);
@@ -72,7 +72,7 @@ namespace Space.UI.Station
             if (!m_tradeHub.gameObject.activeSelf)
                 m_tradeHub.gameObject.SetActive(true);
 
-            m_tradeHub.InitializeHUD();
+            m_tradeHub.InitializeHUD(team);
         }
 
         #endregion

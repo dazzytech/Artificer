@@ -15,5 +15,10 @@ namespace Space.UI.Station
         private TraderHubController m_con;
 
         #endregion
+
+        public void ExitStation()
+        {
+            SystemManager.Space.LeaveStation();
+        }
     }
 }

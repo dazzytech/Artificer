@@ -148,6 +148,11 @@ namespace Space.Teams
             get { return m_enemyTeams.ToList(); }
         }
 
+        public ItemCollectionData[] Assets
+        {
+            get { return m_teamAssets.Assets; }
+        }
+
         #endregion
 
         #region MONO BEHAVIOUR

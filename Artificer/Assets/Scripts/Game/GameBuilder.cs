@@ -32,24 +32,19 @@ namespace Game
             Vector2 teamBPos = param.TeamBSpawn;
 
             // Create a main station position within team As location
-            Vector2 stationAPosition = new Vector2
-                (Random.Range((teamAPos.x - 50), (teamAPos.x + 50)),
-                 Random.Range((teamAPos.y - 50), (teamAPos.y + 50)));
+            Vector2 ATraderPosition = Math.RandomWithinRange(teamAPos, 10, 30);
 
             // Create a main station position within team Bs location
-            Vector2 stationBPosition = new Vector2
-                (Random.Range((teamBPos.x - 50), (teamBPos.x + 50)),
-                 Random.Range((teamBPos.y - 50), (teamBPos.y + 50)));
+            Vector2 BTraderPosition = Math.RandomWithinRange(teamBPos, 10, 30);
 
             // Todo: Develop more parameters for station construction
             // e.g. prefab name
 
-            // for now only send one vector position
-            GameObject stationA = teamA.Spawner.AddStation(stationAPosition);
-            teamA.AddStationObject(stationA.GetComponent<NetworkIdentity>().netId);
+            teamA.Spawner.AddStation(teamAPos);
+            teamA.Spawner.AddStation(ATraderPosition, "Trader_Station");
 
-            GameObject stationB = teamB.Spawner.AddStation(stationBPosition);
-            teamB.AddStationObject(stationB.GetComponent<NetworkIdentity>().netId);
+            teamB.Spawner.AddStation(teamBPos);
+            teamB.Spawner.AddStation(BTraderPosition, "Trader_Station");
         }
 
         [Server]

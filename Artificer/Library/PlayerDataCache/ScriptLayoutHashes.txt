@@ -211,6 +211,7 @@ e523c3b59ee27f7ea946669938becd10 Assembly-CSharp.dll:Space.Teams.TeamController
 4c3f48939bc8dd74134c1441893eb07f Assembly-CSharp.dll:Data.UI.SocketData
 41c9caa43046551fea388e8201aaf770 Assembly-CSharp.dll:Space.UI.Station.Editor.Component.BaseComponent
 98b48022754a7c7cd493f500454aec4f Assembly-CSharp.dll:Space.Ship.Components.Attributes.ShieldAttributes
+bf25f053f8bb51d95cd740ce219f73b6 Assembly-CSharp.dll:Space.UI.Station.TraderHubController
 526592128218b474a7cbd70182c0e70f Assembly-CSharp.dll:Space.Ship.Components.Attributes.TargeterAttributes
 3b3d53a15354af3355899953ad109356 Assembly-CSharp.dll:Space.UI.Spawn.SpawnController
 2304dbc373f83e4aa6d2072f903cc3f6 Assembly-CSharp.dll:Stations.WarpAttributes
@@ -296,8 +297,11 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.Spa
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingRenderer
 3ce4854aca3ff44aa356b88984935c5b Assembly-CSharp.dll:Menu.Video_EventListener
 f39af1a71723b531b47f5e3bb1203707 Assembly-CSharp.dll:Space.Segment.ShipGraveyardBehaviour
+6427c8cf98aa298f3e7c4d95ec54ff4a Assembly-CSharp.dll:Space.UI.Station.TraderHubEventListener
+8e76647ae64118c0c2245d8f4bd6a554 Assembly-CSharp.dll:Stations.TraderController
 afa507ccc545ba5df573b0efba9519d7 Assembly-CSharp.dll:Space.UI.Ship.ShipHUD
 4989bcc1828ca2a0c9427b3bc131adb7 Assembly-CSharp.dll:Menu.ListDividerPrefab
+ee6bf3fd604c127280715e2dbe0cd53e Assembly-CSharp.dll:Stations.TraderAttributes
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:Space.UI.Station.Editor.Component.LayerReorderingBehaviour
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.SteamManager
 fe4d4a8883f80196f479b1a48f38377e Assembly-CSharp.dll:Space.AI.AIManager
@@ -355,7 +359,7 @@ c0b969b1cbdf7ade27597d3e3f1444f7 Assembly-CSharp.dll:Stations.StationAccessor
 1d3c720834ebab26a934e6da9d55be64 Assembly-CSharp.dll:Menu.Menu_Behaviour
 60066eb869932c2772feb4b4cbb6afe0 Assembly-CSharp.dll:Space.UI.StationPrefab
 b43e94df751351a999c4002e1e4de5d2 Assembly-CSharp.dll:Space.UI.Station.Prefabs.ComponentCreatePrefab
-26ab19f96ee1a4f9851c5dd64c7fd204 Assembly-CSharp.dll:Space.UI.Station.StationMessageHandler
+62e0e1e7ef3894911fc9abd16ebb5f24 Assembly-CSharp.dll:Space.UI.Station.StationMessageHandler
 12dac30189bd8c34d84507ed98b89d15 Assembly-CSharp.dll:Space.CameraUtils.StarFieldController
 5fc28f3367c50f479433fe450186c2dd Assembly-CSharp.dll:Space.UI.UIMessageController
 c38ec0d21c425a274f55b7414a6e54c1 Assembly-CSharp-firstpass.dll:NATTraversal.NATNetworkManagerHUD
@@ -363,4 +367,5 @@ c38ec0d21c425a274f55b7414a6e54c1 Assembly-CSharp-firstpass.dll:NATTraversal.NATN
 ba56c5d0d84710ca98240570ed8f340b Assembly-CSharp.dll:Space.UI.Station.Prefabs.ComponentTabPrefab
 0d9c1c5715c91a01216b5c53fda42d19 Assembly-CSharp.dll:Server.ServerEventListener
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:Space.Segment.Debris
+429e8d9449ddc51326d6a9b2c38d5c82 Assembly-CSharp.dll:Space.UI.Station.TraderHubAttributes
 799b1cdda233653eafc3fcaa111a4f1a Assembly-CSharp.dll:Space.UI.Station.Prefabs.ComponentHoverPrefab

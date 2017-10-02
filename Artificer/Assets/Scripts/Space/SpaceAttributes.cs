@@ -73,14 +73,6 @@ namespace Space
         /// </summary>
         public bool Docked;
 
-        /// <summary>
-        /// Every single station in segment
-        /// </summary>
-        public List<StationAccessor> GlobalStations;
-
-        // Reference to player team
-        public TeamController Team;
-
         #endregion
 
         #region SPACE ASSETS
@@ -90,6 +82,20 @@ namespace Space
         public AIManager AI;
 
         public SegmentManager Segment;
+
+        #region LOCAL OBJECT
+
+        /// <summary>
+        /// Every single station in segment
+        /// </summary>
+        public List<StationAccessor> GlobalStations;
+
+        /// <summary>
+        /// Reference to the team we belong to
+        /// </summary>
+        public TeamController Team;
+
+        #endregion
 
         #endregion
     }

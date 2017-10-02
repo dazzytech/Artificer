@@ -143,9 +143,9 @@ namespace Space.UI
             m_stationMsg.InitializeShipViewer(ship);
         }
 
-        public void InitializeTradeHub()
+        public void InitializeTradeHub(TeamController team)
         {
-            m_stationMsg.InitializeTradingHub();
+            m_stationMsg.InitializeTradingHub(team);
         }
 
         #endregion

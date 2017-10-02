@@ -28,6 +28,9 @@ namespace Space.UI
         [SerializeField]
         private Transform m_stationDock;
 
+        [SerializeField]
+        private Transform m_tradeDock;
+
         #endregion
 
         #region PUBLIC INTERACTION

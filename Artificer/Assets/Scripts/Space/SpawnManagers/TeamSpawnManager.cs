@@ -9,6 +9,7 @@ using System.Collections;
 using Space.AI;
 using System.Linq;
 using Networking;
+using Space.Teams;
 
 namespace Space.Spawn
 {
@@ -188,6 +189,9 @@ namespace Space.Spawn
             stationAtt.SpawnID = sPInfo.ID;
 
             m_groups.Add(new AgentGroup(stationCon.netId.Value));
+
+            GetComponent<TeamController>().
+                AddStationObject(stationCon.netId);
 
             return newStation;
         }

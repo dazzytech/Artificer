@@ -159,7 +159,7 @@ namespace Space.AI
 
             for (int i = 0; i < stationCount; i++)
             {
-                team.AddStationObject(CreateStation(team, position));
+                CreateStation(team, position);
             }
 
             return team;
