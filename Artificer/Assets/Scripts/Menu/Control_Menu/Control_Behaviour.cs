@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using UI;
+
 namespace Menu
 {
     public class Control_Behaviour : HUDPanel

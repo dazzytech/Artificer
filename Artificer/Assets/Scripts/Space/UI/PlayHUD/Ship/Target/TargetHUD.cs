@@ -7,6 +7,7 @@ using Space.Ship;
 using Space.Ship.Components.Listener;
 using Space.Ship.Components.Attributes;
 using System.Linq;
+using UI;
 
 namespace Space.UI.Ship.Target
 {

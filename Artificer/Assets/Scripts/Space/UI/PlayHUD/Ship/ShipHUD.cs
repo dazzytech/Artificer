@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Data.Space;
 using Space.Ship;
 using Space.UI.Ship.Target;
+using UI;
 
 namespace Space.UI.Ship
 {

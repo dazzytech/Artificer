@@ -2971,11 +2971,31 @@ MonoBehaviour:
   m_header: {fileID: 0}
   m_body: {fileID: 912}
   m_background: {fileID: 195}
-  m_idleColour: {r: 0.22745098, g: 0.07450981, b: 0.039215688, a: 1}
-  m_hoverColour: {r: 0.65, g: 0.77, b: 0.84, a: 0.3}
-  m_editColour: {r: 0, g: 0, b: 0, a: 0}
-  m_editColourHover: {r: 0, g: 0, b: 0, a: 0}
-  m_editColourDrag: {r: 0, g: 0, b: 0, a: 0}
+  m_idleColour:
+    r: 0.22745098
+    g: 0.07450981
+    b: 0.039215688
+    a: 1
+  m_hoverColour:
+    r: 0.65
+    g: 0.77
+    b: 0.84
+    a: 0.3
+  m_editColour:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
+  m_editColourHover:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
+  m_editColourDrag:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
 --- !u!114 &201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4659,11 +4679,31 @@ MonoBehaviour:
   m_header: {fileID: 0}
   m_body: {fileID: 1009}
   m_background: {fileID: 295}
-  m_idleColour: {r: 0.22745098, g: 0.07450981, b: 0.039215688, a: 1}
-  m_hoverColour: {r: 0.65, g: 0.77, b: 0.84, a: 0.3}
-  m_editColour: {r: 0, g: 0, b: 0, a: 0}
-  m_editColourHover: {r: 0, g: 0, b: 0, a: 0}
-  m_editColourDrag: {r: 0, g: 0, b: 0, a: 0}
+  m_idleColour:
+    r: 0.22745098
+    g: 0.07450981
+    b: 0.039215688
+    a: 1
+  m_hoverColour:
+    r: 0.65
+    g: 0.77
+    b: 0.84
+    a: 0.3
+  m_editColour:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
+  m_editColourHover:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
+  m_editColourDrag:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
 --- !u!1 &307
 GameObject:
   m_ObjectHideFlags: 0

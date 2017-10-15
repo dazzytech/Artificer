@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UI.Effects;
+using UI;
 
 namespace Space.UI.Prompt
 {

@@ -48,5 +48,18 @@ namespace Space.UI.Station
         public Dictionary<ItemCollectionData, MaterialViewerPrefab> TeamAssetList;
 
         #endregion
+
+        #region TRADER 
+
+        [Header("Trade Window")]
+        public Transform SelfPending;
+
+        public Transform OtherPending;
+
+        public Text SelfPendingCost;
+
+        public Text OtherPendingCost;
+
+        #endregion
     }
 }
