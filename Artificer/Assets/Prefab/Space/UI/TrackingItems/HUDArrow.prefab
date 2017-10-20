@@ -87,10 +87,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 129566}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 599f9ce5ed4682047bb0971f3bcbf3cf, type: 3}
+  m_Script: {fileID: 11500000, guid: b532cc879a0df0b4ca76e181916f8efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_interactive: 1
+  SharedIndex: 0
   m_background: {fileID: 114245955103852534}
   m_standardColour: {r: 1, g: 1, b: 1, a: 1}
   m_highlightColour: {r: 1, g: 1, b: 1, a: 1}
