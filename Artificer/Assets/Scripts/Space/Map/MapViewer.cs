@@ -118,6 +118,12 @@ namespace Space.Map
             MapController.OnMapUpdate += OnIconChanged;
 
             StartCoroutine("DrawBoundaries");
+
+            if(m_running)
+            {
+                ClearIcons();
+                BuildIcons();
+            }
         }
 
         public void Start()

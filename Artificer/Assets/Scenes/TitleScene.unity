@@ -2958,9 +2958,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 194}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6319c3685c7794a8d3e585555c013a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf517f4510851646b0415055dca0c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_canEdit: 0
+  m_keyIndex: 
+  m_canCollapse: 0
+  m_startMinimized: 0
+  m_windowType: 0
+  m_responsive: 0
+  m_HUD: {fileID: 912}
+  m_header: {fileID: 0}
+  m_body: {fileID: 912}
+  m_background: {fileID: 0}
+  m_idleColour: {r: 0.65, g: 0.67, b: 0.84, a: 0.1}
+  m_hoverColour: {r: 0.65, g: 0.77, b: 0.84, a: 0.3}
+  m_editColour: {r: 0, g: 0, b: 0, a: 0}
+  m_editColourHover: {r: 0, g: 0, b: 0, a: 0}
+  m_editColourDrag: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4631,9 +4646,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 294}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6319c3685c7794a8d3e585555c013a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf517f4510851646b0415055dca0c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_canEdit: 0
+  m_keyIndex: 
+  m_canCollapse: 0
+  m_startMinimized: 0
+  m_windowType: 0
+  m_responsive: 0
+  m_HUD: {fileID: 1009}
+  m_header: {fileID: 0}
+  m_body: {fileID: 1009}
+  m_background: {fileID: 0}
+  m_idleColour: {r: 0.65, g: 0.67, b: 0.84, a: 0.1}
+  m_hoverColour: {r: 0.65, g: 0.77, b: 0.84, a: 0.3}
+  m_editColour: {r: 0, g: 0, b: 0, a: 0}
+  m_editColourHover: {r: 0, g: 0, b: 0, a: 0}
+  m_editColourDrag: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &307
 GameObject:
   m_ObjectHideFlags: 0

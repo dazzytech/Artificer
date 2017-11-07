@@ -11097,21 +11097,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 520500435}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6319c3685c7794a8d3e585555c013a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf517f4510851646b0415055dca0c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_canEdit: 0
   m_keyIndex: 
-  m_canCollapse: 1
+  m_canCollapse: 0
   m_startMinimized: 0
   m_windowType: 0
-  m_responsive: 1
+  m_responsive: 0
   m_HUD: {fileID: 520500436}
   m_header: {fileID: 0}
   m_body: {fileID: 520500436}
-  m_background: {fileID: 520500438}
-  m_idleColour: {r: 0.33333334, g: 0.33333334, b: 0.33333334, a: 0.1}
-  m_hoverColour: {r: 0.8980393, g: 0.8980393, b: 0.8980393, a: 0.331}
+  m_background: {fileID: 0}
+  m_idleColour: {r: 0.65, g: 0.67, b: 0.84, a: 0.1}
+  m_hoverColour: {r: 0.65, g: 0.77, b: 0.84, a: 0.3}
   m_editColour: {r: 0, g: 0, b: 0, a: 0}
   m_editColourHover: {r: 0, g: 0, b: 0, a: 0}
   m_editColourDrag: {r: 0, g: 0, b: 0, a: 0}
@@ -11806,12 +11806,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Left: 5
+    m_Right: 5
+    m_Top: 5
+    m_Bottom: 5
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: 10
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -13863,7 +13863,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 641364070}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6319c3685c7794a8d3e585555c013a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf517f4510851646b0415055dca0c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_canEdit: 0
@@ -13875,8 +13875,8 @@ MonoBehaviour:
   m_HUD: {fileID: 641364071}
   m_header: {fileID: 0}
   m_body: {fileID: 641364071}
-  m_background: {fileID: 641364072}
-  m_idleColour: {r: 0, g: 0, b: 0, a: 0}
+  m_background: {fileID: 0}
+  m_idleColour: {r: 0.65, g: 0.67, b: 0.84, a: 0.1}
   m_hoverColour: {r: 0.65, g: 0.77, b: 0.84, a: 0.3}
   m_editColour: {r: 0, g: 0, b: 0, a: 0}
   m_editColourHover: {r: 0, g: 0, b: 0, a: 0}
@@ -14519,7 +14519,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 673700068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6319c3685c7794a8d3e585555c013a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf517f4510851646b0415055dca0c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_canEdit: 0
@@ -14531,8 +14531,8 @@ MonoBehaviour:
   m_HUD: {fileID: 673700069}
   m_header: {fileID: 0}
   m_body: {fileID: 673700069}
-  m_background: {fileID: 673700070}
-  m_idleColour: {r: 0.32156864, g: 0.25882354, b: 0.26666668, a: 0.2784314}
+  m_background: {fileID: 0}
+  m_idleColour: {r: 0.65, g: 0.67, b: 0.84, a: 0.1}
   m_hoverColour: {r: 0.65, g: 0.77, b: 0.84, a: 0.3}
   m_editColour: {r: 0, g: 0, b: 0, a: 0}
   m_editColourHover: {r: 0, g: 0, b: 0, a: 0}
@@ -15063,7 +15063,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 677957700}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6319c3685c7794a8d3e585555c013a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf517f4510851646b0415055dca0c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_canEdit: 0
@@ -15075,8 +15075,8 @@ MonoBehaviour:
   m_HUD: {fileID: 677957701}
   m_header: {fileID: 0}
   m_body: {fileID: 677957701}
-  m_background: {fileID: 677957702}
-  m_idleColour: {r: 0.16078432, g: 0.14901961, b: 0.16078432, a: 0.39215687}
+  m_background: {fileID: 0}
+  m_idleColour: {r: 0.65, g: 0.67, b: 0.84, a: 0.1}
   m_hoverColour: {r: 0.65, g: 0.77, b: 0.84, a: 0.3}
   m_editColour: {r: 0, g: 0, b: 0, a: 0}
   m_editColourHover: {r: 0, g: 0, b: 0, a: 0}
@@ -18515,6 +18515,18 @@ Prefab:
     - target: {fileID: 22410970, guid: e7d303662c3ef0a44a9da40d44ea461c, type: 2}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11410706, guid: e7d303662c3ef0a44a9da40d44ea461c, type: 2}
+      propertyPath: m_Color.r
+      value: 0.8897059
+      objectReference: {fileID: 0}
+    - target: {fileID: 11410706, guid: e7d303662c3ef0a44a9da40d44ea461c, type: 2}
+      propertyPath: m_Color.g
+      value: 0.8897059
+      objectReference: {fileID: 0}
+    - target: {fileID: 11410706, guid: e7d303662c3ef0a44a9da40d44ea461c, type: 2}
+      propertyPath: m_Color.b
+      value: 0.8897059
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e7d303662c3ef0a44a9da40d44ea461c, type: 2}
@@ -22537,7 +22549,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1094001596}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6319c3685c7794a8d3e585555c013a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf517f4510851646b0415055dca0c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_canEdit: 0
@@ -22888,7 +22900,6 @@ GameObject:
   - component: {fileID: 1137989021}
   - component: {fileID: 1137989022}
   - component: {fileID: 1137989020}
-  - component: {fileID: 1137989023}
   m_Layer: 5
   m_Name: MessageHUDDock
   m_TagString: Untagged
@@ -22954,47 +22965,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1137989018}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6319c3685c7794a8d3e585555c013a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf517f4510851646b0415055dca0c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_canEdit: 0
   m_keyIndex: 
-  m_canCollapse: 1
+  m_canCollapse: 0
   m_startMinimized: 0
   m_windowType: 0
-  m_responsive: 1
+  m_responsive: 0
   m_HUD: {fileID: 1137989019}
   m_header: {fileID: 0}
   m_body: {fileID: 1137989019}
-  m_background: {fileID: 1137989020}
-  m_idleColour: {r: 0.33333334, g: 0.33333334, b: 0.33333334, a: 0.1}
-  m_hoverColour: {r: 0.8980393, g: 0.8980393, b: 0.8980393, a: 0.331}
-  m_editColour: {r: 0, g: 0, b: 0, a: 0}
-  m_editColourHover: {r: 0, g: 0, b: 0, a: 0}
-  m_editColourDrag: {r: 0, g: 0, b: 0, a: 0}
---- !u!114 &1137989023
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1137989018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6319c3685c7794a8d3e585555c013a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_canEdit: 0
-  m_keyIndex: 
-  m_canCollapse: 1
-  m_startMinimized: 0
-  m_windowType: 0
-  m_responsive: 1
-  m_HUD: {fileID: 1137989019}
-  m_header: {fileID: 0}
-  m_body: {fileID: 1137989019}
-  m_background: {fileID: 1137989020}
-  m_idleColour: {r: 0.33333334, g: 0.33333334, b: 0.33333334, a: 0.1}
-  m_hoverColour: {r: 0.8980393, g: 0.8980393, b: 0.8980393, a: 0.331}
+  m_background: {fileID: 0}
+  m_idleColour: {r: 0.65, g: 0.67, b: 0.84, a: 0.1}
+  m_hoverColour: {r: 0.65, g: 0.77, b: 0.84, a: 0.3}
   m_editColour: {r: 0, g: 0, b: 0, a: 0}
   m_editColourHover: {r: 0, g: 0, b: 0, a: 0}
   m_editColourDrag: {r: 0, g: 0, b: 0, a: 0}
@@ -25677,7 +25662,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1273291891}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6319c3685c7794a8d3e585555c013a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf517f4510851646b0415055dca0c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_canEdit: 0
@@ -25689,8 +25674,8 @@ MonoBehaviour:
   m_HUD: {fileID: 1273291892}
   m_header: {fileID: 0}
   m_body: {fileID: 1273291892}
-  m_background: {fileID: 1273291895}
-  m_idleColour: {r: 0.29803923, g: 0, b: 0, a: 0.37254903}
+  m_background: {fileID: 0}
+  m_idleColour: {r: 0.65, g: 0.67, b: 0.84, a: 0.1}
   m_hoverColour: {r: 0.65, g: 0.77, b: 0.84, a: 0.3}
   m_editColour: {r: 0, g: 0, b: 0, a: 0}
   m_editColourHover: {r: 0, g: 0, b: 0, a: 0}
@@ -33741,7 +33726,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1669443496}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6319c3685c7794a8d3e585555c013a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf517f4510851646b0415055dca0c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_canEdit: 0
@@ -33753,8 +33738,8 @@ MonoBehaviour:
   m_HUD: {fileID: 1669443497}
   m_header: {fileID: 0}
   m_body: {fileID: 1669443497}
-  m_background: {fileID: 1669443498}
-  m_idleColour: {r: 0.32156864, g: 0.25882354, b: 0.26666668, a: 0.2784314}
+  m_background: {fileID: 0}
+  m_idleColour: {r: 0.65, g: 0.67, b: 0.84, a: 0.1}
   m_hoverColour: {r: 0.65, g: 0.77, b: 0.84, a: 0.3}
   m_editColour: {r: 0, g: 0, b: 0, a: 0}
   m_editColourHover: {r: 0, g: 0, b: 0, a: 0}
@@ -34499,7 +34484,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1705473088}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6319c3685c7794a8d3e585555c013a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf517f4510851646b0415055dca0c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_canEdit: 0
@@ -34510,10 +34495,10 @@ MonoBehaviour:
   m_responsive: 0
   m_HUD: {fileID: 1705473089}
   m_header: {fileID: 0}
-  m_body: {fileID: 1809215891}
-  m_background: {fileID: 1809215893}
-  m_idleColour: {r: 0.6117647, g: 0.6117647, b: 0.6117647, a: 0.16078432}
-  m_hoverColour: {r: 0.57254905, g: 0.62352943, b: 0.654902, a: 0.29803923}
+  m_body: {fileID: 1705473089}
+  m_background: {fileID: 0}
+  m_idleColour: {r: 0.65, g: 0.67, b: 0.84, a: 0.1}
+  m_hoverColour: {r: 0.65, g: 0.77, b: 0.84, a: 0.3}
   m_editColour: {r: 0, g: 0, b: 0, a: 0}
   m_editColourHover: {r: 0, g: 0, b: 0, a: 0}
   m_editColourDrag: {r: 0, g: 0, b: 0, a: 0}
@@ -34625,6 +34610,8 @@ MonoBehaviour:
   m_editColourHover: {r: 0, g: 0, b: 0, a: 0}
   m_editColourDrag: {r: 0, g: 0, b: 0, a: 0}
   m_viewerPrefab: {fileID: 124610, guid: 4481a06226abdd44f8c35019e65e76a5, type: 2}
+  m_owned: {r: 0.18039216, g: 0.22745098, b: 0.25882354, a: 0.6666667}
+  m_notOwned: {r: 0.578, g: 0.22745098, b: 0.25882354, a: 0.6666667}
 --- !u!114 &1710053486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36479,7 +36466,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1799334257}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6319c3685c7794a8d3e585555c013a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf517f4510851646b0415055dca0c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_canEdit: 0
@@ -36621,7 +36608,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1809215891
 RectTransform:
   m_ObjectHideFlags: 0
@@ -36661,7 +36648,7 @@ MonoBehaviour:
     type: 3}
   m_EnemyStationIcon: {fileID: 2800000, guid: 41bb4a4589b90614984baffb50d0ba6e, type: 3}
   m_RegionIcon: {fileID: 2800000, guid: 0b82c97e0aab06447962eaf6226311c7, type: 3}
-  m_regionMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 3}
+  m_regionMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_defaultAsteroidColour: {r: 0.26378676, g: 0.875, b: 0.6726674, a: 0.684}
 --- !u!114 &1809215893
 MonoBehaviour:
@@ -43147,7 +43134,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2075570352}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6319c3685c7794a8d3e585555c013a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf517f4510851646b0415055dca0c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_canEdit: 0
@@ -43159,8 +43146,8 @@ MonoBehaviour:
   m_HUD: {fileID: 2075570353}
   m_header: {fileID: 0}
   m_body: {fileID: 2075570353}
-  m_background: {fileID: 2075570356}
-  m_idleColour: {r: 0.22745098, g: 0.07450981, b: 0.039215688, a: 1}
+  m_background: {fileID: 0}
+  m_idleColour: {r: 0.65, g: 0.67, b: 0.84, a: 0.1}
   m_hoverColour: {r: 0.65, g: 0.77, b: 0.84, a: 0.3}
   m_editColour: {r: 0, g: 0, b: 0, a: 0}
   m_editColourHover: {r: 0, g: 0, b: 0, a: 0}

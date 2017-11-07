@@ -302,8 +302,6 @@ namespace Space
 
                 station.Range(true, ship);
 
-                Debug.Log(m_att.InRangeList.Count);
-
                 // define the station reference 
                 if (station.DockPrompt != null)
                 {

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 namespace Space.Map
 {
@@ -42,15 +43,6 @@ namespace Space.Map
 
         #endregion
 
-        #region MONO BEHAVIOUR
-
-        private void Awake()
-        {
-            InitializeMap();
-        }
-
-        #endregion
-
         #region PUBLIC INTERACTION
 
         // Use this for initialization
@@ -62,6 +54,8 @@ namespace Space.Map
             SegmentObjectBehaviour.Created += CreateSegmentObject;
             UI.Proxmity.TrackerHUD.OnWayPointCreated += DeployWaypoint;
 
+            // build objects
+            PopulateExistingShips();
 
             StartCoroutine("UpdateList");
         }
@@ -80,6 +74,28 @@ namespace Space.Map
         #endregion
 
         #region PRIVATE UTILITIES
+
+        /// <summary>
+        /// When the map is initialized
+        /// any ships that is already deployed is not added
+        /// to the map, do manually here
+        /// </summary>
+        private void PopulateExistingShips()
+        {
+            foreach(Transform ship in 
+                GameObject.Find("_ships").transform)
+            {
+                // all ships here need to be added to the map
+                MapObject mapObj = BuildObject
+                    (ship);
+
+                mapObj.Type = MapObjectType.SHIP;
+                mapObj.TeamID = ship.GetComponent<ShipAccessor>().TeamID;
+
+                if (OnMapUpdate != null)
+                    OnMapUpdate(mapObj);
+            }
+        }
 
         private MapObject BuildObject(Transform child)
         {

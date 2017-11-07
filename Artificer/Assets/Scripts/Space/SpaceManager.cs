@@ -205,6 +205,16 @@ namespace Space
             RefreshShipSpawnList();
         }
 
+        /// <summary>
+        /// Called on both servers and clients 
+        /// initializes assets in the space scene
+        /// e.g. init map
+        /// </summary>
+        public void EnterLevel()
+        {
+            m_att.Map.InitializeMap();
+        }
+
         #region STATION
 
         public void DockAtStation()

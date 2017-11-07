@@ -243,14 +243,17 @@ namespace UI
 
             // listen to the player state change
             ShipPlayerInputController.OnStateChanged += DetectState;
-
-            if (m_startMinimized)
-                ToggleHUD(false);
         }
 
         protected virtual void OnDisable()
         {
             ShipPlayerInputController.OnStateChanged -= DetectState;
+        }
+
+        protected virtual void Awake()
+        {
+            if (m_startMinimized)
+                ToggleHUD(false);
         }
 
         #endregion

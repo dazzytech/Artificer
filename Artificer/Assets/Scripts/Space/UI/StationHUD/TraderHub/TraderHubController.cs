@@ -118,6 +118,7 @@ namespace Space.UI.Station
             // Game object
             GameObject newItem = Instantiate(m_att.AssetPrefab) as GameObject;
             newItem.transform.SetParent(container, false);
+            newItem.AddComponent<HUDDraggable>();
 
             return newItem.GetComponent<MaterialViewerPrefab>();
         }

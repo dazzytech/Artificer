@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 // Artificer
 using Data.Space;
-using Menu; // use material list item till we create our own
 using Data.Space.Collectable;
 using System.Linq;
 using UI;
@@ -18,6 +17,12 @@ namespace Space.UI.Station.Utility
 
         [SerializeField]
         private GameObject m_viewerPrefab;
+
+        [SerializeField]
+        private Color m_owned;
+
+        [SerializeField]
+        private Color m_notOwned;
 
         /// <summary>
         /// Refernce to our current stored
@@ -40,7 +45,8 @@ namespace Space.UI.Station.Utility
         #region PUBLIC INTERATION
 
         /// <summary>
-        /// Creates an empty list with only the players components.
+        /// Displays the list of items that 
+        /// are neededto build the ship.
         /// </summary>
         /// <param name="import">Import.</param>
         public void UpdateList(ItemCollectionData[] required)
@@ -68,6 +74,11 @@ namespace Space.UI.Station.Utility
                     new float[2] { required[i].Amount, owned.Amount}, new string[3] 
                     { SystemManager.Items[required[i].Item].Description,
                         required[i].Amount.ToString(), owned.Amount.ToString() });
+
+                if(required[i].Amount <= owned.Amount)
+                    m_reqList[required[i]].SetColour(m_owned);
+                else
+                    m_reqList[required[i]].SetColour(m_notOwned);
             }
 
             // Remove any requirements that are no longer 
@@ -78,6 +89,7 @@ namespace Space.UI.Station.Utility
                 {
                     Destroy(m_reqList.Values.ToArray()[i].gameObject);
                     m_reqList.Remove(m_reqList.Keys.ToArray()[i]);
+                    i--;
                 }
             }
         }

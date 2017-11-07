@@ -15,8 +15,6 @@ namespace Space.UI
     {
         #region ATTRIBUTES
 
-        [Header("Storage")]
-
         /// <summary>
         /// displays the name
         /// </summary>

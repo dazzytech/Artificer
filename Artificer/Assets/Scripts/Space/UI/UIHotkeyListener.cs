@@ -60,9 +60,9 @@ namespace Space.UI
         /// </summary>
         private void Start()
         {
-            // Retrieve HUDS
+            // Retrieve HUDS including inactives
             HUDPanel[] windows = GameObject.Find("_gui").
-                GetComponentsInChildren<HUDPanel>();
+                GetComponentsInChildren<HUDPanel>(true);
 
             // store each HUD in list
             m_windows = new List<HUDPanel>(windows);

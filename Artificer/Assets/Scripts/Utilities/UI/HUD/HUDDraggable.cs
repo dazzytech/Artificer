@@ -42,17 +42,6 @@ namespace UI
 
         #region ATTRIBUTES
 
-        #region HUD ELEMENTS
-
-        /// <summary>
-        /// Image that appears 
-        /// on the component item
-        /// </summary>
-        [SerializeField]
-        private RawImage m_componentImage;
-
-        #endregion
-
         /// <summary>
         /// If our HUD Element is currently
         /// being dragged
@@ -89,9 +78,6 @@ namespace UI
 
                     m_isDragging = false;
 
-                    // Change our colour to a highlight
-                    m_componentImage.color = new Color(.75f, .75f, .2f, .4f);
-
                     return;
                 }
 
@@ -120,8 +106,6 @@ namespace UI
                             OnMouseOut(this);
 
                         m_mouseOver = false;
-
-                        m_componentImage.color = new Color(1, 1, 1, 1);
                     }
                 }
             }
@@ -137,8 +121,6 @@ namespace UI
                 OnMouseOver(this);
 
             m_mouseOver = true;
-
-                m_componentImage.color = new Color(.75f, .75f, .2f, .4f);
         }
 
         public void OnPointerExit(PointerEventData eventData)

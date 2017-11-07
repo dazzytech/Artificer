@@ -436,6 +436,12 @@ public class SystemManager : NATTraversal.NetworkManager
         base.OnClientSceneChanged(conn);
 
         m_singleton.client.RegisterHandler((short)MSGCHANNEL.NEWID, OnNewIDMessage);
+
+        if (SceneManager.GetActiveScene().name == "SpaceScene")
+        {
+            // Try and init map here
+            Space.EnterLevel();
+        }
     }
 
     public override void OnClientDisconnect(NetworkConnection conn)
