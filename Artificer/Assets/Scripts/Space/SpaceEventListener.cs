@@ -271,6 +271,9 @@ namespace Space
             m_att.PlayerShip = GameObject.FindGameObjectWithTag
                 ("PlayerShip");
 
+            m_att.PlayerCamera = GameObject.FindGameObjectWithTag
+                    ("MainCamera").transform;
+
             if (m_att.PlayerShip != null)
             {
                 m_att.netID = m_att.PlayerShip.GetComponent<NetworkIdentity>().
@@ -309,8 +312,6 @@ namespace Space
                         SystemManager.UIPrompt.HidePrompt
                             (m_att.DockingStation.DockPrompt.ID);
 
-                    Debug.Log("Dock Added");
-
                     m_att.DockingStation = station;
                 }
 
@@ -319,8 +320,6 @@ namespace Space
                     if (m_att.InteractStation != null)
                         SystemManager.UIPrompt.HidePrompt
                             (m_att.InteractStation.InteractPrompt.ID);
-
-                    Debug.Log("Interact Added");
 
                     m_att.InteractStation = station;
                 }
@@ -336,8 +335,6 @@ namespace Space
             if (m_att.InRangeList.Contains(station))
                 m_att.InRangeList.Remove(station);
 
-            Debug.Log(m_att.InRangeList.Count);
-
             station.Range(false);
 
             if (m_att.Docked)
@@ -350,8 +347,6 @@ namespace Space
                 if (m_att.DockingStation.Equals(station))
                 {
                     m_att.DockingStation = null;
-
-                    Debug.Log("Dock Removed");
 
                     foreach (StationAccessor other in m_att.InRangeList)
                     {

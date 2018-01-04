@@ -20,6 +20,7 @@ namespace Space.Map
         public Vector2 Location;
         public Vector2 Size;
         public Vector2[] Points;
+        public Vector2[] RenderPoints;
         public MapObjectType Type;
         public Transform Ref;
         public int TeamID;

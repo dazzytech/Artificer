@@ -83,6 +83,8 @@ namespace Space
 
         public SegmentManager Segment;
 
+        public Transform PlayerCamera;
+
         #region LOCAL OBJECT
 
         /// <summary>

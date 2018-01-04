@@ -133,8 +133,6 @@ namespace Space.UI.Proxmity
 
         private bool m_running = false;
 
-        private GameObject m_cameraObject;
-
         private List<WaypointPrefab> m_waypointList;
 
         private Vector2 m_dir;
@@ -153,6 +151,15 @@ namespace Space.UI.Proxmity
         #endregion
 
         #endregion
+
+        #endregion
+
+        #region ACCESSORS
+
+        private Transform CameraObject
+        {
+            get { return SystemManager.Space.PlayerCamera; }
+        }
 
         #endregion
 
@@ -181,9 +188,6 @@ namespace Space.UI.Proxmity
             }
 
             SystemManager.Space.OnOrientationChange += OnOrientationChange;
-
-            m_cameraObject = GameObject.FindGameObjectWithTag
-                    ("MainCamera");
         }
 
         public void Start()
@@ -204,7 +208,7 @@ namespace Space.UI.Proxmity
         {
             // If we don't have a camera or anything to track
             // this stops here
-            if (m_cameraObject == null || m_markers == null)
+            if (CameraObject == null || m_markers == null)
                 return;
 
             if (m_compass[0].arrow.GetComponent<SelectableHUDItem>().Visible)
@@ -217,9 +221,9 @@ namespace Space.UI.Proxmity
             {
                 if (m.arrow == null || m.box == null
                     || m.text == null)
-                    BuildMarker(m, m_cameraObject.transform.position);
+                    BuildMarker(m, CameraObject.transform.position);
                 else
-                    RepositionMarker(m, m_cameraObject.transform.position, m.ID);
+                    RepositionMarker(m, CameraObject.transform.position, m.ID);
             }
         }
 

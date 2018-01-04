@@ -138,6 +138,15 @@ namespace Space
         }
 
         /// <summary>
+        /// Returns the gameobject of the camera attached
+        /// to the player
+        /// </summary>
+        public Transform PlayerCamera
+        {
+            get { return m_att.PlayerCamera; }
+        }
+
+        /// <summary>
         /// Quick access to ship spawn list
         /// </summary>
         private ShipSpawnData[] Spawns

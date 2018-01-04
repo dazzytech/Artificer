@@ -34,7 +34,7 @@ namespace Space.Map
         /// </summary>
         private Vector2 m_dir;
 
-        private List<MapObject> m_renders
+        private List<MapObject> m_mapObjs
             = new List<MapObject>();
 
         #region MAP CUSTOMIZATION
@@ -180,8 +180,23 @@ namespace Space.Map
 
         public void RotateMap(Vector2 dir)
         {
-            m_dir = dir;
-            BuildIcons();
+            if (m_dir != dir)
+            {
+                m_dir = dir;
+                BuildIcons();
+
+                Vector2 offset = new Vector2(2500, 2500);
+
+                foreach (MapObject segmentObject in m_mapObjs)
+                {
+                    for (int i = 0; i < 8; i++)
+                    {
+                        segmentObject.RenderPoints[i] = ApplyCameraRotation
+                            (new Vector2(segmentObject.Points[i].x,
+                                         segmentObject.Points[i].y), offset);
+                    }
+                }
+            }
         }
 
         #endregion
@@ -281,9 +296,10 @@ namespace Space.Map
             {
                 if (mObj.Points != null)
                 {
-                    if (!m_renders.Contains(mObj))
+                    if (!m_mapObjs.Contains(mObj))
                     {
-                        m_renders.Add(mObj);
+                        mObj.Points.CopyTo(mObj.RenderPoints, 0);
+                        m_mapObjs.Add(mObj);
                     }
                 }
                 else
@@ -363,7 +379,7 @@ namespace Space.Map
                 GameObject.Destroy(child.gameObject);
             }
 
-            m_renders.Clear();
+            m_mapObjs.Clear();
         }
 
         /// <summary>
@@ -384,7 +400,7 @@ namespace Space.Map
                     // Destroy icon, map controller will delete item
                     GameObject.Destroy(mObj.Icon.gameObject);
                     mObj.Icon = null;
-                    m_renders.Remove(mObj);
+                    m_mapObjs.Remove(mObj);
                 }
                 else
                 {
@@ -421,6 +437,13 @@ namespace Space.Map
             Vector2 returnVal = orig -new Vector2(2500, 2500);
             returnVal.Scale(m_scale);
 
+            return ApplyCameraRotation(returnVal, Vector2.zero);
+        }
+
+        private Vector2 ApplyCameraRotation(Vector2 orig, Vector2 offset = default(Vector2))
+        {
+            Vector2 returnVal = orig - offset;
+
             if (m_dir.x != 0)
             {
                 returnVal = new Vector2(returnVal.y, -returnVal.x);
@@ -429,7 +452,7 @@ namespace Space.Map
             else if (m_dir.y != 0)
                 returnVal *= m_dir.y;
 
-            return returnVal;
+            return returnVal + offset;
         }
 
         /// <summary>
@@ -473,25 +496,25 @@ namespace Space.Map
                 GL.LoadPixelMatrix(SystemManager.Size.x, SystemManager.Size.width, SystemManager.Size.y, SystemManager.Size.height);
                 GL.Begin(GL.QUADS);
                 GL.Color(m_defaultAsteroidColour);
-                
-                foreach (MapObject segmentObject in m_renders)
+
+                foreach (MapObject segmentObject in m_mapObjs)
                 {
                     // Temp fix, only works for regions with 
                     // 8 points
-                    GL.Vertex3(segmentObject.Points[0].x, segmentObject.Points[0].y, 0);
-                    GL.Vertex3(segmentObject.Points[1].x, segmentObject.Points[1].y, 0);
-                    GL.Vertex3(segmentObject.Points[2].x, segmentObject.Points[2].y, 0);
-                    GL.Vertex3(segmentObject.Points[3].x, segmentObject.Points[3].y, 0);
+                    GL.Vertex3(segmentObject.RenderPoints[0].x, segmentObject.RenderPoints[0].y, 0);
+                    GL.Vertex3(segmentObject.RenderPoints[1].x, segmentObject.RenderPoints[1].y, 0);
+                    GL.Vertex3(segmentObject.RenderPoints[2].x, segmentObject.RenderPoints[2].y, 0);
+                    GL.Vertex3(segmentObject.RenderPoints[3].x, segmentObject.RenderPoints[3].y, 0);
 
-                    GL.Vertex3(segmentObject.Points[3].x, segmentObject.Points[3].y, 0);
-                    GL.Vertex3(segmentObject.Points[4].x, segmentObject.Points[4].y, 0);
-                    GL.Vertex3(segmentObject.Points[7].x, segmentObject.Points[7].y, 0);
-                    GL.Vertex3(segmentObject.Points[0].x, segmentObject.Points[0].y, 0);
+                    GL.Vertex3(segmentObject.RenderPoints[3].x, segmentObject.RenderPoints[3].y, 0);
+                    GL.Vertex3(segmentObject.RenderPoints[4].x, segmentObject.RenderPoints[4].y, 0);
+                    GL.Vertex3(segmentObject.RenderPoints[7].x, segmentObject.RenderPoints[7].y, 0);
+                    GL.Vertex3(segmentObject.RenderPoints[0].x, segmentObject.RenderPoints[0].y, 0);
 
-                    GL.Vertex3(segmentObject.Points[4].x, segmentObject.Points[4].y, 0);
-                    GL.Vertex3(segmentObject.Points[5].x, segmentObject.Points[5].y, 0);
-                    GL.Vertex3(segmentObject.Points[6].x, segmentObject.Points[6].y, 0);
-                    GL.Vertex3(segmentObject.Points[7].x, segmentObject.Points[7].y, 0);
+                    GL.Vertex3(segmentObject.RenderPoints[4].x, segmentObject.RenderPoints[4].y, 0);
+                    GL.Vertex3(segmentObject.RenderPoints[5].x, segmentObject.RenderPoints[5].y, 0);
+                    GL.Vertex3(segmentObject.RenderPoints[6].x, segmentObject.RenderPoints[6].y, 0);
+                    GL.Vertex3(segmentObject.RenderPoints[7].x, segmentObject.RenderPoints[7].y, 0);
                 }
 
                 GL.End();
