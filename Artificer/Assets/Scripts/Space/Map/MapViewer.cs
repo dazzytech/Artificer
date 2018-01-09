@@ -175,7 +175,7 @@ namespace Space.Map
 
             // position on map
             prefab.transform.localPosition =
-                ScaleAndPosition(mObj.Location); 
+                ScaleAndPosition(mObj.Position); 
         }
 
         public void RotateMap(Vector2 dir)
@@ -279,7 +279,7 @@ namespace Space.Map
                         break;
                 }
 
-                GO.transform.localPosition = ScaleAndPosition(mObj.Location);
+                GO.transform.localPosition = ScaleAndPosition(mObj.Position);
 
                 mObj.Icon = GO.transform;
             }
@@ -298,7 +298,11 @@ namespace Space.Map
                 {
                     if (!m_mapObjs.Contains(mObj))
                     {
-                        mObj.Points.CopyTo(mObj.RenderPoints, 0);
+                        if (mObj.RenderPoints == null)
+                        {
+                            mObj.RenderPoints = new Vector2[8];
+                            mObj.Points.CopyTo(mObj.RenderPoints, 0);
+                        }
                         m_mapObjs.Add(mObj);
                     }
                 }
@@ -328,7 +332,7 @@ namespace Space.Map
                     else if (m_dir.y != 0)
                         newSize *= m_dir.y;
 
-                    Base.transform.localPosition = ScaleAndPosition(mObj.Location) + (newSize * .5f);
+                    Base.transform.localPosition = ScaleAndPosition(mObj.Position) + (newSize * .5f);
 
                     mObj.Icon = Base.transform;
 
@@ -404,7 +408,7 @@ namespace Space.Map
                 }
                 else
                 {
-                    mObj.Icon.localPosition = ScaleAndPosition(mObj.Location);
+                    mObj.Icon.localPosition = ScaleAndPosition(mObj.Position);
                 }
             }
             else

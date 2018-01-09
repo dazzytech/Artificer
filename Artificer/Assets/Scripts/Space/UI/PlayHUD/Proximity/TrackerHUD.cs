@@ -376,7 +376,7 @@ namespace Space.UI.Proxmity
             int overlap = 40;
 
             Vector2 dirA =
-                (m.trackedObj.Location - cameraPosition);
+                (m.trackedObj.Position - cameraPosition);
 
             for (; index > 0;)
             {
@@ -387,7 +387,7 @@ namespace Space.UI.Proxmity
                     continue;
 
                 Vector2 dirB =
-                    (testM.trackedObj.Location - cameraPosition);
+                    (testM.trackedObj.Position - cameraPosition);
 
                 float angle = Vector2.Angle(dirA, dirB);
                 if (angle < 10f)
@@ -445,7 +445,7 @@ namespace Space.UI.Proxmity
         private void BuildMarker(Marker m, Vector2 camPos)
         {
             // face the marker pointing towards the object
-            Vector2 dir = (m.trackedObj.Location
+            Vector2 dir = (m.trackedObj.Position
                     - camPos).normalized * m_radius;
 
             // Generic text object within marker to display
@@ -565,11 +565,11 @@ namespace Space.UI.Proxmity
         private float SetMarkerVisiblity(Marker m, Vector3 camPos, ref bool within)
         {
             // distance between our ship and tracked object
-            float objDistance = Vector3.Distance(m.trackedObj.Location, camPos);
+            float objDistance = Vector3.Distance(m.trackedObj.Position, camPos);
             // Retreive borders of the screen game is being played on
             Bounds camB = CameraExtensions.OrthographicBounds(Camera.main);
 
-            if (camB.Contains(m.trackedObj.Location))
+            if (camB.Contains(m.trackedObj.Position))
             {
                 if (!m.box.activeSelf)
                 {
@@ -632,7 +632,7 @@ namespace Space.UI.Proxmity
                 return;
 
             Vector2 dir =
-                (m.trackedObj.Location - camPos)
+                (m.trackedObj.Position - camPos)
                     .normalized * m_radius;
 
             if (m_dir.x != 0)

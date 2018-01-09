@@ -107,7 +107,7 @@ namespace Space.Map
                 // object not already added
                 mapObj = new MapObject();
                 mapObj.Ref = child;
-                mapObj.Location = mapObj.Ref.position;
+                mapObj.Position = mapObj.Ref.position;
 
                 m_att.MapItems.Add(mapObj);
             }
@@ -119,6 +119,11 @@ namespace Space.Map
 
         #region EVENT LISTENERS
 
+        /// <summary>
+        /// When a ship is added to the screen,
+        /// save it to the map objects
+        /// </summary>
+        /// <param name="CD"></param>
         private void CreateShip(CreateDispatch CD)
         {
             // for now just create the object 
@@ -134,11 +139,58 @@ namespace Space.Map
                 OnMapUpdate(mapObj);
         }
 
+        /// <summary>
+        /// When a station is created, add it to
+        /// map objects, or in a group if close to another station
+        /// </summary>
+        /// <param name="station"></param>
         private void CreateStation(StationAccessor station)
         {
             MapObject mapObj = BuildObject(station.transform);
             mapObj.Type = MapObjectType.STATION;
             mapObj.TeamID = station.Team.ID;
+
+            // Test if this station is within prox of any 
+            // other stations of the same team
+            foreach(MapObject mObj in m_att.MapItems)
+            {
+                if(Vector2.Distance(mObj.Position, 
+                    mapObj.Position) < m_att.GroupProximity &&
+                    mObj.TeamID == mapObj.TeamID)
+                {
+                    // This is the group that the team will be stored within 
+                    GroupObject group = null;
+
+                    // these two objects are within range and are in the 
+                    // same team, treat differently if station or group object
+                    if(mObj.Type == MapObjectType.STATION)
+                    {
+                        // This is another station
+                        // create a new group and place this within
+                        group = new GroupObject();
+                        group.Type = MapObjectType.TEAM;
+                        group.TeamID = station.Team.ID;
+                        group.Ref = null;
+
+                        // add other station to the group
+                        group.BuildSubObject(mObj);
+
+                        // remove other station from map objs
+                        m_att.MapItems.Remove(mObj);
+                    }
+                    else if(mObj.Type == MapObjectType.TEAM)
+                    {
+                        // This is a group that already exists, set this as our group reference
+                        group = mObj as GroupObject;
+                    }
+
+                    // add this station to the group object
+                    group.BuildSubObject(mapObj);
+
+                    // remove from group
+                    m_att.MapItems.Remove(mapObj);
+                }
+            }
 
             if (OnMapUpdate != null)
                 OnMapUpdate(mapObj);
@@ -209,10 +261,25 @@ namespace Space.Map
                     if (mObj.Ref == null)
                         m_att.MapItems.RemoveAt(i--); // will dec after completed
 
-                    else if (mObj.Location.x != mObj.Ref.position.x
-                        || mObj.Location.y != mObj.Ref.position.y)
+                    if (mObj is GroupObject)
+                    {
+                        GroupObject gObj = mObj as GroupObject;
+
+                        if(SystemManager.Space.PlayerCamera != null)
+                        {
+                            if(!gObj.Hidden)
+                            { }
+                        }
+                        // Check if object is within proximity of player
+                        //if (Vector2.Distance(mObj.Position, ))
+                    }
+
+                    else if (mObj.Position.x != mObj.Ref.position.x
+                        || mObj.Position.y != mObj.Ref.position.y)
+                    {
                         // update location
-                        mObj.Location = mObj.Ref.position;
+                        mObj.Position = mObj.Ref.position;
+                    }
                     else
                         continue;
 
