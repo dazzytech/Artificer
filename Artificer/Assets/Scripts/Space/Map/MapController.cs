@@ -45,7 +45,10 @@ namespace Space.Map
 
         #region PUBLIC INTERACTION
 
-        // Use this for initialization
+        /// <summary>
+        /// Begins the icon population and listens
+        /// for item creation
+        /// </summary>
         public void InitializeMap()
         {
             // Assign listeners
@@ -97,6 +100,12 @@ namespace Space.Map
             }
         }
 
+        /// <summary>
+        /// Creates a map icon for the
+        /// map object
+        /// </summary>
+        /// <param name="child"></param>
+        /// <returns></returns>
         private MapObject BuildObject(Transform child)
         {
             MapObject mapObj = m_att.MapItems.FirstOrDefault
@@ -108,6 +117,7 @@ namespace Space.Map
                 mapObj = new MapObject();
                 mapObj.Ref = child;
                 mapObj.Position = mapObj.Ref.position;
+                mapObj.Hidden = false;
 
                 m_att.MapItems.Add(mapObj);
             }
@@ -146,24 +156,29 @@ namespace Space.Map
         /// <param name="station"></param>
         private void CreateStation(StationAccessor station)
         {
-            MapObject mapObj = BuildObject(station.transform);
-            mapObj.Type = MapObjectType.STATION;
-            mapObj.TeamID = station.Team.ID;
+            // Initialze our map icon
+            MapObject stationMapObject = BuildObject(station.transform);
+            stationMapObject.Type = MapObjectType.STATION;
+            stationMapObject.TeamID = station.Team.ID;
+
+            // Create a instance of groups for the purpose of not 
+            // editing the collection while enumerating through list
+            GroupObject group = new GroupObject();
 
             // Test if this station is within prox of any 
             // other stations of the same team
-            foreach(MapObject mObj in m_att.MapItems)
+            foreach(MapObject otherMapObject in m_att.MapItems)
             {
-                if(Vector2.Distance(mObj.Position, 
-                    mapObj.Position) < m_att.GroupProximity &&
-                    mObj.TeamID == mapObj.TeamID)
-                {
-                    // This is the group that the team will be stored within 
-                    GroupObject group = null;
+                if (otherMapObject == stationMapObject)
+                    continue;
 
+                if (Vector2.Distance(otherMapObject.Position, 
+                    stationMapObject.Position) < m_att.GroupProximity &&
+                    otherMapObject.TeamID == stationMapObject.TeamID)
+                {
                     // these two objects are within range and are in the 
                     // same team, treat differently if station or group object
-                    if(mObj.Type == MapObjectType.STATION)
+                    if(otherMapObject.Type == MapObjectType.STATION)
                     {
                         // This is another station
                         // create a new group and place this within
@@ -171,31 +186,47 @@ namespace Space.Map
                         group.Type = MapObjectType.TEAM;
                         group.TeamID = station.Team.ID;
                         group.Ref = null;
+                        group.Hidden = true;
 
                         // add other station to the group
-                        group.BuildSubObject(mObj);
-
-                        // remove other station from map objs
-                        m_att.MapItems.Remove(mObj);
+                        group.BuildSubObject(otherMapObject);
                     }
-                    else if(mObj.Type == MapObjectType.TEAM)
+                    else if(otherMapObject.Type == MapObjectType.TEAM)
                     {
                         // This is a group that already exists, set this as our group reference
-                        group = mObj as GroupObject;
+                        group = otherMapObject as GroupObject;
                     }
 
                     // add this station to the group object
-                    group.BuildSubObject(mapObj);
+                    group.BuildSubObject(stationMapObject);
 
-                    // remove from group
-                    m_att.MapItems.Remove(mapObj);
+                    break;
                 }
             }
 
+            // If this object was successfully
+            // placed in a group, add the group
+            // to map list and nullify the pointer
+            if(group != null)
+            {
+                if (!m_att.MapItems.Contains(group))
+                    m_att.MapItems.Add(group);
+
+                // consider updating the group
+
+                group = null;
+            }
+
+            // update our object
             if (OnMapUpdate != null)
-                OnMapUpdate(mapObj);
+                OnMapUpdate(stationMapObject);
         }
 
+        /// <summary>
+        /// Builds an segment object to the map
+        /// </summary>
+        /// <param name="segObj"></param>
+        /// <param name="trans"></param>
         private void CreateSegmentObject(SegmentObjectData segObj, Transform trans)
         {
             MapObjectType mType = MapObjectType.NULL;
@@ -256,23 +287,33 @@ namespace Space.Map
                 {
                     MapObject mObj = m_att.MapItems[i];
 
-                    // Remove from list if transform is null
-                    // e.g. object destroyed
-                    if (mObj.Ref == null)
-                        m_att.MapItems.RemoveAt(i--); // will dec after completed
-
-                    if (mObj is GroupObject)
+                    if (mObj.Type == MapObjectType.TEAM)
                     {
                         GroupObject gObj = mObj as GroupObject;
 
-                        if(SystemManager.Space.PlayerCamera != null)
+                        if (SystemManager.Space.PlayerCamera == null)
                         {
-                            if(!gObj.Hidden)
-                            { }
+                            if (gObj.Hidden)
+                                gObj.InRange();
                         }
                         // Check if object is within proximity of player
-                        //if (Vector2.Distance(mObj.Position, ))
+                        else if (Vector2.Distance(mObj.Position,
+                            SystemManager.Space.PlayerCamera.transform.position)
+                                < m_att.ObscureDistance)
+                        {
+                            if (gObj.Hidden)
+                                gObj.InRange();
+                        }
+
+                        else if (!gObj.Hidden)
+                            gObj.OutOfRange();
+                        else
+                            continue;
                     }
+                    // Remove from list if transform is null
+                    else if (mObj.Ref == null)
+                        // will dec after completed
+                        m_att.MapItems.RemoveAt(i--); 
 
                     else if (mObj.Position.x != mObj.Ref.position.x
                         || mObj.Position.y != mObj.Ref.position.y)
@@ -280,7 +321,8 @@ namespace Space.Map
                         // update location
                         mObj.Position = mObj.Ref.position;
                     }
-                    else
+                    else if((mObj.Hidden && mObj.Icon == null) || 
+                            (!mObj.Hidden && mObj.Icon != null))
                         continue;
 
                     // Update any viewers

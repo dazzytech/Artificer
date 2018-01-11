@@ -86,6 +86,9 @@ namespace Space.Map
         [SerializeField]
         private Material m_regionMaterial;
 
+        [SerializeField]
+        private Texture2D m_teamIcon;
+
         #endregion
 
         #region COLOURS
@@ -227,6 +230,11 @@ namespace Space.Map
             {
                 MapObject mObj = filteredList[i];
 
+                if(mObj.Type == MapObjectType.TEAM)
+                {
+
+                }
+
                 if (mObj.Type == MapObjectType.SHIP ||
                     mObj.Type == MapObjectType.SATELLITE ||
                     mObj.Type == MapObjectType.STATION)
@@ -276,6 +284,12 @@ namespace Space.Map
                             img.texture = m_FriendlyStationIcon;
                         else
                             img.texture = m_EnemyStationIcon;
+                        break;
+                    case MapObjectType.TEAM:
+                        // Resize object based on texture
+                        GO.GetComponent<RectTransform>().sizeDelta =
+                            new Vector2(60, 60);
+                        img.texture = m_teamIcon;
                         break;
                 }
 
@@ -374,6 +388,23 @@ namespace Space.Map
         }
 
         /// <summary>
+        /// Removes the map icon from the viewer
+        /// without affecting the object
+        /// </summary>
+        /// <param name="mObj"></param>
+        private void RemoveIcon(MapObject mObj)
+        {
+            if(mObj.Icon != null)
+            {
+                GameObject.Destroy(mObj.Icon.gameObject);
+                mObj.Icon = null;
+
+                if(!mObj.Exists)
+                    m_mapObjs.Remove(mObj);
+            }
+        }
+
+        /// <summary>
         /// Clears all the icons within the map UI
         /// </summary>
         private void ClearIcons()
@@ -399,12 +430,9 @@ namespace Space.Map
 
             if (mObj.Icon != null)
             {
-                if (mObj.Ref == null)
+                if (!mObj.Exists || mObj.Hidden)
                 {
-                    // Destroy icon, map controller will delete item
-                    GameObject.Destroy(mObj.Icon.gameObject);
-                    mObj.Icon = null;
-                    m_mapObjs.Remove(mObj);
+                    RemoveIcon(mObj);
                 }
                 else
                 {
@@ -418,6 +446,7 @@ namespace Space.Map
                     case MapObjectType.SHIP:
                     case MapObjectType.SATELLITE:
                     case MapObjectType.STATION:
+                    case MapObjectType.TEAM:
                         BuildIcon(mObj);
                         break;
                     case MapObjectType.ASTEROID:
