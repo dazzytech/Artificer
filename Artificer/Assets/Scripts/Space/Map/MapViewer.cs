@@ -230,15 +230,13 @@ namespace Space.Map
             {
                 MapObject mObj = filteredList[i];
 
-                if(mObj.Type == MapObjectType.TEAM)
-                {
-
-                }
+                if (mObj.Hidden)
+                    continue;
 
                 if (mObj.Type == MapObjectType.SHIP ||
                     mObj.Type == MapObjectType.SATELLITE ||
-                    mObj.Type == MapObjectType.STATION)
-                    // send object to be built
+                    mObj.Type == MapObjectType.STATION ||
+                    mObj.Type == MapObjectType.TEAM)
                     BuildIcon(mObj);
                 else
                     BuildSegmentIcon(mObj);
@@ -253,7 +251,7 @@ namespace Space.Map
         /// <param name="mObj"></param>
         private void BuildIcon(MapObject mObj)
         {
-            if (mObj.Ref != null)
+            if (mObj.Exists)
             {
                 // create go for our icon
                 GameObject GO = new GameObject();

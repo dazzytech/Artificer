@@ -293,23 +293,44 @@ namespace Space.Map
 
                         if (SystemManager.Space.PlayerCamera == null)
                         {
-                            if (gObj.Hidden)
-                                gObj.InRange();
+                            if (SystemManager.Space.TeamID == gObj.TeamID)
+                            {
+                                if (!gObj.Hidden)
+                                    gObj.InRange();
+                                else
+                                    continue;
+                            }
+                            else
+                            {
+                                if (gObj.Hidden)
+                                    gObj.OutOfRange();
+                                else
+                                    continue;
+                            }
                         }
                         // Check if object is within proximity of player
-                        else if (Vector2.Distance(mObj.Position,
-                            SystemManager.Space.PlayerCamera.transform.position)
-                                < m_att.ObscureDistance)
-                        {
-                            if (gObj.Hidden)
-                                gObj.InRange();
-                        }
-
-                        else if (!gObj.Hidden)
-                            gObj.OutOfRange();
                         else
-                            continue;
+                        {
+                            float distance = Vector2.Distance(mObj.Position,
+                                SystemManager.Space.PlayerCamera.transform.position);
+
+                            if (distance < m_att.ObscureDistance)
+                            {
+                                if (!gObj.Hidden)
+                                    gObj.InRange();
+                                else
+                                    continue;
+                            }
+                            else
+                            {
+                                if (gObj.Hidden)
+                                    gObj.OutOfRange();
+                                else
+                                    continue;
+                            }
+                        }
                     }
+
                     // Remove from list if transform is null
                     else if (mObj.Ref == null)
                         // will dec after completed

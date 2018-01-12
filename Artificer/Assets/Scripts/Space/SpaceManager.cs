@@ -113,9 +113,19 @@ namespace Space
             }
         }
 
+        /// <summary>
+        /// returns the id of the team the player belongs to
+        /// or returns -1 if team not assigned
+        /// </summary>
         public int TeamID
         {
-            get { return m_att.Team.ID; }
+            get
+            {
+                if (m_att.Team == null)
+                    return -1;
+
+                return m_att.Team.ID;
+            }
         }
 
         /// <summary>
