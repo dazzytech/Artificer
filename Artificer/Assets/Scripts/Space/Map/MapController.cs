@@ -32,6 +32,28 @@ namespace Space.Map
         [SerializeField]
         private MapAttributes m_att;
 
+        #region COLOUR
+
+        [SerializeField]
+        private Color m_lowValueAsteroid;
+
+        [SerializeField]
+        private Color m_plutAsteroid;
+
+        [SerializeField]
+        private Color m_highValueAsteroid;
+
+        [SerializeField]
+        private Color m_friendlyColour;
+
+        [SerializeField]
+        private Color m_neutralColour;
+
+        [SerializeField]
+        private Color m_enemyColour;
+
+        #endregion
+
         #endregion
 
         #region ACCESSORS
@@ -118,6 +140,7 @@ namespace Space.Map
                 mapObj.Ref = child;
                 mapObj.Position = mapObj.Ref.position;
                 mapObj.Hidden = false;
+                mapObj.TeamID = -1;
 
                 m_att.MapItems.Add(mapObj);
             }
@@ -247,6 +270,11 @@ namespace Space.Map
             mapObj.Type = mType;
             mapObj.Points = segObj._border;
             mapObj.Size = segObj._size;
+            if (mType == MapObjectType.ASTEROID)
+            {
+                mapObj.Color = segObj._subType == 0? m_lowValueAsteroid: 
+                    segObj._subType == 1 ? m_plutAsteroid: m_highValueAsteroid;
+            }
 
             if (OnMapUpdate != null)
                 OnMapUpdate(mapObj);
@@ -286,6 +314,13 @@ namespace Space.Map
                 for (int i = 0; i < m_att.MapItems.Count; i++)
                 {
                     MapObject mObj = m_att.MapItems[i];
+
+                    Color newColour = mObj.Relation == -1 ? m_neutralColour :
+                        mObj.Relation == 0 ? m_enemyColour : m_friendlyColour;
+
+                    if (mObj.Color != newColour
+                        && mObj.TeamID != -1)
+                        mObj.Color = newColour;
 
                     if (mObj.Type == MapObjectType.TEAM)
                     {
@@ -330,11 +365,10 @@ namespace Space.Map
                             }
                         }
                     }
-
                     // Remove from list if transform is null
                     else if (mObj.Ref == null)
                         // will dec after completed
-                        m_att.MapItems.RemoveAt(i--); 
+                        m_att.MapItems.RemoveAt(i--);
 
                     else if (mObj.Position.x != mObj.Ref.position.x
                         || mObj.Position.y != mObj.Ref.position.y)
@@ -342,7 +376,7 @@ namespace Space.Map
                         // update location
                         mObj.Position = mObj.Ref.position;
                     }
-                    else if((mObj.Hidden && mObj.Icon == null) || 
+                    else if ((mObj.Hidden && mObj.Icon == null) ||
                             (!mObj.Hidden && mObj.Icon != null))
                         continue;
 

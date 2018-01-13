@@ -279,7 +279,7 @@ namespace Space.Segment
             // Set numeric data
             aField._position = bounds.min;
             aField._size = bounds.size;
-
+            aField._subType = type;
             aField._border = BuildRegion(bounds, size);
 
             aField._count = 

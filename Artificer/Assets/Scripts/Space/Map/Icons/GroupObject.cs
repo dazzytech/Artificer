@@ -58,8 +58,6 @@ namespace Space.Map
         {
             Hidden = true;
 
-            Debug.Log("In Range" + TeamID + " " + Hidden);
-
             foreach (MapObject sObj in SubObjects)
                 sObj.Hidden = false;
         }
@@ -71,8 +69,6 @@ namespace Space.Map
         public void OutOfRange()
         {
             Hidden = false;
-
-            Debug.Log("Out of Range " + TeamID + " " + Hidden);
 
             foreach (MapObject sObj in SubObjects)
                 sObj.Hidden = true;

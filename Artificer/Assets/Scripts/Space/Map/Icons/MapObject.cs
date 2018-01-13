@@ -25,6 +25,10 @@ namespace Space.Map
         /// </summary>
         public Vector2 Size;
         /// <summary>
+        /// colour of the map icon
+        /// </summary>
+        public Color Color;
+        /// <summary>
         /// Original points that define the borders of a segment
         /// </summary>
         public Vector2[] Points;
@@ -49,12 +53,35 @@ namespace Space.Map
         /// If true, object is not displayed
         /// </summary>
         public bool Hidden;
-
+        /// <summary>
+        /// Returns if the object currently 
+        /// exists in scene
+        /// </summary>
         public bool Exists
         {
             get
             {
                 return Ref != null || Type == MapObjectType.TEAM;
+            }
+        }
+
+        public int Relation
+        {
+            get
+            {
+                if (TeamID == -1|| SystemManager.Space.Team == null)
+                    return -1;
+
+                
+
+                if (SystemManager.Space.Team.EnemyTeam.Contains(TeamID))
+                {
+                    return 0;
+                }
+                else if (SystemManager.Space.TeamID == TeamID)
+                    return 1;
+                else
+                    return -1;
             }
         }
     }

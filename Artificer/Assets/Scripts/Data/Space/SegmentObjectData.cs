@@ -20,5 +20,6 @@ namespace Data.Space
         public string _texturePath;
         public string _prefabPath;
         public string _type;
+        public int _subType;
     }
 }

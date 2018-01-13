@@ -75,10 +75,7 @@ namespace Space.Map
         private Texture2D m_wreckIcon;
 
         [SerializeField]
-        private Texture2D m_FriendlyStationIcon;
-
-        [SerializeField]
-        private Texture2D m_EnemyStationIcon;
+        private Texture2D m_StationIcon;
 
         [SerializeField]
         private Texture2D m_RegionIcon;
@@ -88,15 +85,6 @@ namespace Space.Map
 
         [SerializeField]
         private Texture2D m_teamIcon;
-
-        #endregion
-
-        #region COLOURS
-
-        [Header("Colours")]
-
-        [SerializeField]
-        private Color m_defaultAsteroidColour;
 
         #endregion
 
@@ -259,6 +247,9 @@ namespace Space.Map
 
                 // Create texture
                 RawImage img = GO.AddComponent<RawImage>();
+
+                img.color = mObj.Color;
+
                 // Set tex based on type
                 switch (mObj.Type)
                 {
@@ -278,10 +269,7 @@ namespace Space.Map
                         // Resize object based on texture
                         GO.GetComponent<RectTransform>().sizeDelta =
                             new Vector2(30, 30);
-                        if (mObj.TeamID == SystemManager.Space.TeamID)
-                            img.texture = m_FriendlyStationIcon;
-                        else
-                            img.texture = m_EnemyStationIcon;
+                            img.texture = m_StationIcon;
                         break;
                     case MapObjectType.TEAM:
                         // Resize object based on texture
@@ -526,10 +514,11 @@ namespace Space.Map
                 m_regionMaterial.SetPass(0);
                 GL.LoadPixelMatrix(SystemManager.Size.x, SystemManager.Size.width, SystemManager.Size.y, SystemManager.Size.height);
                 GL.Begin(GL.QUADS);
-                GL.Color(m_defaultAsteroidColour);
 
                 foreach (MapObject segmentObject in m_mapObjs)
                 {
+                    GL.Color(segmentObject.Color);
+
                     // Temp fix, only works for regions with 
                     // 8 points
                     GL.Vertex3(segmentObject.RenderPoints[0].x, segmentObject.RenderPoints[0].y, 0);

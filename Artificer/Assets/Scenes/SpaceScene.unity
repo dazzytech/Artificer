@@ -25497,12 +25497,10 @@ MonoBehaviour:
   m_satIcon: {fileID: 0}
   m_astIcon: {fileID: 0}
   m_wreckIcon: {fileID: 0}
-  m_FriendlyStationIcon: {fileID: 0}
-  m_EnemyStationIcon: {fileID: 0}
+  m_StationIcon: {fileID: 0}
   m_RegionIcon: {fileID: 0}
   m_regionMaterial: {fileID: 0}
   m_teamIcon: {fileID: 0}
-  m_defaultAsteroidColour: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1271598169
 GameObject:
   m_ObjectHideFlags: 0
@@ -36717,13 +36715,10 @@ MonoBehaviour:
   m_satIcon: {fileID: 2800000, guid: e441bc019c6151140bd0d848156ef35f, type: 3}
   m_astIcon: {fileID: 2800000, guid: 1b016caf3b30dff439ed5a12c9f1e77c, type: 3}
   m_wreckIcon: {fileID: 2800000, guid: afa8c575b77523a44ae4839546ad6ad0, type: 3}
-  m_FriendlyStationIcon: {fileID: 2800000, guid: 26281da389d1a074db4014f1ba4d20e1,
-    type: 3}
-  m_EnemyStationIcon: {fileID: 2800000, guid: 41bb4a4589b90614984baffb50d0ba6e, type: 3}
+  m_StationIcon: {fileID: 2800000, guid: 26281da389d1a074db4014f1ba4d20e1, type: 3}
   m_RegionIcon: {fileID: 2800000, guid: 0b82c97e0aab06447962eaf6226311c7, type: 3}
   m_regionMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_teamIcon: {fileID: 2800000, guid: a43318939899b764f8d77553a1ca4879, type: 3}
-  m_defaultAsteroidColour: {r: 0.26378676, g: 0.875, b: 0.6726674, a: 0.684}
 --- !u!222 &1809215894
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -38793,13 +38788,10 @@ MonoBehaviour:
   m_satIcon: {fileID: 2800000, guid: e441bc019c6151140bd0d848156ef35f, type: 3}
   m_astIcon: {fileID: 2800000, guid: 1b016caf3b30dff439ed5a12c9f1e77c, type: 3}
   m_wreckIcon: {fileID: 2800000, guid: afa8c575b77523a44ae4839546ad6ad0, type: 3}
-  m_FriendlyStationIcon: {fileID: 2800000, guid: 26281da389d1a074db4014f1ba4d20e1,
-    type: 3}
-  m_EnemyStationIcon: {fileID: 2800000, guid: 41bb4a4589b90614984baffb50d0ba6e, type: 3}
+  m_StationIcon: {fileID: 0}
   m_RegionIcon: {fileID: 2800000, guid: 0b82c97e0aab06447962eaf6226311c7, type: 3}
   m_regionMaterial: {fileID: 0}
   m_teamIcon: {fileID: 0}
-  m_defaultAsteroidColour: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1904372513
 GameObject:
   m_ObjectHideFlags: 0
@@ -41650,6 +41642,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_att: {fileID: 2012517427}
+  m_lowValueAsteroid: {r: 0.2116674, g: 0.6397059, b: 0.5688582, a: 0.816}
+  m_plutAsteroid: {r: 0.34818336, g: 0.78384143, b: 0.8455882, a: 0.816}
+  m_highValueAsteroid: {r: 0.45865807, g: 0.14738327, b: 0.6911765, a: 0.878}
+  m_friendlyColour: {r: 0.5147059, g: 1, b: 0.83935094, a: 0.941}
+  m_neutralColour: {r: 0.6544118, g: 0.6544118, b: 0.6544118, a: 0.897}
+  m_enemyColour: {r: 0.9338235, g: 0.23345588, b: 0.23345588, a: 0.922}
 --- !u!1001 &2015225020
 Prefab:
   m_ObjectHideFlags: 0
