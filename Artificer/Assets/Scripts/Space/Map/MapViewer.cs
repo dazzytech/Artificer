@@ -231,9 +231,10 @@ namespace Space.Map
         /// <param name="mObj"></param>
         private void BuildIcon(MapObject mObj)
         {
-            return;
             if (mObj.Exists)
             {
+                float scale = (m_scale.x < m_scale.y ? m_scale.x : m_scale.y);
+
                 // create go for our icon
                 GameObject GO = new GameObject();
                 GO.transform.SetParent(m_baseMap);
@@ -249,25 +250,25 @@ namespace Space.Map
                     case MapObjectType.SHIP:
                         // Resize object based on texture
                         GO.GetComponent<RectTransform>().sizeDelta =
-                            new Vector2(30, 30);
+                            new Vector2(250, 250) * scale;
                         img.texture = m_shipIcon;
                         break;
                     case MapObjectType.SATELLITE:
                         // Resize object based on texture
                         GO.GetComponent<RectTransform>().sizeDelta =
-                            new Vector2(50, 30);
+                            new Vector2(250, 125) * scale;
                         img.texture = m_satIcon;
                         break;
                     case MapObjectType.STATION:
                         // Resize object based on texture
                         GO.GetComponent<RectTransform>().sizeDelta =
-                            new Vector2(30, 30);
+                            new Vector2(300, 300) * scale;
                             img.texture = m_StationIcon;
                         break;
                     case MapObjectType.TEAM:
                         // Resize object based on texture
                         GO.GetComponent<RectTransform>().sizeDelta =
-                            new Vector2(60, 60);
+                            new Vector2(500, 500) * scale;
                         img.texture = m_teamIcon;
                         break;
                 }
@@ -292,6 +293,8 @@ namespace Space.Map
 
                 newSize.Scale(m_scale);
 
+                float scale = (m_scale.x < m_scale.y ? m_scale.x : m_scale.y);
+
                 if (m_dir.x != 0)
                     newSize = new Vector2(newSize.y, newSize.x);
 
@@ -301,8 +304,9 @@ namespace Space.Map
                     newSize *= m_dir.y;
 
                 GameObject region = new GameObject();
-                region.transform.SetParent(m_baseMap);
-                region.transform.localPosition = ScaleAndPosition(mObj.Position) + (newSize * .5f);
+                RectTransform rTrans = region.AddComponent<RectTransform>();
+                rTrans.SetParent(m_baseMap);
+                rTrans.localPosition = ScaleAndPosition(mObj.Position) + (newSize * .5f);
 
 
                 if (mObj.Points != null)
@@ -320,10 +324,12 @@ namespace Space.Map
                     RawImage regionImg = region.AddComponent<RawImage>();
                     regionImg.texture = DrawBoundaries(mObj);
                     regionImg.color = mObj.Color - new Color(0, 0, 0, .5f);
+
+                    rTrans.sizeDelta = mObj.Size * scale;
                 }
 
                 // Create overlaying icon
-                /*GameObject icon = new GameObject();
+                GameObject icon = new GameObject();
                 icon.transform.SetParent(region.transform);
                 icon.transform.localPosition = Vector3.zero;
 
@@ -337,7 +343,7 @@ namespace Space.Map
                             iconImg.texture = m_astIcon;
 
                             icon.GetComponent<RectTransform>().sizeDelta =
-                                new Vector2(30, 30);
+                                new Vector2(250, 250) * scale;
 
                             iconImg.color = mObj.Color;
 
@@ -347,12 +353,11 @@ namespace Space.Map
                         {
                             iconImg.texture = m_wreckIcon;
 
-                            float scale = Mathf.Max(Mathf.Min(newSize.x, newSize.y), 30);
                             icon.GetComponent<RectTransform>().sizeDelta =
-                                new Vector2(scale + scale * .5f, scale);
+                                new Vector2(250, 125) * scale;
                             break;
                         }
-                }*/
+                }
 
                 mObj.Icon = region.transform;
             }
@@ -488,15 +493,17 @@ namespace Space.Map
         /// <returns></returns>
         private Texture2D DrawBoundaries(MapObject mObj)
         {
-            // Create a new texture to draw the region to
-            Texture2D region = new Texture2D
-                (Mathf.CeilToInt(mObj.Size.x), 
+            Vector2Int sizeInt = new Vector2Int(Mathf.CeilToInt(mObj.Size.x),
                 Mathf.CeilToInt(mObj.Size.y));
 
+            // Create a new texture to draw the region to
+            Texture2D region = new Texture2D
+                (sizeInt.x, sizeInt.y);
+
             // loop through each pixel and colour white if within boundary
-            for (int y = 0; y < Mathf.CeilToInt(mObj.Size.y); y++)
+            for (int y = 0; y < sizeInt.x; y++)
             {
-                for (int x = 0; x < Mathf.CeilToInt(mObj.Size.x); x++)
+                for (int x = 0; x < sizeInt.y; x++)
                 {
                     // default solid white so clear any points not in region
                     if (!Math.IsPointInPolygon(new Vector2(x, y) + mObj.Position, mObj.RenderPoints))
