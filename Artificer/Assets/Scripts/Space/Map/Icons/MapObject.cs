@@ -72,8 +72,6 @@ namespace Space.Map
                 if (TeamID == -1|| SystemManager.Space.Team == null)
                     return -1;
 
-                
-
                 if (SystemManager.Space.Team.EnemyTeam.Contains(TeamID))
                 {
                     return 0;

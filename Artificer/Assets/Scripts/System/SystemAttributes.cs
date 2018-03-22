@@ -61,7 +61,7 @@ public class SystemAttributes:MonoBehaviour
     [HideInInspector]
     public UIStateController UIState;
     [HideInInspector]
-    public UIMessageController UIMsg;
+    public UIChatController UIMsg;
 
     [HideInInspector]
     public SpaceManager Space;

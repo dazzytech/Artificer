@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum UIState { Play, Pause, Popup, TeamPicker, SpawnPicker, Station, Map }
+
 namespace Space.UI
 {
-    public enum UIState { Play, Pause, Popup, TeamPicker, SpawnPicker, Station }
-
     /// <summary>
     /// Manages ui state with the ability to 
     /// set or revert ui state
@@ -15,7 +15,7 @@ namespace Space.UI
         #region ATTRIBUTES
 
         [SerializeField]
-        private UIMessageController m_msg;
+        private UIChatController m_msg;
 
         #region HUD ELEMENTS
 
@@ -38,6 +38,9 @@ namespace Space.UI
 
         [SerializeField]
         private GameObject m_stationRect;
+
+        [SerializeField]
+        private GameObject m_mapRect;
 
         #endregion
 
@@ -108,6 +111,9 @@ namespace Space.UI
                 case UIState.Station:
                     m_stationRect.SetActive(true);
                     break;
+                case UIState.Map:
+                    m_mapRect.SetActive(true);
+                    break;
             }
         }
 
@@ -128,6 +134,7 @@ namespace Space.UI
             m_teamSelectRect.SetActive(false);
             m_spawnPickerRect.SetActive(false);
             m_stationRect.SetActive(false);
+            m_mapRect.SetActive(false);
         }
 
         #endregion

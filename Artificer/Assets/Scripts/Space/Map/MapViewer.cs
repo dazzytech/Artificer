@@ -78,12 +78,6 @@ namespace Space.Map
         private Texture2D m_StationIcon;
 
         [SerializeField]
-        private Texture2D m_RegionIcon;
-
-        [SerializeField]
-        private Material m_regionMaterial;
-
-        [SerializeField]
         private Texture2D m_teamIcon;
 
         #endregion
@@ -107,8 +101,6 @@ namespace Space.Map
         private void OnEnable()
         {
             MapController.OnMapUpdate += OnIconChanged;
-
-            StartCoroutine("DrawBoundaries");
 
             if(m_running)
             {
@@ -190,6 +182,16 @@ namespace Space.Map
             }
         }
 
+        /// <summary>
+        /// Moves the base map object to focus on a specific
+        /// point in world space
+        /// </summary>
+        /// <param name="point"></param>
+        public void CenterAt(Vector2 point)
+        {
+            m_baseMap.anchoredPosition = -ScaleAndPosition(point);
+        }
+
         #endregion
 
         #region PRIVATE UTILITIES
@@ -241,6 +243,8 @@ namespace Space.Map
         {
             if (mObj.Exists)
             {
+                float scale = (m_scale.x < m_scale.y ? m_scale.x : m_scale.y);
+
                 // create go for our icon
                 GameObject GO = new GameObject();
                 GO.transform.SetParent(m_baseMap);
@@ -256,25 +260,25 @@ namespace Space.Map
                     case MapObjectType.SHIP:
                         // Resize object based on texture
                         GO.GetComponent<RectTransform>().sizeDelta =
-                            new Vector2(30, 30);
+                            new Vector2(250, 250) * scale;
                         img.texture = m_shipIcon;
                         break;
                     case MapObjectType.SATELLITE:
                         // Resize object based on texture
                         GO.GetComponent<RectTransform>().sizeDelta =
-                            new Vector2(50, 30);
+                            new Vector2(250, 125) * scale;
                         img.texture = m_satIcon;
                         break;
                     case MapObjectType.STATION:
                         // Resize object based on texture
                         GO.GetComponent<RectTransform>().sizeDelta =
-                            new Vector2(30, 30);
+                            new Vector2(300, 300) * scale;
                             img.texture = m_StationIcon;
                         break;
                     case MapObjectType.TEAM:
                         // Resize object based on texture
                         GO.GetComponent<RectTransform>().sizeDelta =
-                            new Vector2(60, 60);
+                            new Vector2(500, 500) * scale;
                         img.texture = m_teamIcon;
                         break;
                 }
@@ -294,6 +298,27 @@ namespace Space.Map
         {
             if (mObj.Ref != null)
             {
+                // Resize object based on texture
+                Vector2 newSize = mObj.Size;
+
+                newSize.Scale(m_scale);
+
+                float scale = (m_scale.x < m_scale.y ? m_scale.x : m_scale.y);
+
+                if (m_dir.x != 0)
+                    newSize = new Vector2(newSize.y, newSize.x);
+
+                if (m_dir.x != 0)
+                    newSize *= m_dir.x;
+                else if (m_dir.y != 0)
+                    newSize *= m_dir.y;
+
+                GameObject region = new GameObject();
+                RectTransform rTrans = region.AddComponent<RectTransform>();
+                rTrans.SetParent(m_baseMap);
+                rTrans.localPosition = ScaleAndPosition(mObj.Position) + (newSize * .5f);
+
+
                 if (mObj.Points != null)
                 {
                     if (!m_mapObjs.Contains(mObj))
@@ -305,71 +330,46 @@ namespace Space.Map
                         }
                         m_mapObjs.Add(mObj);
                     }
+
+                    RawImage regionImg = region.AddComponent<RawImage>();
+                    regionImg.texture = DrawBoundaries(mObj);
+                    regionImg.color = mObj.Color - new Color(0, 0, 0, .5f);
+
+                    rTrans.sizeDelta = newSize;
                 }
-                else
+
+                // Create overlaying icon
+                GameObject icon = new GameObject();
+                icon.transform.SetParent(region.transform);
+                icon.transform.localPosition = Vector3.zero;
+
+                // Create texture
+                RawImage iconImg = icon.AddComponent<RawImage>();
+
+                switch (mObj.Type)
                 {
-                    // create go for our icon
-                    GameObject Base = new GameObject();
-                    Base.transform.SetParent(m_baseMap);
+                    case MapObjectType.ASTEROID:
+                        {
+                            iconImg.texture = m_astIcon;
 
-                    // Create texture
-                    RawImage img = Base.AddComponent<RawImage>();
-                    img.texture = m_RegionIcon;
+                            icon.GetComponent<RectTransform>().sizeDelta =
+                                new Vector2(250, 250) * scale;
 
-                    // Resize object based on texture
-                    Vector2 newSize = mObj.Size;
+                            iconImg.color = mObj.Color;
 
-                    newSize.Scale(m_scale);
+                            break;
+                        }
+                    case MapObjectType.DEBRIS:
+                        {
+                            iconImg.texture = m_wreckIcon;
 
-                    if (m_dir.x != 0)
-                        newSize = new Vector2(newSize.y, newSize.x);
-
-                    Base.GetComponent<RectTransform>().sizeDelta =
-                        newSize;
-
-                    if (m_dir.x != 0)
-                        newSize *= m_dir.x;
-                    else if (m_dir.y != 0)
-                        newSize *= m_dir.y;
-
-                    Base.transform.localPosition = ScaleAndPosition(mObj.Position) + (newSize * .5f);
-
-                    mObj.Icon = Base.transform;
-
-                    // Create overlaying icon
-                    GameObject Icon = new GameObject();
-                    Icon.transform.SetParent(Base.transform);
-                    Icon.transform.localPosition = new Vector3(0, 0, 0);
-
-                    // Create texture
-                    RawImage iconImg = Icon.AddComponent<RawImage>();
-                    iconImg.texture = m_RegionIcon;
-
-                    switch (mObj.Type)
-                    {
-                        case MapObjectType.ASTEROID:
-                            {
-                                iconImg.texture = m_astIcon;
-
-                                float scale = Mathf.Max(
-                                    Mathf.Min(newSize.x, newSize.y), 30);
-
-                                Icon.GetComponent<RectTransform>().sizeDelta =
-                                    new Vector2(scale, scale);
-
-                                break;
-                            }
-                        case MapObjectType.DEBRIS:
-                            {
-                                iconImg.texture = m_wreckIcon;
-
-                                float scale = Mathf.Max(Mathf.Min(newSize.x, newSize.y), 30);
-                                Icon.GetComponent<RectTransform>().sizeDelta =
-                                    new Vector2(scale + scale * .5f, scale);
-                                break;
-                            }
-                    }
+                            icon.GetComponent<RectTransform>().sizeDelta =
+                                new Vector2(250, 125) * scale;
+                            break;
+                        }
                 }
+
+                mObj.Icon = region.transform;
             }
         }
 
@@ -496,50 +496,35 @@ namespace Space.Map
             }
         }
 
-        #endregion
-
-        #region GL
-
-        private IEnumerator DrawBoundaries()
+        /// <summary>
+        /// Creates a texture that encapsulates the region
+        /// </summary>
+        /// <param name="mObj"></param>
+        /// <returns></returns>
+        private Texture2D DrawBoundaries(MapObject mObj)
         {
-            if (m_regionMaterial == null)
-                yield break;
+            Vector2Int sizeInt = new Vector2Int(Mathf.CeilToInt(mObj.Size.x),
+                Mathf.CeilToInt(mObj.Size.y));
 
-            while (true)
+            // Create a new texture to draw the region to
+            Texture2D region = new Texture2D
+                (sizeInt.x, sizeInt.y);
+
+            // loop through each pixel and colour white if within boundary
+            for (int y = 0; y < sizeInt.x; y++)
             {
-                // We should only read the screen buffer after rendering is complete
-                yield return new WaitForEndOfFrame();
-
-                GL.PushMatrix();
-                m_regionMaterial.SetPass(0);
-                GL.LoadPixelMatrix(SystemManager.Size.x, SystemManager.Size.width, SystemManager.Size.y, SystemManager.Size.height);
-                GL.Begin(GL.QUADS);
-
-                foreach (MapObject segmentObject in m_mapObjs)
+                for (int x = 0; x < sizeInt.y; x++)
                 {
-                    GL.Color(segmentObject.Color);
-
-                    // Temp fix, only works for regions with 
-                    // 8 points
-                    GL.Vertex3(segmentObject.RenderPoints[0].x, segmentObject.RenderPoints[0].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[1].x, segmentObject.RenderPoints[1].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[2].x, segmentObject.RenderPoints[2].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[3].x, segmentObject.RenderPoints[3].y, 0);
-
-                    GL.Vertex3(segmentObject.RenderPoints[3].x, segmentObject.RenderPoints[3].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[4].x, segmentObject.RenderPoints[4].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[7].x, segmentObject.RenderPoints[7].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[0].x, segmentObject.RenderPoints[0].y, 0);
-
-                    GL.Vertex3(segmentObject.RenderPoints[4].x, segmentObject.RenderPoints[4].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[5].x, segmentObject.RenderPoints[5].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[6].x, segmentObject.RenderPoints[6].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[7].x, segmentObject.RenderPoints[7].y, 0);
+                    // default solid white so clear any points not in region
+                    if (!Math.IsPointInPolygon(new Vector2(x, y) + mObj.Position, mObj.RenderPoints))
+                        region.SetPixel(x, y, Color.clear);
                 }
-
-                GL.End();
-                GL.PopMatrix();
             }
+
+            // apply our changes
+            region.Apply();
+
+            return region;
         }
 
         #endregion

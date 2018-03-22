@@ -18,6 +18,9 @@ namespace Space
         private bool m_isPaused = false;
         private bool m_pauseDelay = false;
 
+        private bool m_mapOpen = false;
+        private bool m_mapDelay = false;
+
         private bool m_rotateDelay = false;
 
         #endregion
@@ -83,6 +86,21 @@ namespace Space
             }
         }
 
+        public void Map()
+        {
+            if (!m_mapDelay)
+            {
+                m_mapOpen = !m_mapOpen;
+
+                if (m_mapOpen)
+                    SystemManager.UIState.SetState(UIState.Map);
+                else
+                    SystemManager.UIState.SetState(UIState.Play);
+
+                m_mapDelay = true;
+            }
+        }
+
         public void Stop()
         {
             SystemManager.UIState.SetState(UIState.Popup);
@@ -91,6 +109,11 @@ namespace Space
         public void PauseRelease()
         {
             m_pauseDelay = false;
+        }
+
+        public void MapRelease()
+        {
+            m_mapDelay = false;
         }
 
         public void RotateCam(float rotation, bool keyed)

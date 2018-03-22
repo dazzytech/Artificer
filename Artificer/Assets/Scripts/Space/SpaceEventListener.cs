@@ -140,6 +140,11 @@ namespace Space
                 m_util.Pause(true);
             }
 
+            if(key == Control_Config.GetKey("map", "sys"))
+            {
+                m_util.Map();
+            }
+
             if (SystemManager.UIState.Current == UIState.Play)
             {
                 if (key == Control_Config.GetKey("zoomOut", "sys"))
@@ -187,6 +192,10 @@ namespace Space
             if (key == Control_Config.GetKey("pause", "sys"))
             {
                 m_util.PauseRelease();
+            }
+            if(key == Control_Config.GetKey("map", "sys"))
+            {
+                m_util.MapRelease();
             }
             if (key == Control_Config.GetKey("interact", "sys"))
             {
@@ -305,23 +314,26 @@ namespace Space
 
                 station.Range(true, ship);
 
-                // define the station reference 
-                if (station.DockPrompt != null)
+                if (SystemManager.UIPrompt != null)
                 {
-                    if (m_att.DockingStation != null)
-                        SystemManager.UIPrompt.HidePrompt
-                            (m_att.DockingStation.DockPrompt.ID);
+                    // define the station reference 
+                    if (station.DockPrompt != null)
+                    {
+                        if (m_att.DockingStation != null)
+                            SystemManager.UIPrompt.HidePrompt
+                                (m_att.DockingStation.DockPrompt.ID);
 
-                    m_att.DockingStation = station;
-                }
+                        m_att.DockingStation = station;
+                    }
 
-                if (station.InteractPrompt != null)
-                {
-                    if (m_att.InteractStation != null)
-                        SystemManager.UIPrompt.HidePrompt
-                            (m_att.InteractStation.InteractPrompt.ID);
+                    if (station.InteractPrompt != null)
+                    {
+                        if (m_att.InteractStation != null)
+                            SystemManager.UIPrompt.HidePrompt
+                                (m_att.InteractStation.InteractPrompt.ID);
 
-                    m_att.InteractStation = station;
+                        m_att.InteractStation = station;
+                    }
                 }
             }
         }

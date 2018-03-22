@@ -71,7 +71,7 @@ namespace Space.UI.Ship
             m_storageHUD.SetShip(ship);
 
             m_integrityHUD.SetShip(ship);
-    	}
+        }
 
         #endregion
     }

@@ -89,6 +89,9 @@ namespace Space.UI.Proxmity
         [SerializeField]
         private MapViewer m_mapViewer;
 
+        [SerializeField]
+        private MapViewer m_miniMap;
+
         #endregion
 
         #region COLOUR
@@ -799,6 +802,7 @@ namespace Space.UI.Proxmity
         private void OnOrientationChange(Vector2 newOrient)
         {
             m_mapViewer.RotateMap(newOrient);
+            m_miniMap.RotateMap(newOrient);
 
             m_dir = newOrient;
 
