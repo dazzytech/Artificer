@@ -1207,6 +1207,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 57180729}
+  - component: {fileID: 57180731}
   - component: {fileID: 57180730}
   m_Layer: 5
   m_Name: Map
@@ -1227,8 +1228,8 @@ RectTransform:
   m_Children:
   - {fileID: 1145356383}
   - {fileID: 218373052}
-  m_Father: {fileID: 766316682}
-  m_RootOrder: 5
+  m_Father: {fileID: 521542894}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -1243,7 +1244,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 57180728}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bf517f4510851646b0415055dca0c6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 41f5756a27c9c604aa0bf8736e109ca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_canEdit: 0
@@ -1254,13 +1255,25 @@ MonoBehaviour:
   m_responsive: 0
   m_HUD: {fileID: 57180729}
   m_header: {fileID: 0}
-  m_body: {fileID: 57180729}
+  m_body: {fileID: 218373052}
   m_background: {fileID: 0}
-  m_idleColour: {r: 0, g: 0, b: 0, a: 0.1}
+  m_idleColour: {r: 0.65, g: 0.67, b: 0.84, a: 0.1}
   m_hoverColour: {r: 0.65, g: 0.77, b: 0.84, a: 0.3}
   m_editColour: {r: 0, g: 0, b: 0, a: 0}
   m_editColourHover: {r: 0, g: 0, b: 0, a: 0}
   m_editColourDrag: {r: 0, g: 0, b: 0, a: 0}
+  m_viewer: {fileID: 218373053}
+--- !u!114 &57180731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 57180728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -146154839, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &61241038
 GameObject:
   m_ObjectHideFlags: 0
@@ -4225,10 +4238,10 @@ RectTransform:
   m_Father: {fileID: 57180729}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000050862625, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 160, y: 90.5}
+  m_SizeDelta: {x: 638, y: 361.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &218373053
 MonoBehaviour:
@@ -11338,6 +11351,7 @@ RectTransform:
   - {fileID: 1012713419}
   - {fileID: 1874172604}
   - {fileID: 1088678458}
+  - {fileID: 57180729}
   m_Father: {fileID: 766316682}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16899,7 +16913,6 @@ RectTransform:
   - {fileID: 151098287}
   - {fileID: 29850227}
   - {fileID: 1662861212}
-  - {fileID: 57180729}
   m_Father: {fileID: 1653808575}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20568,6 +20581,7 @@ MonoBehaviour:
   m_proximity: {fileID: 521542895}
   m_wayPointContainer: {fileID: 1571512090}
   m_mapViewer: {fileID: 1809215892}
+  m_miniMap: {fileID: 218373053}
   m_standardColor: {r: 0.5514706, g: 0.5514706, b: 0.5514706, a: 0.8980392}
   m_friendlyColour: {r: 0.14705884, g: 1, b: 0.9999998, a: 0.659}
   m_enemyColour: {r: 0.89705884, g: 0.04617214, b: 0.04617214, a: 0.659}

@@ -182,6 +182,16 @@ namespace Space.Map
             }
         }
 
+        /// <summary>
+        /// Moves the base map object to focus on a specific
+        /// point in world space
+        /// </summary>
+        /// <param name="point"></param>
+        public void CenterAt(Vector2 point)
+        {
+            m_baseMap.anchoredPosition = -ScaleAndPosition(point);
+        }
+
         #endregion
 
         #region PRIVATE UTILITIES
@@ -325,7 +335,7 @@ namespace Space.Map
                     regionImg.texture = DrawBoundaries(mObj);
                     regionImg.color = mObj.Color - new Color(0, 0, 0, .5f);
 
-                    rTrans.sizeDelta = mObj.Size * scale;
+                    rTrans.sizeDelta = newSize;
                 }
 
                 // Create overlaying icon
