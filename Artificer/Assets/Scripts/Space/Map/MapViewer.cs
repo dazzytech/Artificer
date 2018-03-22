@@ -78,12 +78,6 @@ namespace Space.Map
         private Texture2D m_StationIcon;
 
         [SerializeField]
-        private Texture2D m_RegionIcon;
-
-        [SerializeField]
-        private Material m_regionMaterial;
-
-        [SerializeField]
         private Texture2D m_teamIcon;
 
         #endregion
@@ -107,8 +101,6 @@ namespace Space.Map
         private void OnEnable()
         {
             MapController.OnMapUpdate += OnIconChanged;
-
-            StartCoroutine("DrawBoundaries");
 
             if(m_running)
             {
@@ -239,6 +231,7 @@ namespace Space.Map
         /// <param name="mObj"></param>
         private void BuildIcon(MapObject mObj)
         {
+            return;
             if (mObj.Exists)
             {
                 // create go for our icon
@@ -294,6 +287,24 @@ namespace Space.Map
         {
             if (mObj.Ref != null)
             {
+                // Resize object based on texture
+                Vector2 newSize = mObj.Size;
+
+                newSize.Scale(m_scale);
+
+                if (m_dir.x != 0)
+                    newSize = new Vector2(newSize.y, newSize.x);
+
+                if (m_dir.x != 0)
+                    newSize *= m_dir.x;
+                else if (m_dir.y != 0)
+                    newSize *= m_dir.y;
+
+                GameObject region = new GameObject();
+                region.transform.SetParent(m_baseMap);
+                region.transform.localPosition = ScaleAndPosition(mObj.Position) + (newSize * .5f);
+
+
                 if (mObj.Points != null)
                 {
                     if (!m_mapObjs.Contains(mObj))
@@ -305,71 +316,45 @@ namespace Space.Map
                         }
                         m_mapObjs.Add(mObj);
                     }
+
+                    RawImage regionImg = region.AddComponent<RawImage>();
+                    regionImg.texture = DrawBoundaries(mObj);
+                    regionImg.color = mObj.Color - new Color(0, 0, 0, .5f);
                 }
-                else
+
+                // Create overlaying icon
+                /*GameObject icon = new GameObject();
+                icon.transform.SetParent(region.transform);
+                icon.transform.localPosition = Vector3.zero;
+
+                // Create texture
+                RawImage iconImg = icon.AddComponent<RawImage>();
+
+                switch (mObj.Type)
                 {
-                    // create go for our icon
-                    GameObject Base = new GameObject();
-                    Base.transform.SetParent(m_baseMap);
+                    case MapObjectType.ASTEROID:
+                        {
+                            iconImg.texture = m_astIcon;
 
-                    // Create texture
-                    RawImage img = Base.AddComponent<RawImage>();
-                    img.texture = m_RegionIcon;
+                            icon.GetComponent<RectTransform>().sizeDelta =
+                                new Vector2(30, 30);
 
-                    // Resize object based on texture
-                    Vector2 newSize = mObj.Size;
+                            iconImg.color = mObj.Color;
 
-                    newSize.Scale(m_scale);
+                            break;
+                        }
+                    case MapObjectType.DEBRIS:
+                        {
+                            iconImg.texture = m_wreckIcon;
 
-                    if (m_dir.x != 0)
-                        newSize = new Vector2(newSize.y, newSize.x);
+                            float scale = Mathf.Max(Mathf.Min(newSize.x, newSize.y), 30);
+                            icon.GetComponent<RectTransform>().sizeDelta =
+                                new Vector2(scale + scale * .5f, scale);
+                            break;
+                        }
+                }*/
 
-                    Base.GetComponent<RectTransform>().sizeDelta =
-                        newSize;
-
-                    if (m_dir.x != 0)
-                        newSize *= m_dir.x;
-                    else if (m_dir.y != 0)
-                        newSize *= m_dir.y;
-
-                    Base.transform.localPosition = ScaleAndPosition(mObj.Position) + (newSize * .5f);
-
-                    mObj.Icon = Base.transform;
-
-                    // Create overlaying icon
-                    GameObject Icon = new GameObject();
-                    Icon.transform.SetParent(Base.transform);
-                    Icon.transform.localPosition = new Vector3(0, 0, 0);
-
-                    // Create texture
-                    RawImage iconImg = Icon.AddComponent<RawImage>();
-                    iconImg.texture = m_RegionIcon;
-
-                    switch (mObj.Type)
-                    {
-                        case MapObjectType.ASTEROID:
-                            {
-                                iconImg.texture = m_astIcon;
-
-                                float scale = Mathf.Max(
-                                    Mathf.Min(newSize.x, newSize.y), 30);
-
-                                Icon.GetComponent<RectTransform>().sizeDelta =
-                                    new Vector2(scale, scale);
-
-                                break;
-                            }
-                        case MapObjectType.DEBRIS:
-                            {
-                                iconImg.texture = m_wreckIcon;
-
-                                float scale = Mathf.Max(Mathf.Min(newSize.x, newSize.y), 30);
-                                Icon.GetComponent<RectTransform>().sizeDelta =
-                                    new Vector2(scale + scale * .5f, scale);
-                                break;
-                            }
-                    }
-                }
+                mObj.Icon = region.transform;
             }
         }
 
@@ -496,50 +481,33 @@ namespace Space.Map
             }
         }
 
-        #endregion
-
-        #region GL
-
-        private IEnumerator DrawBoundaries()
+        /// <summary>
+        /// Creates a texture that encapsulates the region
+        /// </summary>
+        /// <param name="mObj"></param>
+        /// <returns></returns>
+        private Texture2D DrawBoundaries(MapObject mObj)
         {
-            if (m_regionMaterial == null)
-                yield break;
+            // Create a new texture to draw the region to
+            Texture2D region = new Texture2D
+                (Mathf.CeilToInt(mObj.Size.x), 
+                Mathf.CeilToInt(mObj.Size.y));
 
-            while (true)
+            // loop through each pixel and colour white if within boundary
+            for (int y = 0; y < Mathf.CeilToInt(mObj.Size.y); y++)
             {
-                // We should only read the screen buffer after rendering is complete
-                yield return new WaitForEndOfFrame();
-
-                GL.PushMatrix();
-                m_regionMaterial.SetPass(0);
-                GL.LoadPixelMatrix(SystemManager.Size.x, SystemManager.Size.width, SystemManager.Size.y, SystemManager.Size.height);
-                GL.Begin(GL.QUADS);
-
-                foreach (MapObject segmentObject in m_mapObjs)
+                for (int x = 0; x < Mathf.CeilToInt(mObj.Size.x); x++)
                 {
-                    GL.Color(segmentObject.Color);
-
-                    // Temp fix, only works for regions with 
-                    // 8 points
-                    GL.Vertex3(segmentObject.RenderPoints[0].x, segmentObject.RenderPoints[0].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[1].x, segmentObject.RenderPoints[1].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[2].x, segmentObject.RenderPoints[2].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[3].x, segmentObject.RenderPoints[3].y, 0);
-
-                    GL.Vertex3(segmentObject.RenderPoints[3].x, segmentObject.RenderPoints[3].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[4].x, segmentObject.RenderPoints[4].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[7].x, segmentObject.RenderPoints[7].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[0].x, segmentObject.RenderPoints[0].y, 0);
-
-                    GL.Vertex3(segmentObject.RenderPoints[4].x, segmentObject.RenderPoints[4].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[5].x, segmentObject.RenderPoints[5].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[6].x, segmentObject.RenderPoints[6].y, 0);
-                    GL.Vertex3(segmentObject.RenderPoints[7].x, segmentObject.RenderPoints[7].y, 0);
+                    // default solid white so clear any points not in region
+                    if (!Math.IsPointInPolygon(new Vector2(x, y) + mObj.Position, mObj.RenderPoints))
+                        region.SetPixel(x, y, Color.clear);
                 }
-
-                GL.End();
-                GL.PopMatrix();
             }
+
+            // apply our changes
+            region.Apply();
+
+            return region;
         }
 
         #endregion

@@ -133,13 +133,13 @@ public class SystemManager : NATTraversal.NetworkManager
         }
     }
 
-    public static UIMessageController UIMsg
+    public static UIChatController UIMsg
     {
         get
         {
             // Add new spawned ship to 
             if (m_singleton.m_base.UIMsg == null)
-                m_singleton.m_base.UIMsg = GameObject.Find("_gui").GetComponent<UIMessageController>();
+                m_singleton.m_base.UIMsg = GameObject.Find("_gui").GetComponent<UIChatController>();
 
             return m_singleton.m_base.UIMsg;
         }
@@ -152,6 +152,7 @@ public class SystemManager : NATTraversal.NetworkManager
             if(SceneManager.GetActiveScene().name == "SpaceScene")
             {
                 // only look if we are on active
+                if(UIState.Current == global::UIState.Play)
                 return GameObject.Find("MessagePromptHUD").GetComponent<MessagePromptHUD>();
             }
             return null;

@@ -227,16 +227,19 @@ namespace Stations
         /// </summary>
         public virtual void EnterRange(ShipAccessor ship)
         {
-            if (m_att.DockPrompt == null)
-            { 
-                m_att.DockPrompt = new PromptData();
-                m_att.DockPrompt.LabelText = new string[1]
-                    {m_att.ProximityMessage};
+            if (SystemManager.UIPrompt != null)
+            {
+                if (m_att.DockPrompt == null)
+                {
+                    m_att.DockPrompt = new PromptData();
+                    m_att.DockPrompt.LabelText = new string[1]
+                        {m_att.ProximityMessage};
 
-                SystemManager.UIPrompt.DisplayPrompt(m_att.DockPrompt);
+                    SystemManager.UIPrompt.DisplayPrompt(m_att.DockPrompt);
+                }
+                else
+                    SystemManager.UIPrompt.DisplayPrompt(m_att.DockPrompt.ID);
             }
-            else
-                SystemManager.UIPrompt.DisplayPrompt(m_att.DockPrompt.ID);
 
             m_att.InRange = true;
         }
@@ -246,7 +249,7 @@ namespace Stations
         /// </summary>
         public virtual void ExitRange(ShipAccessor ship)
         {
-            if (m_att.DockPrompt != null)
+            if (m_att.DockPrompt != null && SystemManager.UIPrompt != null)
             {
                 SystemManager.UIPrompt.DeletePrompt(m_att.DockPrompt.ID);
                 m_att.DockPrompt = null;
