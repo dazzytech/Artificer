@@ -21,12 +21,12 @@ namespace Space.Ship.Components.Listener
         /// and attempts to distribute them in storage
         /// </summary>
         /// <param name="ItemIndex"></param>
-        public void ItemGathered(int ItemIndex)
+        public void ItemGathered(int ItemIndex, float amount)
         {
             // Create the dictionary item 
             // for storage
             Dictionary<int, float> yield = new Dictionary<int, float> {
-                { ItemIndex, Random.Range(_attr.YieldModifierMin, _attr.YieldModifierMax) } };
+                { ItemIndex, amount == -1? Random.Range(_attr.YieldModifierMin, _attr.YieldModifierMax): amount } };
 
             // first time only add the item to 
             // storages that already have it

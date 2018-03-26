@@ -40,6 +40,23 @@ namespace Stations
 
         #endregion
 
+        #region ACCESSORS
+
+        protected StationAttributes m_att
+        {
+            get
+            {
+                if (transform == null)
+                    return null;
+                else if (transform.GetComponent<StationAttributes>() != null)
+                    return transform.GetComponent<StationAttributes>();
+                else
+                    return null;
+            }
+        }
+
+        #endregion 
+
         #region MONO BEHAVIOUR 
 
         public virtual void Awake()
@@ -259,29 +276,6 @@ namespace Stations
         }
 
         #endregion
-
-        #endregion
-
-        #region PRIVATE ACCESSORS
-
-        protected StationAttributes m_att
-        {
-            get
-            {
-                if (transform == null)
-                    return null;
-                else if (transform.GetComponent<StationAttributes>() != null)
-                    return transform.GetComponent<StationAttributes>();
-                else
-                    return null;
-            }
-        }
-
-        #endregion 
-
-        #region PRIVATE UTILITIES
-
-        
 
         #endregion
 

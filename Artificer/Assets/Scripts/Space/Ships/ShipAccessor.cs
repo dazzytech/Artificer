@@ -500,11 +500,11 @@ namespace Space.Ship
         /// we add the material to it
         /// </summary>
         /// <param name="itemID"></param>
-        public void MaterialGathered(int itemID)
+        public void MaterialGathered(int itemID, float amount = -1)
         {
             if(m_ship.Collector != null)
             {
-                m_ship.Collector.ItemGathered(itemID);
+                m_ship.Collector.ItemGathered(itemID, amount);
 
                 if(OnStorageChanged != null)
                     OnStorageChanged();
