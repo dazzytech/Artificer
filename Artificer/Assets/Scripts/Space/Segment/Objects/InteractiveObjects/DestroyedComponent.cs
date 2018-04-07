@@ -15,7 +15,7 @@ namespace Space.Segment
     {
         #region MONOBEHAVIOUR
 
-        void Start()
+        private void Start()
         {
             m_maxDensity = m_pieceDensity = (40f * transform.childCount);
         }
@@ -65,6 +65,8 @@ namespace Space.Segment
             if (GO == null)
                 return;
 
+            m_yield = new Dictionary<int, float>();
+
             // Access the accessor for the ship
             ShipAccessor ship = GO.GetComponent<ShipAccessor>();
 
@@ -81,18 +83,22 @@ namespace Space.Segment
                 if (listener is StorageListener)
                 {
                     // Release a number on cargo items from storage
-                    m_yield = ((StorageListener)listener).EjectMaterial(null);
+                    Dictionary<int, float> yield = ((StorageListener)listener).EjectMaterial(null);
 
                     // Reduce storage to a portion
-                    foreach(int index in m_yield.Keys)
+                    foreach(int index in yield.Keys)
                     {
-                        m_yield[index] *= Random.Range(0.3f, 0.6f);
+                        float reduce = yield[index];
+                        reduce *= Random.Range(0.3f, 0.6f);
+                        m_yield.Add(index, reduce);
                     }
                 }
 
                 listener.Destroy();
                 listener.transform.parent = this.transform;
                 rb.mass += listener.Weight;
+                foreach (Collider2D col in listener.transform.GetComponents<Collider2D>())
+                    col.enabled = false;
             }
 
             // Destroy original ship if no more components remain
@@ -100,6 +106,8 @@ namespace Space.Segment
                 Destroy(GO);
 
             m_maxDensity = m_pieceDensity = (40f * transform.childCount);
+
+            Initialize();
         }
 
         #endregion

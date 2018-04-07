@@ -25,53 +25,89 @@ namespace Space
     {
         #region PLAYER TRACKING
 
-        // track if the player is currently on stage
-        public bool PlayerOnStage;
+        /// <summary>
+        /// if the playership is currently on stage/alive
+        /// </summary>
+        public bool Player_OnStage;
 
-        // store reference for playership
-        public GameObject PlayerShip;
+        /// <summary>
+        /// Whether or not the player has docked at a station
+        /// </summary>
+        public bool Player_Docked;
 
-        // store local client ID on server
-        public int playerID;
+        /// <summary>
+        /// store reference to playership gameobject
+        /// </summary>
+        public GameObject Player_Ship;
 
-        // Network instance ID for player's ship
-        public uint netID;
+        /// <summary>
+        /// The world camera that follows the player
+        /// </summary>
+        public Transform Player_Camera;
+
+        /// <summary>
+        /// store local client ID on server
+        /// </summary>
+        public int Player_ID;
+        
+        /// <summary>
+        /// Network instance ID for player's ship
+        /// </summary>
+        public uint Player_NetID;
+
+        /// <summary>
+        /// If the player is within docking radius of a station
+        /// </summary>
+        public bool Player_InStationRange
+        {
+            get { return Station_InRangeList.Count > 0; }
+        }
+
+        /// <summary>
+        /// If the player is within radius of a lootable object
+        /// </summary>
+        public bool Player_InLootingRange
+        {
+            get { return Lootable_InRangeList.Count > 0; }
+        }
+
+        /// <summary>
+        /// In the player is within the build radius of a station
+        /// </summary>
+        public bool Player_InBuildRange;
 
         #endregion
 
         #region STATION TRACKING
 
-        // if the player is within vicinity of station
-        public bool OverStation
-        {
-            get { return InRangeList.Count > 0; }
-        }
-
-        // if player is within construction Range
-        public bool buildRange;
+        /// <summary>
+        /// Current list of stations that are within range
+        /// </summary>
+        public List<StationAccessor> Station_InRangeList;
 
         /// <summary>
-        /// Current list of stations that are within
-        /// docking range
+        /// The current station that we are pending to dock at
         /// </summary>
-        public List<StationAccessor> InRangeList;
+        public StationAccessor Station_CurrentDocking;
 
         /// <summary>
-        /// The current station that we are 
-        /// electing to dock at
+        /// The station we will interact with when the player triggers the interact button
         /// </summary>
-        public StationAccessor DockingStation;
+        public StationAccessor Station_CurrentInteract;
+
+        #endregion
+
+        #region LOOTING
 
         /// <summary>
-        /// The station we will interact with when prompted
+        /// current objects that is within looting range
         /// </summary>
-        public StationAccessor InteractStation;
+        public List<Lootable> Lootable_InRangeList;
 
         /// <summary>
-        /// Whether or not the player has docked at
-        /// this station
+        /// Object that the player can loot
         /// </summary>
-        public bool Docked;
+        public Lootable Lootable_CurrentObject;
 
         #endregion
 
@@ -83,21 +119,15 @@ namespace Space
 
         public SegmentManager Segment;
 
-        public Transform PlayerCamera;
-
-        #region LOCAL OBJECT
-
         /// <summary>
-        /// Every single station in segment
-        /// </summary>
-        public List<StationAccessor> GlobalStations;
-
-        /// <summary>
-        /// Reference to the team we belong to
+        /// Reference to the team that the player belongs to
         /// </summary>
         public TeamController Team;
 
-        #endregion
+        /// <summary>
+        /// Every single station reference within the space segment
+        /// </summary>
+        public List<StationAccessor> GlobalStations;
 
         #endregion
     }

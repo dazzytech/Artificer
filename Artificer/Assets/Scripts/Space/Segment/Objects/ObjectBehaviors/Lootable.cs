@@ -1,4 +1,6 @@
-﻿using Data.UI;
+﻿using Data.Space.Collectable;
+using Data.UI;
+using Space.Ship;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,27 +20,48 @@ namespace Space.Segment
         public static event LootEvent OnEnterRange;
         public static event LootEvent OnExitRange;
 
-        public static event LootEvent OnLootCreated;
+        public static event LootEvent OnLootCompleted;
 
         #endregion
 
         #region ATTRIBUTES
 
-        // Number of seconds until object dissapears
+        /// <summary>
+        /// Number of seconds until object dissapears
+        /// </summary>
         protected float m_secondsTillRemove = 60f;
 
-        // Amount of items that the player can retrieve
+        /// <summary>
+        /// Amount of items that the player can retrieve
+        /// </summary>
         protected Dictionary<int, float> m_yield;
 
-        // distance the player needs to be in order to loot the ship
-        protected float m_lootDistance;
+        /// <summary>
+        /// distance the player needs to be in order to loot the ship
+        /// </summary>
+        protected float m_lootDistance = 5;
 
-        // Whether or not the player is in range
+        /// <summary>
+        /// Whether or not the player is in range
+        /// </summary>
         private bool m_inRange;
 
-        // Message that appears when player in range
+        /// <summary>
+        /// If the player is looting the object
+        /// </summary>
+        private bool m_looting;
+
+        /// <summary>
+        /// Message that appears when player in range
+        /// </summary>
         [HideInInspector]
-        private PromptData m_lootPrompt;
+        public PromptData LootPrompt;
+
+        /// <summary>
+        /// The accessor to the players ship
+        /// </summary>
+        [HideInInspector]
+        private ShipAccessor m_ship;
 
         #endregion
 
@@ -49,18 +72,21 @@ namespace Space.Segment
         /// </summary>
         public virtual void EnterRange()
         {
+            if (m_yield.Count == 0)
+                return;
+
             if (SystemManager.UIPrompt != null)
             {
-                if (m_lootPrompt == null)
+                if (LootPrompt == null)
                 {
-                    m_lootPrompt = new PromptData();
-                    m_lootPrompt.LabelText = new string[1]
-                        {"Press E to Loot Wreckage"};
+                    LootPrompt = new PromptData();
+                    LootPrompt.LabelText = new string[1]
+                        {"Press V to Loot Wreckage", };
 
-                    SystemManager.UIPrompt.DisplayPrompt(m_lootPrompt);
+                    SystemManager.UIPrompt.DisplayPrompt(LootPrompt);
                 }
                 else
-                    SystemManager.UIPrompt.DisplayPrompt(m_lootPrompt.ID);
+                    SystemManager.UIPrompt.DisplayPrompt(LootPrompt.ID);
             }
 
             m_inRange = true;
@@ -73,11 +99,78 @@ namespace Space.Segment
         {
             if (SystemManager.UIPrompt != null)
             {
-                SystemManager.UIPrompt.DeletePrompt(m_lootPrompt.ID);
-                m_lootPrompt = null;
+                if (LootPrompt != null)
+                {
+                    SystemManager.UIPrompt.DeletePrompt(LootPrompt.ID);
+                    LootPrompt = null;
+                }
+                StopCoroutine("DelayLoot");
+                StopCoroutine("DelayEnd");
             }
 
             m_inRange = false;
+
+            m_looting = false;
+
+            m_ship = null;
+        }
+
+        /// <summary>
+        /// Begin the process of 
+        /// depositing materials and display
+        /// </summary>
+        /// <param name="ship"></param>
+        public void Interact(ShipAccessor ship)
+        {
+            if (!m_looting)
+            {
+                m_ship = ship;
+
+                // Change text and update
+                LootPrompt.LabelText = new string[1]
+                    { "Looting Ship, Please Wait" };
+
+                m_looting = true;
+
+                // Set a delay 
+                StartCoroutine("DelayLoot", 10f);
+            }
+        }
+
+        #endregion
+
+        #region PRIVATE UTILITIES
+
+        /// <summary>
+        /// Finished the refining delay,
+        /// add the refined elements to player 
+        /// storage
+        /// </summary>
+        private void Loot()
+        {
+            if (m_ship != null)
+            {
+                // Get list of items from the ship
+                foreach (int mat in m_yield.Keys)
+                {
+                    m_ship.MaterialGathered(mat, m_yield[mat]);
+                }
+            }
+
+            m_yield.Clear();
+
+            m_looting = false;
+
+            StartCoroutine("DelayEnd",
+                "Ship Looted");
+        }
+
+        /// <summary>
+        /// Called by the child object to start the range checking
+        /// </summary>
+        protected void Initialize()
+        {
+            StartCoroutine("CheckRange");
         }
 
         #endregion
@@ -95,7 +188,6 @@ namespace Space.Segment
             // Endless loop
             while (true)
             {
-
                 // Only proceed if the player is 
                 // currently deployed
                 GameObject playerObj =
@@ -104,6 +196,7 @@ namespace Space.Segment
                 // Ensure player is alive
                 if (playerObj == null)
                 {
+                    StopCoroutine("DelayEnd");
                     yield return null;
                     continue;
                 }
@@ -132,6 +225,57 @@ namespace Space.Segment
 
                 yield return null;
             }
+        }
+
+        /// <summary>
+        /// Waits for delay period
+        /// and then start material deposit
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator DelayLoot(float delay)
+        {
+            float timer = 0;
+
+            LootPrompt.SliderValues = new float[1];
+
+            while (timer < delay)
+            {
+                yield return null;
+
+                timer += Time.deltaTime;
+
+                LootPrompt.SliderValues[0] = timer / delay;
+
+                SystemManager.UIPrompt.UpdatePrompt(LootPrompt.ID);
+            }
+
+            Loot();
+
+            yield break;
+        }
+
+        /// <summary>
+        /// Displays ending message for two seconds then  
+        /// resets prompt
+        /// </summary>
+        /// <param name="delay"></param>
+        /// <returns></returns>
+        private IEnumerator DelayEnd(string endMessage)
+        {
+            LootPrompt.SliderValues = null;
+
+            LootPrompt.LabelText[0] = endMessage;
+
+            SystemManager.UIPrompt.UpdatePrompt(LootPrompt.ID);
+
+            yield return new WaitForSeconds(2f);
+
+            LootPrompt.LabelText = null;
+
+            SystemManager.UIPrompt.UpdatePrompt(LootPrompt.ID);
+
+            if (OnLootCompleted != null)
+                OnLootCompleted(this);
         }
 
 
