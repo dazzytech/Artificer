@@ -98,7 +98,7 @@ namespace Space
                 if (m_att == null)
                     return 0u;
 
-                return m_att.netID;
+                return m_att.Player_NetID;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Space
         {
             get
             {
-                return m_att.buildRange;
+                return m_att.Player_InBuildRange;
             }
         }
 
@@ -153,7 +153,7 @@ namespace Space
         /// </summary>
         public Transform PlayerCamera
         {
-            get { return m_att.PlayerCamera; }
+            get { return m_att.Player_Camera; }
         }
 
         /// <summary>
@@ -171,11 +171,11 @@ namespace Space
         void Awake()
         {
             // init onstage
-            m_att.PlayerOnStage = false;
+            m_att.Player_OnStage = false;
 
-            m_att.Docked = false;
+            m_att.Player_Docked = false;
 
-            m_att.InRangeList = new List<StationAccessor>();
+            m_att.Station_InRangeList = new List<StationAccessor>();
 
             m_att.GlobalStations = new List<StationAccessor>();
         }
@@ -215,7 +215,7 @@ namespace Space
         /// </summary>
         public void InitializePlayer()
         {
-            m_att.PlayerOnStage = true;
+            m_att.Player_OnStage = true;
 
             // Trigger that team has been selected
             if(TeamSelected != null)
@@ -236,10 +236,13 @@ namespace Space
 
         #region STATION
 
+        /// <summary>
+        /// Start the process of the player entering the station
+        /// </summary>
         public void DockAtStation()
         { 
             // Only perform if we have a station
-            if (!m_att.OverStation)
+            if (!m_att.Player_InStationRange)
                 return;
 
             // for now first task is to retrieve 
@@ -253,9 +256,9 @@ namespace Space
             // retrieve ship atts from player object
             ShipAccessor ship = PlayerObj.GetComponent<ShipAccessor>();
 
-            m_att.Docked = true;
+            m_att.Player_Docked = true;
 
-            m_att.DockingStation.Dock(true, ship);
+            m_att.Station_CurrentDocking.Dock(true, ship);
         }
 
         /// <summary>
@@ -264,7 +267,7 @@ namespace Space
         /// </summary>
         public void LeaveStation()
         {
-            if (!m_att.Docked)
+            if (!m_att.Player_Docked)
                 return;
 
             // for now first task is to retrieve 
@@ -278,9 +281,9 @@ namespace Space
             // retrieve ship atts from player object
             ShipAccessor ship = PlayerObj.GetComponent<ShipAccessor>();
 
-            m_att.Docked = false;
+            m_att.Player_Docked = false;
 
-            m_att.DockingStation.Dock(false, ship);
+            m_att.Station_CurrentDocking.Dock(false, ship);
         }
 
         /// <summary>
@@ -289,10 +292,8 @@ namespace Space
         /// </summary>
         public void InteractWithStation(bool keyDown)
         {
-            if (m_att.InteractStation != null)
+            if (m_att.Station_CurrentInteract != null)
             {
-                // for now first task is to retrieve 
-                // player ship and notify it to disable
                 GameObject PlayerObj = GameObject.FindGameObjectWithTag
                     ("PlayerShip");
 
@@ -302,11 +303,29 @@ namespace Space
                 // retrieve ship atts from player object
                 ShipAccessor ship = PlayerObj.GetComponent<ShipAccessor>();
 
-                m_att.InteractStation.Interact(keyDown, ship);
+                m_att.Station_CurrentInteract.Interact(keyDown, ship);
             }
         }
 
         #endregion
+
+        /// <summary>
+        /// Begin the process of looting an object in space
+        /// </summary>
+        public void LootObject()
+        {
+            if(m_att.Lootable_CurrentObject != null)
+            {
+                GameObject PlayerObj = GameObject.FindGameObjectWithTag
+                    ("PlayerShip");
+
+                if (PlayerObj == null)
+                    return;                 // need to be alive
+
+                m_att.Lootable_CurrentObject.Interact
+                    (PlayerObj.GetComponent<ShipAccessor>());
+            }
+        }
 
         /// <summary>
         /// Updates the possible
@@ -383,18 +402,18 @@ namespace Space
 
             if (PlayerObj == null)
             {
-                if (m_att.PlayerOnStage)
+                if (m_att.Player_OnStage)
                 {
                     PlayerExitScene();
-                    m_att.PlayerOnStage = false;
+                    m_att.Player_OnStage = false;
                 }
             }
             else
             {
-                if (!m_att.PlayerOnStage)
+                if (!m_att.Player_OnStage)
                 {
                     PlayerEnterScene();
-                    m_att.PlayerOnStage = true;
+                    m_att.Player_OnStage = true;
                 }
                 else
                 {

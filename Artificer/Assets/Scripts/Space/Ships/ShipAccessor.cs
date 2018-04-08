@@ -500,15 +500,39 @@ namespace Space.Ship
         /// we add the material to it
         /// </summary>
         /// <param name="itemID"></param>
-        public void MaterialGathered(int itemID)
+        public void MaterialGathered(int itemID, float amount = -1)
         {
             if(m_ship.Collector != null)
             {
-                m_ship.Collector.ItemGathered(itemID);
+                m_ship.Collector.ItemGathered(itemID, amount);
 
                 if(OnStorageChanged != null)
                     OnStorageChanged();
             }
+        }
+
+        /// <summary>
+        /// looting mechanic that inserts large amounts
+        /// of materials at once, doesn't bother stacking
+        /// </summary>
+        /// <param name="mat"></param>
+        public Dictionary<int, float> InsertMaterial(Dictionary<int, float> mat)
+        {
+            // first time only add the item to 
+            // storages that already have it
+            // for stacking
+            foreach (StorageListener storage in Storage)
+            {
+                mat = storage.AddMaterial(mat);
+
+                if (mat.Count == 0)
+                    break;
+            }
+
+            if (OnStorageChanged != null)
+                OnStorageChanged();
+
+            return mat;
         }
 
         /// <summary>

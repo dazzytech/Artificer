@@ -10,6 +10,9 @@ using Networking;
 using Space.Segment;
 using Space.UI;
 using Data.UI;
+using Space.Segment.Generator;
+using System.Collections.Generic;
+using Data.Space.Collectable;
 
 namespace Stations
 {
@@ -38,7 +41,29 @@ namespace Stations
         private IEnumerator m_docking;
         private IEnumerator m_building;
 
+        /// <summary>
+        /// How long until gameobject is removed
+        /// </summary>
+        private float m_secondsTillRemove;
+
         #endregion
+
+        #region ACCESSORS
+
+        protected StationAttributes m_att
+        {
+            get
+            {
+                if (transform == null)
+                    return null;
+                else if (transform.GetComponent<StationAttributes>() != null)
+                    return transform.GetComponent<StationAttributes>();
+                else
+                    return null;
+            }
+        }
+
+        #endregion 
 
         #region MONO BEHAVIOUR 
 
@@ -142,37 +167,28 @@ namespace Stations
             (HitData hitD)
         {
             // For now ignore friendly fire
-            if (m_att.Accessor.Team.PlayerOnTeam(hitD.originID))
-                return;
-
-            // First apply damage to station integrity
-            m_att.CurrentIntegrity -= hitD.damage;
-
-            // After successfully taking damage, set to under attack mode
-            StopCoroutine("AttackTimer");
-
-            m_att.UnderAttack = true;
-
-            StartCoroutine("AttackTimer");
-
-            IntegrityChangedMsg intmsg = new IntegrityChangedMsg();
-            intmsg.Amount = -hitD.damage;
-            intmsg.Location = transform.position;
-            intmsg.PlayerID = -1;
-
-            SystemManager.singleton.client.Send((short)MSGCHANNEL.INTEGRITYCHANGE, intmsg);
-
-            // if station destroyed then being destroy process
-            if (m_att.CurrentIntegrity <= 0)
+            if (!m_att.Accessor.Team.PlayerOnTeam(hitD.originID))
             {
-                StationDestroyMessage msg = new StationDestroyMessage();
-                msg.SelfID = netId;
-                msg.ID = m_att.SpawnID;
+                // First apply damage to station integrity
+                m_att.CurrentIntegrity -= hitD.damage;
 
-                SystemManager.singleton.client.Send((short)MSGCHANNEL.STATIONDESTROYED, msg);
+                // After successfully taking damage, set to under attack mode
+                StopCoroutine("AttackTimer");
 
-                NetworkServer.UnSpawn(this.gameObject);
-                Destroy(this.gameObject);
+                m_att.UnderAttack = true;
+
+                StartCoroutine("AttackTimer");
+
+                IntegrityChangedMsg intmsg = new IntegrityChangedMsg();
+                intmsg.Amount = -hitD.damage;
+                intmsg.Location = transform.position;
+                intmsg.PlayerID = -1;
+
+                SystemManager.singleton.client.Send((short)MSGCHANNEL.INTEGRITYCHANGE, intmsg);
+
+                // if station destroyed then being destroy process
+                if (m_att.CurrentIntegrity <= 0)
+                    DestroyStation();
             }
         }
 
@@ -262,26 +278,47 @@ namespace Stations
 
         #endregion
 
-        #region PRIVATE ACCESSORS
-
-        protected StationAttributes m_att
-        {
-            get
-            {
-                if (transform == null)
-                    return null;
-                else if (transform.GetComponent<StationAttributes>() != null)
-                    return transform.GetComponent<StationAttributes>();
-                else
-                    return null;
-            }
-        }
-
-        #endregion 
-
         #region PRIVATE UTILITIES
 
-        
+        /// <summary>
+        /// Initializes a station wreckage object
+        /// then destroys this GO
+        /// </summary>
+        [Server]
+        private void DestroyStation()
+        {
+            StationDestroyMessage msg = new StationDestroyMessage();
+            msg.SelfID = netId;
+            msg.ID = m_att.SpawnID;
+
+            SystemManager.singleton.client.Send((short)MSGCHANNEL.STATIONDESTROYED, msg);
+
+            // Retrieve sprite 
+            Sprite sprite = GetComponent<SpriteRenderer>().sprite;
+
+            // Create a loot object
+            TeamController team = m_att.Accessor.Team;
+
+            ItemCollectionData[] yield = team.Assets;
+
+            if (yield != null)
+            {
+                for (int item = 0; item < yield.Length; item++)
+                {
+                    yield[item].Amount *= Random.Range(0.0f, 0.01f);
+                    if (yield[item].Amount == 0f)
+                        yield[item].Exist = false;
+                }
+
+                team.Expend(yield);
+            }
+
+            // Call the debris gen to build a destroyed Station object
+            DebrisGenerator.SpawnStationDebris(transform, sprite, yield);
+
+            Destroy(this.gameObject);
+            NetworkServer.UnSpawn(this.gameObject);
+        }
 
         #endregion
 

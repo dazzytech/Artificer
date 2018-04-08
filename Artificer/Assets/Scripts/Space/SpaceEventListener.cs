@@ -68,12 +68,16 @@ namespace Space
             m_con.PlayerEnterScene += new SpaceManager.SceneEvent(LoadPlayerDataIntoScene);
             m_con.PlayerExitScene += PlayerDeath;
 
-            // Station events
+            // Station Events
             StationController.OnEnterRange += OnEnterStation;
             StationController.OnExitRange += OnExitStation;
             StationController.OnEnterBuildRange += OnEnterBuildRange;
             StationController.OnExitBuildRange += OnExitBuildRange;
             StationController.OnStationCreated += OnStationCreated;
+
+            // Looting Events
+            Lootable.OnEnterRange += Lootable_OnEnterRange;
+            Lootable.OnExitRange += Lootable_OnExitRange;
 
             if (SystemManager.Events != null)
             {
@@ -132,7 +136,7 @@ namespace Space
         private void PlayerSystemInput(KeyCode key)
         {
             // only interact if not docked
-            if (m_att.Docked || key == KeyCode.None)
+            if (m_att.Player_Docked || key == KeyCode.None)
                 return;
 
             if (key == Control_Config.GetKey("pause", "sys"))
@@ -200,6 +204,7 @@ namespace Space
             if (key == Control_Config.GetKey("interact", "sys"))
             {
                 m_con.InteractWithStation(false);
+                m_con.LootObject();
             }
             if (key == Control_Config.GetKey("camUp", "sys")
                 || key == Control_Config.GetKey("camDown", "sys")
@@ -216,7 +221,7 @@ namespace Space
         /// <param name="yDelta"></param>
         private void PlayerMouseScroll(float yDelta)
         {
-            if (m_att.Docked)
+            if (m_att.Player_Docked)
                 return;
 
             if (Input.mouseScrollDelta.y < 0f)
@@ -235,33 +240,33 @@ namespace Space
         /// </summary>
         private void PlayerDeath()
         {
-            m_att.PlayerShip = null;
+            m_att.Player_Ship = null;
 
-            m_att.netID = 0;
+            m_att.Player_NetID = 0;
 
-            m_att.InRangeList.Clear();
+            m_att.Station_InRangeList.Clear();
 
-            if(m_att.DockingStation != null)
+            if(m_att.Station_CurrentDocking != null)
             {
-                m_att.DockingStation.Range(false);
+                m_att.Station_CurrentDocking.Range(false);
 
-                m_att.DockingStation.Interact(false);
+                m_att.Station_CurrentDocking.Interact(false);
 
-                m_att.DockingStation.Dock(false);
+                m_att.Station_CurrentDocking.Dock(false);
 
-                m_att.DockingStation = null;
+                m_att.Station_CurrentDocking = null;
             }
 
 
-            if (m_att.InteractStation != null)
+            if (m_att.Station_CurrentInteract != null)
             {
-                m_att.InteractStation.Range(false);
+                m_att.Station_CurrentInteract.Range(false);
 
-                m_att.InteractStation.Interact(false);
+                m_att.Station_CurrentInteract.Interact(false);
 
-                m_att.InteractStation.Dock(false);
+                m_att.Station_CurrentInteract.Dock(false);
 
-                m_att.InteractStation = null;
+                m_att.Station_CurrentInteract = null;
             }
 
             // Prompt player to pick a spawn
@@ -277,15 +282,15 @@ namespace Space
         private void LoadPlayerDataIntoScene()
         {
             // Run checks for player entry
-            m_att.PlayerShip = GameObject.FindGameObjectWithTag
+            m_att.Player_Ship = GameObject.FindGameObjectWithTag
                 ("PlayerShip");
 
-            m_att.PlayerCamera = GameObject.FindGameObjectWithTag
+            m_att.Player_Camera = GameObject.FindGameObjectWithTag
                     ("MainCamera").transform;
 
-            if (m_att.PlayerShip != null)
+            if (m_att.Player_Ship != null)
             {
-                m_att.netID = m_att.PlayerShip.GetComponent<NetworkIdentity>().
+                m_att.Player_NetID = m_att.Player_Ship.GetComponent<NetworkIdentity>().
                     netId.Value;
             }
 
@@ -294,6 +299,8 @@ namespace Space
 
             SystemManager.Background.StartBackground();
         }
+
+        #region STATION INTERACTION
 
         /// <summary>
         /// When player is in proximity of a station it can enter
@@ -304,12 +311,12 @@ namespace Space
         {
             // if we arent already in range
             // add to our list
-            if (!m_att.InRangeList.Contains(station))
+            if (!m_att.Station_InRangeList.Contains(station))
             {
-                m_att.InRangeList.Add(station);
+                m_att.Station_InRangeList.Add(station);
 
                 // retrieve ship atts from player object
-                ShipAccessor ship = m_att.PlayerShip.
+                ShipAccessor ship = m_att.Player_Ship.
                     GetComponent<ShipAccessor>();
 
                 station.Range(true, ship);
@@ -319,20 +326,20 @@ namespace Space
                     // define the station reference 
                     if (station.DockPrompt != null)
                     {
-                        if (m_att.DockingStation != null)
+                        if (m_att.Station_CurrentDocking != null)
                             SystemManager.UIPrompt.HidePrompt
-                                (m_att.DockingStation.DockPrompt.ID);
+                                (m_att.Station_CurrentDocking.DockPrompt.ID);
 
-                        m_att.DockingStation = station;
+                        m_att.Station_CurrentDocking = station;
                     }
 
                     if (station.InteractPrompt != null)
                     {
-                        if (m_att.InteractStation != null)
+                        if (m_att.Station_CurrentInteract != null)
                             SystemManager.UIPrompt.HidePrompt
-                                (m_att.InteractStation.InteractPrompt.ID);
+                                (m_att.Station_CurrentInteract.InteractPrompt.ID);
 
-                        m_att.InteractStation = station;
+                        m_att.Station_CurrentInteract = station;
                     }
                 }
             }
@@ -344,32 +351,32 @@ namespace Space
         /// <param name="controller"></param>
         private void OnExitStation(StationAccessor station)
         {
-            if (m_att.InRangeList.Contains(station))
-                m_att.InRangeList.Remove(station);
+            if (m_att.Station_InRangeList.Contains(station))
+                m_att.Station_InRangeList.Remove(station);
 
             station.Range(false);
 
-            if (m_att.Docked)
+            if (m_att.Player_Docked)
                 SystemManager.Space.LeaveStation();
 
-            // if the prompts are null, consider 
+            // if the prompts are null, replace prompt with another station in range
             if (station.DockPrompt == null
-                && m_att.DockingStation != null)
+                && m_att.Station_CurrentDocking != null)
             {
-                if (m_att.DockingStation.Equals(station))
+                if (m_att.Station_CurrentDocking.Equals(station))
                 {
-                    m_att.DockingStation = null;
+                    m_att.Station_CurrentDocking = null;
 
-                    foreach (StationAccessor other in m_att.InRangeList)
+                    foreach (StationAccessor other in m_att.Station_InRangeList)
                     {
                         if (other.DockPrompt != null)
                         {
-                            m_att.DockingStation = other;
+                            m_att.Station_CurrentDocking = other;
 
                             Debug.Log("Replaced Dock");
 
                             SystemManager.UIPrompt.DisplayPrompt
-                                (m_att.DockingStation.DockPrompt.ID);
+                                (m_att.Station_CurrentDocking.DockPrompt.ID);
 
                             break;
                         }
@@ -378,24 +385,24 @@ namespace Space
             }
 
             if (station.InteractPrompt == null &&
-                m_att.InteractStation != null)
+                m_att.Station_CurrentInteract != null)
             {
-                if (m_att.InteractStation.Equals(station))
+                if (m_att.Station_CurrentInteract.Equals(station))
                 {
-                    m_att.InteractStation = null;
+                    m_att.Station_CurrentInteract = null;
 
                     Debug.Log("Interact Removed");
 
-                    foreach (StationAccessor other in m_att.InRangeList)
+                    foreach (StationAccessor other in m_att.Station_InRangeList)
                     {
                         if (other.InteractPrompt != null)
                         {
-                            m_att.InteractStation = other;
+                            m_att.Station_CurrentInteract = other;
 
                             Debug.Log("Replaced Interact");
 
                             SystemManager.UIPrompt.DisplayPrompt
-                                (m_att.InteractStation.InteractPrompt.ID);
+                                (m_att.Station_CurrentInteract.InteractPrompt.ID);
 
                             break;
                         }
@@ -404,9 +411,13 @@ namespace Space
             }
         }
 
+        /// <summary>
+        /// Allow the ship to deploy stations
+        /// </summary>
+        /// <param name="station"></param>
         private void OnEnterBuildRange(StationAccessor station)
         {
-            m_att.buildRange = true;
+            m_att.Player_InBuildRange = true;
         }
 
         /// <summary>
@@ -415,8 +426,87 @@ namespace Space
         /// <param name="controller"></param>
         private void OnExitBuildRange(StationAccessor station)
         {
-            m_att.buildRange = false;
+            m_att.Player_InBuildRange = false;
         }
+
+        #endregion
+
+        #region LOOT INTERACTION
+
+        /// <summary>
+        /// When player leaves range of a looting object
+        /// </summary>
+        /// <param name="lootable"></param>
+        private void Lootable_OnEnterRange(Lootable lootable)
+        {
+            if (!m_att.Lootable_InRangeList.Contains(lootable))
+            {
+                // retrieve ship atts from player object
+                ShipAccessor ship = m_att.Player_Ship.
+                    GetComponent<ShipAccessor>();
+
+                if (ship.Storage.Count == 0)
+                    return;
+
+                m_att.Lootable_InRangeList.Add(lootable);
+
+                lootable.EnterRange();
+
+                if (SystemManager.UIPrompt != null)
+                {
+                    // define the station reference 
+                    if (lootable.LootPrompt != null)
+                    {
+                        // If we are still in looting range of previous, then hide that 
+                        // prompt
+                        if (m_att.Lootable_CurrentObject != null)
+                            SystemManager.UIPrompt.HidePrompt
+                                (m_att.Lootable_CurrentObject.LootPrompt.ID);
+
+                        m_att.Lootable_CurrentObject = lootable;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// When player is within range of a looting object
+        /// </summary>
+        /// <param name="lootable"></param>
+        private void Lootable_OnExitRange(Lootable lootable)
+        {
+            if (m_att.Lootable_InRangeList.Contains(lootable))
+                m_att.Lootable_InRangeList.Remove(lootable);
+
+            lootable.ExitRange();
+ 
+            // Replace the current prompt with another lootable that is within range
+            if (lootable.LootPrompt == null
+                && m_att.Lootable_CurrentObject != null)
+            {
+                // if our current loot is the one that's destroyed
+                // replace prompt
+                if (m_att.Lootable_CurrentObject.Equals(lootable))
+                {
+                    m_att.Lootable_CurrentObject = null;
+
+                    foreach (Lootable other in m_att.Lootable_InRangeList)
+                    {
+                        if (other.LootPrompt != null)
+                        {
+                            m_att.Lootable_CurrentObject = other;
+
+                            SystemManager.UIPrompt.DisplayPrompt
+                                (m_att.Lootable_CurrentObject.LootPrompt.ID);
+
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion
 
         #endregion
 
@@ -462,14 +552,18 @@ namespace Space
             // Find the station in our list and remove it
             for(int i = 0; i < m_att.GlobalStations.Count; i++)
             {
-                if(m_att.GlobalStations[i].netId == DD.SelfID)
+                if (m_att.GlobalStations[i] == null)
+                {
+                    m_att.GlobalStations.RemoveAt(i--);
+                    continue;
+                }
+
+                if (m_att.GlobalStations[i].netId == DD.SelfID)
                 {
                     m_att.GlobalStations.RemoveAt(i);
                     break;
                 }
             }
-
-            // whatever done here
         }
 
         /// <summary>
