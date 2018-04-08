@@ -512,6 +512,30 @@ namespace Space.Ship
         }
 
         /// <summary>
+        /// looting mechanic that inserts large amounts
+        /// of materials at once, doesn't bother stacking
+        /// </summary>
+        /// <param name="mat"></param>
+        public Dictionary<int, float> InsertMaterial(Dictionary<int, float> mat)
+        {
+            // first time only add the item to 
+            // storages that already have it
+            // for stacking
+            foreach (StorageListener storage in Storage)
+            {
+                mat = storage.AddMaterial(mat);
+
+                if (mat.Count == 0)
+                    break;
+            }
+
+            if (OnStorageChanged != null)
+                OnStorageChanged();
+
+            return mat;
+        }
+
+        /// <summary>
         /// Clears the storage of the ship
         /// and returns the assets list
         /// </summary>

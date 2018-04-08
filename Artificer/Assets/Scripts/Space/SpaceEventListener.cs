@@ -552,14 +552,18 @@ namespace Space
             // Find the station in our list and remove it
             for(int i = 0; i < m_att.GlobalStations.Count; i++)
             {
-                if(m_att.GlobalStations[i].netId == DD.SelfID)
+                if (m_att.GlobalStations[i] == null)
+                {
+                    m_att.GlobalStations.RemoveAt(i--);
+                    continue;
+                }
+
+                if (m_att.GlobalStations[i].netId == DD.SelfID)
                 {
                     m_att.GlobalStations.RemoveAt(i);
                     break;
                 }
             }
-
-            // whatever done here
         }
 
         /// <summary>

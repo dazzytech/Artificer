@@ -9081,7 +9081,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aae78c177ed7cb842bac6fd25381765a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WreckagePrefab: {fileID: 178506, guid: 87f3cc353526fb047936b76a6bf725f2, type: 2}
+  Ship_WreckagePrefab: {fileID: 178506, guid: 87f3cc353526fb047936b76a6bf725f2, type: 2}
+  Station_WreckagePrefab: {fileID: 178506, guid: c963d53997d865f4a869c22388b04875,
+    type: 2}
 --- !u!4 &434335259
 Transform:
   m_ObjectHideFlags: 0
@@ -16515,7 +16517,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.000015258789}
   m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &741851593
@@ -28022,21 +28024,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97371fae3f183ca499775e6847727380, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerOnStage: 0
-  PlayerShip: {fileID: 0}
-  playerID: 0
-  netID: 0
-  buildRange: 0
-  InRangeList: []
-  DockingStation: {fileID: 0}
-  InteractStation: {fileID: 0}
-  Docked: 0
+  Player_OnStage: 0
+  Player_Docked: 0
+  Player_Ship: {fileID: 0}
+  Player_Camera: {fileID: 0}
+  Player_ID: 0
+  Player_NetID: 0
+  Player_InBuildRange: 0
+  Station_InRangeList: []
+  Station_CurrentDocking: {fileID: 0}
+  Station_CurrentInteract: {fileID: 0}
+  Lootable_InRangeList: []
+  Lootable_CurrentObject: {fileID: 0}
   Map: {fileID: 2012517428}
   AI: {fileID: 593987429}
   Segment: {fileID: 1688872188}
-  PlayerCamera: {fileID: 0}
-  GlobalStations: []
   Team: {fileID: 0}
+  GlobalStations: []
 --- !u!1001 &1368782869
 Prefab:
   m_ObjectHideFlags: 0
@@ -34102,6 +34106,7 @@ Camera:
   m_TargetEye: 3
   m_HDR: 0
   m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -38500,7 +38505,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.000029467128}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1874369536
@@ -41338,7 +41343,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.000029467128}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2006588503

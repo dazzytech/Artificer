@@ -20,14 +20,9 @@ namespace Space.Segment
             m_maxDensity = m_pieceDensity = (40f * transform.childCount);
         }
 
-        void Update()
-        {
-           m_secondsTillRemove -= Time.deltaTime;
-           if (m_secondsTillRemove <= 0)
-               Destroy(gameObject);
-        }
-
         #endregion
+
+        #region PUBLIC INTERACTION
 
         #region SERVER MESSAGES
 
@@ -109,6 +104,8 @@ namespace Space.Segment
 
             Initialize();
         }
+
+        #endregion
 
         #endregion
     }

@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using Data.Space;
+using Data.Space.Collectable;
 
 namespace Space.Segment.Generator
 {
@@ -19,8 +20,13 @@ namespace Space.Segment.Generator
         // reference to self in static functs
         public static DebrisGenerator instance;
 
-        //private static SegmentObject wData = new SegmentObject();
-        public GameObject WreckagePrefab;
+        #region PREFABS
+
+        public GameObject Ship_WreckagePrefab;
+
+        public GameObject Station_WreckagePrefab;
+
+        #endregion
 
         // Track the total number of debris
         private static int maxWreckage = 10;
@@ -107,25 +113,46 @@ namespace Space.Segment.Generator
             if (currentWreckage >= maxWreckage)
                 return;
 
-            GameObject destroyed = Instantiate(instance.WreckagePrefab);
+            GameObject destroyed = Instantiate(instance.Ship_WreckagePrefab);
             destroyed.transform.parent = instance.transform;
             destroyed.transform.position = position;
 
             Rigidbody2D rb = destroyed.GetComponent<Rigidbody2D>();
             rb.AddForce(Vel);
-
-            // Add attribute scripts
-            //SegmentObjectBehaviour obj = destroyed.AddComponent<SegmentObjectBehaviour>();
-            //obj.Create(50, wData);
             
             NetworkServer.Spawn(destroyed);
-
-            // send build msg
             DestroyedComponent dc
                 = destroyed.GetComponent<DestroyedComponent>();
-            //dPC.prospect = wData._symbols;
 
             dc.SetWreckage(Comps, playerID);
+
+            currentWreckage++;
+        }
+
+        /// <summary>
+        /// Places a station wreckage wherever a station has been 
+        /// destroyed
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="tex"></param>
+        /// <param name="loot"></param>
+        [Server]
+        public static void SpawnStationDebris
+            (Transform station, Sprite sprite, ItemCollectionData[] loot)
+        {
+            if (currentWreckage >= maxWreckage)
+                return;
+
+            GameObject destroyed = Instantiate(instance.Station_WreckagePrefab);
+            destroyed.transform.parent = instance.transform;
+            destroyed.transform.position = station.position;
+            destroyed.transform.localScale = station.localScale;
+
+            NetworkServer.Spawn(destroyed);
+            DestroyedStation ds
+                = destroyed.GetComponent<DestroyedStation>();
+
+            ds.SetWreckage(sprite, loot);
 
             currentWreckage++;
         }

@@ -29,6 +29,7 @@ namespace Space.Segment
         /// <summary>
         /// Number of seconds until object dissapears
         /// </summary>
+        [SerializeField]
         protected float m_secondsTillRemove = 60f;
 
         /// <summary>
@@ -150,14 +151,8 @@ namespace Space.Segment
         {
             if (m_ship != null)
             {
-                // Get list of items from the ship
-                foreach (int mat in m_yield.Keys)
-                {
-                    m_ship.MaterialGathered(mat, m_yield[mat]);
-                }
+                m_yield = m_ship.InsertMaterial(m_yield);
             }
-
-            m_yield.Clear();
 
             m_looting = false;
 
@@ -171,6 +166,13 @@ namespace Space.Segment
         protected void Initialize()
         {
             StartCoroutine("CheckRange");
+
+            Invoke("DelayDestroy", m_secondsTillRemove);
+        }
+
+        private void DelayDestroy()
+        {
+            Destroy(gameObject);
         }
 
         #endregion
