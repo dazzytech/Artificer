@@ -658,8 +658,8 @@ namespace Space
 
             if (m_att.Team.ID == 1)
             {
-                m_util.RotateCam(180, false);
                 m_con.ResetOrientation(new Vector2(0, -1f));
+                m_util.RotateCam(180, false);
             }
 
             m_att.Team.EventShipListChanged += m_con.RefreshShipSpawnList;
