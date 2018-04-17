@@ -298,6 +298,14 @@ namespace Space
             SystemManager.UIState.SetState(UIState.Play);
 
             SystemManager.Background.StartBackground();
+
+            // If the player is with team two, flip it around
+            if (m_att.Team.ID == 1)
+            {
+                m_con.ResetOrientation(new Vector2(0, -1f));
+                m_util.RotateCam(180, false);
+                m_att.Player_Ship.transform.Rotate(new Vector3(0, 0, 180));
+            }
         }
 
         #region STATION INTERACTION
@@ -584,14 +592,6 @@ namespace Space
             }
         }
 
-        public void StationReached(Transform ship)
-        {
-            //if (_att.Contract == null)
-            //return;
-
-            //_att.Contract.ProcessStationReached(ship);
-        }
-
         private void EndLevel(/*GameState newState*/)
         {
             m_util.Stop();
@@ -655,12 +655,6 @@ namespace Space
             // extract the team manager and store int space object
             m_att.Team = teamObj.
                 GetComponent<TeamController>();
-
-            if (m_att.Team.ID == 1)
-            {
-                m_con.ResetOrientation(new Vector2(0, -1f));
-                m_util.RotateCam(180, false);
-            }
 
             m_att.Team.EventShipListChanged += m_con.RefreshShipSpawnList;
 
