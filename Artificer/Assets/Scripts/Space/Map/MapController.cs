@@ -77,7 +77,7 @@ namespace Space.Map
             SystemManager.Events.EventShipCreated += CreateShip;
             StationController.OnStationCreated += CreateStation;
             SegmentObjectBehaviour.Created += CreateSegmentObject;
-            UI.Proxmity.TrackerHUD.OnWayPointCreated += DeployWaypoint;
+            WayPointGenerator.OnWayPointCreated += DeployWaypoint;
 
             // build objects
             PopulateExistingShips();
@@ -293,6 +293,8 @@ namespace Space.Map
                 (waypoint);
 
             mapObj.Type = MapObjectType.WAYPOINT;
+
+            mapObj.Color = m_neutralColour;
 
             if (OnMapUpdate != null)
                OnMapUpdate(mapObj);

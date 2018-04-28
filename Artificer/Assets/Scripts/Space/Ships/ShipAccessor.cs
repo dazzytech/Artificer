@@ -104,12 +104,25 @@ namespace Space.Ship
         {
             get
             {
+                // Create a tracker for the best performing warp component
+                WarpListener returnWarp = null;
+                float range = 0;
+
+                 // loop through each component and compare the warps to keep the best
                 foreach (ComponentListener comp in Components)
                 {
                     if (comp is WarpListener)
-                        return comp as WarpListener;
+                    {
+                        WarpListener compareWarp = comp as WarpListener;
+                        // store the warp if is had best distance 
+                        if(compareWarp.WarpDistance > range)
+                        {
+                            returnWarp = compareWarp;
+                            range = compareWarp.WarpDistance;
+                        }
+                    }
                 }
-                return null;
+                return returnWarp;
             }
         }
 

@@ -10,7 +10,6 @@ using Space.Teams;
 using System.Collections.Generic;
 using System;
 using Space.Ship.Components.Listener;
-using Space.UI.Station.Map;
 using Space.UI.Station;
 using Space.UI.Spawn;
 using Space.UI.Teams;
@@ -120,18 +119,6 @@ namespace Space.UI
         #endregion
 
         #region STATION RECT MESSAGES
-
-        /// <summary>
-        /// prompts the station object to enable
-        /// the warp map portion of the Station HUD
-        /// </summary>
-        public void InitializeWarpMap
-            (List<uint> surroundingWarpGates,
-            Transform homeGate)
-        {
-            m_stationMsg.InitializeWarpMap
-                (surroundingWarpGates, homeGate);
-        }
 
         /// <summary>
         /// Prompts the staton object to enable the ship

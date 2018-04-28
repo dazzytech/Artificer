@@ -20578,10 +20578,7 @@ MonoBehaviour:
   m_compassPrefab: {fileID: 1810954157360950, guid: a7a704a472873d1488628c6177fe13e7,
     type: 2}
   m_boxPrefab: {fileID: 157094, guid: 7fca01e2201ed0141a1dd48d6b87cb70, type: 2}
-  m_waypointPrefab: {fileID: 1229126171331660, guid: 41f06022247cd2e449c85cfec2af2772,
-    type: 2}
   m_proximity: {fileID: 521542895}
-  m_wayPointContainer: {fileID: 1571512090}
   m_mapViewer: {fileID: 1809215892}
   m_miniMap: {fileID: 218373053}
   m_standardColor: {r: 0.5514706, g: 0.5514706, b: 0.5514706, a: 0.8980392}
@@ -34728,6 +34725,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1705473089}
   - component: {fileID: 1705473090}
+  - component: {fileID: 1705473091}
   m_Layer: 5
   m_Name: Map
   m_TagString: Untagged
@@ -34781,6 +34779,21 @@ MonoBehaviour:
   m_editColour: {r: 0, g: 0, b: 0, a: 0}
   m_editColourHover: {r: 0, g: 0, b: 0, a: 0}
   m_editColourDrag: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &1705473091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1705473088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d6b517b0d9940c4baa25e0805b8b54e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_wayPointContainer: {fileID: 1571512090}
+  m_mapViewer: {fileID: 1809215892}
+  m_waypointPrefab: {fileID: 1229126171331660, guid: 41f06022247cd2e449c85cfec2af2772,
+    type: 2}
 --- !u!1 &1710053481
 GameObject:
   m_ObjectHideFlags: 0
@@ -36880,6 +36893,7 @@ GameObject:
   - component: {fileID: 1809215891}
   - component: {fileID: 1809215894}
   - component: {fileID: 1809215892}
+  - component: {fileID: 1809215893}
   m_Layer: 5
   m_Name: IconParent
   m_TagString: Untagged
@@ -36924,6 +36938,32 @@ MonoBehaviour:
   m_wreckIcon: {fileID: 2800000, guid: afa8c575b77523a44ae4839546ad6ad0, type: 3}
   m_StationIcon: {fileID: 2800000, guid: 26281da389d1a074db4014f1ba4d20e1, type: 3}
   m_teamIcon: {fileID: 2800000, guid: a43318939899b764f8d77553a1ca4879, type: 3}
+--- !u!114 &1809215893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1809215890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!222 &1809215894
 CanvasRenderer:
   m_ObjectHideFlags: 0

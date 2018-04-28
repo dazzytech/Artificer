@@ -496,7 +496,6 @@ namespace Space.Map
 
                     scaledPoint.Scale(m_inverseScale);
 
-
                     OnClick(eventData, scaledPoint);
                 }
             }
