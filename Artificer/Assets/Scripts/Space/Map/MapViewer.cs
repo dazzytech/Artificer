@@ -248,6 +248,10 @@ namespace Space.Map
                 // create go for our icon
                 GameObject GO = new GameObject();
                 GO.transform.SetParent(m_baseMap);
+                if (mObj.Ref != null)
+                    GO.name = mObj.Ref.name;
+                else
+                    GO.name = "group";
 
                 // Create texture
                 RawImage img = GO.AddComponent<RawImage>();
@@ -423,6 +427,8 @@ namespace Space.Map
                 else
                 {
                     mObj.Icon.localPosition = ScaleAndPosition(mObj.Position);
+                    RawImage img = mObj.Icon.GetComponent<RawImage>();
+                    if(img != null) img.color = mObj.Color;
                 }
             }
             else
@@ -489,7 +495,6 @@ namespace Space.Map
                     Vector3 test = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
                     scaledPoint.Scale(m_inverseScale);
-
 
                     OnClick(eventData, scaledPoint);
                 }

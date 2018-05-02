@@ -77,7 +77,7 @@ namespace Space.Map
             SystemManager.Events.EventShipCreated += CreateShip;
             StationController.OnStationCreated += CreateStation;
             SegmentObjectBehaviour.Created += CreateSegmentObject;
-            UI.Proxmity.TrackerHUD.OnWayPointCreated += DeployWaypoint;
+            WayPointGenerator.OnWayPointCreated += DeployWaypoint;
 
             // build objects
             PopulateExistingShips();
@@ -294,6 +294,8 @@ namespace Space.Map
 
             mapObj.Type = MapObjectType.WAYPOINT;
 
+            mapObj.Color = m_neutralColour;
+
             if (OnMapUpdate != null)
                OnMapUpdate(mapObj);
         }
@@ -318,9 +320,14 @@ namespace Space.Map
                     Color newColour = mObj.Relation == -1 ? m_neutralColour :
                         mObj.Relation == 0 ? m_enemyColour : m_friendlyColour;
 
+                    bool changed = false;
+
                     if (mObj.Color != newColour
                         && mObj.TeamID != -1)
+                    {
                         mObj.Color = newColour;
+                        changed = true;
+                    }
 
                     if (mObj.Type == MapObjectType.TEAM)
                     {
@@ -331,16 +338,18 @@ namespace Space.Map
                             if (SystemManager.Space.TeamID == gObj.TeamID)
                             {
                                 if (!gObj.Hidden)
+                                {
                                     gObj.InRange();
-                                else
-                                    continue;
+                                    changed = true;
+                                }
                             }
                             else
                             {
                                 if (gObj.Hidden)
+                                {
                                     gObj.OutOfRange();
-                                else
-                                    continue;
+                                    changed = true;
+                                }
                             }
                         }
                         // Check if object is within proximity of player
@@ -352,36 +361,42 @@ namespace Space.Map
                             if (distance < m_att.ObscureDistance)
                             {
                                 if (!gObj.Hidden)
+                                {
                                     gObj.InRange();
-                                else
-                                    continue;
+                                    changed = true;
+                                }
                             }
                             else
                             {
                                 if (gObj.Hidden)
+                                {
                                     gObj.OutOfRange();
-                                else
-                                    continue;
+                                    changed = true;
+                                }
                             }
                         }
                     }
                     // Remove from list if transform is null
                     else if (mObj.Ref == null)
+                    {
                         // will dec after completed
                         m_att.MapItems.RemoveAt(i--);
+                        changed = true;
+                    }
 
                     else if (mObj.Position.x != mObj.Ref.position.x
                         || mObj.Position.y != mObj.Ref.position.y)
                     {
                         // update location
                         mObj.Position = mObj.Ref.position;
+                        changed = true;
                     }
-                    else if ((mObj.Hidden && mObj.Icon == null) ||
-                            (!mObj.Hidden && mObj.Icon != null))
-                        continue;
+                    else if ((!mObj.Hidden && mObj.Icon != null) ||
+                            (mObj.Hidden && mObj.Icon == null))
+                        changed = true;
 
-                    // Update any viewers
-                    if (OnMapUpdate != null)
+                    // Update any viewers if object is updates
+                    if (OnMapUpdate != null && changed)
                         OnMapUpdate(mObj);
                 }
 

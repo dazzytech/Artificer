@@ -1,7 +1,6 @@
 ﻿using Data.UI;
 using Space.Ship;
 using Space.Teams;
-using Space.UI.Station.Map;
 using Space.UI.Station.Viewer;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,9 +23,6 @@ namespace Space.UI.Station
         private ShipDockController m_shipDock;
 
         [SerializeField]
-        private WarpMapController m_warpMap;
-
-        [SerializeField]
         private TraderHubController m_tradeHub;
 
         #endregion
@@ -35,9 +31,6 @@ namespace Space.UI.Station
 
         public void InitializeShipViewer(ShipAccessor ship)
         {
-            if (m_warpMap.gameObject.activeSelf)
-                m_warpMap.gameObject.SetActive(false);
-
             if (!m_shipDock.gameObject.activeSelf)
                 m_shipDock.gameObject.SetActive(true);
 
@@ -47,25 +40,8 @@ namespace Space.UI.Station
             m_shipDock.InitializeHUD(ship);
         }
 
-        public void InitializeWarpMap(List<uint> warpList, Transform home)
-        {
-            if (!m_warpMap.gameObject.activeSelf)
-                m_warpMap.gameObject.SetActive(true);
-
-            if (m_shipDock.gameObject.activeSelf)
-                m_shipDock.gameObject.SetActive(false);
-
-            if (m_tradeHub.gameObject.activeSelf)
-                m_tradeHub.gameObject.SetActive(false);
-
-            m_warpMap.BuildMap(warpList, home);
-        }
-
         public void InitializeTradingHub(TeamController team)
         {
-            if (m_warpMap.gameObject.activeSelf)
-                m_warpMap.gameObject.SetActive(false);
-
             if (m_shipDock.gameObject.activeSelf)
                 m_shipDock.gameObject.SetActive(false);
 

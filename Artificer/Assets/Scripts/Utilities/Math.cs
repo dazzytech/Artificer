@@ -47,6 +47,23 @@ public class Math
     }
 
     /// <summary>
+    /// Return a new vector that is clamped between the 
+    /// rectangle
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="minRange"></param>
+    /// <param name="maxRange"></param>
+    /// <returns></returns>
+    public static Vector2 WithinRange(Vector2 pos,
+         Rect Range)
+    {
+        float x = Mathf.Min(Range.xMax, Mathf.Max(Range.xMin, pos.x));
+        float y = Mathf.Min(Range.yMax, Mathf.Max(Range.yMin, pos.y));
+
+        return new Vector2(x, y);
+    }
+
+    /// <summary>
     /// Returns if a point is within range 
     /// of all four points of a rectangle
     /// </summary>

@@ -75,7 +75,7 @@ namespace Space.UI.Ship
             WarpAttributes att = _shipRef.Warp.GetAttributes()
                 as WarpAttributes;
 
-            if (att.readyToFire)
+            if (att.WarpReady)
                 statusText.text = "Warp Ready To Fire";
             else
                 statusText.text = "Next Warp Jump In: " + 
@@ -88,9 +88,9 @@ namespace Space.UI.Ship
             Text maxText = WarpBooster.transform.Find
                 ("maxVal").GetComponent<Text>();
             maxText.text = ((int)att.MaxDistance/10).ToString()+"km";
-            Text dist = WarpBooster.transform.Find
-                ("Distance").GetComponent<Text>();
-            dist.text = ((int)att.WarpDistance/10).ToString()+"km";
+            //Text dist = WarpBooster.transform.Find    change to work with points
+            //    ("Distance").GetComponent<Text>();
+           // dist.text = ((int)att.WarpPoint/10).ToString()+"km";
         }
 
         /// <summary>
@@ -101,8 +101,8 @@ namespace Space.UI.Ship
         /// </summary>
         public void BoosterChange()
         {
-            // Saftey check
-            if (_shipRef.Warp == null)
+            // Saftey check                         Change this to a delegate that is triggered when selecting a warp point
+            /*if (_shipRef.Warp == null)
                 return;
 
             // Calc value
@@ -110,7 +110,7 @@ namespace Space.UI.Ship
             float step = (att.MaxDistance - att.MinDistance) *.1f;
             float finalValue = step * WarpBooster.value;
             // Set value
-            att.WarpDistance = att.MinDistance + finalValue;
+            att.WarpPoint = att.MinDistance + finalValue;*/
         }
     }
 }

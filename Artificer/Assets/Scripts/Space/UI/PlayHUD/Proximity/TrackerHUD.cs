@@ -39,14 +39,6 @@ namespace Space.UI.Proxmity
     /// </summary>
     public class TrackerHUD : SelectableHUDList
     {
-        #region EVENTS
-
-        public delegate void ItemCreated(Transform element);
-
-        public static event ItemCreated OnWayPointCreated;
-
-        #endregion
-
         #region ATTRIBUTES
 
         [Header("Tracker HUD")]
@@ -72,19 +64,10 @@ namespace Space.UI.Proxmity
         [SerializeField]
         private GameObject m_boxPrefab;
 
-        [SerializeField]
-        private GameObject m_waypointPrefab;
-
         [Header("HUD Element")]
 
         [SerializeField]
         private ProximityHUD m_proximity;
-
-        /// <summary>
-        /// Creates waypoints on this container
-        /// </summary>
-        [SerializeField]
-        private Transform m_wayPointContainer;
 
         [SerializeField]
         private MapViewer m_mapViewer;
@@ -136,8 +119,6 @@ namespace Space.UI.Proxmity
 
         private bool m_running = false;
 
-        private List<WaypointPrefab> m_waypointList;
-
         private Vector2 m_dir;
 
         #region COMPASS
@@ -173,8 +154,6 @@ namespace Space.UI.Proxmity
             if (m_running)
             {
                 MapController.OnMapUpdate -= OnIconChanged;
-
-                m_mapViewer.OnClick -= OnMapClick;
             }
 
             if(SystemManager.Space != null)
@@ -186,8 +165,6 @@ namespace Space.UI.Proxmity
             if (m_running)
             {
                 MapController.OnMapUpdate += OnIconChanged;
-
-                m_mapViewer.OnClick += OnMapClick;
             }
 
             SystemManager.Space.OnOrientationChange += OnOrientationChange;
@@ -733,66 +710,6 @@ namespace Space.UI.Proxmity
         #endregion
 
         #region EVENT LISTENER
-
-        /// <summary>
-        /// When the player clicks on map
-        /// build a transfrom waypoint at that location
-        /// and create a map prefab 
-        /// </summary>
-        /// <param name="eventData"></param>
-        private void OnMapClick(PointerEventData eventData, 
-            Vector2 worldPos)
-        {
-            // build the empty transform for our 
-            // waypoint position
-            GameObject wayPoint = new GameObject();
-
-            // add to container
-            wayPoint.transform.SetParent
-                (m_wayPointContainer);
-
-            wayPoint.transform.position = worldPos;
-
-            OnWayPointCreated(wayPoint.transform);
-
-            // Build the waypoint prefab
-            GameObject wayPointObject = 
-                Instantiate(m_waypointPrefab);
-
-            // Initialize the selectable item
-            WaypointPrefab wayPointItem =
-                wayPointObject.GetComponent<WaypointPrefab>();
-            wayPointItem.Initialize(DeleteWaypoint);
-            wayPointItem.Waypoint = wayPoint.transform;
-
-            // Add new prefab to list
-            if (m_waypointList == null)
-                m_waypointList = new List<WaypointPrefab>();
-
-            m_waypointList.Add(wayPointItem);
-
-            // Update map
-            MapObject mObj = SystemManager.Space.GetMapObject
-                (wayPoint.transform);
-
-            if (mObj != null)
-                m_mapViewer.DeployPrefab(mObj, wayPointObject);
-        }
-
-        /// <summary>
-        /// Deleted the waypoint we have clicked
-        /// </summary>
-        /// <param name="ID"></param>
-        private void DeleteWaypoint(SelectableHUDItem selected)
-        {
-            WaypointPrefab waypoint = (WaypointPrefab)selected;
-
-            GameObject.Destroy(waypoint.Waypoint.gameObject);
-
-            waypoint.Waypoint = null;
-
-            m_waypointList.Remove(waypoint);
-        }
 
         /// <summary>
         /// Called when the player changes the 

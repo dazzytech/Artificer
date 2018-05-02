@@ -19,31 +19,20 @@ namespace Space.UI.Proxmity
         private MapViewer m_viewer;
 
         #endregion
+        
+        #region MONO BEHAVIOUR
 
         protected override void OnEnable()
         {
-            if (SystemManager.Space.PlayerCamera != null)
-                Initialize();
-        }
-
-        #region PRIVATE UTILITIES
-
-        #region EVENT LISTENER
-
-        /// <summary>
-        /// Begins the process of following the ship position on map
-        /// visual 
-        /// </summary>
-        private void Initialize()
-        {
+            m_viewer.gameObject.SetActive(true);
             // Begin tracking process if active
-            if (isActiveAndEnabled)
-               StartCoroutine("Step");
-
-            m_viewer.InitializeMap();
+            StartCoroutine("Step");
         }
 
-        #endregion
+        protected override void OnDisable()
+        {
+            m_viewer.gameObject.SetActive(false);
+        }
 
         #endregion
 
