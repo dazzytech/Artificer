@@ -783,22 +783,22 @@
       <hideFlags>None</hideFlags>
       <Bounds>
         <x>543</x>
-        <y>286.5</y>
+        <y>313.5</y>
         <position>
           <x>543</x>
-          <y>286.5</y>
+          <y>313.5</y>
         </position>
         <center>
           <x>571</x>
-          <y>316.5</y>
+          <y>343.5</y>
         </center>
         <min>
           <x>543</x>
-          <y>286.5</y>
+          <y>313.5</y>
         </min>
         <max>
           <x>599</x>
-          <y>346.5</y>
+          <y>373.5</y>
         </max>
         <width>56</width>
         <height>60</height>
@@ -807,11 +807,48 @@
           <y>60</y>
         </size>
         <xMin>543</xMin>
-        <yMin>286.5</yMin>
+        <yMin>313.5</yMin>
         <xMax>599</xMax>
-        <yMax>346.5</yMax>
+        <yMax>373.5</yMax>
       </Bounds>
       <rotation>180</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
+    <body instanceID="22" folder="Warps" name="Warp_02" direction="up" trigger="" combat="" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>539</x>
+        <y>285</y>
+        <position>
+          <x>539</x>
+          <y>285</y>
+        </position>
+        <center>
+          <x>571</x>
+          <y>306.5</y>
+        </center>
+        <min>
+          <x>539</x>
+          <y>285</y>
+        </min>
+        <max>
+          <x>603</x>
+          <y>328</y>
+        </max>
+        <width>64</width>
+        <height>43</height>
+        <size>
+          <x>64</x>
+          <y>43</y>
+        </size>
+        <xMin>539</xMin>
+        <yMin>285</yMin>
+        <xMax>603</xMax>
+        <yMax>328</yMax>
+      </Bounds>
+      <rotation>0</rotation>
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
@@ -819,7 +856,8 @@
   <links>
     <link linkID="0" IDfrom="2" IDto="3" linkToID="0" />
     <link linkID="1" IDfrom="3" IDto="20" linkToID="1" />
-    <link linkID="0" IDfrom="20" IDto="21" linkToID="0" />
+    <link linkID="0" IDfrom="20" IDto="22" linkToID="3" />
+    <link linkID="0" IDfrom="22" IDto="21" linkToID="0" />
     <link linkID="3" IDfrom="20" IDto="7" linkToID="0" />
     <link linkID="1" IDfrom="7" IDto="16" linkToID="0" />
     <link linkID="5" IDfrom="20" IDto="8" linkToID="1" />

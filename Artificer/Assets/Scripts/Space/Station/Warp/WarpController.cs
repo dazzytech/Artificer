@@ -28,7 +28,8 @@ namespace Stations
 
         private void OnDestroy()
         {
-            m_att.Accessor.Team.WarpSyncList.Remove(netId.Value);
+            if(m_att.Accessor != null)
+                m_att.Accessor.Team.WarpSyncList.Remove(netId.Value);
         }
 
         #endregion
@@ -50,6 +51,41 @@ namespace Stations
             // Add ourselves to static reference list
             m_att.Accessor.Team.WarpSyncList.Add(netId.Value);
         }
+
+        #region PLAYER
+
+        public override void Dock(ShipAccessor ship)
+        {
+            // Do nothing
+        }
+
+        public override void UnDock(ShipAccessor ship)
+        {
+            // do nothing
+        }
+
+        public override void Interact(ShipAccessor ship)
+        {
+            // do nothing
+        }
+
+        public override void Idle(ShipAccessor ship)
+        {
+            // do nothing
+        }
+
+        public override void EnterRange(ShipAccessor ship)
+        {
+            // do nothing 
+        }
+
+        public override void ExitRange(ShipAccessor ship)
+        {
+            // do nothing
+        }
+
+
+        #endregion
 
         #endregion
     }

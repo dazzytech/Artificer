@@ -159,8 +159,12 @@ namespace Space.AI
 
             for (int i = 0; i < stationCount; i++)
             {
-                CreateStation(team, position);
+                CreateStation(team, position, m_stationPrefabs[Random.Range(0, m_stationPrefabs.Count())]);
             }
+
+            if(stationCount > 1)
+                // spawn a warp for every team
+                CreateStation(team, position, "Warp Gate");
 
             return team;
         }
@@ -174,7 +178,7 @@ namespace Space.AI
         /// <returns></returns>
         [Server]
         private NetworkInstanceId CreateStation
-            (TeamController team, Vector2 pos)
+            (TeamController team, Vector2 pos, string prefab)
         {
             bool inRange = true;
 
@@ -203,8 +207,7 @@ namespace Space.AI
             }
 
             // create and spawn station using our random spawn information
-            GameObject stationGO = team.Spawner.AddStation(stationPos, 
-                m_stationPrefabs[Random.Range(0, m_stationPrefabs.Count())]);
+            GameObject stationGO = team.Spawner.AddStation(stationPos, prefab);
             NetworkServer.Spawn(stationGO);
 
             return stationGO.GetComponent<NetworkIdentity>().netId;

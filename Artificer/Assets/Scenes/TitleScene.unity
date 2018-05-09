@@ -18598,7 +18598,7 @@ MonoBehaviour:
   - {fileID: 179922, guid: e8473483824f8a14e941aee26bb8cb0d, type: 2}
   - {fileID: 168728, guid: 35a9d159b4683bc4db73505bd8f0b8b8, type: 2}
   - {fileID: 1183336755873472, guid: 96dee74fba57d9542b2ede2f2f84e500, type: 2}
-  - {fileID: 1495074824946290, guid: 307f4ba92c888b443a32d3b2a0492213, type: 2}
+  - {fileID: 0}
   - {fileID: 101392, guid: defe54f371cdf844baf15f7afd230a59, type: 2}
   - {fileID: 184028, guid: 6f3fa0a045e52bb4385c6143a3f2969a, type: 2}
   - {fileID: 166186, guid: 4886850d755819f48aba1621d121dc21, type: 2}
@@ -18915,10 +18915,6 @@ MonoBehaviour:
     Label: Fire Tertiary
     Category: ship
     Key: 306
-  - ID: jump
-    Label: Engage Warp
-    Category: ship
-    Key: 120
   - ID: eject
     Label: Self Destruct
     Category: ship

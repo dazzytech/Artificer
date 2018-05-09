@@ -454,9 +454,6 @@ namespace Space.UI.Station.Editor.Component
                             break;
                     }
                     break;
-                case "Warps":
-                    ShipComponent.Trigger = "use";
-                    break;
                 case "Wells":
                     ShipComponent.Trigger = "well";
                     break;

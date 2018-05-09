@@ -37,6 +37,9 @@ namespace Space.Ship.Components.Listener
                 if (Vector2.Distance(transform.position, m_att.WarpPoint) > m_att.MaxDistance)
                     return false;
 
+                if (m_att.Ship.InCombat)
+                    return false;
+
                 // passes all criteria
                 return true;
             }
