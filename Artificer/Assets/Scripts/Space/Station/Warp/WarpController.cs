@@ -28,7 +28,7 @@ namespace Stations
 
         private void OnDestroy()
         {
-            if(m_att.Accessor != null)
+            if(m_att.Accessor.Team != null)
                 m_att.Accessor.Team.WarpSyncList.Remove(netId.Value);
         }
 

@@ -9,6 +9,17 @@ namespace Space.Ship.Components.Listener
 {
     public class WarpListener : ComponentListener 
     {
+        #region EVENTS
+
+        /// <summary>
+        /// Warp HUD listens for changes in the warp component
+        /// </summary>
+        public delegate void WarpStateUpdate();
+
+        public event WarpStateUpdate OnStateUpdate;
+
+        #endregion
+
         #region ATTRIBUTES
 
         private WarpAttributes m_att;
@@ -34,10 +45,10 @@ namespace Space.Ship.Components.Listener
                     return false;
 
                 // Warp point needs to be within warprange
-                if (Vector2.Distance(transform.position, m_att.WarpPoint) > m_att.MaxDistance)
+                if (TargetDistance> m_att.MaxDistance)
                     return false;
 
-                if (m_att.Ship.InCombat)
+                if (CombatState)
                     return false;
 
                 // passes all criteria
@@ -88,6 +99,37 @@ namespace Space.Ship.Components.Listener
             get
             {
                 return m_att.MaxDistance;
+            }
+        }
+
+        /// <summary>
+        /// Returns a value between 0 & 1
+        /// that represents how much time the warp is in delay for
+        /// </summary>
+        public float WarpDelay
+        {
+            get
+            {
+                return m_att.TimeCount / m_att.WarpDelay;
+            }
+        }
+
+        /// <summary>
+        /// Relays the combat state to the HUD
+        /// </summary>
+        public bool CombatState
+        {
+            get
+            {
+                return m_att.Ship.InCombat;
+            }
+        }
+
+        public float TargetDistance
+        {
+            get
+            {
+                return Vector2.Distance(transform.position, m_att.WarpPoint);
             }
         }
 
