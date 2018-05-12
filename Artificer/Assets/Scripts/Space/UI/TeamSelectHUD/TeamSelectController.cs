@@ -71,8 +71,17 @@ namespace Space.UI.Teams
             TeamSelectionMessage tsm = new TeamSelectionMessage();
             tsm.ID = SystemManager.Space.ID;
             tsm.Selected = selection;
-            // Send message baack to server
+            // Send message to Server
             SystemManager.singleton.client.Send((short)MSGCHANNEL.TEAMSELECTED, tsm);
+        }
+
+        public void Update()
+        {
+            TeamACount.text = 
+                SystemManager.GameMSG.PlayerTeamCount(0).ToString();
+
+            TeamBCount.text =
+                SystemManager.GameMSG.PlayerTeamCount(1).ToString();
         }
     }
 }

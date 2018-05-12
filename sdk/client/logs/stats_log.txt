@@ -2,3 +2,11 @@
 
 [2018-01-04 20:30:25] [AppID 56400] Schema not found on disk
 [2018-01-04 20:30:26] [AppID 56400] CAPIJobRequestUserStats - updated schema from server
+
+
+[2018-05-12 12:26:57] [AppID 56400] Loaded schema from disk.
+[2018-05-12 12:26:57] [AppID 56400] Loading stats from disk...
+[2018-05-12 12:26:57] [AppID 56400] Loading stats from disk...success
+[2018-05-12 12:26:58] [AppID 56400] CAPIJobRequestUserStats::YieldingMergeStats - beginning merge. . .
+[2018-05-12 12:26:58] [AppID 56400] CAPIJobRequestUserStats::YieldingMergeStats - server vs. local 'score' is 11, local changes = false
+[2018-05-12 12:26:58] [AppID 56400] CAPIJobRequestUserStats::YieldingMergeStats - using SERVER stats data

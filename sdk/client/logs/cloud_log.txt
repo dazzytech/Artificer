@@ -22,3 +22,43 @@
 [2018-01-04 20:30:46] [AppID 7] HTTP upload for file 'serverbrowser_hist.vdf' (offset=0, length=4653) to host 'steamclouduksouth.blob.core.windows.net', path /cloud/90/8E/5C/02/7/01A_2_10DE4493_C7B59_553.dat - success.
 [2018-01-04 20:30:47] [AppID 7] Upload OK for file serverbrowser_hist.vdf
 [2018-01-04 20:30:47] [AppID 7] Upload complete, result OK
+
+
+[2018-05-12 12:26:26] [U:1:39620240] [AppID 7] Init cache request complete
+[2018-05-12 12:26:26] Starting sync job
+[2018-05-12 12:26:26] [AppID 7] Starting sync (init)
+[2018-05-12 12:26:28] [U:1:39620240] [AppID 7] Init cache request complete
+[2018-05-12 12:26:28] Starting sync job
+[2018-05-12 12:26:28] [AppID 7] Starting sync (init)
+[2018-05-12 12:26:46] [U:1:39620240] [AppID 7] Init cache request complete
+[2018-05-12 12:26:46] Starting sync job
+[2018-05-12 12:26:46] [AppID 7] Starting sync (init)
+[2018-05-12 12:26:46] Starting sync job
+[2018-05-12 12:26:46] [AppID 7] Starting sync (eval)
+[2018-05-12 12:26:47] [AppID 7] Eval complete
+[2018-05-12 12:26:47] Starting sync job
+[2018-05-12 12:26:47] [AppID 7] Starting sync (upload)
+[2018-05-12 12:26:48] [AppID 7] Resolving file serverbrowser_hist.vdf from state 4, bUseLocal = true
+[2018-05-12 12:26:48] [AppID 7] Resolving file sharedconfig.vdf from state 4, bUseLocal = true
+[2018-05-12 12:26:48] [AppID 7] Need to upload file serverbrowser_hist.vdf
+[2018-05-12 12:26:48] [AppID 7] Need to upload file sharedconfig.vdf
+[2018-05-12 12:26:48] [AppID 7] HTTP upload for file 'serverbrowser_hist.vdf' beginning . . .
+[2018-05-12 12:26:50] [AppID 7] HTTP upload for file 'serverbrowser_hist.vdf' (offset=0, length=4697) to host 'steamclouduksouth.blob.core.windows.net', path /cloud/90/8E/5C/02/7/01A_2_10DE4493_C7B59_632.dat - success.
+[2018-05-12 12:26:51] [AppID 7] Upload OK for file serverbrowser_hist.vdf
+[2018-05-12 12:26:51] [AppID 7] HTTP upload for file 'sharedconfig.vdf' beginning . . .
+[2018-05-12 12:26:52] [AppID 7] HTTP upload for file 'sharedconfig.vdf' (offset=0, length=1627) to host 'steamclouduksouth.blob.core.windows.net', path /cloud/90/8E/5C/02/7/015_0_09F803C6_7BD85_81.dat - success.
+[2018-05-12 12:26:52] [AppID 7] Upload OK for file sharedconfig.vdf
+[2018-05-12 12:26:52] [AppID 7] Upload complete, result OK
+[2018-05-12 12:26:52] Starting sync job
+[2018-05-12 12:26:52] [AppID 7] Starting sync (download)
+[2018-05-12 12:26:52] [AppID 7] File is in sync serverbrowser_hist.vdf
+[2018-05-12 12:26:52] [AppID 7] File is in sync sharedconfig.vdf
+[2018-05-12 12:26:52] [AppID 7] Download complete in build list
+[2018-05-12 12:27:17] Starting sync job
+[2018-05-12 12:27:17] [AppID 7] Starting sync (upload)
+[2018-05-12 12:27:17] [AppID 7] Need to upload file serverbrowser_hist.vdf
+[2018-05-12 12:27:17] [AppID 7] File is in sync sharedconfig.vdf
+[2018-05-12 12:27:18] [AppID 7] HTTP upload for file 'serverbrowser_hist.vdf' beginning . . .
+[2018-05-12 12:27:18] [AppID 7] HTTP upload for file 'serverbrowser_hist.vdf' (offset=0, length=4653) to host 'steamclouduksouth.blob.core.windows.net', path /cloud/90/8E/5C/02/7/01A_2_10DE4493_C7B59_633.dat - success.
+[2018-05-12 12:27:19] [AppID 7] Upload OK for file serverbrowser_hist.vdf
+[2018-05-12 12:27:19] [AppID 7] Upload complete, result OK

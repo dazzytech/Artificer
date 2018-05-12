@@ -170,3 +170,20 @@
 [2018-01-05 18:00:22] UpdatesJob: finished OK, nAppsUpdated 0 (0 KB), nPackagesUpdated 0 (0 KB)
 [2018-01-05 18:15:21] ProductInfoChanges: change number 3897220->3897297, apps: 0/26, packages: 0/26
 [2018-01-05 18:30:21] ProductInfoChanges: change number 3897297->3897354, apps: 0/33, packages: 0/8
+
+
+[2018-05-12 12:26:47] ProductInfoChanges: change number 3897354->4429821, apps: 0/0, packages: 0/0
+[2018-05-12 12:26:47] UpdatesJob: requesting 251 apps, 24 packages (meta data, 1024 prev attempts)
+[2018-05-12 12:26:47] UpdatesJob: requested 4 access tokens, 1 received, 3 denied
+[2018-05-12 12:26:48] UpdatesJob: updated SHAs with 1 new access tokens
+[2018-05-12 12:26:48] UpdatesJob: downloaded 9 apps via HTTP, 223 KB (56 KB compressed)
+[2018-05-12 12:26:48] UpdatesJob: requesting 46 apps, 6 packages (full data, 1024 prev attempts)
+[2018-05-12 12:26:51] UpdatesJob: finished OK, nAppsUpdated 55 (362 KB), nPackagesUpdated 6 (9 KB)
+[2018-05-12 12:26:51] UpdatesJob: requesting 9 apps, 0 packages (meta data, 1024 prev attempts)
+[2018-05-12 12:26:51] UpdatesJob: requested 3 access tokens, 0 received, 3 denied
+[2018-05-12 12:26:51] UpdatesJob: requesting 8 apps, 0 packages (full data, 1024 prev attempts)
+[2018-05-12 12:26:52] UpdatesJob: finished OK, nAppsUpdated 8 (21 KB), nPackagesUpdated 0 (0 KB)
+[2018-05-12 12:26:54] UpdatesJob: requesting 1 apps, 0 packages (meta data, 0 prev attempts)
+[2018-05-12 12:26:55] UpdatesJob: downloaded 1 apps via HTTP, 96 KB (28 KB compressed)
+[2018-05-12 12:26:55] UpdatesJob: finished OK, nAppsUpdated 1 (96 KB), nPackagesUpdated 0 (0 KB)
+[2018-05-12 12:27:10] Starting async write C:\Users\dazzy\Documents\Artificer\sdk\client/appcache/appinfo.vdf (582472 bytes)

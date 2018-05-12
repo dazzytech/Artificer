@@ -119,15 +119,32 @@ namespace Space
 
         public SegmentManager Segment;
 
+        
+        /// <summary>
+        /// Every single station reference within the space segment
+        /// </summary>
+        public List<StationAccessor> GlobalStations;
+
+
+
+        #endregion
+
+        #region TEAM ASSETS
+
         /// <summary>
         /// Reference to the team that the player belongs to
         /// </summary>
         public TeamController Team;
 
         /// <summary>
-        /// Every single station reference within the space segment
+        /// Counts how many players are aligned to Team A
         /// </summary>
-        public List<StationAccessor> GlobalStations;
+        public int TeamACount;
+
+        /// <summary>
+        /// Counts how many players are aligned to Team B
+        /// </summary>
+        public int TeamBCount;
 
         #endregion
     }

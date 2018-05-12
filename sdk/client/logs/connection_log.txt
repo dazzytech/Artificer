@@ -20,3 +20,31 @@
 [2018-01-04 20:30:14] [1,10] Connect() starting connection (eNetQOSLevelHigh, 162.254.196.84:27019, UDP)
 [2018-01-04 20:30:15] [1,10] ConnectionCompleted() (162.254.196.68:27018, UDP)
 [2018-01-04 20:30:15] [1,10] RecvMsgClientLogOnResponse() : [U:1:39620240] 'OK'
+
+
+[2018-05-12 12:26:15] Log session started
+[2018-05-12 12:26:15] [0,0] SetSteamID( [U:1:0] )
+[2018-05-12 12:26:15] CCMInterface::OnNetworkDeviceStateChange -- Saw device up, connecting to Steam
+[2018-05-12 12:26:15] CCMInterface::OnNetworkDeviceStateChange -- Saw device up, connecting to Steam
+[2018-05-12 12:26:26] [0,0] SetSteamID( [U:1:39620240] )
+[2018-05-12 12:26:28] [0,0] SetSteamID( [U:1:39620240] )
+[2018-05-12 12:26:28] [0,0] Server says 50% of connections should be websockets, we rolled 54 - using UDP as default.
+[2018-05-12 12:26:28] [1,2] Connect() starting connection (eNetQOSLevelHigh, 162.254.196.83:27019, UDP)
+[2018-05-12 12:26:29] [1,2] ConnectionCompleted() (162.254.197.41:27018, UDP)
+[2018-05-12 12:26:31] [1,2] RecvMsgClientLogOnResponse() : [U:1:39620240] 'Invalid Password'
+[2018-05-12 12:26:31] [1,2] AsyncDisconnect()
+[2018-05-12 12:26:31] [0,0] ConnectionDisconnected('Disconnected By Remote Host') : 'Invalid Password' (162.254.197.41:27018, UDP)
+[2018-05-12 12:26:31] [0,0] ConnectionDisconnected() not auto reconnecting due to eResultLogonSession specifies no reconnect
+[2018-05-12 12:26:31] [0,0] LogOff()
+[2018-05-12 12:26:45] [0,0] SetSteamID( [U:1:0] )
+[2018-05-12 12:26:45] [0,0] SetSteamID( [U:1:0] )
+[2018-05-12 12:26:45] [0,0] Server says 50% of connections should be websockets, we rolled 95 - using UDP as default.
+[2018-05-12 12:26:45] [1,10] Connect() starting connection (eNetQOSLevelHigh, 162.254.196.83:27019, UDP)
+[2018-05-12 12:26:46] [1,10] ConnectionCompleted() (162.254.196.67:27018, UDP)
+[2018-05-12 12:26:46] [1,10] RecvMsgClientLogOnResponse() : [U:1:39620240] 'OK'
+[2018-05-12 12:31:59] [3,10] LogOff()
+[2018-05-12 12:31:59] [2,10] AsyncDisconnect()
+[2018-05-12 12:31:59] [0,0] ConnectionDisconnected('OK') : 'OK' (162.254.196.67:27018, UDP)
+[2018-05-12 12:31:59] [0,0] ConnectionDisconnected() not auto reconnecting due to user initiated logoff
+[2018-05-12 12:32:01] [0,0] ResetVoiceRecording() (was recording: 0) (last get voice time: 1526124721 seconds ago)
+[2018-05-12 12:32:01] [0,0] Log session ended

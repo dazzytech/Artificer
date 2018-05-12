@@ -127,7 +127,6 @@ namespace Space.UI.Ship
         {
             base.OnEnable();
 
-
             Initialize();
         }
 

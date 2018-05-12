@@ -527,13 +527,7 @@ namespace Space
         /// <param name="input">Input.</param>
         public void OnShipDestroyed(DestroyDespatch destroyed)
         {
-            /*if (destroyed.AggressorTag == "PlayerShip")
-            {
-                if (destroyed.AlignmentLabel == "Enemy")
-                    SystemManager.GUI.DisplayMessege(new MsgParam("sm-green", "You have destroyed an enemy."));
-                if (destroyed.AlignmentLabel == "Friendly")
-                    SystemManager.GUI.DisplayMessege(new MsgParam("sm-red", "You have destroyed an friendly."));
-            }*/
+
         }
 
         /// <summary>
