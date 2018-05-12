@@ -50,6 +50,26 @@ namespace Space.Map
             Position.y = totalY / SubObjects.Count;
         }
 
+        public void RemoveSubObject(MapObject mObj)
+        {
+            SubObjects.Remove(mObj);
+
+            // Find the center of all the components by 
+            // finding the average of the x and y seperately
+            float totalX = 0, totalY = 0;
+
+            // accumulate totals
+            foreach (MapObject sObj in SubObjects)
+            {
+                totalX += sObj.Position.x;
+                totalY += sObj.Position.y;
+            }
+
+            // assign average to location so icon is in center
+            Position.x = totalX / SubObjects.Count;
+            Position.y = totalY / SubObjects.Count;
+        }
+
         /// <summary>
         /// Sets this team object to hide and then
         /// unhides all sub nodes

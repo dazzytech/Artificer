@@ -311,11 +311,11 @@ MonoBehaviour:
     AutoLock: 0
     Behaviour: 0
     AutoFire: 0
-  MinDistance: 10
-  MaxDistance: 100
-  WarpDelay: 5
+  MinDistance: 100
+  MaxDistance: 800
+  WarpDelay: 10
   TimeCount: 0
-  WarpWarmUp: 0.5
+  WarpWarmUp: 3
   WarpPoint: {x: 0, y: 0}
   WarpReady: 0
   CustomWarpPoints: 0

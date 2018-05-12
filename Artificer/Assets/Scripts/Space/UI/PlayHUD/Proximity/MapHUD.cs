@@ -34,6 +34,13 @@ namespace Space.UI.Proxmity
             m_viewer.gameObject.SetActive(false);
         }
 
+        protected override void Awake()
+        {
+            base.Awake();
+
+            m_viewer.InitializeMap();
+        }
+
         #endregion
 
         #region COROUTINE

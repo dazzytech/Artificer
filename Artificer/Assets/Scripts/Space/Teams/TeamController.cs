@@ -60,8 +60,6 @@ namespace Space.Teams
         // Store a list of Net IDs of stations that the stations owns
         private SyncListUInt m_stations = new SyncListUInt();
 
-        public SyncListUInt WarpSyncList = new SyncListUInt();
-
         /// <summary>
         /// Ships available to the team that players may add to
         /// </summary>

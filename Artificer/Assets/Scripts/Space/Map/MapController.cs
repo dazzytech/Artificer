@@ -317,9 +317,11 @@ namespace Space.Map
                 {
                     MapObject mObj = m_att.MapItems[i];
 
+                    // update colour based on alignment in client
                     Color newColour = mObj.Relation == -1 ? m_neutralColour :
                         mObj.Relation == 0 ? m_enemyColour : m_friendlyColour;
 
+                    // only update if there is a change
                     bool changed = false;
 
                     if (mObj.Color != newColour
@@ -329,6 +331,7 @@ namespace Space.Map
                         changed = true;
                     }
 
+                    // If far enough, group far items into their groups
                     if (mObj.Type == MapObjectType.TEAM)
                     {
                         GroupObject gObj = mObj as GroupObject;
@@ -352,6 +355,7 @@ namespace Space.Map
                                 }
                             }
                         }
+
                         // Check if object is within proximity of player
                         else
                         {

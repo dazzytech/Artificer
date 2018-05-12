@@ -23,6 +23,7 @@ namespace Space.Ship.Components.Attributes
         /// <summary>
         /// A timer count that displaying how long the warp can fire again
         /// </summary>
+        [HideInInspector]
         public float TimeCount;
 
         /// <summary>
@@ -37,11 +38,13 @@ namespace Space.Ship.Components.Attributes
         /// <summary>
         /// Location that the warp will place the 
         /// </summary>
+        [HideInInspector]
         public Vector2 WarpPoint;
 
         /// <summary>
         /// Change to accessor
         /// </summary>
+        [HideInInspector]
         public bool WarpReady;
 
         public bool CustomWarpPoints;

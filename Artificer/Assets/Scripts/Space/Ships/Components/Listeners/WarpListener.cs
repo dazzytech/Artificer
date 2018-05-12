@@ -4,6 +4,7 @@ using System.Collections;
 using Space.Ship.Components.Attributes;
 using System.Collections.Generic;
 using UnityEngine.Networking;
+using Stations;
 
 namespace Space.Ship.Components.Listener
 {
@@ -41,11 +42,15 @@ namespace Space.Ship.Components.Listener
                     return false;
 
                 // Warp needs to have a selected warp point
-                if (m_att.WarpPoint != new Vector2(-1, -1))
+                if (m_att.WarpPoint == new Vector2(-1, -1))
                     return false;
 
                 // Warp point needs to be within warprange
                 if (TargetDistance> m_att.MaxDistance)
+                    return false;
+
+                // can't warp if too close
+                if (TargetDistance < m_att.MinDistance)
                     return false;
 
                 if (CombatState)
@@ -56,34 +61,40 @@ namespace Space.Ship.Components.Listener
             }
         }
 
+        public bool WarpAvailable
+        {
+            get
+            {
+                return m_att.WarpReady;
+            }
+        }
+
         /// <summary>
         /// Returns a list of 
-        /// other warp gates nearby
+        /// other warp gates that do not belong to the enemy
         /// </summary>
-        public List<uint> NearbyWarps
+        public List<StationAccessor> AccessibleWarps
         {
             get
             {
                 // Create container list for nearby warps
-                List<uint> nearbyWarps =
-                    new List<uint>();
+                List<StationAccessor> nearbyWarps =
+                    new List<StationAccessor>();
 
                 // find each within distance
-                foreach (uint warpID in
-                    SystemManager.Space.Team.WarpSyncList)
+                foreach (StationAccessor station in
+                    SystemManager.Space.GlobalStations)
                 {
-                    // ignore self
-                    if (warpID == netId.Value)
+                    // only add warps
+                    if (station.Type != STATIONTYPE.WARP)
                         continue;
-                    GameObject warpObj = ClientScene.FindLocalObject
-                        (new NetworkInstanceId(warpID));
 
-                    if (Vector2.Distance(transform.position,
-                        warpObj.transform.position) <= m_att.MaxDistance)
-                    {
-                        // Within distance, keep reference
-                        nearbyWarps.Add(warpID);
-                    }
+                    // cant warp to enemies
+                    if (station.Team.EnemyTeam.Contains(m_att.Ship.TeamID))
+                        continue;
+
+                    // Within distance, keep reference
+                    nearbyWarps.Add(station);
                 }
 
                 // return our retreived list
@@ -103,6 +114,17 @@ namespace Space.Ship.Components.Listener
         }
 
         /// <summary>
+        /// Returns min distance for comparison
+        /// </summary>
+        public float WarpMinDistance
+        {
+            get
+            {
+                return m_att.MinDistance;
+            }
+        }
+
+        /// <summary>
         /// Returns a value between 0 & 1
         /// that represents how much time the warp is in delay for
         /// </summary>
@@ -111,6 +133,17 @@ namespace Space.Ship.Components.Listener
             get
             {
                 return m_att.TimeCount / m_att.WarpDelay;
+            }
+        }
+
+        /// <summary>
+        /// value between 0 & 1 that represents time spent warming up 
+        /// </summary>
+        public float WarpWarmUp
+        {
+            get
+            {
+                return m_att.TimeCount / m_att.WarpWarmUp;
             }
         }
 
@@ -125,11 +158,25 @@ namespace Space.Ship.Components.Listener
             }
         }
 
+        /// <summary>
+        /// Distance between self and target.
+        /// </summary>
         public float TargetDistance
         {
             get
             {
                 return Vector2.Distance(transform.position, m_att.WarpPoint);
+            }
+        }
+
+        /// <summary>
+        /// Displays when activated
+        /// </summary>
+        public bool WarpEngaged
+        {
+            get
+            {
+                return m_IsWarping;
             }
         }
 
@@ -148,6 +195,12 @@ namespace Space.Ship.Components.Listener
                 StartCoroutine("FireWarp");
                 m_IsWarping = true;
                 base.Activate();
+
+                if (OnStateUpdate != null)
+                    OnStateUpdate();
+
+                // no target, no changes
+                StopCoroutine("TrackChanges");
             }
         }
 
@@ -159,6 +212,13 @@ namespace Space.Ship.Components.Listener
         public void SetPoint(Vector2 Point)
         {
             m_att.WarpPoint = Math.WithinRange(Point, SystemManager.Size);
+
+            if (OnStateUpdate != null)
+                OnStateUpdate();
+
+            // update changes in real time
+            StopCoroutine("TrackChanges");
+            StartCoroutine("TrackChanges");
         }
 
         /// <summary>
@@ -167,6 +227,11 @@ namespace Space.Ship.Components.Listener
         public void ClearPoint()
         {
             m_att.WarpPoint = new Vector2(-1, -1);
+
+            if (OnStateUpdate != null)
+                OnStateUpdate();
+
+            StopCoroutine("TrackChanges");
         }
 
         #endregion
@@ -190,10 +255,12 @@ namespace Space.Ship.Components.Listener
         
         protected override void RunUpdate()
         {
-            if (m_att.WarpReady)
-                m_att.TimeCount = 0;
-            else
+            if(m_IsWarping)
                 m_att.TimeCount += Time.deltaTime;
+            else if (!m_att.WarpReady)
+                m_att.TimeCount += Time.deltaTime;
+            else
+                m_att.TimeCount = 0;
         }
 
         protected override void ActivateFx()
@@ -224,6 +291,11 @@ namespace Space.Ship.Components.Listener
             // clear warp point
             ClearPoint();
 
+            m_att.TimeCount = 0;
+
+            if (OnStateUpdate != null)
+                OnStateUpdate();
+
             yield return null;
         }
 
@@ -233,19 +305,54 @@ namespace Space.Ship.Components.Listener
         /// <returns></returns>
         private IEnumerator FireWarp()
         {
+            // Disable the warp from firing again
+            m_att.WarpReady = false;
+
+            // start the coroutine that reenables the warp
+            StartCoroutine("EngageDelay");
+
             // Delay before firing warm up
             yield return new WaitForSeconds(m_att.WarpWarmUp);
             
-            // Disable the warp from firing again
-            m_att.WarpReady = false;
             m_IsWarping = false;
 
             // Move the warp to the new location
             Vector2 warpLocation = Math.RandomWithinRange(m_att.WarpPoint, 1f, 5f);
             transform.parent.transform.position = m_att.WarpPoint;
-            
-            // start the coroutine that reenables the warp
-            StartCoroutine("EngageDelay");
+
+            if (OnStateUpdate != null)
+                OnStateUpdate();
+        }
+
+        /// <summary>
+        /// detect changes that happen in real time and trigger update
+        /// when needed
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator TrackChanges()
+        {
+            // initial vars - if these change there is an update
+            bool outOfRange = false;
+            bool combatstate = false;
+
+            while(true)
+            {
+                if(combatstate != CombatState)
+                {
+                    combatstate = CombatState;
+                    OnStateUpdate();
+                }
+
+                bool newRange = TargetDistance < m_att.MaxDistance && TargetDistance > m_att.MinDistance;
+
+                if (newRange != outOfRange)
+                {
+                    outOfRange = newRange;
+                    OnStateUpdate();
+                }
+
+                yield return null;
+            }
         }
 
         #endregion

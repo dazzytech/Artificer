@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -158,7 +159,7 @@ namespace Space.Map
 
             // position on map
             prefab.transform.localPosition =
-                ScaleAndPosition(mObj.Position); 
+                ScaleAndPosition(mObj.Position);
         }
 
         public void RotateMap(Vector2 dir)
@@ -220,9 +221,6 @@ namespace Space.Map
             {
                 MapObject mObj = filteredList[i];
 
-                if (mObj.Hidden)
-                    continue;
-
                 if (mObj.Type == MapObjectType.SHIP ||
                     mObj.Type == MapObjectType.SATELLITE ||
                     mObj.Type == MapObjectType.STATION ||
@@ -230,6 +228,9 @@ namespace Space.Map
                     BuildIcon(mObj);
                 else
                     BuildSegmentIcon(mObj);
+
+                if (mObj.Hidden)
+                    mObj.Icon.GetComponent<RawImage>().enabled = false;
             }
         }
 
@@ -420,15 +421,24 @@ namespace Space.Map
 
             if (mObj.Icon != null)
             {
-                if (!mObj.Exists || mObj.Hidden)
+                if (!mObj.Exists)
                 {
                     RemoveIcon(mObj);
+                }
+                else if(mObj.Hidden)
+                {
+                    mObj.Icon.GetComponent<RawImage>().enabled = false;
                 }
                 else
                 {
                     mObj.Icon.localPosition = ScaleAndPosition(mObj.Position);
                     RawImage img = mObj.Icon.GetComponent<RawImage>();
-                    if(img != null) img.color = mObj.Color;
+
+                    if (img != null && mObj.Icon.GetComponent<SelectableHUDItem>() == null)
+                    {
+                        img.color = mObj.Color;
+                        img.enabled = true;
+                    }
                 }
             }
             else

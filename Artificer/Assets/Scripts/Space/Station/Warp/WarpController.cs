@@ -26,12 +26,6 @@ namespace Stations
             m_att.Type = STATIONTYPE.WARP;
         }
 
-        private void OnDestroy()
-        {
-            if(m_att.Accessor.Team != null)
-                m_att.Accessor.Team.WarpSyncList.Remove(netId.Value);
-        }
-
         #endregion
 
         #region PUBLIC INTERACTION
@@ -47,9 +41,6 @@ namespace Stations
         {
             // For now call the base class till actions are different
             base.Initialize(newTeam, true);
-
-            // Add ourselves to static reference list
-            m_att.Accessor.Team.WarpSyncList.Add(netId.Value);
         }
 
         #region PLAYER
