@@ -172,7 +172,7 @@ namespace Space.UI
             float sizeScale = m_img.GetComponent<RectTransform>()
                 .rect.height / m_img.texture.height;
 
-            m_img.transform.localScale = new Vector3(sizeScale, sizeScale, 1);
+            m_img.transform.localScale = new Vector3(1, 1, 1);
         }
 
         /// <summary>
@@ -213,6 +213,7 @@ namespace Space.UI
                 m_readyLabel.gameObject.SetActive(true);
 
                 SystemManager.Space.OnShipSpawnUpdate -= DisplaySpawnProgress;
+                DisplayIcon();
             }
             else
             {

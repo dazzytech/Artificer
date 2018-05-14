@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.IO;
 
-namespace Editor
+namespace ArtificerEditor
 {
     [XmlRoot("info")]
     public class Info
@@ -40,7 +40,7 @@ namespace Editor
         public List<Socket> Links
             = new List<Socket>();
 
-        public Info info = new Editor.Info();
+        public Info info = new ArtificerEditor.Info();
 
         [XmlIgnore]
         public string Name;

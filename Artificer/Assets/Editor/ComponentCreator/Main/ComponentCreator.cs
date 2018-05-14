@@ -9,7 +9,7 @@ using Data.Space.DataImporter;
  * The list of tasks are as follows.
  * socketcount updated when object is imported
  * */
-namespace Editor.Components
+namespace ArtificerEditor.Components
 {
     public class ComponentCreator : EditorWindow
     {

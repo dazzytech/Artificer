@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEditor;
 
-namespace Editor
+namespace ArtificerEditor
 {
     public class HeadComponent : BaseShipComponent
     {}

@@ -9,7 +9,7 @@ using Data.Space.Library;
 /// A centralized storage container for all 
 /// partitions of the component creator
 /// </summary>
-namespace Editor.Components
+namespace ArtificerEditor.Components
 {
     public class ComponentAttributes
     {

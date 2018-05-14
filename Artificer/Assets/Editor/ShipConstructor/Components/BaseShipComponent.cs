@@ -10,7 +10,7 @@ using Data.Space;
 using Space.Ship.Components;
 using Space.Ship.Components.Attributes;
 
-namespace Editor
+namespace ArtificerEditor
 {
     [XmlInclude(typeof(ShipComponent))]
     [XmlInclude(typeof(HeadComponent))]
@@ -68,7 +68,7 @@ namespace Editor
 
         private void OnEnable()
         {
-            connect = ScriptableObject.CreateInstance<Editor.ConnectionBehaviour>()
+            connect = ScriptableObject.CreateInstance<ArtificerEditor.ConnectionBehaviour>()
                 as ConnectionBehaviour;
 
             // initialize sockets
@@ -149,7 +149,7 @@ namespace Editor
 
         public void OnDrawGizmos()
         {
-            foreach (Editor.SocketBehaviour socket in sockets) 
+            foreach (ArtificerEditor.SocketBehaviour socket in sockets) 
             {
                 Rect sRect = new Rect(socket.position-new Vector2(4,4), new Vector2(8,8));
                 if (socket.state == SocketAttributes.SocketState.CLOSED) 
@@ -182,7 +182,7 @@ namespace Editor
             {
                 if(t.name.Contains("socket_"))
                 {
-                    SocketBehaviour s = ScriptableObject.CreateInstance<Editor.SocketBehaviour>()
+                    SocketBehaviour s = ScriptableObject.CreateInstance<ArtificerEditor.SocketBehaviour>()
                         as SocketBehaviour;
 
                     s.Init(this);

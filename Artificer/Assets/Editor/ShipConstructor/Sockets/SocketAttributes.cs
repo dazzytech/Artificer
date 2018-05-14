@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Editor
+namespace ArtificerEditor
 {
     public class SocketAttributes {
 

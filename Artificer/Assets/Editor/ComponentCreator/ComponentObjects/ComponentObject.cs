@@ -5,7 +5,7 @@ using System.Collections;
 /// Component object.
 /// Base object contained within a component
 /// </summary>
-namespace Editor.Components
+namespace ArtificerEditor.Components
 {
     public class ComponentObject : ScriptableObject
     {

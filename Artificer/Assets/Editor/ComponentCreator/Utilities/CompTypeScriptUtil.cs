@@ -7,7 +7,7 @@ using Space.Ship.Components;
 using Space.Ship.Components.Listener;
 using Space.Ship.Components.Attributes;
 
-namespace Editor.Components
+namespace ArtificerEditor.Components
 {
     public class CompTypeScriptUtil
     {

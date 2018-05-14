@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Editor.Components
+namespace ArtificerEditor.Components
 {
     public class FirePoint : ComponentObject
     {

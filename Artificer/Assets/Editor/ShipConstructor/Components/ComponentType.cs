@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections;
 using System.IO;
 
-namespace Editor
+namespace ArtificerEditor
 {
     public class ComponentType
     {

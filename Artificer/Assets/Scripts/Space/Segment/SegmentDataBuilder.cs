@@ -19,6 +19,24 @@ namespace Space.Segment
 
         private static GameParameters m_param;
 
+        [SerializeField]
+        private static string[] m_planetPaths
+            =
+            {
+                "moon_01",
+                "moon_02",
+                "planet_01",
+                "planet_02",
+                "planet_03",
+                "planet_05",
+                "planet_06",
+                "planet_07",
+                "planet_08",
+                "planet_09",
+                "planet_12",
+                "planet_17"
+            };
+
         #region ASTEROIDS
 
         private static List<Rect> m_astBoundaries;
@@ -154,18 +172,13 @@ namespace Space.Segment
             // Pick a random texture
 
             // Get directory list of textures
-            string path = (System.Environment.CurrentDirectory + 
-                    "\\Assets\\Resources\\Textures\\PlanetTextures");
-
-            string[] fileEntries = Directory.GetFiles(path, "*.png");
 
             // assign info and pick random planet texture
             planet.X = planetPos.x;
             planet.Y = planetPos.y;
             planet.Distance = Random.Range(90, 200);
             planet.Texture = "Textures/PlanetTextures/" + 
-                    System.IO.Path.GetFileNameWithoutExtension
-                    (fileEntries[Random.Range(0, fileEntries.Length)]);
+                    m_planetPaths[Random.Range(0, m_planetPaths.Length)];
             planet.Type = "Planet";
 
             return planet;

@@ -1,12 +1,15 @@
 WindowsStandalone
+922dde826533f20a40eadb188df86725 Assembly-CSharp.dll:.TestReporter
 a6d65cb155e7fe4168482572cb6a960a Assembly-CSharp.dll:Stations.StationImpactCollider
 174f05e76427d39cbd725bba7d4667f6 Assembly-CSharp.dll:.SoundController
 17f53f456c804953bfb056aebe8c41f6 Assembly-CSharp.dll:Space.UI.Station.Utility.BuildController
 a1f5ca500a8c277f94ef6de2a7012973 Assembly-CSharp.dll:Menu.Filter_Behaviour
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ReporterGUI
 01e8b8a1cb5bc59c8064937528a0c757 Assembly-CSharp.dll:Space.Segment.DestroyedComponent
 7ba1e84ad3d2d8813486668e75f842ce Assembly-CSharp-firstpass.dll:UnityStandardAssets.Effects.ExtinguishableParticleSystem
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:Menu.Filter_EventListener
 8b9f05e49e19b6f3202c3e211aaeb09b Assembly-CSharp.dll:Menu.ResolutionListItem
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ReporterMessageReceiver
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 970a95104359198fe1a98ef48655de8c UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
 8144169769d51429c4aedc8b0f92d47b UnityEngine.Timeline.dll:UnityEngine.Timeline.AnimationPlayableAsset
@@ -163,6 +166,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 53b9856ffd729fb723c30b5b3428bb11 Assembly-CSharp.dll:Space.UI.TargetShipItem
 781d4819379962ba40836b3330594a61 Assembly-CSharp.dll:Space.Projectiles.ProjectileController
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:Game.GameAccessor
+1cb40c746a01332eb78618e045b0b5a9 Assembly-CSharp.dll:.Reporter
 01e8b8a1cb5bc59c8064937528a0c757 Assembly-CSharp.dll:Space.Segment.Lootable
 6e12e50d8bddc3df7b6a60e0831379c4 Assembly-CSharp.dll:Space.Ship.Components.Attributes.BuildAttributes
 998dd8cc2ab3a333b5399f56f9000877 Assembly-CSharp.dll:Menu.Lobby.LobbyAttributes
@@ -337,6 +341,7 @@ cbdc6596aa25cbff9ea9cdf2223365d7 Assembly-CSharp.dll:Space.UI.Spawn.SpawnAttribu
 645d64d65cdee3bc72e033b4c07f4f71 Assembly-CSharp.dll:Space.UI.Station.Utility.TargeterCustomizerSelection
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:Space.Ship.ShipInputReceiver
 8e76647ae64118c0c2245d8f4bd6a554 Assembly-CSharp.dll:Stations.WarpController
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.Rotate
 57efddcdaa6d9f7aeac54da934ebb951 Assembly-CSharp-firstpass.dll:NATTraversal.NATLobbyManager
 cb974619cdbb8817b32ec9d725e05266 Assembly-CSharp.dll:Space.CameraUtils.CameraFollow
 81e4b00c3b581cd854fc648220268dae Assembly-CSharp.dll:Menu.ListKeyPrefab

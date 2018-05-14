@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Editor
+namespace ArtificerEditor
 {
     public class ConnectionBehaviour : ScriptableObject {
 

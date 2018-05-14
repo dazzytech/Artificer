@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using System.Xml.Serialization;
 
-namespace Editor
+namespace ArtificerEditor
 {
     public class DrawObject
     {
