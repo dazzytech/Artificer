@@ -154,6 +154,8 @@ namespace Stations
 
             // reference to our team
             m_att.TeamID = newTeam;
+
+            SystemManager.GameMSG.OnStationCreated(netId);
         }
 
         /// <summary>

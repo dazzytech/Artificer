@@ -97,6 +97,8 @@ namespace Space.Spawn
 
             NetworkServer.Spawn(newStation);
 
+            SystemManager.Accessor.AddStation(newStation.GetComponent<NetworkIdentity>().netId.Value);
+
             // Retrieve behaviour for making changes
             StationController stationCon =
                 newStation.GetComponent<StationController>();

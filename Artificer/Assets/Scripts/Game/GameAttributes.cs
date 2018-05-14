@@ -7,6 +7,7 @@ using Space.Teams;
 using Space.Segment;
 using Space.Spawn;
 using Space.AI;
+using Stations;
 
 namespace Game
 {
@@ -26,25 +27,47 @@ namespace Game
 
     public class GameAttributes : NetworkBehaviour
     {
-        #region ATTRIBUTES
+        #region SPACE ASSET
 
-        // Store builder object for generating game object
+        /// <summary>
+        /// Builds assets into space, e.g. player teams
+        /// </summary>
         public GameBuilder Builder;
 
-        // Store a list of all connected players
-        public IndexedList<PlayerConnectionInfo> PlayerInfoList;
-
-        public GameState CurrentState;
-
-        // Teams, currently on supports two teams
-        public TeamController TeamA;
-
-        public TeamController TeamB;
-
+        /// <summary>
+        /// Controls the generation of segment objects in space
+        /// </summary>
         public SegmentManager Segment;
 
+        /// <summary>
+        /// spawns and manages npcs in space
+        /// </summary>
         public AIManager AI;
-        
+
+        /// <summary>
+        /// Teams added to space 0 and 1 are player teams
+        /// </summary>
+        public List<TeamController> Teams;
+
+        /// <summary>
+        /// Every single station reference within the space segment
+        /// </summary>
+        public List<StationAccessor> GlobalStations;
+
+        #endregion
+
+        #region GAME ASSETS
+
+        /// <summary>
+        /// list of all players connected to the match
+        /// </summary>
+        public IndexedList<PlayerConnectionInfo> PlayerInfoList;
+
+        /// <summary>
+        /// whether the match is in lobby, playing or ended
+        /// </summary>
+        public GameState CurrentState;
+
         #endregion
     }
 }

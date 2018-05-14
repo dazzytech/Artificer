@@ -140,14 +140,6 @@ namespace Space
         }
 
         /// <summary>
-        /// Returns all the stations in this segment
-        /// </summary>
-        public StationAccessor[] GlobalStations
-        {
-            get { return m_att.GlobalStations.ToArray(); }
-        }
-
-        /// <summary>
         /// Returns the gameobject of the camera attached
         /// to the player
         /// </summary>
@@ -176,8 +168,6 @@ namespace Space
             m_att.Player_Docked = false;
 
             m_att.Station_InRangeList = new List<StationAccessor>();
-
-            m_att.GlobalStations = new List<StationAccessor>();
         }
 
         void Update()

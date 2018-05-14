@@ -40,6 +40,9 @@ namespace Space.Teams
 
         #region ATTRIBUTES
 
+        [SyncVar]
+        public int Players;
+
         // Faction that the team belongs to
         [SyncVar]
         private FactionData m_faction;
@@ -55,7 +58,7 @@ namespace Space.Teams
         private WalletData m_teamAssets;
 
         // Store a list of player connections for that team
-        private SyncListUInt m_players = new SyncListUInt();
+        private SyncListUInt m_playerShips = new SyncListUInt();
 
         // Store a list of Net IDs of stations that the stations owns
         private SyncListUInt m_stations = new SyncListUInt();
@@ -121,9 +124,9 @@ namespace Space.Teams
             get { return m_teamSpawn; }
         }
 
-        public SyncListUInt Players
+        public SyncListUInt PlayerShips
         {
-            get { return m_players; }
+            get { return m_playerShips; }
         }
 
         public SyncListUInt Stations
@@ -178,7 +181,7 @@ namespace Space.Teams
             m_ID = id;
 
             // Assign callbacks
-            m_players.Callback = PlayerListChanged;
+            m_playerShips.Callback = PlayerListChanged;
             m_stations.Callback = StationListChanged;
             m_ships.Callback = ShipListChanged;
 
@@ -194,7 +197,7 @@ namespace Space.Teams
             Spawner.TeamID = m_ID = id;
 
             // Assign callbacks
-            m_players.Callback = PlayerListChanged;
+            m_playerShips.Callback = PlayerListChanged;
             m_stations.Callback = StationListChanged;
             m_ships.Callback = ShipListChanged;
 
@@ -212,7 +215,7 @@ namespace Space.Teams
         [Server]
         public void AddPlayerObject(NetworkInstanceId netID)
         {
-            m_players.Add(netID.Value);
+            m_playerShips.Add(netID.Value);
         }
 
         /// <summary>
@@ -222,7 +225,8 @@ namespace Space.Teams
         [Server]
         public void RemovePlayerObject(NetworkInstanceId netID)
         {
-            m_players.Remove(netID.Value);
+            if(m_playerShips.Contains(netID.Value))
+                m_playerShips.Remove(netID.Value);
         }
 
         /// <summary>
@@ -233,7 +237,7 @@ namespace Space.Teams
         /// <returns></returns>
         public bool PlayerOnTeam(NetworkInstanceId netID)
         {
-            return m_players.Contains(netID.Value);
+            return m_playerShips.Contains(netID.Value);
         }
 
         #endregion
@@ -287,6 +291,8 @@ namespace Space.Teams
         [Server]
         public void ProcessDestroyed(DestroyDespatch DD)
         {
+            RemovePlayerObject(DD.SelfID);
+
             // Pass the process to the spawner 
             // for the agent groups to process
             Spawner.ProcessDestroyed(DD);
@@ -308,7 +314,7 @@ namespace Space.Teams
                     {
                         // Team A
                         m_killedByA++;
-                        if(m_killedByA >= Mathf.CeilToInt(SystemManager.GameMSG.PlayerTeamCount(0) * .33f))
+                        if(m_killedByA >= Mathf.CeilToInt(SystemManager.Accessor.PlayerTeamCount(0) * .33f))
                         {
                             // if a third of the team has killed this team
                             // then add team to enemy list
@@ -319,7 +325,7 @@ namespace Space.Teams
                     {
                         // Team B
                         m_killedByB++;
-                        if (m_killedByB > SystemManager.GameMSG.PlayerTeamCount(1) / 3)
+                        if (m_killedByB > SystemManager.Accessor.PlayerTeamCount(1) / 3)
                         {
                             // if a third of the team has killed this team
                             // then add team to enemy list

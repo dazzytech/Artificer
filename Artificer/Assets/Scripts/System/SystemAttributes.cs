@@ -53,6 +53,8 @@ public class SystemAttributes:MonoBehaviour
     public GameMessageHandler GameMsg;
     [HideInInspector]
     public GameServerEvents Events;
+    [HideInInspector]
+    public GameAccessor Accessor;
 
     // Static client accessors
     // ui

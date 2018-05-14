@@ -41,15 +41,6 @@ namespace Space.AI
             }
         }
 
-        /// <summary>
-        /// Returns a team of the team controllers
-        /// spawned by the AI Manager
-        /// </summary>
-        public List<TeamController> Teams
-        {
-            get { return m_att.Teams; }
-        }
-
         #endregion
 
         #region MONO BEHAVIOUR
@@ -61,9 +52,7 @@ namespace Space.AI
         void Awake()
         {
             // Begin the process of importing agent data
-            m_att.AgentLibrary = AgentDataImporter.BuildAgents();
-
-            m_att.Teams = new List<TeamController>();            
+            m_att.AgentLibrary = AgentDataImporter.BuildAgents();       
         }
 
         #endregion
@@ -96,7 +85,8 @@ namespace Space.AI
                 else
                     focus = m_att.Param.TeamBSpawn;
 
-                m_att.Teams.Add(BuildTeam(fortify, focus, i % teamCount / 2));
+                SystemManager.GameMSG.AddTeam
+                    (BuildTeam(fortify, focus, i % teamCount / 2));
             }
         }
 
@@ -142,7 +132,7 @@ namespace Space.AI
                 if (limit-- <= 0)
                     break;
 
-                foreach (TeamController other in m_att.Teams)
+                foreach (TeamController other in SystemManager.Accessor.Teams)
                 {
                     if (Vector3.Distance(position, other.transform.position) < 400f)
                     {
@@ -208,9 +198,10 @@ namespace Space.AI
 
             // create and spawn station using our random spawn information
             GameObject stationGO = team.Spawner.AddStation(stationPos, prefab);
-            NetworkServer.Spawn(stationGO);
 
-            return stationGO.GetComponent<NetworkIdentity>().netId;
+            NetworkInstanceId stationID = stationGO.GetComponent<NetworkIdentity>().netId;
+
+            return stationID;
         }
 
         #endregion

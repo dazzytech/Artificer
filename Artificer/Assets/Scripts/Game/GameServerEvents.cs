@@ -17,12 +17,15 @@ namespace Game
         public delegate void CreatedEvent(CreateDispatch CD);
         [SyncEvent]
         public event CreatedEvent EventShipCreated;
+        [SyncEvent]
+        public event CreatedEvent EventStationCreated;
 
         public delegate void DestroyedEvent(DestroyDespatch DD);
         [SyncEvent]
         public event DestroyedEvent EventShipDestroyed;
         [SyncEvent]
         public event DestroyedEvent EventStationDestroyed;
+        
 
         #endregion
 
@@ -74,6 +77,16 @@ namespace Game
             DD.MiscID = msg.ID;
 
             EventStationDestroyed(DD);
+        }
+
+        [Server]
+        public void StationCreated(NetworkInstanceId Self)
+        {
+            CreateDispatch CD = new CreateDispatch();
+            CD.PlayerID = -1;
+            CD.Self = Self.Value;
+            CD.TeamID = -1;
+            EventStationCreated(CD);
         }
 
         #endregion

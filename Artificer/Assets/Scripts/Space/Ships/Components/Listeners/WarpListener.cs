@@ -83,7 +83,7 @@ namespace Space.Ship.Components.Listener
 
                 // find each within distance
                 foreach (StationAccessor station in
-                    SystemManager.Space.GlobalStations)
+                    SystemManager.Accessor.GlobalStations)
                 {
                     // only add warps
                     if (station.Type != STATIONTYPE.WARP)

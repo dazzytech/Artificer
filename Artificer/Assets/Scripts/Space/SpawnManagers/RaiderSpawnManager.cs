@@ -344,7 +344,8 @@ namespace Space.Spawn
                             npcMsg.SpawnID = netId.Value;
                             npcMsg.TargetID = target.Group.m_focus;
 
-                            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSNPC, BuildAgentListener);
+                            NetworkManager.singleton.client.RegisterHandler
+                                ((short)MSGCHANNEL.PROCESSNPC, BuildAgentListener);
 
                             SystemManager.singleton.client.Send
                                 ((short)MSGCHANNEL.SPAWNNPC, npcMsg);

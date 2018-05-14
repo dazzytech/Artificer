@@ -66,7 +66,6 @@ public class SystemManager : NATTraversal.NetworkManager
     {
         get
         {
-            // Assign the playerspawn to the scene object if doesnt exist
             if (m_singleton.m_base != null)
                 return m_singleton.m_base.GameMsg;
             else
@@ -76,6 +75,22 @@ public class SystemManager : NATTraversal.NetworkManager
         set
         {
             m_singleton.m_base.GameMsg = value;
+        }
+    }
+
+    public static GameAccessor Accessor
+    {
+        get
+        {
+            if (m_singleton.m_base != null)
+                return m_singleton.m_base.Accessor;
+            else
+                return null;
+        }
+
+        set
+        {
+            m_singleton.m_base.Accessor = value;
         }
     }
 

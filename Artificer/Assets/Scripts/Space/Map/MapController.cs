@@ -107,8 +107,12 @@ namespace Space.Map
         /// </summary>
         private void PopulateExistingShips()
         {
-            foreach(Transform ship in 
-                GameObject.Find("_ships").transform)
+            // check that ship container exists
+            GameObject shipContainer = GameObject.Find("_ships");
+            if (shipContainer == null)
+                return;
+            
+            foreach(Transform ship in shipContainer.transform)
             {
                 // all ships here need to be added to the map
                 MapObject mapObj = BuildObject

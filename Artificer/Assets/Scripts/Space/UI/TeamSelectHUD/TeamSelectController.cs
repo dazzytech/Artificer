@@ -78,10 +78,10 @@ namespace Space.UI.Teams
         public void Update()
         {
             TeamACount.text = 
-                SystemManager.GameMSG.PlayerTeamCount(0).ToString();
+                SystemManager.Accessor.PlayerTeamCount(0).ToString();
 
             TeamBCount.text =
-                SystemManager.GameMSG.PlayerTeamCount(1).ToString();
+                SystemManager.Accessor.PlayerTeamCount(1).ToString();
         }
     }
 }

@@ -56,11 +56,13 @@ namespace Game
         }
 
         [Server]
-        public void GenerateStation(TeamController selectedTeam,
+        public NetworkInstanceId GenerateStation(TeamController selectedTeam,
             string prefabName, Vector2 position)
         {
             GameObject station = selectedTeam.Spawner.AddStation(position, prefabName);
             selectedTeam.AddStationObject(station.GetComponent<NetworkIdentity>().netId);
+
+            return station.GetComponent<NetworkIdentity>().netId;
         }
 
         #endregion

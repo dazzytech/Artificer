@@ -4,6 +4,7 @@ using System.Collections;
 
 using Space.Ship;
 using Space.Teams;
+using Stations;
 
 namespace Game
 {
@@ -46,6 +47,7 @@ namespace Game
             SystemManager.Events.EventStationDestroyed += ProcessStationDestroyed;
 
             SystemManager.Events.EventShipCreated += ProcessShipCreated;
+            SystemManager.Events.EventStationCreated += ProcessStationCreated;
         }
 
         #endregion
@@ -54,44 +56,67 @@ namespace Game
 
         public void ProcessShipCreated(CreateDispatch CD)
         {
-            //PlayerConnectionInfo info = m_att.PlayerInfoList.Item(CD.PlayerID);
 
-            /*if (info.mTeam == 0)
-            {
-                m_att.TeamA.RemovePlayerObject(DD.Self);
-            }
-            else
-            {
-                m_att.TeamB.RemovePlayerObject(DD.Self);
-            }*/
         }
 
+        /// <summary>
+        /// Updates all teams on the destroyed ship
+        /// </summary>
+        /// <param name="DD"></param>
         public void ProcessShipDestroyed(DestroyDespatch DD)
         {
-            PlayerConnectionInfo info = m_att.PlayerInfoList.Item(DD.MiscID);
-
-            if (info.mTeam == 0)
-            {
-                m_att.TeamA.RemovePlayerObject(DD.SelfID);
-            }
-            else
-            {
-                m_att.TeamB.RemovePlayerObject(DD.SelfID);
-            }
-
             // Send destroy messege to our list of
             // teams
-            foreach (TeamController team in SystemManager.Space.AI.Teams)
+            foreach (TeamController team in m_att.Teams)
                 team.ProcessDestroyed(DD);
 
             // send to more in future
         }
 
-        
+        /// <summary>
+        /// Find the station in attributes and destroy it
+        /// </summary>
+        /// <param name="destroyed"></param>
         public void ProcessStationDestroyed(DestroyDespatch destroyed)
         {
+            // Find the station in our list and remove it
+            for(int i = 0; i < m_att.GlobalStations.Count; i++)
+            {
+                if (m_att.GlobalStations[i] == null)
+                {
+                    m_att.GlobalStations.RemoveAt(i--);
+                    continue;
+                }
 
+                if (m_att.GlobalStations[i].netId == destroyed.SelfID)
+                {
+                    m_att.GlobalStations.RemoveAt(i);
+                    break;
+                }
+            }
 
+            // detect win condition
+        }
+
+        /// <summary>
+        /// Adds the station to our segment station 
+        /// reference
+        /// </summary>
+        /// <param name="station"></param>
+        public void ProcessStationCreated(CreateDispatch CD)
+        {
+            StationAccessor station = 
+                ClientScene.FindLocalObject(new NetworkInstanceId(CD.Self))
+                    .GetComponent<StationAccessor>();
+
+            if (station == null)
+            {
+                return;
+            }
+            if (!m_att.GlobalStations.Contains(station))
+            {
+                m_att.GlobalStations.Add(station);
+            }
         }
 
         /*

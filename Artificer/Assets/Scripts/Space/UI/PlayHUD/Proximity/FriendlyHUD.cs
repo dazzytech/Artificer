@@ -129,7 +129,7 @@ namespace Space.UI.Proxmity
             }
 
             // Loop through each player and assign a friendly prefab
-            foreach(uint ID in Team.Players)
+            foreach(uint ID in Team.PlayerShips)
             {
                 // Skip if local player
                 if (ID == SystemManager.Space.NetID || m_addedIDs.Contains(ID))

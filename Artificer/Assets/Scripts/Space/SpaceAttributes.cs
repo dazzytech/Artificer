@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
+
 // Artificer
 using Data.Space;
 using Data.Space.Library;
@@ -11,10 +12,6 @@ using Space.Teams;
 using Space.Map;
 using Space.AI;
 
-// Add classes for data
-// that can be serialized and saved
-
-// e.g Player_Data
 namespace Space
 {
     /// <summary>
@@ -119,14 +116,6 @@ namespace Space
 
         public SegmentManager Segment;
 
-        
-        /// <summary>
-        /// Every single station reference within the space segment
-        /// </summary>
-        public List<StationAccessor> GlobalStations;
-
-
-
         #endregion
 
         #region TEAM ASSETS
@@ -135,16 +124,6 @@ namespace Space
         /// Reference to the team that the player belongs to
         /// </summary>
         public TeamController Team;
-
-        /// <summary>
-        /// Counts how many players are aligned to Team A
-        /// </summary>
-        public int TeamACount;
-
-        /// <summary>
-        /// Counts how many players are aligned to Team B
-        /// </summary>
-        public int TeamBCount;
 
         #endregion
     }

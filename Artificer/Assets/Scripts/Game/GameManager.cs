@@ -17,6 +17,7 @@ using Data.UI;
 using Space.Segment;
 using Space.AI;
 using Space.Spawn;
+using Stations;
 
 namespace Game
 {
@@ -43,6 +44,9 @@ namespace Game
         [SerializeField]
         private GameEventListener m_event;
 
+        [SerializeField]
+        private GameAccessor m_access;
+
         #endregion
 
         #region PUBLIC INTERACTION
@@ -54,27 +58,29 @@ namespace Game
         /// initializes the game
         /// </summary>
         [Server]
-        public void Initialize(GameParameters param)
+        public GameAttributes Initialize(GameParameters param)
         {
             // Assign the spawnable ships for each team
             foreach(ShipSpawnData spawn in param.SpawnableShips)
             {
-                m_att.TeamA.AddSpawnableShip(spawn);
-                m_att.TeamB.AddSpawnableShip(spawn);
+                m_att.Teams[0].AddSpawnableShip(spawn);
+                m_att.Teams[1].AddSpawnableShip(spawn);
             }
 
-            m_att.TeamA.DefineTeamAssets(param.Wallet);
-            m_att.TeamB.DefineTeamAssets(param.Wallet);
+            m_att.Teams[0].DefineTeamAssets(param.Wallet);
+            m_att.Teams[1].DefineTeamAssets(param.Wallet);
 
             // Initialize server spacesegment
             m_att.Segment.InitializeSegment(param);
 
             // Generated stations for the teams
-            m_att.Builder.GenerateTeams(m_att.TeamA, m_att.TeamB, param);
-            m_att.TeamA.AddEnemyTeam(1);
-            m_att.TeamB.AddEnemyTeam(0);
+            m_att.Builder.GenerateTeams(m_att.Teams[0], m_att.Teams[1], param);
+            m_att.Teams[0].AddEnemyTeam(1);
+            m_att.Teams[1].AddEnemyTeam(0);
 
             m_att.AI.Initialize(param);
+
+            return m_att;
         }
 
         /// <summary>
@@ -96,6 +102,8 @@ namespace Game
             // Change the state on the game
             m_att.CurrentState = GameState.Play;
 
+            #region RANDOM TEAM FACTION ASSIGNMENT
+
             // Initialize Teams
             bool teamsCompleted = false;
 
@@ -112,16 +120,22 @@ namespace Game
                     teamsCompleted = true;
             }
 
-            // Retieve Team Items
-            m_att.TeamA = GameObject.Find("Team_A").GetComponent<TeamController>();
-            m_att.TeamB = GameObject.Find("Team_B").GetComponent<TeamController>();
+            #endregion
+
+            #region INITIALIZE SPACE ASSETS
+
+            m_att.GlobalStations = new List<StationAccessor>();
+            m_att.Teams = new List<TeamController>();
+
+            m_access = GameObject.Find("_event").GetComponent<GameAccessor>();
+
+            InitializeTeam("Team_A", 0, teamAcon);
+            InitializeTeam("Team_B", 1, teamBcon);
 
             m_att.Segment = GameObject.Find("segment").GetComponent<SegmentManager>();
-
             m_att.AI = GameObject.Find("ai").GetComponent<AIManager>();
-            
-            m_att.TeamA.Initialize(teamAcon, 0);
-            m_att.TeamB.Initialize(teamBcon, 1);
+
+            #endregion
 
             m_event.InitSpaceScene();
         }
@@ -186,7 +200,9 @@ namespace Game
                 m_att.PlayerInfoList.Remove(info);
                 if(SystemManager.Server != null)
                     SystemManager.Server.
-                        DeletePlayerFromServer(info.ID); 
+                        DeletePlayerFromServer(info.ID);
+
+                m_att.Teams[info.mTeam].Players--;
             }
         }
 
@@ -224,17 +240,10 @@ namespace Game
             // Amount of starter cash
             int starterFund = 0;
 
-            // Pass that player team to an instance ID
-            if (TeamID == 0)
-            {
-                teamNetID = m_att.TeamA.netId;
-                starterFund = m_att.TeamA.Expend(1000000);
-            }
-            else
-            {
-                teamNetID = m_att.TeamB.netId;
-                starterFund = m_att.TeamB.Expend(1000000);
-            }
+            // Apply changes to team
+            teamNetID = m_att.Teams[TeamID].netId;
+            starterFund = m_att.Teams[TeamID].Expend(1000000);
+            m_att.Teams[TeamID].Players++;
 
             // Create netID message
             IntegerMessage netMsg = new IntegerMessage((int)teamNetID.Value);
@@ -257,6 +266,20 @@ namespace Game
                 (short)MSGCHANNEL.TRANSACTIONCLIENT, transaction);
         }
 
+        /// <summary>
+        /// Allows team controller to build a team
+        /// and store in game att
+        /// </summary>
+        /// <param name="team"></param>
+        [Server]
+        public void AddTeam(TeamController team)
+        {
+            m_att.Teams.Add(team);
+            m_access.AddTeam(team.netId.Value);
+        }
+
+        #region SPAWNING
+
         [Server]
         public void SpawnPlayer(int playerID, int stationID, ShipData ship)
         {
@@ -265,17 +288,8 @@ namespace Game
 
             GameObject GO = null;
 
-            // Spawn player using correct team
-            if (info.mTeam == 0)
-            {
-                GO = m_att.TeamA.Spawner.SpawnPlayer(info, stationID);
-                m_att.TeamA.AddPlayerObject(GO.GetComponent<NetworkIdentity>().netId);
-            }
-            else
-            {
-                GO = m_att.TeamB.Spawner.SpawnPlayer(info, stationID);
-                m_att.TeamB.AddPlayerObject(GO.GetComponent<NetworkIdentity>().netId);
-            }
+            GO = m_att.Teams[info.mTeam].Spawner.SpawnPlayer(info, stationID);
+            m_att.Teams[info.mTeam].AddPlayerObject(GO.GetComponent<NetworkIdentity>().netId);
 
             GO.GetComponent<ShipGenerator>()
                 .AssignShipData(ship, info.mTeam);
@@ -310,18 +324,14 @@ namespace Game
         [Server]
         public void BuildStation(string prefabName, int teamID, Vector3 position)
         {
-            // Retreive selected team
-            TeamController selectedTeam;
-
-            if(teamID == 0)
-                selectedTeam = m_att.TeamA;
-            else
-                selectedTeam = m_att.TeamB;
-
-            // send message to builder
-            m_att.Builder.GenerateStation(selectedTeam,
+            // add station to the IDed team
+            m_att.Builder.GenerateStation(m_att.Teams[teamID],
                 prefabName, position);
         }
+
+        #endregion
+
+        #region DAMAGE
 
         [Server]
         public void ShipHit(ShipColliderHitMessage hitMsg)
@@ -357,6 +367,8 @@ namespace Game
             }
         }
 
+        #endregion
+
         /// <summary>
         /// Applies costs and additions
         /// to specified team
@@ -365,25 +377,12 @@ namespace Game
         [Server]
         public void OnTransaction(TransactionMessage tMsg)
         {
-            switch(tMsg.Recipiant)
-            {
-                case 0:
-                    if (tMsg.AssetDir == -1)
-                        m_att.TeamA.Expend(tMsg.Assets);
-                    if(tMsg.CurrencyDir == -1)
-                        m_att.TeamA.Expend(tMsg.CurrencyAmount);
-                    else if(tMsg.CurrencyDir == 1)
-                        m_att.TeamA.Deposit(tMsg.CurrencyAmount);
-                    break;
-                case 1:
-                    if (tMsg.AssetDir == -1)
-                        m_att.TeamB.Expend(tMsg.Assets);
-                    if (tMsg.CurrencyDir == -1)
-                        m_att.TeamB.Expend(tMsg.CurrencyAmount);
-                    else if (tMsg.CurrencyDir == 1)
-                        m_att.TeamB.Deposit(tMsg.CurrencyAmount);
-                    break;
-            }
+            if (tMsg.AssetDir == -1)
+                m_att.Teams[tMsg.Recipiant].Expend(tMsg.Assets);
+            if (tMsg.CurrencyDir == -1)
+                m_att.Teams[tMsg.Recipiant].Expend(tMsg.CurrencyAmount);
+            else if (tMsg.CurrencyDir == 1)
+                m_att.Teams[tMsg.Recipiant].Deposit(tMsg.CurrencyAmount);
         }
 
         #endregion
@@ -407,13 +406,6 @@ namespace Game
             return pInfo.mConnection;
         }
 
-        public int PlayerTeamCount(int teamID)
-        {
-            if (teamID == 0)
-                return m_att.TeamA.Players.Count;
-            return m_att.TeamB.Players.Count;
-        }
-
         #endregion
 
         #endregion
@@ -425,10 +417,18 @@ namespace Game
             // prompt player to pick team
             // Send this to single client via a message
             TeamPickerMessage msg = new TeamPickerMessage();
-            msg.teamOne = m_att.TeamA.ID;
-            msg.teamTwo = m_att.TeamB.ID;
+            msg.teamOne = m_att.Teams[0].ID;
+            msg.teamTwo = m_att.Teams[1].ID;
             NetworkServer.SendToClient(info.mConnection.connectionId,
                 (short)MSGCHANNEL.TEAMPICKER, msg);
+        }
+
+        private void InitializeTeam(string GOName, int id, FactionData data)
+        {
+            m_att.Teams.Add(GameObject.Find(GOName).GetComponent<TeamController>());
+            m_att.Teams[id].Initialize(data, id);
+
+            m_access.AddTeam(m_att.Teams[id].netId.Value);
         }
 
         /// <summary>

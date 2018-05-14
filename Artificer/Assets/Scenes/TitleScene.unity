@@ -5937,7 +5937,6 @@ Camera:
   m_TargetEye: 3
   m_HDR: 0
   m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -6816,11 +6815,11 @@ ParticleSystem:
     m_Rotation: {x: 0, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
-    m_MeshMaterialIndex: 0
-    m_MeshNormalOffset: 0
     m_Mesh: {fileID: 0}
     m_MeshRenderer: {fileID: 0}
     m_SkinnedMeshRenderer: {fileID: 0}
+    m_MeshMaterialIndex: 0
+    m_MeshNormalOffset: 0
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
     alignToDirection: 0
@@ -7536,47 +7535,6 @@ ParticleSystem:
         - serializedVersion: 2
           time: 1
           value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-    speedModifier:
-      serializedVersion: 2
-      minMaxState: 0
-      scalar: 1
-      minScalar: 1
-      maxCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 2
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-        - serializedVersion: 2
-          time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      minCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 2
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-        - serializedVersion: 2
-          time: 1
-          value: 1
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -8974,7 +8932,6 @@ ParticleSystem:
     maxLights: 20
   TrailModule:
     enabled: 0
-    mode: 0
     ratio: 1
     lifetime:
       serializedVersion: 2
@@ -9019,14 +8976,12 @@ ParticleSystem:
         m_RotationOrder: 4
     minVertexDistance: 0.2
     textureMode: 0
-    ribbonCount: 1
     worldSpace: 0
     dieWithParticles: 1
     sizeAffectsWidth: 1
     sizeAffectsLifetime: 0
     inheritParticleColor: 1
     generateLightingData: 0
-    splitSubEmitterRibbons: 0
     colorOverLifetime:
       serializedVersion: 2
       minMaxState: 0
@@ -16510,9 +16465,9 @@ RectTransform:
   m_Father: {fileID: 791}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 550, y: -346}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 550, y: 0}
   m_SizeDelta: {x: 1060, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &1022
@@ -18472,10 +18427,7 @@ MonoBehaviour:
   - {fileID: 185646, guid: 94a27fc06e4e1bb48ad10c9d410bfcea, type: 2}
   - {fileID: 1984401247159340, guid: b04ee84ac096c4c43a8715bf3187b43d, type: 2}
   - {fileID: 1125057715253342, guid: 10e4df30099526740827e2f27b560e72, type: 2}
-  - {fileID: 1000013982247906, guid: 7a2be7575710e7b4c93780e3b5226764, type: 2}
   - {fileID: 1399915413231392, guid: dc56fc5bdbc5d2242ada8190a54cf1ff, type: 2}
-  - {fileID: 1195609766446620, guid: 6fc3a68a36867654cacc55f3bf4780b5, type: 2}
-  - {fileID: 1210465998513952, guid: b45d9a91258670d498192367e5ce4ade, type: 2}
   - {fileID: 1421441126997262, guid: 10655ca0af56bb34692db0a97a088f7c, type: 2}
   - {fileID: 1735692790398472, guid: e3382dd1f85ee7545b154901954acc58, type: 2}
   - {fileID: 1086437000325472, guid: 6590eba3a8855dd48bcd51bd90bc7540, type: 2}
@@ -18483,8 +18435,12 @@ MonoBehaviour:
   - {fileID: 120244, guid: 8563e7dac5109c841874465af96fb17c, type: 2}
   - {fileID: 179984, guid: 672f214f8c0367641bd50e4740faa692, type: 2}
   - {fileID: 1271579242226152, guid: 6205d8551f4a2a64bbb48a89ab599eea, type: 2}
+  - {fileID: 1195609766446620, guid: 6fc3a68a36867654cacc55f3bf4780b5, type: 2}
+  - {fileID: 1210465998513952, guid: b45d9a91258670d498192367e5ce4ade, type: 2}
+  - {fileID: 1000013982247906, guid: 7a2be7575710e7b4c93780e3b5226764, type: 2}
   - {fileID: 1210305362054276, guid: d9288742ef0750e49b0591d7b8e0a75f, type: 2}
   - {fileID: 1065658990486022, guid: f864d65ae32a5dc4a9ab1bd0e3791ad5, type: 2}
+  - {fileID: 1329115047839420, guid: ae093a4a39cf4ea46a9a4c855bd2acb1, type: 2}
   m_CustomConfig: 1
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -18567,6 +18523,7 @@ MonoBehaviour:
   Version: Artificer_v.0.64
   GameMsg: {fileID: 0}
   Events: {fileID: 0}
+  Accessor: {fileID: 0}
   UI: {fileID: 0}
   UIState: {fileID: 0}
   UIMsg: {fileID: 0}

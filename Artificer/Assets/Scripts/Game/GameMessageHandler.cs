@@ -8,6 +8,8 @@ using Space.Projectiles;
 using Space.Segment;
 using Networking;
 using Data.UI;
+using Space.Teams;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -32,6 +34,13 @@ namespace Game
 
         void Awake()
         {
+
+            if (NetworkManager.singleton == null)
+            {
+                Destroy(gameObject);
+                SceneManager.LoadScene("TitleScene");
+            }
+
             if (m_singleton == null)
                 m_singleton = this;
             else
@@ -79,7 +88,7 @@ namespace Game
         [Server]
         public void InitializeGameParam(GameParameters param)
         {
-            m_con.Initialize(param);
+            GameAttributes att = m_con.Initialize(param);
         }
 
         [Server]
@@ -136,6 +145,15 @@ namespace Game
         #endregion
 
         #region SPACE MESSAGES
+
+        /// <summary>
+        /// called by AI manager to store a team
+        /// </summary>
+        /// <param name="team"></param>
+        public void AddTeam(TeamController team)
+        {
+            m_con.AddTeam(team);
+        }
 
         /// <summary>
         /// Called when player builds a station
@@ -240,9 +258,15 @@ namespace Game
         #region SERVER EVENTS
 
         [Server]
-        public void OnShipCreated(NetworkInstanceId Self, int ID, int align)
+        public void OnShipCreated(NetworkInstanceId Self, int ID, int Align)
         {
-            SystemManager.Events.ShipCreated(Self, ID, align);
+            SystemManager.Events.ShipCreated(Self, ID, Align);
+        }
+
+        [Server]
+        public void OnStationCreated(NetworkInstanceId Station)
+        {
+            SystemManager.Events.StationCreated(Station);
         }
 
         [Server]
@@ -270,17 +294,6 @@ namespace Game
         public NetworkConnection GetPlayerConn(int playerID)
         {
             return m_con.GetPlayerConn(playerID);
-        }
-
-        /// <summary>
-        /// Returns how many players
-        /// belong to a certain team
-        /// </summary>
-        /// <param name="teamID"></param>
-        /// <returns></returns>
-        public int PlayerTeamCount(int teamID)
-        {
-            return m_con.PlayerTeamCount(teamID);
         }
 
         #endregion

@@ -140,7 +140,7 @@ namespace Space.Ship.Components.Listener
         /// <returns></returns>
         private bool ConflictingRange(Vector2 position, float radius)
         {
-            foreach(StationAccessor station in SystemManager.Space.GlobalStations)
+            foreach(StationAccessor station in SystemManager.Accessor.GlobalStations)
             {
                 if (Math.WithinRange(position, station.transform.position,
                     0, station.Radius + radius))

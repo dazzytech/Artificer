@@ -102,7 +102,6 @@ namespace Space
             StationController.OnExitRange -= OnExitStation;
             StationController.OnEnterBuildRange -= OnEnterBuildRange;
             StationController.OnExitBuildRange -= OnExitBuildRange;
-            StationController.OnStationCreated -= OnStationCreated;
 
             if (SystemManager.Events != null)
             {
@@ -122,6 +121,7 @@ namespace Space
         {
             SystemManager.UIMsg.DisplayMessege
                 ("bold", "Connected to Server Match.");
+
         }
 
         #endregion
@@ -542,48 +542,21 @@ namespace Space
         }
 
         /// <summary>
-        /// If a station is destroyed we remove it from 
-        /// our global list
+        /// 
         /// </summary>
         /// <param name="DD"></param>
         public void OnStationDestroyed(DestroyDespatch DD)
         {
-            if (!isServer)
-                return;
 
-            // Find the station in our list and remove it
-            for(int i = 0; i < m_att.GlobalStations.Count; i++)
-            {
-                if (m_att.GlobalStations[i] == null)
-                {
-                    m_att.GlobalStations.RemoveAt(i--);
-                    continue;
-                }
-
-                if (m_att.GlobalStations[i].netId == DD.SelfID)
-                {
-                    m_att.GlobalStations.RemoveAt(i);
-                    break;
-                }
-            }
         }
 
         /// <summary>
-        /// Adds the station to our segment station 
-        /// reference
-        /// </summary>
+        /// 
         /// <param name="station"></param>
         [Server]
         public void OnStationCreated(StationAccessor station)
         {
-            if (station == null)
-            {
-                return;
-            }
-            if (!m_att.GlobalStations.Contains(station))
-            {
-                m_att.GlobalStations.Add(station);
-            }
+
         }
 
         private void EndLevel(/*GameState newState*/)
@@ -653,7 +626,30 @@ namespace Space
             m_att.Team.EventShipListChanged += m_con.RefreshShipSpawnList;
 
             m_con.InitializePlayer();
+
+            // populate global station list with existing stations
+
+            // first add our own team
+            foreach (uint stationID in m_con.Team.Stations)
+            {
+                OnStationCreated(ClientScene.FindLocalObject
+                    (new NetworkInstanceId(stationID)).GetComponent<StationAccessor>());
+            }
+
+            // Add stations from all NPC teams
+            foreach (TeamController team in SystemManager.Accessor.Teams)
+            {
+                foreach (uint stationID in team.Stations)
+                {
+                    OnStationCreated(ClientScene.FindLocalObject
+                        (new NetworkInstanceId(stationID)).GetComponent<StationAccessor>());
+                }
+            }
+
+            // Enemy team? can pass enemy team here
         }
+
+        #region DAMAGE
 
         public void OnProcessHitMsg(NetworkMessage msg)
         {
@@ -699,6 +695,8 @@ namespace Space
             SystemManager.UI.DisplayIntegrityChange
                     (chgMsg.Location, chgMsg.Amount);
         }
+
+        #endregion
 
         /// <summary>
         /// Listens to a transaction

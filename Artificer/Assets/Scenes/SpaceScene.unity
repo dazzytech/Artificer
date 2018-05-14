@@ -13322,7 +13322,6 @@ GameObject:
   - component: {fileID: 593987428}
   - component: {fileID: 593987427}
   - component: {fileID: 593987430}
-  - component: {fileID: 593987431}
   m_Layer: 0
   m_Name: ai
   m_TagString: Untagged
@@ -13354,7 +13353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36f0ebeaf4888b94ab634987466e664c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RaiderSpawn: {fileID: 593987431}
+  RaiderSpawn: {fileID: 0}
   Teams: []
   TeamPrefab: {fileID: 1271579242226152, guid: 6205d8551f4a2a64bbb48a89ab599eea, type: 2}
 --- !u!114 &593987428
@@ -13414,27 +13413,8 @@ MonoBehaviour:
     i13: 0
     i14: 0
     i15: 0
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
---- !u!114 &593987431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 593987425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60a6f04c5e0263840ab90a948e1d906c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_spawn:
-  - AgentName: raider_small
-    SpawnRequirements: 0
-    SpawnChance: 0.7
-  - AgentName: raider_medium
-    SpawnRequirements: 0
-    SpawnChance: 0.3
-  TeamID: -1
+  m_ServerOnly: 1
+  m_LocalPlayerAuthority: 0
 --- !u!1 &594422500
 GameObject:
   m_ObjectHideFlags: 0
@@ -13590,6 +13570,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 597149673}
+  - component: {fileID: 597149675}
+  - component: {fileID: 597149674}
   m_Layer: 0
   m_Name: _ships
   m_TagString: Untagged
@@ -13610,6 +13592,57 @@ Transform:
   m_Father: {fileID: 1368435019}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &597149674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 597149672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60a6f04c5e0263840ab90a948e1d906c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_spawn:
+  - AgentName: raider_small
+    SpawnRequirements: 0
+    SpawnChance: 0.7
+  - AgentName: raider_medium
+    SpawnRequirements: 0
+    SpawnChance: 0.3
+  TeamID: -1
+--- !u!114 &597149675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 597149672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!1 &600555682
 GameObject:
   m_ObjectHideFlags: 0
@@ -23477,6 +23510,7 @@ GameObject:
   - component: {fileID: 1086536902}
   - component: {fileID: 1086536901}
   - component: {fileID: 1086536900}
+  - component: {fileID: 1086536903}
   m_Layer: 0
   m_Name: _event
   m_TagString: Untagged
@@ -23540,6 +23574,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1086536903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1086536899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdd216040426cca499c0be103223c294, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1087321235
 GameObject:
   m_ObjectHideFlags: 0
@@ -28723,10 +28768,7 @@ MonoBehaviour:
   Map: {fileID: 2012517428}
   AI: {fileID: 593987429}
   Segment: {fileID: 1688872188}
-  GlobalStations: []
   Team: {fileID: 0}
-  TeamACount: 0
-  TeamBCount: 0
 --- !u!1001 &1368782869
 Prefab:
   m_ObjectHideFlags: 0
@@ -34443,7 +34485,6 @@ Camera:
   m_TargetEye: 3
   m_HDR: 0
   m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -40097,12 +40138,10 @@ MonoBehaviour:
   TeamAName: {fileID: 449953183}
   TeamACount: {fileID: 841833226}
   TeamARect: {fileID: 841833223}
-  PlayerCountA: {fileID: 0}
   TeamBIcon: {fileID: 1759009203}
   TeamBName: {fileID: 2119132109}
   TeamBCount: {fileID: 291267841}
   TeamBRect: {fileID: 0}
-  PlayerCountB: {fileID: 291267841}
 --- !u!1 &1933815422
 GameObject:
   m_ObjectHideFlags: 0
@@ -43955,11 +43994,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Builder: {fileID: 2064934869}
-  CurrentState: 0
-  TeamA: {fileID: 0}
-  TeamB: {fileID: 0}
   Segment: {fileID: 1688872188}
   AI: {fileID: 0}
+  Teams: []
+  GlobalStations: []
+  CurrentState: 0
 --- !u!114 &2064934872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44018,6 +44057,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_att: {fileID: 2064934871}
   m_event: {fileID: 2064934870}
+  m_access: {fileID: 1086536903}
 --- !u!1 &2071540084
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,14 +23,6 @@ namespace Space.AI
 
         public GameParameters Param;
 
-        #region SPAWN MANAGERS
-        
-        public RaiderSpawnManager RaiderSpawn;
-
-        public List<TeamController> Teams;
-
-        #endregion
-
         #region PREFABS
 
         [Header("Prefab")]
