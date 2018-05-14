@@ -1,22 +1,22 @@
-[2018-05-14 19:27:42]: Starting build for depot 608501, content path is "C:\Users\dazzy\Documents\Artificer\sdk\tools\ContentBuilder\content\"
-[2018-05-14 19:27:42]: Building file listing for depot 608501 ...
-[2018-05-14 19:27:42]: Found 64 files for mapping: C:\Users\dazzy\Documents\Artificer\sdk\tools\ContentBuilder\content\windows_content * -> .
-[2018-05-14 19:27:43]: Found 64 files (140 MB) for depot 608501
-[2018-05-14 19:27:43]: Building depot 608501, baseline manifest 8951586187732173447 (64 files)
-[2018-05-14 19:27:45]: Found 183 new chunks (183 old ones existed) for depot 608501, took 0 minutes, 1 seconds
+[2018-05-14 22:10:57]: Starting build for depot 608501, content path is "C:\Users\dazzy\Documents\Artificer\sdk\tools\ContentBuilder\content\"
+[2018-05-14 22:10:57]: Building file listing for depot 608501 ...
+[2018-05-14 22:10:57]: Found 64 files for mapping: C:\Users\dazzy\Documents\Artificer\sdk\tools\ContentBuilder\content\windows_content * -> .
+[2018-05-14 22:10:57]: Found 64 files (140 MB) for depot 608501
+[2018-05-14 22:10:58]: Building depot 608501, baseline manifest 8951586187732173447 (64 files)
+[2018-05-14 22:11:00]: Found 183 new chunks (183 old ones existed) for depot 608501, took 0 minutes, 1 seconds
 
-[2018-05-14 19:27:45]: Changes to baseline manifest:
-[2018-05-14 19:27:45]: Changed: "Artificer_Data\app.info" 1 kB 
-[2018-05-14 19:27:45]: Changed: "Artificer_Data\Mono\etc\mono\1.0\DefaultWsdlHelpGenerator.aspx" 59 kB 
-[2018-05-14 19:27:45]: Changed: "Artificer_Data\Mono\etc\mono\1.0\machine.config" 18 kB 
-[2018-05-14 19:27:45]: Changed: "Artificer_Data\Mono\etc\mono\2.0\Browsers\Compat.browser" 2 kB 
-[2018-05-14 19:27:45]: Changed: "Artificer_Data\Mono\etc\mono\2.0\DefaultWsdlHelpGenerator.aspx" 61 kB 
-[2018-05-14 19:27:45]: Changed: "Artificer_Data\Mono\etc\mono\2.0\machine.config" 28 kB 
-[2018-05-14 19:27:45]: Changed: "Artificer_Data\Mono\etc\mono\2.0\settings.map" 3 kB 
-[2018-05-14 19:27:45]: Changed: "Artificer_Data\Mono\etc\mono\2.0\web.config" 12 kB 
-[2018-05-14 19:27:45]: Changed: "Artificer_Data\Mono\etc\mono\browscap.ini" 322 kB 
-[2018-05-14 19:27:45]: Changed: "Artificer_Data\Mono\etc\mono\config" 2 kB 
-[2018-05-14 19:27:45]: Changed: "Artificer_Data\Mono\etc\mono\mconfig\config.xml" 26 kB 
-[2018-05-14 19:27:45]: Summary: 0 files added, 11 files changed, 0 files removed
-[2018-05-14 19:27:46]: Uploading new manifest to 208.64.200.192:80 (handle 17751297559898737541, 13858 bytes).
-[2018-05-14 19:27:47]: Success! Previous manifestID 1077830023928760181 reused, no chunks uploaded.
+[2018-05-14 22:11:00]: Changes to baseline manifest:
+[2018-05-14 22:11:00]: Changed: "Artificer_Data\app.info" 1 kB 
+[2018-05-14 22:11:00]: Changed: "Artificer_Data\Mono\etc\mono\1.0\DefaultWsdlHelpGenerator.aspx" 59 kB 
+[2018-05-14 22:11:00]: Changed: "Artificer_Data\Mono\etc\mono\1.0\machine.config" 18 kB 
+[2018-05-14 22:11:00]: Changed: "Artificer_Data\Mono\etc\mono\2.0\Browsers\Compat.browser" 2 kB 
+[2018-05-14 22:11:00]: Changed: "Artificer_Data\Mono\etc\mono\2.0\DefaultWsdlHelpGenerator.aspx" 61 kB 
+[2018-05-14 22:11:00]: Changed: "Artificer_Data\Mono\etc\mono\2.0\machine.config" 28 kB 
+[2018-05-14 22:11:00]: Changed: "Artificer_Data\Mono\etc\mono\2.0\settings.map" 3 kB 
+[2018-05-14 22:11:00]: Changed: "Artificer_Data\Mono\etc\mono\2.0\web.config" 12 kB 
+[2018-05-14 22:11:00]: Changed: "Artificer_Data\Mono\etc\mono\browscap.ini" 322 kB 
+[2018-05-14 22:11:00]: Changed: "Artificer_Data\Mono\etc\mono\config" 2 kB 
+[2018-05-14 22:11:00]: Changed: "Artificer_Data\Mono\etc\mono\mconfig\config.xml" 26 kB 
+[2018-05-14 22:11:00]: Summary: 0 files added, 11 files changed, 0 files removed
+[2018-05-14 22:11:00]: Uploading new manifest to 208.64.200.192:80 (handle 14727887929970963657, 13863 bytes).
+[2018-05-14 22:11:01]: Success! Previous manifestID 1077830023928760181 reused, no chunks uploaded.

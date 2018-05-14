@@ -1,19 +1,193 @@
-[2017-03-16 02:33:48]: Starting build for depot 609961, content path is "C:\Users\renderman\Documents\Artificer\sdk\tools\ContentBuilder\content\"
-[2017-03-16 02:33:48]: Building file listing for depot 609961 ...
-[2017-03-16 02:33:48]: Found 62 files for mapping: C:\Users\renderman\Documents\Artificer\sdk\tools\ContentBuilder\content\windows_content * -> .
-[2017-03-16 02:33:48]: Found 62 files (132 MB) for depot 609961
-[2017-03-16 02:33:49]: Building depot 609961, baseline manifest 1881493554279295001 (62 files)
-[2017-03-16 02:33:51]: Found 173 new chunks (173 old ones existed) for depot 609961, took 0 minutes, 2 seconds
+[2018-05-14 22:19:07]: Starting build for depot 609961, content path is "C:\Users\dazzy\Documents\Artificer\sdk\tools\ContentBuilder\content\"
+[2018-05-14 22:19:07]: Building file listing for depot 609961 ...
+[2018-05-14 22:19:08]: Found 199 files for mapping: C:\Users\dazzy\Documents\Artificer\sdk\tools\ContentBuilder\content\windows_content * -> .
+[2018-05-14 22:19:08]: Found 199 files (163 MB) for depot 609961
+[2018-05-14 22:19:09]: Building depot 609961, baseline manifest 302182410108182612 (62 files)
+[2018-05-14 22:19:26]: Found 337 new chunks (173 old ones existed) for depot 609961, took 0 minutes, 17 seconds
 
-[2017-03-16 02:33:51]: Changes to baseline manifest:
-[2017-03-16 02:33:51]: Changed: "Artificer_Data\globalgamemanagers" 143 kB 
-[2017-03-16 02:33:51]: Changed: "Artificer_Data\level0" 240 kB 
-[2017-03-16 02:33:51]: Changed: "Artificer_Data\level1" 183 kB 
-[2017-03-16 02:33:51]: Changed: "Artificer_Data\level2" 19 kB 
-[2017-03-16 02:33:51]: Changed: "Artificer_Data\Managed\Assembly-CSharp.dll" 335 kB 
-[2017-03-16 02:33:51]: Changed: "Artificer_Data\output_log.txt" 3 kB 
-[2017-03-16 02:33:51]: Changed: "steam_appid.txt" 1 kB 
-[2017-03-16 02:33:51]: Summary: 0 files added, 7 files changed, 0 files removed
-[2017-03-16 02:33:52]: Uploading new manifest (13070 bytes).
-[2017-03-16 02:33:52]: Uploading 7 out of 7 missing chunks.
-[2017-03-16 02:33:54]: Success! New manifestID 302182410108182612 created and 7 new chunks uploaded.
+[2018-05-14 22:19:26]: Changes to baseline manifest:
+[2018-05-14 22:19:26]: Changed: "Artificer.exe" 637 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\boot.config" 0 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\globalgamemanagers" 160 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\globalgamemanagers.assets" 82 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\level0" 206 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\level1" 322 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\level2" 19 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\Managed\Assembly-CSharp-firstpass.dll" 348 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\Managed\Assembly-CSharp.dll" 497 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\Managed\Mono.Security.dll" 287 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\Managed\mscorlib.dll" 2439 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\NATTraversalForUNET.dll" 64 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\Open.Nat.dll" 63 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\RakNetSwig.dll" 350 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\Managed\System.Core.dll" 260 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\Managed\System.dll" 1045 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\System.Threading.dll" 379 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\Managed\System.Xml.dll" 1204 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.AccessibilityModule.dll" 9 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.AccessibilityModule.dll.mdb" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.AccessibilityModule.xml" 2 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.AIModule.dll" 34 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.AIModule.dll.mdb" 9 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.AIModule.xml" 59 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.AnimationModule.dll" 80 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.AnimationModule.dll.mdb" 28 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.AnimationModule.xml" 116 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ARModule.dll" 23 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ARModule.dll.mdb" 4 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ARModule.xml" 3 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.AudioModule.dll" 49 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.AudioModule.dll.mdb" 12 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.AudioModule.xml" 76 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ClothModule.dll" 11 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ClothModule.dll.mdb" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ClothModule.xml" 7 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ClusterInputModule.dll" 8 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ClusterInputModule.dll.mdb" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ClusterInputModule.xml" 6 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ClusterRendererModule.dll" 7 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ClusterRendererModule.dll.mdb" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ClusterRendererModule.xml" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.CoreModule.dll" 671 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.CoreModule.dll.mdb" 235 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.CoreModule.xml" 1341 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.CrashReportingModule.dll" 7 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.CrashReportingModule.dll.mdb" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.CrashReportingModule.xml" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.DirectorModule.dll" 9 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.DirectorModule.dll.mdb" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.DirectorModule.xml" 7 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\Managed\UnityEngine.dll" 49 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\Managed\UnityEngine.dll.mdb" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.GameCenterModule.dll" 24 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.GameCenterModule.dll.mdb" 7 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.GameCenterModule.xml" 19 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.GridModule.dll" 10 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.GridModule.dll.mdb" 2 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.GridModule.xml" 9 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ImageConversionModule.dll" 7 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ImageConversionModule.dll.mdb" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ImageConversionModule.xml" 3 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.IMGUIModule.dll" 137 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.IMGUIModule.dll.mdb" 58 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.IMGUIModule.xml" 281 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.InputModule.dll" 13 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.InputModule.dll.mdb" 2 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.InputModule.xml" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.JSONSerializeModule.dll" 7 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.JSONSerializeModule.dll.mdb" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.JSONSerializeModule.xml" 3 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\Managed\UnityEngine.Networking.dll" 249 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ParticlesLegacyModule.dll" 15 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ParticlesLegacyModule.dll.mdb" 3 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ParticlesLegacyModule.xml" 13 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ParticleSystemModule.dll" 107 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ParticleSystemModule.dll.mdb" 36 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ParticleSystemModule.xml" 159 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.PerformanceReportingModule.dll" 7 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.PerformanceReportingModule.dll.mdb" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.PerformanceReportingModule.xml" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.Physics2DModule.dll" 76 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.Physics2DModule.dll.mdb" 22 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.Physics2DModule.xml" 147 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.PhysicsModule.dll" 67 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.PhysicsModule.dll.mdb" 21 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.PhysicsModule.xml" 107 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ScreenCaptureModule.dll" 7 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ScreenCaptureModule.dll.mdb" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.ScreenCaptureModule.xml" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.SpatialTracking.dll" 9 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.SpriteMaskModule.dll" 8 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.SpriteMaskModule.dll.mdb" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.SpriteMaskModule.xml" 2 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.StyleSheetsModule.dll" 12 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.StyleSheetsModule.dll.mdb" 3 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.StyleSheetsModule.xml" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.TerrainModule.dll" 28 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.TerrainModule.dll.mdb" 5 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.TerrainModule.xml" 31 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.TerrainPhysicsModule.dll" 7 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.TerrainPhysicsModule.dll.mdb" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.TerrainPhysicsModule.xml" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.TextRenderingModule.dll" 25 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.TextRenderingModule.dll.mdb" 5 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.TextRenderingModule.xml" 31 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.TilemapModule.dll" 21 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.TilemapModule.dll.mdb" 6 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.TilemapModule.xml" 39 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.Timeline.dll" 85 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\Managed\UnityEngine.UI.dll" 243 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UIElementsModule.dll" 163 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UIElementsModule.dll.mdb" 63 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UIElementsModule.xml" 47 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UIModule.dll" 20 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UIModule.dll.mdb" 3 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UIModule.xml" 24 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UNETModule.dll" 74 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UNETModule.dll.mdb" 20 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UNETModule.xml" 103 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityAnalyticsModule.dll" 13 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityAnalyticsModule.dll.mdb" 3 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityAnalyticsModule.xml" 9 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityConnectModule.dll" 11 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityConnectModule.dll.mdb" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityConnectModule.xml" 7 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityWebRequestAudioModule.dll" 8 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityWebRequestAudioModule.dll.mdb" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityWebRequestAudioModule.xml" 5 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityWebRequestModule.dll" 35 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityWebRequestModule.dll.mdb" 11 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityWebRequestModule.xml" 50 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityWebRequestTextureModule.dll" 8 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityWebRequestTextureModule.dll.mdb" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityWebRequestTextureModule.xml" 4 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll" 18 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll.mdb" 4 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.UnityWebRequestWWWModule.xml" 21 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.VehiclesModule.dll" 10 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.VehiclesModule.dll.mdb" 2 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.VehiclesModule.xml" 7 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.VideoModule.dll" 17 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.VideoModule.dll.mdb" 2 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.VideoModule.xml" 25 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.VRModule.dll" 24 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.VRModule.dll.mdb" 6 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.VRModule.xml" 22 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.WebModule.dll" 29 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.WebModule.dll.mdb" 9 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.WebModule.xml" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.WindModule.dll" 7 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.WindModule.dll.mdb" 1 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Managed\UnityEngine.WindModule.xml" 3 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Mono\EmbedRuntime" 0 kB ,Flags: 64
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Mono\EmbedRuntime\mono.dll" 2561 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Mono\EmbedRuntime\MonoPosixHelper.dll" 111 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\Plugins\CSteamworks.dll" 160 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\Plugins\RakNet.dll" 2293 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\Plugins\steam_api64.dll" 244 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\resources.assets" 544 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\resources.assets.resS" 25205 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\Resources\unity default resources" 3500 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\Resources\unity_builtin_extra" 415 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\sharedassets0.assets" 7009 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\sharedassets0.assets.resS" 77437 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\sharedassets0.resource" 7441 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\sharedassets1.assets" 1707 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\sharedassets1.assets.resS" 1759 kB 
+[2018-05-14 22:19:26]: Changed: "Artificer_Data\sharedassets2.assets" 5 kB 
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\StreamingAssets" 0 kB ,Flags: 64
+[2018-05-14 22:19:26]: Added  : "Artificer_Data\StreamingAssets\build_info.txt" 1 kB 
+[2018-05-14 22:19:26]: Added  : "config\Control_Data.txt" 1 kB 
+[2018-05-14 22:19:26]: Changed: "config\Video_Data" 1 kB 
+[2018-05-14 22:19:26]: Added  : "UnityPlayer.dll" 22491 kB 
+[2018-05-14 22:19:26]: Removed: Artificer_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (30 kB)
+[2018-05-14 22:19:26]: Removed: Artificer_Data\Mono\mono.dll (2556 kB)
+[2018-05-14 22:19:26]: Removed: Artificer_Data\Mono\MonoPosixHelper.dll (111 kB)
+[2018-05-14 22:19:26]: Removed: Artificer_Data\output_log.txt (3 kB)
+[2018-05-14 22:19:26]: Removed: Artificer_Data\resources.resource (198 kB)
+[2018-05-14 22:19:26]: Removed: config\Control_Data (4 kB)
+[2018-05-14 22:19:26]: Removed: steam_api64.dll (202 kB)
+[2018-05-14 22:19:26]: Summary: 144 files added, 30 files changed, 7 files removed
+[2018-05-14 22:19:27]: Uploading new manifest to 208.64.201.182:80 (handle 15092749835652719646, 36495 bytes).
+[2018-05-14 22:19:28]: Uploading 264 out of 264 missing chunks.
+[2018-05-14 22:20:23]: Success! New manifestID 4971740466668019964 created and 264 new chunks uploaded.
