@@ -157,8 +157,9 @@ namespace Networking
     /// </summary>
     public class StationDestroyMessage : MessageBase
     {
-        public NetworkInstanceId SelfID;
-        public int ID;
+        public NetworkInstanceId StationNetID;
+        public int StationSpawnID;
+        public int StationTeamID;
     }
 
     /// <summary>

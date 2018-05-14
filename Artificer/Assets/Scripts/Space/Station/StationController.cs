@@ -289,9 +289,12 @@ namespace Stations
         [Server]
         private void DestroyStation()
         {
+            m_att.Accessor.Team.RemoveStationObject(netId);
+
             StationDestroyMessage msg = new StationDestroyMessage();
-            msg.SelfID = netId;
-            msg.ID = m_att.SpawnID;
+            msg.StationNetID = netId;
+            msg.StationSpawnID = m_att.SpawnID;
+            msg.StationTeamID = m_att.Accessor.Team.ID;
 
             SystemManager.singleton.client.Send((short)MSGCHANNEL.STATIONDESTROYED, msg);
 

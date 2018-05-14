@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIntegrity: 0
-  Integrity: 100000
+  Integrity: 100
   UnderAttack: 0
   Interactive: 0
   SpawnID: 0
@@ -198,6 +198,7 @@ MonoBehaviour:
   Accessor: {fileID: 114128045112325856}
   Ship: {fileID: 0}
   MinDistance: 10
+  InRange: 0
   Icon: {fileID: 21300000, guid: dc5625d12dd293e4db7e061f9747c90b, type: 3}
 --- !u!114 &114000013604808810
 MonoBehaviour:
@@ -255,6 +256,7 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
@@ -270,6 +272,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5

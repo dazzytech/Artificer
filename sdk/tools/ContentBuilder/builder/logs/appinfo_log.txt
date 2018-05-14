@@ -1,0 +1,14 @@
+
+
+[2018-05-14 19:04:28] RequestAppInfoUpdate: nNumAppIDs 1
+[2018-05-14 19:04:28] ProductInfoChanges: change number 0->4436587, apps: 0/0, packages: 0/0
+[2018-05-14 19:04:29] UpdatesJob: requesting 1 apps, 24 packages (meta data, 1024 prev attempts)
+[2018-05-14 19:04:29] UpdatesJob: requesting 1 apps, 24 packages (full data, 1024 prev attempts)
+[2018-05-14 19:04:29] UpdatesJob: finished OK, nAppsUpdated 1 (2 KB), nPackagesUpdated 24 (13 KB)
+[2018-05-14 19:04:29] UpdatesJob: requesting 245 apps, 0 packages (meta data, 1024 prev attempts)
+[2018-05-14 19:04:30] UpdatesJob: requested 53 access tokens, 50 received, 3 denied
+[2018-05-14 19:04:30] UpdatesJob: updated SHAs with 50 new access tokens
+[2018-05-14 19:04:30] UpdatesJob: downloaded 9 apps via HTTP, 223 KB (56 KB compressed)
+[2018-05-14 19:04:30] UpdatesJob: requesting 236 apps, 0 packages (full data, 1024 prev attempts)
+[2018-05-14 19:04:32] UpdatesJob: finished OK, nAppsUpdated 245 (611 KB), nPackagesUpdated 0 (0 KB)
+[2018-05-14 19:04:47] Starting async write C:\Users\dazzy\Documents\Artificer\sdk\tools\ContentBuilder\builder/appcache/appinfo.vdf (464297 bytes)

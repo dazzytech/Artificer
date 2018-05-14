@@ -123,6 +123,9 @@ namespace Space.Spawn
             // send to segment
             SystemManager.Space.SegObj.ImportSegmentObject(segObj);
 
+            GetComponent<TeamController>().
+                AddStationObject(stationCon.netId);
+
             // if station is a type that we spawn then add to spawn list
             if (stationAtt.Type != STATIONTYPE.HOME)
             {
@@ -191,9 +194,6 @@ namespace Space.Spawn
             stationAtt.SpawnID = sPInfo.ID;
 
             m_groups.Add(new AgentGroup(stationCon.netId.Value));
-
-            GetComponent<TeamController>().
-                AddStationObject(stationCon.netId);
 
             return newStation;
         }

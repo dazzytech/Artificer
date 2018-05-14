@@ -91,6 +91,10 @@ namespace Game
             GameAttributes att = m_con.Initialize(param);
         }
 
+        /// <summary>
+        /// Initialize the game based on the current scene
+        /// </summary>
+        /// <param name="scene"></param>
         [Server]
         public void SceneChanged(string scene)
         {
@@ -136,6 +140,17 @@ namespace Game
         {
             NetworkServer.SendToAll((short)MSGCHANNEL.CHATMESSAGECLIENT,
                 msg.ReadMessage<ChatParamMsg>());
+        }
+
+        /// <summary>
+        /// When all home bases are destroyed
+        /// go to last scene, where the player can return to lobby
+        /// </summary>
+        /// <param name="winner">The ID of the winning team</param>
+        [Server]
+        public void OnEndGame(int winner)
+        {
+
         }
 
         #endregion

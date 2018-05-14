@@ -21,7 +21,7 @@ using Stations;
 
 namespace Game
 {
-    public enum GameState{Lobby, Play}
+    public enum GameState{Lobby, Play, End}
 
     /// <summary>
     /// Responsible for game elements such as 

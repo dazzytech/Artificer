@@ -297,9 +297,10 @@ namespace Space.Teams
             // for the agent groups to process
             Spawner.ProcessDestroyed(DD);
             
-            if (DD.SelfTeamID == m_ID)
+            if (DD.SelfTeamID == m_ID && DD.AggressorTeamID != m_ID)
             {
                 // The agent destroyed is on our team
+                // if attacker is our team then may be self destruct
 
                 // kos list makes all guards hostile 
                 // to ship

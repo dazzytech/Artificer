@@ -73,8 +73,9 @@ namespace Game
         public void StationDestroyed(StationDestroyMessage msg)
         {
             DestroyDespatch DD = new DestroyDespatch();
-            DD.SelfID = msg.SelfID;
-            DD.MiscID = msg.ID;
+            DD.SelfID = msg.StationNetID;
+            DD.MiscID = msg.StationSpawnID;
+            DD.SelfTeamID = msg.StationTeamID;
 
             EventStationDestroyed(DD);
         }

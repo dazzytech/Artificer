@@ -643,6 +643,11 @@ public class SystemManager : NATTraversal.NetworkManager
         m_singleton.ServerChangeScene("SpaceScene");
     }
 
+    public static void EndMatch()
+    {
+        m_singleton.ServerChangeScene("ServerScene");
+    }
+
     #region SERVER MESSAGES
 
     /// <summary>

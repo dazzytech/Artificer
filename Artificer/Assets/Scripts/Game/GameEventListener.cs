@@ -21,7 +21,7 @@ namespace Game
         void OnDisable()
         {
             // De-assign events
-           // SystemManager.Events.EventShipDestroyed -= ProcessShipDestroyed;
+            //SystemManager.Events.EventShipDestroyed -= ProcessShipDestroyed;
             //SystemManager.Events.EventStationDestroyed -= ProcessStationDestroyed;
         }
 
@@ -96,6 +96,30 @@ namespace Game
             }
 
             // detect win condition
+
+            // only test with player team
+            if (destroyed.SelfTeamID > 1)
+                return;
+
+            // end game if a home station 
+            // for the player team is destroyed
+            bool hasHomeBase = false;
+
+            foreach(uint stationID in 
+                m_att.Teams[destroyed.SelfTeamID].Stations)
+            {
+                StationAccessor station = ClientScene.FindLocalObject
+                    (new NetworkInstanceId(stationID)).GetComponent<StationAccessor>();
+
+                if (station.Type == STATIONTYPE.HOME)
+                    hasHomeBase = true;
+            }
+
+            if(!hasHomeBase)
+            {
+                // game is ended
+                SystemManager.EndMatch();
+            }
         }
 
         /// <summary>

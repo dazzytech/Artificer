@@ -60,7 +60,6 @@ namespace Game
             string prefabName, Vector2 position)
         {
             GameObject station = selectedTeam.Spawner.AddStation(position, prefabName);
-            selectedTeam.AddStationObject(station.GetComponent<NetworkIdentity>().netId);
 
             return station.GetComponent<NetworkIdentity>().netId;
         }

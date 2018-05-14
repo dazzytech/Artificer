@@ -1,0 +1,22 @@
+
+
+[2018-05-14 19:03:28] Log session started
+[2018-05-14 19:03:28] [0,0] SetSteamID( [U:1:0] )
+[2018-05-14 19:03:28] CCMInterface::OnNetworkDeviceStateChange -- Saw device up, connecting to Steam
+[2018-05-14 19:03:28] CCMInterface::OnNetworkDeviceStateChange -- Saw device up, connecting to Steam
+[2018-05-14 19:03:57] [0,0] SetSteamID( [U:1:0] )
+[2018-05-14 19:03:57] [0,0] SetSteamID( [U:1:0] )
+[2018-05-14 19:03:57] [0,0] Server says 0% of connections should be websockets, we rolled 66 - using UDP as default.
+[2018-05-14 19:03:57] CCMInterface::YieldingConnect -- no CMs cached locally, calling ISteamDirectory/GetCMList web api. . .
+[2018-05-14 19:03:58] CCMInterface::YieldingConnect -- got 100 CMs and 100 WebSocket CMS from ISteamDirectory/GetCMList.
+[2018-05-14 19:03:58] [1,2] Connect() starting connection (eNetQOSLevelHigh, 162.254.196.68:27019, UDP)
+[2018-05-14 19:03:59] [1,2] ConnectionCompleted() (162.254.196.84:27019, UDP)
+[2018-05-14 19:04:00] [1,2] RecvMsgClientLogOnResponse() : [U:1:39620240] 'Account Logon Denied'
+[2018-05-14 19:04:00] [1,2] AsyncDisconnect()
+[2018-05-14 19:04:00] [0,0] ConnectionDisconnected('Disconnected By Remote Host') : 'Account Logon Denied' (162.254.196.84:27019, UDP)
+[2018-05-14 19:04:00] [0,0] ConnectionDisconnected() not auto reconnecting due to eResultLogonSession specifies no reconnect
+[2018-05-14 19:04:26] [0,0] SetSteamID( [U:1:0] )
+[2018-05-14 19:04:26] [0,0] Server says 0% of connections should be websockets, we rolled 29 - using UDP as default.
+[2018-05-14 19:04:26] [1,10] Connect() starting connection (eNetQOSLevelHigh, 162.254.196.68:27019, UDP)
+[2018-05-14 19:04:27] [1,10] ConnectionCompleted() (162.254.196.68:27018, UDP)
+[2018-05-14 19:04:28] [1,10] RecvMsgClientLogOnResponse() : [U:1:39620240] 'OK'
