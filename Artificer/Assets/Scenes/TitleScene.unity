@@ -16478,8 +16478,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 550, y: 0}
+  m_SizeDelta: {x: 1060, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &1022
 RectTransform:
@@ -18870,8 +18870,8 @@ MonoBehaviour:
     - Item: 33
       Amount: 10000
       Exist: 1
-  TeamASpawn: {x: 2000, y: 2000}
-  TeamBSpawn: {x: 3000, y: 3000}
+  TeamASpawn: {x: 1500, y: 1500}
+  TeamBSpawn: {x: 3500, y: 3500}
 --- !u!114 &1122
 MonoBehaviour:
   m_ObjectHideFlags: 0

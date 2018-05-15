@@ -67,6 +67,23 @@ namespace Stations
 
         #region MONO BEHAVIOUR 
 
+        private void OnEnable()
+        {
+            // clients disable stations that are out of range
+            // restart coroutines if this is the case
+            if(m_docking != null)
+                StartCoroutine(m_docking);
+            if (m_building != null)
+                StartCoroutine(m_building);
+
+            // Set white on enable as sync issues cause station to 
+            // have build colour on ceation
+            if (!m_att.Interactive)
+                StartCoroutine("CheckForActivity");
+            else
+                GetComponent<SpriteRenderer>().color = Color.white;
+        }
+
         public virtual void Awake()
         {
             m_att.CurrentIntegrity = m_att.Integrity;
@@ -86,7 +103,6 @@ namespace Stations
                 m_docking = CheckRange
                     (OnEnterRange, OnExitRange,
                     m_att.MinDistance);
-
                 StartCoroutine(m_docking);
                     break;
             }
@@ -96,7 +112,6 @@ namespace Stations
                 m_building = CheckRange
                     (OnEnterBuildRange, OnExitBuildRange,
                     m_att.BuildDistance);
-
                 StartCoroutine(m_building);
             }
 

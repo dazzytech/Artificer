@@ -362,56 +362,57 @@ namespace Space.Spawn
         /// <returns></returns>
         private IEnumerator TeamHeartbeat()
         {
-            while (true)
-            {
-                // set the timer before repeating 
-                yield return new WaitForSeconds
-                    (UnityEngine.Random.Range(10, 30));
+            /* while (true)
+             {
+                 // set the timer before repeating 
+                 yield return new WaitForSeconds
+                     (UnityEngine.Random.Range(10, 30));
 
-                // Loop through each ship tracking item
-                int i = 0;
-                while (i < m_groups.Count)
-                {
-                    AgentGroup target = m_groups[i];
+                 // Loop through each ship tracking item
+                 int i = 0;
+                 while (i < m_groups.Count)
+                 {
+                     AgentGroup target = m_groups[i];
 
-                    GameObject Focus = target.Focus;
+                     GameObject Focus = target.Focus;
 
-                    if (Focus == null)
-                    {
-                        // destroyed stop tracking
-                        m_groups.RemoveAt(i);
-                        continue;
-                    }
-                    else
-                        i++;
+                     if (Focus == null)
+                     {
+                         // destroyed stop tracking
+                         m_groups.RemoveAt(i);
+                         continue;
+                     }
+                     else
+                         i++;
 
-                    // Only handle spawn if ship is currently active
-                    if (Focus.GetComponent<StationAccessor>().Active)
-                    {
-                        // determine spawn size on threat level 
-                        int shipCount = FortifyLevel + 1;
+                     // Only handle spawn if ship is currently active
+                     if (Focus.GetComponent<StationAccessor>().Active)
+                     {
+                         // determine spawn size on threat level 
+                         int shipCount = FortifyLevel + 1;
 
-                        // add a ship we have no reached cap
-                        if (target.AgentCount < shipCount)
-                        {
-                            SpawnNPCMessage npcMsg = new SpawnNPCMessage();
-                            npcMsg.AgentType = RandomAgent(FortifyLevel);
-                            npcMsg.Location = Math.RandomWithinRange
-                                (Focus.transform.position, 10, 25);
-                            npcMsg.SelfID = SystemManager.Space.ID;
-                            npcMsg.SpawnID = netId.Value;
-                            npcMsg.HomeID = target.m_focus;
+                         // add a ship we have no reached cap
+                         if (target.AgentCount < shipCount)
+                         {
+                             SpawnNPCMessage npcMsg = new SpawnNPCMessage();
+                             npcMsg.AgentType = RandomAgent(FortifyLevel);
+                             npcMsg.Location = Math.RandomWithinRange
+                                 (Focus.transform.position, 10, 25);
+                             npcMsg.SelfID = SystemManager.Space.ID;
+                             npcMsg.SpawnID = netId.Value;
+                             npcMsg.HomeID = target.m_focus;
 
-                            NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSNPC, BuildAgentListener);
+                             NetworkManager.singleton.client.RegisterHandler((short)MSGCHANNEL.PROCESSNPC, BuildAgentListener);
 
-                            SystemManager.singleton.client.Send
-                                ((short)MSGCHANNEL.SPAWNNPC, npcMsg);
-                        }
-                    }
+                             SystemManager.singleton.client.Send
+                                 ((short)MSGCHANNEL.SPAWNNPC, npcMsg);
+                         }
+                     }
 
-                    yield return null;
-                }
-            }
+                     yield return null;
+                 }
+             }*/
+            yield break;
         }
 
         #endregion
