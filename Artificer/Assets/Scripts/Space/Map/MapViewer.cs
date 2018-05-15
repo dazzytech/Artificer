@@ -38,6 +38,9 @@ namespace Space.Map
         private List<MapObject> m_mapObjs
             = new List<MapObject>();
 
+        private Dictionary<MapObject, GameObject> m_prefabs
+            = new Dictionary<MapObject, GameObject>();
+
         #region MAP CUSTOMIZATION
 
         private MapObjectType[] m_filter;
@@ -81,6 +84,9 @@ namespace Space.Map
         [SerializeField]
         private Texture2D m_teamIcon;
 
+        [SerializeField]
+        private Texture2D m_waypointIcon;
+        
         #endregion
 
         #endregion
@@ -160,6 +166,11 @@ namespace Space.Map
             // position on map
             prefab.transform.localPosition =
                 ScaleAndPosition(mObj.Position);
+
+            if (m_prefabs.ContainsKey(mObj))
+                m_prefabs[mObj] = prefab;
+            else
+                m_prefabs.Add(mObj, prefab);
         }
 
         public void RotateMap(Vector2 dir)
@@ -173,12 +184,13 @@ namespace Space.Map
 
                 foreach (MapObject segmentObject in m_mapObjs)
                 {
-                    for (int i = 0; i < 8; i++)
-                    {
-                        segmentObject.RenderPoints[i] = ApplyCameraRotation
-                            (new Vector2(segmentObject.Points[i].x,
-                                         segmentObject.Points[i].y), offset);
-                    }
+                    if(segmentObject.Points != null)
+                        for (int i = 0; i < 8; i++)
+                        {
+                            segmentObject.RenderPoints[i] = ApplyCameraRotation
+                                (new Vector2(segmentObject.Points[i].x,
+                                             segmentObject.Points[i].y), offset);
+                        }
                 }
             }
         }
@@ -221,10 +233,13 @@ namespace Space.Map
             {
                 MapObject mObj = filteredList[i];
 
+                m_mapObjs.Add(mObj);
+
                 if (mObj.Type == MapObjectType.SHIP ||
                     mObj.Type == MapObjectType.SATELLITE ||
                     mObj.Type == MapObjectType.STATION ||
-                    mObj.Type == MapObjectType.TEAM)
+                    mObj.Type == MapObjectType.TEAM ||
+                    mObj.Type == MapObjectType.WAYPOINT)
                     BuildIcon(mObj);
                 else
                     BuildSegmentIcon(mObj);
@@ -286,6 +301,12 @@ namespace Space.Map
                             new Vector2(500, 500) * scale;
                         img.texture = m_teamIcon;
                         break;
+                    case MapObjectType.WAYPOINT:
+                        // Resize object based on texture
+                        GO.GetComponent<RectTransform>().sizeDelta =
+                            new Vector2(32, 32);
+                        img.texture = m_waypointIcon;
+                        break;
                 }
 
                 GO.transform.localPosition = ScaleAndPosition(mObj.Position);
@@ -326,14 +347,10 @@ namespace Space.Map
 
                 if (mObj.Points != null)
                 {
-                    if (!m_mapObjs.Contains(mObj))
+                    if (mObj.RenderPoints == null)
                     {
-                        if (mObj.RenderPoints == null)
-                        {
-                            mObj.RenderPoints = new Vector2[8];
-                            mObj.Points.CopyTo(mObj.RenderPoints, 0);
-                        }
-                        m_mapObjs.Add(mObj);
+                        mObj.RenderPoints = new Vector2[8];
+                        mObj.Points.CopyTo(mObj.RenderPoints, 0);
                     }
 
                     RawImage regionImg = region.AddComponent<RawImage>();
@@ -385,7 +402,7 @@ namespace Space.Map
         /// <param name="mObj"></param>
         private void RemoveIcon(MapObject mObj)
         {
-            if(mObj.Icon != null)
+            if(mObj.Icon != null && !m_prefabs.ContainsKey(mObj))
             {
                 GameObject.Destroy(mObj.Icon.gameObject);
                 mObj.Icon = null;
@@ -400,9 +417,9 @@ namespace Space.Map
         /// </summary>
         private void ClearIcons()
         {
-            foreach(Transform child in m_baseMap.transform)
+            foreach(MapObject mObj in m_mapObjs)
             {
-                GameObject.Destroy(child.gameObject);
+                RemoveIcon(mObj);
             }
 
             m_mapObjs.Clear();
@@ -461,6 +478,8 @@ namespace Space.Map
 
         #endregion
 
+        #region CAMERA
+
         /// <summary>
         /// Positions and scales the map position
         /// based on the map scale, and direction
@@ -489,6 +508,8 @@ namespace Space.Map
 
             return returnVal + offset;
         }
+
+        #endregion
 
         /// <summary>
         /// If this is interactive then trigger event

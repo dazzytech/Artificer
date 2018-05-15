@@ -4303,6 +4303,7 @@ MonoBehaviour:
   m_wreckIcon: {fileID: 2800000, guid: afa8c575b77523a44ae4839546ad6ad0, type: 3}
   m_StationIcon: {fileID: 2800000, guid: 26281da389d1a074db4014f1ba4d20e1, type: 3}
   m_teamIcon: {fileID: 2800000, guid: a43318939899b764f8d77553a1ca4879, type: 3}
+  m_waypointIcon: {fileID: 2800000, guid: 47033601a54904a4cb4c7e0c822eabd3, type: 3}
 --- !u!222 &218373054
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -37416,13 +37417,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_baseMap: {fileID: 1809215891}
-  m_interactive: 1
+  m_interactive: 0
   m_shipIcon: {fileID: 2800000, guid: df7c31fe9f61795439a331de6addcca3, type: 3}
   m_satIcon: {fileID: 2800000, guid: e441bc019c6151140bd0d848156ef35f, type: 3}
   m_astIcon: {fileID: 2800000, guid: 1b016caf3b30dff439ed5a12c9f1e77c, type: 3}
   m_wreckIcon: {fileID: 2800000, guid: afa8c575b77523a44ae4839546ad6ad0, type: 3}
   m_StationIcon: {fileID: 2800000, guid: 26281da389d1a074db4014f1ba4d20e1, type: 3}
   m_teamIcon: {fileID: 2800000, guid: a43318939899b764f8d77553a1ca4879, type: 3}
+  m_waypointIcon: {fileID: 0}
 --- !u!114 &1809215893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39628,6 +39630,7 @@ MonoBehaviour:
   m_wreckIcon: {fileID: 2800000, guid: afa8c575b77523a44ae4839546ad6ad0, type: 3}
   m_StationIcon: {fileID: 0}
   m_teamIcon: {fileID: 0}
+  m_waypointIcon: {fileID: 0}
 --- !u!1 &1904372513
 GameObject:
   m_ObjectHideFlags: 0
