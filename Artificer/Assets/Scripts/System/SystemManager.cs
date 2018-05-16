@@ -23,7 +23,10 @@ using UnityEngine.Networking.Types;
 using Data.Space.Library;
 using Space.UI.Prompt;
 
-[assembly: System.Reflection.AssemblyVersion("1.0.*")]
+[assembly: System.Reflection.AssemblyVersion("0.1.*")]
+// 1.0.0.0 full release
+// 0.1 demo
+// 1.1 full release, demo new feature
 
 [RequireComponent(typeof(SystemAttributes))]
 public class SystemManager : NATTraversal.NetworkManager

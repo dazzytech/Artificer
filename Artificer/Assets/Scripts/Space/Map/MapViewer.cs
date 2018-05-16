@@ -168,7 +168,10 @@ namespace Space.Map
                 ScaleAndPosition(mObj.Position);
 
             if (m_prefabs.ContainsKey(mObj))
+            {
+                GameObject.Destroy(m_prefabs[mObj]);
                 m_prefabs[mObj] = prefab;
+            }
             else
                 m_prefabs.Add(mObj, prefab);
         }
@@ -226,7 +229,7 @@ namespace Space.Map
             else
                 // Retrieve list based on what filters we are having
                 filteredList = SystemManager.Space.Map.Where
-                (c => m_filter.Contains(c.Type)).ToList();
+                (c => m_filter.Contains(c.Type) || m_prefabs.ContainsKey(c)).ToList();
 
             // create each map object as an icon
             for (int i = 0; i < filteredList.Count; i++)

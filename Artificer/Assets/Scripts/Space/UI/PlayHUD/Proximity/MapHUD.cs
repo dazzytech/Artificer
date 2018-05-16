@@ -39,6 +39,9 @@ namespace Space.UI.Proxmity
             base.Awake();
 
             m_viewer.InitializeMap();
+
+            if (SystemManager.Space.TeamID == 1)
+                m_viewer.RotateMap(new Vector2(0, -1));
         }
 
         #endregion

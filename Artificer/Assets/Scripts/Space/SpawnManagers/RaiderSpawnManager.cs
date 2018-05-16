@@ -269,7 +269,7 @@ namespace Space.Spawn
                 foreach (Transform ship in shipContainer.transform)
                 {
                     if (ship.GetComponent<NetworkIdentity>
-                        ().localPlayerAuthority)
+                        ().hasAuthority)
                     {
                         if (ship.GetComponent<ShipAccessor>().TeamID != -1)
                         {

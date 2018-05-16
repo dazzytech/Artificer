@@ -324,7 +324,8 @@ namespace Space.Ship.Components.Listener
         [SerializeField]
         public void RpcDestroy()
         {
-            rb.mass -= Weight;
+            if(hasAuthority)
+                rb.mass -= Weight;
             this.enabled = false;
         }
 

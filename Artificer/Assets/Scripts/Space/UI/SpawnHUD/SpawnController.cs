@@ -88,7 +88,10 @@ namespace Space.UI.Spawn
         private void Awake()
         {
             // This code should only be called once
-            m_att.Map.InitializeMap(new MapObjectType[] { MapObjectType.SHIP });  
+            m_att.Map.InitializeMap(new MapObjectType[] { MapObjectType.SHIP });
+
+            if (SystemManager.Space.TeamID == 1)
+                m_att.Map.RotateMap(new Vector2(0, -1));
         }
 
         #endregion
