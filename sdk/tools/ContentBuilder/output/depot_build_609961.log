@@ -1,19 +1,19 @@
-[2018-05-15 22:08:41]: Starting build for depot 609961, content path is "C:\Users\dazzy\Documents\Artificer\sdk\tools\ContentBuilder\content\"
-[2018-05-15 22:08:41]: Building file listing for depot 609961 ...
-[2018-05-15 22:08:41]: Found 199 files for mapping: C:\Users\dazzy\Documents\Artificer\sdk\tools\ContentBuilder\content\windows_content * -> .
-[2018-05-15 22:08:41]: Found 199 files (163 MB) for depot 609961
-[2018-05-15 22:08:42]: Building depot 609961, baseline manifest 4971740466668019964 (199 files)
-[2018-05-15 22:08:45]: Found 337 new chunks (337 old ones existed) for depot 609961, took 0 minutes, 2 seconds
+[2018-05-16 21:44:26]: Starting build for depot 609961, content path is "C:\Users\dazzy\Documents\Artificer\sdk\tools\ContentBuilder\content\"
+[2018-05-16 21:44:26]: Building file listing for depot 609961 ...
+[2018-05-16 21:44:26]: Found 199 files for mapping: C:\Users\dazzy\Documents\Artificer\sdk\tools\ContentBuilder\content\windows_content * -> .
+[2018-05-16 21:44:26]: Found 199 files (163 MB) for depot 609961
+[2018-05-16 21:44:27]: Building depot 609961, baseline manifest 8991967023597987405 (199 files)
+[2018-05-16 21:44:30]: Found 337 new chunks (337 old ones existed) for depot 609961, took 0 minutes, 2 seconds
 
-[2018-05-15 22:08:45]: Changes to baseline manifest:
-[2018-05-15 22:08:45]: Changed: "Artificer_Data\globalgamemanagers" 160 kB 
-[2018-05-15 22:08:45]: Changed: "Artificer_Data\globalgamemanagers.assets" 82 kB 
-[2018-05-15 22:08:45]: Changed: "Artificer_Data\level0" 206 kB 
-[2018-05-15 22:08:45]: Changed: "Artificer_Data\level1" 322 kB 
-[2018-05-15 22:08:45]: Changed: "Artificer_Data\Managed\Assembly-CSharp-firstpass.dll" 348 kB 
-[2018-05-15 22:08:45]: Changed: "Artificer_Data\Managed\Assembly-CSharp.dll" 497 kB 
-[2018-05-15 22:08:45]: Changed: "Artificer_Data\StreamingAssets\build_info.txt" 1 kB 
-[2018-05-15 22:08:45]: Summary: 0 files added, 7 files changed, 0 files removed
-[2018-05-15 22:08:46]: Uploading new manifest to 208.64.201.182:80 (handle 1546546729132257014, 36521 bytes).
-[2018-05-15 22:08:46]: Uploading 7 out of 7 missing chunks.
-[2018-05-15 22:08:50]: Success! New manifestID 8991967023597987405 created and 7 new chunks uploaded.
+[2018-05-16 21:44:30]: Changes to baseline manifest:
+[2018-05-16 21:44:30]: Changed: "Artificer_Data\globalgamemanagers" 160 kB 
+[2018-05-16 21:44:30]: Changed: "Artificer_Data\level0" 206 kB 
+[2018-05-16 21:44:30]: Changed: "Artificer_Data\level1" 322 kB 
+[2018-05-16 21:44:30]: Changed: "Artificer_Data\Managed\Assembly-CSharp-firstpass.dll" 348 kB 
+[2018-05-16 21:44:30]: Changed: "Artificer_Data\Managed\Assembly-CSharp.dll" 497 kB 
+[2018-05-16 21:44:30]: Changed: "Artificer_Data\resources.assets" 544 kB 
+[2018-05-16 21:44:30]: Changed: "Artificer_Data\StreamingAssets\build_info.txt" 1 kB 
+[2018-05-16 21:44:30]: Summary: 0 files added, 7 files changed, 0 files removed
+[2018-05-16 21:44:30]: Uploading new manifest to 208.64.201.182:80 (handle 1062709553724645850, 36500 bytes).
+[2018-05-16 21:44:31]: Uploading 7 out of 7 missing chunks.
+[2018-05-16 21:44:35]: Success! New manifestID 959898495264556893 created and 7 new chunks uploaded.
