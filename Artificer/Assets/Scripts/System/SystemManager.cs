@@ -23,8 +23,9 @@ using UnityEngine.Networking.Types;
 using Data.Space.Library;
 using Space.UI.Prompt;
 
-[RequireComponent(typeof(SystemAttributes))]
+[assembly: System.Reflection.AssemblyVersion("1.0.*")]
 
+[RequireComponent(typeof(SystemAttributes))]
 public class SystemManager : NATTraversal.NetworkManager
 {
     #region ATTRIBUTES
@@ -499,7 +500,7 @@ public class SystemManager : NATTraversal.NetworkManager
 
         m_base.Player.PlayerName = name;
 
-        m_base.Version = Application.version;
+        m_base.Version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
     }
 
     public override void Start()
