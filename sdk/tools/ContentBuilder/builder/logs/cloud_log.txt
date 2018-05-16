@@ -66,3 +66,30 @@
 [2018-05-14 22:10:35] [AppID 7] File is in sync sharedconfig.vdf
 [2018-05-14 22:10:35] [AppID 7] Eval complete
 [2018-05-14 22:10:35] [AppID 7] Download complete in build list
+
+
+[2018-05-15 22:07:24] [U:1:39620240] [AppID 7] Init cache request complete
+[2018-05-15 22:07:24] Starting sync job
+[2018-05-15 22:07:24] [AppID 7] Starting sync (init)
+[2018-05-15 22:07:48] [U:1:39620240] [AppID 7] Init cache request complete
+[2018-05-15 22:07:48] Starting sync job
+[2018-05-15 22:07:48] [AppID 7] Starting sync (download)
+[2018-05-15 22:07:48] [AppID 7] Need to download file serverbrowser_hist.vdf
+[2018-05-15 22:07:48] [AppID 7] File is in sync sharedconfig.vdf
+[2018-05-15 22:07:48] [AppID 7] HTTP download for file 'serverbrowser_hist.vdf' from host 'steamclouduksouth.blob.core.windows.net' beginning. . .
+[2018-05-15 22:07:49] [AppID 7] HTTP download for file 'serverbrowser_hist.vdf' from host 'steamclouduksouth.blob.core.windows.net' - Success.
+[2018-05-15 22:07:49] [AppID 7] Download OK for file serverbrowser_hist.vdf
+[2018-05-15 22:07:49] [AppID 7] Download complete, result OK
+[2018-05-15 22:07:49] Starting sync job
+[2018-05-15 22:07:49] [AppID 7] Starting sync (eval)
+[2018-05-15 22:07:49] [AppID 7] File is in sync serverbrowser_hist.vdf
+[2018-05-15 22:07:49] [AppID 7] File is in sync sharedconfig.vdf
+[2018-05-15 22:07:49] [AppID 7] Eval complete
+[2018-05-15 22:08:19] Starting sync job
+[2018-05-15 22:08:19] [AppID 7] Starting sync (upload)
+[2018-05-15 22:08:19] [AppID 7] Need to upload file serverbrowser_hist.vdf
+[2018-05-15 22:08:19] [AppID 7] File is in sync sharedconfig.vdf
+[2018-05-15 22:08:20] [AppID 7] HTTP upload for file 'serverbrowser_hist.vdf' beginning . . .
+[2018-05-15 22:08:20] [AppID 7] HTTP upload for file 'serverbrowser_hist.vdf' (offset=0, length=4653) to host 'steamclouduksouth.blob.core.windows.net', path /cloud/90/8E/5C/02/7/01A_2_10DE4493_C7B59_637.dat - success.
+[2018-05-15 22:08:20] [AppID 7] Upload OK for file serverbrowser_hist.vdf
+[2018-05-15 22:08:20] [AppID 7] Upload complete, result OK

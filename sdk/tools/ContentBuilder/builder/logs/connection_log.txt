@@ -114,3 +114,58 @@
 [2018-05-14 22:14:24] [3,3] AsyncDisconnect()
 [2018-05-14 22:14:25] [0,0] ConnectionDisconnected('I/O Operation Failed') : 'Session Replaced' (162.254.196.68:443, WebSocket)
 [2018-05-14 22:14:25] [0,0] ConnectionDisconnected() not auto reconnecting due to eResultLogonSession specifies no reconnect
+
+
+[2018-05-15 22:06:52] Log session started
+[2018-05-15 22:06:52] [0,0] SetSteamID( [U:1:0] )
+[2018-05-15 22:06:52] CCMInterface::OnNetworkDeviceStateChange -- Saw device up, connecting to Steam
+[2018-05-15 22:06:52] CCMInterface::OnNetworkDeviceStateChange -- Saw device up, connecting to Steam
+[2018-05-15 22:07:23] [0,0] SetSteamID( [U:1:39620240] )
+[2018-05-15 22:07:23] [0,0] SetSteamID( [U:1:39620240] )
+[2018-05-15 22:07:23] [0,0] Server says 50% of connections should be websockets, we rolled 40 - using WebSockets as default.
+[2018-05-15 22:07:23] [0,0] PingWebSocketCM() (CM03-LON.cm.steampowered.com:443) starting...
+[2018-05-15 22:07:23] [0,0] PingWebSocketCM() (CM04-LON.cm.steampowered.com:27021) starting...
+[2018-05-15 22:07:23] [0,0] PingWebSocketCM() (CM02-LON.cm.steampowered.com:27021) starting...
+[2018-05-15 22:07:23] [0,0] PingWebSocketCM() (CM04-LON.cm.steampowered.com:443) starting...
+[2018-05-15 22:07:24] [0,0] PingWebSocketCM() (CM04-LON.cm.steampowered.com:27021) results: 49.8295ms + load 69.0000
+[2018-05-15 22:07:24] [0,0] PingWebSocketCM() (CM01-LON.cm.steampowered.com:27020) starting...
+[2018-05-15 22:07:24] [0,0] PingWebSocketCM() (CM04-LON.cm.steampowered.com:443) results: 49.8180ms + load 71.0000
+[2018-05-15 22:07:24] [0,0] PingWebSocketCM() (CM01-LON.cm.steampowered.com:443) starting...
+[2018-05-15 22:07:24] [0,0] PingWebSocketCM() (CM02-LON.cm.steampowered.com:27021) results: 49.4347ms + load 68.0000
+[2018-05-15 22:07:24] [0,0] PingWebSocketCM() (CM03-LON.cm.steampowered.com:443) results: 49.7475ms + load 65.0000
+[2018-05-15 22:07:24] [0,0] PingWebSocketCM() (CM04-IAD.cm.steampowered.com:443) starting...
+[2018-05-15 22:07:24] [0,0] PingWebSocketCM() (CM02-IAD.cm.steampowered.com:443) starting...
+[2018-05-15 22:07:24] [0,0] PingWebSocketCM() (CM01-LON.cm.steampowered.com:443) results: 49.6635ms + load 66.0000
+[2018-05-15 22:07:24] [0,0] PingWebSocketCM() stopping after 400.00ms timeout and using good enough host (CM03-LON.cm.steampowered.com:443)
+[2018-05-15 22:07:24] [0,0] PingWebSocketCM() (CM01-LON.cm.steampowered.com:27020) results: 299.4423ms + load 66.0000
+[2018-05-15 22:07:24] [0,0] PingWebSocketCM() (CM04-IAD.cm.steampowered.com:443) results: 98.8922ms + load 39.0000
+[2018-05-15 22:07:24] [0,0] PingWebSocketCM() (CM02-IAD.cm.steampowered.com:443) results: 98.7206ms + load 35.0000
+[2018-05-15 22:07:24] [1,3] Connect() starting connection (eNetQOSLevelHigh, CM03-LON.cm.steampowered.com:443, WebSocket)
+[2018-05-15 22:07:24] [1,3] ConnectionCompleted() (162.254.196.68:443, WebSocket)
+[2018-05-15 22:07:25] [1,3] RecvMsgClientLogOnResponse() : [U:1:39620240] 'Invalid Password'
+[2018-05-15 22:07:25] [1,3] AsyncDisconnect()
+[2018-05-15 22:07:25] [0,0] ConnectionDisconnected('I/O Operation Failed') : 'Invalid Password' (162.254.196.68:443, WebSocket)
+[2018-05-15 22:07:25] [0,0] ConnectionDisconnected() not auto reconnecting due to eResultLogonSession specifies no reconnect
+[2018-05-15 22:07:46] [0,0] SetSteamID( [U:1:0] )
+[2018-05-15 22:07:46] [0,0] SetSteamID( [U:1:0] )
+[2018-05-15 22:07:46] [0,0] Server says 50% of connections should be websockets, we rolled 49 - using WebSockets as default.
+[2018-05-15 22:07:46] [0,0] Existing WebSocket ping data (CM01-LON.cm.steampowered.com:27020) results: 299.4423ms + load 66.0000 (22 seconds ago)
+[2018-05-15 22:07:46] [0,0] Existing WebSocket ping data (CM02-IAD.cm.steampowered.com:27021) results: 107.0000ms + load 36.0000 (86232 seconds ago)
+[2018-05-15 22:07:46] [0,0] Existing WebSocket ping data (CM04-IAD.cm.steampowered.com:443) results: 98.8922ms + load 39.0000 (22 seconds ago)
+[2018-05-15 22:07:46] [0,0] Existing WebSocket ping data (CM02-IAD.cm.steampowered.com:443) results: 98.7206ms + load 35.0000 (22 seconds ago)
+[2018-05-15 22:07:46] [0,0] Existing WebSocket ping data (CM04-LON.cm.steampowered.com:27021) results: 49.8295ms + load 69.0000 (22 seconds ago)
+[2018-05-15 22:07:46] [0,0] Existing WebSocket ping data (CM04-LON.cm.steampowered.com:443) results: 49.8180ms + load 71.0000 (22 seconds ago)
+[2018-05-15 22:07:46] [0,0] Existing WebSocket ping data (CM03-LON.cm.steampowered.com:443) results: 49.7475ms + load 65.0000 (22 seconds ago)
+[2018-05-15 22:07:46] [0,0] Existing WebSocket ping data (CM01-LON.cm.steampowered.com:443) results: 49.6635ms + load 66.0000 (22 seconds ago)
+[2018-05-15 22:07:46] [0,0] Existing WebSocket ping data (CM02-LON.cm.steampowered.com:27021) results: 49.4347ms + load 68.0000 (22 seconds ago)
+[2018-05-15 22:07:46] [0,0] PingWebSocketCM() (cm04-ord.cm.steampowered.com:27021) starting...
+[2018-05-15 22:07:46] [0,0] PingWebSocketCM() (CM03-STO.cm.steampowered.com:27021) starting...
+[2018-05-15 22:07:46] [0,0] PingWebSocketCM() (CM02-STO.cm.steampowered.com:27021) starting...
+[2018-05-15 22:07:46] [0,0] PingWebSocketCM() (cm03-ord.cm.steampowered.com:443) starting...
+[2018-05-15 22:07:46] [0,0] PingWebSocketCM() (CM03-STO.cm.steampowered.com:27021) results: 49.6101ms + load 71.0000
+[2018-05-15 22:07:46] [0,0] PingWebSocketCM() (CM02-STO.cm.steampowered.com:27021) results: 54.5235ms + load 69.0000
+[2018-05-15 22:07:47] [0,0] PingWebSocketCM() (cm04-ord.cm.steampowered.com:27021) results: 148.4146ms + load 29.0000
+[2018-05-15 22:07:47] [0,0] PingWebSocketCM() (cm03-ord.cm.steampowered.com:443) results: 148.1895ms + load 32.0000
+[2018-05-15 22:07:47] [1,7] Connect() starting connection (eNetQOSLevelHigh, CM03-LON.cm.steampowered.com:443, WebSocket)
+[2018-05-15 22:07:47] [1,7] ConnectionCompleted() (162.254.196.68:443, WebSocket)
+[2018-05-15 22:07:48] [1,7] RecvMsgClientLogOnResponse() : [U:1:39620240] 'OK'

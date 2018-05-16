@@ -498,6 +498,8 @@ public class SystemManager : NATTraversal.NetworkManager
         }
 
         m_base.Player.PlayerName = name;
+
+        m_base.Version = Application.version;
     }
 
     public override void Start()
