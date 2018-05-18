@@ -454,12 +454,12 @@ namespace Space.UI.Station.Editor.Component
                             break;
                     }
                     break;
-                case "Wells":
-                    ShipComponent.Trigger = "well";
-                    break;
                 case "Shields":
                     ShipComponent.Trigger = "Activate Shield";
                     ShipComponent.CTrigger = "Activate Shield";
+                    break;
+                case "Control":
+                    ShipComponent.Trigger = "edit";
                     break;
             }
             ChangePending = true;
