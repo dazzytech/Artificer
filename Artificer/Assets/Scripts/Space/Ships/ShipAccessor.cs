@@ -58,6 +58,40 @@ namespace Space.Ship
             get { return m_input; }
         }
 
+        public bool Docked
+        {
+            get { return m_ship.ShipDocked; }
+        }
+
+        public bool InCombat
+        {
+            get { return m_ship.InCombat; }
+        }
+        
+        public NetworkInstanceId NetworkID
+        {
+            get { return m_ship.NetworkID; }
+        }
+
+        public List<ShipSelect> TargetedShips
+        {
+            get { return m_ship.TargetedShips; }
+        }
+
+        public bool ShipDocked
+        {
+            get { return m_ship.ShipDocked; }
+        }
+
+        /// <summary>
+        /// Head component of the ship
+        /// </summary>
+        public ComponentListener Head
+        {
+            get { return m_ship.Head; }
+            set { m_ship.Head = value; }
+        }
+
         #region COMPONENTS
 
         /// <summary>
@@ -265,14 +299,6 @@ namespace Space.Ship
 
         #endregion
 
-        /// <summary>
-        /// Returns transform of head for 
-        /// targetting purposes
-        /// </summary>
-        public Transform Head
-        {
-            get { return m_ship.Head.transform; }
-        }
 
         /// <summary>
         /// Accessor for team alignment

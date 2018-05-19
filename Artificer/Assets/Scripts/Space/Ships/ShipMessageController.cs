@@ -149,7 +149,7 @@ namespace Space.Ship
                             selected.TargetedComponents = new List<Transform>();
                             // Add the head as a target bu default
                             selected.TargetedComponents.Add
-                                (ship.Head);
+                                (ship.Head.transform);
 
                             // Now add this to selection
                             m_ship.TargetedShips.Add(selected);

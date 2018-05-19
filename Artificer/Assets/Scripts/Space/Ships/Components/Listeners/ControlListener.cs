@@ -24,6 +24,13 @@ namespace Space.Ship.Components.Listener
         public override void Activate()
         {
             //open ui
+            // Only do if ship is not docked or in combat
+            if (!m_att.Ship.InCombat)
+            {
+                m_att.Ship.DisableShip();
+
+                SystemManager.UIState.SetState(UIState.Edit);
+            }
         }
 
         #endregion

@@ -666,7 +666,7 @@ namespace Space.Ship.Components.Listener
         /// Finds targets within the targeters firing arc.
         /// </summary>
         protected IEnumerator FindArcTargets
-            (float Range, float MinAngle, float MaxAngle, ShipAttributes ShipAtts)
+            (float Range, float MinAngle, float MaxAngle, ShipAccessor ShipAtts)
         {
             while (true)
             {

@@ -126,19 +126,19 @@ namespace Space.Ship.Components.Attributes
         [SyncVar]
         public ComponentData Data;
 
-        public ShipAttributes Ship
+        public ShipAccessor Ship
         {
             get
             {
                 return transform.
                   GetComponentInParent
-                  <ShipAttributes>();
+                  <ShipAccessor>();
             }
         }
 
         public ShipData ShipData
         {
-            get { return Ship.Ship; }
+            get { return Ship.Data; }
         }
 
         #endregion

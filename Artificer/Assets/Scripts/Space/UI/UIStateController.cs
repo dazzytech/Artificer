@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum UIState { Play, Pause, Popup, TeamPicker, SpawnPicker, Station, Map }
+public enum UIState { Play, Pause, Popup, TeamPicker, SpawnPicker, Station, Map, Edit }
 
 namespace Space.UI
 {
@@ -41,6 +41,9 @@ namespace Space.UI
 
         [SerializeField]
         private GameObject m_mapRect;
+
+        [SerializeField]
+        private GameObject m_editRect;
 
         #endregion
 
@@ -114,6 +117,9 @@ namespace Space.UI
                 case UIState.Map:
                     m_mapRect.SetActive(true);
                     break;
+                case UIState.Edit:
+                    m_editRect.SetActive(true);
+                    break;
             }
         }
 
@@ -135,6 +141,7 @@ namespace Space.UI
             m_spawnPickerRect.SetActive(false);
             m_stationRect.SetActive(false);
             m_mapRect.SetActive(false);
+            m_editRect.SetActive(false);
         }
 
         #endregion
