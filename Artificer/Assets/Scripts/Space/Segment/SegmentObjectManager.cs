@@ -247,16 +247,13 @@ namespace Space.Segment
             // start an infinate loop
             for (;;)
             {
-                GameObject player = GameObject.FindGameObjectWithTag 
-                    ("PlayerShip");
-
-                if (player == null)
+                if (SystemManager.Space.Ship == null)
                 {
                     yield return null;
                     continue;
                 }
                 
-                Vector3 playerPos = player.transform.position;
+                Vector3 playerPos = SystemManager.Space.Ship.transform.position;
 
                 foreach (SegmentObjectData segObj
                          in m_att.SegObjs)

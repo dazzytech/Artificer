@@ -83,6 +83,8 @@ namespace Space.Ship.Components.Listener
                 return;
             }
 
+            SystemManager.Wallet = temp;
+
             // Create message for game controller
             StationBuildMessage sbm = new StationBuildMessage();
             sbm.Position = deployPoint;

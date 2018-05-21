@@ -306,10 +306,7 @@ namespace Space.Segment
             // for now just create infinite loop
             for (;;)
             {
-                GameObject player = GameObject.FindGameObjectWithTag
-                    ("PlayerShip");
-
-                if (player == null)
+                if (SystemManager.Space.Ship == null)
                 {
                     DisableObj();
 
@@ -317,7 +314,7 @@ namespace Space.Segment
                     continue;
                 }
 
-                Vector3 playerPos = player.transform.position;
+                Vector3 playerPos = SystemManager.Space.Ship.transform.position;
 
                 Vector2 thisPos = transform.position;
 

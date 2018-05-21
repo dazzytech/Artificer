@@ -23,7 +23,8 @@ namespace ArtificerEditor.Components
             {"Targeter", typeof(TargeterListener)},
             {"Shields", typeof(ShieldListener)},
             {"Construct", typeof(BuildListener)},
-            {"Storage", typeof(StorageListener)}};
+            {"Storage", typeof(StorageListener)},
+            {"Control", typeof(ControlListener)}};
         
         private static Dictionary<string, System.Type> 
             _ComponentAttributesReference = new Dictionary<string, System.Type>()
@@ -37,7 +38,9 @@ namespace ArtificerEditor.Components
             {"Targeter", typeof(TargeterAttributes)},
             {"Shields", typeof(ShieldAttributes)},
             {"Construct", typeof(BuildAttributes)},
-            {"Storage", typeof(StorageAttributes)}};
+            {"Storage", typeof(StorageAttributes)},
+            {"Control", typeof(ControlAttributes)}};
+        
 
         // For now just create an instance of every 
         public static void AddBehavioursToObject(GameObject go, string type, GameObject old)

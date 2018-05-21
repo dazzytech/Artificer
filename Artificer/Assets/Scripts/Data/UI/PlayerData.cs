@@ -3,6 +3,7 @@ using System.Collections;
 using Steamworks;
 using Data.Space;
 using System.Collections.Generic;
+using Data.Shared;
 
 namespace Data.UI
 {
@@ -48,6 +49,11 @@ namespace Data.UI
         /// owns
         /// </summary>
         public WalletData Wallet;
+
+        /// <summary>
+        /// NPCs that the player has created.
+        /// </summary>
+        public NPCPrefabData[] NPCPrefabs;
 
         #endregion
     }

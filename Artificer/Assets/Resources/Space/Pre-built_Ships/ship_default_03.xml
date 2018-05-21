@@ -672,22 +672,22 @@
       <hideFlags>None</hideFlags>
       <Bounds>
         <x>932.5</x>
-        <y>250.5</y>
+        <y>250.499969</y>
         <position>
           <x>932.5</x>
-          <y>250.5</y>
+          <y>250.499969</y>
         </position>
         <center>
           <x>942</x>
-          <y>264.5</y>
+          <y>264.499969</y>
         </center>
         <min>
           <x>932.5</x>
-          <y>250.5</y>
+          <y>250.499969</y>
         </min>
         <max>
           <x>951.5</x>
-          <y>278.5</y>
+          <y>278.499969</y>
         </max>
         <width>19</width>
         <height>28</height>
@@ -696,9 +696,9 @@
           <y>28</y>
         </size>
         <xMin>932.5</xMin>
-        <yMin>250.5</yMin>
+        <yMin>250.499969</yMin>
         <xMax>951.5</xMax>
-        <yMax>278.5</yMax>
+        <yMax>278.499969</yMax>
       </Bounds>
       <rotation>0</rotation>
       <IsHead>false</IsHead>
@@ -968,22 +968,22 @@
       <hideFlags>None</hideFlags>
       <Bounds>
         <x>785.5</x>
-        <y>249.5</y>
+        <y>249.499969</y>
         <position>
           <x>785.5</x>
-          <y>249.5</y>
+          <y>249.499969</y>
         </position>
         <center>
           <x>795</x>
-          <y>263.5</y>
+          <y>263.499969</y>
         </center>
         <min>
           <x>785.5</x>
-          <y>249.5</y>
+          <y>249.499969</y>
         </min>
         <max>
           <x>804.5</x>
-          <y>277.5</y>
+          <y>277.499969</y>
         </max>
         <width>19</width>
         <height>28</height>
@@ -992,9 +992,9 @@
           <y>28</y>
         </size>
         <xMin>785.5</xMin>
-        <yMin>249.5</yMin>
+        <yMin>249.499969</yMin>
         <xMax>804.5</xMax>
-        <yMax>277.5</yMax>
+        <yMax>277.499969</yMax>
       </Bounds>
       <rotation>0</rotation>
       <IsHead>false</IsHead>
@@ -1259,10 +1259,46 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
+    <body instanceID="34" folder="Control" name="Control_01" direction="up" trigger="edit" combat="" style="default">
+      <name />
+      <hideFlags>None</hideFlags>
+      <Bounds>
+        <x>821</x>
+        <y>218</y>
+        <position>
+          <x>821</x>
+          <y>218</y>
+        </position>
+        <center>
+          <x>832</x>
+          <y>235</y>
+        </center>
+        <min>
+          <x>821</x>
+          <y>218</y>
+        </min>
+        <max>
+          <x>843</x>
+          <y>252</y>
+        </max>
+        <width>22</width>
+        <height>34</height>
+        <size>
+          <x>22</x>
+          <y>34</y>
+        </size>
+        <xMin>821</xMin>
+        <yMin>218</yMin>
+        <xMax>843</xMax>
+        <yMax>252</yMax>
+      </Bounds>
+      <rotation>0</rotation>
+      <IsHead>false</IsHead>
+      <StyleSelect>0</StyleSelect>
+    </body>
   </pieces>
   <links>
     <link linkID="0" IDfrom="0" IDto="18" linkToID="0" />
-    <link linkID="0" IDfrom="18" IDto="0" linkToID="0" />
     <link linkID="1" IDfrom="18" IDto="17" linkToID="0" />
     <link linkID="1" IDfrom="17" IDto="13" linkToID="0" />
     <link linkID="2" IDfrom="17" IDto="4" linkToID="0" />
@@ -1295,6 +1331,7 @@
     <link linkID="1" IDfrom="24" IDto="8" linkToID="0" />
     <link linkID="2" IDfrom="24" IDto="30" linkToID="0" />
     <link linkID="5" IDfrom="3" IDto="23" linkToID="0" />
+    <link linkID="2" IDfrom="1" IDto="34" linkToID="0" />
   </links>
   <info>
     <name>Mammoth ViE</name>

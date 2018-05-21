@@ -11,6 +11,7 @@ using Stations;
 using Space.Teams;
 using Space.Map;
 using Space.AI;
+using Space.Ship;
 
 namespace Space
 {
@@ -36,6 +37,11 @@ namespace Space
         /// store reference to playership gameobject
         /// </summary>
         public GameObject Player_Ship;
+
+        /// <summary>
+        /// store reference to player ship accessor
+        /// </summary>
+        public ShipAccessor Player_Ship_Accessor;
 
         /// <summary>
         /// The world camera that follows the player

@@ -326,16 +326,13 @@ namespace Space.Spawn
 
             while (true)
             { 
-                // retrieve player bject is spawned
-                GameObject playerShip = GameObject.FindGameObjectWithTag("PlayerShip");      
-
-                if(playerShip == null)
+                if(SystemManager.Space.Ship == null)
                 {
                     yield return null;
                     continue;
                 }
 
-                if(Vector3.Distance(playerShip.transform.position, 
+                if(Vector3.Distance(SystemManager.Space.Ship.transform.position, 
                     transform.position) < m_range)
                 {
                     // Detect when we are able to add authority

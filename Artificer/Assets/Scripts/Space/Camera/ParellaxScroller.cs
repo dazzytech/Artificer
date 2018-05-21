@@ -140,12 +140,11 @@ namespace Space.CameraUtils
         {
             while(true)
             {
-                GameObject player = GameObject.FindGameObjectWithTag("PlayerShip");
                 foreach(ParellaxItem pItem in _scrollItems)
                 {
-                    if (player != null)
+                    if (SystemManager.Space.Ship != null)
                     {
-                        if (pItem.Bound.Contains(player.transform.position))
+                        if (pItem.Bound.Contains(SystemManager.Space.Ship.transform.position))
                         {
                             if(!pItem.GO.activeSelf)
                                 pItem.GO.SetActive(true);
@@ -154,12 +153,12 @@ namespace Space.CameraUtils
 
                             Vector3 LocalPos = new Vector3();
 
-                            float leftPos = player.transform.position.x  - pItem.Bound.center.x;
+                            float leftPos = SystemManager.Space.Ship.transform.position.x  - pItem.Bound.center.x;
                             float leftPerc = leftPos / pItem.Bound.extents.x;
 
                             float rightPos = -(CamBound.extents.x * leftPerc);
 
-                            float topPos = player.transform.position.y - pItem.Bound.center.y;
+                            float topPos = SystemManager.Space.Ship.transform.position.y - pItem.Bound.center.y;
                             float topPerc = topPos / pItem.Bound.extents.y;
                             float bottomPos = -(CamBound.extents.y * topPerc);
 

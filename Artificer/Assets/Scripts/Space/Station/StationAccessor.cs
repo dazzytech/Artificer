@@ -92,17 +92,14 @@ namespace Stations
             {
                 // Retrieve player object and check if 
                 // Player object currently exists
-                GameObject playerTransform =
-                    GameObject.FindGameObjectWithTag("PlayerShip");
-
-                if (playerTransform == null)
+                if (SystemManager.Space.Ship == null)
                 {
                     return -1;
                 }
 
                 // return distance
                 return Vector3.Distance(this.transform.position,
-                    playerTransform.transform.position);
+                    SystemManager.Space.Ship.transform.position);
             }
         }
 

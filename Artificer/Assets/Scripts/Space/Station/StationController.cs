@@ -416,18 +416,15 @@ namespace Stations
 
                 // Only proceed if the player is 
                 // currently deployed
-                GameObject playerObj =
-                    GameObject.FindGameObjectWithTag("PlayerShip");
-
                 // Ensure player is alive
-                if (playerObj == null)
+                if (SystemManager.Space.Ship == null)
                 {
                     yield return null;
                     continue;
                 }
 
                 // Retrieve NetworkInstance of player
-                NetworkInstanceId localInstID = playerObj.GetComponent
+                NetworkInstanceId localInstID = SystemManager.Space.Ship.GetComponent
                     <NetworkIdentity>().netId;
 
                 // only proceed if local player 
@@ -439,7 +436,7 @@ namespace Stations
 
                 // Find distance between station and player object
                 float distance = Vector2.Distance
-                    (transform.position, playerObj.transform.position);
+                    (transform.position, SystemManager.Space.Ship.transform.position);
 
                 // determine range
                 if (distance <= Distance)

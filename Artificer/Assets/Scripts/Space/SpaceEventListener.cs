@@ -323,11 +323,7 @@ namespace Space
             {
                 m_att.Station_InRangeList.Add(station);
 
-                // retrieve ship atts from player object
-                ShipAccessor ship = m_att.Player_Ship.
-                    GetComponent<ShipAccessor>();
-
-                station.Range(true, ship);
+                station.Range(true, m_con.Ship);
 
                 if (SystemManager.UIPrompt != null)
                 {

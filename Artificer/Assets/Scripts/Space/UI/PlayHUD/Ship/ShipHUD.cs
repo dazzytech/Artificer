@@ -56,21 +56,14 @@ namespace Space.UI.Ship
         /// </summary>
         public void BuildShipData()
     	{
-            GameObject GO = GameObject.FindGameObjectWithTag
-                    ("PlayerShip");
-
-            if (GO == null)
+            if (SystemManager.Space.Ship == null)
                 return;
 
-            // Retreive data of player ship
-            ShipAccessor ship = GO.GetComponent
-                    <ShipAccessor>();
+            m_targetHUD.SetShip(SystemManager.Space.Ship);
 
-            m_targetHUD.SetShip(ship);
+            m_storageHUD.SetShip(SystemManager.Space.Ship);
 
-            m_storageHUD.SetShip(ship);
-
-            m_integrityHUD.SetShip(ship);
+            m_integrityHUD.SetShip(SystemManager.Space.Ship);
         }
 
         #endregion

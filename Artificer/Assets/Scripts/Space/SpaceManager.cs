@@ -71,6 +71,27 @@ namespace Space
             }
         }
 
+        /// <summary>
+        /// Retrieves the accessor of an existing ship
+        /// </summary>
+        public ShipAccessor Ship
+        {
+            get
+            {
+                if (m_att.Player_Ship_Accessor == null)
+                { 
+                    // need to be alive
+                    if (m_att.Player_Ship == null)
+                        return null;
+
+                    // retrieve ship atts from player object
+                    m_att.Player_Ship_Accessor = m_att.Player_Ship.GetComponent<ShipAccessor>();
+                }
+
+                return m_att.Player_Ship_Accessor;
+            }
+        }
+
         public Segment.SegmentObjectManager SegObj
         {
             get
@@ -235,20 +256,12 @@ namespace Space
             if (!m_att.Player_InStationRange)
                 return;
 
-            // for now first task is to retrieve 
-            // player ship and notify it to disable
-            GameObject PlayerObj = GameObject.FindGameObjectWithTag
-                ("PlayerShip");
+            if (Ship != null)
+            {
+                m_att.Player_Docked = true;
 
-            if (PlayerObj == null)
-                return;                 // need to be alive
-
-            // retrieve ship atts from player object
-            ShipAccessor ship = PlayerObj.GetComponent<ShipAccessor>();
-
-            m_att.Player_Docked = true;
-
-            m_att.Station_CurrentDocking.Dock(true, ship);
+                m_att.Station_CurrentDocking.Dock(true, Ship);
+            }
         }
 
         /// <summary>
@@ -260,20 +273,12 @@ namespace Space
             if (!m_att.Player_Docked)
                 return;
 
-            // for now first task is to retrieve 
-            // player ship and notify it to disable
-            GameObject PlayerObj = GameObject.FindGameObjectWithTag
-                ("PlayerShip");
-
-            if (PlayerObj == null)
+            if (Ship == null)
                 return;                 // need to be alive
-
-            // retrieve ship atts from player object
-            ShipAccessor ship = PlayerObj.GetComponent<ShipAccessor>();
 
             m_att.Player_Docked = false;
 
-            m_att.Station_CurrentDocking.Dock(false, ship);
+            m_att.Station_CurrentDocking.Dock(false, Ship);
         }
 
         /// <summary>
@@ -284,16 +289,10 @@ namespace Space
         {
             if (m_att.Station_CurrentInteract != null)
             {
-                GameObject PlayerObj = GameObject.FindGameObjectWithTag
-                    ("PlayerShip");
-
-                if (PlayerObj == null)
+                if (Ship == null)
                     return;                 // need to be alive
 
-                // retrieve ship atts from player object
-                ShipAccessor ship = PlayerObj.GetComponent<ShipAccessor>();
-
-                m_att.Station_CurrentInteract.Interact(keyDown, ship);
+                m_att.Station_CurrentInteract.Interact(keyDown, Ship);
             }
         }
 
@@ -306,14 +305,12 @@ namespace Space
         {
             if(m_att.Lootable_CurrentObject != null)
             {
-                GameObject PlayerObj = GameObject.FindGameObjectWithTag
-                    ("PlayerShip");
 
-                if (PlayerObj == null)
+                if (Ship == null)
                     return;                 // need to be alive
 
                 m_att.Lootable_CurrentObject.Interact
-                    (PlayerObj.GetComponent<ShipAccessor>());
+                    (Ship);
             }
         }
 
@@ -387,10 +384,8 @@ namespace Space
         private void ProcessPlayerState()
         {
             // Run checks for player entry
-            GameObject PlayerObj = GameObject.FindGameObjectWithTag
-                ("PlayerShip");
-
-            if (PlayerObj == null)
+            if (GameObject.FindGameObjectWithTag
+                ("PlayerShip") == null)
             {
                 if (m_att.Player_OnStage)
                 {
@@ -408,7 +403,7 @@ namespace Space
                 else
                 {
                     if(OnPlayerUpdate != null)
-                        OnPlayerUpdate(PlayerObj.transform);
+                        OnPlayerUpdate(Ship.transform);
                 }
             }
         }
