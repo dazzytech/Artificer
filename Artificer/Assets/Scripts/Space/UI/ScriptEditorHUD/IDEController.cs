@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Space.Ship;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,23 @@ namespace Space.UI.IDE
     /// </summary>
     public class IDEController : MonoBehaviour
     {
-	    
+        #region ATTRIBUTES
+
+        [SerializeField]
+        private IDEAttributes m_att;
+
+        [SerializeField]
+        private IDEEventListener m_event;
+
+        #endregion
+
+        // add an accessor for the selected script
+
+        public void Initialize(ShipAccessor ship)
+        {
+            m_att.Ship = ship;
+
+            m_att.Editor.Initialize();
+        }
     }
 }

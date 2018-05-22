@@ -45,6 +45,8 @@ namespace Space.Ship.Components.Listener
                 m_att.Ship.DisableShip();
 
                 SystemManager.UIState.SetState(UIState.Edit);
+
+                SystemManager.UI.InitializeIDE(m_att.Ship);
             }
         }
 

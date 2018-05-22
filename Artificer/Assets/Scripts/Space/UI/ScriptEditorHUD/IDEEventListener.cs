@@ -9,6 +9,9 @@ namespace Space.UI.IDE
     /// </summary>
     public class IDEEventListener : MonoBehaviour
     {
+        [SerializeField]
+        private IDEController m_con;
+
         #region BUTTON EVENTS
 
         /// <summary>
@@ -20,6 +23,19 @@ namespace Space.UI.IDE
             SystemManager.UIState.RevertState();
 
             SystemManager.Space.Ship.EnableShip();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void SaveShip()
+        {
+
+        }
+
+        public void RevertChanges()
+        {
+
         }
 
         #endregion

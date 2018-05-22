@@ -37,6 +37,9 @@ namespace Space.UI
         [SerializeField]
         private StationMessageHandler m_stationMsg;
 
+        [SerializeField]
+        private IDE.IDEController m_IDE;
+
         #region PLAYHUD BEHAVIOUR
 
         [Header("PLAYHUD Behaviours")]
@@ -136,5 +139,10 @@ namespace Space.UI
         }
 
         #endregion
+
+        public void InitializeIDE(ShipAccessor ship)
+        {
+            m_IDE.Initialize(ship);
+        }
     }
 }
