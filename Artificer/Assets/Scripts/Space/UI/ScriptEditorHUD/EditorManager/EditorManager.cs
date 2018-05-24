@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Data.Space.Library;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,27 +12,44 @@ namespace Space.UI.IDE
     /// </summary>
     public class EditorManager : MonoBehaviour
     {
+        public delegate void Create(GameObject GO);
+
         #region ATTIBUTES
 
         [SerializeField]
         private EditorAttributes m_att;
 
-        [SerializeField]
-        private EditorAssetIO m_IO;
-
-        [SerializeField]
-        private IDEController m_con;
+        //[SerializeField]
+        //private IDEController m_con;
 
         #endregion
+
+        #region ACCESSOR
+
+        /// <summary>
+        /// Read only access for the available prefab
+        /// </summary>
+        public NodeLibrary Prefabs
+        {
+            get
+            {
+                return m_att.NodePrefabs;
+            }
+        }
+
+        #endregion
+
 
         #region PUBLIC INTERACTION
 
         /// <summary>
         /// Load attributes and output to script and list
         /// </summary>
-        public void Initialize()
+        public void Initialize(NodeLibrary nodePrefabs)
         {
-            
+            m_att.NodePrefabs = nodePrefabs;
+
+            m_att.PrefabListHUD.GeneratePrefabs();
         }
 
         /// <summary>
@@ -43,20 +61,22 @@ namespace Space.UI.IDE
 
         }
 
+        public void DeleteNode(int ID)
+        {
+
+        }
+        
         /// <summary>
         /// Creates an instance of 
         /// </summary>
         /// <param name="nID"></param>
-        public void AddNode(int nID)
-        {
-
-        }
-
-        public void DeleteNode(int ID)
+        public void AddNode(GameObject prefab)
         {
 
         }
 
         #endregion
+
+        
     }
 }

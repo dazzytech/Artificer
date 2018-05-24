@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<prefabs>
+	<group label="Conditional">
+		<node label="IF">
+			<link in="true" id="0"/>
+			<param in="true" id="1" type="bool"/>
+			<link in="false" id="2"/>
+			<link in="false" id="3"/>
+			<script>
+			if(%s)
+				%s
+				%s
+			</script>
+		</node>
+		<node label="SWITCH">
+			<type>number</type>
+			<type>string</type>
+			<type>object</type>
+			<link in="true" id="0"/>
+			<param in="true" id="1" type="undef"/>
+			<script>
+			switch(%s)
+			{
+			</script>
+			<loop>
+				<link in="true" id="" type="undef"/>
+				<link in="false" id=""/>
+				<script>
+					case %s:
+					{
+						%s
+						break;
+					}
+				</script>
+			</loop>
+			<script>
+			}
+			</script>
+		</node>
+	</group>
+</prefabs>

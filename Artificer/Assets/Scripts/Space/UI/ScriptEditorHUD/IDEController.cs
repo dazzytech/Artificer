@@ -20,6 +20,9 @@ namespace Space.UI.IDE
         [SerializeField]
         private IDEEventListener m_event;
 
+        [SerializeField]
+        private IDEAssetIO m_IO;
+
         #endregion
 
         // add an accessor for the selected script
@@ -28,7 +31,7 @@ namespace Space.UI.IDE
         {
             m_att.Ship = ship;
 
-            m_att.Editor.Initialize();
+            m_att.Editor.Initialize(m_IO.LoadPrefabData());
         }
     }
 }

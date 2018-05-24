@@ -1,16 +1,14 @@
-﻿using System.Collections;
+﻿using Data.Space.Library;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EditorAttributes : MonoBehaviour {
+namespace Space.UI.IDE
+{
+    public class EditorAttributes : MonoBehaviour
+    {
+        public NodeLibrary NodePrefabs;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        public PrefabNodeList PrefabListHUD;
+    }
 }
