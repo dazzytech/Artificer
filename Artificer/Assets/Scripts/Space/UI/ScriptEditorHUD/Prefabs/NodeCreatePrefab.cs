@@ -58,6 +58,30 @@ namespace Space.UI.IDE
         [SerializeField]
         private Text m_label;
 
+        #region ICONS
+
+        [Header("Icon Images")]
+
+        [SerializeField]
+        private Texture2D m_undef;
+
+        [SerializeField]
+        private Texture2D m_num;
+
+        [SerializeField]
+        private Texture2D m_bool;
+
+        [SerializeField]
+        private Texture2D m_object;
+
+        [SerializeField]
+        private Texture2D m_objArray;
+
+        [SerializeField]
+        private Texture2D m_exec;
+
+        #endregion
+
         #endregion
 
         #region REFERENCE
@@ -183,7 +207,31 @@ namespace Space.UI.IDE
                 inPrefab.transform.SetParent(m_inputList);
 
                 inPrefab.GetComponentInChildren<Text>().text = input.Label;
-                // assign icon based on type
+
+                if (input.Type == NodeData.IO.IOType.LINK)
+                    inPrefab.GetComponentInChildren<RawImage>().texture = m_exec;
+                else
+                {
+                    // assign icon based on type
+                    switch (input.Var)
+                    {
+                        case NodeData.IO.VarType.UNDEF:
+                            inPrefab.GetComponentInChildren<RawImage>().texture = m_undef;
+                            break;
+                        case NodeData.IO.VarType.NUM:
+                            inPrefab.GetComponentInChildren<RawImage>().texture = m_num;
+                            break;
+                        case NodeData.IO.VarType.BOOL:
+                            inPrefab.GetComponentInChildren<RawImage>().texture = m_bool;
+                            break;
+                        case NodeData.IO.VarType.OBJECT:
+                            inPrefab.GetComponentInChildren<RawImage>().texture = m_object;
+                            break;
+                        case NodeData.IO.VarType.ARRAY:
+                            inPrefab.GetComponentInChildren<RawImage>().texture = m_objArray;
+                            break;
+                    }
+                }
             }
 
             foreach (NodeData.IO output in node.Output)
@@ -192,6 +240,31 @@ namespace Space.UI.IDE
                 outPrefab.transform.SetParent(m_outputList);
 
                 outPrefab.GetComponentInChildren<Text>().text = output.Label;
+
+                if (output.Type == NodeData.IO.IOType.LINK)
+                    outPrefab.GetComponentInChildren<RawImage>().texture = m_exec;
+                else
+                {
+                    // assign icon based on type
+                    switch (output.Var)
+                    {
+                        case NodeData.IO.VarType.UNDEF:
+                            outPrefab.GetComponentInChildren<RawImage>().texture = m_undef;
+                            break;
+                        case NodeData.IO.VarType.NUM:
+                            outPrefab.GetComponentInChildren<RawImage>().texture = m_num;
+                            break;
+                        case NodeData.IO.VarType.BOOL:
+                            outPrefab.GetComponentInChildren<RawImage>().texture = m_bool;
+                            break;
+                        case NodeData.IO.VarType.OBJECT:
+                            outPrefab.GetComponentInChildren<RawImage>().texture = m_object;
+                            break;
+                        case NodeData.IO.VarType.ARRAY:
+                            outPrefab.GetComponentInChildren<RawImage>().texture = m_objArray;
+                            break;
+                    }
+                }
             }
         }
 

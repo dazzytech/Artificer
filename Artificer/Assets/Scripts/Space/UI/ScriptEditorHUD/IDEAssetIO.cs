@@ -83,6 +83,26 @@ namespace Space.UI.IDE
                     {
                         NodeData.IO io = new NodeData.IO();
                         io.Type = NodeData.IO.IOType.PARAM;
+
+                        switch(subTag.Attributes["type"].Value)
+                        {
+                            case "int":
+                                io.Var = NodeData.IO.VarType.NUM;
+                                break;
+                            case "bool":
+                                io.Var = NodeData.IO.VarType.BOOL;
+                                break;
+                            case "object":
+                                io.Var = NodeData.IO.VarType.OBJECT;
+                                break;
+                            case "objectarray":
+                                io.Var = NodeData.IO.VarType.ARRAY;
+                                break;
+                            case "undef":
+                                io.Var = NodeData.IO.VarType.UNDEF;
+                                break;
+                        }
+
                         io.ID = subTag.Attributes["id"].Value;
                         io.NodeID = node.ID.ToString();
                         io.Label = subTag.Attributes["label"].Value;
@@ -108,7 +128,12 @@ namespace Space.UI.IDE
                     }
                 case "script":
                     {
-                        node.Script = string.Concat(node.Script, subTag.InnerText);
+                        node.Script.Add(subTag.InnerText);
+                        break;
+                    }
+                case "description":
+                    {
+                        node.Description = subTag.InnerText;
                         break;
                     }
             }

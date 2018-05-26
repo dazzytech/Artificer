@@ -16,11 +16,15 @@ namespace Data.UI
         {
             public enum IOType { LINK, PARAM };
 
+            public enum VarType { NUM, BOOL, OBJECT, ARRAY, UNDEF };
+
             /// <summary>
             /// Base class for mutliple types, either a link between the two
             /// nodes or 
             /// </summary>
             public IOType Type;
+
+            public VarType Var;
 
             // IO identifier 
             public string ID;
@@ -68,7 +72,7 @@ namespace Data.UI
         /// <summary>
         /// The template of the script generated
         /// </summary>
-        public string Script = "";
+        public List<string> Script = new List<string>();
 
         public string Description = "";
 
