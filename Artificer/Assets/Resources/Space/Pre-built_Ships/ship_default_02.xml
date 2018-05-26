@@ -75,38 +75,38 @@
       <IsHead>false</IsHead>
       <StyleSelect>0</StyleSelect>
     </body>
-    <head instanceID="2" folder="Components" name="Ship_CC_04" direction="up" trigger="" combat="" style="default">
+    <head instanceID="2" folder="Components" name="Ship_CC_01" direction="up" trigger="" combat="" style="default">
       <name />
       <hideFlags>None</hideFlags>
       <Bounds>
-        <x>536.5</x>
-        <y>117</y>
+        <x>539</x>
+        <y>94</y>
         <position>
-          <x>536.5</x>
-          <y>117</y>
+          <x>539</x>
+          <y>94</y>
         </position>
         <center>
-          <x>570</x>
-          <y>138</y>
+          <x>571</x>
+          <y>126</y>
         </center>
         <min>
-          <x>536.5</x>
-          <y>117</y>
+          <x>539</x>
+          <y>94</y>
         </min>
         <max>
-          <x>603.5</x>
-          <y>159</y>
+          <x>603</x>
+          <y>158</y>
         </max>
-        <width>67</width>
-        <height>42</height>
+        <width>64</width>
+        <height>64</height>
         <size>
-          <x>67</x>
-          <y>42</y>
+          <x>64</x>
+          <y>64</y>
         </size>
-        <xMin>536.5</xMin>
-        <yMin>117</yMin>
-        <xMax>603.5</xMax>
-        <yMax>159</yMax>
+        <xMin>539</xMin>
+        <yMin>94</yMin>
+        <xMax>603</xMax>
+        <yMax>158</yMax>
       </Bounds>
       <rotation>0</rotation>
       <IsHead>true</IsHead>

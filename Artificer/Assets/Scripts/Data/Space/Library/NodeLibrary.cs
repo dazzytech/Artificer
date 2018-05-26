@@ -3,6 +3,8 @@ using System.Collections;
 using Data.UI;
 using System.Collections.Generic;
 
+using System.Linq;
+
 namespace Data.Space.Library
 {
     /// <summary>
@@ -36,6 +38,16 @@ namespace Data.Space.Library
             }
 
             return -1;
+        }
+
+        /// <summary>
+        /// returns all nodes of the category type
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        public List<NodeData> GetCategory(string category)
+        {
+            return base.FindAll(x => x.Category == category);
         }
 
         #endregion

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Data.UI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,16 +16,57 @@ namespace Space.UI.IDE
     {
         #region ATTRIBUTES
 
+        #region PREFABS
+
+        [Header("UI Prefabs")]
+
+        [SerializeField]
+        private GameObject m_inputPrefab;
+
+        [SerializeField]
+        private GameObject m_outputPrefab;
+
+        #endregion
+        
+        #region UI ELEMENTS
+
+        [Header("UI Elements")]
+
         /// <summary>
-        /// Display component
+        /// As the node viewer is made up of multiple pieces
+        /// instead of using a single image as the boundary, use the 
+        /// couldary of the entire prefab
         /// </summary>
         [SerializeField]
-        private RawImage m_icon;
+        private RectTransform m_bounds;
 
+        /// <summary>
+        /// the list of links and params that connect into the node
+        /// </summary>
+        [SerializeField]
+        private Transform m_inputList;
+
+        /// <summary>
+        /// List of links and params that connect to other nodes
+        /// </summary>
+        [SerializeField]
+        private Transform m_outputList;
+
+        /// <summary>
+        /// The name of the component (prefab name)
+        /// </summary>
+        [SerializeField]
+        private Text m_label;
+
+        #endregion
+
+        #region REFERENCE
+
+        [Header("References")]
         /// <summary>
         /// Node prefab created when clicked
         /// </summary>
-        private GameObject m_nodePrefab;
+        private NodeData m_nodeData;
 
         /// <summary>
         /// The delegate function for 
@@ -32,8 +74,11 @@ namespace Space.UI.IDE
         /// </summary>
         private EditorManager.Create m_create;
 
+        #endregion
+
         #region HOVERING 
 
+        [Header("Hovering")]
         /// <summary>
         /// Prefab to be created when 
         /// mouse over
@@ -120,16 +165,34 @@ namespace Space.UI.IDE
         /// </summary>
         /// <param name="GO"></param>
         /// <param name="create"></param>
-        public void CreateItem(GameObject GO,
+        public void CreateItem(NodeData node,
             EditorManager.Create create)
         {
-            m_nodePrefab = GO;
+            m_nodeData = node;
 
             m_hovering = false;
 
             m_create = create;
 
-            // how to 
+            // Assign the data to our visual elements
+            m_label.text = node.Label;
+
+            foreach(NodeData.IO input in node.Input)
+            {
+                GameObject inPrefab = Instantiate(m_inputPrefab);
+                inPrefab.transform.SetParent(m_inputList);
+
+                inPrefab.GetComponentInChildren<Text>().text = input.Label;
+                // assign icon based on type
+            }
+
+            foreach (NodeData.IO output in node.Output)
+            {
+                GameObject outPrefab = Instantiate(m_outputPrefab);
+                outPrefab.transform.SetParent(m_outputList);
+
+                outPrefab.GetComponentInChildren<Text>().text = output.Label;
+            }
         }
 
         #endregion
@@ -138,13 +201,14 @@ namespace Space.UI.IDE
 
         public void OnPointerDown(PointerEventData data)
         {
+            // Create the prefab gameobject and assign with the node data
+
             if (data.button == PointerEventData.InputButton.Left)
-                m_create(m_nodePrefab);
+                m_create(null);
             if (m_hovering)
             {
                 GameObject.Destroy(m_hoverWindow);
                 m_hovering = false;
-                HintBoxController.Clear();
             }
         }
 
@@ -153,16 +217,14 @@ namespace Space.UI.IDE
             if (!m_hovering && !Input.GetMouseButton(0))
 
             {
-                HintBoxController.Display("Left Click and drag the object to the " +
-                     "editor panel to create an instance of the object.");
-
                 // Create a hover window with Component data
                 m_hoverWindow = Instantiate(m_hoverPrefab);
                 m_hoverWindow.transform.SetParent(GameObject.Find("_gui").transform);
                 m_hoverWindow.transform.localPosition = Vector3.zero;
 
-                //m_hoverWindow.GetComponent<ComponentHoverPrefab>().Display
-                //    (m_componentPrefab);
+                /// Display the details in a text popup
+                m_hoverWindow.GetComponent<NodeHoverPrefab>().Display
+                    (m_nodeData);
 
                 m_hovering = true;
             }
@@ -172,7 +234,6 @@ namespace Space.UI.IDE
         {
             if (m_hovering)
             {
-                HintBoxController.Clear();
                 GameObject.Destroy(m_hoverWindow);
                 m_hovering = false;
             }

@@ -31,6 +31,11 @@ namespace Data.UI
             /// ID of the node that this IO object belongs to
             /// </summary>
             public string NodeID;
+
+            /// <summary>
+            /// Display the label on a graphic
+            /// </summary>
+            public string Label;
         }
 
         #endregion

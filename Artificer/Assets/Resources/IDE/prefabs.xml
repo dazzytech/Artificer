@@ -2,10 +2,10 @@
 <prefabs>
 	<group label="Conditional">
 		<node label="IF">
-			<link in="true" id="0"/>
-			<param in="true" id="1" type="bool"/>
-			<link in="false" id="2"/>
-			<link in="false" id="3"/>
+			<link in="true" id="0" label="Start"/>
+			<param in="true" id="1" type="bool" label="Condition"/>
+			<link in="false" id="2" label="True"/>
+			<link in="false" id="3" label="False"/>
 			<script>
 			if(%s)
 				%s
@@ -16,25 +16,43 @@
 			<type>number</type>
 			<type>string</type>
 			<type>object</type>
-			<link in="true" id="0"/>
-			<param in="true" id="1" type="undef"/>
+			<link in="true" id="0" label="Start"/>
+			<param in="true" id="1" type="undef" label="Comparison"/>
 			<script>
 			switch(%s)
 			{
 			</script>
 			<loop>
-				<link in="true" id="" type="undef"/>
-				<link in="false" id=""/>
+				<link in="true" id="" type="undef" label="Condition"/>
+				<link in="false" id="" label="Action"/>
 				<script>
 					case %s:
 					{
-						%s
+						%s;
 						break;
 					}
 				</script>
 			</loop>
 			<script>
 			}
+			</script>
+		</node>
+	</group>
+	<group label="Sequence">
+		<node label="FOR">
+		<link in="true" id="0" label = "Start"/>
+		<param in="true" id="1" type="int" label = "Min"/>
+		<param in="true" id="2" type="int" label = "Max"/>
+		<param in="true" id="3" type="int" label = "Step"/>
+		<link in="false" id="4" label = "Loop"/>
+		<param in="false" id="5" type="int" label = "Index"/>
+		<link in="false" id="6" label = "End"/>
+			<script>
+				for(int %s = %s; %s &lt;= %s; %s += %s)
+				{
+					%s;
+				}
+				%s;
 			</script>
 		</node>
 	</group>

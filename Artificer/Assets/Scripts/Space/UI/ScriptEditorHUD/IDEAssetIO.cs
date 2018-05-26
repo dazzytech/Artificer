@@ -72,6 +72,7 @@ namespace Space.UI.IDE
                         io.Type = NodeData.IO.IOType.LINK;
                         io.ID = subTag.Attributes["id"].Value;
                         io.NodeID = "-1";
+                        io.Label = subTag.Attributes["label"].Value;
                         if (subTag.Attributes["in"].Value == "true")
                             node.Input.Add(io);
                         else
@@ -84,6 +85,11 @@ namespace Space.UI.IDE
                         io.Type = NodeData.IO.IOType.PARAM;
                         io.ID = subTag.Attributes["id"].Value;
                         io.NodeID = node.ID.ToString();
+                        io.Label = subTag.Attributes["label"].Value;
+                        if (subTag.Attributes["in"].Value == "true")
+                            node.Input.Add(io);
+                        else
+                            node.Output.Add(io);
                         break;
                     }
                 case "type":
