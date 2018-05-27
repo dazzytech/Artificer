@@ -1,5 +1,6 @@
 ﻿using Data.Space.Library;
 using Data.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
@@ -62,73 +63,36 @@ namespace Space.UI.IDE
 
         }
 
-        private void BuildSubTag(NodeLibrary library, XmlNode subTag, NodeData node)
+        /// <summary>
+        /// Recursive function that reads the inner data 
+        /// of a node inter internal memory
+        /// </summary>
+        /// <param name="library"></param>
+        /// <param name="subTag"></param>
+        /// <param name="node"></param>
+        /// <param name="groupID"></param>
+        private void BuildSubTag(NodeLibrary library, XmlNode subTag,
+            NodeData node, int groupID = -1)
         {
             switch (subTag.Name)
             {
                 case "link":
-                    {
-                        NodeData.IO io = new NodeData.IO();
-                        io.Type = NodeData.IO.IOType.LINK;
-                        io.ID = subTag.Attributes["id"].Value;
-                        io.NodeID = "-1";
-                        io.Label = subTag.Attributes["label"].Value;
-                        if (subTag.Attributes["in"].Value == "true")
-                            node.Input.Add(io);
-                        else
-                            node.Output.Add(io);
-                        break;
-                    }
                 case "param":
-                    {
-                        NodeData.IO io = new NodeData.IO();
-                        io.Type = NodeData.IO.IOType.PARAM;
-
-                        switch(subTag.Attributes["type"].Value)
-                        {
-                            case "int":
-                                io.Var = NodeData.IO.VarType.NUM;
-                                break;
-                            case "bool":
-                                io.Var = NodeData.IO.VarType.BOOL;
-                                break;
-                            case "object":
-                                io.Var = NodeData.IO.VarType.OBJECT;
-                                break;
-                            case "objectarray":
-                                io.Var = NodeData.IO.VarType.ARRAY;
-                                break;
-                            case "undef":
-                                io.Var = NodeData.IO.VarType.UNDEF;
-                                break;
-                        }
-
-                        io.ID = subTag.Attributes["id"].Value;
-                        io.NodeID = node.ID.ToString();
-                        io.Label = subTag.Attributes["label"].Value;
-                        if (subTag.Attributes["in"].Value == "true")
-                            node.Input.Add(io);
-                        else
-                            node.Output.Add(io);
-                        break;
-                    }
+                    node.AddIO(subTag, groupID);
+                    break;
                 case "type":
                     {
                         node.SupportedTypes.Add(subTag.InnerText);
                         break;
                     }
-                case "loop":
+                case "group":
                     {
                         foreach (XmlNode loopTag
                             in subTag.ChildNodes)
                         {
-                            BuildSubTag(library, loopTag, node);
+                            BuildSubTag(library, loopTag, node, 
+                                Convert.ToInt32(subTag.Attributes["id"].Value));
                         }
-                        break;
-                    }
-                case "script":
-                    {
-                        node.Script.Add(subTag.InnerText);
                         break;
                     }
                 case "description":

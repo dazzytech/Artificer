@@ -5,15 +5,10 @@
 			<description>
 			Controls the program flow through one of two links depending on whether the Boolean Condition is True or False.
 			</description>
-			<link in="true" id="0" label="Start"/>
-			<param in="true" id="1" type="bool" label="Condition"/>
-			<link in="false" id="2" label="True"/>
-			<link in="false" id="3" label="False"/>
-			<script>
-			if({Condition})
-				{True}
-			{False}
-			</script>
+			<link in="true" label="Start"/>
+			<param in="true" type="bool" label="Condition"/>
+			<link in="false" label="True"/>
+			<link in="false" label="False"/>
 		</node>
 		<node label="SWITCH">
 			<description>
@@ -22,26 +17,12 @@
 			<type>number</type>
 			<type>string</type>
 			<type>object</type>
-			<link in="true" id="0" label="Start"/>
-			<param in="true" id="1" type="undef" label="Comparison"/>
-			<script>
-			switch({0})
-			{
-			</script>
-			<loop>
-				<link in="true" id="" type="undef" label="Condition"/>
-				<link in="false" id="" label="Action"/>
-				<script>
-					case {-}:
-					{
-						{-};
-						break;
-					}
-				</script>
-			</loop>
-			<script>
-			}
-			</script>
+			<link in="true" label="Start"/>
+			<param in="true" type="undef" label="Comparison"/>
+			<group id="0">
+				<link in="true" type="undef" label="Condition" createID="0"/>
+				<link in="false" label="Action"/>
+			</group>
 		</node>
 	</group>
 	<group label="Sequence">
@@ -49,20 +30,13 @@
 			<description>
 				Repeats the program flow through the Loop executable for the given amount. The index increments the amount defined by the Step value, starting at the Min value and ending at the Max value. Upon completion, the End link is executed, ending the node execution.
 				</description>
-			<link in="true" id="0" label = "Start"/>
-			<param in="true" id="1" type="int" label = "Min"/>
-			<param in="true" id="2" type="int" label = "Max"/>
-			<param in="true" id="3" type="int" label = "Step"/>
-			<link in="false" id="4" label = "Loop"/>
-			<param in="false" id="5" type="int" label = "Index"/>
-			<link in="false" id="6" label = "End"/>
-			<script>
-				for(int %s = %s; %s &lt;= %s; %s += %s)
-				{
-					%s;
-				}
-				%s;
-			</script>
+			<link in="true" label = "Start"/>
+			<param in="true" type="int" label = "Min"/>
+			<param in="true"  type="int" label = "Max"/>
+			<param in="true" type="int" label = "Step"/>
+			<link in="false" label = "Loop"/>
+			<param in="false" type="int" label = "Index"/>
+			<link in="false" label = "End"/>
 		</node>
 		<node label="FOREACH">
 			<description>
@@ -70,47 +44,30 @@
 			</description>
 			<type>number</type>
 			<type>object</type>
-			<link in="true" id="0" label = "Start"/>
-			<param in="true" id="1" type="objectarray" label = "List"/>
-			<link in="false" id="2" label = "Loop"/>
-			<param in="false" id="3" type="int" label = "Index"/>
-			<param in="false" id="4" type="undef" label = "Item"/>
-			<link in="false" id="5" label = "End"/>
-			<script>
-				foreach(%s item in %s)
-				{
-					%s;
-				}
-				%s;
-			</script>
+			<link in="true" label = "Start"/>
+			<param in="true" type="objectarray" label = "List"/>
+			<link in="false" label = "Loop"/>
+			<param in="false" type="int" label = "Index"/>
+			<param in="false" type="undef" label = "Item"/>
+			<link in="false" label = "End"/>
 		</node>
 		<node label="WHILE">
 			<description>
 				Repeats the program flow through the Loop executable whilst the Condition is true.
 			</description>
-			<link in="true" id="0" label = "Start"/>
-			<param in="true" id="1" type="bool" label = "Condition"/>
-			<link in="false" id="2" label = "Loop"/>
-			<link in="false" id="3" label = "End"/>
-			<script>
-				while(%s)
-				{
-					%s;
-				}
-				%s;
-			</script>
+			<link in="true" label = "Start"/>
+			<param in="true" type="bool" label = "Condition"/>
+			<link in="false" label = "Loop"/>
+			<link in="false" label = "End"/>
 		</node>
 		<node label="SEQUENCE">
 			<description>
 				Allows for multiple actions from one node.
 			</description>
-			<link in="true" id="0" label = "Start"/>
-			<loop>
-				<link in="false" id="" label = "Action"/>
-				<script>
-					{-}
-				</script>
-			</loop>
+			<link in="true" label = "Start"/>
+			<group id = "0">
+				<link in="false" label = "Action" createID="0"/>
+			</group>
 		</node>
 	</group>
 </prefabs>
