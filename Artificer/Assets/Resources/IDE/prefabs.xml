@@ -1,5 +1,13 @@
 <?xml version="1.0"?>
 <prefabs>
+	<group label="Events">
+	<node label="ENTRY">
+			<description>
+			The Entry Point of the script loop
+			</description>
+			<link in="false" label="Start"/>
+		</node>
+	</group>
 	<group label="Conditional">
 		<node label="IF">
 			<description>

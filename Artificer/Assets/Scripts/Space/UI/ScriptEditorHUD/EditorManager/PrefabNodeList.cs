@@ -63,6 +63,9 @@ namespace Space.UI.IDE
 
             foreach (string category in m_con.Prefabs.Categories)
             {
+                if (category == "Events")
+                    continue;
+
                 // build the panel and populate
                 GameObject panel = Instantiate(m_panelPrefabs);
                 panel.transform.SetParent(m_listContainer);
@@ -75,7 +78,7 @@ namespace Space.UI.IDE
                     nodeGO.transform.SetParent(panel.transform, false);
 
                     nodeGO.GetComponent<NodeCreatePrefab>()
-                        .CreateItem(node, new EditorManager.Create(m_con.AddNode));
+                        .CreatePrefab(node, new EditorManager.Create(m_con.AddNode));
                 }
 
                 // Build the tab button and assign the panel to the tab

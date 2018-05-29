@@ -82,6 +82,30 @@ namespace Data.UI
             /// Display the label on a graphic
             /// </summary>
             public string Label;
+
+            /// <summary>
+            /// Returns a cloned IO object
+            /// with the same parameters
+            /// </summary>
+            /// <returns></returns>
+            public IO Clone()
+            {
+                IO clone = new IO();
+                clone.ID = ID;
+                clone.Label = Label;
+
+                clone.Type = Type;
+                clone.Var = Var;
+                clone.LinkID = LinkID;
+                clone.NodeID = NodeID;
+
+                clone.GroupID = GroupID;
+                clone.GroupInstanceID = GroupInstanceID;
+                clone.GroupCreateID = GroupCreateID;
+                clone.GroupRemoveID = GroupRemoveID;
+
+                return clone;
+            }
         }
 
         #endregion
@@ -258,9 +282,39 @@ namespace Data.UI
             }
         }
 
+        /// <summary>
+        /// Remove node refernce to other, if applicable, delete
+        /// group instance and update all other group instances
+        /// </summary>
+        /// <param name="ID"></param>
         public void DereferenceNode(int ID)
         {
 
+        }
+
+        /// <summary>
+        /// Creates a new DataNode with the same input 
+        /// and output abilities
+        /// </summary>
+        /// <returns></returns>
+        public NodeData Clone()
+        {
+            NodeData clone = new NodeData();
+            clone.Category = Category;
+            clone.Label = Label;
+            clone.SupportedTypes.AddRange(SupportedTypes);
+            clone.Description = Description;
+
+            foreach(IO input in m_in)
+            {
+                clone.m_in.Add(input);
+            }
+            foreach(IO output in m_out)
+            {
+                clone.m_out.Add(output);
+            }
+
+            return clone;
         }
 
         #endregion
@@ -310,6 +364,11 @@ namespace Data.UI
             copy.Var = io.Var;
 
             return copy;
+        }
+
+        private void DecrementGroupIDs(int groupID)
+        {
+
         }
 
         #endregion
