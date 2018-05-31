@@ -6,6 +6,17 @@ using UnityEngine;
 
 namespace Space.UI.IDE
 {
+    public class LinkRender
+    {
+        public IOPrefab Start;
+
+        public IOPrefab End;
+
+        public Color Colour;
+
+        public LineRenderer Line;
+    }
+
     public class EditorAttributes : MonoBehaviour
     {
         public NodeLibrary NodePrefabs;
@@ -37,6 +48,9 @@ namespace Space.UI.IDE
         /// </summary>
         public Dictionary<int, NodePrefab> AddedNodes = 
             new Dictionary<int, NodePrefab>();
+
+        public List<LinkRender> RenderList = 
+            new List<LinkRender>();
 
         /// <summary>
         /// Preset node that the script generation stems from

@@ -94,7 +94,7 @@ namespace Data.UI
             /// with the same parameters
             /// </summary>
             /// <returns></returns>
-            public IO Clone()
+            public IO Clone(NodeData cloneNode)
             {
                 IO clone = new IO();
                 clone.ID = ID;
@@ -103,7 +103,7 @@ namespace Data.UI
                 clone.Type = Type;
                 clone.Var = Var;
                 clone.LinkedIO = LinkedIO;
-                clone.Node = Node;
+                clone.Node = cloneNode;
 
                 clone.GroupID = GroupID;
                 clone.GroupInstanceID = GroupInstanceID;
@@ -319,11 +319,11 @@ namespace Data.UI
 
             foreach(IO input in m_in)
             {
-                clone.m_in.Add(input.Clone());
+                clone.m_in.Add(input.Clone(clone));
             }
             foreach(IO output in m_out)
             {
-                clone.m_out.Add(output.Clone());
+                clone.m_out.Add(output.Clone(clone));
             }
 
             return clone;

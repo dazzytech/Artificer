@@ -18,6 +18,9 @@ namespace Space.UI.IDE
         [SerializeField]
         private EditorManager m_con;
 
+        [SerializeField]
+        private Material m_lineMat;
+
         [Header("UI Prefabs")]
 
         [SerializeField]
@@ -30,11 +33,16 @@ namespace Space.UI.IDE
 
         #endregion
 
+        private void OnEnable()
+        {
+            Initialize();
+        }
+
         #region PUBLIC INTERACTION
 
         public void Initialize()
         {
-            
+            StartCoroutine("RenderLines");
         }
 
         public void UpdateUI()
@@ -63,6 +71,42 @@ namespace Space.UI.IDE
             nodeGO.transform.SetParent(m_scriptEditor);
 
             return newNode;
+        }
+
+        #endregion
+
+        private void DrawLine(Vector3 a, Vector3 b, Color col)
+        {
+            GL.Begin(GL.LINES);
+            m_lineMat.SetPass(0);
+            GL.Color(col);
+            GL.Vertex3(a.x, Screen.height - a.y, a.z);
+            GL.Vertex3(b.x, Screen.height - b.y, b.z);
+            GL.End();
+        }
+
+        #region COROUTINES
+
+        private IEnumerator RenderLines()
+        {
+            while(true)
+            {
+                yield return new WaitForEndOfFrame();
+
+                if(EditorManager.IODraggingLink != null)
+                {
+                    DrawLine
+                        (EditorManager.IODraggingLink.IconBounds.position,
+                        Input.mousePosition, EditorManager.IODraggingLink.Colour);
+                }
+                foreach(LinkRender line in m_con.RenderList)
+                {
+                    DrawLine(line.Start.IconBounds.position, line.End.IconBounds.position,
+                        line.Colour);
+                }
+
+                yield return null;
+            }
         }
 
         #endregion

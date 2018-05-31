@@ -104,6 +104,14 @@ namespace Space.UI.IDE
             }
         }
 
+        public Color Colour
+        {
+            get
+            {
+                return m_image.color;
+            }
+        }
+
         #endregion
 
         #region PUBLIC INTERACTION

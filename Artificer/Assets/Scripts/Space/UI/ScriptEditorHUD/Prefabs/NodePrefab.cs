@@ -92,6 +92,11 @@ namespace Space.UI.IDE
             get { return m_nodeData; }
         }
 
+        public Dictionary<NodeData.IO, IOPrefab> IOList
+        {
+            get { return m_IOObjects; }
+        }
+
         #endregion
 
         private void Update()

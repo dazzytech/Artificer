@@ -51,6 +51,22 @@ namespace Space.UI.IDE
             }
         }
 
+        public List<LinkRender> RenderList
+        {
+            get
+            {
+                return m_att.RenderList;
+            }
+        }
+
+        public NodeData ScriptEntry
+        {
+            get
+            {
+                return m_att.EntryNode.Node;
+            }
+        }
+
         #endregion
 
         #region MONO BEHAVIOUR
@@ -98,8 +114,6 @@ namespace Space.UI.IDE
             m_att.NodePrefabs = nodePrefabs;
 
             m_att.PrefabListHUD.GeneratePrefabs();
-
-            m_att.ScriptHUD.Initialize();
 
             // generate a start node
             NodeData start = m_att.NodePrefabs
@@ -200,8 +214,34 @@ namespace Space.UI.IDE
 
                 m_att.AddedNodes.Remove(node.Node.InstanceID);
 
+                foreach (IOPrefab io in node.IOList.Values)
+                    UnlinkIO(io, node);
+
                 GameObject.Destroy(node.gameObject);
             }
+        }
+
+        private void UnlinkIO
+            (IOPrefab io, NodePrefab node)
+        {
+            NodeData.IO otherIO = io.IO.LinkedIO;
+
+            if (otherIO == null)
+                return;
+
+            NodeData other = otherIO.Node;
+
+            IOPrefab otherprefab = m_att.AddedNodes[other.InstanceID].GetIO(otherIO);
+            other.DereferenceNode(otherIO);
+            otherprefab.UpdateNode();
+
+
+            node.Node.DereferenceNode(io.IO);
+            io.UpdateNode();
+
+            m_att.RenderList.Remove(m_att.RenderList.Find
+                (x => (x.Start == io) || (x.End == io)
+                && (x.Start == otherprefab) || (x.End == otherprefab)));
         }
 
         private int ReturnNextAvailableInstance()
@@ -258,12 +298,7 @@ namespace Space.UI.IDE
             if (otherIO == null)
                 return;
 
-            NodeData other = otherIO.Node;
-            other.DereferenceNode(otherIO);
-            m_att.AddedNodes[other.InstanceID].GetIO(otherIO).UpdateNode();
-
-            node.Node.DereferenceNode(io.IO);
-            io.UpdateNode();
+            UnlinkIO(io, node);
         }
 
         public void IOLeave(IOPrefab io, NodePrefab node)
@@ -296,18 +331,7 @@ namespace Space.UI.IDE
                         SelectedObj != HighlightedObj)
                     {
                         if(IODraggingLink.IO.LinkedIO != null)
-                        {
-                            NodePrefab oldLinkNode = m_att.AddedNodes
-                                [IODraggingLink.IO.LinkedIO.Node.InstanceID];
-
-                            IOPrefab io = oldLinkNode.GetIO(IODraggingLink.IO.LinkedIO);
-
-                            oldLinkNode.Node.DereferenceNode
-                                (io.IO);
-
-                            io.UpdateNode();
-                            io.UpdateInput();
-                        }
+                            UnlinkIO(IODraggingLink, SelectedObj);
 
                         SelectedObj.Node.AssignToNode(IODraggingLink.IO, IOOverLink.IO);
                         IODraggingLink.UpdateNode();
@@ -316,6 +340,13 @@ namespace Space.UI.IDE
                         HighlightedObj.Node.AssignToNode(IOOverLink.IO, IODraggingLink.IO);
                         IOOverLink.UpdateNode();
                         IOOverLink.UpdateInput();
+
+                        LinkRender link = new LinkRender();
+                        link.Start = IODraggingLink;
+                        link.End = IOOverLink;
+                        link.Colour = IODraggingLink.Colour;
+
+                        m_att.RenderList.Add(link);
                     }
                 }
             }
