@@ -1,4 +1,5 @@
 ﻿using Data.Space.Library;
+using Data.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,7 +35,8 @@ namespace Space.UI.IDE
         /// <summary>
         /// Nodes that are added to the script by the player
         /// </summary>
-        public List<NodePrefab> AddedNodes = new List<NodePrefab>();
+        public Dictionary<int, NodePrefab> AddedNodes = 
+            new Dictionary<int, NodePrefab>();
 
         /// <summary>
         /// Preset node that the script generation stems from

@@ -15,10 +15,7 @@ namespace Space.UI.IDE
         [Header("UI Prefabs")]
 
         [SerializeField]
-        private GameObject m_inputPrefab;
-
-        [SerializeField]
-        private GameObject m_outputPrefab;
+        private GameObject m_ioPrefab;
 
         #endregion
 
@@ -52,30 +49,6 @@ namespace Space.UI.IDE
         [SerializeField]
         private Text m_label;
 
-        #region ICONS
-
-        [Header("Icon Images")]
-
-        [SerializeField]
-        private Texture2D m_undef;
-
-        [SerializeField]
-        private Texture2D m_num;
-
-        [SerializeField]
-        private Texture2D m_bool;
-
-        [SerializeField]
-        private Texture2D m_object;
-
-        [SerializeField]
-        private Texture2D m_objArray;
-
-        [SerializeField]
-        private Texture2D m_exec;
-
-        #endregion
-
         #endregion
 
         #region REFERENCE
@@ -86,6 +59,9 @@ namespace Space.UI.IDE
         /// Node prefab created when clicked
         /// </summary>
         protected NodeData m_nodeData;
+
+        protected Dictionary<NodeData.IO, IOPrefab> m_IOObjects
+            = new Dictionary<NodeData.IO, IOPrefab>();
 
         #endregion
 
@@ -99,77 +75,34 @@ namespace Space.UI.IDE
         /// </summary>
         /// <param name="GO"></param>
         /// <param name="create"></param>
-        public virtual void DisplayItem(NodeData node)
+        public virtual void DisplayItem(bool displayInput = false)
         {
-            m_nodeData = node;
-
             // Assign the data to our visual elements
-            m_label.text = node.Label;
+            m_label.text = m_nodeData.Label;
 
-            foreach (NodeData.IO input in node.Input)
+            foreach (NodeData.IO input in m_nodeData.Input)
             {
-                GameObject inPrefab = Instantiate(m_inputPrefab);
-                inPrefab.transform.SetParent(m_inputList);
+                GameObject inGO = Instantiate(m_ioPrefab);
+                inGO.transform.SetParent(m_inputList);
 
-                inPrefab.GetComponentInChildren<Text>().text = input.Label;
+                IOPrefab prefab = inGO.GetComponentInChildren<IOPrefab>();
+                prefab.Initialize(input, true);
 
-                if (input.Type == NodeData.IO.IOType.LINK)
-                    inPrefab.GetComponentInChildren<RawImage>().texture = m_exec;
-                else
-                {
-                    // assign icon based on type
-                    switch (input.Var)
-                    {
-                        case NodeData.IO.VarType.UNDEF:
-                            inPrefab.GetComponentInChildren<RawImage>().texture = m_undef;
-                            break;
-                        case NodeData.IO.VarType.NUM:
-                            inPrefab.GetComponentInChildren<RawImage>().texture = m_num;
-                            break;
-                        case NodeData.IO.VarType.BOOL:
-                            inPrefab.GetComponentInChildren<RawImage>().texture = m_bool;
-                            break;
-                        case NodeData.IO.VarType.OBJECT:
-                            inPrefab.GetComponentInChildren<RawImage>().texture = m_object;
-                            break;
-                        case NodeData.IO.VarType.ARRAY:
-                            inPrefab.GetComponentInChildren<RawImage>().texture = m_objArray;
-                            break;
-                    }
-                }
+                if(displayInput)
+                    prefab.UpdateInput();
+
+                m_IOObjects.Add(input, prefab);
             }
 
-            foreach (NodeData.IO output in node.Output)
+            foreach (NodeData.IO output in m_nodeData.Output)
             {
-                GameObject outPrefab = Instantiate(m_outputPrefab);
-                outPrefab.transform.SetParent(m_outputList);
+                GameObject outGO = Instantiate(m_ioPrefab);
+                outGO.transform.SetParent(m_outputList);
 
-                outPrefab.GetComponentInChildren<Text>().text = output.Label;
+                IOPrefab prefab = outGO.GetComponentInChildren<IOPrefab>();
+                prefab.Initialize(output, false);
 
-                if (output.Type == NodeData.IO.IOType.LINK)
-                    outPrefab.GetComponentInChildren<RawImage>().texture = m_exec;
-                else
-                {
-                    // assign icon based on type
-                    switch (output.Var)
-                    {
-                        case NodeData.IO.VarType.UNDEF:
-                            outPrefab.GetComponentInChildren<RawImage>().texture = m_undef;
-                            break;
-                        case NodeData.IO.VarType.NUM:
-                            outPrefab.GetComponentInChildren<RawImage>().texture = m_num;
-                            break;
-                        case NodeData.IO.VarType.BOOL:
-                            outPrefab.GetComponentInChildren<RawImage>().texture = m_bool;
-                            break;
-                        case NodeData.IO.VarType.OBJECT:
-                            outPrefab.GetComponentInChildren<RawImage>().texture = m_object;
-                            break;
-                        case NodeData.IO.VarType.ARRAY:
-                            outPrefab.GetComponentInChildren<RawImage>().texture = m_objArray;
-                            break;
-                    }
-                }
+                m_IOObjects.Add(output, prefab);
             }
         }
 

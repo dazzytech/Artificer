@@ -11,7 +11,7 @@ namespace Space.UI.IDE
     /// <summary>
     /// Used to determine the attribute types
     /// </summary>
-    public enum NodeType { NUM, BOOL, OBJECT, ARRAY };
+    public enum NodeType { NUM, STRING, BOOL, OBJECT, ARRAY };
 
     public class NodePrefab : NodeViewer,
         IPointerEnterHandler, IPointerExitHandler,
@@ -19,17 +19,27 @@ namespace Space.UI.IDE
     {
         #region EVENT
 
-        public delegate void MouseEvent(NodePrefab Reference);
+        public delegate void NodeEvent(NodePrefab Reference);
 
-        public event MouseEvent OnMouseOver;
+        public delegate void IOEvent(IOPrefab Reference, NodePrefab NodeReference);
 
-        public event MouseEvent OnMouseOut;
+        public event NodeEvent OnMouseOver;
 
-        public event MouseEvent OnMouseDown;
+        public event NodeEvent OnMouseOut;
 
-        public event MouseEvent OnMouseUp;
+        public event NodeEvent OnMouseDown;
 
-        public event MouseEvent OnDragNode;
+        public event NodeEvent OnMouseUp;
+
+        public event NodeEvent OnDragNode;
+
+        public event IOEvent OnDragIO;
+
+        public event IOEvent OnDownIO;
+
+        public event IOEvent OnEnterIO;
+
+        public event IOEvent OnExitIO;
 
         #endregion
 
@@ -84,12 +94,6 @@ namespace Space.UI.IDE
 
         #endregion
 
-        // Use this for initialization
-        void Start()
-        {
-
-        }
-
         private void Update()
         {
             if (m_isDragging)
@@ -104,7 +108,8 @@ namespace Space.UI.IDE
                     return;
                 }
 
-                transform.position = Input.mousePosition;
+                if (EditorManager.DraggedObj == this)
+                    transform.position = Input.mousePosition;
             }
             else if (m_selected)
             {
@@ -135,7 +140,24 @@ namespace Space.UI.IDE
                         if (OnMouseOut != null)
                             OnMouseOut(this);
 
+                        foreach (IOPrefab io in m_IOObjects.Values)
+                        {
+                            if (OnExitIO != null)
+                                OnExitIO(io, this);
+                        }
+
                         m_mouseOver = false;
+                    }
+                }
+            }
+
+            if (Input.GetMouseButton(1))
+            {
+                foreach (IOPrefab io in m_IOObjects.Values)
+                {
+                    if (RectTransformExtension.InBounds(io.IconBounds, Input.mousePosition))
+                    {
+                        OnDownIO(io, this);
                     }
                 }
             }
@@ -151,7 +173,18 @@ namespace Space.UI.IDE
         {
             m_nodeData = node;
 
-            DisplayItem(node);
+            DisplayItem(true);
+        }
+
+        /// <summary>
+        /// Will retrieve the relevent IO prefab using
+        /// the IO data index
+        /// </summary>
+        /// <param name="io"></param>
+        /// <returns></returns>
+        public IOPrefab GetIO(NodeData.IO io)
+        {
+            return m_IOObjects[io];
         }
 
         #endregion
@@ -163,6 +196,16 @@ namespace Space.UI.IDE
             if (OnMouseOver != null)
                 OnMouseOver(this);
 
+            // Detect if the mouse is over a IO icon, we will want to start dragging that instead
+            foreach (IOPrefab io in m_IOObjects.Values)
+            {
+                if (RectTransformExtension.InBounds(io.IconBounds, Input.mousePosition))
+                {
+                    if (OnEnterIO != null)
+                        OnEnterIO(io, this);
+                }
+            }
+
             m_mouseOver = true;
         }
 
@@ -173,7 +216,24 @@ namespace Space.UI.IDE
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (EditorManager.DraggedObj == null &&
+            if (EditorManager.IODraggingLink == null && !m_isDragging)
+            {
+                // Detect if the mouse is over a IO icon, we will want to start dragging that instead
+                foreach (IOPrefab io in m_IOObjects.Values)
+                {
+                    if (RectTransformExtension.InBounds(io.IconBounds, Input.mousePosition))
+                    {
+                        if (OnDragIO != null)
+                            OnDragIO(io, this);
+
+                        m_isDragging = true;
+                        // currently over an icon
+                        return;
+                    }
+                }
+            }
+
+            if (EditorManager.DraggedObj == null && !m_isDragging &&
                 eventData.button == PointerEventData.InputButton.Left)
             {
                 if (OnDragNode != null)

@@ -116,7 +116,9 @@ namespace Space.UI.IDE
 
             m_create = create;
 
-            DisplayItem(node);
+            m_nodeData = node;
+
+            DisplayItem();
         }
 
         #endregion

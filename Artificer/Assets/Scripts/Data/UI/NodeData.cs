@@ -21,7 +21,7 @@ namespace Data.UI
 
             public enum IOType { LINK, PARAM };
 
-            public enum VarType { NUM, BOOL, OBJECT, ARRAY, UNDEF };
+            public enum VarType { NUM, STRING, BOOL, OBJECT, ARRAY, UNDEF };
 
             /// <summary>
             /// Base class for mutliple types, either a link between the two
@@ -42,12 +42,12 @@ namespace Data.UI
             /// <summary>
             /// ID of other nodes that this connects to
             /// </summary>
-            public int LinkID;
+            public IO LinkedIO;
 
             /// <summary>
             /// ID of the node that this IO object belongs to
             /// </summary>
-            public int NodeID;
+            public NodeData Node;
 
             #region GROUPS
 
@@ -84,6 +84,12 @@ namespace Data.UI
             public string Label;
 
             /// <summary>
+            /// Params may allow for a value to be entered directly into the 
+            /// link
+            /// </summary>
+            public string Value;
+
+            /// <summary>
             /// Returns a cloned IO object
             /// with the same parameters
             /// </summary>
@@ -96,8 +102,8 @@ namespace Data.UI
 
                 clone.Type = Type;
                 clone.Var = Var;
-                clone.LinkID = LinkID;
-                clone.NodeID = NodeID;
+                clone.LinkedIO = LinkedIO;
+                clone.Node = Node;
 
                 clone.GroupID = GroupID;
                 clone.GroupInstanceID = GroupInstanceID;
@@ -197,13 +203,16 @@ namespace Data.UI
             // Initialze base data 
             NodeData.IO io = new NodeData.IO();
             io.Label = xmlIO.Attributes["label"].Value;
-            io.NodeID = ID;
+            io.Node = this;
+            io.LinkedIO = null;
 
             // grouping assignment and group editing
             io.GroupID = groupID;
 
-            if(xmlIO.Attributes["createId"] != null)
+            if (xmlIO.Attributes["createId"] != null)
                 io.GroupCreateID = Convert.ToInt32(xmlIO.Attributes["createId"].Value);
+            else
+                io.GroupCreateID = -1;
 
             // Initialize data depending on IO type
             switch (xmlIO.Name)
@@ -218,19 +227,22 @@ namespace Data.UI
                     switch (xmlIO.Attributes["type"].Value)
                     {
                         case "int":
-                            io.Var = NodeData.IO.VarType.NUM;
+                            io.Var = IO.VarType.NUM;
+                            break;
+                        case "string":
+                            io.Var = IO.VarType.STRING;
                             break;
                         case "bool":
-                            io.Var = NodeData.IO.VarType.BOOL;
+                            io.Var = IO.VarType.BOOL;
                             break;
                         case "object":
-                            io.Var = NodeData.IO.VarType.OBJECT;
+                            io.Var = IO.VarType.OBJECT;
                             break;
                         case "objectarray":
-                            io.Var = NodeData.IO.VarType.ARRAY;
+                            io.Var = IO.VarType.ARRAY;
                             break;
                         case "undef":
-                            io.Var = NodeData.IO.VarType.UNDEF;
+                            io.Var = IO.VarType.UNDEF;
                             break;
                     }
                     break;
@@ -247,15 +259,15 @@ namespace Data.UI
         /// if applicable, increment a group object
         /// </summary>
         /// <param name="other"></param>
-        public void AssignToNode(int ID, NodeData other)
+        public void AssignToNode(IO self, IO other)
         {
-            m_in[ID].LinkID = other.InstanceID;
+            self.LinkedIO = other;
             
-            if(m_in[ID].GroupCreateID != -1)
+            if(self.GroupCreateID != -1)
             {
-                int maxGroupID = MaxGroupInstance(m_in[ID].GroupCreateID);
+                int maxGroupID = MaxGroupInstance(self.GroupCreateID);
 
-                foreach (IO io in m_in.FindAll(x => x.GroupID == m_in[ID].GroupID))
+                foreach (IO io in m_in.FindAll(x => x.GroupID == self.GroupID))
                 {
                     // if this is the latest instance, create a copy
                     if (io.GroupInstanceID == maxGroupID)
@@ -264,10 +276,10 @@ namespace Data.UI
                         m_in.Add(CreateGroupCopy(maxGroupID + 1, io));
                     }
                     // add the reference to the id to the input param
-                    m_in[ID].GroupRemoveID = maxGroupID + 1;
+                    self.GroupRemoveID = maxGroupID + 1;
                 }
 
-                foreach (IO io in m_out.FindAll(x => x.GroupID == m_out[ID].GroupID))
+                foreach (IO io in m_out.FindAll(x => x.GroupID == self.GroupID))
                 {
                     // if this is the latest instance, create a copy
                     if (io.GroupInstanceID == maxGroupID)
@@ -277,7 +289,7 @@ namespace Data.UI
                     }
 
                     // add the reference to the id to the input param
-                    m_in[ID].GroupRemoveID = maxGroupID + 1;
+                    self.GroupRemoveID = maxGroupID + 1;
                 }
             }
         }
@@ -287,9 +299,9 @@ namespace Data.UI
         /// group instance and update all other group instances
         /// </summary>
         /// <param name="ID"></param>
-        public void DereferenceNode(int ID)
+        public void DereferenceNode(IO node)
         {
-
+            node.LinkedIO = null;
         }
 
         /// <summary>
@@ -307,11 +319,11 @@ namespace Data.UI
 
             foreach(IO input in m_in)
             {
-                clone.m_in.Add(input);
+                clone.m_in.Add(input.Clone());
             }
             foreach(IO output in m_out)
             {
-                clone.m_out.Add(output);
+                clone.m_out.Add(output.Clone());
             }
 
             return clone;
@@ -357,7 +369,7 @@ namespace Data.UI
         {
             IO copy = new IO();
             copy.Label = io.Label;
-            copy.NodeID = io.NodeID;
+            copy.Node = io.Node;
             copy.GroupID = io.GroupID;
             copy.GroupInstanceID = groupID;
             copy.Type = io.Type;

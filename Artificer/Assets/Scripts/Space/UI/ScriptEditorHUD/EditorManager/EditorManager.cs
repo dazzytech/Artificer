@@ -30,6 +30,12 @@ namespace Space.UI.IDE
         [HideInInspector]
         public static NodePrefab SelectedObj;
 
+        [HideInInspector]
+        public static IOPrefab IODraggingLink;
+
+        [HideInInspector]
+        public static IOPrefab IOOverLink;
+
         #endregion
 
         #region ACCESSOR
@@ -54,25 +60,29 @@ namespace Space.UI.IDE
             if (m_att.AddedNodes.Count > 0)
             {
                 m_att.ScriptHUD.UpdateUI();
+
+                NodePrefab delete = null;
                 
-                for (int i = 0; i < m_att.AddedNodes.Count; i++)
+                foreach (NodePrefab node in m_att.AddedNodes.Values)
                 {
-                    NodePrefab node = m_att.AddedNodes[i];
+                    if (node == null)
+                        continue;
 
                     if (DraggedObj == node && !node.Dragging)
                     {
                         if (!RectTransformExtension.InBounds
                             (m_att.ScriptHUD.GetComponent<RectTransform>(),
                             DraggedObj.transform.position))
-                        {
-                            DeleteNode(DraggedObj);
-                            i--;
-                        }
+                            delete = node;
 
                         // now stop checking
                         DraggedObj = null;
+                        
+                        break;
                     }
                 }
+
+                DeleteNode(delete);
             }
         }
 
@@ -101,12 +111,9 @@ namespace Space.UI.IDE
 
             NodePrefab node = m_att.ScriptHUD.PlaceNode(start);
             node.transform.position = new Vector3(146, 425, 0);
-            m_att.AddedNodes.Add(node);
+            m_att.AddedNodes.Add(0, node);
 
-            node.OnDragNode += StartDrag;
-            node.OnMouseDown += MouseDown;
-            node.OnMouseOver += MouseEnter;
-            node.OnMouseOut += MouseLeave;
+            AddListeners(node);
 
             m_att.EntryNode = node;
         }
@@ -118,23 +125,6 @@ namespace Space.UI.IDE
         public void LoadAgent(string agent)
         {
 
-        }
-
-        public void DeleteNode(NodePrefab node)
-        {
-            if(m_att.EntryNode == node)
-                return;
-
-            m_att.AddedIDs.Remove(node.Node.InstanceID);
-
-            m_att.AddedNodes.Remove(node);
-
-            GameObject.Destroy(node.gameObject);
-
-            node.OnDragNode -= StartDrag;
-            node.OnMouseDown -= MouseDown;
-            node.OnMouseOver -= MouseEnter;
-            node.OnMouseOut -= MouseLeave;
         }
         
         /// <summary>
@@ -149,12 +139,9 @@ namespace Space.UI.IDE
 
             NodePrefab node = m_att.ScriptHUD.PlaceNode(newNode);
 
-            node.OnDragNode += StartDrag;
-            node.OnMouseDown += MouseDown;
-            node.OnMouseOver += MouseEnter;
-            node.OnMouseOut += MouseLeave;
+            AddListeners(node);
 
-            m_att.AddedNodes.Add(node);
+            m_att.AddedNodes.Add(newNode.InstanceID, node);
 
             DraggedObj = node;
             DraggedObj.Dragging = true;
@@ -163,6 +150,59 @@ namespace Space.UI.IDE
         #endregion
 
         #region PRIVATE INTERACTION
+
+        #region EDIT LISTENERS
+
+        /// <summary>
+        /// Assign the node events to the listeners
+        /// </summary>
+        /// <param name="node"></param>
+        private void AddListeners(NodePrefab node)
+        {
+            node.OnDragNode += NodeDrag;
+            node.OnDragIO += IODrag;
+            node.OnMouseDown += MouseDown;
+            node.OnDownIO += IODown;
+            node.OnEnterIO += IOEnter;
+            node.OnExitIO += IOLeave;
+            node.OnMouseOver += MouseEnter;
+            node.OnMouseOut += MouseLeave;
+            node.OnMouseUp += MouseUp;
+        }
+
+        /// <summary>
+        /// remove all listeners 
+        /// </summary>
+        /// <param name="node"></param>
+        private void RemoveListeners(NodePrefab node)
+        {
+            node.OnDragNode -= NodeDrag;
+            node.OnDragIO -= IODrag;
+            node.OnMouseDown -= MouseDown;
+            node.OnEnterIO -= IOEnter;
+            node.OnExitIO -= IOLeave;
+            node.OnMouseOver -= MouseEnter;
+            node.OnMouseOut -= MouseLeave;
+            node.OnMouseUp -= MouseUp;
+        }
+
+        #endregion
+
+        private void DeleteNode(NodePrefab node)
+        {
+            if (m_att.EntryNode == node || node == null)
+                return;
+            if (m_att.AddedNodes.ContainsValue(node))
+            {
+                m_att.AddedIDs.Remove(node.Node.InstanceID);
+
+                RemoveListeners(node);
+
+                m_att.AddedNodes.Remove(node.Node.InstanceID);
+
+                GameObject.Destroy(node.gameObject);
+            }
+        }
 
         private int ReturnNextAvailableInstance()
         {
@@ -179,19 +219,60 @@ namespace Space.UI.IDE
             return ID;
         }
 
-        public void StartDrag(NodePrefab node)
+        #region LISTENERS
+
+        public void NodeDrag(NodePrefab node)
         {
             DraggedObj = SelectedObj = node;
         }
 
+        public void IODrag(IOPrefab io, NodePrefab node)
+        {
+            IODraggingLink = io;
+            IODraggingLink.Close();
+            SelectedObj = node;
+        }
+
         public void MouseDown(NodePrefab node)
         {
-            SelectedObj = node;
+            if(IODraggingLink == null)
+                SelectedObj = node;
         }
 
         public void MouseEnter(NodePrefab node)
         {
             HighlightedObj = node;
+        }
+
+        public void IOEnter(IOPrefab io, NodePrefab node)
+        {
+            if (IODraggingLink != null && node != SelectedObj)
+                io.Close();
+            IOOverLink = io;
+        }
+
+        public void IODown(IOPrefab io, NodePrefab node)
+        {
+            NodeData.IO otherIO = io.IO.LinkedIO;
+
+            if (otherIO == null)
+                return;
+
+            NodeData other = otherIO.Node;
+            other.DereferenceNode(otherIO);
+            m_att.AddedNodes[other.InstanceID].GetIO(otherIO).UpdateNode();
+
+            node.Node.DereferenceNode(io.IO);
+            io.UpdateNode();
+        }
+
+        public void IOLeave(IOPrefab io, NodePrefab node)
+        {
+            if (IOOverLink == io)
+            {
+                IOOverLink.Open();
+                IOOverLink = null;
+            }
         }
 
         public void MouseLeave(NodePrefab node)
@@ -200,8 +281,57 @@ namespace Space.UI.IDE
                 HighlightedObj = null;
         }
 
+        public void MouseUp(NodePrefab node) 
+        {
+            if(IODraggingLink != null)
+            {
+                IODraggingLink.UpdateNode();
+
+                // if we are dragging a link
+                // check if the is a node the mouse is currently over
+                // if so then create the link
+                if(IOOverLink != null)
+                {
+                    if (IOOverLink != IODraggingLink &&
+                        SelectedObj != HighlightedObj)
+                    {
+                        if(IODraggingLink.IO.LinkedIO != null)
+                        {
+                            NodePrefab oldLinkNode = m_att.AddedNodes
+                                [IODraggingLink.IO.LinkedIO.Node.InstanceID];
+
+                            IOPrefab io = oldLinkNode.GetIO(IODraggingLink.IO.LinkedIO);
+
+                            oldLinkNode.Node.DereferenceNode
+                                (io.IO);
+
+                            io.UpdateNode();
+                            io.UpdateInput();
+                        }
+
+                        SelectedObj.Node.AssignToNode(IODraggingLink.IO, IOOverLink.IO);
+                        IODraggingLink.UpdateNode();
+                        IODraggingLink.UpdateInput();
+
+                        HighlightedObj.Node.AssignToNode(IOOverLink.IO, IODraggingLink.IO);
+                        IOOverLink.UpdateNode();
+                        IOOverLink.UpdateInput();
+                    }
+                }
+            }
+
+            IODraggingLink = null;
+            IOOverLink = null;
+        }
+
         #endregion
 
+        #endregion
 
+        #region COROUTINE
+
+
+
+        #endregion
     }
 }

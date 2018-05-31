@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <prefabs>
-	<group label="Events">
+	<category label="Events">
 	<node label="ENTRY">
 			<description>
 			The Entry Point of the script loop
 			</description>
 			<link in="false" label="Start"/>
 		</node>
-	</group>
-	<group label="Conditional">
+	</category>
+	<category label="Conditional">
 		<node label="IF">
 			<description>
 			Controls the program flow through one of two links depending on whether the Boolean Condition is True or False.
@@ -32,8 +32,8 @@
 				<link in="false" label="Action"/>
 			</group>
 		</node>
-	</group>
-	<group label="Sequence">
+	</category>
+	<category label="Sequence">
 		<node label="FOR">
 			<description>
 				Repeats the program flow through the Loop executable for the given amount. The index increments the amount defined by the Step value, starting at the Min value and ending at the Max value. Upon completion, the End link is executed, ending the node execution.
@@ -77,5 +77,5 @@
 				<link in="false" label = "Action" createID="0"/>
 			</group>
 		</node>
-	</group>
+	</category>
 </prefabs>
