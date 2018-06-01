@@ -82,7 +82,27 @@ namespace Space.UI.IDE
                     break;
                 case "type":
                     {
-                        node.SupportedTypes.Add(subTag.InnerText);
+                        switch (subTag.InnerText)
+                        {
+                            case "number":
+                                node.SupportedTypes.Add(NodeData.IO.IOType.NUM);
+                                break;
+                            case "string":
+                                node.SupportedTypes.Add(NodeData.IO.IOType.STRING);
+                                break;
+                            case "bool":
+                                node.SupportedTypes.Add(NodeData.IO.IOType.BOOL);
+                                break;
+                            case "object":
+                                node.SupportedTypes.Add(NodeData.IO.IOType.OBJECT);
+                                break;
+                            case "objectarray":
+                                node.SupportedTypes.Add(NodeData.IO.IOType.ARRAY);
+                                break;
+                            default:
+                                node.SupportedTypes.Add(NodeData.IO.IOType.UNDEF);
+                                break;
+                        }
                         break;
                     }
                 case "group":

@@ -88,6 +88,14 @@ namespace Space.UI.IDE
             }
         }
 
+        public bool In
+        {
+            get
+            {
+                return m_isInput;
+            }
+        }
+
         public RectTransform IconBounds
         {
             get
@@ -172,19 +180,19 @@ namespace Space.UI.IDE
             DisableInputs();
             if (m_data.LinkedIO == null)
             {
-                if (m_isInput && m_data.Type == NodeData.IO.IOType.PARAM)
+                if (m_isInput)
                 {
-                    switch (m_data.Var)
+                    switch (m_data.CurrentType)
                     {
-                        case NodeData.IO.VarType.NUM:
+                        case NodeData.IO.IOType.NUM:
                             m_input.gameObject.SetActive(true);
                             m_input.contentType = InputField.ContentType.DecimalNumber;
                             break;
-                        case NodeData.IO.VarType.STRING:
+                        case NodeData.IO.IOType.STRING:
                             m_input.gameObject.SetActive(true);
                             m_input.contentType = InputField.ContentType.Alphanumeric;
                             break;
-                        case NodeData.IO.VarType.BOOL:
+                        case NodeData.IO.IOType.BOOL:
                             m_toggle.gameObject.SetActive(true);
                             break;
                     }
@@ -231,22 +239,22 @@ namespace Space.UI.IDE
             else
             {
                 // assign icon based on type
-                switch (m_data.Var)
+                switch (m_data.CurrentType)
                 {
-                    case NodeData.IO.VarType.UNDEF:
+                    case NodeData.IO.IOType.UNDEF:
                         m_image.color = m_undefColour;
                         break;
-                    case NodeData.IO.VarType.NUM:
+                    case NodeData.IO.IOType.NUM:
                         m_image.color = m_numColour;
                         break;
-                    case NodeData.IO.VarType.STRING:
+                    case NodeData.IO.IOType.STRING:
                         m_image.color = m_stringColour;
                         break;
-                    case NodeData.IO.VarType.BOOL:
+                    case NodeData.IO.IOType.BOOL:
                         m_image.color = m_boolColour;
                         break;
-                    case NodeData.IO.VarType.OBJECT:
-                    case NodeData.IO.VarType.ARRAY:
+                    case NodeData.IO.IOType.OBJECT:
+                    case NodeData.IO.IOType.ARRAY:
                         m_image.color = m_objectColour;
                         break;
                 }

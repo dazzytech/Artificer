@@ -234,7 +234,8 @@ namespace Space.UI.IDE
             IOPrefab otherprefab = m_att.AddedNodes[other.InstanceID].GetIO(otherIO);
             other.DereferenceNode(otherIO);
             otherprefab.UpdateNode();
-
+            m_att.AddedNodes[other.InstanceID].ResetType();
+            node.ResetType();
 
             node.Node.DereferenceNode(io.IO);
             io.UpdateNode();
@@ -287,8 +288,45 @@ namespace Space.UI.IDE
         public void IOEnter(IOPrefab io, NodePrefab node)
         {
             if (IODraggingLink != null && node != SelectedObj)
+            {
+                // also make sure ios are not both input or output
+                if (IODraggingLink.In == io.In)
+                    return;
+
+                // check here that the io types are matching, otherwise quit
+                if (IODraggingLink.IO.Type != io.IO.Type)
+                {
+                    // detect if the type of either is unassigned
+                    if (io.IO.Type == NodeData.IO.IOType.UNDEF)
+                    {
+                        if (io.IO.Node.SupportedTypes.Contains(IODraggingLink.IO.Type))
+                        {
+                            // assign the io node to the sub var type
+                            node.SetType(IODraggingLink.IO.CurrentType);
+                        }
+                        else
+                            return;
+                    }
+                    else if (IODraggingLink.IO.Type == NodeData.IO.IOType.UNDEF)
+                    {
+                        if (IODraggingLink.IO.Node.SupportedTypes.Contains(io.IO.Type))
+                        {
+                            // assign the io node to the sub var type
+                            SelectedObj.SetType(io.IO.CurrentType);
+                        }
+                        else
+                            return;
+                    }
+                    else
+                        return;
+                }
+                else if (io.IO.Type == NodeData.IO.IOType.UNDEF)
+                    return;
+
                 io.Close();
-            IOOverLink = io;
+                IOOverLink = io;
+            }
+            
         }
 
         public void IODown(IOPrefab io, NodePrefab node)
@@ -305,6 +343,8 @@ namespace Space.UI.IDE
         {
             if (IOOverLink == io)
             {
+                node.ResetType();
+                SelectedObj.ResetType();
                 IOOverLink.Open();
                 IOOverLink = null;
             }

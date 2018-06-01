@@ -101,6 +101,9 @@ namespace Space.UI.IDE
                 }
                 foreach(LinkRender line in m_con.RenderList)
                 {
+                    if (line.Start == null || line.End == null)
+                        continue;
+
                     DrawLine(line.Start.IconBounds.position, line.End.IconBounds.position,
                         line.Colour);
                 }

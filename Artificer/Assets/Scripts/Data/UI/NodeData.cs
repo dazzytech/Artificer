@@ -19,21 +19,32 @@ namespace Data.UI
         {
             #region NODE TYPES
 
-            public enum IOType { LINK, PARAM };
-
-            public enum VarType { NUM, STRING, BOOL, OBJECT, ARRAY, UNDEF };
-
-            /// <summary>
-            /// Base class for mutliple types, either a link between the two
-            /// nodes or 
-            /// </summary>
-            public IOType Type;
+            public enum IOType { UNDEF, NUM, STRING, BOOL, OBJECT, ARRAY, LINK };
 
             /// <summary>
             /// If IO os param, define the type of parameter the 
             /// IO is
             /// </summary>
-            public VarType Var;
+            public IOType Type;
+
+            /// <summary>
+            /// If an undef IO type, this subtype 
+            /// </summary>
+            public IOType TempVar;
+
+            /// <summary>
+            /// If undefined, then return the temporarily assigned var
+            /// </summary>
+            public IOType CurrentType
+            {
+                get
+                {
+                    if (TempVar == IOType.UNDEF)
+                        return Type;
+                    else
+                        return TempVar;
+                }
+            }
 
             #endregion
 
@@ -101,7 +112,7 @@ namespace Data.UI
                 clone.Label = Label;
 
                 clone.Type = Type;
-                clone.Var = Var;
+                clone.Type = Type;
                 clone.LinkedIO = LinkedIO;
                 clone.Node = cloneNode;
 
@@ -136,7 +147,7 @@ namespace Data.UI
         /// <summary>
         /// If an object 
         /// </summary>
-        public List<string> SupportedTypes = new List<string>();
+        public List<NodeData.IO.IOType> SupportedTypes = new List<NodeData.IO.IOType>();
 
         /// <summary>
         /// links and params that travel into the node
@@ -221,28 +232,25 @@ namespace Data.UI
                     io.Type = NodeData.IO.IOType.LINK;
                     break;
                 case "param":
-
-                    io.Type = NodeData.IO.IOType.PARAM;
-
                     switch (xmlIO.Attributes["type"].Value)
                     {
                         case "int":
-                            io.Var = IO.VarType.NUM;
+                            io.Type = IO.IOType.NUM;
                             break;
                         case "string":
-                            io.Var = IO.VarType.STRING;
+                            io.Type = IO.IOType.STRING;
                             break;
                         case "bool":
-                            io.Var = IO.VarType.BOOL;
+                            io.Type = IO.IOType.BOOL;
                             break;
                         case "object":
-                            io.Var = IO.VarType.OBJECT;
+                            io.Type = IO.IOType.OBJECT;
                             break;
                         case "objectarray":
-                            io.Var = IO.VarType.ARRAY;
+                            io.Type = IO.IOType.ARRAY;
                             break;
                         case "undef":
-                            io.Var = IO.VarType.UNDEF;
+                            io.Type = IO.IOType.UNDEF;
                             break;
                     }
                     break;
@@ -373,7 +381,7 @@ namespace Data.UI
             copy.GroupID = io.GroupID;
             copy.GroupInstanceID = groupID;
             copy.Type = io.Type;
-            copy.Var = io.Var;
+            copy.Type = io.Type;
 
             return copy;
         }

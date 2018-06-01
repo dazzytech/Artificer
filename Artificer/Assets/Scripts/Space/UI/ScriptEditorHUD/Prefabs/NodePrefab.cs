@@ -1,4 +1,5 @@
-﻿using Data.UI;
+﻿
+using Data.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UI.Effects;
@@ -8,11 +9,6 @@ using UnityEngine.UI;
 
 namespace Space.UI.IDE
 {
-    /// <summary>
-    /// Used to determine the attribute types
-    /// </summary>
-    public enum NodeType { NUM, STRING, BOOL, OBJECT, ARRAY };
-
     public class NodePrefab : NodeViewer,
         IPointerEnterHandler, IPointerExitHandler,
         IDragHandler
@@ -190,6 +186,29 @@ namespace Space.UI.IDE
         public IOPrefab GetIO(NodeData.IO io)
         {
             return m_IOObjects[io];
+        }
+
+        public void SetType(NodeData.IO.IOType type)
+        {
+            foreach(IOPrefab io in m_IOObjects.Values)
+            {
+                if(io.IO.CurrentType == NodeData.IO.IOType.UNDEF)
+                    io.IO.TempVar = type;
+
+                io.UpdateNode();
+                io.UpdateInput();
+            }
+        }
+
+        public void ResetType()
+        {
+            foreach (IOPrefab io in m_IOObjects.Values)
+            {
+                io.IO.TempVar = NodeData.IO.IOType.UNDEF;
+
+                io.UpdateNode();
+                io.UpdateInput();
+            }
         }
 
         #endregion
