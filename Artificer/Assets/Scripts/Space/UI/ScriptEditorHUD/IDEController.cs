@@ -1,4 +1,5 @@
-﻿using Space.Ship;
+﻿using Data.UI;
+using Space.Ship;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,18 @@ namespace Space.UI.IDE
 
         [SerializeField]
         private IDEAssetIO m_IO;
+
+        #endregion
+
+        #region ACCESSOR
+
+        public NodeData Entry
+        {
+            get
+            {
+                return m_att.Editor.ScriptEntry;
+            }
+        }
 
         #endregion
 

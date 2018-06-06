@@ -47,6 +47,7 @@ namespace Space.AI
         CombatDivert,
         Defensive,
         Ejecting,
+        Custom,
     }
 
     #endregion

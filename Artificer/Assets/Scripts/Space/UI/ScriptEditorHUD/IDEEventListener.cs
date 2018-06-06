@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Generator;
+
 
 namespace Space.UI.IDE
 {
@@ -26,11 +28,13 @@ namespace Space.UI.IDE
         }
 
         /// <summary>
-        /// 
+        /// Invoke the compiler with the start of the 
+        /// node script 
         /// </summary>
-        public void SaveShip()
+        public void CompileAgent()
         {
-
+            if (m_con.Entry != null)
+                AgentGenerator.GenerateAgent(m_con.Entry);
         }
 
         public void RevertChanges()
