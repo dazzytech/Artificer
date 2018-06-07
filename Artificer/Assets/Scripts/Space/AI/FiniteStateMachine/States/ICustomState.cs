@@ -24,9 +24,24 @@ namespace Space.AI.State
         }
 
         /// <summary>
+        /// Called by custom agent to 
+        /// assign default parameters etc
+        /// </summary>
+        public void InitializeScript()
+        {
+
+        }
+
+        /// <summary>
         /// Called by the CustomAgent
         /// </summary>
         public abstract void PerformLoop();
+
+        /// <summary>
+        /// Called by custom agent when the ship
+        /// takes damage
+        /// </summary>
+        public abstract void ComponentDamaged();
 
         #region FSM STATE
 

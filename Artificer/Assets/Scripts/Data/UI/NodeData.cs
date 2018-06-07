@@ -101,6 +101,21 @@ namespace Data.UI
             public string Value;
 
             /// <summary>
+            /// Returns the value of this node or the linked
+            /// nodes
+            /// </summary>
+            public string GetValue
+            {
+                get
+                {
+                    if (LinkedIO == null)
+                        return Value;
+                    else
+                        return LinkedIO.Value;
+                }
+            }
+
+            /// <summary>
             /// Returns a cloned IO object
             /// with the same parameters
             /// </summary>

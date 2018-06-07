@@ -16,8 +16,17 @@ namespace Space.AI
     public class CustomState : ICustomState
     {
         
+        // The main execution loop of the NPC script
         public override void PerformLoop()
         {
+            if (true)
+            {
+                // If condition is true, execute these statements.
+            }
+            else
+            {
+                // Else block. If condition is false, execute these statements.
+            }
         }
     }
 }

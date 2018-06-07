@@ -22,14 +22,23 @@ namespace Generator
         public static void GenerateAgent(NodeData start)
         {
             cu = new CodeCompileUnit();
+
             CodeNamespace samples = new CodeNamespace("Space.AI");
             samples.Imports.Add(new CodeNamespaceImport("System"));
-            targetClass = new CodeTypeDeclaration("CustomState");
+
+            
+
+                                                                            //CodeAttributeArgument codeAttr =
+                                                                            //new CodeAttributeArgument(new CodeSnippetExpression("typeof(Space.AI.FSM)"));
+                                                                            //CodeAttributeDeclaration codeAttribute = new CodeAttributeDeclaration("RequireComponent", codeAttr);
+            targetClass = new CodeTypeDeclaration("CustomState");           //targetClass.CustomAttributes.Add(codeAttribute);
+
             targetClass.IsClass = true;
             targetClass.TypeAttributes =
                 TypeAttributes.Public;
             targetClass.BaseTypes.Add(new CodeTypeReference
             { BaseType = "ICustomState", Options = CodeTypeReferenceOptions.GenericTypeParameter });
+
             samples.Types.Add(targetClass);
             cu.Namespaces.Add(samples);
 
@@ -43,10 +52,92 @@ namespace Generator
             LoopMethod.Attributes =
                 MemberAttributes.Public | MemberAttributes.Override;
             LoopMethod.Name = "PerformLoop";
+
+            LoopMethod.Comments.Add(new CodeCommentStatement
+                (new CodeComment("The main execution loop of the NPC script")));
+
             LoopMethod.ReturnType =
                 new CodeTypeReference(typeof(void));
 
+            //CodeSnippetStatement code =
+                //new CodeSnippetStatement("Debug.Log();");
+
+            LoopMethod.Statements.AddRange(GenerateNode(start));
+
             targetClass.Members.Add(LoopMethod);
+        }
+
+        private static CodeStatement[] GenerateNode(NodeData node)
+        {
+            switch(node.Category)
+            {
+                case "Events":
+                    return GenerateEvent(node);
+                case "Conditional":
+                    return GenerateCondtional(node);
+                default:
+                    return null;
+            }
+        }
+
+        private static CodeStatement[] GenerateEvent(NodeData node)
+        {
+            // Generate code based on the linked node
+            foreach(NodeData.IO link in node.Output)
+            {
+                if(link.LinkedIO != null && link.CurrentType == NodeData.IO.IOType.LINK)
+                {
+                    return GenerateNode(link.LinkedIO.Node);
+                }
+            }
+
+            return null;
+        }
+
+        private static CodeStatement[] GenerateCondtional(NodeData node)
+        {
+            if (node.Label == "IF")
+            {
+                // only create one condition if the node has the IF label
+                // input [1] is the boolean variable
+
+                CodeExpression condition = new CodeSnippetExpression(node.Input[1].GetValue);
+
+                // create the script
+                CodeConditionStatement conditionalStatement = new CodeConditionStatement(
+                    condition,              // The condition to test.
+                    new CodeStatement[]     // The statements to execute if the condition evaluates to true.
+                        { new CodeCommentStatement("If condition is true, execute these statements.") },
+                    new CodeStatement[]     // The statements to execute if the condition evalues to false.
+                        { new CodeCommentStatement("Else block. If condition is false, execute these statements.") });
+                // return the statement that is created
+                return new CodeStatement[] { conditionalStatement };
+            }
+            else
+            {
+                // This is a switch, add a comparison for
+                // each comparison value
+                string Comparison = node.Input[1].GetValue;
+
+                CodeStatement[] ifs = new CodeStatement[node.Input.Count-2];
+
+                // Input[2] is the start of the comparison values
+                for (int i = 2; i < node.Input.Count; i++)
+                {
+                    CodeBinaryOperatorExpression ifMatch = new CodeBinaryOperatorExpression
+                        (new CodeVariableReferenceExpression(Comparison), CodeBinaryOperatorType.IdentityEquality, 
+                            new CodeVariableReferenceExpression(node.Input[1].GetValue));
+
+                    CodeConditionStatement conditionStatement = new CodeConditionStatement(
+                        ifMatch,
+                        new CodeStatement[]     // The statements to execute if the condition evaluates to true.
+                            { new CodeCommentStatement("If condition is true, execute these statements.") });
+
+                    ifs[i-2] = conditionStatement;
+                }
+
+                return ifs;
+            }
         }
 
         public static void AddFields()

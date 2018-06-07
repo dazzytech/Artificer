@@ -194,6 +194,7 @@ namespace Space.UI.IDE
                             break;
                         case NodeData.IO.IOType.BOOL:
                             m_toggle.gameObject.SetActive(true);
+                            InputToggleChanged();
                             break;
                     }
                 }
