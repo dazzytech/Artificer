@@ -75,10 +75,14 @@ namespace Generator
                     return GenerateEvent(node);
                 case "Conditional":
                     return GenerateCondtional(node);
+                case "Sequence":
+                    return GenerateSequence(node);
                 default:
                     return null;
             }
         }
+
+        #region NODE GENERATORS
 
         private static CodeStatement[] GenerateEvent(NodeData node)
         {
@@ -139,6 +143,39 @@ namespace Generator
                 return ifs;
             }
         }
+
+        private static CodeStatement[] GenerateSequence(NodeData node)
+        {
+            // Create index name and assign to output
+            string indexName = "index_" + node.InstanceID.ToString();
+
+            // any child nodes may now access the index here
+            node.Output[1].Value = indexName;
+
+            // The output int of this node is assigned to the node output
+            CodeVariableDeclarationStatement indexInt = 
+                new CodeVariableDeclarationStatement(typeof(int),
+                indexName, new CodePrimitiveExpression(0));
+
+            // input[0] exec     
+            // input[1] min input     
+            // input[2] max input
+            // input[3] step input
+            CodeIterationStatement forLoop = new CodeIterationStatement(
+                new CodeAssignStatement( new CodeVariableReferenceExpression(indexName),
+                    new CodeSnippetExpression(node.Input[1].GetValue)),
+                new CodeBinaryOperatorExpression( new CodeVariableReferenceExpression(indexName),
+                    CodeBinaryOperatorType.LessThan, new CodeSnippetExpression(node.Input[2].GetValue)),
+                new CodeAssignStatement(new CodeVariableReferenceExpression(indexName),
+                    new CodeBinaryOperatorExpression(new CodeVariableReferenceExpression(indexName), CodeBinaryOperatorType.Add,
+                    new CodeSnippetExpression(node.Input[3].GetValue))),
+                new CodeStatement[]     // The statements to execute if the condition evaluates to true.
+                            { new CodeCommentStatement("If condition is true, execute these statements.") });
+
+            return new CodeStatement[] { forLoop };
+        }
+
+        #endregion
 
         public static void AddFields()
         {

@@ -19,13 +19,9 @@ namespace Space.AI
         // The main execution loop of the NPC script
         public override void PerformLoop()
         {
-            if (true)
+            for (index_1 = 0; (index_1 < 3); index_1 = (index_1 + 1))
             {
                 // If condition is true, execute these statements.
-            }
-            else
-            {
-                // Else block. If condition is false, execute these statements.
             }
         }
     }
