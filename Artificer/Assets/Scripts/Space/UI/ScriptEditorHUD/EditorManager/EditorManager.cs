@@ -297,9 +297,10 @@ namespace Space.UI.IDE
                 if (IODraggingLink.IO.Type != io.IO.Type)
                 {
                     // detect if the type of either is unassigned
-                    if (io.IO.Type == NodeData.IO.IOType.UNDEF)
+                    if (io.IO.Type == NodeData.IO.IOType.UNDEF
+                        || io.IO.Type == NodeData.IO.IOType.UNDEFSINGLE)
                     {
-                        if (io.IO.Node.SupportedTypes.Contains(IODraggingLink.IO.Type))
+                        if (io.IO.Node.SupportedTypes.Contains(IODraggingLink.IO.CurrentType))
                         {
                             // assign the io node to the sub var type
                             node.SetType(IODraggingLink.IO.CurrentType);
@@ -307,9 +308,10 @@ namespace Space.UI.IDE
                         else
                             return;
                     }
-                    else if (IODraggingLink.IO.Type == NodeData.IO.IOType.UNDEF)
+                    else if (IODraggingLink.IO.Type == NodeData.IO.IOType.UNDEF
+                        || io.IO.Type == NodeData.IO.IOType.UNDEFSINGLE)
                     {
-                        if (IODraggingLink.IO.Node.SupportedTypes.Contains(io.IO.Type))
+                        if (IODraggingLink.IO.Node.SupportedTypes.Contains(io.IO.CurrentType))
                         {
                             // assign the io node to the sub var type
                             SelectedObj.SetType(io.IO.CurrentType);
@@ -320,7 +322,8 @@ namespace Space.UI.IDE
                     else
                         return;
                 }
-                else if (io.IO.Type == NodeData.IO.IOType.UNDEF)
+                else if (io.IO.Type == NodeData.IO.IOType.UNDEF 
+                    || io.IO.Type == NodeData.IO.IOType.UNDEFSINGLE)
                     return;
 
                 io.Close();

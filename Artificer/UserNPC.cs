@@ -11,6 +11,9 @@
 namespace Space.AI
 {
     using System;
+    using UnityEngine;
+    using System.Collections.Generic;
+    using Data.UI;
     
     
     public class CustomState : ICustomState
@@ -19,9 +22,13 @@ namespace Space.AI
         // The main execution loop of the NPC script
         public override void PerformLoop()
         {
-            for (index_1 = 0; (index_1 < 3); index_1 = (index_1 + 1))
+            System.Collections.Generic.List<float> array_3 = new List<float>();
+            int index_1 = 0;
+            float item_1;
+            for (index_1 = 0; (index_1 < array_3.Count()); index_1 = (index_1 + 1))
             {
-                // If condition is true, execute these statements.
+                item_1 = array_3[index_1];
+Debug.Log(item_1.ToString());
             }
         }
     }

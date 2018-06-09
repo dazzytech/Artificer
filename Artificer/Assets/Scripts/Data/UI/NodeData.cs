@@ -15,11 +15,11 @@ namespace Data.UI
     {
         #region NESTED
 
-        public class IO: IndexedObject
+        public class IO : IndexedObject
         {
             #region NODE TYPES
 
-            public enum IOType { UNDEF, NUM, STRING, BOOL, OBJECT, ARRAY, LINK };
+            public enum IOType { UNDEF, UNDEFSINGLE, NUM, STRING, BOOL, OBJECT, NUMARRAY, STRINGARRAY, OBJARRAY, LINK };
 
             /// <summary>
             /// If IO os param, define the type of parameter the 
@@ -115,6 +115,27 @@ namespace Data.UI
                 }
             }
 
+            public System.Type IOGetType
+            {
+                get
+                {
+                    switch (CurrentType)
+                    {
+                        case IOType.NUM:
+                        case IOType.NUMARRAY:
+                            return typeof(float);
+                        case IOType.STRING:
+                        case IOType.STRINGARRAY:
+                            return typeof(string);
+                        case IOType.OBJECT:
+                        case IOType.OBJARRAY:
+                            return typeof(IDEObjectData);
+                        default:
+                            return typeof(void);
+                    }
+                }
+            }
+
             /// <summary>
             /// Returns a cloned IO object
             /// with the same parameters
@@ -130,6 +151,7 @@ namespace Data.UI
                 clone.Type = Type;
                 clone.LinkedIO = LinkedIO;
                 clone.Node = cloneNode;
+                clone.Value = Value;
 
                 clone.GroupID = GroupID;
                 clone.GroupInstanceID = GroupInstanceID;
@@ -249,7 +271,7 @@ namespace Data.UI
                 case "param":
                     switch (xmlIO.Attributes["type"].Value)
                     {
-                        case "int":
+                        case "number":
                             io.Type = IO.IOType.NUM;
                             break;
                         case "string":
@@ -262,14 +284,26 @@ namespace Data.UI
                             io.Type = IO.IOType.OBJECT;
                             break;
                         case "objectarray":
-                            io.Type = IO.IOType.ARRAY;
+                            io.Type = IO.IOType.OBJARRAY;
+                            break;
+                        case "numarray":
+                            io.Type = NodeData.IO.IOType.NUMARRAY;
+                            break;
+                        case "stringarray":
+                            io.Type = NodeData.IO.IOType.STRINGARRAY;
                             break;
                         case "undef":
                             io.Type = IO.IOType.UNDEF;
                             break;
+                        case "undefsingle":
+                            io.Type = IO.IOType.UNDEFSINGLE;
+                            break;
                     }
                     break;
             }
+
+            if (xmlIO.Attributes["value"] != null)
+                    io.Value = xmlIO.Attributes["value"].Value;
 
             if (xmlIO.Attributes["in"].Value == "true")
                 m_in.Add(io);

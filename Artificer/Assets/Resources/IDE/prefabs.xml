@@ -24,7 +24,6 @@
 			</description>
 			<type>number</type>
 			<type>string</type>
-			<type>object</type>
 			<link in="true" label="Start"/>
 			<param in="true" type="undef" label="Comparison"/>
 			<group id="0">
@@ -39,24 +38,25 @@
 				Repeats the program flow through the Loop executable for the given amount. The index increments the amount defined by the Step value, starting at the Min value and ending at the Max value. Upon completion, the End link is executed, ending the node execution.
 				</description>
 			<link in="true" label = "Start"/>
-			<param in="true" type="int" label = "Min"/>
-			<param in="true"  type="int" label = "Max"/>
-			<param in="true" type="int" label = "Step"/>
+			<param in="true" type="number" label = "Min"/>
+			<param in="true"  type="number" label = "Max"/>
+			<param in="true" type="number" label = "Step"/>
 			<link in="false" label = "Loop"/>
-			<param in="false" type="int" label = "Index"/>
+			<param in="false" type="number" label = "Index"/>
 			<link in="false" label = "End"/>
 		</node>
 		<node label="FOREACH">
 			<description>
 				Repeats the program flow through the Loop executable for each item in the list.
 			</description>
-			<type>number</type>
-			<type>object</type>
+			<type>numarray</type>
+			<type>objectarray</type>
+			<type>stringarray</type>
 			<link in="true" label = "Start"/>
-			<param in="true" type="objectarray" label = "List"/>
+			<param in="true" type="undef" label = "List"/>
 			<link in="false" label = "Loop"/>
-			<param in="false" type="int" label = "Index"/>
-			<param in="false" type="undef" label = "Item"/>
+			<param in="false" type="number" label = "Index"/>
+			<param in="false" type="undefsingle" label = "Item"/>
 			<link in="false" label = "End"/>
 		</node>
 		<node label="WHILE">
@@ -76,6 +76,73 @@
 			<group id = "0">
 				<link in="false" label = "Action" createID="0"/>
 			</group>
+		</node>
+	</category>
+	<category label = "Debug">
+		<node label = "TRUE">
+			<description>
+				Always returns a true value
+			</description>
+			<param in="false" type="bool" label="True" value="true"/>
+		</node>
+		<node label = "FALSE">
+			<description>
+				Always returns a false value
+			</description>
+			<param in="false" type="bool" label="False" value="false"/>
+		</node>
+		<node label = "LOG">
+			<description>
+				Outputs a message to the Debug.Log window
+			</description>
+			<type>number</type>
+			<type>string</type>
+			<type>bool</type>
+			<link in="true" label = "In"/>
+			<param in="true" type="undef" label = "Messege"/>
+			<link in="false" label = "Out"/>
+		</node>
+		<node label = "CREATESTRING">
+			<description>
+				Creates a a string variable for testing string inputs
+			</description>
+			<link in="true" label = "In"/>
+			<param in="true" type="string" label = "Value"/>
+			<link in="false" label = "Out"/>
+			<param in="false" type="string" label = "Value"/>
+		</node>
+		<node label = "CREATENUM">
+			<description>
+				Creates a a number variable for testing number inputs
+			</description>
+			<link in="true" label = "In"/>
+			<param in="true" type="number" label = "Value" value = "0"/>
+			<link in="false" label = "Out"/>
+			<param in="false" type="number" label = "Value"/>
+		</node>
+		<node label = "CREATENUMARRAY">
+			<description>
+				Creates an empty array of numbers
+			</description>
+			<link in="true" label = "In"/>
+			<link in="false" label = "Out"/>
+			<param in="false" type="numarray" label = "New Array"/>
+		</node>
+		<node label = "CREATESTRINGARRAY">
+			<description>
+				Creates an empty array of strings
+			</description>
+			<link in="true" label = "In"/>
+			<link in="false" label = "Out"/>
+			<param in="false" type="stringarray" label = "New Array"/>
+		</node>
+		<node label = "CREATEOBJARRAY">
+			<description>
+				Creates an empty array of objects
+			</description>
+			<link in="true" label = "In"/>
+			<link in="false" label = "Out"/>
+			<param in="false" type="objectarray" label = "New Array"/>
 		</node>
 	</category>
 </prefabs>

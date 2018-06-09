@@ -97,7 +97,13 @@ namespace Space.UI.IDE
                                 node.SupportedTypes.Add(NodeData.IO.IOType.OBJECT);
                                 break;
                             case "objectarray":
-                                node.SupportedTypes.Add(NodeData.IO.IOType.ARRAY);
+                                node.SupportedTypes.Add(NodeData.IO.IOType.OBJARRAY);
+                                break;
+                            case "numarray":
+                                node.SupportedTypes.Add(NodeData.IO.IOType.NUMARRAY);
+                                break;
+                            case "stringarray":
+                                node.SupportedTypes.Add(NodeData.IO.IOType.STRINGARRAY);
                                 break;
                             default:
                                 node.SupportedTypes.Add(NodeData.IO.IOType.UNDEF);

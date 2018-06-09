@@ -192,8 +192,10 @@ namespace Space.UI.IDE
         {
             foreach(IOPrefab io in m_IOObjects.Values)
             {
-                if(io.IO.CurrentType == NodeData.IO.IOType.UNDEF)
+                if (io.IO.CurrentType == NodeData.IO.IOType.UNDEF)
                     io.IO.TempVar = type;
+                else if (io.IO.CurrentType == NodeData.IO.IOType.UNDEFSINGLE)
+                    io.IO.TempVar = IOGetSingle(type);
 
                 io.UpdateNode();
                 io.UpdateInput();
@@ -212,6 +214,25 @@ namespace Space.UI.IDE
         }
 
         #endregion
+
+        /// <summary>
+        /// When an input is an array
+        /// this will return the stored var type in the array
+        /// </summary>
+        public NodeData.IO.IOType IOGetSingle(NodeData.IO.IOType CurrentType)
+        {
+            switch (CurrentType)
+            {
+                case NodeData.IO.IOType.NUMARRAY:
+                    return NodeData.IO.IOType.NUM;
+                case NodeData.IO.IOType.STRINGARRAY:
+                    return NodeData.IO.IOType.STRING;
+                case NodeData.IO.IOType.OBJARRAY:
+                    return NodeData.IO.IOType.OBJECT;
+                default:
+                    return CurrentType;
+            }
+        }
 
         #region IPOINTEREVENT
 

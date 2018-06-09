@@ -50,6 +50,10 @@ namespace Space.UI.IDE
         [SerializeField]
         private Texture2D m_closedIO;
 
+        #endregion
+
+        #region COLOURS
+
         [Header("Colours")]
 
         [SerializeField]
@@ -66,6 +70,15 @@ namespace Space.UI.IDE
 
         [SerializeField]
         private Color m_objectColour;
+
+        [SerializeField]
+        private Color m_numArrayColour;
+
+        [SerializeField]
+        private Color m_stringArrayColour;
+
+        [SerializeField]
+        private Color m_objectArrayColour;
 
         [SerializeField]
         private Color m_execColour;
@@ -217,7 +230,10 @@ namespace Space.UI.IDE
 
         public void InputTextChanged()
         {
-            m_data.Value = m_input.text;
+            if(m_data.CurrentType == NodeData.IO.IOType.STRING)
+                m_data.Value = string.Format("\"{0}\"", m_input.text);
+            else
+                m_data.Value = m_input.text;
         }
 
         public void InputToggleChanged()
@@ -243,6 +259,7 @@ namespace Space.UI.IDE
                 switch (m_data.CurrentType)
                 {
                     case NodeData.IO.IOType.UNDEF:
+                    case NodeData.IO.IOType.UNDEFSINGLE:
                         m_image.color = m_undefColour;
                         break;
                     case NodeData.IO.IOType.NUM:
@@ -255,8 +272,16 @@ namespace Space.UI.IDE
                         m_image.color = m_boolColour;
                         break;
                     case NodeData.IO.IOType.OBJECT:
-                    case NodeData.IO.IOType.ARRAY:
                         m_image.color = m_objectColour;
+                        break;
+                    case NodeData.IO.IOType.OBJARRAY:
+                        m_image.color = m_objectArrayColour;
+                        break;
+                    case NodeData.IO.IOType.STRINGARRAY:
+                        m_image.color = m_stringArrayColour;
+                        break;
+                    case NodeData.IO.IOType.NUMARRAY:
+                        m_image.color = m_numArrayColour;
                         break;
                 }
             }
