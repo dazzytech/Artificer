@@ -233,11 +233,13 @@ namespace Space.UI.IDE
 
             IOPrefab otherprefab = m_att.AddedNodes[other.InstanceID].GetIO(otherIO);
             other.DereferenceNode(otherIO);
+            m_att.AddedNodes[other.InstanceID].DisplayItem(true);
             otherprefab.UpdateNode();
             m_att.AddedNodes[other.InstanceID].ResetType();
             node.ResetType();
 
             node.Node.DereferenceNode(io.IO);
+            node.DisplayItem(true);
             io.UpdateNode();
 
             m_att.RenderList.Remove(m_att.RenderList.Find
@@ -377,10 +379,12 @@ namespace Space.UI.IDE
                             UnlinkIO(IODraggingLink, SelectedObj);
 
                         SelectedObj.Node.AssignToNode(IODraggingLink.IO, IOOverLink.IO);
+                        SelectedObj.DisplayItem(true);
                         IODraggingLink.UpdateNode();
                         IODraggingLink.UpdateInput();
 
                         HighlightedObj.Node.AssignToNode(IOOverLink.IO, IODraggingLink.IO);
+                        HighlightedObj.DisplayItem(true);
                         IOOverLink.UpdateNode();
                         IOOverLink.UpdateInput();
 

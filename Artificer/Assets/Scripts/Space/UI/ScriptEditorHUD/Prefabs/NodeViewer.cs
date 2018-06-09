@@ -80,8 +80,26 @@ namespace Space.UI.IDE
             // Assign the data to our visual elements
             m_label.text = m_nodeData.Label;
 
+            List<NodeData.IO> deleteList = new List<NodeData.IO>();
+
+            foreach(NodeData.IO io in m_IOObjects.Keys)
+            {
+                if (!m_nodeData.Input.Contains(io)
+                    && !m_nodeData.Output.Contains(io))
+                    deleteList.Add(io);
+            }
+
+            foreach(NodeData.IO io in deleteList)
+            {
+                GameObject.Destroy(m_IOObjects[io].gameObject);
+                m_IOObjects.Remove(io);
+            }
+
             foreach (NodeData.IO input in m_nodeData.Input)
             {
+                if (m_IOObjects.ContainsKey(input))
+                    continue;
+
                 GameObject inGO = Instantiate(m_ioPrefab);
                 inGO.transform.SetParent(m_inputList);
 
@@ -96,6 +114,9 @@ namespace Space.UI.IDE
 
             foreach (NodeData.IO output in m_nodeData.Output)
             {
+                if (m_IOObjects.ContainsKey(output))
+                    continue;
+
                 GameObject outGO = Instantiate(m_ioPrefab);
                 outGO.transform.SetParent(m_outputList);
 

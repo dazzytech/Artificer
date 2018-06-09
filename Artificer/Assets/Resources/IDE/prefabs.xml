@@ -27,7 +27,7 @@
 			<link in="true" label="Start"/>
 			<param in="true" type="undef" label="Comparison"/>
 			<group id="0">
-				<link in="true" type="undef" label="Condition" createID="0"/>
+				<param in="true" type="undef" label="Condition" createID="0"/>
 				<link in="false" label="Action"/>
 			</group>
 		</node>
@@ -77,6 +77,9 @@
 				<link in="false" label = "Action" createID="0"/>
 			</group>
 		</node>
+	</category>
+	<category label="Variables">
+	
 	</category>
 	<category label = "Debug">
 		<node label = "TRUE">

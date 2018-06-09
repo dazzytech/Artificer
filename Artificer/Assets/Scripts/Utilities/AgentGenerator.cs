@@ -124,24 +124,27 @@ namespace Generator
                 // each comparison value
                 string Comparison = node.Input[1].GetValue;
 
-                CodeStatement[] ifs = new CodeStatement[node.Input.Count-2];
+                List<CodeStatement> ifs = new List<CodeStatement>();
 
                 // Input[2] is the start of the comparison values
                 for (int i = 2; i < node.Input.Count; i++)
                 {
+                    if (node.Input[i].GetValue == null)
+                        continue;
+
                     CodeBinaryOperatorExpression ifMatch = new CodeBinaryOperatorExpression
                         (new CodeVariableReferenceExpression(Comparison), CodeBinaryOperatorType.IdentityEquality, 
-                            new CodeVariableReferenceExpression(node.Input[1].GetValue));
+                            new CodeVariableReferenceExpression(node.Input[i].GetValue));
 
                     CodeConditionStatement conditionStatement = new CodeConditionStatement(
                         ifMatch,
                         new CodeStatement[]     // The statements to execute if the condition evaluates to true.
                             { new CodeCommentStatement("If condition is true, execute these statements.") });
 
-                    ifs[i-2] = conditionStatement;
+                    ifs.Add(conditionStatement);
                 }
 
-                return ifs;
+                return ifs.ToArray();
             }
         }
 

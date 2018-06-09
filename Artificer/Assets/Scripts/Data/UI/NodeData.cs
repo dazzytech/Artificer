@@ -80,11 +80,6 @@ namespace Data.UI
             /// </summary>
             public int GroupCreateID;
 
-            /// <summary>
-            /// When unassigned and this ID is not the highest group instance ID
-            /// </summary>
-            public int GroupRemoveID;
-
             #endregion
 
             #endregion
@@ -156,8 +151,6 @@ namespace Data.UI
                 clone.GroupID = GroupID;
                 clone.GroupInstanceID = GroupInstanceID;
                 clone.GroupCreateID = GroupCreateID;
-                clone.GroupRemoveID = GroupRemoveID;
-
                 return clone;
             }
         }
@@ -257,8 +250,8 @@ namespace Data.UI
             // grouping assignment and group editing
             io.GroupID = groupID;
 
-            if (xmlIO.Attributes["createId"] != null)
-                io.GroupCreateID = Convert.ToInt32(xmlIO.Attributes["createId"].Value);
+            if (xmlIO.Attributes["createID"] != null)
+                io.GroupCreateID = Convert.ToInt32(xmlIO.Attributes["createID"].Value);
             else
                 io.GroupCreateID = -1;
 
@@ -332,8 +325,6 @@ namespace Data.UI
                         // Add this copy to list
                         m_in.Add(CreateGroupCopy(maxGroupID + 1, io));
                     }
-                    // add the reference to the id to the input param
-                    self.GroupRemoveID = maxGroupID + 1;
                 }
 
                 foreach (IO io in m_out.FindAll(x => x.GroupID == self.GroupID))
@@ -344,9 +335,6 @@ namespace Data.UI
                         // Add this copy to list
                         m_out.Add(CreateGroupCopy(maxGroupID + 1, io));
                     }
-
-                    // add the reference to the id to the input param
-                    self.GroupRemoveID = maxGroupID + 1;
                 }
             }
         }
@@ -356,9 +344,38 @@ namespace Data.UI
         /// group instance and update all other group instances
         /// </summary>
         /// <param name="ID"></param>
-        public void DereferenceNode(IO node)
+        public void DereferenceNode(IO self)
         {
-            node.LinkedIO = null;
+            self.LinkedIO = null;
+
+            List<IO> delete = new List<IO>();
+
+            if (self.GroupInstanceID != MaxGroupInstance(self.GroupCreateID))
+            {
+                foreach (IO io in m_in.FindAll(x => x.GroupID == self.GroupID))
+                {
+                    // if this is the latest instance, delete
+                    if (io.GroupInstanceID == self.GroupInstanceID)
+                    {
+                        delete.Add(io);
+                    }
+                }
+
+                foreach (IO io in m_out.FindAll(x => x.GroupID == self.GroupID))
+                {
+                    // if this is the latest instance, create a copy
+                    if (io.GroupInstanceID == self.GroupInstanceID)
+                    {
+                        delete.Add(io);
+                    }
+                }
+            }
+
+            foreach(IO io in delete)
+            {
+                m_in.Remove(io);
+                m_out.Remove(io);
+            }
         }
 
         /// <summary>
@@ -429,6 +446,7 @@ namespace Data.UI
             copy.Node = io.Node;
             copy.GroupID = io.GroupID;
             copy.GroupInstanceID = groupID;
+            copy.GroupCreateID = io.GroupCreateID;
             copy.Type = io.Type;
             copy.Type = io.Type;
 

@@ -22,13 +22,11 @@ namespace Space.AI
         // The main execution loop of the NPC script
         public override void PerformLoop()
         {
-            System.Collections.Generic.List<float> array_3 = new List<float>();
-            int index_1 = 0;
-            float item_1;
-            for (index_1 = 0; (index_1 < array_3.Count()); index_1 = (index_1 + 1))
+            float number_2 = 0;
+            float number_3 = 0;
+            if ((number_2 == number_3))
             {
-                item_1 = array_3[index_1];
-Debug.Log(item_1.ToString());
+                // If condition is true, execute these statements.
             }
         }
     }
