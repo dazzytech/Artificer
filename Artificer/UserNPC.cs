@@ -22,12 +22,9 @@ namespace Space.AI
         // The main execution loop of the NPC script
         public override void PerformLoop()
         {
-            float number_2 = 0;
-            float number_3 = 0;
-            if ((number_2 == number_3))
-            {
-                // If condition is true, execute these statements.
-            }
+            Keys.Add(Control_Config.GetKey("fire", "ship"));;
+            Keys.Add(Control_Config.GetKey("secondary", "ship"));;
+            Keys.Add(Control_Config.GetKey("tertiary", "ship"));;
         }
     }
 }

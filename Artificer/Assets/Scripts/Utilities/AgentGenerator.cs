@@ -77,6 +77,10 @@ namespace Generator
                     return GenerateCondtional(node);
                 case "Sequence":
                     return GenerateSequence(node);
+                case "Variables":
+                    return GenerateVariables(node);
+                case "Ship Interact":
+                    return GenerateShipInteract(node);
                 case "Debug":
                     return GenerateDebug(node);
                 default:
@@ -102,49 +106,63 @@ namespace Generator
 
         private static CodeStatement[] GenerateCondtional(NodeData node)
         {
-            if (node.Label == "IF")
+            switch (node.Label)
             {
-                // only create one condition if the node has the IF label
-                // input [1] is the boolean variable
-                CodeExpression condition = new CodeSnippetExpression(node.Input[1].GetValue);
-
-                // create the script
-                CodeConditionStatement conditionalStatement = new CodeConditionStatement(
-                    condition,              // The condition to test.
-                    new CodeStatement[]     // The statements to execute if the condition evaluates to true.
-                        { new CodeCommentStatement("If condition is true, execute these statements.") },
-                    new CodeStatement[]     // The statements to execute if the condition evalues to false.
-                        { new CodeCommentStatement("Else block. If condition is false, execute these statements.") });
-                // return the statement that is created
-                return new CodeStatement[] { conditionalStatement };
-            }
-            else
-            {
-                // This is a switch, add a comparison for
-                // each comparison value
-                string Comparison = node.Input[1].GetValue;
-
-                List<CodeStatement> ifs = new List<CodeStatement>();
-
-                // Input[2] is the start of the comparison values
-                for (int i = 2; i < node.Input.Count; i++)
+                case "IF":
                 {
-                    if (node.Input[i].GetValue == null)
-                        continue;
+                        // only create one condition if the node has the IF label
+                        // input [1] is the boolean variable
+                        CodeExpression condition = new CodeSnippetExpression(node.Input[1].GetValue);
 
-                    CodeBinaryOperatorExpression ifMatch = new CodeBinaryOperatorExpression
-                        (new CodeVariableReferenceExpression(Comparison), CodeBinaryOperatorType.IdentityEquality, 
-                            new CodeVariableReferenceExpression(node.Input[i].GetValue));
+                        CodeStatement[] trueStatements = null;
+                        if(node.Output[0].LinkedIO != null)
+                            trueStatements = GenerateNode(node.Output[0].LinkedIO.Node);
 
-                    CodeConditionStatement conditionStatement = new CodeConditionStatement(
-                        ifMatch,
-                        new CodeStatement[]     // The statements to execute if the condition evaluates to true.
-                            { new CodeCommentStatement("If condition is true, execute these statements.") });
+                        CodeStatement[] falseStatements = null;
+                        if(node.Output[1].LinkedIO != null) 
+                            falseStatements = GenerateNode(node.Output[1].LinkedIO.Node);
 
-                    ifs.Add(conditionStatement);
+                        // create the script
+                        CodeConditionStatement conditionalStatement = new CodeConditionStatement(
+                            condition, trueStatements, falseStatements);
+                            
+
+                        // return the statement that is created
+                        return new CodeStatement[] { conditionalStatement };
                 }
+                case "SWITCH":
+                {
+                    // This is a switch, add a comparison for
+                    // each comparison value
+                    string Comparison = node.Input[1].GetValue;
 
-                return ifs.ToArray();
+                    List<CodeStatement> ifs = new List<CodeStatement>();
+
+                    // Input[2] is the start of the comparison values
+                    for (int i = 2; i < node.Input.Count; i++)
+                    {
+                        if (node.Input[i].GetValue == null)
+                            continue;
+
+                        CodeBinaryOperatorExpression ifMatch = new CodeBinaryOperatorExpression
+                            (new CodeVariableReferenceExpression(Comparison), CodeBinaryOperatorType.IdentityEquality,
+                                new CodeVariableReferenceExpression(node.Input[i].GetValue));
+
+                            CodeStatement[] trueStatements = null;
+                            if (node.Output[0].LinkedIO != null)
+                                trueStatements = GenerateNode(node.Output[i - 2].LinkedIO.Node);
+
+                            CodeConditionStatement conditionStatement = new CodeConditionStatement(
+                            ifMatch,
+                            trueStatements);
+
+                        ifs.Add(conditionStatement);
+                    }
+
+                    return ifs.ToArray();
+                }
+                default:
+                    return null;
             }
         }
 
@@ -157,98 +175,109 @@ namespace Generator
         {
             List<CodeStatement> statements = new List<CodeStatement>();
 
-            if (node.Label == "FOR")
+            switch (node.Label)
             {
-                if (node.Output[0].LinkedIO != null)
-                {
-                    // Create index name and assign to output
-                    string indexName = "index_" + node.InstanceID.ToString();
+                case "FOR":
+                    {
+                        if (node.Output[0].LinkedIO != null)
+                        {
+                            // Create index name and assign to output
+                            string indexName = "index_" + node.InstanceID.ToString();
 
-                    // any child nodes may now access the index here
-                    node.Output[1].Value = indexName;
+                            // any child nodes may now access the index here
+                            node.Output[1].Value = indexName;
 
-                    // The output int of this node is assigned to the node output
-                    CodeVariableDeclarationStatement indexInt =
-                        new CodeVariableDeclarationStatement(typeof(int),
-                        indexName, new CodePrimitiveExpression(0));
-                    statements.Add(indexInt);
-                    // input[0] exec     
-                    // input[1] min input     
-                    // input[2] max input
-                    // input[3] step input
-                    CodeIterationStatement forLoop = new CodeIterationStatement(
-                        new CodeAssignStatement(new CodeVariableReferenceExpression(indexName),
-                            new CodeSnippetExpression(node.Input[1].GetValue)),
-                        new CodeBinaryOperatorExpression(new CodeVariableReferenceExpression(indexName),
-                            CodeBinaryOperatorType.LessThan, new CodeSnippetExpression(node.Input[2].GetValue)),
-                        new CodeAssignStatement(new CodeVariableReferenceExpression(indexName),
-                            new CodeBinaryOperatorExpression(new CodeVariableReferenceExpression(indexName), CodeBinaryOperatorType.Add,
-                            new CodeSnippetExpression(node.Input[3].GetValue))),
-                            GenerateNode(node.Output[0].LinkedIO.Node)); // The statements to execute if the condition evaluates to true.
-                    statements.Add(forLoop);
-                }
+                            // The output int of this node is assigned to the node output
+                            CodeVariableDeclarationStatement indexInt =
+                                new CodeVariableDeclarationStatement(typeof(int),
+                                indexName, new CodePrimitiveExpression(0));
+                            statements.Add(indexInt);
+                            // input[0] exec     
+                            // input[1] min input     
+                            // input[2] max input
+                            // input[3] step input
+                            CodeIterationStatement forLoop = new CodeIterationStatement(
+                                new CodeAssignStatement(new CodeVariableReferenceExpression(indexName),
+                                    new CodeSnippetExpression(node.Input[1].GetValue)),
+                                new CodeBinaryOperatorExpression(new CodeVariableReferenceExpression(indexName),
+                                    CodeBinaryOperatorType.LessThan, new CodeSnippetExpression(node.Input[2].GetValue)),
+                                new CodeAssignStatement(new CodeVariableReferenceExpression(indexName),
+                                    new CodeBinaryOperatorExpression(new CodeVariableReferenceExpression(indexName), CodeBinaryOperatorType.Add,
+                                    new CodeSnippetExpression(node.Input[3].GetValue))),
+                                    GenerateNode(node.Output[0].LinkedIO.Node)); // The statements to execute if the condition evaluates to true.
+                            statements.Add(forLoop);
+                        }
 
-                // if there is an end node then generate the end node - Output[2]
-                if(node.Output[2].LinkedIO != null)
-                    statements.AddRange(GenerateNode(node.Output[2].LinkedIO.Node));
-            }
-            else if(node.Label == "FOREACH")
-            {
-                // Create index name and assign to output
-                string indexName = "index_" + node.InstanceID.ToString();
-                // any child nodes may now access the index here
-                node.Output[1].Value = indexName;
+                        // if there is an end node then generate the end node - Output[2]
+                        if (node.Output[2].LinkedIO != null)
+                            statements.AddRange(GenerateNode(node.Output[2].LinkedIO.Node));
 
-                // Create item name and assign to output
-                string itemName = "item_" + node.InstanceID.ToString();
-                // access the item via the output
-                node.Output[2].Value = itemName;
+                        break;
+                    }
+                case "FOREACH":
+                    {
+                        // Create index name and assign to output
+                        string indexName = "index_" + node.InstanceID.ToString();
+                        // any child nodes may now access the index here
+                        node.Output[1].Value = indexName;
 
-                // The output int of this node is assigned to the node output
-                CodeVariableDeclarationStatement indexInt =
-                    new CodeVariableDeclarationStatement(typeof(int),
-                    indexName, new CodePrimitiveExpression(0));
-                statements.Add(indexInt);
+                        // Create item name and assign to output
+                        string itemName = "item_" + node.InstanceID.ToString();
+                        // access the item via the output
+                        node.Output[2].Value = itemName;
 
-                // The output item of this node is assigned to the node output
-                CodeVariableDeclarationStatement itemRef =
-                    new CodeVariableDeclarationStatement(node.Input[1].IOGetType,
-                    itemName);
-                statements.Add(itemRef);
+                        // The output int of this node is assigned to the node output
+                        CodeVariableDeclarationStatement indexInt =
+                            new CodeVariableDeclarationStatement(typeof(int),
+                            indexName, new CodePrimitiveExpression(0));
+                        statements.Add(indexInt);
 
-                List<CodeStatement> loopBody = new List<CodeStatement>();
-                loopBody.Add(new CodeAssignStatement(new CodeVariableReferenceExpression(itemName),
-                                new CodeSnippetExpression(string.Format("{0}[{1}]", node.Input[1].GetValue, indexName))));
-                if (node.Output[0].LinkedIO != null)
-                    loopBody.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
+                        // The output item of this node is assigned to the node output
+                        CodeVariableDeclarationStatement itemRef =
+                            new CodeVariableDeclarationStatement(node.Input[1].IOGetType,
+                            itemName);
+                        statements.Add(itemRef);
 
-                CodeIterationStatement forLoop = new CodeIterationStatement(
-                    new CodeAssignStatement(new CodeVariableReferenceExpression(indexName),
-                        new CodePrimitiveExpression(0)),
-                    new CodeBinaryOperatorExpression(new CodeVariableReferenceExpression(indexName),
-                        CodeBinaryOperatorType.LessThan, new CodeSnippetExpression(node.Input[1].GetValue + ".Count()")),
-                    new CodeAssignStatement(new CodeVariableReferenceExpression(indexName),
-                        new CodeBinaryOperatorExpression(new CodeVariableReferenceExpression(indexName), CodeBinaryOperatorType.Add,
-                        new CodePrimitiveExpression(1))),
-                    loopBody.ToArray());
+                        List<CodeStatement> loopBody = new List<CodeStatement>();
+                        loopBody.Add(new CodeAssignStatement(new CodeVariableReferenceExpression(itemName),
+                                        new CodeSnippetExpression(string.Format("{0}[{1}]", node.Input[1].GetValue, indexName))));
+                        if (node.Output[0].LinkedIO != null)
+                            loopBody.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
 
-                statements.Add(forLoop);
-            }
-            else if(node.Label == "WHILE")
-            {
-                CodeIterationStatement whileLoop = new CodeIterationStatement(new CodeSnippetStatement(), new CodeSnippetExpression(node.Input[1].GetValue), 
-                    new CodeSnippetStatement(), new CodeStatement[]     
-                                { new CodeCommentStatement("Execute the loop body") });
-                statements.Add(whileLoop);
-            }
-            else if(node.Label == "SEQUENCE")
-            {
-                // loop through each output and add the node statement to list
-                foreach(NodeData.IO output in node.Output)
-                {
-                    if (output.LinkedIO != null)
-                        statements.AddRange(GenerateNode(output.LinkedIO.Node));
-                }
+                        CodeIterationStatement forLoop = new CodeIterationStatement(
+                            new CodeAssignStatement(new CodeVariableReferenceExpression(indexName),
+                                new CodePrimitiveExpression(0)),
+                            new CodeBinaryOperatorExpression(new CodeVariableReferenceExpression(indexName),
+                                CodeBinaryOperatorType.LessThan, new CodeSnippetExpression(node.Input[1].GetValue + ".Count()")),
+                            new CodeAssignStatement(new CodeVariableReferenceExpression(indexName),
+                                new CodeBinaryOperatorExpression(new CodeVariableReferenceExpression(indexName), CodeBinaryOperatorType.Add,
+                                new CodePrimitiveExpression(1))),
+                            loopBody.ToArray());
+
+                        statements.Add(forLoop);
+
+                        break;
+                    }
+                case "WHILE":
+                    {
+                        CodeIterationStatement whileLoop = new CodeIterationStatement(new CodeSnippetStatement(), new CodeSnippetExpression(node.Input[1].GetValue),
+                            new CodeSnippetStatement(), new CodeStatement[]
+                                        { new CodeCommentStatement("Execute the loop body") });
+                        statements.Add(whileLoop);
+
+                        break;
+                    }
+                case "SEQUENCE":
+                    {
+                        // loop through each output and add the node statement to list
+                        foreach (NodeData.IO output in node.Output)
+                        {
+                            if (output.LinkedIO != null)
+                                statements.AddRange(GenerateNode(output.LinkedIO.Node));
+                        }
+                        break;
+                    }
+                    
             }
 
             return statements.ToArray();
@@ -264,104 +293,275 @@ namespace Generator
         {
             List<CodeStatement> statements = new List<CodeStatement>();
 
-            if (node.Label == "LOG")
+            switch (node.Label)
             {
-                // Creates a debug.log to output a message
-                if (node.Input[1].GetValue != null)
+                case "LOG":
                 {
-                    // generate an input string here
-                    string input = node.Input[1].GetValue;
-                    // if the input is not a string then it will need to be converted
-                    if (node.Input[1].CurrentType != NodeData.IO.IOType.STRING)
-                        input = string.Concat(input, ".ToString()");
+                    // Creates a debug.log to output a message
+                    if (node.Input[1].GetValue != null)
+                    {
+                        // generate an input string here
+                        string input = node.Input[1].GetValue;
+                        // if the input is not a string then it will need to be converted
+                        if (node.Input[1].CurrentType != NodeData.IO.IOType.STRING)
+                            input = string.Concat(input, ".ToString()");
 
-                    CodeSnippetStatement code =
-                        new CodeSnippetStatement("Debug.Log(" + input + ");");
+                        CodeSnippetStatement code =
+                            new CodeSnippetStatement("Debug.Log(" + input + ");");
 
-                    statements.Add(code);
+                        statements.Add(code);
+                    }
+                    if (node.Output[0].LinkedIO != null)
+                        statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
+
+                    break;
                 }
-                if(node.Output[0].LinkedIO != null)
-                    statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
+                case "CREATESTRING":
+                {
+                    // Create string name and assign to output
+                    string stringName = "string_" + node.InstanceID.ToString();
+                    node.Output[1].Value = stringName;
+
+                    // The output item of this node is assigned to the node output
+                    CodeVariableDeclarationStatement itemRef =
+                        new CodeVariableDeclarationStatement(typeof(string),
+                        stringName, node.Input[1].GetValue != null ? new CodeSnippetExpression(node.Input[1].GetValue) : null);
+
+                    statements.Add(itemRef);
+
+                        if (node.Output[0].LinkedIO != null)
+                            statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
+                        break;
+                }
+                case "CREATENUM":
+                {
+                    // Create string name and assign to output
+                    string numName = "number_" + node.InstanceID.ToString();
+                    node.Output[1].Value = numName;
+
+                    // The output item of this node is assigned to the node output
+                    CodeVariableDeclarationStatement itemRef =
+                        new CodeVariableDeclarationStatement(typeof(float),
+                        numName, node.Input[1].GetValue != null ? new CodeSnippetExpression(node.Input[1].GetValue) : null);
+
+                    statements.Add(itemRef);
+
+                    if (node.Output[0].LinkedIO != null)
+                        statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
+                    break;
+                }
+                case "CREATENUMARRAY":
+                {
+                    string arrayName = "array_" + node.InstanceID.ToString();
+                    node.Output[1].Value = arrayName;
+
+                    // The output item of this node is assigned to the node output
+                    CodeVariableDeclarationStatement arrayRef =
+                        new CodeVariableDeclarationStatement(typeof(List<float>),
+                        arrayName, new CodeSnippetExpression("new List<float>()"));
+
+                    statements.Add(arrayRef);
+
+                    if (node.Output[0].LinkedIO != null)
+                        statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
+
+                    break;
+                }
+                case "CREATESTRINGARRAY":
+                {
+                    string arrayName = "array_" + node.InstanceID.ToString();
+                    node.Output[1].Value = arrayName;
+
+                    // The output item of this node is assigned to the node output
+                    CodeVariableDeclarationStatement arrayRef =
+                        new CodeVariableDeclarationStatement(typeof(List<string>),
+                        arrayName, new CodeSnippetExpression("new List<string>()"));
+
+                    statements.Add(arrayRef);
+
+                    if (node.Output[0].LinkedIO != null)
+                        statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
+                    break;
+                }
+                case "CREATEOBJARRAY":
+                {
+                    string arrayName = "array_" + node.InstanceID.ToString();
+                    node.Output[1].Value = arrayName;
+
+                    // The output item of this node is assigned to the node output
+                    CodeVariableDeclarationStatement arrayRef =
+                        new CodeVariableDeclarationStatement(typeof(List<IDEObjectData>),
+                        arrayName, new CodeSnippetExpression("new List<IDEObjectData>()"));
+
+                    statements.Add(arrayRef);
+
+                    if (node.Output[0].LinkedIO != null)
+                        statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
+                    break;
+                }
             }
-            else if(node.Label == "CREATESTRING")
+
+            return statements.ToArray();
+        }
+
+        /// <summary>
+        /// Generate nodes that manipulate and create variables
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        private static CodeStatement[] GenerateVariables(NodeData node)
+        {
+            List<CodeStatement> statements = new List<CodeStatement>();
+
+            switch (node.Label)
             {
-                // Create string name and assign to output
-                string stringName = "string_" + node.InstanceID.ToString();
-                node.Output[1].Value = stringName;
+                case "SETSTRING": case "SETNUM":
+                {
+                    // 
+                    CodeAssignStatement assignStatement =
+                        new CodeAssignStatement
+                        (new CodeArgumentReferenceExpression(node.Input[1].GetValue),
+                        new CodeArgumentReferenceExpression(node.Input[2].GetValue));
 
-                // The output item of this node is assigned to the node output
-                CodeVariableDeclarationStatement itemRef =
-                    new CodeVariableDeclarationStatement(typeof(string),
-                    stringName, node.Input[1].GetValue != null? new CodeSnippetExpression(node.Input[1].GetValue) : null);
+                    node.Output[1].Value = node.Input[1].GetValue;
 
-                statements.Add(itemRef);
+                    statements.Add(assignStatement);
+                    break;
+                }
 
-                if(node.Output[0].LinkedIO != null)
-                    statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
+                case "GETITEM":
+                {
+                    // Create item name and assign to output
+                    string itemName = "item_" + node.InstanceID.ToString();
+                    // access the item via the output
+                    node.Output[1].Value = itemName;
+
+                    // The output item of this node is assigned to the node output
+                    CodeVariableDeclarationStatement itemRef =
+                        new CodeVariableDeclarationStatement(node.Input[1].IOGetType,
+                        itemName);
+
+                    statements.Add(itemRef);
+
+                    statements.Add(new CodeAssignStatement(new CodeVariableReferenceExpression(itemName),
+                                    new CodeSnippetExpression(string.Format("{0}[{1}]", node.Input[1].GetValue, node.Input[2].GetValue))));
+                    break;
+                }
+                case "ADDITEM":
+                {
+                    statements.Add(new CodeExpressionStatement(new CodeSnippetExpression(
+                        string.Format("{0}.Add({1})", node.Input[1].GetValue,
+                            node.Input[2].GetValue))));
+                    break;
+                }
             }
-            else if(node.Label == "CREATENUM")
+
+            if (node.Output[0].LinkedIO != null)
+                statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
+
+            return statements.ToArray();
+        }
+
+        private static CodeStatement[] GenerateShipInteract(NodeData node)
+        {
+            List<CodeStatement> statements = new List<CodeStatement>();
+
+            switch (node.Label)
             {
-                // Create string name and assign to output
-                string numName = "number_" + node.InstanceID.ToString();
-                node.Output[1].Value = numName;
+                case "FORWARDENGINE":
+                {
+                    // define the action based on which node is
+                    // linked
+                    if (node.Input[0].LinkedIO != null)
+                        statements.Add(new CodeExpressionStatement(new CodeSnippetExpression
+                            ("Keys.Add(Control_Config.GetKey(\"moveUp\", \"ship\"))")));
+                    else
+                        statements.Add(new CodeExpressionStatement(new CodeSnippetExpression
+                            ("Con.ReleaseKey(Control_Config.GetKey(\"moveUp\", \"ship\"));")));
+                    break;
+                }
+                case "REVERSEENGINE":
+                {
+                    // define the action based on which node is
+                    // linked
+                    if (node.Input[0].LinkedIO != null)
+                        statements.Add(new CodeExpressionStatement(new CodeSnippetExpression
+                            ("Keys.Add(Control_Config.GetKey(\"moveDown\", \"ship\"));")));
+                    else
+                        statements.Add(new CodeExpressionStatement(new CodeSnippetExpression
+                            ("Con.ReleaseKey(Control_Config.GetKey(\"moveDown\", \"ship\"));")));
+                        break;
+                }
+                case "LEFTROTOR":
+                {
+                    // define the action based on which node is
+                    // linked
+                    if (node.Input[0].LinkedIO != null)
+                        statements.Add(new CodeExpressionStatement(new CodeSnippetExpression
+                            ("Keys.Add(Control_Config.GetKey(\"turnLeft\", \"ship\"))")));
+                    else
+                        statements.Add(new CodeExpressionStatement(new CodeSnippetExpression
+                            ("Con.ReleaseKey(Control_Config.GetKey(\"turnLeft\", \"ship\"));")));
 
-                // The output item of this node is assigned to the node output
-                CodeVariableDeclarationStatement itemRef =
-                    new CodeVariableDeclarationStatement(typeof(float),
-                    numName, node.Input[1].GetValue != null ? new CodeSnippetExpression(node.Input[1].GetValue) : null);
+                        break;
+                }
+                case "RIGHTROTOR":
+                {
+                    // define the action based on which node is
+                    // linked
+                    if (node.Input[0].LinkedIO != null)
+                        statements.Add(new CodeExpressionStatement(new CodeSnippetExpression
+                            ("Keys.Add(Control_Config.GetKey(\"turnRight\", \"ship\"));")));
+                    else
+                        statements.Add(new CodeExpressionStatement(new CodeSnippetExpression
+                            ("Con.ReleaseKey(Control_Config.GetKey(\"turnRight\", \"ship\"));")));
+                        break;
+                }
+                case "FIRE":
+                    {
+                        // define the action based on which node is
+                        // linked
+                        if (node.Input[0].LinkedIO != null)
+                            statements.Add(new CodeExpressionStatement(new CodeSnippetExpression
+                                ("Keys.Add(Control_Config.GetKey(\"fire\", \"ship\"));")));
+                        else if (node.Input[1].LinkedIO != null)
+                            statements.Add(new CodeExpressionStatement(new CodeSnippetExpression
+                                ("Keys.Add(Control_Config.GetKey(\"secondary\", \"ship\"));")));
+                        else if (node.Input[2].LinkedIO != null)
+                            statements.Add(new CodeExpressionStatement(new CodeSnippetExpression
+                                ("Keys.Add(Control_Config.GetKey(\"tertiary\", \"ship\"));")));
+                        break;
+                    }
+                case "EJECT":
+                    {
+                        // define the action based on which node is
+                        // linked
+                        statements.Add(new CodeExpressionStatement(new CodeSnippetExpression
+                            ("Keys.Add(Control_Config.GetKey(\"eject\", \"ship\"));")));
+                        break;
+                    }
+                case "STOPMOVE":
+                    {
+                        // define the action based on which node is
+                        // linked
+                        statements.Add(new CodeExpressionStatement(new CodeSnippetExpression
+                            ("Con.ReleaseKey(Control_Config.GetKey(\"moveUp\", \"ship\"));")));
 
-                statements.Add(itemRef);
+                        statements.Add(new CodeExpressionStatement(new CodeSnippetExpression
+                            ("Con.ReleaseKey(Control_Config.GetKey(\"moveDown\", \"ship\"));")));
 
-                if (node.Output[0].LinkedIO != null)
-                    statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
+                        statements.Add(new CodeExpressionStatement(new CodeSnippetExpression
+                            ("Con.ReleaseKey(Control_Config.GetKey(\"turnLeft\", \"ship\"));")));
+
+                        statements.Add(new CodeExpressionStatement(new CodeSnippetExpression
+                            ("Con.ReleaseKey(Control_Config.GetKey(\"turnRight\", \"ship\"));")));
+
+                        break;
+                    }
             }
-            else if(node.Label == "CREATENUMARRAY")
-            {
-                string arrayName = "array_" + node.InstanceID.ToString();
-                node.Output[1].Value = arrayName;
 
-                // The output item of this node is assigned to the node output
-                CodeVariableDeclarationStatement arrayRef =
-                    new CodeVariableDeclarationStatement(typeof(List<float>),
-                    arrayName, new CodeSnippetExpression("new List<float>()"));
-
-                statements.Add(arrayRef);
-
-                if (node.Output[0].LinkedIO != null)
-                    statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
-
-            }
-            else if (node.Label == "CREATESTRINGARRAY")
-            {
-                string arrayName = "array_" + node.InstanceID.ToString();
-                node.Output[1].Value = arrayName;
-
-                // The output item of this node is assigned to the node output
-                CodeVariableDeclarationStatement arrayRef =
-                    new CodeVariableDeclarationStatement(typeof(List<string>),
-                    arrayName, new CodeSnippetExpression("new List<string>()"));
-
-                statements.Add(arrayRef);
-
-                if (node.Output[0].LinkedIO != null)
-                    statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
-
-            }
-            else if(node.Label == "CREATEOBJARRAY")
-            {
-                string arrayName = "array_" + node.InstanceID.ToString();
-                node.Output[1].Value = arrayName;
-
-                // The output item of this node is assigned to the node output
-                CodeVariableDeclarationStatement arrayRef =
-                    new CodeVariableDeclarationStatement(typeof(List<IDEObjectData>),
-                    arrayName, new CodeSnippetExpression("new List<IDEObjectData>()"));
-
-                statements.Add(arrayRef);
-
-                if (node.Output[0].LinkedIO != null)
-                    statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
-            }
+            if (node.Output[0].LinkedIO != null)
+                statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
 
             return statements.ToArray();
         }

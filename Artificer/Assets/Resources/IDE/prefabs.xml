@@ -79,7 +79,108 @@
 		</node>
 	</category>
 	<category label="Variables">
-	
+		<node label="SETSTRING">
+			<description>
+				Assigns the value of the given string variable
+			</description>
+			<link in="true" label = "In"/>
+			<param in="true" type="string" label = "Var"/>
+			<param in="true" type="string" label = "New Value"/>
+			<link in="false" label = "Out"/>
+			<param in="false" type="string" label = "Var"/>
+		</node>
+		<node label="SETNUM">
+			<description>
+				Assigns the value of the given number variable
+			</description>
+			<link in="true" label = "In"/>
+			<param in="true" type="number" label = "Var"/>
+			<param in="true" type="number" label = "New Value"/>
+			<link in="false" label = "Out"/>
+			<param in="false" type="number" label = "Var"/>
+		</node>
+		<node label="GETITEM">
+			<description>
+				Retreives the item within a given array
+			</description>
+			<type>numarray</type>
+			<type>stringarray</type>
+			<type>objectarray</type>
+			<link in="true" label = "In"/>
+			<param in="true" type="undef" label = "Array"/>
+			<param in="true" type="number" label = "Index"/>
+			<link in="false" label = "Out"/>
+			<param in="false" type="undefsingle" label = "Item"/>
+		</node>
+		<node label="ADDITEM">
+			<description>
+				Adds an item to a given array
+			</description>
+			<type>numarray</type>
+			<type>stringarray</type>
+			<type>objectarray</type>
+			<link in="true" label = "In"/>
+			<param in="true" type="undef" label = "Array"/>
+			<param in="true" type="undefsingle" label = "New Item"/>
+			<link in="false" label = "Out"/>
+		</node>
+	</category>
+	<category label="Ship Interact">
+		<node label="FORWARDENGINE">
+			<description>
+				Starts or stops the engines to move the ship forward
+			</description>
+			<link in="true" label = "ON"/>
+			<link in="true" label = "OFF"/>
+			<link in="false" label = "OUT"/>
+		</node>
+		<node label="REVERSEENGINE">
+			<description>
+				Starts or stops the engines to move the ship backwards
+			</description>
+			<link in="true" label = "ON"/>
+			<link in="true" label = "OFF"/>
+			<link in="false" label = "OUT"/>
+		</node>
+		<node label="LEFTROTOR">
+			<description>
+				Starts or stops the rotor to turn the ship anti-clockwise
+			</description>
+			<link in="true" label = "ON"/>
+			<link in="true" label = "OFF"/>
+			<link in="false" label = "OUT"/>
+		</node>
+		<node label="RIGHTROTOR">
+			<description>
+				Starts or stops the rotor to turn the ship clockwise
+			</description>
+			<link in="true" label = "ON"/>
+			<link in="true" label = "OFF"/>
+			<link in="false" label = "OUT"/>
+		</node>
+		<node label="FIRE">
+			<description>
+				Fires the ship weapons, either primary, secondary, or tertiary
+			</description>
+			<link in="true" label = "PRIMARY"/>
+			<link in="true" label = "SECONDRY"/>
+			<link in="true" label = "TERTIARY"/>
+			<link in="false" label = "OUT"/>
+		</node>
+		<node label="EJECT">
+			<description>
+				Causes the ship to seft destruct
+			</description>
+			<link in="true" label = "IN"/>
+			<link in="false" label = "OUT"/>
+		</node>
+		<node label="STOPMOVE">
+			<description>
+				Stops the ship from moving and turning
+			</description>
+			<link in="true" label = "IN"/>
+			<link in="false" label = "OUT"/>
+		</node>
 	</category>
 	<category label = "Debug">
 		<node label = "TRUE">
