@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Space.AI.State
+using Space.AI;
+
+namespace Space.AI
 {
     /// <summary>
     /// The base class for user created scripts

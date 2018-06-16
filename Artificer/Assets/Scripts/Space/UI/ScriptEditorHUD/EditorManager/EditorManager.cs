@@ -111,6 +111,13 @@ namespace Space.UI.IDE
         /// </summary>
         public void Initialize(NodeLibrary nodePrefabs)
         {
+            // Create and display a log that displays each node object loaded into the attributes
+            Debug.Log("Node Prefabs Successfully Loaded:");
+            foreach (NodeData prefab in nodePrefabs)
+            {
+                Debug.Log(string.Format("Node: {0} - {1}", prefab.Label, prefab.Description));
+            }
+
             m_att.NodePrefabs = nodePrefabs;
 
             m_att.PrefabListHUD.GeneratePrefabs();

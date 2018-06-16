@@ -8,6 +8,7 @@ using Microsoft.CSharp;
 using UnityEngine;
 using System.Reflection;
 using System;
+using Space.AI;
 
 namespace Generator
 {
@@ -25,25 +26,23 @@ namespace Generator
 
             CodeNamespace samples = new CodeNamespace("Space.AI");
             samples.Imports.Add(new CodeNamespaceImport("System"));
-            samples.Imports.Add(new CodeNamespaceImport("UnityEngine"));
             samples.Imports.Add(new CodeNamespaceImport("System.Collections.Generic"));
-            samples.Imports.Add(new CodeNamespaceImport("Data.UI"));
 
             targetClass = new CodeTypeDeclaration("CustomState");    
             targetClass.IsClass = true;
             targetClass.TypeAttributes =
                 TypeAttributes.Public;
             targetClass.BaseTypes.Add(new CodeTypeReference
-            { BaseType = "ICustomState", Options = CodeTypeReferenceOptions.GenericTypeParameter });
+                ("ICustomState"));
 
             samples.Types.Add(targetClass);
             cu.Namespaces.Add(samples);
 
-            GenerateLoop(start);
-            GenerateCSharp();
+            if(GenerateLoop(start))
+                GenerateCSharp();
         }
 
-        private static void GenerateLoop(NodeData start)
+        private static bool GenerateLoop(NodeData start)
         {
             CodeMemberMethod LoopMethod = new CodeMemberMethod();
             LoopMethod.Attributes =
@@ -56,9 +55,20 @@ namespace Generator
             LoopMethod.ReturnType =
                 new CodeTypeReference(typeof(void));
 
-            LoopMethod.Statements.AddRange(GenerateNode(start));
+            CodeStatement[] codeStatement = GenerateNode(start);
+
+            if(codeStatement == null)
+            {
+                Debug.Log("Failed to generate script body");
+                return false;
+            }
+
+            // Create the statements for the body
+            LoopMethod.Statements.AddRange(codeStatement);
 
             targetClass.Members.Add(LoopMethod);
+
+            return true;
         }
 
         /// <summary>
@@ -104,39 +114,48 @@ namespace Generator
             return null;
         }
 
+        /// <summary>
+        /// Direct the program flow based on which conditions are met
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         private static CodeStatement[] GenerateCondtional(NodeData node)
         {
             switch (node.Label)
             {
                 case "IF":
-                {
-                        // only create one condition if the node has the IF label
-                        // input [1] is the boolean variable
-                        CodeExpression condition = new CodeSnippetExpression(node.Input[1].GetValue);
+                    // only create one condition if the node has the IF label
+                    // input [1] is the boolean variable
+                    CodeExpression condition = new CodeSnippetExpression(node.Input[1].GetValue);
 
-                        CodeStatement[] trueStatements = null;
-                        if(node.Output[0].LinkedIO != null)
-                            trueStatements = GenerateNode(node.Output[0].LinkedIO.Node);
+                    CodeStatement[] trueStatements = null;
+                    if(node.Output[0].LinkedIO != null)
+                        trueStatements = GenerateNode(node.Output[0].LinkedIO.Node);
+                    else
+                        trueStatements = new CodeStatement[] { new CodeCommentStatement("Nothing here..") };
 
-                        CodeStatement[] falseStatements = null;
-                        if(node.Output[1].LinkedIO != null) 
-                            falseStatements = GenerateNode(node.Output[1].LinkedIO.Node);
+                    CodeStatement[] falseStatements = null;
+                    if(node.Output[1].LinkedIO != null) 
+                        falseStatements = GenerateNode(node.Output[1].LinkedIO.Node);
+                    else
+                        falseStatements = new CodeStatement[] { new CodeCommentStatement("Nothing here..") };
 
-                        // create the script
-                        CodeConditionStatement conditionalStatement = new CodeConditionStatement(
-                            condition, trueStatements, falseStatements);
-                            
+                    // create the script
+                    CodeConditionStatement conditionalStatement = new CodeConditionStatement(
+                        condition, trueStatements, falseStatements);
 
-                        // return the statement that is created
-                        return new CodeStatement[] { conditionalStatement };
-                }
+                    // return the statement that is created
+                    return new CodeStatement[] { conditionalStatement };
+
                 case "SWITCH":
-                {
+
                     // This is a switch, add a comparison for
                     // each comparison value
                     string Comparison = node.Input[1].GetValue;
 
                     List<CodeStatement> ifs = new List<CodeStatement>();
+
+                    ifs.Add(new CodeCommentStatement("Switch Statement is made of an IF statement list"));
 
                     // Input[2] is the start of the comparison values
                     for (int i = 2; i < node.Input.Count; i++)
@@ -148,19 +167,20 @@ namespace Generator
                             (new CodeVariableReferenceExpression(Comparison), CodeBinaryOperatorType.IdentityEquality,
                                 new CodeVariableReferenceExpression(node.Input[i].GetValue));
 
-                            CodeStatement[] trueStatements = null;
+                            CodeStatement[] statements = null;
                             if (node.Output[0].LinkedIO != null)
-                                trueStatements = GenerateNode(node.Output[i - 2].LinkedIO.Node);
+                                statements = GenerateNode(node.Output[i - 2].LinkedIO.Node);
+                        else
+                            statements = new CodeStatement[] { new CodeCommentStatement("Nothing here..") };
 
-                            CodeConditionStatement conditionStatement = new CodeConditionStatement(
+                        CodeConditionStatement conditionStatement = new CodeConditionStatement(
                             ifMatch,
-                            trueStatements);
+                            statements);
 
                         ifs.Add(conditionStatement);
                     }
 
                     return ifs.ToArray();
-                }
                 default:
                     return null;
             }
@@ -178,108 +198,101 @@ namespace Generator
             switch (node.Label)
             {
                 case "FOR":
-                    {
-                        if (node.Output[0].LinkedIO != null)
-                        {
-                            // Create index name and assign to output
-                            string indexName = "index_" + node.InstanceID.ToString();
-
-                            // any child nodes may now access the index here
-                            node.Output[1].Value = indexName;
-
-                            // The output int of this node is assigned to the node output
-                            CodeVariableDeclarationStatement indexInt =
-                                new CodeVariableDeclarationStatement(typeof(int),
-                                indexName, new CodePrimitiveExpression(0));
-                            statements.Add(indexInt);
-                            // input[0] exec     
-                            // input[1] min input     
-                            // input[2] max input
-                            // input[3] step input
-                            CodeIterationStatement forLoop = new CodeIterationStatement(
-                                new CodeAssignStatement(new CodeVariableReferenceExpression(indexName),
-                                    new CodeSnippetExpression(node.Input[1].GetValue)),
-                                new CodeBinaryOperatorExpression(new CodeVariableReferenceExpression(indexName),
-                                    CodeBinaryOperatorType.LessThan, new CodeSnippetExpression(node.Input[2].GetValue)),
-                                new CodeAssignStatement(new CodeVariableReferenceExpression(indexName),
-                                    new CodeBinaryOperatorExpression(new CodeVariableReferenceExpression(indexName), CodeBinaryOperatorType.Add,
-                                    new CodeSnippetExpression(node.Input[3].GetValue))),
-                                    GenerateNode(node.Output[0].LinkedIO.Node)); // The statements to execute if the condition evaluates to true.
-                            statements.Add(forLoop);
-                        }
-
-                        // if there is an end node then generate the end node - Output[2]
-                        if (node.Output[2].LinkedIO != null)
-                            statements.AddRange(GenerateNode(node.Output[2].LinkedIO.Node));
-
-                        break;
-                    }
-                case "FOREACH":
+                {
+                    if (node.Output[0].LinkedIO != null)
                     {
                         // Create index name and assign to output
                         string indexName = "index_" + node.InstanceID.ToString();
+
                         // any child nodes may now access the index here
                         node.Output[1].Value = indexName;
-
-                        // Create item name and assign to output
-                        string itemName = "item_" + node.InstanceID.ToString();
-                        // access the item via the output
-                        node.Output[2].Value = itemName;
 
                         // The output int of this node is assigned to the node output
                         CodeVariableDeclarationStatement indexInt =
                             new CodeVariableDeclarationStatement(typeof(int),
                             indexName, new CodePrimitiveExpression(0));
                         statements.Add(indexInt);
-
-                        // The output item of this node is assigned to the node output
-                        CodeVariableDeclarationStatement itemRef =
-                            new CodeVariableDeclarationStatement(node.Input[1].IOGetType,
-                            itemName);
-                        statements.Add(itemRef);
-
-                        List<CodeStatement> loopBody = new List<CodeStatement>();
-                        loopBody.Add(new CodeAssignStatement(new CodeVariableReferenceExpression(itemName),
-                                        new CodeSnippetExpression(string.Format("{0}[{1}]", node.Input[1].GetValue, indexName))));
-                        if (node.Output[0].LinkedIO != null)
-                            loopBody.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
-
+                        // input[0] exec     
+                        // input[1] min input     
+                        // input[2] max input
+                        // input[3] step input
                         CodeIterationStatement forLoop = new CodeIterationStatement(
                             new CodeAssignStatement(new CodeVariableReferenceExpression(indexName),
-                                new CodePrimitiveExpression(0)),
+                                new CodeSnippetExpression(node.Input[1].GetValue)),
                             new CodeBinaryOperatorExpression(new CodeVariableReferenceExpression(indexName),
-                                CodeBinaryOperatorType.LessThan, new CodeSnippetExpression(node.Input[1].GetValue + ".Count()")),
+                                CodeBinaryOperatorType.LessThan, new CodeSnippetExpression(node.Input[2].GetValue)),
                             new CodeAssignStatement(new CodeVariableReferenceExpression(indexName),
                                 new CodeBinaryOperatorExpression(new CodeVariableReferenceExpression(indexName), CodeBinaryOperatorType.Add,
-                                new CodePrimitiveExpression(1))),
-                            loopBody.ToArray());
-
+                                new CodeSnippetExpression(node.Input[3].GetValue))),
+                                GenerateNode(node.Output[0].LinkedIO.Node)); // The statements to execute if the condition evaluates to true.
                         statements.Add(forLoop);
-
-                        break;
                     }
+
+                    // if there is an end node then generate the end node - Output[2]
+                    if (node.Output[2].LinkedIO != null)
+                        statements.AddRange(GenerateNode(node.Output[2].LinkedIO.Node));
+
+                    break;
+                }
+                case "FOREACH":
+                {
+                    // Create index name and assign to output
+                    string indexName = "index_" + node.InstanceID.ToString();
+                    // any child nodes may now access the index here
+                    node.Output[1].Value = indexName;
+
+                    // Create item name and assign to output
+                    string itemName = "item_" + node.InstanceID.ToString();
+                    // access the item via the output
+                    node.Output[2].Value = itemName;
+
+                    // The output int of this node is assigned to the node output
+                    CodeVariableDeclarationStatement indexInt =
+                        new CodeVariableDeclarationStatement(typeof(int),
+                        indexName, new CodePrimitiveExpression(0));
+                    statements.Add(indexInt);
+
+                    // The output item of this node is assigned to the node output
+                    CodeVariableDeclarationStatement itemRef =
+                        new CodeVariableDeclarationStatement(node.Input[1].IOGetType,
+                        itemName);
+                    statements.Add(itemRef);
+
+                    List<CodeStatement> loopBody = new List<CodeStatement>();
+                    loopBody.Add(new CodeAssignStatement(new CodeVariableReferenceExpression(itemName),
+                                    new CodeSnippetExpression(string.Format("{0}[{1}]", node.Input[1].GetValue, indexName))));
+                    if (node.Output[0].LinkedIO != null)
+                        loopBody.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
+
+                    CodeIterationStatement forLoop = new CodeIterationStatement(
+                        new CodeAssignStatement(new CodeVariableReferenceExpression(indexName),
+                            new CodePrimitiveExpression(0)),
+                        new CodeBinaryOperatorExpression(new CodeVariableReferenceExpression(indexName),
+                            CodeBinaryOperatorType.LessThan, new CodeSnippetExpression(node.Input[1].GetValue + ".Count()")),
+                        new CodeAssignStatement(new CodeVariableReferenceExpression(indexName),
+                            new CodeBinaryOperatorExpression(new CodeVariableReferenceExpression(indexName), CodeBinaryOperatorType.Add,
+                            new CodePrimitiveExpression(1))),
+                        loopBody.ToArray());
+
+                    statements.Add(forLoop);
+
+                    break;
+                }
                 case "WHILE":
-                    {
-                        CodeIterationStatement whileLoop = new CodeIterationStatement(new CodeSnippetStatement(), new CodeSnippetExpression(node.Input[1].GetValue),
-                            new CodeSnippetStatement(), new CodeStatement[]
-                                        { new CodeCommentStatement("Execute the loop body") });
-                        statements.Add(whileLoop);
-
-                        break;
-                    }
+                    statements.Add(new CodeCommentStatement("While statement is comprised of a for loop with a boolean condition."));
+                    CodeIterationStatement whileLoop = new CodeIterationStatement(new CodeSnippetStatement(), new CodeSnippetExpression(node.Input[1].GetValue),
+                        new CodeSnippetStatement(), GenerateNode(node.Output[0].LinkedIO.Node));
+                    statements.Add(whileLoop);
+                    break;
                 case "SEQUENCE":
+                    // loop through each output and add the node statement to list
+                    foreach (NodeData.IO output in node.Output)
                     {
-                        // loop through each output and add the node statement to list
-                        foreach (NodeData.IO output in node.Output)
-                        {
-                            if (output.LinkedIO != null)
-                                statements.AddRange(GenerateNode(output.LinkedIO.Node));
-                        }
-                        break;
+                        if (output.LinkedIO != null)
+                            statements.AddRange(GenerateNode(output.LinkedIO.Node));
                     }
-                    
+                    break;
             }
-
             return statements.ToArray();
         }
 
@@ -417,7 +430,7 @@ namespace Generator
             {
                 case "SETSTRING": case "SETNUM":
                 {
-                    // 
+                    // assigns a variable to the given attribute, both int and string use same value
                     CodeAssignStatement assignStatement =
                         new CodeAssignStatement
                         (new CodeArgumentReferenceExpression(node.Input[1].GetValue),
@@ -462,6 +475,11 @@ namespace Generator
             return statements.ToArray();
         }
 
+        /// <summary>
+        /// Functions that make the ship perform an action
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         private static CodeStatement[] GenerateShipInteract(NodeData node)
         {
             List<CodeStatement> statements = new List<CodeStatement>();
@@ -568,163 +586,41 @@ namespace Generator
 
         #endregion
 
-        public static void AddFields()
-        {
-            CodeMemberField widthValueField = new
-                CodeMemberField();
-            widthValueField.Attributes = MemberAttributes.Private;
-            widthValueField.Name = "widthValue";
-            widthValueField.Type = new CodeTypeReference(typeof(System.Double));
-            widthValueField.Comments.Add(new CodeCommentStatement("The width of the object"));
-            targetClass.Members.Add(widthValueField);
-
-            CodeMemberField heightValueField = new CodeMemberField();
-            heightValueField.Attributes = MemberAttributes.Private;
-            heightValueField.Name = "heightValue";
-            heightValueField.Type =
-                new CodeTypeReference(typeof(System.Double));
-            heightValueField.Comments.Add(new CodeCommentStatement("The height of the object"));
-            targetClass.Members.Add(heightValueField);
-        }
-
-        public static void AddProperties()
-        {
-            CodeMemberProperty widthProperty = new CodeMemberProperty();
-            widthProperty.Attributes =
-                MemberAttributes.Public | MemberAttributes.Final;
-            widthProperty.Name = "Width";
-            widthProperty.HasGet = true;
-            widthProperty.Type = new CodeTypeReference(typeof(System.Double));
-            widthProperty.Comments.Add(new CodeCommentStatement("The width property for the object"));
-            widthProperty.GetStatements.Add(new CodeMethodReturnStatement(
-                new CodeFieldReferenceExpression(
-                    new CodeThisReferenceExpression(), "widthValue")));
-            targetClass.Members.Add(widthProperty);
-
-            CodeMemberProperty heightProperty = new CodeMemberProperty();
-            heightProperty.Attributes =
-                MemberAttributes.Public | MemberAttributes.Final;
-            heightProperty.Name = "Height";
-            heightProperty.HasGet = true;
-            heightProperty.Type = new CodeTypeReference(typeof(System.Double));
-            heightProperty.Comments.Add(new CodeCommentStatement("The height property for the object"));
-            heightProperty.GetStatements.Add(new CodeMethodReturnStatement(
-                new CodeFieldReferenceExpression(
-                    new CodeThisReferenceExpression(), "heightValue")));
-            targetClass.Members.Add(heightProperty);
-
-            CodeMemberProperty areaProperty = new CodeMemberProperty();
-            areaProperty.Attributes = MemberAttributes.Public | MemberAttributes.Final;
-            areaProperty.Name = "Area";
-            areaProperty.HasGet = true;
-            areaProperty.Type = new CodeTypeReference(typeof(System.Double));
-            areaProperty.Comments.Add(new CodeCommentStatement
-                ("The Area property for the object"));
-
-            CodeBinaryOperatorExpression areaExpression =
-                new CodeBinaryOperatorExpression(
-                    new CodeFieldReferenceExpression(
-                        new CodeThisReferenceExpression(), "widthValue"),
-                    CodeBinaryOperatorType.Multiply,
-                    new CodeFieldReferenceExpression(
-                        new CodeThisReferenceExpression(), "heightValue"));
-            areaProperty.GetStatements.Add(
-                new CodeMethodReturnStatement(areaExpression));
-            targetClass.Members.Add(areaProperty);
-        }
-
-        public static void AddMethod()
-        {
-            CodeMemberMethod toStringMethod = new CodeMemberMethod();
-            toStringMethod.Attributes =
-                MemberAttributes.Public | MemberAttributes.Override;
-            toStringMethod.Name = "ToString";
-            toStringMethod.ReturnType =
-                new CodeTypeReference(typeof(System.String));
-
-            CodeFieldReferenceExpression widthReference =
-                new CodeFieldReferenceExpression(
-                    new CodeThisReferenceExpression(), "Width");
-            CodeFieldReferenceExpression heightReference =
-                new CodeFieldReferenceExpression(
-                    new CodeThisReferenceExpression(), "Height");
-            CodeFieldReferenceExpression areaReference =
-                new CodeFieldReferenceExpression(
-                    new CodeThisReferenceExpression(), "Area");
-
-            CodeMethodReturnStatement returnStatement =
-                new CodeMethodReturnStatement();
-
-            string formattedOutput = "The object:" + Environment.NewLine +
-                " width = {0}," + Environment.NewLine +
-                " height = {1}," + Environment.NewLine +
-                " area = {2}";
-            returnStatement.Expression =
-                new CodeMethodInvokeExpression(
-                    new CodeTypeReferenceExpression("System.String"), "Format",
-                    new CodePrimitiveExpression(formattedOutput),
-                    widthReference, heightReference, areaReference);
-            toStringMethod.Statements.Add(returnStatement);
-            targetClass.Members.Add(toStringMethod);
-        }  
-
-        public static void AddConstructor()
-        {
-            CodeConstructor con = new CodeConstructor();
-            con.Attributes =
-                MemberAttributes.Public | MemberAttributes.Final;
-
-            con.Parameters.Add(new CodeParameterDeclarationExpression
-                (typeof(System.Double), "width"));
-            con.Parameters.Add(new CodeParameterDeclarationExpression
-                (typeof(System.Double), "height"));
-
-            CodeFieldReferenceExpression widthRef =
-                new CodeFieldReferenceExpression(
-                    new CodeThisReferenceExpression(), "widthValue");
-            con.Statements.Add(new CodeAssignStatement(widthRef,
-                new CodeArgumentReferenceExpression("width")));
-            CodeFieldReferenceExpression heightRef =
-                new CodeFieldReferenceExpression(
-                    new CodeThisReferenceExpression(), "heightValue");
-            con.Statements.Add(new CodeAssignStatement(heightRef,
-                new CodeArgumentReferenceExpression("height")));
-            targetClass.Members.Add(con);
-        }
-
-        public static void AddEntryPoint()
-        {
-            CodeEntryPointMethod start = new CodeEntryPointMethod();
-            CodeObjectCreateExpression create =
-                new CodeObjectCreateExpression(
-                    new CodeTypeReference("UserNPC"),
-                    new CodePrimitiveExpression(5.3),
-                    new CodePrimitiveExpression(6.9));
-
-            start.Statements.Add(new CodeVariableDeclarationStatement(
-                new CodeTypeReference("UserNPC"), "testNPC",
-                create));
-
-            CodeMethodInvokeExpression toStringInvoke =
-                new CodeMethodInvokeExpression(
-                    new CodeVariableReferenceExpression("testNPC"), "ToString");
-
-            start.Statements.Add(new CodeMethodInvokeExpression(
-                new CodeTypeReferenceExpression("System.Console"),
-                "WriteLine", toStringInvoke));
-            targetClass.Members.Add(start);
-        }
-
         public static void GenerateCSharp()
         {
-            CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
+            CSharpCodeProvider provider = new CSharpCodeProvider();
+            ICodeGenerator codeGen = provider.CreateGenerator();
             CodeGeneratorOptions options = new CodeGeneratorOptions();
             options.BracingStyle = "C";
-            using (StreamWriter sourceWriter = new StreamWriter("UserNPC.cs"))
+            using (StreamWriter sourceWriter = new StreamWriter("CustomState.cs"))
             {
                 provider.GenerateCodeFromCompileUnit
                     (cu, sourceWriter, options);
             }
+
+           /* CSharpCodeProvider codeProvider = new CSharpCodeProvider();
+            ICodeCompiler codeCompiler = codeProvider.CreateCompiler();
+
+            CompilerParameters parameters = new CompilerParameters();
+            //parameters.CompilerOptions = "/target:library /optimize /warn:0";
+            parameters.GenerateExecutable = false;
+            //parameters.GenerateInMemory = true;
+            parameters.ReferencedAssemblies.Add("System.dll");
+            parameters.ReferencedAssemblies.Add("System.Core.dll");
+            parameters.ReferencedAssemblies.Add(typeof(ICustomState).Assembly.Location);
+            parameters.ReferencedAssemblies.Add("UnityEngine.dll");
+
+            CompilerResults results = codeCompiler.CompileAssemblyFromDom(parameters, cu);
+            if (results.Errors.HasErrors)
+            {
+                Debug.Log("Error Count: " + results.Errors.Count.ToString());
+                for (int x = 0; x < results.Errors.Count; x++)
+                {
+                    Debug.Log(string.Format("Warning? {0} - Line: {1} - {2}", 
+                        results.Errors[x].IsWarning, results.Errors[x].Line.ToString(), 
+                        results.Errors[x].ErrorText));
+                }
+            }*/
         }
     }
 }

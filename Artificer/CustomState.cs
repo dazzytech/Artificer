@@ -11,9 +11,7 @@
 namespace Space.AI
 {
     using System;
-    using UnityEngine;
     using System.Collections.Generic;
-    using Data.UI;
     
     
     public class CustomState : ICustomState
@@ -22,9 +20,14 @@ namespace Space.AI
         // The main execution loop of the NPC script
         public override void PerformLoop()
         {
-            Keys.Add(Control_Config.GetKey("fire", "ship"));;
-            Keys.Add(Control_Config.GetKey("secondary", "ship"));;
-            Keys.Add(Control_Config.GetKey("tertiary", "ship"));;
+            if (false)
+            {
+                // Nothing here..
+            }
+            else
+            {
+                // Nothing here..
+            }
         }
     }
 }
