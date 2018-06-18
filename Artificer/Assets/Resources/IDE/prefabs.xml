@@ -31,6 +31,36 @@
 				<link in="false" label="Action"/>
 			</group>
 		</node>
+		<node label="MORETHAN">
+			<description>
+				returns true if number A is more than B
+			</description>
+			<link in="true" label = "In"/>
+			<param in="true" type="number" label = "A"/>
+			<param in="true" type="number" label = "B"/>
+			<link in="false" label = "Out"/>
+			<param in="false" type="bool" label = "Result"/>
+		</node>
+		<node label="LESSTHAN">
+			<description>
+				returns true if number A is less than B
+			</description>
+			<link in="true" label = "In"/>
+			<param in="true" type="number" label = "A"/>
+			<param in="true" type="number" label = "B"/>
+			<link in="false" label = "Out"/>
+			<param in="false" type="bool" label = "Result"/>
+		</node>
+		<node label="EQUALS">
+			<description>
+				returns true if number A is equal to B
+			</description>
+			<link in="true" label = "In"/>
+			<param in="true" type="number" label = "A"/>
+			<param in="true" type="number" label = "B"/>
+			<link in="false" label = "Out"/>
+			<param in="false" type="bool" label = "Result"/>
+		</node>
 	</category>
 	<category label="Sequence">
 		<node label="FOR">
@@ -52,6 +82,7 @@
 			<type>numarray</type>
 			<type>objectarray</type>
 			<type>stringarray</type>
+			<type>vec2array</type>
 			<link in="true" label = "Start"/>
 			<param in="true" type="undef" label = "List"/>
 			<link in="false" label = "Loop"/>
@@ -79,6 +110,17 @@
 		</node>
 	</category>
 	<category label="Variables">
+		<node label="SETVEC2">
+			<description>
+				Sets the x and y of a vecto2 object
+			</description>
+			<link in="true" label = "In"/>
+			<param in="true" type="vec2" label = "Var"/>
+			<param in="true" type="number" label = "X"/>
+			<param in="true" type="number" label = "Y"/>
+			<link in="false" label = "Out"/>
+			<param in="false" type="vec2" label = "Var"/>
+		</node>
 		<node label="SETSTRING">
 			<description>
 				Assigns the value of the given string variable
@@ -118,6 +160,7 @@
 			</description>
 			<type>numarray</type>
 			<type>stringarray</type>
+			<type>vec2array</type>
 			<type>objectarray</type>
 			<link in="true" label = "In"/>
 			<param in="true" type="undef" label = "Array"/>
@@ -224,6 +267,16 @@
 			<link in="false" label = "Out"/>
 			<param in="false" type="number" label = "Value"/>
 		</node>
+		<node label = "CREATEVEC2">
+			<description>
+				Creates a vector 2 object
+			</description>
+			<link in="true" label = "In"/>
+			<param in="true" type="number" label = "X" value = "0"/>
+			<param in="true" type="number" label = "Y" value = "0"/>
+			<link in="false" label = "Out"/>
+			<param in="false" type="vec2" label = "Value"/>
+		</node>
 		<node label = "CREATENUMARRAY">
 			<description>
 				Creates an empty array of numbers
@@ -239,6 +292,14 @@
 			<link in="true" label = "In"/>
 			<link in="false" label = "Out"/>
 			<param in="false" type="stringarray" label = "New Array"/>
+		</node>
+		<node label = "CREATEVEC2ARRAY">
+			<description>
+				Creates an empty array of vector2
+			</description>
+			<link in="true" label = "In"/>
+			<link in="false" label = "Out"/>
+			<param in="false" type="vec2array" label = "New Array"/>
 		</node>
 		<node label = "CREATEOBJARRAY">
 			<description>

@@ -19,7 +19,7 @@ namespace Data.UI
         {
             #region NODE TYPES
 
-            public enum IOType { UNDEF, UNDEFSINGLE, NUM, STRING, BOOL, OBJECT, NUMARRAY, STRINGARRAY, OBJARRAY, LINK };
+            public enum IOType { UNDEF, UNDEFSINGLE, NUM, STRING, BOOL, VEC2, OBJECT, NUMARRAY, STRINGARRAY, OBJARRAY, VEC2ARRAY, LINK };
 
             /// <summary>
             /// If IO os param, define the type of parameter the 
@@ -122,6 +122,9 @@ namespace Data.UI
                         case IOType.STRING:
                         case IOType.STRINGARRAY:
                             return typeof(string);
+                        case IOType.VEC2:
+                        case IOType.VEC2ARRAY:
+                            return typeof(Vector2);
                         case IOType.OBJECT:
                         case IOType.OBJARRAY:
                             return typeof(IDEObjectData);
@@ -273,6 +276,9 @@ namespace Data.UI
                         case "bool":
                             io.Type = IO.IOType.BOOL;
                             break;
+                        case "vec2":
+                            io.Type = IO.IOType.VEC2;
+                            break;
                         case "object":
                             io.Type = IO.IOType.OBJECT;
                             break;
@@ -284,6 +290,9 @@ namespace Data.UI
                             break;
                         case "stringarray":
                             io.Type = NodeData.IO.IOType.STRINGARRAY;
+                            break;
+                        case "vec2array":
+                            io.Type = IO.IOType.VEC2ARRAY;
                             break;
                         case "undef":
                             io.Type = IO.IOType.UNDEF;

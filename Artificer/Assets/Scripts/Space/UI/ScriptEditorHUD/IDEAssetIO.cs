@@ -93,6 +93,9 @@ namespace Space.UI.IDE
                             case "bool":
                                 node.SupportedTypes.Add(NodeData.IO.IOType.BOOL);
                                 break;
+                            case "vec2":
+                                node.SupportedTypes.Add(NodeData.IO.IOType.VEC2);
+                                break;
                             case "object":
                                 node.SupportedTypes.Add(NodeData.IO.IOType.OBJECT);
                                 break;
@@ -104,6 +107,9 @@ namespace Space.UI.IDE
                                 break;
                             case "stringarray":
                                 node.SupportedTypes.Add(NodeData.IO.IOType.STRINGARRAY);
+                                break;
+                            case "vec2array":
+                                node.SupportedTypes.Add(NodeData.IO.IOType.VEC2ARRAY);
                                 break;
                             default:
                                 node.SupportedTypes.Add(NodeData.IO.IOType.UNDEF);

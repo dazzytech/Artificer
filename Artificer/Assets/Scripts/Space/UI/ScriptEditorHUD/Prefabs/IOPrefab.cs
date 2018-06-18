@@ -69,6 +69,9 @@ namespace Space.UI.IDE
         private Color m_boolColour;
 
         [SerializeField]
+        private Color m_vec2Colour;
+
+        [SerializeField]
         private Color m_objectColour;
 
         [SerializeField]
@@ -79,6 +82,9 @@ namespace Space.UI.IDE
 
         [SerializeField]
         private Color m_objectArrayColour;
+
+        [SerializeField]
+        private Color m_vec2ArrayColour;
 
         [SerializeField]
         private Color m_execColour;
@@ -271,6 +277,9 @@ namespace Space.UI.IDE
                     case NodeData.IO.IOType.BOOL:
                         m_image.color = m_boolColour;
                         break;
+                    case NodeData.IO.IOType.VEC2:
+                        m_image.color = m_vec2Colour;
+                        break;
                     case NodeData.IO.IOType.OBJECT:
                         m_image.color = m_objectColour;
                         break;
@@ -282,6 +291,9 @@ namespace Space.UI.IDE
                         break;
                     case NodeData.IO.IOType.NUMARRAY:
                         m_image.color = m_numArrayColour;
+                        break;
+                    case NodeData.IO.IOType.VEC2ARRAY:
+                        m_image.color = m_vec2ArrayColour;
                         break;
                 }
             }

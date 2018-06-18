@@ -124,29 +124,30 @@ namespace Generator
             switch (node.Label)
             {
                 case "IF":
-                    // only create one condition if the node has the IF label
-                    // input [1] is the boolean variable
-                    CodeExpression condition = new CodeSnippetExpression(node.Input[1].GetValue);
+                    {
+                        // only create one condition if the node has the IF label
+                        // input [1] is the boolean variable
+                        CodeExpression condition = new CodeSnippetExpression(node.Input[1].GetValue);
 
-                    CodeStatement[] trueStatements = null;
-                    if(node.Output[0].LinkedIO != null)
-                        trueStatements = GenerateNode(node.Output[0].LinkedIO.Node);
-                    else
-                        trueStatements = new CodeStatement[] { new CodeCommentStatement("Nothing here..") };
+                        CodeStatement[] trueStatements = null;
+                        if (node.Output[0].LinkedIO != null)
+                            trueStatements = GenerateNode(node.Output[0].LinkedIO.Node);
+                        else
+                            trueStatements = new CodeStatement[] { new CodeCommentStatement("Nothing here..") };
 
-                    CodeStatement[] falseStatements = null;
-                    if(node.Output[1].LinkedIO != null) 
-                        falseStatements = GenerateNode(node.Output[1].LinkedIO.Node);
-                    else
-                        falseStatements = new CodeStatement[] { new CodeCommentStatement("Nothing here..") };
+                        CodeStatement[] falseStatements = null;
+                        if (node.Output[1].LinkedIO != null)
+                            falseStatements = GenerateNode(node.Output[1].LinkedIO.Node);
+                        else
+                            falseStatements = new CodeStatement[] { new CodeCommentStatement("Nothing here..") };
 
-                    // create the script
-                    CodeConditionStatement conditionalStatement = new CodeConditionStatement(
-                        condition, trueStatements, falseStatements);
+                        // create the script
+                        CodeConditionStatement conditionalStatement = new CodeConditionStatement(
+                            condition, trueStatements, falseStatements);
 
-                    // return the statement that is created
-                    return new CodeStatement[] { conditionalStatement };
-
+                        // return the statement that is created
+                        return new CodeStatement[] { conditionalStatement };
+                    }
                 case "SWITCH":
 
                     // This is a switch, add a comparison for
@@ -181,6 +182,44 @@ namespace Generator
                     }
 
                     return ifs.ToArray();
+                case "MORETHAN":
+                case "LESSTHAN":
+                case "EQUALS":
+                    {
+                        List<CodeStatement> statements = new List<CodeStatement>();
+
+                        // Create item name and assign to output
+                        string boolName = "result_" + node.InstanceID.ToString();
+                        // access the item via the output
+                        node.Output[1].Value = boolName;
+
+                        // The output item of this node is assigned to the node output
+                        CodeVariableDeclarationStatement boolRef =
+                            new CodeVariableDeclarationStatement(typeof(Boolean),
+                            boolName);
+
+                        statements.Add(boolRef);
+
+                        CodeExpression condition = new CodeBinaryOperatorExpression(new CodeSnippetExpression(node.Input[1].GetValue),
+                                node.Label == "MORETHAN" ? CodeBinaryOperatorType.GreaterThan : node.Label == "LESSTHAN" ? CodeBinaryOperatorType.LessThan : CodeBinaryOperatorType.IdentityEquality,
+                                new CodeSnippetExpression(node.Input[2].GetValue));
+
+                        CodeStatement iftrue = new CodeAssignStatement(new CodeVariableReferenceExpression(boolName), new CodePrimitiveExpression(true));
+
+                        CodeStatement iffalse = new CodeAssignStatement(new CodeVariableReferenceExpression(boolName), new CodePrimitiveExpression(false));
+
+                        CodeConditionStatement conditionStatement = new CodeConditionStatement(
+                            condition,
+                            new CodeStatement[] { iftrue },
+                            new CodeStatement[] { iffalse });
+
+                        statements.Add(conditionStatement);
+
+                        if (node.Output[0].LinkedIO != null)
+                            statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
+
+                        return statements.ToArray();
+                    }
                 default:
                     return null;
             }
@@ -346,6 +385,23 @@ namespace Generator
                             statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
                         break;
                 }
+                case "CREATEVEC2":
+                    {
+                        // Create vector name and assign to output
+                        string vecName = "vec2_" + node.InstanceID.ToString();
+                        node.Output[1].Value = vecName;
+
+                        // The output item of this node is assigned to the node output
+                        CodeVariableDeclarationStatement itemRef =
+                            new CodeVariableDeclarationStatement(typeof(Vector2),
+                            vecName, new CodeSnippetExpression(string.Format("new Vector2({0}, {1})", node.Input[1].GetValue, node.Input[2].GetValue)));
+
+                        statements.Add(itemRef);
+
+                        if (node.Output[0].LinkedIO != null)
+                            statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
+                        break;
+                    }
                 case "CREATENUM":
                 {
                     // Create string name and assign to output
@@ -396,6 +452,22 @@ namespace Generator
                         statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
                     break;
                 }
+                case "CREATEVEC2ARRAY":
+                    {
+                        string arrayName = "array_" + node.InstanceID.ToString();
+                        node.Output[1].Value = arrayName;
+
+                        // The output item of this node is assigned to the node output
+                        CodeVariableDeclarationStatement arrayRef =
+                            new CodeVariableDeclarationStatement(typeof(List<Vector2>),
+                            arrayName, new CodeSnippetExpression("new List<Vector2>()"));
+
+                        statements.Add(arrayRef);
+
+                        if (node.Output[0].LinkedIO != null)
+                            statements.AddRange(GenerateNode(node.Output[0].LinkedIO.Node));
+                        break;
+                    }
                 case "CREATEOBJARRAY":
                 {
                     string arrayName = "array_" + node.InstanceID.ToString();
@@ -441,7 +513,14 @@ namespace Generator
                     statements.Add(assignStatement);
                     break;
                 }
+                case "SETVEC2":
+                {
+                        statements.Add(new CodeSnippetStatement(string.Format("Vector2 {0} = new Vector2({1}, {2});", 
+                                    node.Input[1].GetValue, node.Input[2].GetValue, node.Input[3].GetValue)));
 
+                        node.Output[1].Value = node.Input[3].GetValue;
+                        break;
+                }
                 case "GETITEM":
                 {
                     // Create item name and assign to output
@@ -467,6 +546,7 @@ namespace Generator
                             node.Input[2].GetValue))));
                     break;
                 }
+
             }
 
             if (node.Output[0].LinkedIO != null)
