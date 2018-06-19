@@ -515,7 +515,7 @@ namespace Generator
                 }
                 case "SETVEC2":
                 {
-                        statements.Add(new CodeSnippetStatement(string.Format("Vector2 {0} = new Vector2({1}, {2});", 
+                        statements.Add(new CodeSnippetStatement(string.Format("{0} = new Vector2({1}, {2});", 
                                     node.Input[1].GetValue, node.Input[2].GetValue, node.Input[3].GetValue)));
 
                         node.Output[1].Value = node.Input[3].GetValue;

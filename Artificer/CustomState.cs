@@ -20,14 +20,20 @@ namespace Space.AI
         // The main execution loop of the NPC script
         public override void PerformLoop()
         {
-            bool result_1;
-            if ((4 == 4))
+            bool result_2;
+            if ((0 == 0))
             {
-                result_1 = true;
+                result_2 = true;
             }
             else
             {
-                result_1 = false;
+                result_2 = false;
+            }
+            // While statement is comprised of a for loop with a boolean condition.
+            for (
+            ; result_2; 
+            )
+            {
             }
         }
     }

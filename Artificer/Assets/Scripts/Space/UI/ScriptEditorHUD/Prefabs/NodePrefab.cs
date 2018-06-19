@@ -229,6 +229,8 @@ namespace Space.UI.IDE
                     return NodeData.IO.IOType.STRING;
                 case NodeData.IO.IOType.OBJARRAY:
                     return NodeData.IO.IOType.OBJECT;
+                case NodeData.IO.IOType.VEC2ARRAY:
+                    return NodeData.IO.IOType.VEC2;
                 default:
                     return CurrentType;
             }
