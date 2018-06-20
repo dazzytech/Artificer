@@ -25,8 +25,6 @@ namespace Space.UI.Proxmity
         protected override void OnEnable()
         {
             m_viewer.gameObject.SetActive(true);
-            // Begin tracking process if active
-            StartCoroutine("Step");
         }
 
         protected override void OnDisable()
@@ -48,19 +46,7 @@ namespace Space.UI.Proxmity
 
         #region COROUTINE
 
-        private IEnumerator Step()
-        {
-            while (true)
-            {
-                if (SystemManager.Space.PlayerCamera == null)
-                    yield break;
-
-                m_viewer.CenterAt(SystemManager.Space.PlayerCamera.position);
-
-                yield return new WaitForSeconds(.5f);
-            }
-            
-        }
+        
 
         #endregion
     }

@@ -58,6 +58,12 @@ namespace Space.Map
         [SerializeField]
         private bool m_interactive = false;
 
+        /// <summary>
+        /// If true then this map will remain centered on the player
+        /// </summary>
+        [SerializeField]
+        private bool m_followPlayer = false;
+
         #endregion
 
         #region ICONS
@@ -114,6 +120,12 @@ namespace Space.Map
                 ClearIcons();
                 BuildIcons();
             }
+
+            if(m_followPlayer)
+            {
+                // Begin tracking process if active
+                StartCoroutine("Step");
+            }
         }
 
         public void Start()
@@ -130,11 +142,11 @@ namespace Space.Map
         public void InitializeMap(MapObjectType[] filter = null)
         {
             // determine our scale
-            m_scale.x = Mathf.Round((m_baseMap.rect.width / 5000f) * 100f) / 100f;
-            m_scale.y = Mathf.Round((m_baseMap.rect.height / 5000f) * 100f) / 100f;
+            m_scale.x = Mathf.Round((m_baseMap.rect.width/5000f) * 100f) / 100f;
+            m_scale.y = Mathf.Round((m_baseMap.rect.height/5000f) * 100f) / 100f;
 
-            m_inverseScale.x = Mathf.Round((5000f/m_baseMap.rect.width) * 100f) / 100f;
-            m_inverseScale.y = Mathf.Round((5000f / m_baseMap.rect.height) * 100f) / 100f;
+            m_inverseScale.x = (5000f/m_baseMap.rect.width);
+            m_inverseScale.y = (5000f/m_baseMap.rect.height);
 
             // apply filter
             m_filter = filter;
@@ -289,7 +301,7 @@ namespace Space.Map
                     case MapObjectType.SATELLITE:
                         // Resize object based on texture
                         GO.GetComponent<RectTransform>().sizeDelta =
-                            new Vector2(250, 125) * scale;
+                            new Vector2(250, 150) * scale;
                         img.texture = m_satIcon;
                         break;
                     case MapObjectType.STATION:
@@ -345,8 +357,6 @@ namespace Space.Map
                 GameObject region = new GameObject();
                 RectTransform rTrans = region.AddComponent<RectTransform>();
                 rTrans.SetParent(m_baseMap);
-                rTrans.localPosition = ScaleAndPosition(mObj.Position) + (newSize * .5f);
-
 
                 if (mObj.Points != null)
                 {
@@ -362,6 +372,8 @@ namespace Space.Map
 
                     rTrans.sizeDelta = newSize;
                 }
+
+                region.transform.localPosition = ScaleAndPosition(mObj.Position) + (newSize * .5f);
 
                 // Create overlaying icon
                 GameObject icon = new GameObject();
@@ -451,8 +463,10 @@ namespace Space.Map
                 }
                 else
                 {
-                    mObj.Icon.localPosition = ScaleAndPosition(mObj.Position);
                     RawImage img = mObj.Icon.GetComponent<RawImage>();
+                    if(mObj.RenderPoints == null)
+                        mObj.Icon.localPosition = ScaleAndPosition(mObj.Position);
+                    
 
                     if (img != null && mObj.Icon.GetComponent<SelectableHUDItem>() == null)
                     {
@@ -497,6 +511,15 @@ namespace Space.Map
             return ApplyCameraRotation(returnVal, Vector2.zero);
         }
 
+        private Vector2 ScaleAndPositionWorld(Vector2 orig)
+        {
+            Vector3 returnVal = orig;
+            RectTransformUtility.ScreenPointToWorldPointInRectangle(m_baseMap, orig, 
+                GameObject.Find("UICamera").GetComponent<Camera>(), out returnVal);
+
+            return ApplyCameraRotation(returnVal, Vector2.zero);
+        }
+
         private Vector2 ApplyCameraRotation(Vector2 orig, Vector2 offset = default(Vector2))
         {
             Vector2 returnVal = orig - offset;
@@ -525,10 +548,10 @@ namespace Space.Map
             {
                 if (OnClick != null)
                 {
-                    Vector2 scaledPoint = Input.mousePosition;
-                    Vector3 test = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    // find point relative to mouse point rather 
+                    
 
-                    scaledPoint.Scale(m_inverseScale);
+                    Vector2 scaledPoint = ScaleAndPositionWorld(Input.mousePosition);
 
                     OnClick(eventData, scaledPoint);
                 }
@@ -567,5 +590,19 @@ namespace Space.Map
         }
 
         #endregion
+
+        private IEnumerator Step()
+        {
+            while (true)
+            {
+                if (SystemManager.Space.PlayerCamera == null)
+                    yield break;
+
+                CenterAt(SystemManager.Space.PlayerCamera.position);
+
+                yield return new WaitForSeconds(.5f);
+            }
+
+        }
     }
 }
