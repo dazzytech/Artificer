@@ -28,12 +28,12 @@ namespace Generator
             samples.Imports.Add(new CodeNamespaceImport("System"));
             samples.Imports.Add(new CodeNamespaceImport("System.Collections.Generic"));
 
-            targetClass = new CodeTypeDeclaration("CustomState");    
+            targetClass = new CodeTypeDeclaration("CustomScript");    
             targetClass.IsClass = true;
             targetClass.TypeAttributes =
                 TypeAttributes.Public;
             targetClass.BaseTypes.Add(new CodeTypeReference
-                ("ICustomState"));
+                ("ICustomScript"));
 
             samples.Types.Add(targetClass);
             cu.Namespaces.Add(samples);
@@ -668,7 +668,7 @@ namespace Generator
 
         public static void GenerateCSharp()
         {
-            CSharpCodeProvider provider = new CSharpCodeProvider();
+            /*CSharpCodeProvider provider = new CSharpCodeProvider();
             ICodeGenerator codeGen = provider.CreateGenerator();
             CodeGeneratorOptions options = new CodeGeneratorOptions();
             options.BracingStyle = "C";
@@ -677,8 +677,10 @@ namespace Generator
                 provider.GenerateCodeFromCompileUnit
                     (cu, sourceWriter, options);
             }
+            */
 
-           /* CSharpCodeProvider codeProvider = new CSharpCodeProvider();
+            CSharpCodeProvider codeProvider = new CSharpCodeProvider(
+                new Dictionary<String, String> { { "CompilerVersion", "v3.5" } });
             ICodeCompiler codeCompiler = codeProvider.CreateCompiler();
 
             CompilerParameters parameters = new CompilerParameters();
@@ -687,8 +689,20 @@ namespace Generator
             //parameters.GenerateInMemory = true;
             parameters.ReferencedAssemblies.Add("System.dll");
             parameters.ReferencedAssemblies.Add("System.Core.dll");
-            parameters.ReferencedAssemblies.Add(typeof(ICustomState).Assembly.Location);
-            parameters.ReferencedAssemblies.Add("UnityEngine.dll");
+            parameters.ReferencedAssemblies.Add(typeof(ICustomScript).Assembly.Location);
+            parameters.ReferencedAssemblies.Add(typeof(KeyCode).Assembly.Location);
+            parameters.ReferencedAssemblies.Add(typeof(FSM).Assembly.Location);
+            parameters.ReferencedAssemblies.Add(typeof(FSMState).Assembly.Location);
+            parameters.ReferencedAssemblies.Add(typeof(Vector3).Assembly.Location);
+            parameters.ReferencedAssemblies.Add(typeof(Transition).Assembly.Location);
+            parameters.ReferencedAssemblies.Add(typeof(FSMStateID).Assembly.Location);
+            parameters.ReferencedAssemblies.Add(typeof(Space.Ship.ShipInputReceiver).Assembly.Location);
+            parameters.ReferencedAssemblies.Add(typeof(Debug).Assembly.Location);
+            parameters.ReferencedAssemblies.Add(typeof(Control_Config).Assembly.Location);
+            parameters.ReferencedAssemblies.Add(typeof(Transform).Assembly.Location);
+            parameters.ReferencedAssemblies.Add(typeof(DestUtil).Assembly.Location);
+            parameters.ReferencedAssemblies.Add(typeof(Time).Assembly.Location);
+
 
             CompilerResults results = codeCompiler.CompileAssemblyFromDom(parameters, cu);
             if (results.Errors.HasErrors)
@@ -700,7 +714,7 @@ namespace Generator
                         results.Errors[x].IsWarning, results.Errors[x].Line.ToString(), 
                         results.Errors[x].ErrorText));
                 }
-            }*/
+            }
         }
     }
 }

@@ -11,19 +11,13 @@ namespace Space.AI
     /// contains default attributes and event listeners
     /// interacted with by the CustomAgent
     /// </summary>
-    public abstract class ICustomState : FSMState
+    public abstract class ICustomScript
     {
         #region ATTRIBUTES
 
-
+        public List<KeyCode> Keys;
 
         #endregion
-
-        public ICustomState()
-        {
-            m_stateID = FSMStateID.Custom;
-            Keys = new List<KeyCode>();
-        }
 
         /// <summary>
         /// Called by custom agent to 
@@ -31,7 +25,7 @@ namespace Space.AI
         /// </summary>
         public void InitializeScript()
         {
-
+            Keys = new List<KeyCode>();
         }
 
         /// <summary>
@@ -39,23 +33,13 @@ namespace Space.AI
         /// </summary>
         public abstract void PerformLoop();
 
+        #region SHIP EVENTS
+
         /// <summary>
         /// Called by custom agent when the ship
         /// takes damage
         /// </summary>
-        public abstract void ComponentDamaged();
-
-        #region FSM STATE
-
-        public override void Reason()
-        {
-            // Do nothing here
-        }
-
-        public override void Act()
-        {
-            // Do nothing here
-        }
+        //public abstract void ComponentDamaged();
 
         #endregion
     }
