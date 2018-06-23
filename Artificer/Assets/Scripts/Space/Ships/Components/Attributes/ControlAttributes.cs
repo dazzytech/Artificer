@@ -8,5 +8,7 @@ namespace Space.Ship.Components.Attributes
     public class ControlAttributes : ComponentAttributes
     {
         public List<FSM> Agent;
+
+        public ICustomScript Script;
     }
 }

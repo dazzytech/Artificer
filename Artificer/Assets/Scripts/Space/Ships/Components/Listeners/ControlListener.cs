@@ -7,6 +7,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Space.AI;
+using Space.AI.Agent;
 
 namespace Space.Ship.Components.Listener
 {
@@ -24,11 +26,11 @@ namespace Space.Ship.Components.Listener
         /// Library of generated prefabs that the ship can
         /// spawn
         /// </summary>
-        private NPCPrefabData[] Prefabs
+        private ShipSpawnData[] Prefabs
         {
             get
             {
-                return SystemManager.Player.NPCPrefabs;
+                return SystemManager.PlayerShips;
             }
         }
 
@@ -54,15 +56,20 @@ namespace Space.Ship.Components.Listener
         /// Builds the NPC and assigns the agent
         /// </summary>
         /// <param name="index"></param>
-        public void SpawnNPC(int index)
+        public void SpawnNPC(ICustomScript customScript)
         {
-            NPCPrefabData npc = Prefabs[index];
+            if (customScript == null)
+                return;
+
+            m_att.Script = customScript;
+
+            ShipSpawnData npc = Prefabs[0];
 
             #region CHECK AND APPLY COST
 
             WalletData temp = SystemManager.Wallet;
 
-            if (!temp.Withdraw(ShipLibrary.GetShip(npc.Ship).Cost))
+            if (!temp.Withdraw(npc.Ship.Cost))
             {
                 SystemManager.UIPrompt.DisplayPrompt
                     ("Insufficient funds to deploy npc", 3f);
@@ -81,7 +88,7 @@ namespace Space.Ship.Components.Listener
             Vector3 location = Math.RandomWithinRange
                                 (transform.position, 5, 10);
 
-            CmdSpawnNPC(SystemManager.Space.ID, (uint)index, netId.Value, location);
+            CmdSpawnNPC(SystemManager.Space.ID, netId.Value, location);
 
             #endregion
         }
@@ -93,7 +100,7 @@ namespace Space.Ship.Components.Listener
         /// <param name="prefabID"></param>
         /// <param name="selfID"></param>
         /// <param name="location"></param>
-        public void CmdSpawnNPC(int playerID, uint prefabID, uint selfID,
+        public void CmdSpawnNPC(int playerID, uint selfID,
             Vector3 location)
         {
             #region GENERATE SHIP
@@ -112,7 +119,7 @@ namespace Space.Ship.Components.Listener
 
             // Assign the information while on the server
             GO.GetComponent<ShipGenerator>().
-                AssignShipData((SystemManager.PlayerShips[Prefabs[prefabID].Ship].Ship), 
+                AssignShipData((SystemManager.PlayerShips[0].Ship), 
                 m_att.Ship.TeamID, playerConn);
 
             #endregion
@@ -121,7 +128,7 @@ namespace Space.Ship.Components.Listener
 
             SpawnNPCMessage snm = new SpawnNPCMessage();
             snm.SpawnID = selfID;
-            snm.TargetID = prefabID;
+            snm.TargetID = 0;
             snm.HomeID = 0;
             snm.AgentID = GO.GetComponent<NetworkIdentity>().netId.Value;
             snm.AgentType = "";
@@ -167,9 +174,12 @@ namespace Space.Ship.Components.Listener
                 return;
 
             // assign FSM to custom FSM
+            UserAgent userFSM = GO.AddComponent<UserAgent>();
 
             // Initialize FSM
+            userFSM.SetNPC(m_att.Script);
 
+            m_att.Agent.Add(userFSM);
         }
 
         #endregion

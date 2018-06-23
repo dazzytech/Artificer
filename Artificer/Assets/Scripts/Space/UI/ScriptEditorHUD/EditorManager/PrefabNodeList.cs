@@ -58,8 +58,13 @@ namespace Space.UI.IDE
         /// <param name="nodeCreate"></param>
         public void GeneratePrefabs()
         {
+            //m_con.Prefabs.Clear();
+
+            foreach (Transform child in m_tabList)
+                GameObject.Destroy(child.gameObject);
+
             foreach (Transform child in m_listContainer)
-                GameObject.Destroy(child);
+                GameObject.Destroy(child.gameObject);
 
             foreach (string category in m_con.Prefabs.Categories)
             {

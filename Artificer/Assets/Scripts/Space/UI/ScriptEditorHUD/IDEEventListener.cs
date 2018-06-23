@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Generator;
-
+using Space.AI;
 
 namespace Space.UI.IDE
 {
@@ -33,13 +33,24 @@ namespace Space.UI.IDE
         /// </summary>
         public void CompileAgent()
         {
-            if (m_con.Entry != null)
-                AgentGenerator.GenerateAgent(m_con.Entry);
+            m_con.CompileScript();
         }
 
-        public void RevertChanges()
+        /// <summary>
+        /// Build the C# script of the compiled graph
+        /// </summary>
+        public void CreateScriptCSharp()
         {
+            m_con.GenerateCSharp();
+        }
 
+        /// <summary>
+        /// When the button is pressed
+        /// trigger the controller to create a NPC instance
+        /// </summary>
+        public void SpawnAgent()
+        {
+            m_con.TriggerControlModule();
         }
 
         #endregion

@@ -130,6 +130,20 @@ namespace Space.Ship
             }
         }
 
+        public ControlListener Control
+        {
+            get
+            {
+                foreach (ComponentListener comp in Components)
+                {
+                    if (comp is ControlListener)
+                        return comp as ControlListener;
+                }
+
+                return null;
+            }
+        }
+
         /// <summary>
         /// Returns the first
         /// occuring instance of a warp component
