@@ -1,9 +1,11 @@
 ﻿using Data.Space.Library;
 using Data.UI;
+using Generator;
 using System.Collections;
 using System.Collections.Generic;
 using UI.Effects;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Space.UI.IDE
 {
@@ -138,15 +140,6 @@ namespace Space.UI.IDE
 
             m_att.EntryNode = node;
         }
-
-        /// <summary>
-        /// Clears and draws the new nodes to the script viewer
-        /// </summary>
-        /// <param name="agent"></param>
-        public void LoadAgent(string agent)
-        {
-
-        }
         
         /// <summary>
         /// Creates an instance of 
@@ -166,6 +159,34 @@ namespace Space.UI.IDE
 
             DraggedObj = node;
             DraggedObj.Dragging = true;
+        }
+
+        public void GenerateDebug(List<DebugMessages> msgs)
+        {
+            ClearDebug();
+
+            foreach(DebugMessages msg in msgs)
+            {
+                GameObject messageGO = Instantiate(m_att.DebugMsgPrefab);
+
+                messageGO.transform.SetParent(m_att.DebugHUD);
+
+                // display to text
+                messageGO.transform.Find("Node").GetComponent<Text>().text =
+                    msg.NodeInstance;
+
+                // display to text
+                messageGO.transform.Find("Msg").GetComponent<Text>().text =
+                    msg.Message;
+            }
+
+            //m_att.DebugHUD.localPosition = new Vector3(0, 0);
+        }
+
+        public void ClearDebug()
+        {
+            foreach (Transform child in m_att.DebugHUD)
+                GameObject.Destroy(child.gameObject);
         }
 
         #endregion

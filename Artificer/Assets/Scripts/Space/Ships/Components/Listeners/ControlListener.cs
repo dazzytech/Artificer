@@ -177,7 +177,7 @@ namespace Space.Ship.Components.Listener
             UserAgent userFSM = GO.AddComponent<UserAgent>();
 
             // Initialize FSM
-            userFSM.SetNPC(m_att.Script);
+            userFSM.SetNPC(m_att.Script, this);
 
             m_att.Agent.Add(userFSM);
         }

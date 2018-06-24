@@ -9,9 +9,27 @@ using UnityEngine;
 using System.Reflection;
 using System;
 using Space.AI;
+using UnityEngine.UI;
 
 namespace Generator
 {
+    /// <summary>
+    /// Stores information about any erros occuring within
+    /// the compiler to display
+    /// </summary>
+    public class DebugMessages
+    {
+        /// <summary>
+        /// What is wrong
+        /// </summary>
+        public string Message;
+
+        /// <summary>
+        /// The node that triggered the issue -1 if none
+        /// </summary>
+        public string NodeInstance;
+    }
+
     /// <summary>
     /// Uses CodeDOM to build the agent script
     /// </summary>
@@ -23,6 +41,11 @@ namespace Generator
         /// The graph object that generates the object
         /// </summary>
         private CodeCompileUnit m_compileUnit;
+
+        /// <summary>
+        /// List of errors with the compiler
+        /// </summary>
+        private List<DebugMessages> m_debugMsgs;
 
         #endregion
 
@@ -37,6 +60,14 @@ namespace Generator
             get
             {
                 return m_compileUnit != null;
+            }
+        }
+
+        public List<DebugMessages> DebugMsg
+        {
+            get
+            {
+                return m_debugMsgs;
             }
         }
 
@@ -70,8 +101,11 @@ namespace Generator
 
             Assembly compiled = null;
 
-            if(GenerateLoop(targetClass, start))
+            if (GenerateLoop(targetClass, start))
                 compiled = CompileScript();
+            else
+                m_debugMsgs.Add(new DebugMessages()
+                    { Message = "Main Loop Method Failed to Compile", NodeInstance = "-1" });
 
             if(compiled != null)
             {
@@ -112,6 +146,8 @@ namespace Generator
         /// <returns></returns>
         private bool GenerateLoop(CodeTypeDeclaration targetClass, NodeData start)
         {
+            m_debugMsgs = new List<DebugMessages>();
+
             CodeMemberMethod LoopMethod = new CodeMemberMethod();
             LoopMethod.Attributes =
                 MemberAttributes.Public | MemberAttributes.Override;
@@ -127,7 +163,6 @@ namespace Generator
 
             if(codeStatement == null)
             {
-                Debug.Log("Failed to generate script body");
                 return false;
             }
 
@@ -178,6 +213,14 @@ namespace Generator
                     return GenerateNode(link.LinkedIO.Node);
                 }
             }
+
+            // make sure to warn the player is entry node isn't assigned
+            if (node.Label == "ENTRY")
+                m_debugMsgs.Add(new DebugMessages()
+                {
+                    NodeInstance = node.InstanceID.ToString(),
+                    Message = "Entry node not connected"
+                });
 
             return null;
         }
@@ -302,14 +345,65 @@ namespace Generator
         {
             List<CodeStatement> statements = new List<CodeStatement>();
 
+            #region ERROR CHECKING
+
+            if (node.Output[0].LinkedIO != null)
+            {
+                m_debugMsgs.Add(new DebugMessages()
+                {
+                    NodeInstance = node.InstanceID.ToString(),
+                    Message = "loop output not assigned to node"
+                });
+
+                return null;
+            }
+
+            #endregion
+
             switch (node.Label)
             {
                 case "FOR":
                 {
-                    if (node.Output[0].LinkedIO != null)
-                    {
-                        // Create index name and assign to output
-                        string indexName = "index_" + node.InstanceID.ToString();
+                        #region ERROR CHECKING
+
+                        // Error checking
+                        if (node.Input[1].GetValue == null)
+                        {
+                            m_debugMsgs.Add(new DebugMessages()
+                            {
+                                NodeInstance = node.InstanceID.ToString(),
+                                Message = "Min variable not assigned to node"
+                            });
+
+                            return null;
+                        }
+
+                        // Error checking
+                        if (node.Input[2].GetValue == null)
+                        {
+                            m_debugMsgs.Add(new DebugMessages()
+                            {
+                                NodeInstance = node.InstanceID.ToString(),
+                                Message = "Max variable not assigned to node"
+                            });
+                            return null;
+                        }
+
+                        // Error checking
+                        if (node.Input[3].GetValue == null)
+                        {
+                            m_debugMsgs.Add(new DebugMessages()
+                            {
+                                NodeInstance = node.InstanceID.ToString(),
+                                Message = "Step variable not assigned to node"
+                            });
+                            return null;
+                        }
+
+                        #endregion    
+
+                            // Create index name and assign to output
+                            string indexName = "index_" + node.InstanceID.ToString();
 
                         // any child nodes may now access the index here
                         node.Output[1].Value = indexName;
@@ -319,6 +413,7 @@ namespace Generator
                             new CodeVariableDeclarationStatement(typeof(int),
                             indexName, new CodePrimitiveExpression(0));
                         statements.Add(indexInt);
+
                         // input[0] exec     
                         // input[1] min input     
                         // input[2] max input
@@ -333,7 +428,6 @@ namespace Generator
                                 new CodeSnippetExpression(node.Input[3].GetValue))),
                                 GenerateNode(node.Output[0].LinkedIO.Node)); // The statements to execute if the condition evaluates to true.
                         statements.Add(forLoop);
-                    }
 
                     // if there is an end node then generate the end node - Output[2]
                     if (node.Output[2].LinkedIO != null)
@@ -343,8 +437,24 @@ namespace Generator
                 }
                 case "FOREACH":
                 {
-                    // Create index name and assign to output
-                    string indexName = "index_" + node.InstanceID.ToString();
+                        #region ERROR CHECKING
+
+                        // Error checking
+                        if (node.Input[1].GetValue == null)
+                        {
+                            m_debugMsgs.Add(new DebugMessages()
+                            {
+                                NodeInstance = node.InstanceID.ToString(),
+                                Message = "Array not connected to node"
+                            });
+
+                            return null;
+                        }
+
+                        #endregion
+
+                        // Create index name and assign to output
+                        string indexName = "index_" + node.InstanceID.ToString();
                     // any child nodes may now access the index here
                     node.Output[1].Value = indexName;
 
@@ -386,6 +496,22 @@ namespace Generator
                     break;
                 }
                 case "WHILE":
+                    #region ERROR CHECKING
+
+                    // Error checking
+                    if (node.Input[1].LinkedIO == null)
+                    {
+                        m_debugMsgs.Add(new DebugMessages()
+                        {
+                            NodeInstance = node.InstanceID.ToString(),
+                            Message = "Input Boolean has to be linked node"
+                        });
+
+                        return null;
+                    }
+
+                    #endregion
+
                     statements.Add(new CodeCommentStatement("While statement is comprised of a for loop with a boolean condition."));
                     CodeIterationStatement whileLoop = new CodeIterationStatement(new CodeSnippetStatement(), new CodeSnippetExpression(node.Input[1].GetValue),
                         new CodeSnippetStatement(), GenerateNode(node.Output[0].LinkedIO.Node));
@@ -418,9 +544,27 @@ namespace Generator
                 case "LOG":
                 {
                     // Creates a debug.log to output a message
-                    if (node.Input[1].GetValue != null)
+                    if (node.Input[1].GetValue == null)
                     {
-                        // generate an input string here
+                        #region ERROR CHECKING
+
+                        // Error checking
+                        if (node.Input[1].GetValue == "")
+                        {
+                            m_debugMsgs.Add(new DebugMessages()
+                            {
+                                NodeInstance = node.InstanceID.ToString(),
+                                Message = "No object connected to output"
+                            });
+
+                            return null;
+                        }
+
+                            #endregion
+                    }
+                    else
+                    {
+                            // generate an input string here
                         string input = node.Input[1].GetValue;
                         // if the input is not a string then it will need to be converted
                         if (node.Input[1].CurrentType != NodeData.IO.IOType.STRING)
@@ -631,6 +775,45 @@ namespace Generator
         private CodeStatement[] GenerateShipInteract(NodeData node)
         {
             List<CodeStatement> statements = new List<CodeStatement>();
+
+            #region ERROR CHECKING
+
+            bool linked = false;
+
+            if (node.Input[0].LinkedIO != null)
+                linked = true;
+
+            // Error checking - all of these commands should only have one input 
+            if (node.Input[1].LinkedIO != null)
+            {
+                if (linked)
+                {
+                    m_debugMsgs.Add(new DebugMessages()
+                    {
+                        NodeInstance = node.InstanceID.ToString(),
+                        Message = "Ship interactioncan can only have one input"
+                    });
+                    return null;
+                }
+                else
+                    linked = true;
+            }
+            if (node.Input[2].LinkedIO != null)
+            {
+                if (linked)
+                {
+                    m_debugMsgs.Add(new DebugMessages()
+                    {
+                        NodeInstance = node.InstanceID.ToString(),
+                        Message = "Ship interactioncan can only have one input"
+                    });
+                    return null;
+                }
+                else
+                    linked = true;
+            }
+
+            #endregion
 
             switch (node.Label)
             {

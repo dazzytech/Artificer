@@ -45,18 +45,29 @@ namespace Space.UI.IDE
         /// <param name="customScript"></param>
         public void CompileScript()
         {
+            // Run if there is an entry node
             if (m_att.Editor.ScriptEntry == null)
                 return;
 
+            // Use the tool to conver the graph to a script 
             ICustomScript script =
                 m_att.Generator.GenerateCodeGraph
                 (m_att.Editor.ScriptEntry);
 
-            m_att.PlayerScript = script;
+            if (script != null)
+            {
+                m_att.PlayerScript = script;
+                Debug.Log("Script Saved");
 
-            Debug.Log("Script Saved");
+                m_att.Editor.ClearDebug();
+            }
+            else
+            {
+                // Create debug messages
+                m_att.Editor.GenerateDebug(m_att.Generator.DebugMsg);
+            }
         }
-
+        
         /// <summary>
         /// If the script is already compiled
         /// then create the c# script
@@ -77,6 +88,8 @@ namespace Space.UI.IDE
             // a script to build
             if(m_att.PlayerScript != null)
                 m_att.Ship.Control.SpawnNPC(m_att.PlayerScript);
+
+            m_event.ExitIDE();
         }
     }
 }

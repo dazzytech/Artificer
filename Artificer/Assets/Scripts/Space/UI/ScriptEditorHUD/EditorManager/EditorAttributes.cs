@@ -3,6 +3,7 @@ using Data.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Space.UI.IDE
 {
@@ -20,13 +21,18 @@ namespace Space.UI.IDE
     public class EditorAttributes : MonoBehaviour
     {
         public NodeLibrary NodePrefabs;
-
         
         #region UI REFERENCES
 
         public PrefabNodeList PrefabListHUD;
 
         public ScriptUI ScriptHUD;
+
+        /// <summary>
+        /// The UI panel in which
+        /// compiler errors are displayed
+        /// </summary>
+        public Transform DebugHUD;
 
         #endregion
 
@@ -56,6 +62,11 @@ namespace Space.UI.IDE
         /// Preset node that the script generation stems from
         /// </summary>
         public NodePrefab EntryNode;
+
+        /// <summary>
+        /// The prefab object to display errors
+        /// </summary>
+        public GameObject DebugMsgPrefab;
 
         #endregion
     }
