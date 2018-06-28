@@ -227,8 +227,8 @@ namespace Space.UI.IDE
                     return NodeData.IO.IOType.NUM;
                 case NodeData.IO.IOType.STRINGARRAY:
                     return NodeData.IO.IOType.STRING;
-                case NodeData.IO.IOType.OBJARRAY:
-                    return NodeData.IO.IOType.OBJECT;
+                case NodeData.IO.IOType.ENTITYARRAY:
+                    return NodeData.IO.IOType.ENTITY;
                 case NodeData.IO.IOType.VEC2ARRAY:
                     return NodeData.IO.IOType.VEC2;
                 default:

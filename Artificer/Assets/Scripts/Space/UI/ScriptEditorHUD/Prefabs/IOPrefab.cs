@@ -72,7 +72,10 @@ namespace Space.UI.IDE
         private Color m_vec2Colour;
 
         [SerializeField]
-        private Color m_objectColour;
+        private Color m_entityColour;
+
+        [SerializeField]
+        private Color m_alignColour;
 
         [SerializeField]
         private Color m_numArrayColour;
@@ -81,7 +84,7 @@ namespace Space.UI.IDE
         private Color m_stringArrayColour;
 
         [SerializeField]
-        private Color m_objectArrayColour;
+        private Color m_entityArrayColour;
 
         [SerializeField]
         private Color m_vec2ArrayColour;
@@ -280,11 +283,14 @@ namespace Space.UI.IDE
                     case NodeData.IO.IOType.VEC2:
                         m_image.color = m_vec2Colour;
                         break;
-                    case NodeData.IO.IOType.OBJECT:
-                        m_image.color = m_objectColour;
+                    case NodeData.IO.IOType.ENTITY:
+                        m_image.color = m_entityColour;
                         break;
-                    case NodeData.IO.IOType.OBJARRAY:
-                        m_image.color = m_objectArrayColour;
+                    case NodeData.IO.IOType.ALIGNMENT:
+                        m_image.color = m_alignColour;
+                        break;
+                    case NodeData.IO.IOType.ENTITYARRAY:
+                        m_image.color = m_entityArrayColour;
                         break;
                     case NodeData.IO.IOType.STRINGARRAY:
                         m_image.color = m_stringArrayColour;

@@ -80,9 +80,11 @@ namespace Generator
         /// </summary>
         /// <param name="start"></param>
         /// <returns></returns>
-        public ICustomScript GenerateCodeGraph(NodeData start)
+        public ICustomScript GenerateCodeGraph(NodeData start, NodeData inRange)
         {
             m_compileUnit = new CodeCompileUnit();
+
+            m_debugMsgs = new List<DebugMessages>();
 
             CodeNamespace samples = new CodeNamespace("Space.AI");
             samples.Imports.Add(new CodeNamespaceImport("System"));
@@ -101,11 +103,16 @@ namespace Generator
 
             Assembly compiled = null;
 
-            if (GenerateLoop(targetClass, start))
+            bool Loop = GenerateLoop(targetClass, start);
+            bool InRange = GenerateEvent(targetClass, inRange);
+
+            if (Loop || InRange)
                 compiled = CompileScript();
             else
                 m_debugMsgs.Add(new DebugMessages()
-                    { Message = "Main Loop Method Failed to Compile", NodeInstance = "-1" });
+                    { Message = "Script Failed to Compile", NodeInstance = "-1" });
+
+
 
             if(compiled != null)
             {
@@ -115,6 +122,10 @@ namespace Generator
                 if (newScript != null)
                     return newScript;
             }
+
+            GenerateCSharp();
+
+            m_compileUnit = null;
 
             return null;
         }
@@ -146,8 +157,6 @@ namespace Generator
         /// <returns></returns>
         private bool GenerateLoop(CodeTypeDeclaration targetClass, NodeData start)
         {
-            m_debugMsgs = new List<DebugMessages>();
-
             CodeMemberMethod LoopMethod = new CodeMemberMethod();
             LoopMethod.Attributes =
                 MemberAttributes.Public | MemberAttributes.Override;
@@ -159,6 +168,8 @@ namespace Generator
             LoopMethod.ReturnType =
                 new CodeTypeReference(typeof(void));
 
+            targetClass.Members.Add(LoopMethod);
+
             CodeStatement[] codeStatement = GenerateNode(start);
 
             if(codeStatement == null)
@@ -169,7 +180,39 @@ namespace Generator
             // Create the statements for the body
             LoopMethod.Statements.AddRange(codeStatement);
 
-            targetClass.Members.Add(LoopMethod);
+            return true;
+        }
+
+        private bool GenerateEvent(CodeTypeDeclaration targetClass, NodeData inRange)
+        {
+            CodeMemberMethod enterMethod = new CodeMemberMethod();
+            enterMethod.Attributes =
+                MemberAttributes.Public | MemberAttributes.Override;
+            enterMethod.Name = "EnterRange";
+            enterMethod.Parameters.Add(new CodeParameterDeclarationExpression(
+                typeof(EntityObject), "entity"));
+
+            inRange.Output[1].Value = "entity";
+
+            enterMethod.Comments.Add(new CodeCommentStatement
+                (new CodeComment("Triggered when an entity enters range")));
+
+            enterMethod.ReturnType =
+                new CodeTypeReference(typeof(void));
+
+            targetClass.Members.Add(enterMethod);
+
+            CodeStatement[] codeStatement = GenerateNode(inRange);
+
+            if (codeStatement == null)
+            {
+                return false;
+            }
+
+            // Create the statements for the body
+            enterMethod.Statements.AddRange(codeStatement);
+
+            
 
             return true;
         }
@@ -194,6 +237,8 @@ namespace Generator
                     return GenerateVariables(node);
                 case "Ship Interact":
                     return GenerateShipInteract(node);
+                case "Agent Accessor":
+                    return GenerateAgentAccessor(node);
                 case "Debug":
                     return GenerateDebug(node);
                 default:
@@ -236,6 +281,22 @@ namespace Generator
             {
                 case "IF":
                     {
+                        #region ERROR CHECKING
+
+                        // Error checking
+                        if (node.Input[1].GetValue == null)
+                        {
+                            m_debugMsgs.Add(new DebugMessages()
+                            {
+                                NodeInstance = node.InstanceID.ToString(),
+                                Message = "Bool variable not assigned to node"
+                            });
+
+                            return null;
+                        }
+
+                        #endregion 
+
                         // only create one condition if the node has the IF label
                         // input [1] is the boolean variable
                         CodeExpression condition = new CodeSnippetExpression(node.Input[1].GetValue);
@@ -252,6 +313,9 @@ namespace Generator
                         else
                             falseStatements = new CodeStatement[] { new CodeCommentStatement("Nothing here..") };
 
+                        if (trueStatements == null || falseStatements == null)
+                            return null;
+
                         // create the script
                         CodeConditionStatement conditionalStatement = new CodeConditionStatement(
                             condition, trueStatements, falseStatements);
@@ -260,6 +324,21 @@ namespace Generator
                         return new CodeStatement[] { conditionalStatement };
                     }
                 case "SWITCH":
+                    #region ERROR CHECKING
+
+                    // Error checking
+                    if (node.Input[1].GetValue == null)
+                    {
+                        m_debugMsgs.Add(new DebugMessages()
+                        {
+                            NodeInstance = node.InstanceID.ToString(),
+                            Message = "Comparison variable not assigned to node"
+                        });
+
+                        return null;
+                    }
+
+                    #endregion
 
                     // This is a switch, add a comparison for
                     // each comparison value
@@ -297,6 +376,22 @@ namespace Generator
                 case "LESSTHAN":
                 case "EQUALS":
                     {
+                        #region ERROR CHECKING
+
+                        // Error checking
+                        if (node.Input[1].GetValue == null || node.Input[2].GetValue == null)
+                        {
+                            m_debugMsgs.Add(new DebugMessages()
+                            {
+                                NodeInstance = node.InstanceID.ToString(),
+                                Message = "both parameters not assigned to node"
+                            });
+
+                            return null;
+                        }
+
+                        #endregion
+
                         List<CodeStatement> statements = new List<CodeStatement>();
 
                         // Create item name and assign to output
@@ -758,7 +853,66 @@ namespace Generator
                             node.Input[2].GetValue))));
                     break;
                 }
+                case "GETPOS":
+                {
+                    // Create item name and assign to output
+                    string posName = "vec2_" + node.InstanceID.ToString();
+                    // access the item via the output
+                    node.Output[1].Value = posName;
 
+                    // The output item of this node is assigned to the node output
+                    CodeVariableDeclarationStatement posRef =
+                        new CodeVariableDeclarationStatement(typeof(Vector2),
+                        posName);
+
+                    statements.Add(posRef);
+
+                    statements.Add(new CodeAssignStatement(new CodeVariableReferenceExpression(posName),
+                                new CodeSnippetExpression(string.Format("{0}.Reference.position", 
+                                node.Input[1].GetValue))));
+
+                    break;
+                }
+                case "GETALIGN":
+                {
+                    // Create item name and assign to output
+                    string alignName = "align_" + node.InstanceID.ToString();
+                    // access the item via the output
+                    node.Output[1].Value = alignName;
+
+                    // The output item of this node is assigned to the node output
+                    CodeVariableDeclarationStatement alignRef =
+                        new CodeVariableDeclarationStatement(typeof(Alignment),
+                        alignName);
+
+                    statements.Add(alignRef);
+
+                    statements.Add(new CodeAssignStatement(new CodeVariableReferenceExpression(alignName),
+                                new CodeSnippetExpression(string.Format("{0}.Alignment",
+                                node.Input[1].GetValue))));
+
+                    break;
+                }
+                case "VEC2DISTANCE":
+                    {
+                        // Create item name and assign to output
+                        string distName = "distance_" + node.InstanceID.ToString();
+                        // access the item via the output
+                        node.Output[1].Value = distName;
+
+                        // The output item of this node is assigned to the node output
+                        CodeVariableDeclarationStatement distRef =
+                            new CodeVariableDeclarationStatement(typeof(float),
+                            distName);
+
+                        statements.Add(distRef);
+
+                        statements.Add(new CodeAssignStatement(new CodeVariableReferenceExpression(distName),
+                                    new CodeSnippetExpression(string.Format("UnityEngine.Vector2.Distance({0},{1})", 
+                                    node.Input[1].GetValue, node.Input[2].GetValue))));
+
+                        break;
+                    }
             }
 
             if (node.Output[0].LinkedIO != null)
@@ -784,35 +938,28 @@ namespace Generator
                 linked = true;
 
             // Error checking - all of these commands should only have one input 
-            if (node.Input[1].LinkedIO != null)
-            {
-                if (linked)
-                {
-                    m_debugMsgs.Add(new DebugMessages()
-                    {
-                        NodeInstance = node.InstanceID.ToString(),
-                        Message = "Ship interactioncan can only have one input"
-                    });
-                    return null;
-                }
-                else
-                    linked = true;
-            }
-            if (node.Input[2].LinkedIO != null)
-            {
-                if (linked)
-                {
-                    m_debugMsgs.Add(new DebugMessages()
-                    {
-                        NodeInstance = node.InstanceID.ToString(),
-                        Message = "Ship interactioncan can only have one input"
-                    });
-                    return null;
-                }
-                else
-                    linked = true;
-            }
 
+            foreach(NodeData.IO io in node.Input)
+            {
+                if (io.Equals(node.Input[0]) || io.Type != NodeData.IO.IOType.LINK)
+                    continue;
+
+                if(io.LinkedIO != null)
+                {
+                    if (linked)
+                    {
+                        m_debugMsgs.Add(new DebugMessages()
+                        {
+                            NodeInstance = node.InstanceID.ToString(),
+                            Message = "Ship interaction can can only have one input"
+                        });
+                        return null;
+                    }
+                    else
+                        linked = true;
+                }
+            }
+    
             #endregion
 
             switch (node.Label)
@@ -907,6 +1054,22 @@ namespace Generator
 
                         break;
                     }
+                case "TURNTO":
+                    {
+                        // Create string name and assign to output
+                        string resultName = "result_" + node.InstanceID.ToString();
+                        node.Output[1].Value = resultName;
+
+                        // The output item of this node is assigned to the node output
+                        CodeVariableDeclarationStatement resultRef =
+                            new CodeVariableDeclarationStatement(typeof(Boolean), resultName, 
+                                new CodeMethodInvokeExpression(
+                                    new CodeMethodReferenceExpression(new CodeThisReferenceExpression(), "TurnTo"), 
+                                            new CodeExpression[] { new CodeVariableReferenceExpression(node.Input[1].GetValue) }));
+
+                        statements.Add(resultRef);
+                        break;
+                    }
             }
 
             if (node.Output[0].LinkedIO != null)
@@ -914,6 +1077,24 @@ namespace Generator
 
             return statements.ToArray();
         }
+
+        /// <summary>
+        /// Retrieves attributes relating to the object
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        private CodeStatement[] GenerateAgentAccessor(NodeData node)
+        {
+            List<CodeStatement> statements = new List<CodeStatement>();
+
+            /*switch(node.Label)
+            {
+
+            }*/
+
+            return statements.ToArray();
+        }
+
 
         #endregion
 

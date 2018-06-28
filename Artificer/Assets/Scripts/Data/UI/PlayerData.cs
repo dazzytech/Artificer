@@ -50,11 +50,6 @@ namespace Data.UI
         /// </summary>
         public WalletData Wallet;
 
-        /// <summary>
-        /// NPCs that the player has created.
-        /// </summary>
-        public NPCPrefabData[] NPCPrefabs;
-
         #endregion
     }
 }

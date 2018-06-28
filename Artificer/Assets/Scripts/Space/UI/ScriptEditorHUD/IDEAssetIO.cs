@@ -96,11 +96,14 @@ namespace Space.UI.IDE
                             case "vec2":
                                 node.SupportedTypes.Add(NodeData.IO.IOType.VEC2);
                                 break;
-                            case "object":
-                                node.SupportedTypes.Add(NodeData.IO.IOType.OBJECT);
+                            case "entity":
+                                node.SupportedTypes.Add(NodeData.IO.IOType.ENTITY);
                                 break;
-                            case "objectarray":
-                                node.SupportedTypes.Add(NodeData.IO.IOType.OBJARRAY);
+                            case "alignment":
+                                node.SupportedTypes.Add(NodeData.IO.IOType.ALIGNMENT);
+                                break;
+                            case "entityarray":
+                                node.SupportedTypes.Add(NodeData.IO.IOType.ENTITYARRAY);
                                 break;
                             case "numarray":
                                 node.SupportedTypes.Add(NodeData.IO.IOType.NUMARRAY);

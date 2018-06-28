@@ -64,6 +64,11 @@ namespace Space.UI.IDE
         public NodePrefab EntryNode;
 
         /// <summary>
+        /// Node that is invokd when an object is reached
+        /// </summary>
+        public NodePrefab InRange;
+
+        /// <summary>
         /// The prefab object to display errors
         /// </summary>
         public GameObject DebugMsgPrefab;

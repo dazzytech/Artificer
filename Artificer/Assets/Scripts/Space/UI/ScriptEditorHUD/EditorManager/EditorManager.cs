@@ -69,6 +69,14 @@ namespace Space.UI.IDE
             }
         }
 
+        public NodeData InRange
+        {
+            get
+            {
+                return m_att.InRange.Node;
+            }
+        }
+
         #endregion
 
         #region MONO BEHAVIOUR
@@ -133,12 +141,28 @@ namespace Space.UI.IDE
 
 
             NodePrefab node = m_att.ScriptHUD.PlaceNode(start);
-            node.transform.position = new Vector3(146, 425, 0);
+            node.transform.position = new Vector3(146, 625, 0);
             m_att.AddedNodes.Add(0, node);
 
             AddListeners(node);
 
             m_att.EntryNode = node;
+
+            // generate an event node
+            NodeData inRange = m_att.NodePrefabs
+                [m_att.NodePrefabs.GetID("INRANGE")].Clone();
+
+            m_att.AddedIDs.Add
+                (inRange.InstanceID = 1);
+
+
+            NodePrefab rNode = m_att.ScriptHUD.PlaceNode(inRange);
+            rNode.transform.position = new Vector3(146, 425, 0);
+            m_att.AddedNodes.Add(1, rNode);
+
+            AddListeners(rNode);
+
+            m_att.InRange = rNode;
         }
         
         /// <summary>
@@ -179,8 +203,6 @@ namespace Space.UI.IDE
                 messageGO.transform.Find("Msg").GetComponent<Text>().text =
                     msg.Message;
             }
-
-            //m_att.DebugHUD.localPosition = new Vector3(0, 0);
         }
 
         public void ClearDebug()
@@ -431,12 +453,6 @@ namespace Space.UI.IDE
         }
 
         #endregion
-
-        #endregion
-
-        #region COROUTINE
-
-
 
         #endregion
     }

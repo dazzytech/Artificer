@@ -1,11 +1,18 @@
 <?xml version="1.0"?>
 <prefabs>
 	<category label="Events">
-	<node label="ENTRY">
+		<node label="ENTRY">
 			<description>
 			The Entry Point of the script loop
 			</description>
 			<link in="false" label="Start"/>
+		</node>
+		<node label="INRANGE">
+			<description>
+			The Triggered when an entity enters range
+			</description>
+			<link in="false" label="Start"/>
+			<param in ="false" type = "entity" label="Entity"/>
 		</node>
 	</category>
 	<category label="Conditional">
@@ -80,7 +87,7 @@
 				Repeats the program flow through the Loop executable for each item in the list.
 			</description>
 			<type>numarray</type>
-			<type>objectarray</type>
+			<type>entityarray</type>
 			<type>stringarray</type>
 			<type>vec2array</type>
 			<link in="true" label = "Start"/>
@@ -112,7 +119,7 @@
 	<category label="Variables">
 		<node label="SETVEC2">
 			<description>
-				Sets the x and y of a vecto2 object
+				Sets the x and y of a vecto2 entity
 			</description>
 			<link in="true" label = "In"/>
 			<param in="true" type="vec2" label = "Var"/>
@@ -147,7 +154,7 @@
 			</description>
 			<type>numarray</type>
 			<type>stringarray</type>
-			<type>objectarray</type>
+			<type>entityarray</type>
 			<link in="true" label = "In"/>
 			<param in="true" type="undef" label = "Array"/>
 			<param in="true" type="number" label = "Index"/>
@@ -161,11 +168,39 @@
 			<type>numarray</type>
 			<type>stringarray</type>
 			<type>vec2array</type>
-			<type>objectarray</type>
+			<type>entityarray</type>
 			<link in="true" label = "In"/>
 			<param in="true" type="undef" label = "Array"/>
 			<param in="true" type="undefsingle" label = "New Item"/>
 			<link in="false" label = "Out"/>
+		</node>
+		<node label="GETPOS">
+			<description>
+				Gets the position of an entity object
+			</description>
+			<link in="true" label = "In"/>
+			<param in="true" type="entity" label = "Entity"/>
+			<link in="false" label = "Out"/>
+			<param in="false" type="vec2" label = "Position"/>
+		</node>
+		<node label = "GETALIGN">
+			<description>
+				Extract the alignment of the entity object
+			</description>
+			<link in="true" label = "In"/>
+			<param in="true" type="entity" label = "Entity"/>
+			<link in="false" label = "Out"/>
+			<param in="false" type="alignment" label = "Alignment"/>
+		</node>
+		<node label="VEC2DISTANCE">
+			<description>
+				Returns the distance between two vec2s
+			</description>
+			<link in="true" label = "In"/>
+			<param in="true" type="vec2" label = "Pos A"/>
+			<param in="true" type="vec2" label = "Pos B"/>
+			<link in="false" label = "Out"/>
+			<param in="false" type="number" label = "Distance"/>
 		</node>
 	</category>
 	<category label="Ship Interact">
@@ -224,6 +259,55 @@
 			<link in="true" label = "IN"/>
 			<link in="false" label = "OUT"/>
 		</node>
+		<node label="TURNTO">
+			<description>
+				Turns the agent ship to face the Vector point
+			</description>
+			<link in="true" label = "IN"/>
+			<param in="true" type ="vec2" label = "POINT"/>
+			<link in="false" label = "OUT"/>
+			<param in="false" type ="bool" label = "FACING"/>
+		</node>
+	</category>
+	<category label = "Agent Getter">
+		<node label = "PLAYER">
+			<description>
+				Reference to the player entity that spawned this NPC
+			</description>
+			<param in="false" type="entity" label="Player" value="Player"/>
+		</node>
+		<node label = "SELF">
+			<description>
+				Reference to the ship object spawned with this NPC
+			</description>
+			<param in="false" type="entity" label="Self" value="Self"/>
+		</node>
+	</category>
+	<category label="Alignment">
+		<node label = "SELF">
+			<description>
+				Enumerator Value for the Self Alignment
+			</description>
+			<param in="false" type="alignment" label="Self" value="Alignment.SELF"/>
+		</node>
+		<node label = "FRIENDLY">
+			<description>
+				Enumerator Value for the Friendly Alignment
+			</description>
+			<param in="false" type="alignment" label="Friendly" value="Alignment.FRIENDLY"/>
+		</node>
+		<node label = "NEUTRAL">
+			<description>
+				Enumerator Value for the Neutral Alignment
+			</description>
+			<param in="false" type="alignment" label="Neutral" value="Alignment.NEUTRAL"/>
+		</node>
+		<node label = "ENEMY">
+			<description>
+				Enumerator Value for the Enemy Alignment
+			</description>
+			<param in="false" type="alignment" label="Enemy" value="Alignment.ENEMY"/>
+		</node>
 	</category>
 	<category label = "Debug">
 		<node label = "TRUE">
@@ -245,6 +329,8 @@
 			<type>number</type>
 			<type>string</type>
 			<type>bool</type>
+			<type>vec2</type>
+			<type>alignment</type>
 			<link in="true" label = "In"/>
 			<param in="true" type="undef" label = "Messege"/>
 			<link in="false" label = "Out"/>
@@ -269,7 +355,7 @@
 		</node>
 		<node label = "CREATEVEC2">
 			<description>
-				Creates a vector 2 object
+				Creates a vector 2 entity
 			</description>
 			<link in="true" label = "In"/>
 			<param in="true" type="number" label = "X" value = "0"/>
@@ -301,13 +387,13 @@
 			<link in="false" label = "Out"/>
 			<param in="false" type="vec2array" label = "New Array"/>
 		</node>
-		<node label = "CREATEOBJARRAY">
+		<node label = "CREATEENTITYARRAY">
 			<description>
-				Creates an empty array of objects
+				Creates an empty array of entitys
 			</description>
 			<link in="true" label = "In"/>
 			<link in="false" label = "Out"/>
-			<param in="false" type="objectarray" label = "New Array"/>
+			<param in="false" type="entityarray" label = "New Array"/>
 		</node>
 	</category>
 </prefabs>

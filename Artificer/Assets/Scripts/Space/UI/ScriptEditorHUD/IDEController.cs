@@ -36,6 +36,8 @@ namespace Space.UI.IDE
             m_att.Ship = ship;
 
             m_att.Editor.Initialize(m_IO.LoadPrefabData());
+
+            UpdateUI();
         }
 
         /// <summary>
@@ -52,7 +54,7 @@ namespace Space.UI.IDE
             // Use the tool to conver the graph to a script 
             ICustomScript script =
                 m_att.Generator.GenerateCodeGraph
-                (m_att.Editor.ScriptEntry);
+                (m_att.Editor.ScriptEntry, m_att.Editor.InRange);
 
             if (script != null)
             {
@@ -66,6 +68,7 @@ namespace Space.UI.IDE
                 // Create debug messages
                 m_att.Editor.GenerateDebug(m_att.Generator.DebugMsg);
             }
+            UpdateUI();
         }
         
         /// <summary>
@@ -90,6 +93,22 @@ namespace Space.UI.IDE
                 m_att.Ship.Control.SpawnNPC(m_att.PlayerScript);
 
             m_event.ExitIDE();
+        }
+
+        /// <summary>
+        /// Enables and disables buttons based on
+        /// UI state
+        /// </summary>
+        public void UpdateUI()
+        {
+            if (m_att.Generator.IsCompiled)
+            {
+                m_att.SpawnAgent.interactable = true;
+            }
+            else
+            {
+                m_att.SpawnAgent.interactable = false;
+            }
         }
     }
 }

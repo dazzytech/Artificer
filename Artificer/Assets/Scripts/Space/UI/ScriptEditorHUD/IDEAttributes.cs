@@ -5,6 +5,7 @@ using Space.Ship.Components.Listener;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Space.UI.IDE
 {
@@ -32,5 +33,12 @@ namespace Space.UI.IDE
         /// The utility that will generate the user script
         /// </summary>
         public ScriptGenerator Generator;
+
+
+        #region BUTTONS
+
+        public Button SpawnAgent;
+
+        #endregion
     }
 }
