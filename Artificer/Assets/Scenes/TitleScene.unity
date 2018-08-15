@@ -699,7 +699,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &45
 GameObject:
   m_ObjectHideFlags: 0
@@ -16478,8 +16478,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 550, y: 0}
+  m_SizeDelta: {x: 1060, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &1022
 RectTransform:
@@ -18649,7 +18649,7 @@ MonoBehaviour:
       CombatActive: 0
       Aligned: 0
     ShipName: Mammoth XI
-    Owned: 1
+    Owned: 0
     PlayerMade: 0
     UnlockCost: 0
     SpawnTimer: 0
@@ -18677,7 +18677,7 @@ MonoBehaviour:
       CombatActive: 0
       Aligned: 0
     ShipName: Mammoth ViD
-    Owned: 1
+    Owned: 0
     PlayerMade: 0
     UnlockCost: 0
     SpawnTimer: 0

@@ -20,14 +20,21 @@ namespace Space.AI
         // The main execution loop of the NPC script
         public override void PerformLoop()
         {
+            string string_3 = "true";
+            string string_4 = "false";
+            if (false)
+            {
+UnityEngine.Debug.Log(string_3);
+            }
+            else
+            {
+UnityEngine.Debug.Log(string_4);
+            }
         }
         
         // Triggered when an entity enters range
         public override void EnterRange(Data.UI.EntityObject entity)
         {
-            UnityEngine.Vector2 vec2_3;
-            vec2_3 = entity.Reference.position;
-            bool result_2 = this.TurnTo(vec2_3);
         }
     }
 }
